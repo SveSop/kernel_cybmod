@@ -2,7 +2,7 @@
 
 Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.tar.xz)  
 
-** Custom kernel with the following patches **  
+**Custom kernel with the following patches**  
 
 0001 : Kernel patch 4.19.5  
 0002 : PDS Cpu scheduler [http://cchalpha.blogspot.com/search/label/PDS-mq](http://cchalpha.blogspot.com/search/label/PDS-mq)  
@@ -16,7 +16,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 0013 : Kernel naming tweak  
 0014 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0010/0011)  
 
-** AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that **  
+**AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
 
 To build on Ubuntu:  
 ```
