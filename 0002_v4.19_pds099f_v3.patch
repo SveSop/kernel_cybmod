@@ -135,9 +135,9 @@ diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
 index 1a0be022f91d..698da2fa0337 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -1013,6 +1013,22 @@ config SCHED_SMT
- 	  cost of slightly increased overhead in some places. If unsure say
- 	  N here.
+@@ -1003,6 +1003,22 @@
+ config SCHED_SMT
+ 	def_bool y if SMP
  
 +config SMT_NICE
 +	bool "SMT (Hyperthreading) aware nice priority and policy support"
@@ -321,7 +321,7 @@ index 977cb57d7bc9..85c55052966a 100644
  
  #ifdef CONFIG_PREEMPT_NOTIFIERS
  	/* List of struct preempt_notifier: */
-@@ -1209,6 +1230,29 @@ struct task_struct {
+@@ -1210,6 +1231,29 @@ struct task_struct {
  	 */
  };
  
@@ -8053,7 +8053,7 @@ index 9683f458aec7..5f4d2871f3a5 100644
  #include <linux/sched.h>
  
  #include <linux/sched/autogroup.h>
-@@ -2244,3 +2248,4 @@ unsigned long scale_irq_capacity(unsigned long util, unsigned long irq, unsigned
+@@ -2242,3 +2246,4 @@ unsigned long scale_irq_capacity(unsigned long util, unsigned long irq, unsigned
  	return util;
  }
  #endif
@@ -8269,3 +8269,68 @@ index 11e9daa4a568..1c7084552275 100644
  	};
  	struct wakeup_test_data *x = data;
  
+diff --git a/kernel/sched/pds.c b/kernel/sched/pds.c
+index 0421a050d61c..cddf591a1603 100644
+--- a/kernel/sched/pds.c
++++ b/kernel/sched/pds.c
+@@ -190,6 +190,7 @@ DEFINE_PER_CPU(cpumask_t *, sched_cpu_llc_start_mask);
+ DEFINE_PER_CPU(cpumask_t *, sched_cpu_affinity_chk_end_masks);
+ 
+ #ifdef CONFIG_SCHED_SMT
++DEFINE_STATIC_KEY_FALSE(sched_smt_present);
+ DEFINE_PER_CPU(int, sched_sibling_cpu);
+ 
+ static cpumask_t sched_cpu_sg_idle_mask ____cacheline_aligned_in_smp;
+@@ -5853,6 +5854,13 @@ int sched_cpu_activate(unsigned int cpu)
+ 	struct rq *rq = cpu_rq(cpu);
+ 	unsigned long flags;
+ 
++#ifdef CONFIG_SCHED_SMT
++	/*
++	 * When going up, increment the number of cores with SMT present.
++	 */
++	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
++		static_branch_inc_cpuslocked(&sched_smt_present);
++#endif
+ 	set_cpu_active(cpu, true);
+ 
+ 	if (sched_smp_initialized)
+@@ -5888,6 +5896,14 @@ int sched_cpu_deactivate(unsigned int cpu)
+ 	 */
+ 	synchronize_rcu_mult(call_rcu, call_rcu_sched);
+ 
++#ifdef CONFIG_SCHED_SMT
++	/*
++	 * When going down, decrement the number of cores with SMT present.
++	 */
++	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
++		static_branch_dec_cpuslocked(&sched_smt_present);
++#endif
++
+ 	if (!sched_smp_initialized)
+ 		return 0;
+ 
+
+diff --git a/kernel/sched/pds.c b/kernel/sched/pds.c
+index cddf591a1603..5a5ad448f23c 100644
+--- a/kernel/sched/pds.c
++++ b/kernel/sched/pds.c
+@@ -619,7 +619,7 @@ static inline void update_sched_rq_queued_masks(struct rq *rq)
+ 		return;
+ 
+ #ifdef CONFIG_SCHED_SMT
+-	if (~0 == per_cpu(sched_sibling_cpu, cpu))
++	if (cpu == per_cpu(sched_sibling_cpu, cpu))
+ 		return;
+ 
+ 	if (SCHED_RQ_EMPTY == last_level) {
+@@ -6103,7 +6103,7 @@ void __init sched_init(void)
+ 		rq->queued_level = SCHED_RQ_EMPTY;
+ 		rq->pending_level = SCHED_RQ_EMPTY;
+ #ifdef CONFIG_SCHED_SMT
+-		per_cpu(sched_sibling_cpu, i) = ~0;
++		per_cpu(sched_sibling_cpu, i) = i;
+ 		rq->active_balance = 0;
+ #endif
+ #endif
+
