@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Kernel patch 4.19.6  
+0001 : Kernel patch 4.19.8  
 0002 : PDS Cpu scheduler [http://cchalpha.blogspot.com/search/label/PDS-mq](http://cchalpha.blogspot.com/search/label/PDS-mq)  
 0003 : BFQ SQ/MQ patch from [https://github.com/sirlucjan/kernel-patches/tree/master/4.19/bfq-sq-mq](https://github.com/sirlucjan/kernel-patches/tree/master/4.19/bfq-sq-mq)  
 0004 : Swap tweak from -ck kernel  
