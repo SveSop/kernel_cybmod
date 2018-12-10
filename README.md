@@ -5,7 +5,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 **Custom kernel with the following patches**  
 
 0001 : Kernel patch 4.19.8  
-0002 : PDS Cpu scheduler [http://cchalpha.blogspot.com/search/label/PDS-mq](http://cchalpha.blogspot.com/search/label/PDS-mq)  
+0002 : MuQSS CPU scheduler from -ck kernel: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 0003 : BFQ SQ/MQ patch from [https://github.com/sirlucjan/kernel-patches/tree/master/4.19/bfq-sq-mq](https://github.com/sirlucjan/kernel-patches/tree/master/4.19/bfq-sq-mq)  
 0004 : Swap tweak from -ck kernel  
 0005 : ZSwap tweak from -ck kernel  
@@ -18,6 +18,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 0015 : Kernel patch for 4.19.8 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 
 **AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
+**This branch has MuQSS CPU scheduler, config (patch 0014) set up with CONFIG_RQ_SMT (Hyperthreading) and 1000Hz tickrate**  
 
 To build on Ubuntu:  
 ```
