@@ -907,25 +907,24 @@ diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
 index 1a0be022f91d..88bfccabcf3b 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -1003,6 +1003,22 @@
+@@ -1003,6 +1003,21 @@ config NR_CPUS
  config SCHED_SMT
  	def_bool y if SMP
  
 +config SMT_NICE
-+       bool "SMT (Hyperthreading) aware nice priority and policy support"
-+       depends on SCHED_PDS && SCHED_SMT
-+       default y
-+       ---help---
-+         Enabling Hyperthreading on Intel CPUs decreases the effectiveness
-+         of the use of 'nice' levels and different scheduling policies
-+         (e.g. realtime) due to sharing of CPU power between hyperthreads.
-+         SMT nice support makes each logical CPU aware of what is running on
-+         its hyperthread siblings, maintaining appropriate distribution of
-+         CPU according to nice levels and scheduling policies at the expense
-+         of slightly increased overhead.
++	bool "SMT (Hyperthreading) aware nice priority and policy support"
++	depends on SCHED_MUQSS && SCHED_SMT
++	default y
++	---help---
++	  Enabling Hyperthreading on Intel CPUs decreases the effectiveness
++	  of the use of 'nice' levels and different scheduling policies
++	  (e.g. realtime) due to sharing of CPU power between hyperthreads.
++	  SMT nice support makes each logical CPU aware of what is running on
++	  its hyperthread siblings, maintaining appropriate distribution of
++	  CPU according to nice levels and scheduling policies at the expense
++	  of slightly increased overhead.
 +
-+         If unsure say Y here.
-+
++	  If unsure say Y here.
 +
  config SCHED_MC
  	def_bool y
@@ -10409,6 +10408,19 @@ index 11e9daa4a568..4c4e1d5bdf42 100644
  	};
  	struct wakeup_test_data *x = data;
  
+diff -up linux-4.19/kernel/sched/MuQSS.c.schedsmt linux-4.19/kernel/sched/MuQSS.c
+--- linux-4.19/kernel/sched/MuQSS.c.schedsmt	2018-12-04 19:50:39.000000000 +0100
++++ linux-4.19/kernel/sched/MuQSS.c	2018-12-04 21:06:43.447533771 +0100
+@@ -1011,6 +1011,10 @@ static void resched_curr(struct rq *rq)
+ #define CPUIDLE_THREAD_BUSY	(16)
+ #define CPUIDLE_DIFF_NODE	(32)
+ 
++#ifdef CONFIG_SCHED_SMT
++DEFINE_STATIC_KEY_FALSE(sched_smt_present);
++#endif
++
+ /*
+  * The best idle CPU is chosen according to the CPUIDLE ranking above where the
+  * lowest value would give the most suitable CPU to schedule p onto next. The
 -- 
 2.17.1
-
