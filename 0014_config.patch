@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,9605 @@
+@@ -0,0 +1,9604 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 4.19.6 Kernel Configuration
++# Linux/x86 4.19.10 Kernel Configuration
 +#
 +
 +#
@@ -86,8 +86,8 @@ new file mode 100644
 +CONFIG_TICK_ONESHOT=y
 +CONFIG_NO_HZ_COMMON=y
 +# CONFIG_HZ_PERIODIC is not set
-+# CONFIG_NO_HZ_IDLE is not set
-+CONFIG_NO_HZ_FULL=y
++CONFIG_NO_HZ_IDLE=y
++# CONFIG_NO_HZ_FULL is not set
 +CONFIG_NO_HZ=y
 +CONFIG_HIGH_RES_TIMERS=y
 +# CONFIG_PREEMPT_NONE is not set
@@ -98,8 +98,8 @@ new file mode 100644
 +#
 +# CPU/Task time and stats accounting
 +#
-+CONFIG_VIRT_CPU_ACCOUNTING=y
-+CONFIG_VIRT_CPU_ACCOUNTING_GEN=y
++CONFIG_TICK_CPU_ACCOUNTING=y
++# CONFIG_VIRT_CPU_ACCOUNTING_GEN is not set
 +# CONFIG_IRQ_TIME_ACCOUNTING is not set
 +CONFIG_BSD_PROCESS_ACCT=y
 +CONFIG_BSD_PROCESS_ACCT_V3=y
@@ -119,8 +119,6 @@ new file mode 100644
 +CONFIG_TASKS_RCU=y
 +CONFIG_RCU_STALL_COMMON=y
 +CONFIG_RCU_NEED_SEGCBLIST=y
-+CONFIG_CONTEXT_TRACKING=y
-+# CONFIG_CONTEXT_TRACKING_FORCE is not set
 +CONFIG_RCU_FANOUT=64
 +CONFIG_RCU_FANOUT_LEAF=16
 +# CONFIG_RCU_FAST_NO_HZ is not set
@@ -3448,6 +3446,7 @@ new file mode 100644
 +CONFIG_WLAN_VENDOR_MEDIATEK=y
 +CONFIG_MT7601U=m
 +CONFIG_MT76_CORE=m
++CONFIG_MT76_LEDS=y
 +CONFIG_MT76x2_COMMON=m
 +# CONFIG_MT76x0U is not set
 +CONFIG_MT76x2E=m
