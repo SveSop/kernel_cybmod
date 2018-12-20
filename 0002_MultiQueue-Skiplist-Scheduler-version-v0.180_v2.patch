@@ -1316,7 +1316,7 @@ index 1e234e2f1cba..adb61defd6c3 100644
  config BROKEN
  	bool
  
-@@ -647,6 +659,7 @@ config NUMA_BALANCING
+@@ -652,6 +664,7 @@ config NUMA_BALANCING
  	depends on ARCH_SUPPORTS_NUMA_BALANCING
  	depends on !ARCH_WANT_NUMA_VARIABLE_LOCALITY
  	depends on SMP && NUMA && MIGRATION
@@ -1324,7 +1324,7 @@ index 1e234e2f1cba..adb61defd6c3 100644
  	help
  	  This option adds support for automatic NUMA aware memory/task placement.
  	  The mechanism is quite primitive and is based on migrating memory when
-@@ -754,9 +767,13 @@ menuconfig CGROUP_SCHED
+@@ -759,9 +772,13 @@ menuconfig CGROUP_SCHED
  	help
  	  This feature lets CPU scheduler recognize task groups and control CPU
  	  bandwidth allocation to such task groups. It uses cgroups to group
@@ -1340,7 +1340,7 @@ index 1e234e2f1cba..adb61defd6c3 100644
  config FAIR_GROUP_SCHED
  	bool "Group scheduling for SCHED_OTHER"
  	depends on CGROUP_SCHED
-@@ -863,6 +880,7 @@ config CGROUP_DEVICE
+@@ -868,6 +885,7 @@ config CGROUP_DEVICE
  
  config CGROUP_CPUACCT
  	bool "Simple CPU accounting controller"
@@ -1348,7 +1348,7 @@ index 1e234e2f1cba..adb61defd6c3 100644
  	help
  	  Provides a simple controller for monitoring the
  	  total CPU consumed by the tasks in a cgroup.
-@@ -981,6 +999,7 @@ config CHECKPOINT_RESTORE
+@@ -986,6 +1004,7 @@ config CHECKPOINT_RESTORE
  
  config SCHED_AUTOGROUP
  	bool "Automatic process group scheduling"
@@ -9994,7 +9994,7 @@ index 9683f458aec7..6a65812cb262 100644
  #include <linux/sched.h>
  
  #include <linux/sched/autogroup.h>
-@@ -2242,3 +2255,30 @@ unsigned long scale_irq_capacity(unsigned long util, unsigned long irq, unsigned
+@@ -2241,3 +2254,30 @@ unsigned long scale_irq_capacity(unsigned long util, unsigned long irq, unsigned
  	return util;
  }
  #endif
