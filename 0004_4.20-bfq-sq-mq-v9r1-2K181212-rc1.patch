@@ -141,7 +141,7 @@ diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
 index a4a8914bf7a4..299a6861fb90 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
-@@ -40,6 +40,26 @@ config CFQ_GROUP_IOSCHED
+@@ -39,6 +39,26 @@ config CFQ_GROUP_IOSCHED
  	---help---
  	  Enable group IO scheduling in CFQ.
  
@@ -168,7 +168,7 @@ index a4a8914bf7a4..299a6861fb90 100644
  choice
  
  	prompt "Default I/O scheduler"
-@@ -54,6 +74,16 @@ choice
+@@ -53,6 +73,16 @@ choice
  	config DEFAULT_CFQ
  		bool "CFQ" if IOSCHED_CFQ=y
  
@@ -185,7 +185,7 @@ index a4a8914bf7a4..299a6861fb90 100644
  	config DEFAULT_NOOP
  		bool "No-op"
  
-@@ -63,8 +93,28 @@ config DEFAULT_IOSCHED
+@@ -62,8 +92,28 @@ config DEFAULT_IOSCHED
  	string
  	default "deadline" if DEFAULT_DEADLINE
  	default "cfq" if DEFAULT_CFQ

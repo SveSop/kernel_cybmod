@@ -1,35 +1,36 @@
-## Cybmod patches for 4.19 kernel  
+## Cybmod patches for 4.20 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.19.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0001 : Kernel patch 4.19.11  
+0001 : NA  
 0002 : MuQSS CPU scheduler from -ck kernel: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
-0003 : BFQ SQ/MQ patch from [https://github.com/sirlucjan/kernel-patches/tree/master/4.19/bfq-sq-mq](https://github.com/sirlucjan/kernel-patches/tree/master/4.19/bfq-sq-mq)  
-0004 : Swap tweak from -ck kernel  
-0005 : ZSwap tweak from -ck kernel  
-0006 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
+0003 : Make preemptive kernel default from -ck kernel
+0004 : BFQ SQ/MQ patch from [https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq](https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq)  
+0005 : Swap tweak from -ck kernel  
+0006 : ZSwap tweak from -ck kernel  
+0007 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
 0010 : Graysky's GCC optimization patches  
 0011 : Graysky's GCC optimization patches  
 0012 : Set CAKE qdisk default  
 0013 : Kernel naming tweak  
 0014 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0010/0011)  
-0015 : Kernel patch for 4.19.11 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
+0015 : Kernel patch for 4.20 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 
 **AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
 **This branch has MuQSS CPU scheduler, config (patch 0014) set up with CONFIG_RQ_SMT (Hyperthreading) and 1000Hz tickrate**  
 
 To build on Ubuntu:  
 ```
-tar xf linux-4.19.tar.xz  
-cd linux-4.19  
+tar xf linux-4.20.tar.xz  
+cd linux-4.20  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```
 When build is done, the .deb files is in the ../ folder relative to the source.  
 
-To benefit from patch 0006, and sign your kernel modules with dkms with Ubuntu you need to do:  
+To benefit from patch 0007, and sign your kernel modules with dkms with Ubuntu you need to do:  
 `sudo mokutil --import /var/lib/shim-signed/mok/MOK.der`  
 This will put the DKMS certificate up for signing. You then need to reboot and go through the bootup sequence allowing the certificate to be signed by Ubuntu.  
 
