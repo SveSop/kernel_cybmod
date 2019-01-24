@@ -4,23 +4,23 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Kernel patch 4.20.4  
-0002 : MuQSS CPU scheduler from -ck kernel: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
-0003 : Make preemptive kernel default from -ck kernel
-0004 : BFQ SQ/MQ patch from [https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq](https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq)  
-0005 : Swap tweak from -ck kernel  
-0006 : ZSwap tweak from -ck kernel  
-0007 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
-0010 : Graysky's GCC optimization patches  
-0011 : Graysky's GCC optimization patches  
-0012 : Set CAKE qdisk default  
-0013 : Kernel naming tweak  
-0014 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0010/0011)  
-0015 : Kernel patch for 4.20.4 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
-0016 : Add ZEN -O3 optimize option patch.  
+0000 : Kernel patch 4.20.4  
+0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
+to  
+0015 : Last of the -ck patches.  
+0016 : zswap tweak patch  
+0017 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
+0018 : BFQ SQ/MQ patch from https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq  
+0019 : Add ZEN -O3 optimize option patch.  
+0020 : Graysky's GCC optimization patches  
+0021 : Graysky's GCC optimization patches  
+0022 : Set CAKE qdisk default  
+0023 : Kernel naming tweak  
+0024 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
+0025 : Kernel patch for 4.20.4 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 
 **AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
-**This branch has MuQSS CPU scheduler, config (patch 0014) set up with CONFIG_RQ_SMT (Hyperthreading) and 1000Hz tickrate**  
+**This branch has MuQSS CPU scheduler, config (patch 0024) set up with CONFIG_RQ_MC and 100Hz tickless (NO_HZ_FULL)**  
 
 To build on Ubuntu:  
 ```
