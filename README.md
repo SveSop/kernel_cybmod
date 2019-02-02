@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 4.20.4  
+0000 : Kernel patch 4.20.6  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0015 : Last of the -ck patches.  
@@ -16,11 +16,9 @@ to
 0021 : Graysky's GCC optimization patches  
 0022 : Set CAKE qdisk default  
 0023 : Kernel naming tweak  
-0024 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
-0025 : Kernel patch for 4.20.4 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
+0025 : Kernel patch for 4.20.6 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 
-**AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
-**This branch has MuQSS CPU scheduler, config (patch 0024) set up with CONFIG_RQ_MC and 100Hz tickless (NO_HZ_FULL)**  
+**NOT including .config atm, due to major instabilities with the config**  
 
 To build on Ubuntu:  
 ```
