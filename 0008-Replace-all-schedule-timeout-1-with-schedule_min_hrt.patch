@@ -90,7 +90,7 @@ diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghan
 index a74ce885b541..c86b80418bc6 100644
 --- a/drivers/char/ipmi/ipmi_msghandler.c
 +++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3450,7 +3450,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
+@@ -3452,7 +3452,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
  	/* Current message first, to preserve order */
  	while (intf->curr_msg && !list_empty(&intf->waiting_rcv_msgs)) {
  		/* Wait for the message to clear out. */
@@ -103,7 +103,7 @@ diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
 index ca9528c4f183..765b2506f919 100644
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -1211,7 +1211,7 @@ static void shutdown_ssif(void *send_info)
+@@ -1220,7 +1220,7 @@ static void shutdown_ssif(void *send_info)
  
  	/* make sure the driver is not looking for flags any more. */
  	while (ssif_info->ssif_state != SSIF_NORMAL)

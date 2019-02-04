@@ -18464,7 +18464,7 @@ diff --git a/block/blk-mq.c b/block/blk-mq.c
 index e3c39ea8e17b..7a57368841f6 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -2848,6 +2848,8 @@ int blk_mq_update_nr_requests(struct request_queue *q, unsigned int nr)
+@@ -2948,6 +2948,8 @@ int blk_mq_update_nr_requests(struct request_queue *q, unsigned int nr)
  		}
  		if (ret)
  			break;
