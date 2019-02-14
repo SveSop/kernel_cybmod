@@ -1598,7 +1598,7 @@ new file mode 100644
 index 000000000000..e8610b659791
 --- /dev/null
 +++ b/kernel/sched/MuQSS.c
-@@ -0,0 +1,7437 @@
+@@ -0,0 +1,7438 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + *  kernel/sched/MuQSS.c, was kernel/sched.c
@@ -1828,6 +1828,7 @@ index 000000000000..e8610b659791
 +
 +#ifdef CONFIG_SCHED_SMT
 +DEFINE_STATIC_KEY_FALSE(sched_smt_present);
++EXPORT_SYMBOL_GPL(sched_smt_present);
 +#endif
 +
 +#else
