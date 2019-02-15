@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,9653 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 4.20.8 Kernel Configuration
++# Linux/x86 4.20.10 Kernel Configuration
 +#
 +
 +#
@@ -784,7 +784,7 @@ new file mode 100644
 +CONFIG_VIRTUALIZATION=y
 +CONFIG_KVM=m
 +CONFIG_KVM_INTEL=m
-+CONFIG_KVM_AMD=m
++# CONFIG_KVM_AMD is not set
 +# CONFIG_KVM_MMU_AUDIT is not set
 +CONFIG_VHOST_NET=m
 +CONFIG_VHOST_SCSI=m
