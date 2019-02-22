@@ -1,5 +1,5 @@
 diff --git a/Documentation/block/bfq-iosched.txt b/Documentation/block/bfq-iosched.txt
-index 8d8d8f06cab2..41d0200944f1 100644
+index 8d8d8f06cab2..995869c88f51 100644
 --- a/Documentation/block/bfq-iosched.txt
 +++ b/Documentation/block/bfq-iosched.txt
 @@ -1,3 +1,6 @@
@@ -142,8 +142,8 @@ index 8d8d8f06cab2..41d0200944f1 100644
 +respectively, bfq-sq-iosched and bfq-mq-iosched (the latter is
 +available if also the changes introducing bfq-mq-iosched have been
 +applied). In particular, this tree contains the dev version of bfq for
-+Linux mainline 4.19.0, and has been obtained from the dev version for
-+Linux 4.18.0. Rebasing from 4.18 to 4.19 involved two manual
++Linux mainline 4.20.0, and has been obtained from the dev version for
++Linux 4.18.0. Rebasing from 4.18 to 4.20 involved two manual
 +interventions.
 +
 +First, some conflicts had to be resolved, as follows:
@@ -158,12 +158,12 @@ index 8d8d8f06cab2..41d0200944f1 100644
 +  # SPDX-License-Identifier: GPL-2.0
 +  VERSION = 4
 +- PATCHLEVEL = 18
-++ PATCHLEVEL = 19
+++ PATCHLEVEL = 20
 +  SUBLEVEL = 0
 + -EXTRAVERSION =
 + +EXTRAVERSION = -bfq-mq
 +- NAME = Merciless Moray
-++ NAME = "People's Front"
+++ NAME = Shy Crocodile
 +
 +  # *DOCUMENTATION*
 +  # To see a list of typical targets execute "make help"
@@ -185,7 +185,7 @@ index 8d8d8f06cab2..41d0200944f1 100644
 +Second, the following port commit had to be made:
 +port commit "block: use ktime_get_ns() instead of sched_clock() for cfq and bfq"
 diff --git a/arch/x86/configs/x86_64_defconfig b/arch/x86/configs/x86_64_defconfig
-index e32fc1f274d8..94cb28eb20ba 100644
+index ac9ae487cfeb..630d84d88365 100644
 --- a/arch/x86/configs/x86_64_defconfig
 +++ b/arch/x86/configs/x86_64_defconfig
 @@ -12,6 +12,11 @@ CONFIG_NO_HZ=y
@@ -201,7 +201,7 @@ index e32fc1f274d8..94cb28eb20ba 100644
  CONFIG_CPUSETS=y
  CONFIG_CGROUP_CPUACCT=y
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index a4a8914bf7a4..299a6861fb90 100644
+index f95a48b0d7b2..cfe7d1e0dd7f 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -39,6 +39,26 @@ config CFQ_GROUP_IOSCHED
@@ -278,7 +278,7 @@ index a4a8914bf7a4..299a6861fb90 100644
  	tristate "MQ deadline I/O scheduler"
  	default y
 diff --git a/block/Makefile b/block/Makefile
-index 572b33f32c07..1dd6ffdc2fee 100644
+index 27eac600474f..11c701c9ac83 100644
 --- a/block/Makefile
 +++ b/block/Makefile
 @@ -25,6 +25,8 @@ obj-$(CONFIG_MQ_IOSCHED_DEADLINE)	+= mq-deadline.o
@@ -292,7 +292,7 @@ index 572b33f32c07..1dd6ffdc2fee 100644
  obj-$(CONFIG_BLK_CMDLINE_PARSER)	+= cmdline-parser.o
 diff --git a/block/bfq-cgroup-included.c b/block/bfq-cgroup-included.c
 new file mode 100644
-index 000000000000..15459e50cd6a
+index 000000000000..92c14c4b4aea
 --- /dev/null
 +++ b/block/bfq-cgroup-included.c
 @@ -0,0 +1,1359 @@
@@ -1047,7 +1047,7 @@ index 000000000000..15459e50cd6a
 +	uint64_t serial_nr;
 +
 +	rcu_read_lock();
-+	serial_nr = bio_blkcg(bio)->css.serial_nr;
++	serial_nr = __bio_blkcg(bio)->css.serial_nr;
 +
 +	/*
 +	 * Check whether blkcg has changed.  The condition may trigger
@@ -1056,7 +1056,7 @@ index 000000000000..15459e50cd6a
 +	if (unlikely(!bfqd) || likely(bic->blkcg_serial_nr == serial_nr))
 +		goto out;
 +
-+	bfqg = __bfq_bic_change_cgroup(bfqd, bic, bio_blkcg(bio));
++	bfqg = __bfq_bic_change_cgroup(bfqd, bic, __bio_blkcg(bio));
 +#ifdef BFQ_MQ
 +	/*
 +	 * Update blkg_path for bfq_log_* functions. We cache this
@@ -1699,7 +1699,7 @@ index 000000000000..fb7bb8f08b75
 +}
 diff --git a/block/bfq-mq-iosched.c b/block/bfq-mq-iosched.c
 new file mode 100644
-index 000000000000..47a49d9e6512
+index 000000000000..de1fb81212ca
 --- /dev/null
 +++ b/block/bfq-mq-iosched.c
 @@ -0,0 +1,6548 @@
@@ -6605,7 +6605,7 @@ index 000000000000..47a49d9e6512
 +
 +	rcu_read_lock();
 +
-+	bfqg = bfq_find_set_group(bfqd, bio_blkcg(bio));
++	bfqg = bfq_find_set_group(bfqd, __bio_blkcg(bio));
 +	if (!bfqg) {
 +		bfqq = &bfqd->oom_bfqq;
 +		goto out;
@@ -18460,8 +18460,48 @@ index 000000000000..0177fc7205d7
 +static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
 +
 +#endif /* _BFQ_H */
+diff --git a/block/bio.c b/block/bio.c
+index 4d86e90654b2..877771dfe49c 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1991,13 +1991,19 @@ int bio_associate_blkcg_from_page(struct bio *bio, struct page *page)
+  *
+  * This function takes an extra reference of @blkcg_css which will be put
+  * when @bio is released.  The caller must own @bio and is responsible for
+- * synchronizing calls to this function.
++ * synchronizing calls to this function.  If @blkcg_css is %NULL, a call to
++ * blkcg_get_css() finds the current css from the kthread or task.
+  */
+ int bio_associate_blkcg(struct bio *bio, struct cgroup_subsys_state *blkcg_css)
+ {
+ 	if (unlikely(bio->bi_css))
+ 		return -EBUSY;
+-	css_get(blkcg_css);
++
++	if (blkcg_css)
++		css_get(blkcg_css);
++	else
++		blkcg_css = blkcg_get_css();
++
+ 	bio->bi_css = blkcg_css;
+ 	return 0;
+ }
+diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
+index 38c35c32aff2..c5d1e496b21f 100644
+--- a/block/blk-iolatency.c
++++ b/block/blk-iolatency.c
+@@ -491,8 +491,8 @@ static void blkcg_iolatency_throttle(struct rq_qos *rqos, struct bio *bio,
+ 		return;
+ 
+ 	rcu_read_lock();
++	bio_associate_blkcg(bio, NULL);
+ 	blkcg = bio_blkcg(bio);
+-	bio_associate_blkcg(bio, &blkcg->css);
+ 	blkg = blkg_lookup(blkcg, q);
+ 	if (unlikely(!blkg)) {
+ 		if (!lock)
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index e3c39ea8e17b..7a57368841f6 100644
+index 6a7566244de3..9ba4f40421b5 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
 @@ -2948,6 +2948,8 @@ int blk_mq_update_nr_requests(struct request_queue *q, unsigned int nr)
@@ -18473,8 +18513,167 @@ index e3c39ea8e17b..7a57368841f6 100644
  	}
  
  	if (!ret)
+diff --git a/block/elevator.c b/block/elevator.c
+index 8fdcd64ae12e..fccde9ac3bc5 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -948,8 +948,8 @@ int elevator_switch_mq(struct request_queue *q,
+ }
+ 
+ /*
+- * For blk-mq devices, we default to using mq-deadline, if available, for single
+- * queue devices.  If deadline isn't available OR we have multiple queues,
++ * For blk-mq devices, we default to using bfq-mq, if available, for single
++ * queue devices.  If bfq-mq isn't available OR we have multiple queues,
+  * default to "none".
+  */
+ int elevator_init_mq(struct request_queue *q)
+@@ -968,7 +968,7 @@ int elevator_init_mq(struct request_queue *q)
+ 	if (unlikely(q->elevator))
+ 		goto out_unlock;
+ 
+-	e = elevator_get(q, "mq-deadline", false);
++	e = elevator_get(q, "bfq-mq", false);
+ 	if (!e)
+ 		goto out_unlock;
+ 
+diff --git a/include/linux/blk-cgroup.h b/include/linux/blk-cgroup.h
+index 6d766a19f2bb..15af92fe458b 100644
+--- a/include/linux/blk-cgroup.h
++++ b/include/linux/blk-cgroup.h
+@@ -230,22 +230,103 @@ int blkg_conf_prep(struct blkcg *blkcg, const struct blkcg_policy *pol,
+ 		   char *input, struct blkg_conf_ctx *ctx);
+ void blkg_conf_finish(struct blkg_conf_ctx *ctx);
+ 
++/**
++ * blkcg_css - find the current css
++ *
++ * Find the css associated with either the kthread or the current task.
++ * This may return a dying css, so it is up to the caller to use tryget logic
++ * to confirm it is alive and well.
++ */
++static inline struct cgroup_subsys_state *blkcg_css(void)
++{
++	struct cgroup_subsys_state *css;
++
++	css = kthread_blkcg();
++	if (css)
++		return css;
++	return task_css(current, io_cgrp_id);
++}
++
++/**
++ * blkcg_get_css - find and get a reference to the css
++ *
++ * Find the css associated with either the kthread or the current task.
++ * This takes a reference on the blkcg which will need to be managed by the
++ * caller.
++ */
++static inline struct cgroup_subsys_state *blkcg_get_css(void)
++{
++	struct cgroup_subsys_state *css;
++
++	rcu_read_lock();
++
++	css = kthread_blkcg();
++	if (css) {
++		css_get(css);
++	} else {
++		/*
++		 * This is a bit complicated.  It is possible task_css() is
++		 * seeing an old css pointer here.  This is caused by the
++		 * current thread migrating away from this cgroup and this
++		 * cgroup dying.  css_tryget() will fail when trying to take a
++		 * ref on a cgroup that's ref count has hit 0.
++		 *
++		 * Therefore, if it does fail, this means current must have
++		 * been swapped away already and this is waiting for it to
++		 * propagate on the polling cpu.  Hence the use of cpu_relax().
++		 */
++		while (true) {
++			css = task_css(current, io_cgrp_id);
++			if (likely(css_tryget(css)))
++				break;
++			cpu_relax();
++		}
++	}
++
++	rcu_read_unlock();
++
++	return css;
++}
+ 
+ static inline struct blkcg *css_to_blkcg(struct cgroup_subsys_state *css)
+ {
+ 	return css ? container_of(css, struct blkcg, css) : NULL;
+ }
+ 
+-static inline struct blkcg *bio_blkcg(struct bio *bio)
++/**
++ * __bio_blkcg - internal, inconsistent version to get blkcg
++ *
++ * DO NOT USE.
++ * This function is inconsistent and consequently is dangerous to use.  The
++ * first part of the function returns a blkcg where a reference is owned by the
++ * bio.  This means it does not need to be rcu protected as it cannot go away
++ * with the bio owning a reference to it.  However, the latter potentially gets
++ * it from task_css().  This can race against task migration and the cgroup
++ * dying.  It is also semantically different as it must be called rcu protected
++ * and is susceptible to failure when trying to get a reference to it.
++ * Therefore, it is not ok to assume that *_get() will always succeed on the
++ * blkcg returned here.
++ */
++static inline struct blkcg *__bio_blkcg(struct bio *bio)
+ {
+-	struct cgroup_subsys_state *css;
++	if (bio && bio->bi_css)
++		return css_to_blkcg(bio->bi_css);
++	return css_to_blkcg(blkcg_css());
++}
+ 
++/**
++ * bio_blkcg - grab the blkcg associated with a bio
++ * @bio: target bio
++ *
++ * This returns the blkcg associated with a bio, %NULL if not associated.
++ * Callers are expected to either handle %NULL or know association has been
++ * done prior to calling this.
++ */
++static inline struct blkcg *bio_blkcg(struct bio *bio)
++{
+ 	if (bio && bio->bi_css)
+ 		return css_to_blkcg(bio->bi_css);
+-	css = kthread_blkcg();
+-	if (css)
+-		return css_to_blkcg(css);
+-	return css_to_blkcg(task_css(current, io_cgrp_id));
++	return NULL;
+ }
+ 
+ static inline bool blk_cgroup_congested(void)
+@@ -805,10 +886,10 @@ static inline bool blkcg_bio_issue_check(struct request_queue *q,
+ 	bool throtl = false;
+ 
+ 	rcu_read_lock();
+-	blkcg = bio_blkcg(bio);
+ 
+ 	/* associate blkcg if bio hasn't attached one */
+-	bio_associate_blkcg(bio, &blkcg->css);
++	bio_associate_blkcg(bio, NULL);
++	blkcg = bio_blkcg(bio);
+ 
+ 	blkg = blkg_lookup(blkcg, q);
+ 	if (unlikely(!blkg)) {
+@@ -930,6 +1011,7 @@ static inline int blkcg_activate_policy(struct request_queue *q,
+ static inline void blkcg_deactivate_policy(struct request_queue *q,
+ 					   const struct blkcg_policy *pol) { }
+ 
++static inline struct blkcg *__bio_blkcg(struct bio *bio) { return NULL; }
+ static inline struct blkcg *bio_blkcg(struct bio *bio) { return NULL; }
+ 
+ static inline struct blkg_policy_data *blkg_to_pd(struct blkcg_gq *blkg,
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 6980014357d4..8c4568ea6884 100644
+index 4293dc1cd160..f54ac071a64f 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
 @@ -54,7 +54,7 @@ struct blk_stat_callback;
@@ -18498,7 +18697,7 @@ index 6980014357d4..8c4568ea6884 100644
  /* flags that prevent us from merging requests: */
  #define RQF_NOMERGE_FLAGS \
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index a02deea30185..a2bf4a6b9316 100644
+index 015bb59c0331..94590cb58017 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -99,6 +99,7 @@ struct elevator_mq_ops {
