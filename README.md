@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Kernel patch 4.20.11  
+0001 : Kernel patch 4.20.13  
 0002 : PDS Cpu scheduler [http://cchalpha.blogspot.com/search/label/PDS-mq](http://cchalpha.blogspot.com/search/label/PDS-mq)  
 0003 : BFQ SQ/MQ patch from [https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq-lucjan](https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq-lucjan)  
 0004 : Swap tweak from -ck kernel  
@@ -15,7 +15,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux
 0012 : Set CAKE qdisk default  
 0013 : Kernel naming tweak  
 0014 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0010/0011)  
-0015 : Kernel patch for 4.20.11 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
+0015 : Kernel patch for 4.20.13 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 0016 : Add ZEN -O3 optimize option patch.  
 
 **AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
