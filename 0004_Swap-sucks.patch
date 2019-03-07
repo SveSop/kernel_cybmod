@@ -1,7 +1,7 @@
 diff --git a/mm/vmscan.c b/mm/vmscan.c
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -160,7 +160,7 @@ struct scan_control {
+@@ -164,7 +164,7 @@ struct scan_control {
  /*
   * From 0 .. 100.  Higher means more swappy.
   */
