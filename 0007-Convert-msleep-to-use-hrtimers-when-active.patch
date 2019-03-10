@@ -1,4 +1,4 @@
-From 1182a8c764cd404a0f5db0d360bf60b9d2ba7985 Mon Sep 17 00:00:00 2001
+From 2efc0c737777ec85f7674ebcb36d0a8f8a411d60 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Fri, 4 Nov 2016 09:25:54 +1100
 Subject: [PATCH 07/16] Convert msleep to use hrtimers when active.
@@ -8,10 +8,10 @@ Subject: [PATCH 07/16] Convert msleep to use hrtimers when active.
  1 file changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index ae942d459aa2..542c13d98950 100644
+index 809981b2ff11..f9cb3b6bfaaf 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
-@@ -1965,7 +1965,19 @@ void __init init_timers(void)
+@@ -1964,7 +1964,19 @@ void __init init_timers(void)
   */
  void msleep(unsigned int msecs)
  {
@@ -32,7 +32,7 @@ index ae942d459aa2..542c13d98950 100644
  
  	while (timeout)
  		timeout = schedule_timeout_uninterruptible(timeout);
-@@ -1979,7 +1991,15 @@ EXPORT_SYMBOL(msleep);
+@@ -1978,7 +1990,15 @@ EXPORT_SYMBOL(msleep);
   */
  unsigned long msleep_interruptible(unsigned int msecs)
  {

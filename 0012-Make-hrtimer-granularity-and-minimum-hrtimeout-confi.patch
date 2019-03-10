@@ -1,8 +1,9 @@
-From a97b795cfb1af4938cfe2aa077960cf7c6511550 Mon Sep 17 00:00:00 2001
+From 3f9b20631d4172475def7ccd1e1e8e6ec81caeae Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Tue, 22 Nov 2016 10:15:51 +1100
 Subject: [PATCH 12/16] Make hrtimer granularity and minimum hrtimeout
- configurable in sysctl.
+ configurable in sysctl. Set default granularity to 100us and min timeout to
+ 500us.
 
 ---
  kernel/sysctl.c           | 22 ++++++++++++++++-
@@ -11,7 +12,7 @@ Subject: [PATCH 12/16] Make hrtimer granularity and minimum hrtimeout
  3 files changed, 70 insertions(+), 11 deletions(-)
 
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index c5ab6af20cd7..a16902f32e6a 100644
+index b073a59e3273..226771720139 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
 @@ -135,7 +135,9 @@ extern int sched_interactive;
@@ -25,7 +26,7 @@ index c5ab6af20cd7..a16902f32e6a 100644
  static int ten_thousand = 10000;
  #endif
  #ifdef CONFIG_PERF_EVENTS
-@@ -1078,6 +1080,24 @@ static struct ctl_table kern_table[] = {
+@@ -1085,6 +1087,24 @@ static struct ctl_table kern_table[] = {
  		.extra2		= &two,
  	},
  #endif
@@ -51,10 +52,10 @@ index c5ab6af20cd7..a16902f32e6a 100644
  	{
  		.procname	= "spin_retry",
 diff --git a/kernel/time/clockevents.c b/kernel/time/clockevents.c
-index 01d206062aa5..faf30b861235 100644
+index 3a115f145d95..73fe2e359438 100644
 --- a/kernel/time/clockevents.c
 +++ b/kernel/time/clockevents.c
-@@ -198,13 +198,9 @@ int clockevents_tick_resume(struct clock_event_device *dev)
+@@ -190,13 +190,9 @@ int clockevents_tick_resume(struct clock_event_device *dev)
  
  #ifdef CONFIG_GENERIC_CLOCKEVENTS_MIN_ADJUST
  
@@ -71,10 +72,10 @@ index 01d206062aa5..faf30b861235 100644
  /**
   * clockevents_increase_min_delta - raise minimum delta of a clock event device
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index a4d3c44b8849..0f7f27adf16b 100644
+index 898701cb4330..f56f9a1cffc8 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
-@@ -2034,7 +2034,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout);
+@@ -2025,7 +2025,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout);
  long __sched schedule_msec_hrtimeout(long timeout)
  {
  	struct hrtimer_sleeper t;
@@ -83,7 +84,7 @@ index a4d3c44b8849..0f7f27adf16b 100644
  	ktime_t expires;
  
  	if (!timeout) {
-@@ -2051,9 +2051,8 @@ long __sched schedule_msec_hrtimeout(long timeout)
+@@ -2042,9 +2042,8 @@ long __sched schedule_msec_hrtimeout(long timeout)
  	if (jiffs > 4 || hrtimer_resolution >= NSEC_PER_SEC / HZ || pm_freezing)
  		return schedule_timeout(jiffs);
  
@@ -94,7 +95,7 @@ index a4d3c44b8849..0f7f27adf16b 100644
  
  	hrtimer_init_on_stack(&t.timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
  	hrtimer_set_expires_range_ns(&t.timer, expires, delta);
-@@ -2077,9 +2076,53 @@ long __sched schedule_msec_hrtimeout(long timeout)
+@@ -2068,9 +2067,53 @@ long __sched schedule_msec_hrtimeout(long timeout)
  
  EXPORT_SYMBOL(schedule_msec_hrtimeout);
  
@@ -140,7 +141,7 @@ index a4d3c44b8849..0f7f27adf16b 100644
 +	return timeout < 0 ? 0 : timeout;
 +}
 +
-+int __read_mostly hrtimeout_min_us = 1000;
++int __read_mostly hrtimeout_min_us = 500;
 +
  long __sched schedule_min_hrtimeout(void)
  {

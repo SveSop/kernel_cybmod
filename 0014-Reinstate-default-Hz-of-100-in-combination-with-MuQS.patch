@@ -1,4 +1,4 @@
-From 5173b739506f3a8e4282403c69f31cb9837f6803 Mon Sep 17 00:00:00 2001
+From e77d42447a296f3de95d0320458d9a7cd43cceb5 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Wed, 7 Dec 2016 21:23:01 +1100
 Subject: [PATCH 14/16] Reinstate default Hz of 100 in combination with MuQSS

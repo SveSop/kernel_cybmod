@@ -13,7 +13,7 @@ diff --git a/Makefile b/Makefile
 index ab5fe2013bbe..6ddfc4b20855 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -666,12 +666,16 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+@@ -660,12 +660,16 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
  KBUILD_CFLAGS	+= $(call cc-option,-Oz,-Os)
  KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
  else
@@ -34,7 +34,7 @@ diff --git a/init/Kconfig b/init/Kconfig
 index ed9352513c32..59fca692658d 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1125,6 +1125,13 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
+@@ -1130,6 +1130,13 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
  	  with the "-O2" compiler flag for best performance and most
  	  helpful compile-time warnings.
  

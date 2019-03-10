@@ -1,4 +1,4 @@
-From 9ed04585cf4e8b804e15c19c8c40e6893ac0751b Mon Sep 17 00:00:00 2001
+From 81265841279ac94cb2d4b50b34bfe79f266da701 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Fri, 12 May 2017 13:07:37 +1000
 Subject: [PATCH 04/16] Expose vmsplit for our poor 32 bit users.
@@ -8,10 +8,10 @@ Subject: [PATCH 04/16] Expose vmsplit for our poor 32 bit users.
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index fe42b18409dc..6f3519674169 100644
+index 6e4b1b310f6c..f4d18b103270 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -1500,7 +1500,7 @@ config HIGHMEM64G
+@@ -1427,7 +1427,7 @@ config HIGHMEM64G
  endchoice
  
  choice
@@ -20,7 +20,7 @@ index fe42b18409dc..6f3519674169 100644
  	default VMSPLIT_3G
  	depends on X86_32
  	---help---
-@@ -1520,17 +1520,17 @@ choice
+@@ -1447,17 +1447,17 @@ choice
  	  option alone!
  
  	config VMSPLIT_3G

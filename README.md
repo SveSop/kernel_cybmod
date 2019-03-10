@@ -1,37 +1,39 @@
-## Cybmod patches for 4.20 kernel  
+## Cybmod patches for 5.0 kernel  
 
 Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 4.20.13  
+0000 : Kernel patch 5.0.1  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0015 : Last of the -ck patches.  
 0016 : zswap tweak patch  
 0017 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
-0018 : BFQ SQ/MQ patch from https://github.com/sirlucjan/kernel-patches/tree/master/4.20/bfq-sq-mq  
+0018 : Set_MinMax_KB_Read-ahead from Xanmod patches  
 0019 : Add ZEN -O3 optimize option patch.  
 0020 : Graysky's GCC optimization patches  
 0021 : Graysky's GCC optimization patches  
 0022 : Set CAKE qdisk default  
 0023 : Kernel naming tweak  
 0024 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
-0025 : Kernel patch for 4.20.13 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
+0025 : Kernel patch for 5.0.1 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
+0026 : Increase_task_balance from Xanmod patches  
+0027 : set_rq_affinity_mt_block from Xanmod patches  
 
-**AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
+**AMD support is disabled in the example config (patch 0024), so if you have a AMD processor, you need to enable that**  
 **This branch has MuQSS CPU scheduler, config (patch 0024) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
 
 To build on Ubuntu:  
 ```
-tar xf linux-4.20.tar.xz  
-cd linux-4.20  
+tar xf linux-5.0.tar.xz    
+cd linux-5.0  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```
 When build is done, the .deb files is in the ../ folder relative to the source.  
 
-To benefit from patch 0007, and sign your kernel modules with dkms with Ubuntu you need to do:  
+To benefit from patch 0017, and sign your kernel modules with dkms with Ubuntu you need to do:  
 `sudo mokutil --import /var/lib/shim-signed/mok/MOK.der`  
 This will put the DKMS certificate up for signing. You then need to reboot and go through the bootup sequence allowing the certificate to be signed by Ubuntu.  
 

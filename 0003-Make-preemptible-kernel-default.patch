@@ -1,4 +1,4 @@
-From d7e658b89afd751851acc9b1e34ba078b414fb8b Mon Sep 17 00:00:00 2001
+From aa3a9b05caccf74c7a2413550c85f6028ce0875d Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 29 Oct 2016 11:20:37 +1100
 Subject: [PATCH 03/16] Make preemptible kernel default.
@@ -29,17 +29,17 @@ Make full preempt default on all arches.
  arch/blackfin/configs/PNAV-10_defconfig       | 111 ++++
  arch/blackfin/configs/SRV1_defconfig          |  88 +++
  arch/blackfin/configs/TCM-BF518_defconfig     | 131 +++++
- arch/mips/configs/fuloong2e_defconfig         |   3 +-
- arch/mips/configs/gpr_defconfig               |   3 +-
- arch/mips/configs/ip22_defconfig              |   3 +-
- arch/mips/configs/ip28_defconfig              |   3 +-
- arch/mips/configs/jazz_defconfig              |   3 +-
- arch/mips/configs/mtx1_defconfig              |   3 +-
+ arch/mips/configs/fuloong2e_defconfig         |   2 +-
+ arch/mips/configs/gpr_defconfig               |   2 +-
+ arch/mips/configs/ip22_defconfig              |   2 +-
+ arch/mips/configs/ip28_defconfig              |   2 +-
+ arch/mips/configs/jazz_defconfig              |   2 +-
+ arch/mips/configs/mtx1_defconfig              |   2 +-
  arch/mips/configs/nlm_xlr_defconfig           |   2 +-
  arch/mips/configs/pic32mzda_defconfig         |   2 +-
  arch/mips/configs/pistachio_defconfig         |   2 +-
  arch/mips/configs/pnx8335_stb225_defconfig    |   2 +-
- arch/mips/configs/rm200_defconfig             |   3 +-
+ arch/mips/configs/rm200_defconfig             |   2 +-
  arch/parisc/configs/712_defconfig             |   2 +-
  arch/parisc/configs/c3000_defconfig           |   2 +-
  arch/parisc/configs/default_defconfig         |   2 +-
@@ -54,8 +54,8 @@ Make full preempt default on all arches.
  arch/tile/configs/tilepro_defconfig           | 524 ++++++++++++++++++
  arch/x86/configs/i386_defconfig               |   2 +-
  arch/x86/configs/x86_64_defconfig             |   2 +-
- kernel/Kconfig.preempt                        |   9 +-
- 50 files changed, 4087 insertions(+), 29 deletions(-)
+ kernel/Kconfig.preempt                        |   7 +-
+ 50 files changed, 4079 insertions(+), 28 deletions(-)
  create mode 100644 arch/blackfin/configs/BF518F-EZBRD_defconfig
  create mode 100644 arch/blackfin/configs/BF526-EZBRD_defconfig
  create mode 100644 arch/blackfin/configs/BF527-EZKIT-V2_defconfig
@@ -107,10 +107,10 @@ index bb6a35fb1dd7..ff58a38d0d5b 100644
  CONFIG_KSM=y
  CONFIG_CLEANCACHE=y
 diff --git a/arch/arm/configs/imx_v6_v7_defconfig b/arch/arm/configs/imx_v6_v7_defconfig
-index 1ad5736c8fa6..cf116a40dc1c 100644
+index 5586a5074a96..616816acae73 100644
 --- a/arch/arm/configs/imx_v6_v7_defconfig
 +++ b/arch/arm/configs/imx_v6_v7_defconfig
-@@ -44,6 +44,7 @@ CONFIG_PCI_MSI=y
+@@ -45,6 +45,7 @@ CONFIG_PCI_MSI=y
  CONFIG_PCI_IMX6=y
  CONFIG_SMP=y
  CONFIG_ARM_PSCI=y
@@ -2907,152 +2907,153 @@ index 000000000000..425c24e43c34
 +# CONFIG_CRYPTO_ANSI_CPRNG is not set
 +CONFIG_CRC_CCITT=m
 diff --git a/arch/mips/configs/fuloong2e_defconfig b/arch/mips/configs/fuloong2e_defconfig
-index 499f51498ecb..f7cb39b0662c 100644
+index 8bcb61a6ec15..6b0912ba544a 100644
 --- a/arch/mips/configs/fuloong2e_defconfig
 +++ b/arch/mips/configs/fuloong2e_defconfig
-@@ -2,7 +2,8 @@ CONFIG_MACH_LOONGSON64=y
- CONFIG_64BIT=y
+@@ -4,7 +4,7 @@ CONFIG_SYSVIPC=y
+ CONFIG_POSIX_MQUEUE=y
  CONFIG_NO_HZ=y
  CONFIG_HIGH_RES_TIMERS=y
 -CONFIG_PREEMPT_VOLUNTARY=y
 +CONFIG_PREEMPT=y
-+CONFIG_EXPERIMENTAL=y
- CONFIG_LOCALVERSION="-fuloong2e"
- # CONFIG_LOCALVERSION_AUTO is not set
- CONFIG_SYSVIPC=y
+ CONFIG_BSD_PROCESS_ACCT=y
+ CONFIG_IKCONFIG=y
+ CONFIG_IKCONFIG_PROC=y
 diff --git a/arch/mips/configs/gpr_defconfig b/arch/mips/configs/gpr_defconfig
-index 55438fc9991e..db03ef4f737d 100644
+index 9d9af5f923c3..acd27816d300 100644
 --- a/arch/mips/configs/gpr_defconfig
 +++ b/arch/mips/configs/gpr_defconfig
-@@ -1,7 +1,8 @@
- CONFIG_MIPS_ALCHEMY=y
- CONFIG_MIPS_GPR=y
- CONFIG_HIGH_RES_TIMERS=y
--CONFIG_PREEMPT_VOLUNTARY=y
+@@ -1,8 +1,8 @@
 +CONFIG_PREEMPT=y
-+CONFIG_EXPERIMENTAL=y
  # CONFIG_LOCALVERSION_AUTO is not set
  CONFIG_SYSVIPC=y
  CONFIG_POSIX_MQUEUE=y
+ CONFIG_HIGH_RES_TIMERS=y
+-CONFIG_PREEMPT_VOLUNTARY=y
+ CONFIG_BSD_PROCESS_ACCT=y
+ CONFIG_BSD_PROCESS_ACCT_V3=y
+ CONFIG_RELAY=y
 diff --git a/arch/mips/configs/ip22_defconfig b/arch/mips/configs/ip22_defconfig
-index 7ddfb4ef9479..93e439ad3fce 100644
+index ff40fbc2f439..2bca2257a8bb 100644
 --- a/arch/mips/configs/ip22_defconfig
 +++ b/arch/mips/configs/ip22_defconfig
-@@ -4,7 +4,8 @@ CONFIG_CPU_R5000=y
+@@ -1,7 +1,7 @@
+ CONFIG_SYSVIPC=y
  CONFIG_NO_HZ=y
  CONFIG_HIGH_RES_TIMERS=y
- CONFIG_HZ_1000=y
 -CONFIG_PREEMPT_VOLUNTARY=y
 +CONFIG_PREEMPT=y
-+CONFIG_EXPERIMENTAL=y
- CONFIG_SYSVIPC=y
  CONFIG_IKCONFIG=y
  CONFIG_IKCONFIG_PROC=y
+ CONFIG_LOG_BUF_SHIFT=14
 diff --git a/arch/mips/configs/ip28_defconfig b/arch/mips/configs/ip28_defconfig
-index d0a4c2cfacf8..6f0600e99c25 100644
+index 0921ef38e9fb..6da05cef46f8 100644
 --- a/arch/mips/configs/ip28_defconfig
 +++ b/arch/mips/configs/ip28_defconfig
-@@ -1,6 +1,7 @@
- CONFIG_SGI_IP28=y
- CONFIG_ARC_CONSOLE=y
+@@ -1,5 +1,5 @@
+ CONFIG_SYSVIPC=y
 -CONFIG_PREEMPT_VOLUNTARY=y
 +CONFIG_PREEMPT=y
-+CONFIG_EXPERIMENTAL=y
- CONFIG_SYSVIPC=y
  CONFIG_IKCONFIG=y
  CONFIG_IKCONFIG_PROC=y
+ CONFIG_LOG_BUF_SHIFT=14
 diff --git a/arch/mips/configs/jazz_defconfig b/arch/mips/configs/jazz_defconfig
-index 9ad1c94376c8..1d62ce7ff5dc 100644
+index 328d4dfeb4cb..e17cb23173ea 100644
 --- a/arch/mips/configs/jazz_defconfig
 +++ b/arch/mips/configs/jazz_defconfig
-@@ -1,6 +1,7 @@
- CONFIG_MACH_JAZZ=y
- CONFIG_OLIVETTI_M700=y
--CONFIG_PREEMPT_VOLUNTARY=y
+@@ -1,6 +1,6 @@
 +CONFIG_PREEMPT=y
-+CONFIG_EXPERIMENTAL=y
  CONFIG_SYSVIPC=y
  CONFIG_POSIX_MQUEUE=y
+-CONFIG_PREEMPT_VOLUNTARY=y
  CONFIG_BSD_PROCESS_ACCT=y
+ CONFIG_IKCONFIG=y
+ CONFIG_IKCONFIG_PROC=y
 diff --git a/arch/mips/configs/mtx1_defconfig b/arch/mips/configs/mtx1_defconfig
-index c3d0d0a6e044..aa3426d5f7d7 100644
+index 16bef819fe98..a426aeb3a603 100644
 --- a/arch/mips/configs/mtx1_defconfig
 +++ b/arch/mips/configs/mtx1_defconfig
-@@ -1,6 +1,7 @@
- CONFIG_MIPS_ALCHEMY=y
- CONFIG_MIPS_MTX1=y
--CONFIG_PREEMPT_VOLUNTARY=y
+@@ -1,8 +1,8 @@
 +CONFIG_PREEMPT=y
-+CONFIG_EXPERIMENTAL=y
  # CONFIG_LOCALVERSION_AUTO is not set
  CONFIG_SYSVIPC=y
  CONFIG_POSIX_MQUEUE=y
+ CONFIG_AUDIT=y
+-CONFIG_PREEMPT_VOLUNTARY=y
+ CONFIG_BSD_PROCESS_ACCT=y
+ CONFIG_BSD_PROCESS_ACCT_V3=y
+ CONFIG_RELAY=y
 diff --git a/arch/mips/configs/nlm_xlr_defconfig b/arch/mips/configs/nlm_xlr_defconfig
-index c4477a4d40c1..95caf0af665f 100644
+index 4ecb157e56d4..ea7309283b01 100644
 --- a/arch/mips/configs/nlm_xlr_defconfig
 +++ b/arch/mips/configs/nlm_xlr_defconfig
-@@ -5,7 +5,7 @@ CONFIG_DEFAULT_MMAP_MIN_ADDR=65536
- CONFIG_SMP=y
+@@ -1,10 +1,10 @@
++CONFIG_PREEMPT=y
+ # CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_SYSVIPC=y
+ CONFIG_POSIX_MQUEUE=y
+ CONFIG_AUDIT=y
  CONFIG_NO_HZ=y
  CONFIG_HIGH_RES_TIMERS=y
 -CONFIG_PREEMPT_VOLUNTARY=y
-+CONFIG_PREEMPT=y
- CONFIG_KEXEC=y
- CONFIG_CROSS_COMPILE=""
- # CONFIG_LOCALVERSION_AUTO is not set
+ CONFIG_BSD_PROCESS_ACCT=y
+ CONFIG_BSD_PROCESS_ACCT_V3=y
+ CONFIG_TASKSTATS=y
 diff --git a/arch/mips/configs/pic32mzda_defconfig b/arch/mips/configs/pic32mzda_defconfig
-index 41190c2036e6..3728897ab2b2 100644
+index 63fe2da1b37f..7f08ee237345 100644
 --- a/arch/mips/configs/pic32mzda_defconfig
 +++ b/arch/mips/configs/pic32mzda_defconfig
 @@ -1,7 +1,7 @@
- CONFIG_MACH_PIC32=y
- CONFIG_DTB_PIC32_MZDA_SK=y
- CONFIG_HZ_100=y
--CONFIG_PREEMPT_VOLUNTARY=y
 +CONFIG_PREEMPT=y
- # CONFIG_SECCOMP is not set
  CONFIG_SYSVIPC=y
  CONFIG_NO_HZ=y
+ CONFIG_HIGH_RES_TIMERS=y
+-CONFIG_PREEMPT_VOLUNTARY=y
+ CONFIG_IKCONFIG=y
+ CONFIG_IKCONFIG_PROC=y
+ CONFIG_LOG_BUF_SHIFT=14
 diff --git a/arch/mips/configs/pistachio_defconfig b/arch/mips/configs/pistachio_defconfig
-index b22a3cf149b6..cfffca3d37f4 100644
+index 2f08d071ada6..11118f5f507a 100644
 --- a/arch/mips/configs/pistachio_defconfig
 +++ b/arch/mips/configs/pistachio_defconfig
-@@ -5,7 +5,7 @@ CONFIG_MIPS_CPS=y
- CONFIG_DEFAULT_MMAP_MIN_ADDR=32768
- CONFIG_ZSMALLOC=y
- CONFIG_NR_CPUS=4
--CONFIG_PREEMPT_VOLUNTARY=y
+@@ -1,9 +1,9 @@
 +CONFIG_PREEMPT=y
  # CONFIG_LOCALVERSION_AUTO is not set
  CONFIG_DEFAULT_HOSTNAME="localhost"
  CONFIG_SYSVIPC=y
-diff --git a/arch/mips/configs/pnx8335_stb225_defconfig b/arch/mips/configs/pnx8335_stb225_defconfig
-index e73cdb08fc6e..dc62fa8d6065 100644
---- a/arch/mips/configs/pnx8335_stb225_defconfig
-+++ b/arch/mips/configs/pnx8335_stb225_defconfig
-@@ -3,7 +3,7 @@ CONFIG_CPU_LITTLE_ENDIAN=y
  CONFIG_NO_HZ=y
  CONFIG_HIGH_RES_TIMERS=y
- CONFIG_HZ_128=y
 -CONFIG_PREEMPT_VOLUNTARY=y
+ CONFIG_IKCONFIG=m
+ CONFIG_IKCONFIG_PROC=y
+ CONFIG_LOG_BUF_SHIFT=18
+diff --git a/arch/mips/configs/pnx8335_stb225_defconfig b/arch/mips/configs/pnx8335_stb225_defconfig
+index aa0b169800e0..d2177f598a1d 100644
+--- a/arch/mips/configs/pnx8335_stb225_defconfig
++++ b/arch/mips/configs/pnx8335_stb225_defconfig
+@@ -1,9 +1,9 @@
 +CONFIG_PREEMPT=y
- # CONFIG_SECCOMP is not set
  # CONFIG_LOCALVERSION_AUTO is not set
  # CONFIG_SWAP is not set
+ CONFIG_SYSVIPC=y
+ CONFIG_NO_HZ=y
+ CONFIG_HIGH_RES_TIMERS=y
+-CONFIG_PREEMPT_VOLUNTARY=y
+ CONFIG_LOG_BUF_SHIFT=14
+ CONFIG_EXPERT=y
+ CONFIG_SLAB=y
 diff --git a/arch/mips/configs/rm200_defconfig b/arch/mips/configs/rm200_defconfig
-index 5f71aa598b06..767f1999ead0 100644
+index 0f4b09f8a0ee..6ba5086f6dff 100644
 --- a/arch/mips/configs/rm200_defconfig
 +++ b/arch/mips/configs/rm200_defconfig
-@@ -2,7 +2,8 @@ CONFIG_SNI_RM=y
- CONFIG_CPU_LITTLE_ENDIAN=y
- CONFIG_ARC_CONSOLE=y
- CONFIG_HZ_1000=y
--CONFIG_PREEMPT_VOLUNTARY=y
+@@ -1,6 +1,6 @@
 +CONFIG_PREEMPT=y
-+CONFIG_EXPERIMENTAL=y
  CONFIG_SYSVIPC=y
  CONFIG_POSIX_MQUEUE=y
+-CONFIG_PREEMPT_VOLUNTARY=y
  CONFIG_BSD_PROCESS_ACCT=y
+ CONFIG_IKCONFIG=y
+ CONFIG_IKCONFIG_PROC=y
 diff --git a/arch/parisc/configs/712_defconfig b/arch/parisc/configs/712_defconfig
 index ccc109761f44..a6a5b0b7a9c9 100644
 --- a/arch/parisc/configs/712_defconfig
@@ -3488,7 +3489,7 @@ index 000000000000..04fee07ea6c5
 +CONFIG_CRYPTO_TEA=m
 +CONFIG_CRYPTO_TWOFISH=m
 diff --git a/arch/powerpc/configs/ppc6xx_defconfig b/arch/powerpc/configs/ppc6xx_defconfig
-index 7ee736f20774..8663c0043a56 100644
+index 53687c3a70c4..33bc9f4d70ff 100644
 --- a/arch/powerpc/configs/ppc6xx_defconfig
 +++ b/arch/powerpc/configs/ppc6xx_defconfig
 @@ -74,7 +74,7 @@ CONFIG_QE_GPIO=y
@@ -4590,7 +4591,7 @@ index 000000000000..e8c4003cbd81
 +CONFIG_CRC_CCITT=m
 +CONFIG_CRC7=m
 diff --git a/arch/x86/configs/i386_defconfig b/arch/x86/configs/i386_defconfig
-index 6c3ab05c231d..264b756b11e6 100644
+index 4bb95d7ad947..1a144867d9d5 100644
 --- a/arch/x86/configs/i386_defconfig
 +++ b/arch/x86/configs/i386_defconfig
 @@ -41,7 +41,7 @@ CONFIG_SMP=y
@@ -4603,7 +4604,7 @@ index 6c3ab05c231d..264b756b11e6 100644
  CONFIG_X86_MCE=y
  CONFIG_X86_REBOOTFIXUPS=y
 diff --git a/arch/x86/configs/x86_64_defconfig b/arch/x86/configs/x86_64_defconfig
-index ac9ae487cfeb..a229a3588dac 100644
+index 0fed049422a8..41236eed0fcb 100644
 --- a/arch/x86/configs/x86_64_defconfig
 +++ b/arch/x86/configs/x86_64_defconfig
 @@ -40,7 +40,7 @@ CONFIG_SMP=y
@@ -4616,7 +4617,7 @@ index ac9ae487cfeb..a229a3588dac 100644
  CONFIG_X86_MCE=y
  CONFIG_MICROCODE=y
 diff --git a/kernel/Kconfig.preempt b/kernel/Kconfig.preempt
-index cd1655122ec0..9cf10230d5fb 100644
+index 0fee5fe6c899..9cf10230d5fb 100644
 --- a/kernel/Kconfig.preempt
 +++ b/kernel/Kconfig.preempt
 @@ -1,7 +1,7 @@
@@ -4647,13 +4648,6 @@ index cd1655122ec0..9cf10230d5fb 100644
  
  config PREEMPT
  	bool "Preemptible Kernel (Low-Latency Desktop)"
-@@ -57,4 +58,4 @@ config PREEMPT
- endchoice
- 
- config PREEMPT_COUNT
--       bool
-\ No newline at end of file
-+       bool
 -- 
 2.17.1
 

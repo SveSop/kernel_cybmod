@@ -1,4 +1,4 @@
-From abca08ed536cf0f95f9f570ce3215bccf4b3fd66 Mon Sep 17 00:00:00 2001
+From d5afd3036aa88c05ce9ead813545eb25e8102749 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:28:30 +1100
 Subject: [PATCH 08/16] Replace all schedule timeout(1) with
@@ -87,7 +87,7 @@ index f036c8f98ea3..6492d10f78d4 100644
  
  	if (qcadev->btsoc_type == QCA_WCN3990)
 diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index a74ce885b541..c86b80418bc6 100644
+index c518659b4d9f..c9387b548b38 100644
 --- a/drivers/char/ipmi/ipmi_msghandler.c
 +++ b/drivers/char/ipmi/ipmi_msghandler.c
 @@ -3452,7 +3452,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
@@ -100,7 +100,7 @@ index a74ce885b541..c86b80418bc6 100644
  
  	/* No need for locks, the interface is down. */
 diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index ca9528c4f183..765b2506f919 100644
+index b7a1ae2afaea..d5ce2cd8c695 100644
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
 @@ -1220,7 +1220,7 @@ static void shutdown_ssif(void *send_info)
@@ -161,10 +161,10 @@ index c3ad4478266b..7e2a29d56459 100644
  			/**
  			 * FIXME: Use schedule_hr_timeout here for
 diff --git a/drivers/media/pci/ivtv/ivtv-ioctl.c b/drivers/media/pci/ivtv/ivtv-ioctl.c
-index a66f8b872520..f6404a3af0a5 100644
+index 6c269ecd8d05..69becedee614 100644
 --- a/drivers/media/pci/ivtv/ivtv-ioctl.c
 +++ b/drivers/media/pci/ivtv/ivtv-ioctl.c
-@@ -1155,7 +1155,7 @@ void ivtv_s_std_dec(struct ivtv *itv, v4l2_std_id std)
+@@ -1156,7 +1156,7 @@ void ivtv_s_std_dec(struct ivtv *itv, v4l2_std_id std)
  				TASK_UNINTERRUPTIBLE);
  		if ((read_reg(IVTV_REG_DEC_LINE_FIELD) >> 16) < 100)
  			break;
@@ -239,10 +239,10 @@ index 13238a72a338..fc51ae55c63f 100644
  
  	return err;
 diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 77d3c85febf1..1c8f9592a88b 100644
+index e96bc0c6140f..153269fea2fd 100644
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -2670,7 +2670,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
+@@ -2675,7 +2675,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
  	while (!skb_queue_empty(&dev->rxq) &&
  	       !skb_queue_empty(&dev->txq) &&
  	       !skb_queue_empty(&dev->done)) {
@@ -265,7 +265,7 @@ index 504282af27e5..da60ab9b56c7 100644
  		spin_lock_irqsave(&q->lock, flags);
  	}
 diff --git a/drivers/scsi/fnic/fnic_scsi.c b/drivers/scsi/fnic/fnic_scsi.c
-index 96acfcecd540..8c9ae51d98c2 100644
+index cafbcfb85bfa..171c6a323ff8 100644
 --- a/drivers/scsi/fnic/fnic_scsi.c
 +++ b/drivers/scsi/fnic/fnic_scsi.c
 @@ -217,7 +217,7 @@ int fnic_fw_reset_handler(struct fnic *fnic)
@@ -745,10 +745,10 @@ index 000000000000..8cca151741b2
 +	return 0;
 +}
 diff --git a/drivers/staging/rts5208/rtsx.c b/drivers/staging/rts5208/rtsx.c
-index 69e6abe14abf..7d23e214ac21 100644
+index fa597953e9a0..685cf842badc 100644
 --- a/drivers/staging/rts5208/rtsx.c
 +++ b/drivers/staging/rts5208/rtsx.c
-@@ -507,7 +507,7 @@ static int rtsx_polling_thread(void *__dev)
+@@ -490,7 +490,7 @@ static int rtsx_polling_thread(void *__dev)
  
  	for (;;) {
  		set_current_state(TASK_INTERRUPTIBLE);
@@ -758,7 +758,7 @@ index 69e6abe14abf..7d23e214ac21 100644
  		/* lock the device pointers */
  		mutex_lock(&dev->dev_mutex);
 diff --git a/drivers/staging/speakup/speakup_acntpc.c b/drivers/staging/speakup/speakup_acntpc.c
-index 28519754b2f0..a96805bbec5c 100644
+index c94328a5bd4a..6e7d4671aa69 100644
 --- a/drivers/staging/speakup/speakup_acntpc.c
 +++ b/drivers/staging/speakup/speakup_acntpc.c
 @@ -198,7 +198,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -806,7 +806,7 @@ index 3741c0fcf5bb..bff857b4aa5f 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/staging/speakup/speakup_decpc.c b/drivers/staging/speakup/speakup_decpc.c
-index 6649309e0342..c60e4712d817 100644
+index 459ee0c0bd57..52b539544c98 100644
 --- a/drivers/staging/speakup/speakup_decpc.c
 +++ b/drivers/staging/speakup/speakup_decpc.c
 @@ -394,7 +394,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -854,10 +854,10 @@ index dbebed0eeeec..6d83c13ca4a6 100644
  		}
  	}
 diff --git a/drivers/staging/speakup/speakup_keypc.c b/drivers/staging/speakup/speakup_keypc.c
-index 3901734982a4..4e8a7a98b46d 100644
+index b788272da4f9..d5dac16c04d8 100644
 --- a/drivers/staging/speakup/speakup_keypc.c
 +++ b/drivers/staging/speakup/speakup_keypc.c
-@@ -199,7 +199,7 @@ spin_lock_irqsave(&speakup_info.spinlock, flags);
+@@ -199,7 +199,7 @@ static void do_catch_up(struct spk_synth *synth)
  		full_time_val = full_time->u.n.value;
  		spin_unlock_irqrestore(&speakup_info.spinlock, flags);
  		if (synth_full()) {
@@ -866,7 +866,7 @@ index 3901734982a4..4e8a7a98b46d 100644
  			continue;
  		}
  		set_current_state(TASK_RUNNING);
-@@ -232,7 +232,7 @@ spin_lock_irqsave(&speakup_info.spinlock, flags);
+@@ -232,7 +232,7 @@ static void do_catch_up(struct spk_synth *synth)
  			jiffy_delta_val = jiffy_delta->u.n.value;
  			delay_time_val = delay_time->u.n.value;
  			spin_unlock_irqrestore(&speakup_info.spinlock, flags);
@@ -909,7 +909,7 @@ index 25f259ee4ffc..b9721103e651 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/staging/unisys/visornic/visornic_main.c b/drivers/staging/unisys/visornic/visornic_main.c
-index 3647b8f1ed28..9fb26ccc2b3b 100644
+index 5eeb4b93b45b..9c49e03d0b0e 100644
 --- a/drivers/staging/unisys/visornic/visornic_main.c
 +++ b/drivers/staging/unisys/visornic/visornic_main.c
 @@ -549,7 +549,7 @@ static int visornic_disable_with_timeout(struct net_device *netdev,
@@ -953,7 +953,7 @@ index 6199d4806193..7c7165f2dad4 100644
  	hwa742_set_update_mode(hwa742.update_mode_before_suspend);
  }
 diff --git a/drivers/video/fbdev/pxafb.c b/drivers/video/fbdev/pxafb.c
-index bbed039617a4..681ae041ea77 100644
+index d59c8a59f582..e103cce28de7 100644
 --- a/drivers/video/fbdev/pxafb.c
 +++ b/drivers/video/fbdev/pxafb.c
 @@ -1287,7 +1287,7 @@ static int pxafb_smart_thread(void *arg)
@@ -966,10 +966,10 @@ index bbed039617a4..681ae041ea77 100644
  
  	pr_debug("%s(): task ending\n", __func__);
 diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index a1febf155747..9321458b6e89 100644
+index d81035b7ea7d..95e2e25133f2 100644
 --- a/fs/btrfs/extent-tree.c
 +++ b/fs/btrfs/extent-tree.c
-@@ -5937,7 +5937,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
+@@ -6147,7 +6147,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
  			flush = BTRFS_RESERVE_FLUSH_LIMIT;
  
  		if (btrfs_transaction_in_commit(fs_info))

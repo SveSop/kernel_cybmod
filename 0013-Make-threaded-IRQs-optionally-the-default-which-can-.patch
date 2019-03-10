@@ -1,4 +1,4 @@
-From 2fed6f8590bd6e2967d39f01123c007406b41202 Mon Sep 17 00:00:00 2001
+From 06d73590facfaeee6f34291847b8e56437e84dfc Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Wed, 7 Dec 2016 21:13:16 +1100
 Subject: [PATCH 13/16] Make threaded IRQs optionally the default which can be
@@ -38,7 +38,7 @@ index 5f3e2baefca9..de3e5740679b 100644
  	bool "Support sparse irq numbering" if MAY_HAVE_SPARSE_IRQ
  	---help---
 diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 9dbdccab3b6a..fa7821e0221e 100644
+index 84b54a17b95d..4fc495778919 100644
 --- a/kernel/irq/manage.c
 +++ b/kernel/irq/manage.c
 @@ -23,9 +23,20 @@

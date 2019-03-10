@@ -1,4 +1,4 @@
-From b4a23232d1ceb52cbfe71c4565a474eacac3b36a Mon Sep 17 00:00:00 2001
+From 7c17b401408db5beddb41986030a81889b0ee8ad Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sun, 18 Feb 2018 12:36:22 +1100
 Subject: [PATCH 02/16] Fix Werror build failure in tools.
