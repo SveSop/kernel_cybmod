@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,9680 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.0.1 Kernel Configuration
++# Linux/x86 5.0.2 Kernel Configuration
 +#
 +
 +#
@@ -22,7 +22,8 @@ new file mode 100644
 +#
 +# General setup
 +#
-+CONFIG_SCHED_PDS=y
++CONFIG_SCHED_BMQ=y
++CONFIG_SCHED_TIMESLICE=4
 +CONFIG_INIT_ENV_ARG_LIMIT=32
 +# CONFIG_COMPILE_TEST is not set
 +CONFIG_LOCALVERSION=""
@@ -372,7 +373,6 @@ new file mode 100644
 +CONFIG_NR_CPUS_DEFAULT=64
 +CONFIG_NR_CPUS=64
 +CONFIG_SCHED_SMT=y
-+CONFIG_SMT_NICE=y
 +CONFIG_SCHED_MC=y
 +CONFIG_SCHED_MC_PRIO=y
 +CONFIG_X86_LOCAL_APIC=y
