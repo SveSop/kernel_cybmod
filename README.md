@@ -1,10 +1,10 @@
 ## Cybmod patches for 5.0 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.0.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.0.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.0.3  
+0000 : Kernel patch 5.0.4  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0015 : Last of the -ck patches.  
@@ -17,7 +17,7 @@ to
 0022 : Set CAKE qdisk default  
 0023 : Kernel naming tweak  
 0024 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
-0025 : Kernel patch for 5.0.3 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
+0025 : Kernel patch for 5.0 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 0026 : Increase_task_balance from Xanmod patches  
 0027 : set_rq_affinity_mt_block from Xanmod patches  
 
