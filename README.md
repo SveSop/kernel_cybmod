@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.0.4  
+0000 : Kernel patch 5.0.5  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0015 : Last of the -ck patches.  
@@ -20,6 +20,7 @@ to
 0025 : Kernel patch for 5.0 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 0026 : Increase_task_balance from Xanmod patches  
 0027 : set_rq_affinity_mt_block from Xanmod patches  
+blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.0](https://github.com/sirlucjan/kernel-patches/tree/master/5.0)  
 
 **AMD support is disabled in the example config (patch 0024), so if you have a AMD processor, you need to enable that**  
 **This branch has MuQSS CPU scheduler, config (patch 0024) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
