@@ -20,7 +20,6 @@ to
 0025 : Kernel patch for 5.0 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
 0026 : Increase_task_balance from Xanmod patches  
 0027 : set_rq_affinity_mt_block from Xanmod patches  
-0028 : sched_smt_muqss.patch (Add SMT patch ref. [https://lkml.org/lkml/2018/11/26/30](https://lkml.org/lkml/2018/11/26/30)  
 blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.0](https://github.com/sirlucjan/kernel-patches/tree/master/5.0)  
 
 **AMD support is disabled in the example config (patch 0024), so if you have a AMD processor, you need to enable that**  
