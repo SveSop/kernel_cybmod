@@ -18,7 +18,7 @@ diff --git a/drivers/block/loop.c b/drivers/block/loop.c
 index 3b91f13c377f..14e2e2a0c6de 100644
 --- a/drivers/block/loop.c
 +++ b/drivers/block/loop.c
-@@ -1115,8 +1115,9 @@ static int __loop_clr_fd(struct loop_device *lo, bool release)
+@@ -1111,8 +1111,9 @@ static int __loop_clr_fd(struct loop_device *lo, bool release)
  			err = __blkdev_reread_part(bdev);
  		else
  			err = blkdev_reread_part(bdev);
