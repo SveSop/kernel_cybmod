@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Kernel 5.0.6 patch  
+0001 : Kernel 5.0.7 patch  
 0002 : BMQ Cpu scheduler [https://cchalpha.blogspot.com/](https://cchalpha.blogspot.com/)  
 0004 : Swap tweak from -ck kernel  
 0005 : ZSwap tweak from -ck kernel  
