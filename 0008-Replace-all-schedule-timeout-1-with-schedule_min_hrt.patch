@@ -303,7 +303,7 @@ diff --git a/drivers/staging/comedi/drivers/ni_mio_common.c b/drivers/staging/co
 index 5edf59ac6706..3784dc56d39c 100644
 --- a/drivers/staging/comedi/drivers/ni_mio_common.c
 +++ b/drivers/staging/comedi/drivers/ni_mio_common.c
-@@ -4723,7 +4723,7 @@ static int cs5529_wait_for_idle(struct comedi_device *dev)
+@@ -4727,7 +4727,7 @@ static int cs5529_wait_for_idle(struct comedi_device *dev)
  		if ((status & NI67XX_CAL_STATUS_BUSY) == 0)
  			break;
  		set_current_state(TASK_INTERRUPTIBLE);
@@ -969,7 +969,7 @@ diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
 index d81035b7ea7d..95e2e25133f2 100644
 --- a/fs/btrfs/extent-tree.c
 +++ b/fs/btrfs/extent-tree.c
-@@ -6147,7 +6147,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
+@@ -6152,7 +6152,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
  			flush = BTRFS_RESERVE_FLUSH_LIMIT;
  
  		if (btrfs_transaction_in_commit(fs_info))

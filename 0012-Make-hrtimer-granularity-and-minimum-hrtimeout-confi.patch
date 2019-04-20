@@ -15,7 +15,7 @@ diff --git a/kernel/sysctl.c b/kernel/sysctl.c
 index b073a59e3273..226771720139 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -135,7 +135,9 @@ extern int sched_interactive;
+@@ -136,7 +136,9 @@ extern int sched_interactive;
  extern int sched_iso_cpu;
  extern int sched_yield_type;
  #endif
@@ -26,7 +26,7 @@ index b073a59e3273..226771720139 100644
  static int ten_thousand = 10000;
  #endif
  #ifdef CONFIG_PERF_EVENTS
-@@ -1085,6 +1087,24 @@ static struct ctl_table kern_table[] = {
+@@ -1086,6 +1088,24 @@ static struct ctl_table kern_table[] = {
  		.extra2		= &two,
  	},
  #endif

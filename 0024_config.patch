@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,9687 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.0.7 Kernel Configuration
++# Linux/x86 5.0.9 Kernel Configuration
 +#
 +
 +#
@@ -377,11 +377,11 @@ new file mode 100644
 +CONFIG_SCHED_MC=y
 +CONFIG_SCHED_MC_PRIO=y
 +# CONFIG_RQ_NONE is not set
-+CONFIG_RQ_SMT=y
-+# CONFIG_RQ_MC is not set
++# CONFIG_RQ_SMT is not set
++CONFIG_RQ_MC=y
 +# CONFIG_RQ_SMP is not set
 +# CONFIG_RQ_ALL is not set
-+CONFIG_SHARERQ=1
++CONFIG_SHARERQ=2
 +CONFIG_X86_LOCAL_APIC=y
 +CONFIG_X86_IO_APIC=y
 +CONFIG_X86_REROUTE_FOR_BROKEN_BOOT_IRQS=y
@@ -4078,6 +4078,7 @@ new file mode 100644
 +CONFIG_N_GSM=m
 +CONFIG_TRACE_ROUTER=m
 +CONFIG_TRACE_SINK=m
++CONFIG_LDISC_AUTOLOAD=y
 +CONFIG_DEVMEM=y
 +# CONFIG_DEVKMEM is not set
 +
@@ -4162,7 +4163,6 @@ new file mode 100644
 +CONFIG_HW_RANDOM_VIA=m
 +CONFIG_HW_RANDOM_VIRTIO=m
 +CONFIG_NVRAM=m
-+CONFIG_R3964=m
 +CONFIG_APPLICOM=m
 +
 +#

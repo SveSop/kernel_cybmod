@@ -58,7 +58,7 @@ diff --git a/block/blk-mq.h b/block/blk-mq.h
 index 0ed8e5a8729f..d704fc7766f4 100644
 --- a/block/blk-mq.h
 +++ b/block/blk-mq.h
-@@ -224,15 +224,6 @@ static inline void __blk_mq_put_driver_tag(struct blk_mq_hw_ctx *hctx,
+@@ -222,15 +222,6 @@ static inline void __blk_mq_put_driver_tag(struct blk_mq_hw_ctx *hctx,
  	}
  }
  
