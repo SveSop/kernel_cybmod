@@ -18,7 +18,7 @@ diff --git a/block/blk-mq.c b/block/blk-mq.c
 index 699ff704ca6a..76a3f78c566a 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -3359,8 +3359,6 @@ static bool blk_mq_poll_hybrid_sleep(struct request_queue *q,
+@@ -3363,8 +3363,6 @@ static bool blk_mq_poll_hybrid_sleep(struct request_queue *q,
  	 *  0:	use half of prev avg
  	 * >0:	use this specific value
  	 */
@@ -27,7 +27,7 @@ index 699ff704ca6a..76a3f78c566a 100644
  	if (q->poll_nsec > 0)
  		nsecs = q->poll_nsec;
  	else
-@@ -3403,7 +3401,7 @@ static bool blk_mq_poll_hybrid(struct request_queue *q,
+@@ -3407,7 +3405,7 @@ static bool blk_mq_poll_hybrid(struct request_queue *q,
  {
  	struct request *rq;
  

@@ -18,7 +18,7 @@ diff --git a/block/blk-mq.c b/block/blk-mq.c
 index c4effb956ebc..70584933e80a 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -2872,7 +2872,7 @@ struct request_queue *blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+@@ -2876,7 +2876,7 @@ struct request_queue *blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
  	/*
  	 * Default to classic polling
  	 */
@@ -27,7 +27,7 @@ index c4effb956ebc..70584933e80a 100644
  
  	blk_mq_init_cpu_queues(q, set->nr_hw_queues);
  	blk_mq_add_queue_tag_set(set, q);
-@@ -3360,6 +3360,8 @@ static bool blk_mq_poll_hybrid_sleep(struct request_queue *q,
+@@ -3364,6 +3364,8 @@ static bool blk_mq_poll_hybrid_sleep(struct request_queue *q,
  	 *  0:	use half of prev avg
  	 * >0:	use this specific value
  	 */
