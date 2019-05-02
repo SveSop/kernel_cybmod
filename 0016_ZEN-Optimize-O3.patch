@@ -5,31 +5,10 @@ Subject: [PATCH 1/3] ZEN: Add a CONFIG option that sets -O3
 
 Adjusted for v4.9.
 ---
- Makefile     | 4 ++++
  init/Kconfig | 7 +++++++
+ Makefile     | 4 ++++
  2 files changed, 11 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index ab5fe2013bbe..6ddfc4b20855 100644
---- a/Makefile
-+++ b/Makefile
-@@ -681,12 +681,16 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
- KBUILD_CFLAGS	+= $(call cc-option,-Oz,-Os)
- KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
- else
-+ifdef CONFIG_CC_OPTIMIZE_HARDER
-+KBUILD_CFLAGS	+= -O3 $(call cc-disable-warning,maybe-uninitialized,)
-+else
- ifdef CONFIG_PROFILE_ALL_BRANCHES
- KBUILD_CFLAGS	+= -O2 $(call cc-disable-warning,maybe-uninitialized,)
- else
- KBUILD_CFLAGS   += -O2
- endif
- endif
-+endif
- 
- KBUILD_CFLAGS += $(call cc-ifversion, -lt, 0409, \
- 			$(call cc-disable-warning,maybe-uninitialized,))
 diff --git a/init/Kconfig b/init/Kconfig
 index ed9352513c32..59fca692658d 100644
 --- a/init/Kconfig
@@ -48,6 +27,27 @@ index ed9352513c32..59fca692658d 100644
  config CC_OPTIMIZE_FOR_SIZE
  	bool "Optimize for size"
  	help
+diff --git a/Makefile b/Makefile
+index b282c41..f820077 100644
+--- a/Makefile
++++ b/Makefile
+@@ -680,12 +680,16 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
+ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+ KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
+ else
++ifdef CONFIG_CC_OPTIMIZE_HARDER
++KBUILD_CFLAGS  += -O3 $(call cc-disable-warning,maybe-uninitialized,)
++else
+ ifdef CONFIG_PROFILE_ALL_BRANCHES
+ KBUILD_CFLAGS	+= -O2 $(call cc-disable-warning,maybe-uninitialized,)
+ else
+ KBUILD_CFLAGS   += -O2
+ endif
+ endif
++endif
+ 
+ KBUILD_CFLAGS += $(call cc-ifversion, -lt, 0409, \
+ 			$(call cc-disable-warning,maybe-uninitialized,))
 -- 
 2.20.1.2.gb21ebb671b
 
