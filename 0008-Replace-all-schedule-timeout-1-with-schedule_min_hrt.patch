@@ -90,7 +90,7 @@ diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghan
 index c518659b4d9f..c9387b548b38 100644
 --- a/drivers/char/ipmi/ipmi_msghandler.c
 +++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3452,7 +3452,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
+@@ -3467,7 +3467,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
  	/* Current message first, to preserve order */
  	while (intf->curr_msg && !list_empty(&intf->waiting_rcv_msgs)) {
  		/* Wait for the message to clear out. */

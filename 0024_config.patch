@@ -5,14 +5,14 @@ new file mode 100644
 @@ -0,0 +1,9687 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.0.9 Kernel Configuration
++# Linux/x86 5.0.11 Kernel Configuration
 +#
 +
 +#
-+# Compiler: gcc (Ubuntu 8.2.0-1ubuntu2~18.04) 8.2.0
++# Compiler: gcc (Ubuntu 8.3.0-6ubuntu1~18.04) 8.3.0
 +#
 +CONFIG_CC_IS_GCC=y
-+CONFIG_GCC_VERSION=80200
++CONFIG_GCC_VERSION=80300
 +CONFIG_CLANG_VERSION=0
 +CONFIG_CC_HAS_ASM_GOTO=y
 +CONFIG_IRQ_WORK=y
