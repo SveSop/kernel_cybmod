@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,9687 @@
+@@ -0,0 +1,9686 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.0.11 Kernel Configuration
++# Linux/x86 5.0.12 Kernel Configuration
 +#
 +
 +#
@@ -7863,7 +7863,6 @@ new file mode 100644
 +# Gasket devices
 +#
 +# CONFIG_STAGING_GASKET_FRAMEWORK is not set
-+# CONFIG_XIL_AXIS_FIFO is not set
 +# CONFIG_EROFS_FS is not set
 +CONFIG_X86_PLATFORM_DEVICES=y
 +CONFIG_ACER_WMI=m

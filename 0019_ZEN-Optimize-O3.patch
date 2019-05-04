@@ -31,7 +31,7 @@ diff --git a/Makefile b/Makefile
 index b282c41..f820077 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -680,12 +680,16 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
+@@ -682,12 +682,16 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
  ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
  KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
  else
