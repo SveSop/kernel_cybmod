@@ -15,7 +15,7 @@ diff --git a/block/blk-mq.c b/block/blk-mq.c
 index a462c58fff4b..699ff704ca6a 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -1108,8 +1108,7 @@ static bool blk_mq_mark_tag_wait(struct blk_mq_hw_ctx *hctx,
+@@ -1103,8 +1103,7 @@ static bool blk_mq_mark_tag_wait(struct blk_mq_hw_ctx *hctx,
  	bool ret;
  
  	if (!(hctx->flags & BLK_MQ_F_TAG_SHARED)) {
