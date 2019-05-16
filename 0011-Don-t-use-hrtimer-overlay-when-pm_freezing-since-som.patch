@@ -1,4 +1,4 @@
-From 90299831cfc6010754f1890738c19f0d0502a226 Mon Sep 17 00:00:00 2001
+From 876598b9dbe9c1f27feae36c2e2deacdd4beaf9d Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:32:58 +1100
 Subject: [PATCH 11/16] Don't use hrtimer overlay when pm_freezing since some
@@ -10,7 +10,7 @@ Subject: [PATCH 11/16] Don't use hrtimer overlay when pm_freezing since some
  2 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 9a24c35fb354..898701cb4330 100644
+index c6ea49693bca..17ad543fbbc4 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -2039,7 +2039,7 @@ long __sched schedule_msec_hrtimeout(long timeout)
@@ -23,7 +23,7 @@ index 9a24c35fb354..898701cb4330 100644
  
  	secs = timeout / 1000;
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index f9cb3b6bfaaf..d26dac9794b6 100644
+index 3ab277ba0f44..28509c518461 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
 @@ -43,6 +43,7 @@

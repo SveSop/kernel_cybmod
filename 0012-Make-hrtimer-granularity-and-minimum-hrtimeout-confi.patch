@@ -1,4 +1,4 @@
-From 3f9b20631d4172475def7ccd1e1e8e6ec81caeae Mon Sep 17 00:00:00 2001
+From 3ad75b1496d8da38afbe7bf394a7cdce21154ab6 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Tue, 22 Nov 2016 10:15:51 +1100
 Subject: [PATCH 12/16] Make hrtimer granularity and minimum hrtimeout
@@ -12,10 +12,10 @@ Subject: [PATCH 12/16] Make hrtimer granularity and minimum hrtimeout
  3 files changed, 70 insertions(+), 11 deletions(-)
 
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index b073a59e3273..226771720139 100644
+index 61603de4fa1e..8f91e2a76e29 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -137,7 +137,9 @@ extern int sched_interactive;
+@@ -139,7 +139,9 @@ extern int sched_interactive;
  extern int sched_iso_cpu;
  extern int sched_yield_type;
  #endif
@@ -26,7 +26,7 @@ index b073a59e3273..226771720139 100644
  static int ten_thousand = 10000;
  #endif
  #ifdef CONFIG_PERF_EVENTS
-@@ -1087,6 +1089,24 @@ static struct ctl_table kern_table[] = {
+@@ -1105,6 +1107,24 @@ static struct ctl_table kern_table[] = {
  		.extra2		= &two,
  	},
  #endif
@@ -72,7 +72,7 @@ index 3a115f145d95..73fe2e359438 100644
  /**
   * clockevents_increase_min_delta - raise minimum delta of a clock event device
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 898701cb4330..f56f9a1cffc8 100644
+index 17ad543fbbc4..c910fc7d81a6 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -2025,7 +2025,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout);

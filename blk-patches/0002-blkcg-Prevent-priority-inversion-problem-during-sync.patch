@@ -1,7 +1,7 @@
-From b09c8e97312bbe0c3ea1c8c420c2f0abb5714780 Mon Sep 17 00:00:00 2001
+From 7e9ed93838080632211b92b55d76e2995b18f8e4 Mon Sep 17 00:00:00 2001
 From: Andrea Righi <andrea.righi@canonical.com>
 Date: Sat, 9 Mar 2019 09:29:38 +0200
-Subject: [PATCH 1/2] blkcg: Prevent priority inversion problem during sync()
+Subject: [PATCH] blkcg: Prevent priority inversion problem during sync()
 
 When sync(2) is executed from a high-priority cgroup, the process is
 forced to wait the completion of the entire outstanding writeback I/O,
@@ -43,7 +43,7 @@ Changes in v3:
  7 files changed, 179 insertions(+), 4 deletions(-)
 
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 72156fe7b51a..02ad01077f1e 100644
+index 94a25971ef01..fc23ed4e40f9 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
 @@ -1351,6 +1351,136 @@ struct cgroup_subsys io_cgrp_subsys = {
@@ -373,5 +373,5 @@ index 72e6d0c55cfa..8848d26e8bf6 100644
  	ret = wb_init(&bdi->wb, bdi, 1, GFP_KERNEL);
  	if (!ret) {
 -- 
-2.21.0.157.g0e94f7aa73
+2.21.0.777.g83232e3864
 

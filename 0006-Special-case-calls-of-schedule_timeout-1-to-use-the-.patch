@@ -1,4 +1,4 @@
-From 7915d14f7bf9739774a19a2add836118a7d5c6ee Mon Sep 17 00:00:00 2001
+From cda5868e93585d3751bcb991e00735502cba2566 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 5 Nov 2016 09:27:36 +1100
 Subject: [PATCH 06/16] Special case calls of schedule_timeout(1) to use the
@@ -9,7 +9,7 @@ Subject: [PATCH 06/16] Special case calls of schedule_timeout(1) to use the
  1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index f499e0a7d731..809981b2ff11 100644
+index 926ab73595a2..98803a47491c 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
 @@ -1800,6 +1800,18 @@ signed long __sched schedule_timeout(signed long timeout)

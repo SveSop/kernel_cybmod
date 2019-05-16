@@ -1,4 +1,4 @@
-From 1c7063a9cb0a8cfcc26f1e3ca7faea8c0636eff2 Mon Sep 17 00:00:00 2001
+From ed9d6f38013a94e1ea56b33c02706a4079b31e92 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:07 +1100
 Subject: [PATCH 09/16] Replace all calls to schedule_timeout_interruptible of
@@ -52,7 +52,7 @@ index 6bbb0b1e6032..f4b83648c405 100644
  
  static int tsl2563_adjust_gainlevel(struct tsl2563_chip *chip, u16 adc)
 diff --git a/drivers/media/i2c/msp3400-driver.c b/drivers/media/i2c/msp3400-driver.c
-index c63be01059b2..4872ae954389 100644
+index 522fb1d561e7..47d1afee1d04 100644
 --- a/drivers/media/i2c/msp3400-driver.c
 +++ b/drivers/media/i2c/msp3400-driver.c
 @@ -179,7 +179,7 @@ static int msp_read(struct i2c_client *client, int dev, int addr)
@@ -206,10 +206,10 @@ index bffe548187ee..c2918ee3e100 100644
  
  	timer_setup(&ips->timer, monitor_timeout, TIMER_DEFERRABLE);
 diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index 6ac919847ce6..37bcc0bafe51 100644
+index f3f5a78cd062..edbed00a06ed 100644
 --- a/net/core/pktgen.c
 +++ b/net/core/pktgen.c
-@@ -1900,7 +1900,7 @@ static void pktgen_mark_device(const struct pktgen_net *pn, const char *ifname)
+@@ -1901,7 +1901,7 @@ static void pktgen_mark_device(const struct pktgen_net *pn, const char *ifname)
  		mutex_unlock(&pktgen_thread_lock);
  		pr_debug("%s: waiting for %s to disappear....\n",
  			 __func__, ifname);

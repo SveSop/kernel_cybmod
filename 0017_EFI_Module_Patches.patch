@@ -284,7 +284,7 @@ index 8172871..3abe7ba 100644
  
  static struct key *builtin_trusted_keys;
  #ifdef CONFIG_SECONDARY_TRUSTED_KEYRING
-@@ -172,6 +173,7 @@ static __init int load_system_certificate_list(void)
+@@ -175,6 +176,7 @@ static __init int load_system_certificate_list(void)
  		if (IS_ERR(key)) {
  			pr_err("Problem loading in-kernel X.509 certificate (%ld)\n",
  			       PTR_ERR(key));
@@ -292,10 +292,10 @@ index 8172871..3abe7ba 100644
  		} else {
  			pr_notice("Loaded X.509 cert '%s'\n",
  				  key_ref_to_ptr(key)->description);
-@@ -266,3 +268,35 @@ error:
- EXPORT_SYMBOL_GPL(verify_pkcs7_signature);
- 
- #endif /* CONFIG_SYSTEM_DATA_VERIFICATION */
+@@ -287,3 +289,35 @@ error:
+ 	platform_trusted_keys = keyring;
+ }
+ #endif
 +
 +#ifdef CONFIG_SECONDARY_TRUSTED_KEYRING
 +/**

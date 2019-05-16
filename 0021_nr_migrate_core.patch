@@ -1,4 +1,4 @@
-From 16d76f2631e071bf6e91b474ce3d0471d6b80108 Mon Sep 17 00:00:00 2001
+From cd241ee52858720ea0a731d73c6c855b8ef3604e Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <admfrade@gmail.com>
 Date: Mon, 29 Jan 2018 18:29:13 +0000
 Subject: [PATCH] sched/core: nr_migrate = 128 increases number of tasks to
@@ -10,7 +10,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index d8d76a65cfdd..98a9ce04b29a 100644
+index 4778c48a7fda..cd5f79ccd3d3 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -44,7 +44,7 @@ const_debug unsigned int sysctl_sched_features =

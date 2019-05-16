@@ -1,7 +1,7 @@
-From 280dedccb9055e23342a74f3f577cb427d246a71 Mon Sep 17 00:00:00 2001
+From f41dbcf99b5c53cc589e6d429694627ab4e6ae17 Mon Sep 17 00:00:00 2001
 From: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
 Date: Mon, 4 Mar 2019 20:03:36 +0200
-Subject: [PATCH 1/2] blk-throttle: verify format of bandwidth limit and detect
+Subject: [PATCH] blk-throttle: verify format of bandwidth limit and detect
  overflows
 
 Unlike to memory cgroup blkio throttler does not support value suffixes.
@@ -111,5 +111,5 @@ index 1b97a73d2fb1..ce00060b3a48 100644
  
  	tg->bps_conf[READ][index] = v[0];
 -- 
-2.21.0
+2.21.0.777.g83232e3864
 

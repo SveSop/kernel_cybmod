@@ -1,4 +1,4 @@
-From 9508f471f0e6c463e72943c5361e57c7b08a22f8 Mon Sep 17 00:00:00 2001
+From 4c8554b4da764ea564a9a2ef9faa481a61cb1a4b Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:32 +1100
 Subject: [PATCH 10/16] Replace all calls to schedule_timeout_uninterruptible
@@ -86,10 +86,10 @@ index 483c7993516b..fddbaa475066 100644
  
  	if (rtc_ctrl & WM8350_RTC_ALMSTS)
 diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
-index b4f1a840b3b4..d83f8e2c13af 100644
+index a497b2c0cb79..1ed8a04c5cdf 100644
 --- a/drivers/scsi/lpfc/lpfc_scsi.c
 +++ b/drivers/scsi/lpfc/lpfc_scsi.c
-@@ -5310,7 +5310,7 @@ lpfc_reset_flush_io_context(struct lpfc_vport *vport, uint16_t tgt_id,
+@@ -5007,7 +5007,7 @@ lpfc_reset_flush_io_context(struct lpfc_vport *vport, uint16_t tgt_id,
  					tgt_id, lun_id, context);
  	later = msecs_to_jiffies(2 * vport->cfg_devloss_tmo * 1000) + jiffies;
  	while (time_after(later, jiffies) && cnt) {
@@ -99,7 +99,7 @@ index b4f1a840b3b4..d83f8e2c13af 100644
  	}
  	if (cnt) {
 diff --git a/sound/pci/maestro3.c b/sound/pci/maestro3.c
-index 62962178a9d7..87e486740da0 100644
+index 1a9468c14aaf..410ad89a3c7c 100644
 --- a/sound/pci/maestro3.c
 +++ b/sound/pci/maestro3.c
 @@ -2016,7 +2016,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
@@ -143,7 +143,7 @@ index 865f49ac38dd..3c1190dd114f 100644
  		/* config depop sequence parameter */
  		rt5631_write_index(component, RT5631_SPK_INTL_CTRL, 0x302f);
 diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
-index 20bad755888b..bfdca3765397 100644
+index 0382a47b30bd..0d805d3563ca 100644
 --- a/sound/soc/soc-dapm.c
 +++ b/sound/soc/soc-dapm.c
 @@ -154,7 +154,7 @@ static void dapm_assert_locked(struct snd_soc_dapm_context *dapm)
@@ -154,7 +154,7 @@ index 20bad755888b..bfdca3765397 100644
 +		schedule_msec_hrtimeout_uninterruptible((pop_time));
  }
  
- static void pop_dbg(struct device *dev, u32 pop_time, const char *fmt, ...)
+ __printf(3, 4)
 -- 
 2.17.1
 

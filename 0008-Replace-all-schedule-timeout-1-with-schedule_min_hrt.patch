@@ -1,4 +1,4 @@
-From d5afd3036aa88c05ce9ead813545eb25e8102749 Mon Sep 17 00:00:00 2001
+From 97bf976c1a61af48431ce97bc129a0f448e8c735 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:28:30 +1100
 Subject: [PATCH 08/16] Replace all schedule timeout(1) with
@@ -6,7 +6,6 @@ Subject: [PATCH 08/16] Replace all schedule timeout(1) with
 
 ---
  drivers/block/swim.c                          |   6 +-
- drivers/bluetooth/hci_qca.c                   |   2 +-
  drivers/char/ipmi/ipmi_msghandler.c           |   2 +-
  drivers/char/ipmi/ipmi_ssif.c                 |   2 +-
  drivers/char/snsc.c                           |   4 +-
@@ -39,7 +38,7 @@ Subject: [PATCH 08/16] Replace all schedule timeout(1) with
  fs/btrfs/extent-tree.c                        |   2 +-
  fs/btrfs/inode-map.c                          |   2 +-
  sound/usb/line6/pcm.c                         |   2 +-
- 34 files changed, 471 insertions(+), 51 deletions(-)
+ 33 files changed, 470 insertions(+), 50 deletions(-)
  create mode 100644 drivers/staging/lustre/lnet/lnet/lib-eq.c
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
@@ -73,24 +72,11 @@ index 3fa6fcc34790..278486c8266d 100644
  
  		swim_select(base, RELAX);
  		if (!swim_readbit(base, STEP))
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index f036c8f98ea3..6492d10f78d4 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -996,7 +996,7 @@ static int qca_set_baudrate(struct hci_dev *hdev, uint8_t baudrate)
- 	 * then host can communicate with new baudrate to controller
- 	 */
- 	set_current_state(TASK_UNINTERRUPTIBLE);
--	schedule_timeout(msecs_to_jiffies(BAUDRATE_SETTLE_TIMEOUT_MS));
-+	schedule_msec_hrtimeout((BAUDRATE_SETTLE_TIMEOUT_MS));
- 	set_current_state(TASK_RUNNING);
- 
- 	if (qcadev->btsoc_type == QCA_WCN3990)
 diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index c518659b4d9f..c9387b548b38 100644
+index 00bf4b17edbf..71c49540cb25 100644
 --- a/drivers/char/ipmi/ipmi_msghandler.c
 +++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3467,7 +3467,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
+@@ -3541,7 +3541,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
  	/* Current message first, to preserve order */
  	while (intf->curr_msg && !list_empty(&intf->waiting_rcv_msgs)) {
  		/* Wait for the message to clear out. */
@@ -100,10 +86,10 @@ index c518659b4d9f..c9387b548b38 100644
  
  	/* No need for locks, the interface is down. */
 diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index b7a1ae2afaea..d5ce2cd8c695 100644
+index 8b5aec5430f1..a5737d29cd93 100644
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -1220,7 +1220,7 @@ static void shutdown_ssif(void *send_info)
+@@ -1285,7 +1285,7 @@ static void shutdown_ssif(void *send_info)
  
  	/* make sure the driver is not looking for flags any more. */
  	while (ssif_info->ssif_state != SSIF_NORMAL)
@@ -111,7 +97,7 @@ index b7a1ae2afaea..d5ce2cd8c695 100644
 +		schedule_min_hrtimeout();
  
  	ssif_info->stopping = true;
- 	del_timer_sync(&ssif_info->retry_timer);
+ 	del_timer_sync(&ssif_info->watch_timer);
 diff --git a/drivers/char/snsc.c b/drivers/char/snsc.c
 index 5918ea7499bb..5228e78df804 100644
 --- a/drivers/char/snsc.c
@@ -239,10 +225,10 @@ index 13238a72a338..fc51ae55c63f 100644
  
  	return err;
 diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index e96bc0c6140f..153269fea2fd 100644
+index 3d92ea6fcc02..de564401fd4d 100644
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -2675,7 +2675,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
+@@ -2674,7 +2674,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
  	while (!skb_queue_empty(&dev->rxq) &&
  	       !skb_queue_empty(&dev->txq) &&
  	       !skb_queue_empty(&dev->done)) {
@@ -265,10 +251,10 @@ index 504282af27e5..da60ab9b56c7 100644
  		spin_lock_irqsave(&q->lock, flags);
  	}
 diff --git a/drivers/scsi/fnic/fnic_scsi.c b/drivers/scsi/fnic/fnic_scsi.c
-index cafbcfb85bfa..171c6a323ff8 100644
+index 80608b53897b..84051b538fa8 100644
 --- a/drivers/scsi/fnic/fnic_scsi.c
 +++ b/drivers/scsi/fnic/fnic_scsi.c
-@@ -217,7 +217,7 @@ int fnic_fw_reset_handler(struct fnic *fnic)
+@@ -216,7 +216,7 @@ int fnic_fw_reset_handler(struct fnic *fnic)
  
  	/* wait for io cmpl */
  	while (atomic_read(&fnic->in_flight))
@@ -277,7 +263,7 @@ index cafbcfb85bfa..171c6a323ff8 100644
  
  	spin_lock_irqsave(&fnic->wq_copy_lock[0], flags);
  
-@@ -2249,7 +2249,7 @@ static int fnic_clean_pending_aborts(struct fnic *fnic,
+@@ -2273,7 +2273,7 @@ static int fnic_clean_pending_aborts(struct fnic *fnic,
  		}
  	}
  
@@ -300,7 +286,7 @@ index b3650c989ed4..7ed1fb285754 100644
  	ret = snic_issue_hba_reset(snic, sc);
  	if (ret) {
 diff --git a/drivers/staging/comedi/drivers/ni_mio_common.c b/drivers/staging/comedi/drivers/ni_mio_common.c
-index 5edf59ac6706..3784dc56d39c 100644
+index b04dad8c7092..27c824bdebf0 100644
 --- a/drivers/staging/comedi/drivers/ni_mio_common.c
 +++ b/drivers/staging/comedi/drivers/ni_mio_common.c
 @@ -4727,7 +4727,7 @@ static int cs5529_wait_for_idle(struct comedi_device *dev)
@@ -793,7 +779,7 @@ index 0877b4044c28..627102d048c1 100644
  		}
  		if (time_after_eq(jiffies, jiff_max) && (ch == SPACE)) {
 diff --git a/drivers/staging/speakup/speakup_decext.c b/drivers/staging/speakup/speakup_decext.c
-index 3741c0fcf5bb..bff857b4aa5f 100644
+index ddbb7e97d118..f9502addc765 100644
 --- a/drivers/staging/speakup/speakup_decext.c
 +++ b/drivers/staging/speakup/speakup_decext.c
 @@ -176,7 +176,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -819,7 +805,7 @@ index 459ee0c0bd57..52b539544c98 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/staging/speakup/speakup_dectlk.c b/drivers/staging/speakup/speakup_dectlk.c
-index a144f28ee1a8..c34764fafe2b 100644
+index dccb4ea29d37..8ecead307d04 100644
 --- a/drivers/staging/speakup/speakup_dectlk.c
 +++ b/drivers/staging/speakup/speakup_dectlk.c
 @@ -244,7 +244,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -876,7 +862,7 @@ index b788272da4f9..d5dac16c04d8 100644
  		}
  	}
 diff --git a/drivers/staging/speakup/synth.c b/drivers/staging/speakup/synth.c
-index 25f259ee4ffc..b9721103e651 100644
+index 3568bfb89912..0a80b3b098b2 100644
 --- a/drivers/staging/speakup/synth.c
 +++ b/drivers/staging/speakup/synth.c
 @@ -93,12 +93,8 @@ static void _spk_do_catch_up(struct spk_synth *synth, int unicode)
@@ -909,7 +895,7 @@ index 25f259ee4ffc..b9721103e651 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/staging/unisys/visornic/visornic_main.c b/drivers/staging/unisys/visornic/visornic_main.c
-index 5eeb4b93b45b..9c49e03d0b0e 100644
+index 1c1a470d2e50..cbac00e586b0 100644
 --- a/drivers/staging/unisys/visornic/visornic_main.c
 +++ b/drivers/staging/unisys/visornic/visornic_main.c
 @@ -549,7 +549,7 @@ static int visornic_disable_with_timeout(struct net_device *netdev,
@@ -966,10 +952,10 @@ index d59c8a59f582..e103cce28de7 100644
  
  	pr_debug("%s(): task ending\n", __func__);
 diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index d81035b7ea7d..95e2e25133f2 100644
+index c5880329ae37..aad921814170 100644
 --- a/fs/btrfs/extent-tree.c
 +++ b/fs/btrfs/extent-tree.c
-@@ -6152,7 +6152,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
+@@ -6206,7 +6206,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
  			flush = BTRFS_RESERVE_FLUSH_LIMIT;
  
  		if (btrfs_transaction_in_commit(fs_info))

@@ -1,7 +1,7 @@
-From 4781ded9aa058aa8703734cf168b923bf5236188 Mon Sep 17 00:00:00 2001
+From 7a1d33351c90fc61644878beb736ffbfb4e95f5a Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
-Date: Tue, 13 Nov 2018 17:18:04 +1100
-Subject: [PATCH 01/16] MultiQueue Skiplist Scheduler version v0.190.
+Date: Wed, 15 May 2019 15:12:54 +1000
+Subject: [PATCH 01/16] MultiQueue Skiplist Scheduler version 0.190
 
 ---
  .../admin-guide/kernel-parameters.txt         |    8 +
@@ -9,6 +9,8 @@ Subject: [PATCH 01/16] MultiQueue Skiplist Scheduler version v0.190.
  Documentation/scheduler/sched-MuQSS.txt       |  373 +
  Documentation/sysctl/kernel.txt               |   37 +
  arch/alpha/Kconfig                            |    2 +
+ arch/arm/Kconfig                              |    2 +
+ arch/arm64/Kconfig                            |    2 +
  arch/powerpc/Kconfig                          |    2 +
  arch/powerpc/platforms/cell/spufs/sched.c     |    5 -
  arch/x86/Kconfig                              |   18 +
@@ -31,10 +33,9 @@ Subject: [PATCH 01/16] MultiQueue Skiplist Scheduler version v0.190.
  kernel/exit.c                                 |    4 +-
  kernel/kthread.c                              |   30 +-
  kernel/livepatch/transition.c                 |    6 +-
- kernel/rcu/Kconfig                            |    2 +-
  kernel/sched/Makefile                         |   10 +-
- kernel/sched/MuQSS.c                          | 7438 +++++++++++++++++
- kernel/sched/MuQSS.h                          |  950 +++
+ kernel/sched/MuQSS.c                          | 7496 +++++++++++++++++
+ kernel/sched/MuQSS.h                          |  957 +++
  kernel/sched/cpufreq_schedutil.c              |   12 +-
  kernel/sched/cpupri.h                         |    2 +
  kernel/sched/cputime.c                        |   22 +-
@@ -47,7 +48,7 @@ Subject: [PATCH 01/16] MultiQueue Skiplist Scheduler version v0.190.
  kernel/time/posix-cpu-timers.c                |    8 +-
  kernel/time/timer.c                           |    7 +-
  kernel/trace/trace_selftest.c                 |    5 +
- 43 files changed, 9759 insertions(+), 56 deletions(-)
+ 44 files changed, 9827 insertions(+), 55 deletions(-)
  create mode 100644 Documentation/scheduler/sched-BFS.txt
  create mode 100644 Documentation/scheduler/sched-MuQSS.txt
  create mode 100644 include/linux/skip_list.h
@@ -57,10 +58,10 @@ Subject: [PATCH 01/16] MultiQueue Skiplist Scheduler version v0.190.
  create mode 100644 kernel/skip_list.c
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 858b6c0b9a15..311076ada7b7 100644
+index 2b8ee90bb644..16c428c5e23a 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4117,6 +4117,14 @@
+@@ -4154,6 +4154,14 @@
  			Memory area to be used by remote processor image,
  			managed by CMA.
  
@@ -812,7 +813,7 @@ index 000000000000..ae28b85c9995
 +
 +Con Kolivas <kernel@kolivas.org> Sat, 29th October 2016
 diff --git a/Documentation/sysctl/kernel.txt b/Documentation/sysctl/kernel.txt
-index c0527d8a468a..cc8f346a5404 100644
+index aa058aa7bf28..68cbcc9fe1a5 100644
 --- a/Documentation/sysctl/kernel.txt
 +++ b/Documentation/sysctl/kernel.txt
 @@ -41,6 +41,7 @@ show up in /proc/sys/kernel:
@@ -830,8 +831,8 @@ index c0527d8a468a..cc8f346a5404 100644
 +- rr_interval
  - rtsig-max
  - rtsig-nr
- - seccomp/                    ==> Documentation/userspace-api/seccomp_filter.rst
-@@ -99,6 +101,7 @@ show up in /proc/sys/kernel:
+ - sched_energy_aware
+@@ -100,6 +102,7 @@ show up in /proc/sys/kernel:
  - unknown_nmi_panic
  - watchdog
  - watchdog_thresh
@@ -839,7 +840,7 @@ index c0527d8a468a..cc8f346a5404 100644
  - version
  
  ==============================================================
-@@ -437,6 +440,16 @@ When kptr_restrict is set to (2), kernel pointers printed using
+@@ -438,6 +441,16 @@ When kptr_restrict is set to (2), kernel pointers printed using
  
  ==============================================================
  
@@ -856,7 +857,7 @@ index c0527d8a468a..cc8f346a5404 100644
  l2cr: (PPC only)
  
  This flag controls the L2 cache of G3 processor boards. If
-@@ -880,6 +893,20 @@ rebooting. ???
+@@ -881,6 +894,20 @@ rebooting. ???
  
  ==============================================================
  
@@ -877,7 +878,7 @@ index c0527d8a468a..cc8f346a5404 100644
  rtsig-max & rtsig-nr:
  
  The file rtsig-max can be used to tune the maximum number
-@@ -1137,3 +1164,13 @@ The softlockup threshold is (2 * watchdog_thresh). Setting this
+@@ -1143,3 +1170,13 @@ The softlockup threshold is (2 * watchdog_thresh). Setting this
  tunable to zero will disable lockup detection altogether.
  
  ==============================================================
@@ -904,11 +905,37 @@ index 584a6e114853..2d497c3710f2 100644
  config SRM_ENV
  	tristate "SRM environment through procfs"
  	depends on PROC_FS
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 9aed25a6019b..84d1a255c6e0 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1308,6 +1308,8 @@ config SCHED_SMT
+ 	  MultiThreading at a cost of slightly increased overhead in some
+ 	  places. If unsure say N here.
+ 
++source "kernel/Kconfig.MuQSS"
++
+ config HAVE_ARM_SCU
+ 	bool
+ 	help
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 7e34b9eba5de..10d5e92f3291 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -807,6 +807,8 @@ config SCHED_SMT
+ 	  MultiThreading at a cost of slightly increased overhead in some
+ 	  places. If unsure say N here.
+ 
++source "kernel/Kconfig.MuQSS"
++
+ config NR_CPUS
+ 	int "Maximum number of CPUs (2-4096)"
+ 	range 2 4096
 diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index 2890d36eb531..deeedd7f4de8 100644
+index 2d0be82c3061..18ed2dc91fc3 100644
 --- a/arch/powerpc/Kconfig
 +++ b/arch/powerpc/Kconfig
-@@ -772,6 +772,8 @@ config SCHED_SMT
+@@ -820,6 +820,8 @@ config SCHED_SMT
  	  when dealing with POWER5 cpus at a cost of slightly increased
  	  overhead in some places. If unsure say N here.
  
@@ -934,10 +961,10 @@ index 9fcccb4490b9..7f2b6c226eed 100644
   * Frequency of the spu scheduler tick.  By default we do one SPU scheduler
   * tick for every 10 CPU scheduler ticks.
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 68261430fe6e..6e4b1b310f6c 100644
+index 62fc3fda1a05..fe5df269452d 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -1018,6 +1018,22 @@ config NR_CPUS
+@@ -1017,6 +1017,22 @@ config NR_CPUS
  config SCHED_SMT
  	def_bool y if SMP
  
@@ -960,7 +987,7 @@ index 68261430fe6e..6e4b1b310f6c 100644
  config SCHED_MC
  	def_bool y
  	prompt "Multi-core scheduler support"
-@@ -1048,6 +1064,8 @@ config SCHED_MC_PRIO
+@@ -1047,6 +1063,8 @@ config SCHED_MC_PRIO
  
  	  If unsure say Y here.
  
@@ -970,11 +997,11 @@ index 68261430fe6e..6e4b1b310f6c 100644
         def_bool y
         depends on !SMP && X86_LOCAL_APIC
 diff --git a/fs/proc/base.c b/fs/proc/base.c
-index f5ed9512d193..42bf4ae51b41 100644
+index 6a803a0b75df..c75b7be0f94b 100644
 --- a/fs/proc/base.c
 +++ b/fs/proc/base.c
-@@ -459,7 +459,7 @@ static int proc_pid_schedstat(struct seq_file *m, struct pid_namespace *ns,
- 		seq_printf(m, "0 0 0\n");
+@@ -463,7 +463,7 @@ static int proc_pid_schedstat(struct seq_file *m, struct pid_namespace *ns,
+ 		seq_puts(m, "0 0 0\n");
  	else
  		seq_printf(m, "%llu %llu %lu\n",
 -		   (unsigned long long)task->se.sum_exec_runtime,
@@ -983,10 +1010,10 @@ index f5ed9512d193..42bf4ae51b41 100644
  		   task->sched_info.pcount);
  
 diff --git a/include/linux/init_task.h b/include/linux/init_task.h
-index a7083a45a26c..c0fae13d6fc0 100644
+index 6049baa5b8bc..9a70cbc958a7 100644
 --- a/include/linux/init_task.h
 +++ b/include/linux/init_task.h
-@@ -46,7 +46,11 @@ extern struct cred init_cred;
+@@ -47,7 +47,11 @@ extern struct cred init_cred;
  #define INIT_CPU_TIMERS(s)
  #endif
  
@@ -1012,10 +1039,10 @@ index e9bfe6972aed..16ba1c7e5bde 100644
  }
  
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index f9b43c989577..e952f9f19bdf 100644
+index 1549584a1538..71d849ef5ee2 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
-@@ -29,6 +29,9 @@
+@@ -30,6 +30,9 @@
  #include <linux/mm_types_task.h>
  #include <linux/task_io_accounting.h>
  #include <linux/rseq.h>
@@ -1025,7 +1052,7 @@ index f9b43c989577..e952f9f19bdf 100644
  
  /* task_struct member predeclarations (sorted alphabetically): */
  struct audit_context;
-@@ -612,9 +615,11 @@ struct task_struct {
+@@ -605,9 +608,11 @@ struct task_struct {
  	unsigned int			flags;
  	unsigned int			ptrace;
  
@@ -1038,7 +1065,7 @@ index f9b43c989577..e952f9f19bdf 100644
  #ifdef CONFIG_THREAD_INFO_IN_TASK
  	/* Current CPU: */
  	unsigned int			cpu;
-@@ -639,10 +644,25 @@ struct task_struct {
+@@ -632,10 +637,25 @@ struct task_struct {
  	int				static_prio;
  	int				normal_prio;
  	unsigned int			rt_priority;
@@ -1064,7 +1091,7 @@ index f9b43c989577..e952f9f19bdf 100644
  #ifdef CONFIG_CGROUP_SCHED
  	struct task_group		*sched_task_group;
  #endif
-@@ -797,6 +817,10 @@ struct task_struct {
+@@ -790,6 +810,10 @@ struct task_struct {
  #ifdef CONFIG_ARCH_HAS_SCALED_CPUTIME
  	u64				utimescaled;
  	u64				stimescaled;
@@ -1075,7 +1102,7 @@ index f9b43c989577..e952f9f19bdf 100644
  #endif
  	u64				gtime;
  	struct prev_cputime		prev_cputime;
-@@ -1219,6 +1243,40 @@ struct task_struct {
+@@ -1217,6 +1241,40 @@ struct task_struct {
  	 */
  };
  
@@ -1179,7 +1206,7 @@ index e5af028c08b4..010b2244e0b6 100644
  }
  
 diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
-index 44c6f15800ff..4fed33ea8d39 100644
+index 2e97a2227045..619ce11ee75e 100644
 --- a/include/linux/sched/task.h
 +++ b/include/linux/sched/task.h
 @@ -82,7 +82,7 @@ extern long kernel_wait4(pid_t, int __user *, int, struct rusage *);
@@ -1253,10 +1280,10 @@ index 22627f80063e..17077cd6fc40 100644
  /* Can be ORed in to make sure the process is reverted back to SCHED_NORMAL on fork */
  #define SCHED_RESET_ON_FORK     0x40000000
 diff --git a/init/Kconfig b/init/Kconfig
-index c9386a365eea..7d7c64cd038d 100644
+index 4592bf7997c0..04c74929ce80 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -48,6 +48,18 @@ config THREAD_INFO_IN_TASK
+@@ -64,6 +64,18 @@ config THREAD_INFO_IN_TASK
  
  menu "General setup"
  
@@ -1275,7 +1302,7 @@ index c9386a365eea..7d7c64cd038d 100644
  config BROKEN
  	bool
  
-@@ -685,6 +697,7 @@ config NUMA_BALANCING
+@@ -702,6 +714,7 @@ config NUMA_BALANCING
  	depends on ARCH_SUPPORTS_NUMA_BALANCING
  	depends on !ARCH_WANT_NUMA_VARIABLE_LOCALITY
  	depends on SMP && NUMA && MIGRATION
@@ -1283,7 +1310,7 @@ index c9386a365eea..7d7c64cd038d 100644
  	help
  	  This option adds support for automatic NUMA aware memory/task placement.
  	  The mechanism is quite primitive and is based on migrating memory when
-@@ -792,9 +805,13 @@ menuconfig CGROUP_SCHED
+@@ -809,9 +822,13 @@ menuconfig CGROUP_SCHED
  	help
  	  This feature lets CPU scheduler recognize task groups and control CPU
  	  bandwidth allocation to such task groups. It uses cgroups to group
@@ -1299,7 +1326,7 @@ index c9386a365eea..7d7c64cd038d 100644
  config FAIR_GROUP_SCHED
  	bool "Group scheduling for SCHED_OTHER"
  	depends on CGROUP_SCHED
-@@ -901,6 +918,7 @@ config CGROUP_DEVICE
+@@ -918,6 +935,7 @@ config CGROUP_DEVICE
  
  config CGROUP_CPUACCT
  	bool "Simple CPU accounting controller"
@@ -1307,7 +1334,7 @@ index c9386a365eea..7d7c64cd038d 100644
  	help
  	  Provides a simple controller for monitoring the
  	  total CPU consumed by the tasks in a cgroup.
-@@ -1019,6 +1037,7 @@ config CHECKPOINT_RESTORE
+@@ -1036,6 +1054,7 @@ config CHECKPOINT_RESTORE
  
  config SCHED_AUTOGROUP
  	bool "Automatic process group scheduling"
@@ -1316,12 +1343,12 @@ index c9386a365eea..7d7c64cd038d 100644
  	select CGROUP_SCHED
  	select FAIR_GROUP_SCHED
 diff --git a/init/init_task.c b/init/init_task.c
-index 5aebe3be4d7c..2b576d3b2333 100644
+index c70ef656d0f4..91fab35e0d51 100644
 --- a/init/init_task.c
 +++ b/init/init_task.c
-@@ -67,9 +67,17 @@ struct task_struct init_task
+@@ -68,9 +68,17 @@ struct task_struct init_task
  	.stack		= init_stack,
- 	.usage		= ATOMIC_INIT(2),
+ 	.usage		= REFCOUNT_INIT(2),
  	.flags		= PF_KTHREAD,
 +#ifdef CONFIG_SCHED_MUQSS
 +	.prio		= NORMAL_PRIO,
@@ -1337,7 +1364,7 @@ index 5aebe3be4d7c..2b576d3b2333 100644
  	.policy		= SCHED_NORMAL,
  	.cpus_allowed	= CPU_MASK_ALL,
  	.nr_cpus_allowed= NR_CPUS,
-@@ -78,6 +86,7 @@ struct task_struct init_task
+@@ -79,6 +87,7 @@ struct task_struct init_task
  	.restart_block	= {
  		.fn = do_no_restart_syscall,
  	},
@@ -1345,7 +1372,7 @@ index 5aebe3be4d7c..2b576d3b2333 100644
  	.se		= {
  		.group_node 	= LIST_HEAD_INIT(init_task.se.group_node),
  	},
-@@ -85,6 +94,7 @@ struct task_struct init_task
+@@ -86,6 +95,7 @@ struct task_struct init_task
  		.run_list	= LIST_HEAD_INIT(init_task.rt.run_list),
  		.time_slice	= RR_TIMESLICE,
  	},
@@ -1354,10 +1381,10 @@ index 5aebe3be4d7c..2b576d3b2333 100644
  #ifdef CONFIG_SMP
  	.pushable_tasks	= PLIST_NODE_INIT(init_task.pushable_tasks, MAX_PRIO),
 diff --git a/init/main.c b/init/main.c
-index c86a1c8f19f4..2bf8260f5d06 100644
+index 7d4025d665eb..b131f35dfb00 100644
 --- a/init/main.c
 +++ b/init/main.c
-@@ -1069,6 +1069,8 @@ static int __ref kernel_init(void *unused)
+@@ -1083,6 +1083,8 @@ static int __ref kernel_init(void *unused)
  
  	rcu_end_inkernel_boot();
  
@@ -1462,7 +1489,7 @@ index 000000000000..558a7cb02cb9
 +	default 3 if RQ_SMP
 +	default 4 if RQ_ALL
 diff --git a/kernel/Makefile b/kernel/Makefile
-index 6aa7543bcdb2..84fd615d2113 100644
+index 6c57e78817da..c7c3424c0cf6 100644
 --- a/kernel/Makefile
 +++ b/kernel/Makefile
 @@ -10,7 +10,7 @@ obj-y     = fork.o exec_domain.o panic.o \
@@ -1488,7 +1515,7 @@ index 2a12b988c717..dba268ca115f 100644
  	d->cpu_count += t1;
  
 diff --git a/kernel/exit.c b/kernel/exit.c
-index 2639a30a8aa5..40fe20e71553 100644
+index 2166c2d92ddc..c4eef2f20036 100644
 --- a/kernel/exit.c
 +++ b/kernel/exit.c
 @@ -130,7 +130,7 @@ static void __exit_signal(struct task_struct *tsk)
@@ -1510,10 +1537,10 @@ index 2639a30a8aa5..40fe20e71553 100644
  	__unhash_process(tsk, group_dead);
  	write_sequnlock(&sig->stats_lock);
 diff --git a/kernel/kthread.c b/kernel/kthread.c
-index 087d18d771b5..fdddd187774a 100644
+index 5942eeafb9ac..62a9f5534712 100644
 --- a/kernel/kthread.c
 +++ b/kernel/kthread.c
-@@ -424,6 +424,34 @@ void kthread_bind(struct task_struct *p, unsigned int cpu)
+@@ -431,6 +431,34 @@ void kthread_bind(struct task_struct *p, unsigned int cpu)
  }
  EXPORT_SYMBOL(kthread_bind);
  
@@ -1548,7 +1575,7 @@ index 087d18d771b5..fdddd187774a 100644
  /**
   * kthread_create_on_cpu - Create a cpu bound kthread
   * @threadfn: the function to run until signal_pending(current).
-@@ -445,7 +473,7 @@ struct task_struct *kthread_create_on_cpu(int (*threadfn)(void *data),
+@@ -452,7 +480,7 @@ struct task_struct *kthread_create_on_cpu(int (*threadfn)(void *data),
  				   cpu);
  	if (IS_ERR(p))
  		return p;
@@ -1558,7 +1585,7 @@ index 087d18d771b5..fdddd187774a 100644
  	set_bit(KTHREAD_IS_PER_CPU, &to_kthread(p)->flags);
  	to_kthread(p)->cpu = cpu;
 diff --git a/kernel/livepatch/transition.c b/kernel/livepatch/transition.c
-index 304d5eb8a98c..3eb871ff5132 100644
+index 9c89ae8b337a..9f942cc15517 100644
 --- a/kernel/livepatch/transition.c
 +++ b/kernel/livepatch/transition.c
 @@ -298,7 +298,7 @@ static int klp_check_stack(struct task_struct *task, char *err_buf)
@@ -1588,19 +1615,6 @@ index 304d5eb8a98c..3eb871ff5132 100644
  
  	/*
  	 * Due to console deadlock issues, pr_debug() can't be used while
-diff --git a/kernel/rcu/Kconfig b/kernel/rcu/Kconfig
-index 939a2056c87a..242f7e491e8d 100644
---- a/kernel/rcu/Kconfig
-+++ b/kernel/rcu/Kconfig
-@@ -93,7 +93,7 @@ config CONTEXT_TRACKING
- config CONTEXT_TRACKING_FORCE
- 	bool "Force context tracking"
- 	depends on CONTEXT_TRACKING
--	default y if !NO_HZ_FULL
-+	default y if !NO_HZ_FULL && !SCHED_MUQSS
- 	help
- 	  The major pre-requirement for full dynticks to work is to
- 	  support the context tracking subsystem. But there are also
 diff --git a/kernel/sched/Makefile b/kernel/sched/Makefile
 index 21fb5a5662b5..a04ffebc6b7a 100644
 --- a/kernel/sched/Makefile
@@ -1632,10 +1646,10 @@ index 21fb5a5662b5..a04ffebc6b7a 100644
  obj-$(CONFIG_MEMBARRIER) += membarrier.o
 diff --git a/kernel/sched/MuQSS.c b/kernel/sched/MuQSS.c
 new file mode 100644
-index 000000000000..5b094d9e0734
+index 000000000000..e260f932b992
 --- /dev/null
 +++ b/kernel/sched/MuQSS.c
-@@ -0,0 +1,7438 @@
+@@ -0,0 +1,7496 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + *  kernel/sched/MuQSS.c, was kernel/sched.c
@@ -1749,7 +1763,7 @@ index 000000000000..5b094d9e0734
 +
 +void print_scheduler_version(void)
 +{
-+	printk(KERN_INFO "MuQSS CPU scheduler v0.190 by Con Kolivas.\n");
++	printk(KERN_INFO "MuQSS CPU scheduler v0.192 by Con Kolivas.\n");
 +}
 +
 +#define RQSHARE_NONE 0
@@ -2075,7 +2089,7 @@ index 000000000000..5b094d9e0734
 +{
 +	if (unlikely(!do_raw_spin_trylock(rq->lock)))
 +		return false;
-+	spin_acquire(rq->lock.dep_map, SINGLE_DEPTH_NESTING, 1, _RET_IP_);
++	spin_acquire(&rq->lock->dep_map, SINGLE_DEPTH_NESTING, 1, _RET_IP_);
 +	synchronise_niffies(this_rq, rq);
 +	return true;
 +}
@@ -2083,7 +2097,7 @@ index 000000000000..5b094d9e0734
 +/* Unlock a specially nested trylocked rq */
 +static inline void unlock_rq(struct rq *rq)
 +{
-+	spin_release(rq->lock.dep_map, 1, _RET_IP_);
++	spin_release(&rq->lock->dep_map, 1, _RET_IP_);
 +	do_raw_spin_unlock(rq->lock);
 +}
 +
@@ -2156,6 +2170,30 @@ index 000000000000..5b094d9e0734
 +#endif
 +#endif
 +
++static bool __wake_q_add(struct wake_q_head *head, struct task_struct *task)
++{
++	struct wake_q_node *node = &task->wake_q;
++
++	/*
++	 * Atomically grab the task, if ->wake_q is !nil already it means
++	 * its already queued (either by us or someone else) and will get the
++	 * wakeup due to that.
++	 *
++	 * In order to ensure that a pending wakeup will observe our pending
++	 * state, even in the failed case, an explicit smp_mb() must be used.
++	 */
++	smp_mb__before_atomic();
++	if (unlikely(cmpxchg_relaxed(&node->next, NULL, WAKE_Q_TAIL)))
++		return false;
++
++	/*
++	 * The head is context local, there can be no concurrency.
++	 */
++	*head->lastp = node;
++	head->lastp = &node->next;
++	return true;
++}
++
 +/**
 + * wake_q_add() - queue a wakeup for 'later' waking.
 + * @head: the wake_q_head to add @task to
@@ -2170,27 +2208,31 @@ index 000000000000..5b094d9e0734
 + */
 +void wake_q_add(struct wake_q_head *head, struct task_struct *task)
 +{
-+	struct wake_q_node *node = &task->wake_q;
++	if (__wake_q_add(head, task))
++		get_task_struct(task);
++}
 +
-+	/*
-+	 * Atomically grab the task, if ->wake_q is !nil already it means
-+	 * its already queued (either by us or someone else) and will get the
-+	 * wakeup due to that.
-+	 *
-+	 * In order to ensure that a pending wakeup will observe our pending
-+	 * state, even in the failed case, an explicit smp_mb() must be used.
-+	 */
-+	smp_mb__before_atomic();
-+	if (cmpxchg_relaxed(&node->next, NULL, WAKE_Q_TAIL))
-+		return;
-+
-+	get_task_struct(task);
-+
-+	/*
-+	 * The head is context local, there can be no concurrency.
-+	 */
-+	*head->lastp = node;
-+	head->lastp = &node->next;
++/**
++ * wake_q_add_safe() - safely queue a wakeup for 'later' waking.
++ * @head: the wake_q_head to add @task to
++ * @task: the task to queue for 'later' wakeup
++ *
++ * Queue a task for later wakeup, most likely by the wake_up_q() call in the
++ * same context, _HOWEVER_ this is not guaranteed, the wakeup can come
++ * instantly.
++ *
++ * This function must be used as-if it were wake_up_process(); IOW the task
++ * must be ready to be woken at this location.
++ *
++ * This function is essentially a task-safe equivalent to wake_q_add(). Callers
++ * that already hold reference to @task can call the 'safe' version and trust
++ * wake_q to do the right thing depending whether or not the @task is already
++ * queued for wakeup.
++ */
++void wake_q_add_safe(struct wake_q_head *head, struct task_struct *task)
++{
++	if (!__wake_q_add(head, task))
++		put_task_struct(task);
 +}
 +
 +void wake_up_q(struct wake_q_head *head)
@@ -2948,9 +2990,9 @@ index 000000000000..5b094d9e0734
 +	}
 +
 +#ifdef CONFIG_THREAD_INFO_IN_TASK
-+	p->cpu = new_cpu;
++	WRITE_ONCE(p->cpu, new_cpu);
 +#else
-+	task_thread_info(p)->cpu = new_cpu;
++	WRITE_ONCE(task_thread_info(p)->cpu, new_cpu);
 +#endif
 +	/* We're no longer protecting p after this point since we're holding
 +	 * the wrong runqueue lock. */
@@ -2991,7 +3033,7 @@ index 000000000000..5b094d9e0734
 +		 * lock is dropped in finish_lock_switch.
 +		 */
 +		if (unlikely(p->wake_cpu != cpu))
-+			p->on_rq = TASK_ON_RQ_MIGRATING;
++			WRITE_ONCE(p->on_rq, TASK_ON_RQ_MIGRATING);
 +		else
 +#endif
 +			enqueue_task(rq, p, ENQUEUE_RESTORE);
@@ -3771,6 +3813,11 @@ index 000000000000..5b094d9e0734
 +#ifdef CONFIG_PREEMPT_NOTIFIERS
 +	INIT_HLIST_HEAD(&p->preempt_notifiers);
 +#endif
++
++#ifdef CONFIG_COMPACTION
++	p->capture_control = NULL;
++#endif
++
 +	/*
 +	 * We mark the process as NEW here. This guarantees that
 +	 * nobody will actually run it, and a signal or other external
@@ -4199,10 +4246,10 @@ index 000000000000..5b094d9e0734
 +	 * of the scheduler it's an obvious special-case), so we
 +	 * do an early lockdep release here:
 +	 */
-+	spin_release(&rq->lock.dep_map, 1, _THIS_IP_);
++	spin_release(&rq->lock->dep_map, 1, _THIS_IP_);
 +#ifdef CONFIG_DEBUG_SPINLOCK
 +	/* this is a valid case when another task releases the spinlock */
-+	rq->lock.owner = next;
++	rq->lock->owner = next;
 +#endif
 +}
 +
@@ -4213,7 +4260,7 @@ index 000000000000..5b094d9e0734
 +	 * fix up the runqueue lock - which gets 'carried over' from
 +	 * prev into current:
 +	 */
-+	spin_acquire(&rq->lock.dep_map, 0, 0, _THIS_IP_);
++	spin_acquire(&rq->lock->dep_map, 0, 0, _THIS_IP_);
 +
 +#ifdef CONFIG_SMP
 +	/*
@@ -7327,9 +7374,8 @@ index 000000000000..5b094d9e0734
 +}
 +
 +#ifdef CONFIG_COMPAT_32BIT_TIME
-+COMPAT_SYSCALL_DEFINE2(sched_rr_get_interval,
-+		       compat_pid_t, pid,
-+		       struct old_timespec32 __user *, interval)
++SYSCALL_DEFINE2(sched_rr_get_interval_time32, pid_t, pid,
++		struct old_timespec32 __user *, interval)
 +{
 +	struct timespec64 t;
 +	int retval = sched_rr_get_interval(pid, &t);
@@ -8338,21 +8384,18 @@ index 000000000000..5b094d9e0734
 +	/*
 +	 * There's no userspace yet to cause hotplug operations; hence all the
 +	 * cpu masks are stable and all blatant races in the below code cannot
-+	 * happen. The hotplug lock is nevertheless taken to satisfy lockdep,
-+	 * but there won't be any contention on it.
++	 * happen.
 +	 */
-+	cpus_read_lock();
 +	mutex_lock(&sched_domains_mutex);
 +	sched_init_domains(cpu_active_mask);
 +	mutex_unlock(&sched_domains_mutex);
-+	cpus_read_unlock();
 +
 +	/* Move init over to a non-isolated CPU */
 +	if (set_cpus_allowed_ptr(current, housekeeping_cpumask(HK_FLAG_DOMAIN)) < 0)
 +		BUG();
 +
-+	mutex_lock(&sched_domains_mutex);
 +	local_irq_disable();
++	mutex_lock(&sched_domains_mutex);
 +	lock_all_rqs();
 +	/*
 +	 * Set up the relative cache distance of each online cpu from each
@@ -8443,7 +8486,6 @@ index 000000000000..5b094d9e0734
 +	}
 +#endif
 +	unlock_all_rqs();
-+	local_irq_enable();
 +	mutex_unlock(&sched_domains_mutex);
 +
 +	for_each_online_cpu(cpu) {
@@ -8523,6 +8565,8 @@ index 000000000000..5b094d9e0734
 +			rq_unlock(rq);
 +	}
 +#endif /* CONFIG_SCHED_SMT */
++
++	local_irq_enable();
 +
 +	total_runqueues = 0;
 +	for_each_possible_cpu(cpu) {
@@ -8796,6 +8840,34 @@ index 000000000000..5b094d9e0734
 +	___might_sleep(file, line, preempt_offset);
 +}
 +EXPORT_SYMBOL(__might_sleep);
++
++void __cant_sleep(const char *file, int line, int preempt_offset)
++{
++	static unsigned long prev_jiffy;
++
++	if (irqs_disabled())
++		return;
++
++	if (!IS_ENABLED(CONFIG_PREEMPT_COUNT))
++		return;
++
++	if (preempt_count() > preempt_offset)
++		return;
++
++	if (time_before(jiffies, prev_jiffy + HZ) && prev_jiffy)
++		return;
++	prev_jiffy = jiffies;
++
++	printk(KERN_ERR "BUG: assuming atomic context at %s:%d\n", file, line);
++	printk(KERN_ERR "in_atomic(): %d, irqs_disabled(): %d, pid: %d, name: %s\n",
++			in_atomic(), irqs_disabled(),
++			current->pid, current->comm);
++
++	debug_show_held_locks(current);
++	dump_stack();
++	add_taint(TAINT_WARN, LOCKDEP_STILL_OK);
++}
++EXPORT_SYMBOL_GPL(__cant_sleep);
 +
 +void ___might_sleep(const char *file, int line, int preempt_offset)
 +{
@@ -9076,10 +9148,10 @@ index 000000000000..5b094d9e0734
 +#undef CREATE_TRACE_POINTS
 diff --git a/kernel/sched/MuQSS.h b/kernel/sched/MuQSS.h
 new file mode 100644
-index 000000000000..7dfef921a9ee
+index 000000000000..0237ac382643
 --- /dev/null
 +++ b/kernel/sched/MuQSS.h
-@@ -0,0 +1,950 @@
+@@ -0,0 +1,957 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +#ifndef MUQSS_SCHED_H
 +#define MUQSS_SCHED_H
@@ -9339,7 +9411,8 @@ index 000000000000..7dfef921a9ee
 +#endif /* CONFIG_PARAVIRT_TIME_ACCOUNTING */
 +
 +	u64 clock, old_clock, last_tick;
-+	u64 clock_task;
++	/* Ensure that all clocks are in the same cache line */
++	u64 clock_task ____cacheline_aligned;
 +	int dither;
 +
 +	int iso_ticks;
@@ -9423,7 +9496,7 @@ index 000000000000..7dfef921a9ee
 +
 +static inline int task_on_rq_migrating(struct task_struct *p)
 +{
-+	return p->on_rq == TASK_ON_RQ_MIGRATING;
++	return READ_ONCE(p->on_rq) == TASK_ON_RQ_MIGRATING;
 +}
 +
 +static inline void rq_lock(struct rq *rq)
@@ -9602,7 +9675,7 @@ index 000000000000..7dfef921a9ee
 +
 +/*
 + * The domain tree (rq->sd) is protected by RCU's quiescent state transition.
-+ * See detach_destroy_domains: synchronize_sched for details.
++ * See destroy_sched_domains: call_rcu for details.
 + *
 + * The domain tree of any CPU may only be accessed from within
 + * preempt-disabled sections.
@@ -10021,17 +10094,23 @@ index 000000000000..7dfef921a9ee
 +
 +#if defined(CONFIG_ENERGY_MODEL) && defined(CONFIG_CPU_FREQ_GOV_SCHEDUTIL)
 +#define perf_domain_span(pd) (to_cpumask(((pd)->em_pd->cpus)))
-+#else
++
++DECLARE_STATIC_KEY_FALSE(sched_energy_present);
++
++static inline bool sched_energy_enabled(void)
++{
++	return static_branch_unlikely(&sched_energy_present);
++}
++
++#else /* ! (CONFIG_ENERGY_MODEL && CONFIG_CPU_FREQ_GOV_SCHEDUTIL) */
++
 +#define perf_domain_span(pd) NULL
-+#endif
++static inline bool sched_energy_enabled(void) { return false; }
 +
-+#ifdef CONFIG_SMP
-+extern struct static_key_false sched_energy_present;
-+#endif
-+
++#endif /* CONFIG_ENERGY_MODEL && CONFIG_CPU_FREQ_GOV_SCHEDUTIL */
 +#endif /* MUQSS_SCHED_H */
 diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
-index 033ec7c45f13..6052f5cd4aaa 100644
+index 3638d2377e3c..50c673564b92 100644
 --- a/kernel/sched/cpufreq_schedutil.c
 +++ b/kernel/sched/cpufreq_schedutil.c
 @@ -175,6 +175,12 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
@@ -10173,7 +10252,7 @@ index f5516bae0c1b..c14cd1bcdbd0 100644
  };
 +#endif /* CONFIG_SCHED_MUQSS */
 diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index d04530bf251f..e0d4a0069808 100644
+index efa686eeff26..225fd2b5e652 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
 @@ -2,6 +2,19 @@
@@ -10196,10 +10275,10 @@ index d04530bf251f..e0d4a0069808 100644
  #include <linux/sched.h>
  
  #include <linux/sched/autogroup.h>
-@@ -2307,3 +2320,30 @@ unsigned long scale_irq_capacity(unsigned long util, unsigned long irq, unsigned
- #ifdef CONFIG_SMP
- extern struct static_key_false sched_energy_present;
- #endif
+@@ -2341,3 +2354,30 @@ static inline bool sched_energy_enabled(void)
+ static inline bool sched_energy_enabled(void) { return false; }
+ 
+ #endif /* CONFIG_ENERGY_MODEL && CONFIG_CPU_FREQ_GOV_SCHEDUTIL */
 +
 +/* MuQSS compatibility functions */
 +static inline bool softirq_pending(int cpu)
@@ -10228,10 +10307,10 @@ index d04530bf251f..e0d4a0069808 100644
 +#endif
 +#endif /* CONFIG_SCHED_MUQSS */
 diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
-index 3f35ba1d8fde..c2fdd67d747e 100644
+index ab7f371a3a17..5327c92302a0 100644
 --- a/kernel/sched/topology.c
 +++ b/kernel/sched/topology.c
-@@ -413,7 +413,11 @@ void rq_attach_root(struct rq *rq, struct root_domain *rd)
+@@ -442,7 +442,11 @@ void rq_attach_root(struct rq *rq, struct root_domain *rd)
  	struct root_domain *old_rd = NULL;
  	unsigned long flags;
  
@@ -10243,7 +10322,7 @@ index 3f35ba1d8fde..c2fdd67d747e 100644
  
  	if (rq->rd) {
  		old_rd = rq->rd;
-@@ -439,7 +443,11 @@ void rq_attach_root(struct rq *rq, struct root_domain *rd)
+@@ -468,7 +472,11 @@ void rq_attach_root(struct rq *rq, struct root_domain *rd)
  	if (cpumask_test_cpu(rq->cpu, cpu_active_mask))
  		set_rq_online(rq);
  
@@ -10254,7 +10333,7 @@ index 3f35ba1d8fde..c2fdd67d747e 100644
 +#endif
  
  	if (old_rd)
- 		call_rcu_sched(&old_rd->rcu, free_rootdomain);
+ 		call_rcu(&old_rd->rcu, free_rootdomain);
 diff --git a/kernel/skip_list.c b/kernel/skip_list.c
 new file mode 100644
 index 000000000000..bf5c6e97e139
@@ -10410,10 +10489,10 @@ index 000000000000..bf5c6e97e139
 +	l->entries--;
 +}
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index ba4d9e8..37cf9d5 100644
+index c9ec050bcf46..61603de4fa1e 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -129,8 +129,14 @@ static int __maybe_unused four = 4;
+@@ -131,8 +131,14 @@ static int __maybe_unused four = 4;
  static unsigned long zero_ul;
  static unsigned long one_ul = 1;
  static unsigned long long_max = LONG_MAX;
@@ -10430,7 +10509,7 @@ index ba4d9e8..37cf9d5 100644
  #ifdef CONFIG_PRINTK
  static int ten_thousand = 10000;
  #endif
-@@ -298,7 +304,7 @@ static struct ctl_table sysctl_base_table[] = {
+@@ -305,7 +311,7 @@ static struct ctl_table sysctl_base_table[] = {
  	{ }
  };
  
@@ -10439,7 +10518,7 @@ index ba4d9e8..37cf9d5 100644
  static int min_sched_granularity_ns = 100000;		/* 100 usecs */
  static int max_sched_granularity_ns = NSEC_PER_SEC;	/* 1 second */
  static int min_wakeup_granularity_ns;			/* 0 usecs */
-@@ -315,6 +321,7 @@ static int max_extfrag_threshold = 1000;
+@@ -322,6 +328,7 @@ static int max_extfrag_threshold = 1000;
  #endif
  
  static struct ctl_table kern_table[] = {
@@ -10447,15 +10526,15 @@ index ba4d9e8..37cf9d5 100644
  	{
  		.procname	= "sched_child_runs_first",
  		.data		= &sysctl_sched_child_runs_first,
-@@ -469,6 +476,7 @@ static struct ctl_table kern_table[] = {
- 		.extra1		= &one,
+@@ -487,6 +494,7 @@ static struct ctl_table kern_table[] = {
+ 		.extra2		= &one,
  	},
  #endif
 +#endif /* !CONFIG_SCHED_MUQSS */
  #ifdef CONFIG_PROVE_LOCKING
  	{
  		.procname	= "prove_locking",
-@@ -1041,6 +1049,44 @@ static struct ctl_table kern_table[] = {
+@@ -1059,6 +1067,44 @@ static struct ctl_table kern_table[] = {
  		.proc_handler	= proc_dointvec,
  	},
  #endif
@@ -10519,10 +10598,10 @@ index 5e77662dd2d9..3a115f145d95 100644
  /**
   * clockevents_increase_min_delta - raise minimum delta of a clock event device
 diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
-index 80f955210861..2ba579215c18 100644
+index 0a426f4e3125..bdd0a5c1811e 100644
 --- a/kernel/time/posix-cpu-timers.c
 +++ b/kernel/time/posix-cpu-timers.c
-@@ -830,7 +830,7 @@ static void check_thread_timers(struct task_struct *tsk,
+@@ -829,7 +829,7 @@ static void check_thread_timers(struct task_struct *tsk,
  	tsk_expires->virt_exp = expires;
  
  	tsk_expires->sched_exp = check_timers_list(++timers, firing,
@@ -10531,7 +10610,7 @@ index 80f955210861..2ba579215c18 100644
  
  	/*
  	 * Check for the special case thread timers.
-@@ -840,7 +840,7 @@ static void check_thread_timers(struct task_struct *tsk,
+@@ -839,7 +839,7 @@ static void check_thread_timers(struct task_struct *tsk,
  		unsigned long hard = task_rlimit_max(tsk, RLIMIT_RTTIME);
  
  		if (hard != RLIM_INFINITY &&
@@ -10540,7 +10619,7 @@ index 80f955210861..2ba579215c18 100644
  			/*
  			 * At the hard limit, we just die.
  			 * No need to calculate anything else now.
-@@ -852,7 +852,7 @@ static void check_thread_timers(struct task_struct *tsk,
+@@ -851,7 +851,7 @@ static void check_thread_timers(struct task_struct *tsk,
  			__group_send_sig_info(SIGKILL, SEND_SIG_PRIV, tsk);
  			return;
  		}
@@ -10549,7 +10628,7 @@ index 80f955210861..2ba579215c18 100644
  			/*
  			 * At the soft limit, send a SIGXCPU every second.
  			 */
-@@ -1092,7 +1092,7 @@ static inline int fastpath_timer_check(struct task_struct *tsk)
+@@ -1091,7 +1091,7 @@ static inline int fastpath_timer_check(struct task_struct *tsk)
  		struct task_cputime task_sample;
  
  		task_cputime(tsk, &task_sample.utime, &task_sample.stime);
@@ -10559,7 +10638,7 @@ index 80f955210861..2ba579215c18 100644
  			return 1;
  	}
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index 444156debfa0..f499e0a7d731 100644
+index 2fce056f8a49..926ab73595a2 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
 @@ -1478,7 +1478,7 @@ static unsigned long __next_timer_interrupt(struct timer_base *base)

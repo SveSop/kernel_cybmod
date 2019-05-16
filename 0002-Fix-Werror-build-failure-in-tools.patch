@@ -1,4 +1,4 @@
-From 7c17b401408db5beddb41986030a81889b0ee8ad Mon Sep 17 00:00:00 2001
+From 89b8d55e743d382f463526832cf8b8a4f8cf32ff Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sun, 18 Feb 2018 12:36:22 +1100
 Subject: [PATCH 02/16] Fix Werror build failure in tools.
@@ -8,7 +8,7 @@ Subject: [PATCH 02/16] Fix Werror build failure in tools.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
-index 53f8be0..ad2c11a 100644
+index 53f8be0f4a1f..ad2c11a881db 100644
 --- a/tools/objtool/Makefile
 +++ b/tools/objtool/Makefile
 @@ -34,7 +34,7 @@ INCLUDES := -I$(srctree)/tools/include \
@@ -22,3 +22,4 @@ index 53f8be0..ad2c11a 100644
  # Allow old libelf to be used:
 -- 
 2.17.1
+

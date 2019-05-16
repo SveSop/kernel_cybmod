@@ -1,7 +1,7 @@
-From bd263169e94a33fe968f7031aeab73fcc94c03db Mon Sep 17 00:00:00 2001
+From c6e983640fdf502a705174154c71e9372ea08fb2 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
-Date: Sat, 2 Jun 2018 12:47:40 +0200
-Subject: [PATCH] gcctunes-4.19: merge graysky's patchset
+Date: Sat, 1 Dec 2018 14:14:37 +0100
+Subject: [PATCH] cpu-5.1: merge graysky's patchset
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -12,7 +12,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
  4 files changed, 323 insertions(+), 35 deletions(-)
 
 diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
-index 638411f22267..160924412d6a 100644
+index 6adce15268bd..f8612b07d32f 100644
 --- a/arch/x86/Kconfig.cpu
 +++ b/arch/x86/Kconfig.cpu
 @@ -116,6 +116,7 @@ config MPENTIUMM
@@ -255,7 +255,7 @@ index 638411f22267..160924412d6a 100644
 +	select X86_P6_NOP
 +	---help---
 +
-+	  Select this for 8th Gen Core processors.
++	  Select this for 8th Gen Core processors
 +
 +	  Enables -march=cannonlake
 +
@@ -363,7 +363,7 @@ index 638411f22267..160924412d6a 100644
  config X86_MINIMUM_CPU_FAMILY
  	int
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 8f6e7eb8ae9f..f01202bca3ff 100644
+index a587805c6687..550973f69db8 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
 @@ -118,13 +118,46 @@ else
@@ -412,12 +412,12 @@ index 8f6e7eb8ae9f..f01202bca3ff 100644
 +        cflags-$(CONFIG_MICELAKE) += \
 +                $(call cc-option,-march=icelake,$(call cc-option,-mtune=icelake))
 +        cflags-$(CONFIG_MATOM) += $(call cc-option,-march=bonnell) \
-+                $(call cc-option,-mtune=bonnell,$(call cc-option,-mtune=bonnell))
++                $(call cc-option,-mtune=bonnell,$(call cc-option,-mtune=generic))
          cflags-$(CONFIG_GENERIC_CPU) += $(call cc-option,-mtune=generic)
          KBUILD_CFLAGS += $(cflags-y)
  
 diff --git a/arch/x86/Makefile_32.cpu b/arch/x86/Makefile_32.cpu
-index 1f5faf8606b4..4ac25b19e53e 100644
+index 1f5faf8606b4..14a6d19995cc 100644
 --- a/arch/x86/Makefile_32.cpu
 +++ b/arch/x86/Makefile_32.cpu
 @@ -23,7 +23,18 @@ cflags-$(CONFIG_MK6)		+= -march=k6
@@ -457,7 +457,7 @@ index 1f5faf8606b4..4ac25b19e53e 100644
 +cflags-$(CONFIG_MCANNONLAKE)	+= -march=i686 $(call tune,cannonlake)
 +cflags-$(CONFIG_MICELAKE)	+= -march=i686 $(call tune,icelake)
 +cflags-$(CONFIG_MATOM)		+= $(call cc-option,-march=bonnell,$(call cc-option,-march=core2,-march=i686)) \
-+	$(call cc-option,-mtune=bonnell,$(call cc-option,-mtune=bonnell))
++	$(call cc-option,-mtune=bonnell,$(call cc-option,-mtune=generic))
  
  # AMD Elan support
  cflags-$(CONFIG_MELAN)		+= -march=i486
@@ -524,5 +524,5 @@ index 7948a17febb4..44b776297dc3 100644
  #define MODULE_PROC_FAMILY "ELAN "
  #elif defined CONFIG_MCRUSOE
 -- 
-2.19.1.542.gc4df23f792
+2.21.0.777.g83232e3864
 

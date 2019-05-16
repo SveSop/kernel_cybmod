@@ -1,34 +1,36 @@
-## Cybmod patches for 5.0 kernel  
+## Cybmod patches for 5.1 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.0.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.0.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.1.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.1.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.0.16  
+0000 : Kernel patch 5.1.2  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0015 : Last of the -ck patches.  
 0016 : zswap tweak patch  
 0017 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
-0018 : Set_MinMax_KB_Read-ahead from Xanmod patches  
-0019 : Add ZEN -O3 optimize option patch.  
+0018 : Add ZEN -O3 optimize option patch.  
+0019 : nfp-make-friends-with-O3  
 0020 : Graysky's GCC optimization patches  
-0021 : Graysky's GCC optimization patches  
-0022 : Set CAKE qdisk default  
-0023 : Kernel naming tweak  
-0024 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
-0025 : Kernel patch for 5.0 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
-0026 : Increase_task_balance from Xanmod patches  
-0027 : set_rq_affinity_mt_block from Xanmod patches  
-blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.0](https://github.com/sirlucjan/kernel-patches/tree/master/5.0)  
+0021 : nr_migrate_core  
+0022 : cache_pressure  
+0023 : mm_read-ahead  
+0024 : revert_acpi_change_for_nct6775  
+0025 : Cake_Qdisc_default  
+0026 : io_uring-fix-shadowed-variable-ret-return-code-being  
+0027 : Kernel naming tweak  
+0028 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
+blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.1](https://github.com/sirlucjan/kernel-patches/tree/master/5.1)  
+bfq-patches : Collection of "bfq" scheduler patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.1](https://github.com/sirlucjan/kernel-patches/tree/master/5.1)  
 
-**AMD support is disabled in the example config (patch 0024), so if you have a AMD processor, you need to enable that**  
-**This branch has MuQSS CPU scheduler, config (patch 0024) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
+**AMD support is disabled in the example config (patch 0028), so if you have a AMD processor, you need to enable that**  
+**This branch has MuQSS CPU scheduler, config (patch 0028) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
 
 To build on Ubuntu:  
 ```
-tar xf linux-5.0.tar.xz    
-cd linux-5.0  
+tar xf linux-5.1.tar.xz    
+cd linux-5.1  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```

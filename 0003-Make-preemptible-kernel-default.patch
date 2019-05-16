@@ -1,4 +1,4 @@
-From aa3a9b05caccf74c7a2413550c85f6028ce0875d Mon Sep 17 00:00:00 2001
+From 4caf76327e0d7e1c25b40dbbf7294cc80a2d167c Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 29 Oct 2016 11:20:37 +1100
 Subject: [PATCH 03/16] Make preemptible kernel default.
@@ -81,7 +81,7 @@ Make full preempt default on all arches.
  create mode 100644 arch/tile/configs/tilepro_defconfig
 
 diff --git a/arch/arc/configs/tb10x_defconfig b/arch/arc/configs/tb10x_defconfig
-index e71ade3cf9c8..771f0bad7a3c 100644
+index 5b5119d2b5d5..7425d2ec3a82 100644
 --- a/arch/arc/configs/tb10x_defconfig
 +++ b/arch/arc/configs/tb10x_defconfig
 @@ -29,7 +29,7 @@ CONFIG_ARC_PLAT_TB10X=y
@@ -94,7 +94,7 @@ index e71ade3cf9c8..771f0bad7a3c 100644
  CONFIG_NET=y
  CONFIG_PACKET=y
 diff --git a/arch/arm/configs/bcm2835_defconfig b/arch/arm/configs/bcm2835_defconfig
-index bb6a35fb1dd7..ff58a38d0d5b 100644
+index dcf7610cfe55..d15cd13aa944 100644
 --- a/arch/arm/configs/bcm2835_defconfig
 +++ b/arch/arm/configs/bcm2835_defconfig
 @@ -29,7 +29,7 @@ CONFIG_MODULE_UNLOAD=y
@@ -107,7 +107,7 @@ index bb6a35fb1dd7..ff58a38d0d5b 100644
  CONFIG_KSM=y
  CONFIG_CLEANCACHE=y
 diff --git a/arch/arm/configs/imx_v6_v7_defconfig b/arch/arm/configs/imx_v6_v7_defconfig
-index 5586a5074a96..616816acae73 100644
+index 50fb01d70b10..5f2960f1853f 100644
 --- a/arch/arm/configs/imx_v6_v7_defconfig
 +++ b/arch/arm/configs/imx_v6_v7_defconfig
 @@ -45,6 +45,7 @@ CONFIG_PCI_MSI=y
@@ -119,7 +119,7 @@ index 5586a5074a96..616816acae73 100644
  CONFIG_FORCE_MAX_ZONEORDER=14
  CONFIG_CMDLINE="noinitrd console=ttymxc0,115200"
 diff --git a/arch/arm/configs/mps2_defconfig b/arch/arm/configs/mps2_defconfig
-index 0bcdec7cc169..10ceaefa51e0 100644
+index 1d923dbb9928..9c1931f1fafd 100644
 --- a/arch/arm/configs/mps2_defconfig
 +++ b/arch/arm/configs/mps2_defconfig
 @@ -18,7 +18,7 @@ CONFIG_ARCH_MPS2=y
@@ -3489,7 +3489,7 @@ index 000000000000..04fee07ea6c5
 +CONFIG_CRYPTO_TEA=m
 +CONFIG_CRYPTO_TWOFISH=m
 diff --git a/arch/powerpc/configs/ppc6xx_defconfig b/arch/powerpc/configs/ppc6xx_defconfig
-index 53687c3a70c4..33bc9f4d70ff 100644
+index 7c6baf6df139..9aea58fa9dba 100644
 --- a/arch/powerpc/configs/ppc6xx_defconfig
 +++ b/arch/powerpc/configs/ppc6xx_defconfig
 @@ -74,7 +74,7 @@ CONFIG_QE_GPIO=y
@@ -3631,7 +3631,7 @@ index ceb48e9b70f4..1a69eda6610c 100644
  CONFIG_CMDLINE="console=ttySC1,38400N81 root=/dev/nfs ip=:::::eth1:autoconf rw"
  CONFIG_PCI=y
 diff --git a/arch/sparc/configs/sparc64_defconfig b/arch/sparc/configs/sparc64_defconfig
-index 4d4e1cc6402f..04bea1d28ba7 100644
+index ea547d596fcf..e1f11071da4c 100644
 --- a/arch/sparc/configs/sparc64_defconfig
 +++ b/arch/sparc/configs/sparc64_defconfig
 @@ -22,7 +22,7 @@ CONFIG_NO_HZ=y
@@ -4591,7 +4591,7 @@ index 000000000000..e8c4003cbd81
 +CONFIG_CRC_CCITT=m
 +CONFIG_CRC7=m
 diff --git a/arch/x86/configs/i386_defconfig b/arch/x86/configs/i386_defconfig
-index 4bb95d7ad947..1a144867d9d5 100644
+index 9f908112bbb9..25452ca053b8 100644
 --- a/arch/x86/configs/i386_defconfig
 +++ b/arch/x86/configs/i386_defconfig
 @@ -41,7 +41,7 @@ CONFIG_SMP=y
@@ -4604,7 +4604,7 @@ index 4bb95d7ad947..1a144867d9d5 100644
  CONFIG_X86_MCE=y
  CONFIG_X86_REBOOTFIXUPS=y
 diff --git a/arch/x86/configs/x86_64_defconfig b/arch/x86/configs/x86_64_defconfig
-index 0fed049422a8..41236eed0fcb 100644
+index 1d3badfda09e..235b63cb08fa 100644
 --- a/arch/x86/configs/x86_64_defconfig
 +++ b/arch/x86/configs/x86_64_defconfig
 @@ -40,7 +40,7 @@ CONFIG_SMP=y

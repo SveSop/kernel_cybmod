@@ -1,4 +1,4 @@
-From 2efc0c737777ec85f7674ebcb36d0a8f8a411d60 Mon Sep 17 00:00:00 2001
+From b713b0c571fa869fec376742be0e9c217ab38dab Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Fri, 4 Nov 2016 09:25:54 +1100
 Subject: [PATCH 07/16] Convert msleep to use hrtimers when active.
@@ -8,7 +8,7 @@ Subject: [PATCH 07/16] Convert msleep to use hrtimers when active.
  1 file changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index 809981b2ff11..f9cb3b6bfaaf 100644
+index 98803a47491c..3ab277ba0f44 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
 @@ -1964,7 +1964,19 @@ void __init init_timers(void)

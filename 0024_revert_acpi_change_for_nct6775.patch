@@ -2,7 +2,7 @@ diff --git a/drivers/acpi/acpica/dsopcode.c b/drivers/acpi/acpica/dsopcode.c
 index e9fb0bf3c8d2..78f9de260d5f 100644
 --- a/drivers/acpi/acpica/dsopcode.c
 +++ b/drivers/acpi/acpica/dsopcode.c
-@@ -417,10 +417,6 @@
+@@ -429,10 +429,6 @@
  			  ACPI_FORMAT_UINT64(obj_desc->region.address),
  			  obj_desc->region.length));
  
