@@ -4,35 +4,37 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Kernel 5.0.11 patch  
-0002 : BMQ Cpu scheduler [https://cchalpha.blogspot.com/](https://cchalpha.blogspot.com/)  
-0004 : Swap tweak from -ck kernel  
-0005 : ZSwap tweak from -ck kernel  
-0006 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
-0007 : Set_MinMax_KB_Read-ahead from Xanmod patches  
-0008 : Increase_task_balance from Xanmod patches  
-0009 : set_rq_affinity_mt_block from Xanmod patches  
-0010 : Graysky's GCC optimization patches  
-0011 : Graysky's GCC optimization patches  
-0012 : Set CAKE qdisk default  
-0013 : Kernel naming tweak  
-0014 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0010/0011)  
-0015 : Kernel patch for 5.0 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
-0016 : Add ZEN -O3 optimize option patch.  
+0000 : Kernel patch 5.0.16  
+0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
+to  
+0015 : Last of the -ck patches.  
+0016 : zswap tweak patch  
+0017 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
+0018 : Set_MinMax_KB_Read-ahead from Xanmod patches  
+0019 : Add ZEN -O3 optimize option patch.  
+0020 : Graysky's GCC optimization patches  
+0021 : Graysky's GCC optimization patches  
+0022 : Set CAKE qdisk default  
+0023 : Kernel naming tweak  
+0024 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
+0025 : Kernel patch for 5.0 that fix Asus motherboards using nct6775 module to monitor volt/temps.  
+0026 : Increase_task_balance from Xanmod patches  
+0027 : set_rq_affinity_mt_block from Xanmod patches  
 blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.0](https://github.com/sirlucjan/kernel-patches/tree/master/5.0)  
 
-**AMD support is disabled in the example config (patch 0014), so if you have a AMD processor, you need to enable that**  
+**AMD support is disabled in the example config (patch 0024), so if you have a AMD processor, you need to enable that**  
+**This branch has MuQSS CPU scheduler, config (patch 0024) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
 
 To build on Ubuntu:  
 ```
-tar xf linux-5.0.tar.xz  
+tar xf linux-5.0.tar.xz    
 cd linux-5.0  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```
 When build is done, the .deb files is in the ../ folder relative to the source.  
 
-To benefit from patch 0006, and sign your kernel modules with dkms with Ubuntu you need to do:  
+To benefit from patch 0017, and sign your kernel modules with dkms with Ubuntu you need to do:  
 `sudo mokutil --import /var/lib/shim-signed/mok/MOK.der`  
 This will put the DKMS certificate up for signing. You then need to reboot and go through the bootup sequence allowing the certificate to be signed by Ubuntu.  
 
@@ -60,3 +62,5 @@ If you sign a DKMS kernel module, or use this script (or manually) to add module
 `sudo update-initramfs -u`  
 
 _This kernelconfig is hugely inspired by the Xanmod kernel [https://xanmod.org](https://xanmod.org)_  
+
+More info to come...  

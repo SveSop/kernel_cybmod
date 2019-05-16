@@ -23,7 +23,7 @@ diff --git a/block/blk-mq.c b/block/blk-mq.c
 index 84e807e4e93c..8fcdd0bab65f 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -2016,11 +2016,13 @@ static blk_qc_t blk_mq_make_request(struct request_queue *q, struct bio *bio)
+@@ -2012,11 +2012,13 @@ static blk_qc_t blk_mq_make_request(struct request_queue *q, struct bio *bio)
  			plug->rq_count--;
  		}
  		blk_add_rq_to_plug(plug, rq);

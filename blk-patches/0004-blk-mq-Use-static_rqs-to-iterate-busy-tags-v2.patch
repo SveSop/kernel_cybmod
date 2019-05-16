@@ -398,7 +398,7 @@ index b20f1472848a..ec4ec0315cdf 100644
  				     bool reserved)
  {
  	struct mq_inflight *mi = priv;
-@@ -826,28 +824,22 @@ struct request *blk_mq_tag_to_rq(struct blk_mq_tags *tags, unsigned int tag)
+@@ -821,28 +819,22 @@ struct request *blk_mq_tag_to_rq(struct blk_mq_tags *tags, unsigned int tag)
  }
  EXPORT_SYMBOL(blk_mq_tag_to_rq);
  
@@ -432,7 +432,7 @@ index b20f1472848a..ec4ec0315cdf 100644
  	return busy;
  }
  EXPORT_SYMBOL_GPL(blk_mq_queue_inflight);
-@@ -887,8 +879,7 @@ static bool blk_mq_req_expired(struct request *rq, unsigned long *next)
+@@ -882,8 +874,7 @@ static bool blk_mq_req_expired(struct request *rq, unsigned long *next)
  	return false;
  }
  
@@ -442,7 +442,7 @@ index b20f1472848a..ec4ec0315cdf 100644
  {
  	unsigned long *next = priv;
  
-@@ -949,7 +940,7 @@ static void blk_mq_timeout_work(struct work_struct *work)
+@@ -944,7 +935,7 @@ static void blk_mq_timeout_work(struct work_struct *work)
  	if (!percpu_ref_tryget(&q->q_usage_counter))
  		return;
  
@@ -451,7 +451,7 @@ index b20f1472848a..ec4ec0315cdf 100644
  
  	if (next != 0) {
  		mod_timer(&q->timeout, next);
-@@ -3235,10 +3226,6 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+@@ -3231,10 +3222,6 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
  
  	list_for_each_entry(q, &set->tag_list, tag_set_list)
  		blk_mq_freeze_queue(q);
@@ -552,7 +552,7 @@ diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
 index f3b9d91ba0df..667da72d41f6 100644
 --- a/drivers/nvme/host/fc.c
 +++ b/drivers/nvme/host/fc.c
-@@ -2368,7 +2368,7 @@ nvme_fc_complete_rq(struct request *rq)
+@@ -2378,7 +2378,7 @@ nvme_fc_complete_rq(struct request *rq)
  /*
   * This routine is used by the transport when it needs to find active
   * io on a queue that is to be terminated. The transport uses
@@ -561,7 +561,7 @@ index f3b9d91ba0df..667da72d41f6 100644
   * this routine to kill them on a 1 by 1 basis.
   *
   * As FC allocates FC exchange for each io, the transport must contact
-@@ -2729,7 +2729,7 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
+@@ -2739,7 +2739,7 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
  	 * If io queues are present, stop them and terminate all outstanding
  	 * ios on them. As FC allocates FC exchange for each io, the
  	 * transport must contact the LLDD to terminate the exchange,
@@ -570,7 +570,7 @@ index f3b9d91ba0df..667da72d41f6 100644
  	 * to tell us what io's are busy and invoke a transport routine
  	 * to kill them with the LLDD.  After terminating the exchange
  	 * the LLDD will call the transport's normal io done path, but it
-@@ -2739,7 +2739,7 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
+@@ -2749,7 +2749,7 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
  	 */
  	if (ctrl->ctrl.queue_count > 1) {
  		nvme_stop_queues(&ctrl->ctrl);
@@ -579,7 +579,7 @@ index f3b9d91ba0df..667da72d41f6 100644
  				nvme_fc_terminate_exchange, &ctrl->ctrl);
  	}
  
-@@ -2757,11 +2757,11 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
+@@ -2767,11 +2767,11 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
  
  	/*
  	 * clean up the admin queue. Same thing as above.
