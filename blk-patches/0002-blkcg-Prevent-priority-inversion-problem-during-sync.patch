@@ -226,7 +226,7 @@ index 36855c1f8daf..77c039a0ec25 100644
  #include "internal.h"
  
  /*
-@@ -2446,6 +2447,8 @@ void sync_inodes_sb(struct super_block *sb)
+@@ -2451,6 +2452,8 @@ void sync_inodes_sb(struct super_block *sb)
  		return;
  	WARN_ON(!rwsem_is_locked(&sb->s_umount));
  
@@ -235,7 +235,7 @@ index 36855c1f8daf..77c039a0ec25 100644
  	/* protect against inode wb switch, see inode_switch_wbs_work_fn() */
  	bdi_down_write_wb_switch_rwsem(bdi);
  	bdi_split_work_to_wbs(bdi, &work, false);
-@@ -2453,6 +2456,8 @@ void sync_inodes_sb(struct super_block *sb)
+@@ -2458,6 +2461,8 @@ void sync_inodes_sb(struct super_block *sb)
  	bdi_up_write_wb_switch_rwsem(bdi);
  
  	wait_sb_inodes(sb);
