@@ -11,7 +11,7 @@ diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
 index 53f8be0f4a1f..ad2c11a881db 100644
 --- a/tools/objtool/Makefile
 +++ b/tools/objtool/Makefile
-@@ -34,7 +34,7 @@ INCLUDES := -I$(srctree)/tools/include \
+@@ -35,7 +35,7 @@ INCLUDES := -I$(srctree)/tools/include \
  	    -I$(srctree)/tools/arch/$(HOSTARCH)/include/uapi \
  	    -I$(srctree)/tools/objtool/arch/$(ARCH)/include
  WARNINGS := $(EXTRA_WARNINGS) -Wno-switch-default -Wno-switch-enum -Wno-packed

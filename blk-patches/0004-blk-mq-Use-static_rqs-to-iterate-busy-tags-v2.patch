@@ -451,7 +451,7 @@ index fc60ed7e940e..08150ccb95d8 100644
  
  	if (next != 0) {
  		mod_timer(&q->timeout, next);
-@@ -3234,10 +3225,6 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+@@ -3230,10 +3221,6 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
  
  	list_for_each_entry(q, &set->tag_list, tag_set_list)
  		blk_mq_freeze_queue(q);
