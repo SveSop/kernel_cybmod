@@ -241,7 +241,7 @@ diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
 index 504282af27e5..da60ab9b56c7 100644
 --- a/drivers/net/usb/usbnet.c
 +++ b/drivers/net/usb/usbnet.c
-@@ -770,7 +770,7 @@ static void wait_skb_queue_empty(struct sk_buff_head *q)
+@@ -771,7 +771,7 @@ static void wait_skb_queue_empty(struct sk_buff_head *q)
  	spin_lock_irqsave(&q->lock, flags);
  	while (!skb_queue_empty(q)) {
  		spin_unlock_irqrestore(&q->lock, flags);
@@ -955,7 +955,7 @@ diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
 index c5880329ae37..aad921814170 100644
 --- a/fs/btrfs/extent-tree.c
 +++ b/fs/btrfs/extent-tree.c
-@@ -6206,7 +6206,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
+@@ -6205,7 +6205,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
  			flush = BTRFS_RESERVE_FLUSH_LIMIT;
  
  		if (btrfs_transaction_in_commit(fs_info))

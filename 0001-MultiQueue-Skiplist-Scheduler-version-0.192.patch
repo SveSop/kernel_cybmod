@@ -922,7 +922,7 @@ diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
 index 7e34b9eba5de..10d5e92f3291 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -807,6 +807,8 @@ config SCHED_SMT
+@@ -825,6 +825,8 @@ config SCHED_SMT
  	  MultiThreading at a cost of slightly increased overhead in some
  	  places. If unsure say N here.
  
