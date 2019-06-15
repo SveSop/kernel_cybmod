@@ -15,7 +15,7 @@ diff --git a/block/blk-mq.c b/block/blk-mq.c
 index 9248add8194e..32741990dbad 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -2844,7 +2844,7 @@ struct request_queue *blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+@@ -2846,7 +2846,7 @@ struct request_queue *blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
  		goto err_exit;
  
  	if (blk_mq_alloc_ctxs(q))
@@ -24,7 +24,7 @@ index 9248add8194e..32741990dbad 100644
  
  	/* init q->mq_kobj and sw queues' kobjects */
  	blk_mq_sysfs_init(q);
-@@ -2905,6 +2905,9 @@ struct request_queue *blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+@@ -2907,6 +2907,9 @@ struct request_queue *blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
  	kfree(q->queue_hw_ctx);
  err_sys_init:
  	blk_mq_sysfs_deinit(q);
