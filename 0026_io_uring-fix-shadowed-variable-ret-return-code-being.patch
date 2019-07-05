@@ -25,7 +25,7 @@ diff --git a/fs/io_uring.c b/fs/io_uring.c
 index 84efb8956734..38ec675e8c40 100644
 --- a/fs/io_uring.c
 +++ b/fs/io_uring.c
-@@ -2225,7 +2225,6 @@ static int io_sqe_files_scm(struct io_ring_ctx *ctx)
+@@ -2224,7 +2224,6 @@ static int io_sqe_files_scm(struct io_ring_ctx *ctx)
  	left = ctx->nr_user_files;
  	while (left) {
  		unsigned this_files = min_t(unsigned, left, SCM_MAX_FD);
