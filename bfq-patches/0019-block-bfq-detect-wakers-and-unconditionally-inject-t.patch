@@ -287,7 +287,7 @@ index 099d927aa..4ecaa9b51 100644
  	bfq_put_queue(bfqq); /* release process reference */
  }
  
-@@ -4699,6 +4891,8 @@ static void bfq_init_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -4700,6 +4892,8 @@ static void bfq_init_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq,
  	RB_CLEAR_NODE(&bfqq->entity.rb_node);
  	INIT_LIST_HEAD(&bfqq->fifo);
  	INIT_HLIST_NODE(&bfqq->burst_list_node);
@@ -296,7 +296,7 @@ index 099d927aa..4ecaa9b51 100644
  
  	bfqq->ref = 0;
  	bfqq->bfqd = bfqd;
-@@ -4917,28 +5111,27 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
+@@ -4918,28 +5112,27 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
  	 * bfqq may have a long think time because of a
  	 * synchronization with some other queue, i.e., because the
  	 * I/O of some other queue may need to be completed for bfqq
@@ -342,7 +342,7 @@ index 099d927aa..4ecaa9b51 100644
  	 * immediately. But this would set to 0 the inject
  	 * limit. Without injection, the blocking I/O would cause the
  	 * think time of bfqq to become long again, and therefore the
-@@ -4949,11 +5142,11 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
+@@ -4950,11 +5143,11 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
  	 * In contrast, if the inject limit is not reset during such a
  	 * long time interval as 100 ms, then the number of short
  	 * think time samples can grow significantly before the reset
@@ -359,7 +359,7 @@ index 099d927aa..4ecaa9b51 100644
  	 * performed at all times, and throughput gets boosted.
  	 *
  	 * An inject limit equal to 1 is however in conflict, in
-@@ -4968,10 +5161,20 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
+@@ -4969,10 +5162,20 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
  	 * brought forward, because it is not blocked for
  	 * milliseconds.
  	 *
@@ -384,7 +384,7 @@ index 099d927aa..4ecaa9b51 100644
  	 */
  	if (state_changed && bfqq->last_serv_time_ns == 0 &&
  	    (time_is_before_eq_jiffies(bfqq->decrease_time_jif +
-@@ -5286,6 +5489,7 @@ static void bfq_completed_request(struct bfq_queue *bfqq, struct bfq_data *bfqd)
+@@ -5287,6 +5490,7 @@ static void bfq_completed_request(struct bfq_queue *bfqq, struct bfq_data *bfqd)
  			1UL<<(BFQ_RATE_SHIFT - 10))
  		bfq_update_rate_reset(bfqd, NULL);
  	bfqd->last_completion = now_ns;

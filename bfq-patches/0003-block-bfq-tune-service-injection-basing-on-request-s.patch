@@ -399,7 +399,7 @@ index 896ff8d47dc1..948ca49e9d60 100644
  
  	/*
  	 * If weight raising has to terminate for bfqq, then next
-@@ -4410,13 +4618,6 @@ static void bfq_init_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -4411,13 +4619,6 @@ static void bfq_init_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq,
  			bfq_mark_bfqq_has_short_ttime(bfqq);
  		bfq_mark_bfqq_sync(bfqq);
  		bfq_mark_bfqq_just_created(bfqq);
@@ -413,7 +413,7 @@ index 896ff8d47dc1..948ca49e9d60 100644
  	} else
  		bfq_clear_bfqq_sync(bfqq);
  
-@@ -4975,6 +5176,147 @@ static void bfq_finish_requeue_request_body(struct bfq_queue *bfqq)
+@@ -4976,6 +5177,147 @@ static void bfq_finish_requeue_request_body(struct bfq_queue *bfqq)
  	bfq_put_queue(bfqq);
  }
  
@@ -561,7 +561,7 @@ index 896ff8d47dc1..948ca49e9d60 100644
  /*
   * Handle either a requeue or a finish for rq. The things to do are
   * the same in both cases: all references to rq are to be dropped. In
-@@ -5019,6 +5361,9 @@ static void bfq_finish_requeue_request(struct request *rq)
+@@ -5020,6 +5362,9 @@ static void bfq_finish_requeue_request(struct request *rq)
  
  		spin_lock_irqsave(&bfqd->lock, flags);
  

@@ -180,7 +180,7 @@ index 4f99a2e4c..15471b3d7 100644
  
  		/*
  		 * The following conditions must hold to setup a new
-@@ -4863,7 +4866,7 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
+@@ -4864,7 +4867,7 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
  				       struct bfq_queue *bfqq,
  				       struct bfq_io_cq *bic)
  {
@@ -189,7 +189,7 @@ index 4f99a2e4c..15471b3d7 100644
  
  	/*
  	 * No need to update has_short_ttime if bfqq is async or in
-@@ -4888,13 +4891,93 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
+@@ -4889,13 +4892,93 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
  	     bfqq->ttime.ttime_mean > bfqd->bfq_slice_idle))
  		has_short_ttime = false;
  

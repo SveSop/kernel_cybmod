@@ -376,7 +376,7 @@ index 679d608347ea..896ff8d47dc1 100644
  }
  
  /*
-@@ -5509,7 +5533,7 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
+@@ -5510,7 +5534,7 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
  		     HRTIMER_MODE_REL);
  	bfqd->idle_slice_timer.function = bfq_idle_slice_timer;
  

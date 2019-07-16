@@ -209,7 +209,7 @@ index 948ca49e9d60..76f73a1a2f40 100644
  	}
  
  	/*
-@@ -5050,6 +5109,9 @@ static void bfq_update_hw_tag(struct bfq_data *bfqd)
+@@ -5051,6 +5110,9 @@ static void bfq_update_hw_tag(struct bfq_data *bfqd)
  	bfqd->hw_tag = bfqd->max_rq_in_driver > BFQ_HW_QUEUE_THRESHOLD;
  	bfqd->max_rq_in_driver = 0;
  	bfqd->hw_tag_samples = 0;
@@ -219,7 +219,7 @@ index 948ca49e9d60..76f73a1a2f40 100644
  }
  
  static void bfq_completed_request(struct bfq_queue *bfqq, struct bfq_data *bfqd)
-@@ -5886,6 +5948,7 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
+@@ -5887,6 +5949,7 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
  	INIT_HLIST_HEAD(&bfqd->burst_list);
  
  	bfqd->hw_tag = -1;

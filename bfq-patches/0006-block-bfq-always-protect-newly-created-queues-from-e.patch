@@ -114,7 +114,7 @@ index 05c14a465f5e..8e53ca4301e6 100644
   *
   * . when the very first queue is created, the queue is inserted into the
   *   list (as it could be the first queue in a possible burst)
-@@ -5694,7 +5710,29 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+@@ -5695,7 +5711,29 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
  		}
  	}
  

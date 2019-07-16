@@ -47,7 +47,7 @@ index 76f73a1a2f40..05c14a465f5e 100644
  		!in_burst &&
  		time_is_before_jiffies(bfqq->soft_rt_next_start) &&
  		bfqq->dispatched == 0;
-@@ -4815,6 +4824,11 @@ bfq_update_io_seektime(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -4816,6 +4825,11 @@ bfq_update_io_seektime(struct bfq_data *bfqd, struct bfq_queue *bfqq,
  {
  	bfqq->seek_history <<= 1;
  	bfqq->seek_history |= BFQ_RQ_SEEKY(bfqd, bfqq->last_request_pos, rq);

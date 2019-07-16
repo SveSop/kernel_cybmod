@@ -79,7 +79,7 @@ index 7f9042bac729..b85a4ab8b9db 100644
  		 * and bfqq can be put.
  		 */
  		bfq_merge_bfqqs(bfqd, bfqd->bio_bic, bfqq,
-@@ -5631,7 +5631,7 @@ static void bfq_prepare_request(struct request *rq, struct bio *bio)
+@@ -5632,7 +5632,7 @@ static void bfq_prepare_request(struct request *rq, struct bio *bio)
   * preparation is that, after the prepare_request hook is invoked for
   * rq, rq may still be transformed into a request with no icq, i.e., a
   * request not associated with any queue. No bfq hook is invoked to

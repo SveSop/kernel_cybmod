@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.1.16  
+0000 : Kernel patch 5.1.18  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0015 : Last of the -ck patches.  
@@ -21,7 +21,6 @@ to
 0026 : io_uring-fix-shadowed-variable-ret-return-code-being  
 0027 : Kernel naming tweak  
 0028 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
-0029 : Bluetooth: Fix minimum encryption key size check
 blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.1](https://github.com/sirlucjan/kernel-patches/tree/master/5.1)  
 bfq-patches : Collection of "bfq" scheduler patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.1](https://github.com/sirlucjan/kernel-patches/tree/master/5.1)  
 

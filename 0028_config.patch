@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,9728 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.1.16 Kernel Configuration
++# Linux/x86 5.1.18 Kernel Configuration
 +#
 +
 +#
@@ -3196,7 +3196,7 @@ new file mode 100644
 +CONFIG_SFP=m
 +CONFIG_AMD_PHY=m
 +CONFIG_AQUANTIA_PHY=m
-+CONFIG_ASIX_PHY=m
++# CONFIG_AX88796B_PHY is not set
 +CONFIG_AT803X_PHY=m
 +CONFIG_BCM7XXX_PHY=m
 +CONFIG_BCM87XX_PHY=m

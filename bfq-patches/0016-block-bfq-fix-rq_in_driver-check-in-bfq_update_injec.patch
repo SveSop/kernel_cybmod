@@ -29,7 +29,7 @@ diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
 index 15471b3d7..bd969382f 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -5489,8 +5489,14 @@ static void bfq_update_inject_limit(struct bfq_data *bfqd,
+@@ -5490,8 +5490,14 @@ static void bfq_update_inject_limit(struct bfq_data *bfqd,
  	 * total service time, and there seem to be the right
  	 * conditions to do it, or we can lower the last base value
  	 * computed.
