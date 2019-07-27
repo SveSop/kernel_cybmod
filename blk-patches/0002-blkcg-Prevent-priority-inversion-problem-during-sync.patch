@@ -46,7 +46,7 @@ diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
 index 94a25971ef01..fc23ed4e40f9 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -1351,6 +1351,136 @@ struct cgroup_subsys io_cgrp_subsys = {
+@@ -1355,6 +1355,136 @@ struct cgroup_subsys io_cgrp_subsys = {
  };
  EXPORT_SYMBOL_GPL(io_cgrp_subsys);
  
@@ -187,7 +187,7 @@ diff --git a/block/blk-throttle.c b/block/blk-throttle.c
 index ce00060b3a48..a51d9301d395 100644
 --- a/block/blk-throttle.c
 +++ b/block/blk-throttle.c
-@@ -970,9 +970,13 @@ static bool tg_may_dispatch(struct throtl_grp *tg, struct bio *bio,
+@@ -967,9 +967,13 @@ static bool tg_may_dispatch(struct throtl_grp *tg, struct bio *bio,
  {
  	bool rw = bio_data_dir(bio);
  	unsigned long bps_wait = 0, iops_wait = 0, max_wait = 0;
@@ -202,7 +202,7 @@ index ce00060b3a48..a51d9301d395 100644
  	 * queued in the group bio list. So one should not be calling
  	 * this function with a different bio if there are other bios
  	 * queued.
-@@ -981,8 +985,9 @@ static bool tg_may_dispatch(struct throtl_grp *tg, struct bio *bio,
+@@ -978,8 +982,9 @@ static bool tg_may_dispatch(struct throtl_grp *tg, struct bio *bio,
  	       bio != throtl_peek_queued(&tg->service_queue.queued[rw]));
  
  	/* If tg->bps = -1, then BW is unlimited */
@@ -226,7 +226,7 @@ index 36855c1f8daf..77c039a0ec25 100644
  #include "internal.h"
  
  /*
-@@ -2451,6 +2452,8 @@ void sync_inodes_sb(struct super_block *sb)
+@@ -2457,6 +2458,8 @@ void sync_inodes_sb(struct super_block *sb)
  		return;
  	WARN_ON(!rwsem_is_locked(&sb->s_umount));
  
@@ -235,7 +235,7 @@ index 36855c1f8daf..77c039a0ec25 100644
  	/* protect against inode wb switch, see inode_switch_wbs_work_fn() */
  	bdi_down_write_wb_switch_rwsem(bdi);
  	bdi_split_work_to_wbs(bdi, &work, false);
-@@ -2458,6 +2461,8 @@ void sync_inodes_sb(struct super_block *sb)
+@@ -2464,6 +2467,8 @@ void sync_inodes_sb(struct super_block *sb)
  	bdi_up_write_wb_switch_rwsem(bdi);
  
  	wait_sb_inodes(sb);

@@ -41,7 +41,7 @@ diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
 index 1401afa0d58a..54394031b536 100644
 --- a/kernel/irq/manage.c
 +++ b/kernel/irq/manage.c
-@@ -23,9 +23,20 @@
+@@ -24,9 +24,20 @@
  #include "internals.h"
  
  #ifdef CONFIG_IRQ_FORCED_THREADING

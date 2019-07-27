@@ -38,7 +38,7 @@ diff --git a/block/blk-throttle.c b/block/blk-throttle.c
 index 1b97a73d2fb1..ce00060b3a48 100644
 --- a/block/blk-throttle.c
 +++ b/block/blk-throttle.c
-@@ -1433,8 +1433,10 @@ static ssize_t tg_set_conf(struct kernfs_open_file *of,
+@@ -1430,8 +1430,10 @@ static ssize_t tg_set_conf(struct kernfs_open_file *of,
  	if (ret)
  		return ret;
  
@@ -51,7 +51,7 @@ index 1b97a73d2fb1..ce00060b3a48 100644
  		goto out_finish;
  	if (!v)
  		v = U64_MAX;
-@@ -1444,7 +1446,8 @@ static ssize_t tg_set_conf(struct kernfs_open_file *of,
+@@ -1441,7 +1443,8 @@ static ssize_t tg_set_conf(struct kernfs_open_file *of,
  	if (is_u64)
  		*(u64 *)((void *)tg + of_cft(of)->private) = v;
  	else
@@ -61,7 +61,7 @@ index 1b97a73d2fb1..ce00060b3a48 100644
  
  	tg_conf_updated(tg, false);
  	ret = 0;
-@@ -1609,23 +1612,25 @@ static ssize_t tg_set_limit(struct kernfs_open_file *of,
+@@ -1606,23 +1609,25 @@ static ssize_t tg_set_limit(struct kernfs_open_file *of,
  	idle_time = tg->idletime_threshold_conf;
  	latency_time = tg->latency_target_conf;
  	while (true) {
@@ -100,7 +100,7 @@ index 1b97a73d2fb1..ce00060b3a48 100644
  		ret = -ERANGE;
  		if (!val)
  			goto out_finish;
-@@ -1645,6 +1650,9 @@ static ssize_t tg_set_limit(struct kernfs_open_file *of,
+@@ -1642,6 +1647,9 @@ static ssize_t tg_set_limit(struct kernfs_open_file *of,
  			latency_time = val;
  		else
  			goto out_finish;
