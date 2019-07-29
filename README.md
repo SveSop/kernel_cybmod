@@ -14,6 +14,7 @@ to
 0020 : Add -O3 optimize option patch  
 0021 : Cake_Qdisc_default  
 0022 : "Cybmod" version name  
+0023 : Revert loop patch (Breaks snapd for Ubuntu) [https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1836914](https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1836914)  
 0030 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
