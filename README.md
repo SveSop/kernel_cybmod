@@ -1,42 +1,37 @@
-## Cybmod patches for 5.1 kernel  
+## Cybmod patches for 5.2 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.1.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.1.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.1.21[EOL]  
+0000 : Kernel patch 5.2.4  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
-0015 : Last of the -ck patches.  
-0016 : zswap tweak patch  
-0017 : EFI Module patch to allow kernel modules to be signed with Ubuntu dkms  
-0018 : Add ZEN -O3 optimize option patch.  
-0019 : nfp-make-friends-with-O3  
-0020 : Graysky's GCC optimization patches  
-0021 : nr_migrate_core  
-0022 : cache_pressure  
-0023 : mm_read-ahead  
-0024 : revert_acpi_change_for_nct6775  
-0025 : Cake_Qdisc_default  
-0026 : io_uring-fix-shadowed-variable-ret-return-code-being  
-0027 : Kernel naming tweak  
-0028 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
-blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.1](https://github.com/sirlucjan/kernel-patches/tree/master/5.1)  
-bfq-patches : Collection of "bfq" scheduler patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.1](https://github.com/sirlucjan/kernel-patches/tree/master/5.1)  
+0016 : Last of the -ck patches.  
+0017 : revert_acpi_change_for_nct6775  
+0018 : zswap-tweaks.patch  
+0019 : Graysky's GCC optimization patch  
+0020 : Add -O3 optimize option patch  
+0021 : Cake_Qdisc_default  
+0022 : "Cybmod" version name  
+0030 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
+ubuntu : Ubuntu kernel patchset  
+efi-lockdown : EFI lockdown patchset (se note below!)  
+blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.2](https://github.com/sirlucjan/kernel-patches/tree/master/5.2)  
 
 **AMD support is disabled in the example config (patch 0028), so if you have a AMD processor, you need to enable that**  
-**This branch has MuQSS CPU scheduler, config (patch 0028) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
+**This branch has MuQSS CPU scheduler, config (patch 0030) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
 
 To build on Ubuntu:  
 ```
-tar xf linux-5.1.tar.xz    
-cd linux-5.1  
+tar xf linux-5.2.tar.xz    
+cd linux-5.2  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```
 When build is done, the .deb files is in the ../ folder relative to the source.  
 
-To benefit from patch 0017, and sign your kernel modules with dkms with Ubuntu you need to do:  
+To benefit from patches in "efi-lockdown", and sign your kernel modules with dkms with Ubuntu you need to do:  
 `sudo mokutil --import /var/lib/shim-signed/mok/MOK.der`  
 This will put the DKMS certificate up for signing. You then need to reboot and go through the bootup sequence allowing the certificate to be signed by Ubuntu.  
 

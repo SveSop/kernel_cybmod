@@ -1,7 +1,7 @@
-From 97bf976c1a61af48431ce97bc129a0f448e8c735 Mon Sep 17 00:00:00 2001
+From a804cc98e47c832d3a5e469a4be7deee88676320 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:28:30 +1100
-Subject: [PATCH 08/16] Replace all schedule timeout(1) with
+Subject: [PATCH 08/17] Replace all schedule timeout(1) with
  schedule_min_hrtimeout()
 
 ---
@@ -42,10 +42,10 @@ Subject: [PATCH 08/16] Replace all schedule timeout(1) with
  create mode 100644 drivers/staging/lustre/lnet/lnet/lib-eq.c
 
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 3fa6fcc34790..278486c8266d 100644
+index 4c297f69171d..5bc4f1be2617 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
-@@ -332,7 +332,7 @@ static inline void swim_motor(struct swim __iomem *base,
+@@ -328,7 +328,7 @@ static inline void swim_motor(struct swim __iomem *base,
  			if (swim_readbit(base, MOTOR_ON))
  				break;
  			current->state = TASK_INTERRUPTIBLE;
@@ -54,7 +54,7 @@ index 3fa6fcc34790..278486c8266d 100644
  		}
  	} else if (action == OFF) {
  		swim_action(base, MOTOR_OFF);
-@@ -351,7 +351,7 @@ static inline void swim_eject(struct swim __iomem *base)
+@@ -347,7 +347,7 @@ static inline void swim_eject(struct swim __iomem *base)
  		if (!swim_readbit(base, DISK_IN))
  			break;
  		current->state = TASK_INTERRUPTIBLE;
@@ -63,7 +63,7 @@ index 3fa6fcc34790..278486c8266d 100644
  	}
  	swim_select(base, RELAX);
  }
-@@ -375,7 +375,7 @@ static inline int swim_step(struct swim __iomem *base)
+@@ -371,7 +371,7 @@ static inline int swim_step(struct swim __iomem *base)
  	for (wait = 0; wait < HZ; wait++) {
  
  		current->state = TASK_INTERRUPTIBLE;
@@ -73,7 +73,7 @@ index 3fa6fcc34790..278486c8266d 100644
  		swim_select(base, RELAX);
  		if (!swim_readbit(base, STEP))
 diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 00bf4b17edbf..71c49540cb25 100644
+index 1dc10740fc0f..083c6f01bd8c 100644
 --- a/drivers/char/ipmi/ipmi_msghandler.c
 +++ b/drivers/char/ipmi/ipmi_msghandler.c
 @@ -3541,7 +3541,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
@@ -86,7 +86,7 @@ index 00bf4b17edbf..71c49540cb25 100644
  
  	/* No need for locks, the interface is down. */
 diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index 8b5aec5430f1..a5737d29cd93 100644
+index cf8156d6bc07..ba9e8e91199d 100644
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
 @@ -1289,7 +1289,7 @@ static void shutdown_ssif(void *send_info)
@@ -121,7 +121,7 @@ index 5918ea7499bb..5228e78df804 100644
  		remove_wait_queue(&sd->sd_wq, &wait);
  		if (signal_pending(current)) {
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_fifo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_fifo.c
-index d0fd147ef75f..730ae4fe6b85 100644
+index ff3586cb6851..e1539c9294a4 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_fifo.c
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fifo.c
 @@ -235,7 +235,7 @@ static int vmw_fifo_wait_noirq(struct vmw_private *dev_priv,
@@ -147,10 +147,10 @@ index c3ad4478266b..7e2a29d56459 100644
  			/**
  			 * FIXME: Use schedule_hr_timeout here for
 diff --git a/drivers/media/pci/ivtv/ivtv-ioctl.c b/drivers/media/pci/ivtv/ivtv-ioctl.c
-index 6c269ecd8d05..69becedee614 100644
+index d1e358a2273e..e022ff80e026 100644
 --- a/drivers/media/pci/ivtv/ivtv-ioctl.c
 +++ b/drivers/media/pci/ivtv/ivtv-ioctl.c
-@@ -1156,7 +1156,7 @@ void ivtv_s_std_dec(struct ivtv *itv, v4l2_std_id std)
+@@ -1144,7 +1144,7 @@ void ivtv_s_std_dec(struct ivtv *itv, v4l2_std_id std)
  				TASK_UNINTERRUPTIBLE);
  		if ((read_reg(IVTV_REG_DEC_LINE_FIELD) >> 16) < 100)
  			break;
@@ -173,10 +173,10 @@ index a641f20e3f86..e1b40d2b4bed 100644
  
  			/* To convert jiffies to ms, we must multiply by 1000
 diff --git a/drivers/mfd/ucb1x00-core.c b/drivers/mfd/ucb1x00-core.c
-index d6fb2e1a759a..7ac951b84beb 100644
+index b690796d24d4..448b13da62b4 100644
 --- a/drivers/mfd/ucb1x00-core.c
 +++ b/drivers/mfd/ucb1x00-core.c
-@@ -253,7 +253,7 @@ unsigned int ucb1x00_adc_read(struct ucb1x00 *ucb, int adc_channel, int sync)
+@@ -250,7 +250,7 @@ unsigned int ucb1x00_adc_read(struct ucb1x00 *ucb, int adc_channel, int sync)
  			break;
  		/* yield to other processes */
  		set_current_state(TASK_INTERRUPTIBLE);
@@ -199,7 +199,7 @@ index 8e6607fc8a67..b9ab770bbdb5 100644
  	atomic_dec(&ch->n_on_msg_allocate_wq);
  
 diff --git a/drivers/net/caif/caif_hsi.c b/drivers/net/caif/caif_hsi.c
-index 433a14b9f731..4d197a99472b 100644
+index b2f10b6ad6e5..f491de230ff1 100644
 --- a/drivers/net/caif/caif_hsi.c
 +++ b/drivers/net/caif/caif_hsi.c
 @@ -939,7 +939,7 @@ static void cfhsi_wake_down(struct work_struct *work)
@@ -212,10 +212,10 @@ index 433a14b9f731..4d197a99472b 100644
  	}
  
 diff --git a/drivers/net/can/usb/peak_usb/pcan_usb.c b/drivers/net/can/usb/peak_usb/pcan_usb.c
-index 13238a72a338..fc51ae55c63f 100644
+index 15ce5ad1d632..7ab56f64a518 100644
 --- a/drivers/net/can/usb/peak_usb/pcan_usb.c
 +++ b/drivers/net/can/usb/peak_usb/pcan_usb.c
-@@ -250,7 +250,7 @@ static int pcan_usb_write_mode(struct peak_usb_device *dev, u8 onoff)
+@@ -242,7 +242,7 @@ static int pcan_usb_write_mode(struct peak_usb_device *dev, u8 onoff)
  	} else {
  		/* the PCAN-USB needs time to init */
  		set_current_state(TASK_INTERRUPTIBLE);
@@ -238,10 +238,10 @@ index 3d92ea6fcc02..de564401fd4d 100644
  		netif_dbg(dev, ifdown, dev->net,
  			  "waited for %d urb completions\n", temp);
 diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index 504282af27e5..da60ab9b56c7 100644
+index 72514c46b478..38fa9d1edc04 100644
 --- a/drivers/net/usb/usbnet.c
 +++ b/drivers/net/usb/usbnet.c
-@@ -771,7 +771,7 @@ static void wait_skb_queue_empty(struct sk_buff_head *q)
+@@ -759,7 +759,7 @@ static void wait_skb_queue_empty(struct sk_buff_head *q)
  	spin_lock_irqsave(&q->lock, flags);
  	while (!skb_queue_empty(q)) {
  		spin_unlock_irqrestore(&q->lock, flags);
@@ -286,10 +286,10 @@ index b3650c989ed4..7ed1fb285754 100644
  	ret = snic_issue_hba_reset(snic, sc);
  	if (ret) {
 diff --git a/drivers/staging/comedi/drivers/ni_mio_common.c b/drivers/staging/comedi/drivers/ni_mio_common.c
-index b04dad8c7092..27c824bdebf0 100644
+index c175227009f1..a8b3611b1441 100644
 --- a/drivers/staging/comedi/drivers/ni_mio_common.c
 +++ b/drivers/staging/comedi/drivers/ni_mio_common.c
-@@ -4727,7 +4727,7 @@ static int cs5529_wait_for_idle(struct comedi_device *dev)
+@@ -4742,7 +4742,7 @@ static int cs5529_wait_for_idle(struct comedi_device *dev)
  		if ((status & NI67XX_CAL_STATUS_BUSY) == 0)
  			break;
  		set_current_state(TASK_INTERRUPTIBLE);
@@ -792,7 +792,7 @@ index ddbb7e97d118..f9502addc765 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/staging/speakup/speakup_decpc.c b/drivers/staging/speakup/speakup_decpc.c
-index 459ee0c0bd57..52b539544c98 100644
+index 798c42dfa16c..d85b41db67a3 100644
 --- a/drivers/staging/speakup/speakup_decpc.c
 +++ b/drivers/staging/speakup/speakup_decpc.c
 @@ -394,7 +394,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -840,7 +840,7 @@ index dbebed0eeeec..6d83c13ca4a6 100644
  		}
  	}
 diff --git a/drivers/staging/speakup/speakup_keypc.c b/drivers/staging/speakup/speakup_keypc.c
-index b788272da4f9..d5dac16c04d8 100644
+index 414827e888fc..cb31c9176daa 100644
 --- a/drivers/staging/speakup/speakup_keypc.c
 +++ b/drivers/staging/speakup/speakup_keypc.c
 @@ -199,7 +199,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -857,8 +857,8 @@ index b788272da4f9..d5dac16c04d8 100644
  			delay_time_val = delay_time->u.n.value;
  			spin_unlock_irqrestore(&speakup_info.spinlock, flags);
 -			schedule_timeout(msecs_to_jiffies(delay_time_val));
-+			schedule_msec_hrtimeout((delay_time_val));
- 			jiff_max = jiffies+jiffy_delta_val;
++			schedule_msec_hrtimeout(delay_time_val);
+ 			jiff_max = jiffies + jiffy_delta_val;
  		}
  	}
 diff --git a/drivers/staging/speakup/synth.c b/drivers/staging/speakup/synth.c
@@ -926,10 +926,10 @@ index 1c1a470d2e50..cbac00e586b0 100644
  	}
  
 diff --git a/drivers/video/fbdev/omap/hwa742.c b/drivers/video/fbdev/omap/hwa742.c
-index 6199d4806193..7c7165f2dad4 100644
+index cfe63932f825..71c00ef772a3 100644
 --- a/drivers/video/fbdev/omap/hwa742.c
 +++ b/drivers/video/fbdev/omap/hwa742.c
-@@ -926,7 +926,7 @@ static void hwa742_resume(void)
+@@ -913,7 +913,7 @@ static void hwa742_resume(void)
  		if (hwa742_read_reg(HWA742_PLL_DIV_REG) & (1 << 7))
  			break;
  		set_current_state(TASK_UNINTERRUPTIBLE);
@@ -952,10 +952,10 @@ index d59c8a59f582..e103cce28de7 100644
  
  	pr_debug("%s(): task ending\n", __func__);
 diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index c5880329ae37..aad921814170 100644
+index 5faf057f6f37..808a5c7cf01d 100644
 --- a/fs/btrfs/extent-tree.c
 +++ b/fs/btrfs/extent-tree.c
-@@ -6205,7 +6205,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
+@@ -6056,7 +6056,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
  			flush = BTRFS_RESERVE_FLUSH_LIMIT;
  
  		if (btrfs_transaction_in_commit(fs_info))
@@ -978,10 +978,10 @@ index ffca2abf13d0..89b2a7f7397e 100644
  			} else
  				continue;
 diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
-index 72c6f8e82a7e..46d8c2a148ad 100644
+index 2c03e0f6bf72..fde9ee3db78e 100644
 --- a/sound/usb/line6/pcm.c
 +++ b/sound/usb/line6/pcm.c
-@@ -131,7 +131,7 @@ static void line6_wait_clear_audio_urbs(struct snd_line6_pcm *line6pcm,
+@@ -127,7 +127,7 @@ static void line6_wait_clear_audio_urbs(struct snd_line6_pcm *line6pcm,
  		if (!alive)
  			break;
  		set_current_state(TASK_UNINTERRUPTIBLE);
@@ -991,5 +991,5 @@ index 72c6f8e82a7e..46d8c2a148ad 100644
  	if (alive)
  		dev_err(line6pcm->line6->ifcdev,
 -- 
-2.17.1
+2.19.1
 

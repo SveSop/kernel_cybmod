@@ -1,7 +1,7 @@
-From 50ddde6e3c62abd39dc6a3cd5941febed7ad49c3 Mon Sep 17 00:00:00 2001
+From acdd2d88b98ac3fabdcd0c7a984c546dea6e22ba Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Wed, 7 Dec 2016 21:13:16 +1100
-Subject: [PATCH 13/16] Make threaded IRQs optionally the default which can be
+Subject: [PATCH 13/17] Make threaded IRQs optionally the default which can be
  disabled.
 
 ---
@@ -10,10 +10,10 @@ Subject: [PATCH 13/16] Make threaded IRQs optionally the default which can be
  2 files changed, 28 insertions(+)
 
 diff --git a/kernel/irq/Kconfig b/kernel/irq/Kconfig
-index 5f3e2baefca9..de3e5740679b 100644
+index f92d9a687372..d17db0ff775f 100644
 --- a/kernel/irq/Kconfig
 +++ b/kernel/irq/Kconfig
-@@ -107,6 +107,23 @@ config GENERIC_IRQ_RESERVATION_MODE
+@@ -111,6 +111,23 @@ config GENERIC_IRQ_RESERVATION_MODE
  config IRQ_FORCED_THREADING
         bool
  
@@ -38,7 +38,7 @@ index 5f3e2baefca9..de3e5740679b 100644
  	bool "Support sparse irq numbering" if MAY_HAVE_SPARSE_IRQ
  	---help---
 diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 1401afa0d58a..54394031b536 100644
+index 78f3ddeb7fe4..ee547afcc030 100644
 --- a/kernel/irq/manage.c
 +++ b/kernel/irq/manage.c
 @@ -24,9 +24,20 @@
@@ -63,5 +63,5 @@ index 1401afa0d58a..54394031b536 100644
  {
  	force_irqthreads = true;
 -- 
-2.17.1
+2.19.1
 

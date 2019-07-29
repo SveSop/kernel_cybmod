@@ -1,7 +1,7 @@
-From 4c8554b4da764ea564a9a2ef9faa481a61cb1a4b Mon Sep 17 00:00:00 2001
+From 276518b8d0fc9c5a160bdb7a80f046986e6332cd Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:32 +1100
-Subject: [PATCH 10/16] Replace all calls to schedule_timeout_uninterruptible
+Subject: [PATCH 10/17] Replace all calls to schedule_timeout_uninterruptible
  of potentially under 50ms to use schedule_msec_hrtimeout_uninterruptible
 
 ---
@@ -15,10 +15,10 @@ Subject: [PATCH 10/16] Replace all calls to schedule_timeout_uninterruptible
  7 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/media/pci/cx18/cx18-gpio.c b/drivers/media/pci/cx18/cx18-gpio.c
-index 012859e6dc7b..206bd08265a5 100644
+index cf7cfda94107..f63e17489547 100644
 --- a/drivers/media/pci/cx18/cx18-gpio.c
 +++ b/drivers/media/pci/cx18/cx18-gpio.c
-@@ -90,11 +90,11 @@ static void gpio_reset_seq(struct cx18 *cx, u32 active_lo, u32 active_hi,
+@@ -81,11 +81,11 @@ static void gpio_reset_seq(struct cx18 *cx, u32 active_lo, u32 active_hi,
  
  	/* Assert */
  	gpio_update(cx, mask, ~active_lo);
@@ -33,10 +33,10 @@ index 012859e6dc7b..206bd08265a5 100644
  
  /*
 diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2100.c b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-index 52e5ed2d3bc2..7d72a8b62700 100644
+index 75c0c29d81f0..f2e9872e2fcc 100644
 --- a/drivers/net/wireless/intel/ipw2x00/ipw2100.c
 +++ b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-@@ -830,7 +830,7 @@ static int ipw2100_hw_send_command(struct ipw2100_priv *priv,
+@@ -816,7 +816,7 @@ static int ipw2100_hw_send_command(struct ipw2100_priv *priv,
  	 * doesn't seem to have as many firmware restart cycles...
  	 *
  	 * As a test, we're sticking in a 1/100s delay here */
@@ -45,7 +45,7 @@ index 52e5ed2d3bc2..7d72a8b62700 100644
  
  	return 0;
  
-@@ -1281,7 +1281,7 @@ static int ipw2100_start_adapter(struct ipw2100_priv *priv)
+@@ -1267,7 +1267,7 @@ static int ipw2100_start_adapter(struct ipw2100_priv *priv)
  	IPW_DEBUG_FW("Waiting for f/w initialization to complete...\n");
  	i = 5000;
  	do {
@@ -55,10 +55,10 @@ index 52e5ed2d3bc2..7d72a8b62700 100644
  
  		read_register(priv->net_dev, IPW_REG_INTA, &inta);
 diff --git a/drivers/rtc/rtc-wm8350.c b/drivers/rtc/rtc-wm8350.c
-index 483c7993516b..fddbaa475066 100644
+index 2018614f258f..fc19b312c345 100644
 --- a/drivers/rtc/rtc-wm8350.c
 +++ b/drivers/rtc/rtc-wm8350.c
-@@ -119,7 +119,7 @@ static int wm8350_rtc_settime(struct device *dev, struct rtc_time *tm)
+@@ -114,7 +114,7 @@ static int wm8350_rtc_settime(struct device *dev, struct rtc_time *tm)
  	/* Wait until confirmation of stopping */
  	do {
  		rtc_ctrl = wm8350_reg_read(wm8350, WM8350_RTC_TIME_CONTROL);
@@ -67,7 +67,7 @@ index 483c7993516b..fddbaa475066 100644
  	} while (--retries && !(rtc_ctrl & WM8350_RTC_STS));
  
  	if (!retries) {
-@@ -202,7 +202,7 @@ static int wm8350_rtc_stop_alarm(struct wm8350 *wm8350)
+@@ -197,7 +197,7 @@ static int wm8350_rtc_stop_alarm(struct wm8350 *wm8350)
  	/* Wait until confirmation of stopping */
  	do {
  		rtc_ctrl = wm8350_reg_read(wm8350, WM8350_RTC_TIME_CONTROL);
@@ -76,7 +76,7 @@ index 483c7993516b..fddbaa475066 100644
  	} while (retries-- && !(rtc_ctrl & WM8350_RTC_ALMSTS));
  
  	if (!(rtc_ctrl & WM8350_RTC_ALMSTS))
-@@ -225,7 +225,7 @@ static int wm8350_rtc_start_alarm(struct wm8350 *wm8350)
+@@ -220,7 +220,7 @@ static int wm8350_rtc_start_alarm(struct wm8350 *wm8350)
  	/* Wait until confirmation */
  	do {
  		rtc_ctrl = wm8350_reg_read(wm8350, WM8350_RTC_TIME_CONTROL);
@@ -86,7 +86,7 @@ index 483c7993516b..fddbaa475066 100644
  
  	if (rtc_ctrl & WM8350_RTC_ALMSTS)
 diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
-index a497b2c0cb79..1ed8a04c5cdf 100644
+index ba996fbde89b..ba4879b50382 100644
 --- a/drivers/scsi/lpfc/lpfc_scsi.c
 +++ b/drivers/scsi/lpfc/lpfc_scsi.c
 @@ -5007,7 +5007,7 @@ lpfc_reset_flush_io_context(struct lpfc_vport *vport, uint16_t tgt_id,
@@ -99,10 +99,10 @@ index a497b2c0cb79..1ed8a04c5cdf 100644
  	}
  	if (cnt) {
 diff --git a/sound/pci/maestro3.c b/sound/pci/maestro3.c
-index 1a9468c14aaf..410ad89a3c7c 100644
+index 19fa73df0846..46caed9b924d 100644
 --- a/sound/pci/maestro3.c
 +++ b/sound/pci/maestro3.c
-@@ -2016,7 +2016,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
+@@ -2001,7 +2001,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
  		outw(0, io + GPIO_DATA);
  		outw(dir | GPO_PRIMARY_AC97, io + GPIO_DIRECTION);
  
@@ -111,7 +111,7 @@ index 1a9468c14aaf..410ad89a3c7c 100644
  
  		outw(GPO_PRIMARY_AC97, io + GPIO_DATA);
  		udelay(5);
-@@ -2024,7 +2024,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
+@@ -2009,7 +2009,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
  		outw(IO_SRAM_ENABLE | SERIAL_AC_LINK_ENABLE, io + RING_BUS_CTRL_A);
  		outw(~0, io + GPIO_MASK);
  
@@ -121,10 +121,10 @@ index 1a9468c14aaf..410ad89a3c7c 100644
  		if (! snd_m3_try_read_vendor(chip))
  			break;
 diff --git a/sound/soc/codecs/rt5631.c b/sound/soc/codecs/rt5631.c
-index 865f49ac38dd..3c1190dd114f 100644
+index f70b9f7e68bb..77b65398ca07 100644
 --- a/sound/soc/codecs/rt5631.c
 +++ b/sound/soc/codecs/rt5631.c
-@@ -419,7 +419,7 @@ static void onebit_depop_mute_stage(struct snd_soc_component *component, int ena
+@@ -415,7 +415,7 @@ static void onebit_depop_mute_stage(struct snd_soc_component *component, int ena
  	hp_zc = snd_soc_component_read32(component, RT5631_INT_ST_IRQ_CTRL_2);
  	snd_soc_component_write(component, RT5631_INT_ST_IRQ_CTRL_2, hp_zc & 0xf7ff);
  	if (enable) {
@@ -133,7 +133,7 @@ index 865f49ac38dd..3c1190dd114f 100644
  		/* config one-bit depop parameter */
  		rt5631_write_index(component, RT5631_SPK_INTL_CTRL, 0x307f);
  		snd_soc_component_update_bits(component, RT5631_HP_OUT_VOL,
-@@ -529,7 +529,7 @@ static void depop_seq_mute_stage(struct snd_soc_component *component, int enable
+@@ -525,7 +525,7 @@ static void depop_seq_mute_stage(struct snd_soc_component *component, int enable
  	hp_zc = snd_soc_component_read32(component, RT5631_INT_ST_IRQ_CTRL_2);
  	snd_soc_component_write(component, RT5631_INT_ST_IRQ_CTRL_2, hp_zc & 0xf7ff);
  	if (enable) {
@@ -143,7 +143,7 @@ index 865f49ac38dd..3c1190dd114f 100644
  		/* config depop sequence parameter */
  		rt5631_write_index(component, RT5631_SPK_INTL_CTRL, 0x302f);
 diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
-index 0382a47b30bd..0d805d3563ca 100644
+index 55f8278077f4..5581bd3f8179 100644
 --- a/sound/soc/soc-dapm.c
 +++ b/sound/soc/soc-dapm.c
 @@ -154,7 +154,7 @@ static void dapm_assert_locked(struct snd_soc_dapm_context *dapm)
@@ -156,5 +156,5 @@ index 0382a47b30bd..0d805d3563ca 100644
  
  __printf(3, 4)
 -- 
-2.17.1
+2.19.1
 

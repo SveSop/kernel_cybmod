@@ -1,7 +1,7 @@
-From f1b776971e6aa46347f035adfebfd71d5f0930bb Mon Sep 17 00:00:00 2001
+From 045f4156d221f32d8703c92bd84dd2470840e47e Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Wed, 7 Dec 2016 21:23:01 +1100
-Subject: [PATCH 14/16] Reinstate default Hz of 100 in combination with MuQSS
+Subject: [PATCH 14/17] Reinstate default Hz of 100 in combination with MuQSS
  and -ck patches.
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 14/16] Reinstate default Hz of 100 in combination with MuQSS
  1 file changed, 18 insertions(+), 7 deletions(-)
 
 diff --git a/kernel/Kconfig.hz b/kernel/Kconfig.hz
-index 2a202a846757..1806fcac8f14 100644
+index 38ef6d06888e..89ed751ac4e4 100644
 --- a/kernel/Kconfig.hz
 +++ b/kernel/Kconfig.hz
-@@ -4,7 +4,8 @@
+@@ -5,7 +5,8 @@
  
  choice
  	prompt "Timer frequency"
@@ -22,7 +22,7 @@ index 2a202a846757..1806fcac8f14 100644
  	help
  	 Allows the configuration of the timer frequency. It is customary
  	 to have the timer interrupt run at 1000 Hz but 100 Hz may be more
-@@ -19,11 +20,18 @@ choice
+@@ -20,11 +21,18 @@ choice
  	config HZ_100
  		bool "100 HZ"
  	help
@@ -42,7 +42,7 @@ index 2a202a846757..1806fcac8f14 100644
  		bool "250 HZ"
  	help
  	 250 Hz is a good compromise choice allowing server performance
-@@ -31,7 +39,10 @@ choice
+@@ -32,7 +40,10 @@ choice
  	 on SMP and NUMA systems. If you are going to be using NTSC video
  	 or multimedia, selected 300Hz instead.
  
@@ -54,7 +54,7 @@ index 2a202a846757..1806fcac8f14 100644
  		bool "300 HZ"
  	help
  	 300 Hz is a good compromise choice allowing server performance
-@@ -39,7 +50,7 @@ choice
+@@ -40,7 +51,7 @@ choice
  	 on SMP and NUMA systems and exactly dividing by both PAL and
  	 NTSC frame rates for video and multimedia work.
  
@@ -63,7 +63,7 @@ index 2a202a846757..1806fcac8f14 100644
  		bool "1000 HZ"
  	help
  	 1000 Hz is the preferred choice for desktop systems and other
-@@ -50,9 +61,9 @@ endchoice
+@@ -51,9 +62,9 @@ endchoice
  config HZ
  	int
  	default 100 if HZ_100
@@ -77,5 +77,5 @@ index 2a202a846757..1806fcac8f14 100644
  config SCHED_HRTICK
  	def_bool HIGH_RES_TIMERS
 -- 
-2.17.1
+2.19.1
 

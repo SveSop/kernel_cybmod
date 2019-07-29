@@ -1,7 +1,7 @@
-From 35c6a7df0bc36fdf3cb8e14c0ba8c73b6b17dded Mon Sep 17 00:00:00 2001
+From b3466e30db1973ed21d2ab7e3457dcb7ba1231d6 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 12 Aug 2017 11:53:39 +1000
-Subject: [PATCH 05/16] Create highres timeout variants of schedule_timeout
+Subject: [PATCH 05/17] Create highres timeout variants of schedule_timeout
  functions.
 
 ---
@@ -23,10 +23,10 @@ index 21f5aa0b217f..ee9b46394fdf 100644
  
  #endif	/* FREEZER_H_INCLUDED */
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 71d849ef5ee2..14ab8a8f8b1c 100644
+index 9d5cb934657e..bbf6cd0cc767 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
-@@ -214,13 +214,40 @@ struct task_group;
+@@ -213,13 +213,40 @@ struct task_group;
  
  extern void scheduler_tick(void);
  
@@ -149,5 +149,5 @@ index 41dfff23c1f9..c6ea49693bca 100644
 +}
 +EXPORT_SYMBOL(schedule_msec_hrtimeout_uninterruptible);
 -- 
-2.17.1
+2.19.1
 

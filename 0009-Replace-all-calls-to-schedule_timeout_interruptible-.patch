@@ -1,7 +1,7 @@
-From ed9d6f38013a94e1ea56b33c02706a4079b31e92 Mon Sep 17 00:00:00 2001
+From c99f2b161b3a7281904b8d53c0da19ccb22c5f42 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:07 +1100
-Subject: [PATCH 09/16] Replace all calls to schedule_timeout_interruptible of
+Subject: [PATCH 09/17] Replace all calls to schedule_timeout_interruptible of
  potentially under 50ms to use schedule_msec_hrtimeout_interruptible.
 
 ---
@@ -22,10 +22,10 @@ Subject: [PATCH 09/16] Replace all calls to schedule_timeout_interruptible of
  14 files changed, 26 insertions(+), 30 deletions(-)
 
 diff --git a/drivers/hwmon/fam15h_power.c b/drivers/hwmon/fam15h_power.c
-index 9545a346044f..c24cf1302ec7 100644
+index 267eac00a3fb..352af68c6cd7 100644
 --- a/drivers/hwmon/fam15h_power.c
 +++ b/drivers/hwmon/fam15h_power.c
-@@ -237,7 +237,7 @@ static ssize_t power1_average_show(struct device *dev,
+@@ -225,7 +225,7 @@ static ssize_t power1_average_show(struct device *dev,
  		prev_ptsc[cu] = data->cpu_sw_pwr_ptsc[cu];
  	}
  
@@ -35,10 +35,10 @@ index 9545a346044f..c24cf1302ec7 100644
  		return 0;
  
 diff --git a/drivers/iio/light/tsl2563.c b/drivers/iio/light/tsl2563.c
-index 6bbb0b1e6032..f4b83648c405 100644
+index d8c40a83097d..8332baf4961c 100644
 --- a/drivers/iio/light/tsl2563.c
 +++ b/drivers/iio/light/tsl2563.c
-@@ -282,11 +282,7 @@ static void tsl2563_wait_adc(struct tsl2563_chip *chip)
+@@ -269,11 +269,7 @@ static void tsl2563_wait_adc(struct tsl2563_chip *chip)
  	default:
  		delay = 402;
  	}
@@ -52,10 +52,10 @@ index 6bbb0b1e6032..f4b83648c405 100644
  
  static int tsl2563_adjust_gainlevel(struct tsl2563_chip *chip, u16 adc)
 diff --git a/drivers/media/i2c/msp3400-driver.c b/drivers/media/i2c/msp3400-driver.c
-index 522fb1d561e7..47d1afee1d04 100644
+index 39530d43590e..a7caf2eb5771 100644
 --- a/drivers/media/i2c/msp3400-driver.c
 +++ b/drivers/media/i2c/msp3400-driver.c
-@@ -179,7 +179,7 @@ static int msp_read(struct i2c_client *client, int dev, int addr)
+@@ -170,7 +170,7 @@ static int msp_read(struct i2c_client *client, int dev, int addr)
  			break;
  		dev_warn(&client->dev, "I/O error #%d (read 0x%02x/0x%02x)\n", err,
  		       dev, addr);
@@ -64,7 +64,7 @@ index 522fb1d561e7..47d1afee1d04 100644
  	}
  	if (err == 3) {
  		dev_warn(&client->dev, "resetting chip, sound will go off.\n");
-@@ -220,7 +220,7 @@ static int msp_write(struct i2c_client *client, int dev, int addr, int val)
+@@ -211,7 +211,7 @@ static int msp_write(struct i2c_client *client, int dev, int addr, int val)
  			break;
  		dev_warn(&client->dev, "I/O error #%d (write 0x%02x/0x%02x)\n", err,
  		       dev, addr);
@@ -74,10 +74,10 @@ index 522fb1d561e7..47d1afee1d04 100644
  	if (err == 3) {
  		dev_warn(&client->dev, "resetting chip, sound will go off.\n");
 diff --git a/drivers/media/pci/ivtv/ivtv-gpio.c b/drivers/media/pci/ivtv/ivtv-gpio.c
-index f752f3993687..23372af61ebf 100644
+index 856e7ab7f33e..766a26251337 100644
 --- a/drivers/media/pci/ivtv/ivtv-gpio.c
 +++ b/drivers/media/pci/ivtv/ivtv-gpio.c
-@@ -117,7 +117,7 @@ void ivtv_reset_ir_gpio(struct ivtv *itv)
+@@ -105,7 +105,7 @@ void ivtv_reset_ir_gpio(struct ivtv *itv)
  	curout = (curout & ~0xF) | 1;
  	write_reg(curout, IVTV_REG_GPIO_OUT);
  	/* We could use something else for smaller time */
@@ -86,7 +86,7 @@ index f752f3993687..23372af61ebf 100644
  	curout |= 2;
  	write_reg(curout, IVTV_REG_GPIO_OUT);
  	curdir &= ~0x80;
-@@ -137,11 +137,11 @@ int ivtv_reset_tuner_gpio(void *dev, int component, int cmd, int value)
+@@ -125,11 +125,11 @@ int ivtv_reset_tuner_gpio(void *dev, int component, int cmd, int value)
  	curout = read_reg(IVTV_REG_GPIO_OUT);
  	curout &= ~(1 << itv->card->xceive_pin);
  	write_reg(curout, IVTV_REG_GPIO_OUT);
@@ -101,10 +101,10 @@ index f752f3993687..23372af61ebf 100644
  }
  
 diff --git a/drivers/media/radio/radio-mr800.c b/drivers/media/radio/radio-mr800.c
-index ab1324f68199..3fdb422a5caa 100644
+index f53f9064e1e9..55ea45d72653 100644
 --- a/drivers/media/radio/radio-mr800.c
 +++ b/drivers/media/radio/radio-mr800.c
-@@ -378,7 +378,7 @@ static int vidioc_s_hw_freq_seek(struct file *file, void *priv,
+@@ -369,7 +369,7 @@ static int vidioc_s_hw_freq_seek(struct file *file, void *priv,
  			retval = -ENODATA;
  			break;
  		}
@@ -114,10 +114,10 @@ index ab1324f68199..3fdb422a5caa 100644
  			break;
  		}
 diff --git a/drivers/media/radio/radio-tea5777.c b/drivers/media/radio/radio-tea5777.c
-index 61f751cf1aa4..7eb30468091e 100644
+index 49d4beba341e..ef8e9294c295 100644
 --- a/drivers/media/radio/radio-tea5777.c
 +++ b/drivers/media/radio/radio-tea5777.c
-@@ -245,7 +245,7 @@ static int radio_tea5777_update_read_reg(struct radio_tea5777 *tea, int wait)
+@@ -235,7 +235,7 @@ static int radio_tea5777_update_read_reg(struct radio_tea5777 *tea, int wait)
  	}
  
  	if (wait) {
@@ -127,10 +127,10 @@ index 61f751cf1aa4..7eb30468091e 100644
  	}
  
 diff --git a/drivers/media/radio/tea575x.c b/drivers/media/radio/tea575x.c
-index f89f83e04741..325987cd5997 100644
+index 64613dd145a1..105d97da584e 100644
 --- a/drivers/media/radio/tea575x.c
 +++ b/drivers/media/radio/tea575x.c
-@@ -416,7 +416,7 @@ int snd_tea575x_s_hw_freq_seek(struct file *file, struct snd_tea575x *tea,
+@@ -405,7 +405,7 @@ int snd_tea575x_s_hw_freq_seek(struct file *file, struct snd_tea575x *tea,
  	for (;;) {
  		if (time_after(jiffies, timeout))
  			break;
@@ -140,7 +140,7 @@ index f89f83e04741..325987cd5997 100644
  			tea->val &= ~TEA575X_BIT_SEARCH;
  			snd_tea575x_set_freq(tea);
 diff --git a/drivers/parport/ieee1284.c b/drivers/parport/ieee1284.c
-index f12b9da69255..6ca6eecbdb2d 100644
+index 90fb73575495..c94048b048a5 100644
 --- a/drivers/parport/ieee1284.c
 +++ b/drivers/parport/ieee1284.c
 @@ -208,7 +208,7 @@ int parport_wait_peripheral(struct parport *port,
@@ -206,10 +206,10 @@ index bffe548187ee..c2918ee3e100 100644
  
  	timer_setup(&ips->timer, monitor_timeout, TIMER_DEFERRABLE);
 diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index f3f5a78cd062..edbed00a06ed 100644
+index f975c5e2a369..2a1705d2b31a 100644
 --- a/net/core/pktgen.c
 +++ b/net/core/pktgen.c
-@@ -1901,7 +1901,7 @@ static void pktgen_mark_device(const struct pktgen_net *pn, const char *ifname)
+@@ -1894,7 +1894,7 @@ static void pktgen_mark_device(const struct pktgen_net *pn, const char *ifname)
  		mutex_unlock(&pktgen_thread_lock);
  		pr_debug("%s: waiting for %s to disappear....\n",
  			 __func__, ifname);
@@ -219,10 +219,10 @@ index f3f5a78cd062..edbed00a06ed 100644
  
  		if (++i >= max_tries) {
 diff --git a/sound/soc/codecs/wm8350.c b/sound/soc/codecs/wm8350.c
-index e92ebe52d485..88791ebb6df0 100644
+index fe99584c917f..f1344d532a13 100644
 --- a/sound/soc/codecs/wm8350.c
 +++ b/sound/soc/codecs/wm8350.c
-@@ -236,10 +236,10 @@ static void wm8350_pga_work(struct work_struct *work)
+@@ -233,10 +233,10 @@ static void wm8350_pga_work(struct work_struct *work)
  		    out2->ramp == WM8350_RAMP_UP) {
  			/* delay is longer over 0dB as increases are larger */
  			if (i >= WM8350_OUTn_0dB)
@@ -235,7 +235,7 @@ index e92ebe52d485..88791ebb6df0 100644
  							       (1));
  		} else
  			udelay(50);	/* doesn't matter if we delay longer */
-@@ -1123,7 +1123,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
+@@ -1120,7 +1120,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
  					 (platform->dis_out4 << 6));
  
  			/* wait for discharge */
@@ -244,7 +244,7 @@ index e92ebe52d485..88791ebb6df0 100644
  						       (platform->
  							cap_discharge_msecs));
  
-@@ -1139,7 +1139,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
+@@ -1136,7 +1136,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
  					 WM8350_VBUFEN);
  
  			/* wait for vmid */
@@ -253,7 +253,7 @@ index e92ebe52d485..88791ebb6df0 100644
  						       (platform->
  							vmid_charge_msecs));
  
-@@ -1190,7 +1190,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
+@@ -1187,7 +1187,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
  		wm8350_reg_write(wm8350, WM8350_POWER_MGMT_1, pm1);
  
  		/* wait */
@@ -262,7 +262,7 @@ index e92ebe52d485..88791ebb6df0 100644
  					       (platform->
  						vmid_discharge_msecs));
  
-@@ -1208,7 +1208,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
+@@ -1205,7 +1205,7 @@ static int wm8350_set_bias_level(struct snd_soc_component *component,
  				 pm1 | WM8350_OUTPUT_DRAIN_EN);
  
  		/* wait */
@@ -272,10 +272,10 @@ index e92ebe52d485..88791ebb6df0 100644
  
  		pm1 &= ~WM8350_BIASEN;
 diff --git a/sound/soc/codecs/wm8900.c b/sound/soc/codecs/wm8900.c
-index 1a14e902949d..68f17d9877ec 100644
+index 271235a69c01..3ec90e1b1eb4 100644
 --- a/sound/soc/codecs/wm8900.c
 +++ b/sound/soc/codecs/wm8900.c
-@@ -1112,7 +1112,7 @@ static int wm8900_set_bias_level(struct snd_soc_component *component,
+@@ -1109,7 +1109,7 @@ static int wm8900_set_bias_level(struct snd_soc_component *component,
  		/* Need to let things settle before stopping the clock
  		 * to ensure that restart works, see "Stopping the
  		 * master clock" in the datasheet. */
@@ -285,10 +285,10 @@ index 1a14e902949d..68f17d9877ec 100644
  			     WM8900_REG_POWER2_SYSCLK_ENA);
  		break;
 diff --git a/sound/soc/codecs/wm9713.c b/sound/soc/codecs/wm9713.c
-index 5a2fdf4f69bf..aeb4e759de4c 100644
+index 6497c1ea6228..08fefeca9d82 100644
 --- a/sound/soc/codecs/wm9713.c
 +++ b/sound/soc/codecs/wm9713.c
-@@ -203,7 +203,7 @@ static int wm9713_voice_shutdown(struct snd_soc_dapm_widget *w,
+@@ -199,7 +199,7 @@ static int wm9713_voice_shutdown(struct snd_soc_dapm_widget *w,
  
  	/* Gracefully shut down the voice interface. */
  	snd_soc_component_update_bits(component, AC97_HANDSET_RATE, 0x0f00, 0x0200);
@@ -297,7 +297,7 @@ index 5a2fdf4f69bf..aeb4e759de4c 100644
  	snd_soc_component_update_bits(component, AC97_HANDSET_RATE, 0x0f00, 0x0f00);
  	snd_soc_component_update_bits(component, AC97_EXTENDED_MID, 0x1000, 0x1000);
  
-@@ -872,7 +872,7 @@ static int wm9713_set_pll(struct snd_soc_component *component,
+@@ -868,7 +868,7 @@ static int wm9713_set_pll(struct snd_soc_component *component,
  	wm9713->pll_in = freq_in;
  
  	/* wait 10ms AC97 link frames for the link to stabilise */
@@ -307,5 +307,5 @@ index 5a2fdf4f69bf..aeb4e759de4c 100644
  }
  
 -- 
-2.17.1
+2.19.1
 

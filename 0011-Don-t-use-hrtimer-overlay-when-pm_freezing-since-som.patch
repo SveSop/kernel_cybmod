@@ -1,7 +1,7 @@
-From 876598b9dbe9c1f27feae36c2e2deacdd4beaf9d Mon Sep 17 00:00:00 2001
+From e2062b3da270435e58557414592c917b9f73e6f1 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:32:58 +1100
-Subject: [PATCH 11/16] Don't use hrtimer overlay when pm_freezing since some
+Subject: [PATCH 11/17] Don't use hrtimer overlay when pm_freezing since some
  drivers still don't correctly use freezable timeouts.
 
 ---
@@ -23,7 +23,7 @@ index c6ea49693bca..17ad543fbbc4 100644
  
  	secs = timeout / 1000;
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index 3ab277ba0f44..28509c518461 100644
+index ffd29e30ddb9..73ace4cbbe28 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
 @@ -43,6 +43,7 @@
@@ -34,7 +34,7 @@ index 3ab277ba0f44..28509c518461 100644
  
  #include <linux/uaccess.h>
  #include <asm/unistd.h>
-@@ -1971,12 +1972,12 @@ void msleep(unsigned int msecs)
+@@ -1975,12 +1976,12 @@ void msleep(unsigned int msecs)
  	 * Use high resolution timers where the resolution of tick based
  	 * timers is inadequate.
  	 */
@@ -49,7 +49,7 @@ index 3ab277ba0f44..28509c518461 100644
  
  	while (timeout)
  		timeout = schedule_timeout_uninterruptible(timeout);
-@@ -1993,12 +1994,12 @@ unsigned long msleep_interruptible(unsigned int msecs)
+@@ -1997,12 +1998,12 @@ unsigned long msleep_interruptible(unsigned int msecs)
  	int jiffs = msecs_to_jiffies(msecs);
  	unsigned long timeout;
  
@@ -65,5 +65,5 @@ index 3ab277ba0f44..28509c518461 100644
  	while (timeout && !signal_pending(current))
  		timeout = schedule_timeout_interruptible(timeout);
 -- 
-2.17.1
+2.19.1
 
