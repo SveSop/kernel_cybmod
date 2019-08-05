@@ -15,7 +15,7 @@ diff --git a/Makefile b/Makefile
 index 3e4868a6498b..b9220e99f1f0 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -697,8 +697,12 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
+@@ -698,8 +698,12 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
  ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
  KBUILD_CFLAGS	+= -Os
  else

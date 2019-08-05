@@ -935,7 +935,7 @@ diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
 index 8c1c636308c8..14e28da8bcae 100644
 --- a/arch/powerpc/Kconfig
 +++ b/arch/powerpc/Kconfig
-@@ -821,6 +821,8 @@ config SCHED_SMT
+@@ -822,6 +822,8 @@ config SCHED_SMT
  	  when dealing with POWER5 cpus at a cost of slightly increased
  	  overhead in some places. If unsure say N here.
  
@@ -1000,7 +1000,7 @@ diff --git a/fs/proc/base.c b/fs/proc/base.c
 index 255f6754c70d..3d375c10ddc6 100644
 --- a/fs/proc/base.c
 +++ b/fs/proc/base.c
-@@ -459,7 +459,7 @@ static int proc_pid_schedstat(struct seq_file *m, struct pid_namespace *ns,
+@@ -477,7 +477,7 @@ static int proc_pid_schedstat(struct seq_file *m, struct pid_namespace *ns,
  		seq_puts(m, "0 0 0\n");
  	else
  		seq_printf(m, "%llu %llu %lu\n",
@@ -1102,7 +1102,7 @@ index 11837410690f..9d5cb934657e 100644
  #endif
  	u64				gtime;
  	struct prev_cputime		prev_cputime;
-@@ -1217,6 +1241,40 @@ struct task_struct {
+@@ -1225,6 +1249,40 @@ struct task_struct {
  	 */
  };
  
