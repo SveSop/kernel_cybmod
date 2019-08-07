@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.2.6  
+0000 : Kernel patch 5.2.7  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0016 : Last of the -ck patches.  
@@ -14,7 +14,10 @@ to
 0020 : Add -O3 optimize option patch  
 0021 : Cake_Qdisc_default  
 0022 : "Cybmod" version name  
-0023 : loop-Fix-mount-2-failure-due-to-race-with-LOOP_SET_F.patch  
+0024 : clear-patches (patch from TK-Glitch patchset)  
+0025 : add-acs-overrides_iommu (patch from TK-Glitch patchset)  
+0026 : ZFS-fix (patch from TK-Glitch patchset)  
+0027 : v5.2-fsync (fsync patch from TK-Glitch patchset)  
 0030 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
