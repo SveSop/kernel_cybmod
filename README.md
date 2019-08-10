@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.2.7  
+0000 : Kernel patch 5.2.8  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0016 : Last of the -ck patches.  
@@ -22,6 +22,7 @@ to
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
 blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.2](https://github.com/sirlucjan/kernel-patches/tree/master/5.2)  
+bfq-patches : Collection of BFQ patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.2](https://github.com/sirlucjan/kernel-patches/tree/master/5.2)  
 
 **AMD support is disabled in the example config (patch 0028), so if you have a AMD processor, you need to enable that**  
 **This branch has MuQSS CPU scheduler, config (patch 0030) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
