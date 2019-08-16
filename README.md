@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.2.8  
+0000 : Kernel patch 5.2.9  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0016 : Last of the -ck patches.  
@@ -17,7 +17,7 @@ to
 0024 : clear-patches (patch from TK-Glitch patchset)  
 0025 : add-acs-overrides_iommu (patch from TK-Glitch patchset)  
 0026 : ZFS-fix (patch from TK-Glitch patchset)  
-0027 : v5.2-fsync (fsync patch from TK-Glitch patchset)  
+0027 : v5.2-fsync (fsync patch from TK-Glitch patchset) ref. [https://steamcommunity.com/app/221410/discussions/0/3158631000006906163/](https://steamcommunity.com/app/221410/discussions/0/3158631000006906163/)  
 0030 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  

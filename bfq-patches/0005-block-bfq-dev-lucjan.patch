@@ -1,18 +1,15 @@
-From ed261a243506476f0814926a0757886ca6cb7d5f Mon Sep 17 00:00:00 2001
+From 1505a57fb376cce5c6dafe0470a8dc1927b5ebf0 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 9 Aug 2019 13:19:44 +0200
-Subject: [PATCH 1/6] Revert "port: block, bfq: reset last_completed_rq_bfqq if
- the pointed queue is freed"
-
-This reverts commit b7d2e961ce8be5dd4d4af9bdfbcab278ffd173f4.
+Date: Mon, 12 Aug 2019 14:58:59 +0200
+Subject: [PATCH 1/4] Drop block-bfq ports
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
- block/bfq-iosched.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ block/bfq-iosched.c | 71 ++++++++++++++-------------------------------
+ 1 file changed, 22 insertions(+), 49 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 102ad98fd52d..5d278a505d45 100644
+index 102ad98fd52d..9a72a34d192a 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2122,13 +2122,12 @@ static void bfq_add_request(struct request *rq)
@@ -32,41 +29,32 @@ index 102ad98fd52d..5d278a505d45 100644
  				/*
  				 * First synchronization detected with
  				 * a candidate waker queue, or with a
-@@ -5430,11 +5429,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
- 	bfq_log_bfqq(bfqq->bfqd, bfqq, "putting blkg and bfqg %p\n", bfqg);
- 	bfqg_and_blkg_put(bfqg);
- #endif
--	
--        if (bfqq->bfqd && bfqq->bfqd->last_completed_rq_bfqq == bfqq)
--		bfqq->bfqd->last_completed_rq_bfqq = NULL;
--        
--        kmem_cache_free(bfq_pool, bfqq);
-+	kmem_cache_free(bfq_pool, bfqq);
- }
+@@ -2500,13 +2499,8 @@ static void bfq_request_merged(struct request_queue *q, struct request *req,
+ 	    blk_rq_pos(container_of(rb_prev(&req->rb_node),
+ 				    struct request, rb_node))) {
+ 		struct bfq_queue *bfqq = bfq_init_rq(req);
+-		struct bfq_data *bfqd;
++		struct bfq_data *bfqd = bfqq->bfqd;
+ 		struct request *prev, *next_rq;
+-                
+-                if (!bfqq)
+-			return;
+-
+-		bfqd = bfqq->bfqd;
  
- static void bfq_put_cooperator(struct bfq_queue *bfqq)
--- 
-2.23.0.rc1
-
-
-From 17cff7e29c2af437db9cab7d190c7c990294140b Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 9 Aug 2019 13:20:04 +0200
-Subject: [PATCH 2/6] Revert "port: block, bfq: move update of waker and woken
- list to queue freeing"
-
-This reverts commit 80397811b0ea0657b3340704714e322b0f270a02.
-
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
----
- block/bfq-iosched.c | 44 +++++++++++++++-----------------------------
- 1 file changed, 15 insertions(+), 29 deletions(-)
-
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 5d278a505d45..862cc35b4519 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -5339,8 +5339,6 @@ static struct request *bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
+ 		/* Reposition request in its sort_list */
+ 		elv_rb_del(&bfqq->sort_list, req);
+@@ -2562,9 +2556,6 @@ static void bfq_requests_merged(struct request_queue *q, struct request *rq,
+ {
+ 	struct bfq_queue *bfqq = bfq_init_rq(rq),
+ 		*next_bfqq = bfq_init_rq(next);
+-                
+-        if (!bfqq)
+-		return;
+ 
+ 	BFQ_BUG_ON(!RQ_BFQQ(rq));
+ 	BFQ_BUG_ON(!RQ_BFQQ(next)); /* this does not imply next is in a bfqq */
+@@ -5340,8 +5331,6 @@ static struct request *bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
   */
  void bfq_put_queue(struct bfq_queue *bfqq)
  {
@@ -75,7 +63,7 @@ index 5d278a505d45..862cc35b4519 100644
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
  	struct bfq_group *bfqg = bfqq_group(bfqq);
  #endif
-@@ -5395,33 +5393,6 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+@@ -5396,33 +5385,6 @@ void bfq_put_queue(struct bfq_queue *bfqq)
  			bfqq->bfqd->burst_size--;
  	}
  
@@ -109,7 +97,20 @@ index 5d278a505d45..862cc35b4519 100644
  	if (bfqq->bfqd)
  		bfq_log_bfqq(bfqq->bfqd, bfqq, "%p freed", bfqq);
  
-@@ -5453,6 +5424,9 @@ static void bfq_put_cooperator(struct bfq_queue *bfqq)
+@@ -5430,11 +5392,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+ 	bfq_log_bfqq(bfqq->bfqd, bfqq, "putting blkg and bfqg %p\n", bfqg);
+ 	bfqg_and_blkg_put(bfqg);
+ #endif
+-	
+-        if (bfqq->bfqd && bfqq->bfqd->last_completed_rq_bfqq == bfqq)
+-		bfqq->bfqd->last_completed_rq_bfqq = NULL;
+-        
+-        kmem_cache_free(bfq_pool, bfqq);
++	kmem_cache_free(bfq_pool, bfqq);
+ }
+ 
+ static void bfq_put_cooperator(struct bfq_queue *bfqq)
+@@ -5458,6 +5416,9 @@ static void bfq_put_cooperator(struct bfq_queue *bfqq)
  
  static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq)
  {
@@ -119,7 +120,7 @@ index 5d278a505d45..862cc35b4519 100644
  	if (bfqq == bfqd->in_service_queue) {
  		__bfq_bfqq_expire(bfqd, bfqq, BFQQE_BUDGET_TIMEOUT);
  		bfq_schedule_dispatch(bfqd);
-@@ -5462,6 +5436,18 @@ static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq)
+@@ -5467,6 +5428,18 @@ static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq)
  
  	bfq_put_cooperator(bfqq);
  
@@ -138,53 +139,7 @@ index 5d278a505d45..862cc35b4519 100644
  	bfq_put_queue(bfqq); /* release process reference */
  }
  
--- 
-2.23.0.rc1
-
-
-From 83a927ba8aba00f694712e3c9857c1b1c55b8382 Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 9 Aug 2019 13:20:27 +0200
-Subject: [PATCH 3/6] Revert "port: block, bfq: handle NULL return value by
- bfq_init_rq()"
-
-This reverts commit cc55bc45262ac8e232b8825f220a718a01ba50a7.
-
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
----
- block/bfq-iosched.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
-
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 862cc35b4519..9a72a34d192a 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -2499,13 +2499,8 @@ static void bfq_request_merged(struct request_queue *q, struct request *req,
- 	    blk_rq_pos(container_of(rb_prev(&req->rb_node),
- 				    struct request, rb_node))) {
- 		struct bfq_queue *bfqq = bfq_init_rq(req);
--		struct bfq_data *bfqd;
-+		struct bfq_data *bfqd = bfqq->bfqd;
- 		struct request *prev, *next_rq;
--                
--                if (!bfqq)
--			return;
--
--		bfqd = bfqq->bfqd;
- 
- 		/* Reposition request in its sort_list */
- 		elv_rb_del(&bfqq->sort_list, req);
-@@ -2561,9 +2556,6 @@ static void bfq_requests_merged(struct request_queue *q, struct request *rq,
- {
- 	struct bfq_queue *bfqq = bfq_init_rq(rq),
- 		*next_bfqq = bfq_init_rq(next);
--                
--        if (!bfqq)
--		return;
- 
- 	BFQ_BUG_ON(!RQ_BFQQ(rq));
- 	BFQ_BUG_ON(!RQ_BFQQ(next)); /* this does not imply next is in a bfqq */
-@@ -6059,7 +6051,7 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
+@@ -6078,7 +6051,7 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
  	BFQ_BUG_ON(!bfqq && !(at_head || blk_rq_is_passthrough(rq)));
  	BFQ_BUG_ON(bfqq && bic_to_bfqq(RQ_BIC(rq), rq_is_sync(rq)) != bfqq);
  
@@ -193,7 +148,7 @@ index 862cc35b4519..9a72a34d192a 100644
  		if (at_head)
  			list_add(&rq->queuelist, &bfqd->dispatch);
  		else
-@@ -6074,7 +6066,7 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
+@@ -6093,7 +6066,7 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
  			bfq_log(bfqd,
  				"%p in disp: at_head %d",
  				rq, at_head);
@@ -206,10 +161,10 @@ index 862cc35b4519..9a72a34d192a 100644
 2.23.0.rc1
 
 
-From d2c3f43c1d2d3d399144696c746628e838f280a7 Mon Sep 17 00:00:00 2001
+From 98b4263ce2c5807b2e297a9142fd18fb1e906dc2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 7 Aug 2019 09:25:47 +0200
-Subject: [PATCH 4/6] block, bfq: reset last_completed_rq_bfqq if the pointed
+Subject: [PATCH 2/4] block, bfq: reset last_completed_rq_bfqq if the pointed
  queue is freed
 
 Since commit 13a857a4c4e8 ("block, bfq: detect wakers and
@@ -266,10 +221,10 @@ index 9a72a34d192a..2b65fdaff17f 100644
 2.23.0.rc1
 
 
-From af58b4e56d483e99abc39516ce801e8dd0ca7b4f Mon Sep 17 00:00:00 2001
+From 89d19f774fc29b6a31d841356505592c4be14ece Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 7 Aug 2019 09:26:44 +0200
-Subject: [PATCH 5/6] block, bfq: move update of waker and woken list to queue
+Subject: [PATCH 3/4] block, bfq: move update of waker and woken list to queue
  freeing
 
 Since commit 13a857a4c4e8 ("block, bfq: detect wakers and
@@ -381,10 +336,10 @@ index 2b65fdaff17f..bb2f70ca5ef5 100644
 2.23.0.rc1
 
 
-From 05687453ad9e30c98e786f67d1f434283f2fbd9f Mon Sep 17 00:00:00 2001
+From bf0843bb85f8d2336228e60c852b8c109129e183 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 7 Aug 2019 17:47:37 +0200
-Subject: [PATCH 6/6] block, bfq: handle NULL return value by bfq_init_rq()
+Subject: [PATCH 4/4] block, bfq: handle NULL return value by bfq_init_rq()
 
 As reported in [1], the call bfq_init_rq(rq) may return NULL in case
 of OOM (in particular, if rq->elv.icq is NULL because memory
