@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.2.9  
+0000 : Kernel patch 5.2.11  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0016 : Last of the -ck patches.  
@@ -18,11 +18,10 @@ to
 0025 : add-acs-overrides_iommu (patch from TK-Glitch patchset)  
 0026 : ZFS-fix (patch from TK-Glitch patchset)  
 0027 : v5.2-fsync (fsync patch from TK-Glitch patchset) ref. [https://steamcommunity.com/app/221410/discussions/0/3158631000006906163/](https://steamcommunity.com/app/221410/discussions/0/3158631000006906163/)  
-0030 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0020/0021)  
+0030 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0019/0020)  
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
 blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.2](https://github.com/sirlucjan/kernel-patches/tree/master/5.2)  
-bfq-patches : Collection of BFQ patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.2](https://github.com/sirlucjan/kernel-patches/tree/master/5.2)  
 
 **AMD support is disabled in the example config (patch 0028), so if you have a AMD processor, you need to enable that**  
 **This branch has MuQSS CPU scheduler, config (patch 0030) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
