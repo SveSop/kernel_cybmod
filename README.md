@@ -28,6 +28,7 @@ blk-patches : Collection of "block" patches picked from [https://github.com/sirl
 
 To build on Ubuntu:  
 ```
+** Requires lz4lib-tool to compile **
 tar xf linux-5.2.tar.xz    
 cd linux-5.2  
 /path/to/patches/and/cybmod.sh  
