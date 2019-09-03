@@ -22,6 +22,7 @@ to
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
 blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.2](https://github.com/sirlucjan/kernel-patches/tree/master/5.2)  
+muqss-fixes : Experimental patchset to fix MDS mitigation issue. [https://ck-hack.blogspot.com/2019/07/linux-52-ck1-muqss-version-0193-for.html?showComment=1567460773533#c1849857238048133045](https://ck-hack.blogspot.com/2019/07/linux-52-ck1-muqss-version-0193-for.html?showComment=1567460773533#c1849857238048133045)  
 
 **AMD support is disabled in the example config (patch 0028), so if you have a AMD processor, you need to enable that**  
 **This branch has MuQSS CPU scheduler, config (patch 0030) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  

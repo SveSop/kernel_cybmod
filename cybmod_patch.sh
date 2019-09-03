@@ -30,5 +30,12 @@ do
         echo -e "***************${NC}"
         patch -p1 < $each
 done
+for each in $DIR/muqss-fixes/0*.patch
+do
+        echo -e "${RED}***************"
+        echo -e "Applying patch: $(basename $each)"
+        echo -e "***************${NC}"
+        patch -p1 < $each
+done
 
 echo Done patching
