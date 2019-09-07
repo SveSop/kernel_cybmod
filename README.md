@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.2.11  
+0000 : Kernel patch 5.2.13  
 0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
 to  
 0016 : Last of the -ck patches.  
@@ -25,7 +25,7 @@ blk-patches : Collection of "block" patches picked from [https://github.com/sirl
 muqss-fixes : Experimental patchset to fix MDS mitigation issue. [https://ck-hack.blogspot.com/2019/07/linux-52-ck1-muqss-version-0193-for.html?showComment=1567460773533#c1849857238048133045](https://ck-hack.blogspot.com/2019/07/linux-52-ck1-muqss-version-0193-for.html?showComment=1567460773533#c1849857238048133045)  
 
 **AMD support is disabled in the example config (patch 0028), so if you have a AMD processor, you need to enable that**  
-**This branch has MuQSS CPU scheduler, config (patch 0030) set up with CONFIG_RQ_SMT and 100Hz (NO_HZ_IDLE)**  
+**This branch has MuQSS CPU scheduler, config (patch 0030) set up with CONFIG_RQ_NONE and 100Hz (NO_HZ_IDLE)**  
 
 To build on Ubuntu:  
 ```
