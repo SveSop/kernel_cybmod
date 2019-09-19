@@ -1,0 +1,140 @@
+diff --git a/kernel/Kconfig.MuQSS b/kernel/Kconfig.MuQSS
+index 558a7cb..a6a5878 100644
+--- a/kernel/Kconfig.MuQSS
++++ b/kernel/Kconfig.MuQSS
+@@ -48,6 +48,21 @@ config RQ_MC
+ 
+ 	  If unsure, say Y.
+ 
++config RQ_MC_LLC
++	bool "Multicore siblings (LLC)"
++	depends on SCHED_MC && SCHED_MUQSS
++	help
++	  With this option enabled, the CPU scheduler will behave similarly as
++	  with "Multicore siblings".
++	  This option takes LLC cache into account when scheduling tasks.
++	  Option may benefit CPUs with multiple LLC caches, such as Ryzen
++	  and Xeon CPUs.
++
++	  This can still be enabled runtime with the boot parameter
++	  rqshare=llc
++
++	  If unsure, say N.
++
+ config RQ_SMP
+ 	bool "Symmetric Multi-Processing"
+ 	depends on SMP && SCHED_MUQSS
+@@ -85,5 +100,6 @@ config SHARERQ
+ 	default 0 if RQ_NONE
+ 	default 1 if RQ_SMT
+ 	default 2 if RQ_MC
+-	default 3 if RQ_SMP
+-	default 4 if RQ_ALL
++	default 3 if RQ_MC_LLC
++	default 4 if RQ_SMP
++	default 5 if RQ_ALL
+diff --git a/kernel/sched/MuQSS.c b/kernel/sched/MuQSS.c
+index 3d2d788..4dbf58f 100644
+--- a/kernel/sched/MuQSS.c
++++ b/kernel/sched/MuQSS.c
+@@ -119,8 +119,9 @@ void print_scheduler_version(void)
+ #define RQSHARE_NONE 0
+ #define RQSHARE_SMT 1
+ #define RQSHARE_MC 2
+-#define RQSHARE_SMP 3
+-#define RQSHARE_ALL 4
++#define RQSHARE_MC_LLC 3
++#define RQSHARE_SMP 4
++#define RQSHARE_ALL 5
+ 
+ /* Define locality levels */
+ #define LOCALITY_SAME 0
+@@ -150,6 +151,10 @@ static int __init set_rqshare(char *str)
+ 		rqshare = RQSHARE_MC;
+ 		return 0;
+ 	}
++	if (!strncmp(str, "llc", 3)) {
++		rqshare = RQSHARE_MC_LLC;
++		return 0;
++	}
+ 	if (!strncmp(str, "smp", 3)) {
+ 		rqshare = RQSHARE_SMP;
+ 		return 0;
+@@ -6678,6 +6683,16 @@ static bool cache_cpu_idle(struct rq *rq)
+ {
+ 	return cpumask_subset(&rq->core_mask, &cpu_idle_map);
+ }
++/* Die topology */
++static const cpumask_t *topology_die_cpumask(int cpu)
++{
++	return per_cpu(cpu_llc_shared_map, cpu);
++}
++/* MC siblings CPU mask which share the same LLC */
++static const cpumask_t *llc_core_cpumask(int cpu)
++{
++	return topology_die_cpumask(cpu);
++}
+ #endif
+ 
+ enum sched_domain_level {
+@@ -6749,7 +6764,6 @@ void __init sched_init_smp(void)
+ 						leader = rq;
+ 					other_rq->smp_leader = leader;
+ 				}
+-
+ 				if (rq->cpu_locality[other_cpu] > LOCALITY_SMP)
+ 					rq->cpu_locality[other_cpu] = LOCALITY_SMP;
+ 			}
+@@ -6762,10 +6776,14 @@ void __init sched_init_smp(void)
+ #ifdef CONFIG_SCHED_MC
+ 		leader = NULL;
+ 		if (cpumask_weight(core_cpumask(cpu)) > 1) {
+-			cpumask_copy(&rq->core_mask, core_cpumask(cpu));
++			if (rqshare == RQSHARE_MC_LLC)
++				cpumask_copy(&rq->core_mask, llc_core_cpumask(cpu));
++			else
++				cpumask_copy(&rq->core_mask, core_cpumask(cpu));
+ 			cpumask_clear_cpu(cpu, &rq->core_mask);
+ 			for_each_cpu(other_cpu, core_cpumask(cpu)) {
+-				if (rqshare == RQSHARE_MC) {
++				if (rqshare == RQSHARE_MC ||
++					(rqshare == RQSHARE_MC_LLC && cpumask_test_cpu(other_cpu, llc_core_cpumask(cpu)))) {
+ 					other_rq = cpu_rq(other_cpu);
+ 
+ 					/* Set the mc_leader to the first CPU */
+@@ -6774,8 +6792,8 @@ void __init sched_init_smp(void)
+ 					other_rq->mc_leader = leader;
+ 				}
+ 				if (rq->cpu_locality[other_cpu] > LOCALITY_MC) {
+-					/* this is to get LLC into play */
+-					if (per_cpu(cpu_llc_id, cpu) == per_cpu(cpu_llc_id, other_cpu))
++					/* this is to get LLC into play even in case LLC sharing is not used */
++					if (cpumask_test_cpu(other_cpu, llc_core_cpumask(cpu)))
+ 						rq->cpu_locality[other_cpu] = LOCALITY_MC_LLC;
+ 					else
+ 						rq->cpu_locality[other_cpu] = LOCALITY_MC;
+@@ -6954,7 +6972,7 @@ void __init sched_init_smp(void)
+ 						other_rq = cpu_rq(ordered_cpus[ordered_cpus_idx]);
+ 						if (best_locality > other_rq->cpu_locality[selected_cpus[cpu_idx]])
+ 						{
+-							/* assign best loclity and best CPU idx in array */
++							/* assign best locality and best CPU idx in array */
+ 							best_locality = other_rq->cpu_locality[selected_cpus[cpu_idx]];
+ 							selected_cpu_idx = cpu_idx;
+ 						}
+@@ -7018,6 +7036,10 @@ void __init sched_init_smp(void)
+ 			printk(KERN_INFO "MuQSS runqueue share type MC total runqueues: %d\n",
+ 			       total_runqueues);
+ 			break;
++		case RQSHARE_MC_LLC:
++			printk(KERN_INFO "MuQSS runqueue share type LLC total runqueues: %d\n",
++			       total_runqueues);
++			break;
+ 		case RQSHARE_SMT:
+ 			printk(KERN_INFO "MuQSS runqueue share type SMT total runqueues: %d\n",
+ 			       total_runqueues);
+@@ -7522,3 +7544,4 @@ struct cgroup_subsys cpu_cgrp_subsys = {
+ #endif	/* CONFIG_CGROUP_SCHED */
+ 
+ #undef CREATE_TRACE_POINTS
++

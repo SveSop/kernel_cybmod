@@ -2,7 +2,7 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10318 @@
+@@ -0,0 +1,10319 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
 +# Linux/x86 5.2.15-cybmod18 Kernel Configuration
@@ -395,12 +395,13 @@ new file mode 100644
 +CONFIG_SMT_NICE=y
 +CONFIG_SCHED_MC=y
 +CONFIG_SCHED_MC_PRIO=y
-+CONFIG_RQ_NONE=y
-+# CONFIG_RQ_SMT is not set
++# CONFIG_RQ_NONE is not set
++CONFIG_RQ_SMT=y
 +# CONFIG_RQ_MC is not set
++# CONFIG_RQ_MC_LLC is not set
 +# CONFIG_RQ_SMP is not set
 +# CONFIG_RQ_ALL is not set
-+CONFIG_SHARERQ=0
++CONFIG_SHARERQ=1
 +CONFIG_X86_LOCAL_APIC=y
 +CONFIG_X86_IO_APIC=y
 +CONFIG_X86_REROUTE_FOR_BROKEN_BOOT_IRQS=y
