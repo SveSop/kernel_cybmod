@@ -1,0 +1,38 @@
+From fae44b6955bd682b89891ff6fc4cd84817027eb4 Mon Sep 17 00:00:00 2001
+From: Peter Jones <pjones@redhat.com>
+Date: Mon, 2 Oct 2017 18:18:30 -0400
+Subject: UBUNTU: SAUCE: (efi-lockdown) Make get_cert_list() use
+ efi_status_to_str() to print error messages.
+
+Signed-off-by: Peter Jones <pjones@redhat.com>
+(cherry picked from commit 6e56736bc779dab3c1d80fd27796520420aab987
+ git://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git)
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+
+diff --git a/security/integrity/platform_certs/load_uefi.c b/security/integrity/platform_certs/load_uefi.c
+index e188f3e..4241acc 100644
+--- a/security/integrity/platform_certs/load_uefi.c
++++ b/security/integrity/platform_certs/load_uefi.c
+@@ -54,7 +54,8 @@ static __init int get_cert_list(efi_char16_t *name, efi_guid_t *guid,
+ 	}
+ 
+ 	if (status != EFI_BUFFER_TOO_SMALL) {
+-		pr_err("Couldn't get size: 0x%lx\n", status);
++		pr_err("Couldn't get size: %s (0x%lx)\n",
++		       efi_status_to_str(status), status);
+ 		return efi_status_to_err(status);
+ 	}
+ 
+@@ -65,7 +66,8 @@ static __init int get_cert_list(efi_char16_t *name, efi_guid_t *guid,
+ 	status = efi.get_variable(name, guid, NULL, &lsize, db);
+ 	if (status != EFI_SUCCESS) {
+ 		kfree(db);
+-		pr_err("Error reading db var: 0x%lx\n", status);
++		pr_err("Error reading db var: %s (0x%lx)\n",
++		       efi_status_to_str(status), status);
+ 		return efi_status_to_err(status);
+ 	}
+ 
+-- 
+cgit v0.10.2
+

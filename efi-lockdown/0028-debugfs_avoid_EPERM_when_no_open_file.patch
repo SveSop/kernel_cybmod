@@ -1,0 +1,58 @@
+From fa99fdc90d1e899f13e12f5625f7f5ad3168a80d Mon Sep 17 00:00:00 2001
+From: Vasily Gorbik <gor@linux.ibm.com>
+Date: Wed, 21 Nov 2018 13:05:10 +0100
+Subject: UBUNTU: SAUCE: (efi-lockdown) debugfs: avoid EPERM when no open file
+ operation defined
+
+With "debugfs: Restrict debugfs when the kernel is locked down"
+return code "r" is unconditionally set to -EPERM, which stays like that
+until function return if no "open" file operation defined, effectivelly
+resulting in "Operation not permitted" for all such files despite kernel
+lock down status or CONFIG_LOCK_DOWN_KERNEL being enabled.
+
+In particular this breaks 2 debugfs files on s390:
+/sys/kernel/debug/s390_hypfs/diag_304
+/sys/kernel/debug/s390_hypfs/diag_204
+
+To address that set EPERM return code only when debugfs_is_locked_down
+returns true.
+
+Fixes: 3fc322605158 ("debugfs: Restrict debugfs when the kernel is locked down")
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+(cherry picked from commit f53c8aa05a37fb1c7b10f0b8fd84d9e0ad980c8c
+ git://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git)
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+
+diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
+index 8eeff90..9c56e1a 100644
+--- a/fs/debugfs/file.c
++++ b/fs/debugfs/file.c
+@@ -167,9 +167,10 @@ static int open_proxy_open(struct inode *inode, struct file *filp)
+ 
+ 	real_fops = debugfs_real_fops(filp);
+ 
+-	r = -EPERM;
+-	if (debugfs_is_locked_down(inode, filp, real_fops))
++	if (debugfs_is_locked_down(inode, filp, real_fops)) {
++		r = -EPERM;
+ 		goto out;
++	}
+ 
+ 	real_fops = fops_get(real_fops);
+ 	if (!real_fops) {
+@@ -296,9 +297,10 @@ static int full_proxy_open(struct inode *inode, struct file *filp)
+ 		return r == -EIO ? -ENOENT : r;
+ 
+ 	real_fops = debugfs_real_fops(filp);
+-	r = -EPERM;
+-	if (debugfs_is_locked_down(inode, filp, real_fops))
++	if (debugfs_is_locked_down(inode, filp, real_fops)) {
++		r = -EPERM;
+ 		goto out;
++	}
+ 
+ 	real_fops = fops_get(real_fops);
+ 	if (!real_fops) {
+-- 
+cgit v0.10.2
+

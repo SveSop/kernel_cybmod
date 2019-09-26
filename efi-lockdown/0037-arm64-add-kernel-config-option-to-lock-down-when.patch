@@ -1,0 +1,95 @@
+From d70ccc9c51152224d11c5863a29c6147a50b4b50 Mon Sep 17 00:00:00 2001
+From: Linn Crosetto <linn@hpe.com>
+Date: Wed, 20 Feb 2019 16:48:23 +0100
+Subject: UBUNTU: SAUCE: (efi-lockdown) arm64: add kernel config option to lock
+ down when in Secure Boot mode
+
+Add a kernel configuration option to lock down the kernel, to restrict
+userspace's ability to modify the running kernel when UEFI Secure Boot is
+enabled. Based on the x86 patch by Matthew Garrett.
+
+Determine the state of Secure Boot in the EFI stub and pass this to the
+kernel using the FDT.
+
+Signed-off-by: Linn Crosetto <linn@hpe.com>
+[bwh: Forward-ported to 4.10: adjust context]
+[Lukas Wunner: Forward-ported to 4.11: drop parts applied upstream]
+[bwh: Forward-ported to 4.15 and lockdown patch set:
+ - Pass result of efi_get_secureboot() in stub through to
+   efi_set_secure_boot() in main kernel
+ - Use lockdown API and naming]
+[bwh: Forward-ported to 4.19.3: adjust context in update_fdt()]
+[dannf: Moved init_lockdown() call after uefi_init(), fixing SB detection]
+(from https://salsa.debian.org/kernel-team/linux/blob/4c4f3e03fdaaa674275c7197cae156e606dfaa4b/debian/patches/features/all/lockdown/arm64-add-kernel-config-option-to-lock-down-when.patch)
+Signed-off-by: dann frazier <dann.frazier@canonical.com>
+
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+
+diff --git a/drivers/firmware/efi/arm-init.c b/drivers/firmware/efi/arm-init.c
+index 311cd34..e2a8222 100644
+--- a/drivers/firmware/efi/arm-init.c
++++ b/drivers/firmware/efi/arm-init.c
+@@ -17,6 +17,7 @@
+ #include <linux/of_fdt.h>
+ #include <linux/platform_device.h>
+ #include <linux/screen_info.h>
++#include <linux/security.h>
+ 
+ #include <asm/efi.h>
+ 
+@@ -253,6 +254,9 @@ void __init efi_init(void)
+ 		return;
+ 	}
+ 
++	efi_set_secure_boot(params.secure_boot);
++	init_lockdown();
++
+ 	reserve_regions();
+ 	efi_esrt_init();
+ 
+diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
+index 5c878bb..995b494 100644
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -699,7 +699,8 @@ static __initdata struct params fdt_params[] = {
+ 	UEFI_PARAM("MemMap Address", "linux,uefi-mmap-start", mmap),
+ 	UEFI_PARAM("MemMap Size", "linux,uefi-mmap-size", mmap_size),
+ 	UEFI_PARAM("MemMap Desc. Size", "linux,uefi-mmap-desc-size", desc_size),
+-	UEFI_PARAM("MemMap Desc. Version", "linux,uefi-mmap-desc-ver", desc_ver)
++	UEFI_PARAM("MemMap Desc. Version", "linux,uefi-mmap-desc-ver", desc_ver),
++	UEFI_PARAM("Secure Boot Enabled", "linux,uefi-secure-boot", secure_boot)
+ };
+ 
+ static __initdata struct params xen_fdt_params[] = {
+diff --git a/drivers/firmware/efi/libstub/fdt.c b/drivers/firmware/efi/libstub/fdt.c
+index 0bf0190..b5249cd 100644
+--- a/drivers/firmware/efi/libstub/fdt.c
++++ b/drivers/firmware/efi/libstub/fdt.c
+@@ -151,6 +151,12 @@ static efi_status_t update_fdt(efi_system_table_t *sys_table, void *orig_fdt,
+ 		}
+ 	}
+ 
++	fdt_val32 = cpu_to_fdt32(efi_get_secureboot(sys_table));
++	status = fdt_setprop(fdt, node, "linux,uefi-secure-boot",
++			     &fdt_val32, sizeof(fdt_val32));
++	if (status)
++		goto fdt_set_fail;
++
+ 	/* Shrink the FDT back to its minimum size: */
+ 	fdt_pack(fdt);
+ 
+diff --git a/include/linux/efi.h b/include/linux/efi.h
+index e0b39b8..34e2808 100644
+--- a/include/linux/efi.h
++++ b/include/linux/efi.h
+@@ -807,6 +807,7 @@ struct efi_fdt_params {
+ 	u32 mmap_size;
+ 	u32 desc_size;
+ 	u32 desc_ver;
++	u32 secure_boot;
+ };
+ 
+ typedef struct {
+-- 
+cgit v0.10.2
+

@@ -1,0 +1,38 @@
+From c2b409a9dd72db36d45e6e475b6eaaa92e4f4ee8 Mon Sep 17 00:00:00 2001
+From: David Howells <dhowells@redhat.com>
+Date: Mon, 18 Feb 2019 12:45:01 +0000
+Subject: UBUNTU: SAUCE: (efi-lockdown) x86/mmiotrace: Lock down the
+ testmmiotrace module
+
+The testmmiotrace module shouldn't be permitted when the kernel is locked
+down as it can be used to arbitrarily read and write MMIO space.
+
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: David Howells <dhowells@redhat.com
+cc: Thomas Gleixner <tglx@linutronix.de>
+cc: Steven Rostedt <rostedt@goodmis.org>
+cc: Ingo Molnar <mingo@kernel.org>
+cc: "H. Peter Anvin" <hpa@zytor.com>
+cc: x86@kernel.org
+Signed-off-by: Matthew Garrett <matthewgarrett@google.com>
+(cherry picked from commit 5674f831317a0d02726fd79929eb36d9461175e9
+ git://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git)
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+
+diff --git a/arch/x86/mm/testmmiotrace.c b/arch/x86/mm/testmmiotrace.c
+index 0881e1f..13f1da9 100644
+--- a/arch/x86/mm/testmmiotrace.c
++++ b/arch/x86/mm/testmmiotrace.c
+@@ -116,6 +116,9 @@ static int __init init(void)
+ {
+ 	unsigned long size = (read_far) ? (8 << 20) : (16 << 10);
+ 
++	if (kernel_is_locked_down("MMIO trace testing"))
++		return -EPERM;
++
+ 	if (mmio_address == 0) {
+ 		pr_err("you have to use the module argument mmio_address.\n");
+ 		pr_err("DO NOT LOAD THIS MODULE UNLESS YOU REALLY KNOW WHAT YOU ARE DOING!\n");
+-- 
+cgit v0.10.2
+

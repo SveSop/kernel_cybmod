@@ -1,37 +1,36 @@
-## Cybmod patches for 5.2 kernel  
+## Cybmod patches for 5.3 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.3.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.3.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.2.15  
-0001 : -ck kernel patches incl MuQSS scheduler: [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/)  
-to  
-0016 : Last of the -ck patches.  
-0017 : revert_acpi_change_for_nct6775  
-0018 : zswap-tweaks.patch  
-0019 : Graysky's GCC optimization patch  
-0020 : Add -O3 optimize option patch  
-0021 : Cake_Qdisc_default  
-0022 : "Cybmod" version name  
-0024 : clear-patches (patch from TK-Glitch patchset)  
-0025 : add-acs-overrides_iommu (patch from TK-Glitch patchset)  
-0026 : ZFS-fix (patch from TK-Glitch patchset)  
-0027 : v5.2-fsync (fsync patch from TK-Glitch patchset) ref. [https://steamcommunity.com/app/221410/discussions/0/3158631000006906163/](https://steamcommunity.com/app/221410/discussions/0/3158631000006906163/)  
-0030 : Custom kernel .config. Tested with Intel processor. (Uses -march=native gcc optimization - see patch 0019/0020)  
+0000 : Kernel patch 5.3.1  
+0001 : PDS 0.99o from TKGlitch patches  
+0002 : PDS Fixes  
+0010 : smpboot-reuse-timer-calibration.patch  
+0011 : kernel-time-reduce-ntp-wakeups.patch  
+0012 : Swap-sucks.patch  
+0013 : revert_acpi_change_for_nct6775.patch  
+0014 : zswap-tweaks.patch  
+0015 : cpu-5.3-merge-graysky-s-patchset.patch  
+0016 : cpu-5.3-add-a-CONFIG-option-that-sets-O3.patch  
+0017 : Cake_Qdisc_default.patch  
+0018 : loop-Better-discard-for-block-devices.patch  
+0019 : v5.3-fsync.patch  
+0020 : Ubuntu based config (See note below!)  
+0021 : Add-cybmod-version.patch  
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
-blk-patches : Collection of "block" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.2](https://github.com/sirlucjan/kernel-patches/tree/master/5.2)  
-muqss-fixes : Experimental patchset to fix MDS mitigation issue. [https://ck-hack.blogspot.com/2019/07/linux-52-ck1-muqss-version-0193-for.html?showComment=1567460773533#c1849857238048133045](https://ck-hack.blogspot.com/2019/07/linux-52-ck1-muqss-version-0193-for.html?showComment=1567460773533#c1849857238048133045)  
+bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep)  
 
-**AMD support is disabled in the example config (patch 0028), so if you have a AMD processor, you need to enable that**  
-**This branch has MuQSS CPU scheduler, config (patch 0030) set up with CONFIG_RQ_NONE and 100Hz (NO_HZ_IDLE)**  
+**AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
+**This config has PDS 0.99o CPU scheduler, CONFIG_HZ=1000, and CONFIG_NO_HZ_IDLE**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.2.tar.xz    
-cd linux-5.2  
+tar xf linux-5.3.tar.xz    
+cd linux-5.3  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```

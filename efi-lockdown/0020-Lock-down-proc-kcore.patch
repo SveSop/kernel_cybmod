@@ -1,0 +1,31 @@
+From f8a901edc6132255582222e110e30425f1bcecc4 Mon Sep 17 00:00:00 2001
+From: David Howells <dhowells@redhat.com>
+Date: Mon, 18 Feb 2019 12:45:02 +0000
+Subject: UBUNTU: SAUCE: (efi-lockdown) Lock down /proc/kcore
+
+Disallow access to /proc/kcore when the kernel is locked down to prevent
+access to cryptographic data.
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: James Morris <james.l.morris@oracle.com>
+Signed-off-by: Matthew Garrett <matthewgarrett@google.com>
+(cherry picked from commit ae7a30d69a5422bcbc803592b49640330811030a
+ git://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git)
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+
+diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
+index f583448..0639228 100644
+--- a/fs/proc/kcore.c
++++ b/fs/proc/kcore.c
+@@ -545,6 +545,8 @@ out:
+ 
+ static int open_kcore(struct inode *inode, struct file *filp)
+ {
++	if (kernel_is_locked_down("/proc/kcore"))
++		return -EPERM;
+ 	if (!capable(CAP_SYS_RAWIO))
+ 		return -EPERM;
+ 
+-- 
+cgit v0.10.2
+

@@ -1,31 +1,27 @@
+From f8ee8f92e292d1c7a590d4d752a3a7f7b25483f2 Mon Sep 17 00:00:00 2001
 From: David Howells <dhowells@redhat.com>
 Date: Mon, 18 Feb 2019 12:44:57 +0000
-Subject: [01/30] Add the ability to lock down access to the running kernel
- image
-Origin: https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/linux-fs.git/commit?id=160a99536afc317b337212dd40eaba341702343e
+Subject: UBUNTU: SAUCE: (efi-lockdown) Add the ability to lock down access to
+ the running kernel image
 
 Provide a single call to allow kernel code to determine whether the system
 should be locked down, thereby disallowing various accesses that might
 allow the running kernel image to be changed including the loading of
 modules that aren't validly signed with a key we recognise, fiddling with
-MSR registers and disallowing hibernation,
+MSR registers and disallowing hibernation.
 
 Signed-off-by: David Howells <dhowells@redhat.com>
 Acked-by: James Morris <james.l.morris@oracle.com>
----
- include/linux/kernel.h   | 17 ++++++++++++
- include/linux/security.h |  9 +++++-
- security/Kconfig         |  8 ++++++
- security/Makefile        |  3 ++
- security/lock_down.c     | 60 ++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 96 insertions(+), 1 deletion(-)
- create mode 100644 security/lock_down.c
+Signed-off-by: Matthew Garrett <matthewgarrett@google.com>
+(cherry picked from commit 1ea009a7a044928777fdabc4a6dedfe7ab16909e
+ git://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git)
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
 
 diff --git a/include/linux/kernel.h b/include/linux/kernel.h
-index 8f0e68e250a7..833bf32ce4e6 100644
+index 4fa360a..b5c6550 100644
 --- a/include/linux/kernel.h
 +++ b/include/linux/kernel.h
-@@ -312,6 +312,23 @@ static inline void refcount_error_report(struct pt_regs *regs, const char *err)
+@@ -314,6 +314,23 @@ static inline void refcount_error_report(struct pt_regs *regs, const char *err)
  { }
  #endif
  
@@ -50,7 +46,7 @@ index 8f0e68e250a7..833bf32ce4e6 100644
  int __must_check _kstrtoul(const char *s, unsigned int base, unsigned long *res);
  int __must_check _kstrtol(const char *s, unsigned int base, long *res);
 diff --git a/include/linux/security.h b/include/linux/security.h
-index dbfb5a66babb..35f0be540e0b 100644
+index 5f7441a..fd7579c 100644
 --- a/include/linux/security.h
 +++ b/include/linux/security.h
 @@ -1829,5 +1829,12 @@ static inline void security_bpf_prog_free(struct bpf_prog_aux *aux)
@@ -68,26 +64,33 @@ index dbfb5a66babb..35f0be540e0b 100644
  
 +#endif /* ! __LINUX_SECURITY_H */
 diff --git a/security/Kconfig b/security/Kconfig
-index e4fe2f3c2c65..14a6f154805d 100644
+index 8e43a40..f57fa80 100644
 --- a/security/Kconfig
 +++ b/security/Kconfig
-@@ -230,6 +230,14 @@ config STATIC_USERMODEHELPER_PATH
+@@ -230,6 +230,21 @@ config STATIC_USERMODEHELPER_PATH
  	  If you wish for all usermode helper programs to be disabled,
  	  specify an empty string here (i.e. "").
  
 +config LOCK_DOWN_KERNEL
 +	bool "Allow the kernel to be 'locked down'"
 +	help
-+	  Allow the kernel to be locked down under certain circumstances, for
-+	  instance if UEFI secure boot is enabled.  Locking down the kernel
-+	  turns off various features that might otherwise allow access to the
-+	  kernel image (eg. setting MSR registers).
++	  Allow the kernel to be locked down. If lockdown support is enabled
++	  and activated, the kernel will impose additional restrictions
++	  intended to prevent uid 0 from being able to modify the running
++	  kernel. This may break userland applications that rely on low-level
++	  access to hardware.
++
++config LOCK_DOWN_KERNEL_FORCE
++        bool "Enable kernel lockdown mode automatically"
++        depends on LOCK_DOWN_KERNEL
++        help
++          Enable the kernel lock down functionality automatically at boot.
 +
  source "security/selinux/Kconfig"
  source "security/smack/Kconfig"
  source "security/tomoyo/Kconfig"
 diff --git a/security/Makefile b/security/Makefile
-index 4d2d3782ddef..507ac8c520ce 100644
+index c598b90..5ff0901 100644
 --- a/security/Makefile
 +++ b/security/Makefile
 @@ -32,3 +32,6 @@ obj-$(CONFIG_CGROUP_DEVICE)		+= device_cgroup.o
@@ -99,10 +102,11 @@ index 4d2d3782ddef..507ac8c520ce 100644
 +obj-$(CONFIG_LOCK_DOWN_KERNEL)		+= lock_down.o
 diff --git a/security/lock_down.c b/security/lock_down.c
 new file mode 100644
-index 000000000000..d8595c0e6673
+index 0000000..18d8776
 --- /dev/null
 +++ b/security/lock_down.c
 @@ -0,0 +1,60 @@
++// SPDX-License-Identifier: GPL-2.0
 +/* Lock down the kernel
 + *
 + * Copyright (C) 2016 Red Hat, Inc. All Rights Reserved.
@@ -145,9 +149,8 @@ index 000000000000..d8595c0e6673
 + */
 +void __init init_lockdown(void)
 +{
-+#ifdef CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT
-+	if (efi_enabled(EFI_SECURE_BOOT))
-+		lock_kernel_down("EFI secure boot");
++#ifdef CONFIG_LOCK_DOWN_FORCE
++	lock_kernel_down("Kernel configuration");
 +#endif
 +}
 +
@@ -163,3 +166,6 @@ index 000000000000..d8595c0e6673
 +	return kernel_locked_down;
 +}
 +EXPORT_SYMBOL(__kernel_is_locked_down);
+-- 
+cgit v0.10.2
+

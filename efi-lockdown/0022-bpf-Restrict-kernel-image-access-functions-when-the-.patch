@@ -1,0 +1,42 @@
+From ab475863c5da4eacd8cc98bcb45b23d369062f3e Mon Sep 17 00:00:00 2001
+From: David Howells <dhowells@redhat.com>
+Date: Mon, 18 Feb 2019 12:45:02 +0000
+Subject: UBUNTU: SAUCE: (efi-lockdown) bpf: Restrict kernel image access
+ functions when the kernel is locked down
+
+There are some bpf functions can be used to read kernel memory:
+bpf_probe_read, bpf_probe_write_user and bpf_trace_printk.  These allow
+private keys in kernel memory (e.g. the hibernation image signing key) to
+be read by an eBPF program and kernel memory to be altered without
+restriction.
+
+Completely prohibit the use of BPF when the kernel is locked down.
+
+Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: netdev@vger.kernel.org
+cc: Chun-Yi Lee <jlee@suse.com>
+cc: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Matthew Garrett <matthewgarrett@google.com>
+(cherry picked from commit 179926cf8ba00329494df6f45fc537ab9540d485
+ git://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git)
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 272071e..70f92bb 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2819,6 +2819,9 @@ SYSCALL_DEFINE3(bpf, int, cmd, union bpf_attr __user *, uattr, unsigned int, siz
+ 	if (sysctl_unprivileged_bpf_disabled && !capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
++	if (kernel_is_locked_down("BPF"))
++		return -EPERM;
++
+ 	err = bpf_check_uarg_tail_zero(uattr, sizeof(attr), size);
+ 	if (err)
+ 		return err;
+-- 
+cgit v0.10.2
+

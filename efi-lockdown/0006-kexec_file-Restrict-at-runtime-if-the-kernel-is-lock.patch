@@ -1,0 +1,44 @@
+From cf3f0994c811fee473898aceff17933d6c98b5cc Mon Sep 17 00:00:00 2001
+From: Jiri Bohac <jbohac@suse.cz>
+Date: Mon, 18 Feb 2019 12:44:58 +0000
+Subject: UBUNTU: SAUCE: (efi-lockdown) kexec_file: Restrict at runtime if the
+ kernel is locked down
+
+When KEXEC_SIG is not enabled, kernel should not load images through
+kexec_file systemcall if the kernel is locked down.
+
+[Modified by David Howells to fit with modifications to the previous patch
+ and to return -EPERM if the kernel is locked down for consistency with
+ other lockdowns. Modified by Matthew Garrett to remove the IMA
+ integration, which will be replaced by integrating with the IMA
+ architecture policy patches.]
+
+Signed-off-by: Jiri Bohac <jbohac@suse.cz>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jiri Bohac <jbohac@suse.cz>
+cc: kexec@lists.infradead.org
+Signed-off-by: Matthew Garrett <matthewgarrett@google.com>
+(cherry picked from commit 0534109a5184b15bdec4cb66822894478c689603
+ git://git.kernel.org/pub/scm/linux/kernel/git/jwboyer/fedora.git)
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+
+diff --git a/kernel/kexec_file.c b/kernel/kexec_file.c
+index 5036bde..0668c29 100644
+--- a/kernel/kexec_file.c
++++ b/kernel/kexec_file.c
+@@ -234,6 +234,12 @@ kimage_file_prepare_segments(struct kimage *image, int kernel_fd, int initrd_fd,
+ 		}
+ 
+ 		ret = 0;
++
++		if (kernel_is_locked_down(reason)) {
++			ret = -EPERM;
++			goto out;
++		}
++
+ 		break;
+ 
+ 		/* All other errors are fatal, including nomem, unparseable
+-- 
+cgit v0.10.2
+
