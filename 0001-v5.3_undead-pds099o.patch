@@ -969,7 +969,7 @@ diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
 index 962cf343f798..2821ce592b89 100644
 --- a/kernel/sched/cpufreq_schedutil.c
 +++ b/kernel/sched/cpufreq_schedutil.c
-@@ -180,6 +180,7 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
+@@ -185,6 +185,7 @@ static unsigned int get_next_freq(struct sugov_policy *sg_policy,
  	return cpufreq_driver_resolve_freq(policy, freq);
  }
  
@@ -977,7 +977,7 @@ index 962cf343f798..2821ce592b89 100644
  /*
   * This function computes an effective utilization for the given CPU, to be
   * used for frequency selection given the linear relation: f = u * f_max.
-@@ -297,6 +298,13 @@ static unsigned long sugov_get_util(struct sugov_cpu *sg_cpu)
+@@ -302,6 +303,13 @@ static unsigned long sugov_get_util(struct sugov_cpu *sg_cpu)
  
  	return schedutil_cpu_util(sg_cpu->cpu, util, max, FREQUENCY_UTIL, NULL);
  }
@@ -991,7 +991,7 @@ index 962cf343f798..2821ce592b89 100644
  
  /**
   * sugov_iowait_reset() - Reset the IO boost status of a CPU.
-@@ -440,7 +448,9 @@ static inline bool sugov_cpu_is_busy(struct sugov_cpu *sg_cpu) { return false; }
+@@ -445,7 +453,9 @@ static inline bool sugov_cpu_is_busy(struct sugov_cpu *sg_cpu) { return false; }
   */
  static inline void ignore_dl_rate_limit(struct sugov_cpu *sg_cpu, struct sugov_policy *sg_policy)
  {
@@ -1001,7 +1001,7 @@ index 962cf343f798..2821ce592b89 100644
  		sg_policy->limits_changed = true;
  }
  
-@@ -683,6 +693,7 @@ static int sugov_kthread_create(struct sugov_policy *sg_policy)
+@@ -688,6 +698,7 @@ static int sugov_kthread_create(struct sugov_policy *sg_policy)
  	}
  
  	ret = sched_setattr_nocheck(thread, &attr);
@@ -1009,7 +1009,7 @@ index 962cf343f798..2821ce592b89 100644
  	if (ret) {
  		kthread_stop(thread);
  		pr_warn("%s: failed to set SCHED_DEADLINE\n", __func__);
-@@ -913,6 +924,7 @@ static int __init sugov_register(void)
+@@ -918,6 +929,7 @@ static int __init sugov_register(void)
  fs_initcall(sugov_register);
  
  #ifdef CONFIG_ENERGY_MODEL
@@ -1017,7 +1017,7 @@ index 962cf343f798..2821ce592b89 100644
  extern bool sched_energy_update;
  extern struct mutex sched_energy_mutex;
  
-@@ -943,4 +955,10 @@ void sched_cpufreq_governor_change(struct cpufreq_policy *policy,
+@@ -948,4 +960,10 @@ void sched_cpufreq_governor_change(struct cpufreq_policy *policy,
  	}
  
  }
@@ -1088,7 +1088,7 @@ diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
 index 80940939b733..3e09d3ed3fa3 100644
 --- a/kernel/sched/idle.c
 +++ b/kernel/sched/idle.c
-@@ -354,6 +354,7 @@ void cpu_startup_entry(enum cpuhp_state state)
+@@ -355,6 +355,7 @@ void cpu_startup_entry(enum cpuhp_state state)
  		do_idle();
  }
  
@@ -1096,7 +1096,7 @@ index 80940939b733..3e09d3ed3fa3 100644
  /*
   * idle-task scheduling class.
   */
-@@ -466,3 +467,4 @@ const struct sched_class idle_sched_class = {
+@@ -467,3 +468,4 @@ const struct sched_class idle_sched_class = {
  	.switched_to		= switched_to_idle,
  	.update_curr		= update_curr_idle,
  };
@@ -8233,7 +8233,7 @@ diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
 index 0a426f4e3125..2692b89a70d5 100644
 --- a/kernel/time/posix-cpu-timers.c
 +++ b/kernel/time/posix-cpu-timers.c
-@@ -791,6 +791,7 @@ check_timers_list(struct list_head *timers,
+@@ -794,6 +794,7 @@ check_timers_list(struct list_head *timers,
  	return 0;
  }
  
@@ -8241,7 +8241,7 @@ index 0a426f4e3125..2692b89a70d5 100644
  static inline void check_dl_overrun(struct task_struct *tsk)
  {
  	if (tsk->dl.dl_overrun) {
-@@ -798,6 +799,7 @@ static inline void check_dl_overrun(struct task_struct *tsk)
+@@ -801,6 +802,7 @@ static inline void check_dl_overrun(struct task_struct *tsk)
  		__group_send_sig_info(SIGXCPU, SEND_SIG_PRIV, tsk);
  	}
  }
@@ -8249,7 +8249,7 @@ index 0a426f4e3125..2692b89a70d5 100644
  
  /*
   * Check for any per-thread CPU timers that have fired and move them off
-@@ -812,8 +814,10 @@ static void check_thread_timers(struct task_struct *tsk,
+@@ -815,8 +817,10 @@ static void check_thread_timers(struct task_struct *tsk,
  	u64 expires;
  	unsigned long soft;
  
@@ -8260,7 +8260,7 @@ index 0a426f4e3125..2692b89a70d5 100644
  
  	/*
  	 * If cputime_expires is zero, then there are no active
-@@ -829,7 +833,7 @@ static void check_thread_timers(struct task_struct *tsk,
+@@ -832,7 +836,7 @@ static void check_thread_timers(struct task_struct *tsk,
  	tsk_expires->virt_exp = expires;
  
  	tsk_expires->sched_exp = check_timers_list(++timers, firing,
@@ -8269,7 +8269,7 @@ index 0a426f4e3125..2692b89a70d5 100644
  
  	/*
  	 * Check for the special case thread timers.
-@@ -839,7 +843,7 @@ static void check_thread_timers(struct task_struct *tsk,
+@@ -842,7 +846,7 @@ static void check_thread_timers(struct task_struct *tsk,
  		unsigned long hard = task_rlimit_max(tsk, RLIMIT_RTTIME);
  
  		if (hard != RLIM_INFINITY &&
@@ -8278,7 +8278,7 @@ index 0a426f4e3125..2692b89a70d5 100644
  			/*
  			 * At the hard limit, we just die.
  			 * No need to calculate anything else now.
-@@ -851,7 +855,7 @@ static void check_thread_timers(struct task_struct *tsk,
+@@ -854,7 +858,7 @@ static void check_thread_timers(struct task_struct *tsk,
  			__group_send_sig_info(SIGKILL, SEND_SIG_PRIV, tsk);
  			return;
  		}
@@ -8287,7 +8287,7 @@ index 0a426f4e3125..2692b89a70d5 100644
  			/*
  			 * At the soft limit, send a SIGXCPU every second.
  			 */
-@@ -1091,7 +1095,7 @@ static inline int fastpath_timer_check(struct task_struct *tsk)
+@@ -1095,7 +1099,7 @@ static inline int fastpath_timer_check(struct task_struct *tsk)
  		struct task_cputime task_sample;
  
  		task_cputime(tsk, &task_sample.utime, &task_sample.stime);
@@ -8296,7 +8296,7 @@ index 0a426f4e3125..2692b89a70d5 100644
  		if (task_cputime_expired(&task_sample, &tsk->cputime_expires))
  			return 1;
  	}
-@@ -1121,8 +1125,10 @@ static inline int fastpath_timer_check(struct task_struct *tsk)
+@@ -1125,8 +1129,10 @@ static inline int fastpath_timer_check(struct task_struct *tsk)
  			return 1;
  	}
  

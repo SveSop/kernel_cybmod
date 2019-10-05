@@ -26,7 +26,7 @@ diff --git a/drivers/char/mem.c b/drivers/char/mem.c
 index b08dc50..0a2f2e7 100644
 --- a/drivers/char/mem.c
 +++ b/drivers/char/mem.c
-@@ -786,6 +786,8 @@ static loff_t memory_lseek(struct file *file, loff_t offset, int orig)
+@@ -807,6 +807,8 @@ static loff_t memory_lseek(struct file *file, loff_t offset, int orig)
  
  static int open_port(struct inode *inode, struct file *filp)
  {

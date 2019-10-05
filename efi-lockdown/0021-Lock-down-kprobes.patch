@@ -22,7 +22,7 @@ diff --git a/kernel/kprobes.c b/kernel/kprobes.c
 index d9770a53..31fc85b 100644
 --- a/kernel/kprobes.c
 +++ b/kernel/kprobes.c
-@@ -1556,6 +1556,9 @@ int register_kprobe(struct kprobe *p)
+@@ -1557,6 +1557,9 @@ int register_kprobe(struct kprobe *p)
  	struct module *probed_mod;
  	kprobe_opcode_t *addr;
  
