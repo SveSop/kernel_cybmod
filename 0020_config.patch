@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10423 @@
+@@ -0,0 +1,10422 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.3.4-cybmod3 Kernel Configuration
++# Linux/x86 5.3.5-cybmod4 Kernel Configuration
 +#
 +
 +#
@@ -7746,7 +7746,6 @@ new file mode 100644
 +CONFIG_RTC_DRV_PCF8583=m
 +CONFIG_RTC_DRV_M41T80=m
 +CONFIG_RTC_DRV_M41T80_WDT=y
-+CONFIG_RTC_DRV_BD70528=m
 +CONFIG_RTC_DRV_BQ32K=m
 +CONFIG_RTC_DRV_PALMAS=m
 +CONFIG_RTC_DRV_TPS6586X=m
