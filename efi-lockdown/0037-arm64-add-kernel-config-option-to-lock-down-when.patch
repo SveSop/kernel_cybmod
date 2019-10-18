@@ -51,7 +51,7 @@ diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
 index 5c878bb..995b494 100644
 --- a/drivers/firmware/efi/efi.c
 +++ b/drivers/firmware/efi/efi.c
-@@ -699,7 +699,8 @@ static __initdata struct params fdt_params[] = {
+@@ -702,7 +702,8 @@ static __initdata struct params fdt_params[] = {
  	UEFI_PARAM("MemMap Address", "linux,uefi-mmap-start", mmap),
  	UEFI_PARAM("MemMap Size", "linux,uefi-mmap-size", mmap_size),
  	UEFI_PARAM("MemMap Desc. Size", "linux,uefi-mmap-desc-size", desc_size),

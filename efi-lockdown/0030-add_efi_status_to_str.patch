@@ -25,7 +25,7 @@ index ad3b1f4..5c878bb 100644
  
  #include <asm/early_ioremap.h>
  
-@@ -928,40 +929,101 @@ int efi_mem_type(unsigned long phys_addr)
+@@ -931,40 +932,101 @@ int efi_mem_type(unsigned long phys_addr)
  }
  #endif
  
