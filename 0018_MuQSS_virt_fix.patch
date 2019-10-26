@@ -1,0 +1,26 @@
+From 3d6e52f1415a5bcdc6b06f10f9a48388597fcd60 Mon Sep 17 00:00:00 2001
+From: glitsj16 <glitsj16@users.noreply.github.com>
+Date: Thu, 19 Sep 2019 02:05:33 +0000
+Subject: [PATCH] Fix systemd-detect-virt
+
+As per https://bbs.archlinux.org/viewtopic.php?pid=1863063#p1863063, systemd-detect-virt broke on linux-ck 5.2.14. This fix was mentioned in https://bbs.archlinux.org/viewtopic.php?pid=1863567#p1863567.
+---
+ kernel/sched/MuQSS.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/sched/MuQSS.c b/kernel/sched/MuQSS.c
+index 9e0dc715646ca..3d1a1c50b714d 100644
+--- a/kernel/sched/MuQSS.c
++++ b/kernel/sched/MuQSS.c
+@@ -7402,7 +7402,10 @@ __read_mostly bool sched_debug_enabled;
+ 
+ void proc_sched_show_task(struct task_struct *p, struct pid_namespace *ns,
+ 			  struct seq_file *m)
+-{}
++{
++	seq_printf(m, "%s (%d, #threads: %d)\n", p->comm, task_pid_nr_ns(p, ns),
++		   get_nr_threads(p));
++}
+ 
+ void proc_sched_set_task(struct task_struct *p)
+ {}

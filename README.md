@@ -5,26 +5,26 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 **Custom kernel with the following patches**  
 
 0000 : Kernel patch 5.3.7  
-0001 : PDS 0.99o from TKGlitch patches  
-0002 : PDS Fixes  
-0010 : smpboot-reuse-timer-calibration.patch  
-0011 : kernel-time-reduce-ntp-wakeups.patch  
-0012 : Swap-sucks.patch  
-0013 : revert_acpi_change_for_nct6775.patch  
-0014 : zswap-tweaks.patch  
-0015 : cpu-5.3-merge-graysky-s-patchset.patch  
-0016 : cpu-5.3-add-a-CONFIG-option-that-sets-O3.patch  
-0017 : Cake_Qdisc_default.patch  
-0018 : loop-Better-discard-for-block-devices.patch  
-0019 : v5.3-fsync.patch  
-0020 : Ubuntu based config (See note below!)  
-0021 : Add-cybmod-version.patch  
+0001 : -ck patches 0.195 w/MuQSS scheduler  
+0018 : Last of the -ck patches  
+0020 : Swap-sucks.patch  
+0021 : revert_acpi_change_for_nct6775.patch  
+0022 : zswap-tweaks.patch  
+0023 : cpu-5.3-merge-graysky-s-patchset.patch  
+0024 : cpu-5.3-add-a-CONFIG-option-that-sets-O3.patch  
+0025 : Cake_Qdisc_default.patch  
+0026 : loop-Better-discard-for-block-devices.patch  
+0027 : v5.3-fsync.patch  
+0030 : Ubuntu based config (See note below!)  
+0031 : Add-cybmod-version.patch  
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
 bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep)  
+clearlinux-patches : Collection of "Clearlinux" patches aimed at Intel processors  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
-**This config has PDS 0.99o CPU scheduler, CONFIG_HZ=1000, and CONFIG_NO_HZ_IDLE**  
+**Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
+**This config has MuQSS 0.195 CPU scheduler, full -ck patchset with CONFIG_HZ=100, and CONFIG_RQ_SMT default**  
 
 To build on Ubuntu:  
 ```
