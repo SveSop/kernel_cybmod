@@ -922,7 +922,7 @@ diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
 index 3adcec05b1f6..d3d1c50feb92 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -830,6 +830,8 @@ config SCHED_SMT
+@@ -847,6 +847,8 @@ config SCHED_SMT
  	  MultiThreading at a cost of slightly increased overhead in some
  	  places. If unsure say N here.
  
@@ -10337,7 +10337,7 @@ index 802b1f3405f2..3ce9dc8e7457 100644
  #include <linux/sched.h>
  
  #include <linux/sched/autogroup.h>
-@@ -2423,3 +2436,30 @@ static inline bool sched_energy_enabled(void)
+@@ -2419,3 +2432,30 @@ static inline bool sched_energy_enabled(void)
  static inline bool sched_energy_enabled(void) { return false; }
  
  #endif /* CONFIG_ENERGY_MODEL && CONFIG_CPU_FREQ_GOV_SCHEDUTIL */

@@ -19,7 +19,7 @@ diff --git a/kernel/events/core.c b/kernel/events/core.c
 index 8479c7c..5425d05 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -10824,6 +10824,11 @@ SYSCALL_DEFINE5(perf_event_open,
+@@ -10851,6 +10851,11 @@ SYSCALL_DEFINE5(perf_event_open,
  			return -EINVAL;
  	}
  

@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.3.7  
+0000 : Kernel patch 5.3.9  
 0001 : -ck patches 0.195 w/MuQSS scheduler  
 0018 : Last of the -ck patches  
 0020 : Swap-sucks.patch  
@@ -21,6 +21,7 @@ ubuntu : Ubuntu kernel patchset
 efi-lockdown : EFI lockdown patchset (se note below!)  
 bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep)  
 clearlinux-patches : Collection of "Clearlinux" patches aimed at Intel processors  
+mm-patches : Hugepages patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  

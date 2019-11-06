@@ -162,7 +162,7 @@ index ab7ca5989..5dddfabc7 100644
  }
  
  static void loop_unprepare_queue(struct loop_device *lo)
-@@ -1930,7 +1953,10 @@ static void loop_handle_cmd(struct loop_cmd *cmd)
+@@ -1940,7 +1963,10 @@ static void loop_handle_cmd(struct loop_cmd *cmd)
   failed:
  	/* complete non-aio request */
  	if (!cmd->use_aio || ret) {

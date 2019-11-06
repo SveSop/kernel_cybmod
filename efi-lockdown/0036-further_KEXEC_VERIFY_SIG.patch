@@ -17,7 +17,7 @@ diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
 index 47b158c..12c8571 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -966,28 +966,37 @@ config KEXEC_FILE
+@@ -983,28 +983,37 @@ config KEXEC_FILE
  	  for kernel and initramfs as opposed to list of segments as
  	  accepted by previous system call.
  
