@@ -1,4 +1,4 @@
-From 7f23d469f85eebe596db9b43686a08a98b6248c8 Mon Sep 17 00:00:00 2001
+From 8ba973e9d62edcff0425735d4c65f3dd7fda1c68 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:50:00 +0800
 Subject: [PATCH 18/49] fpga: dfl: afu: expose __afu_port_enable/disable
@@ -103,5 +103,5 @@ index 0c7630ae3..83683f2e0 100644
  int afu_mmio_region_add(struct dfl_feature_platform_data *pdata,
  			u32 region_index, u64 region_size, u64 phys, u32 flags);
 -- 
-2.24.0.rc0
+2.24.0
 

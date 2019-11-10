@@ -1,4 +1,4 @@
-From 864154d4c233dfb6ae6680aaea4d2c51d8b7db99 Mon Sep 17 00:00:00 2001
+From 156520c831794735ac584fa31c6e8dbb7529827a Mon Sep 17 00:00:00 2001
 From: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
 Date: Mon, 23 Sep 2019 13:11:26 -0500
 Subject: [PATCH 01/49] staging: exfat: add exfat filesystem code to staging
@@ -10906,5 +10906,5 @@ index 000000000..366082fb3
 +	0xFE, 0xFF, 0xFF, 0xFF
 +};
 -- 
-2.24.0.rc0
+2.24.0
 

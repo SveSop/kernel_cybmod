@@ -1,4 +1,4 @@
-From 21404a06c9e5ed23aa82015cb711d4630184bea8 Mon Sep 17 00:00:00 2001
+From 68a60270a0ae2b2051c1f1a8c2113351487f616f Mon Sep 17 00:00:00 2001
 From: Carlos A Petry <capetry.dev@gmail.com>
 Date: Wed, 7 Nov 2018 23:13:12 -0200
 Subject: [PATCH 02/49] fpga: altera-cvp: Fix function definition argument
@@ -28,5 +28,5 @@ index 770915fb9..53b963071 100644
  	u8			numclks;
  };
 -- 
-2.24.0.rc0
+2.24.0
 

@@ -1,4 +1,4 @@
-From 9cd7c6350a9f5f4c88e62ab499faa3c3f4d724f9 Mon Sep 17 00:00:00 2001
+From 3ca608c3298944dbed5418c3a369c2fe925fc044 Mon Sep 17 00:00:00 2001
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Date: Thu, 4 Jul 2019 07:56:45 +0200
 Subject: [PATCH 04/49] fpga: dfl: use driver core functions, not sysfs ones.
@@ -125,5 +125,5 @@ index 086ad2420..0be463558 100644
  
  static const struct dfl_feature_ops fme_hdr_ops = {
 -- 
-2.24.0.rc0
+2.24.0
 

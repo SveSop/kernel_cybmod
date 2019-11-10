@@ -1,4 +1,4 @@
-From 2af1a6dcd755407bc593d5bb8ead63eab2f16c2a Mon Sep 17 00:00:00 2001
+From 09f21a7be3e3d380388cf1a2cb452c3cb8b61a73 Mon Sep 17 00:00:00 2001
 From: Thor Thayer <thor.thayer@linux.intel.com>
 Date: Mon, 19 Aug 2019 15:48:06 -0500
 Subject: [PATCH 11/49] fpga: altera-cvp: Discover Vendor Specific offset
@@ -297,5 +297,5 @@ index 53b963071..9df207333 100644
  	 * Enable memory BAR access. We cannot use pci_enable_device() here
  	 * because it will make the driver unusable with FPGA devices that
 -- 
-2.24.0.rc0
+2.24.0
 

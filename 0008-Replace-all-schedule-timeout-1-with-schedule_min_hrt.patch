@@ -227,7 +227,7 @@ diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
 index f033fee225a1..bc1ec3ada9b5 100644
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -2674,7 +2674,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
+@@ -2677,7 +2677,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
  	while (!skb_queue_empty(&dev->rxq) &&
  	       !skb_queue_empty(&dev->txq) &&
  	       !skb_queue_empty(&dev->done)) {

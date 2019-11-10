@@ -1,4 +1,4 @@
-From 5dd7327b587096faab64232344471c4ab3daf0fc Mon Sep 17 00:00:00 2001
+From 0350e62b3d21d079ed84d8d377cd2f6718f55379 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:18 +0800
 Subject: [PATCH 09/49] fpga: dfl: make uinit callback optional
@@ -29,5 +29,5 @@ index 87eaef6d2..c0512afc4 100644
  		}
  }
 -- 
-2.24.0.rc0
+2.24.0
 

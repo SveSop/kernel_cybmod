@@ -1,4 +1,4 @@
-From d0e22c15aa32f7de7f2e8212a6cc02f042443c7e Mon Sep 17 00:00:00 2001
+From dc801b82efe2f3a1b4d3a4cf14b507345ceed466 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:50:03 +0800
 Subject: [PATCH 21/49] fpga: dfl: fme: add global error reporting support
@@ -531,5 +531,5 @@ index e4131e857..6685c8ef9 100644
  
  #endif /* __DFL_FME_H */
 -- 
-2.24.0.rc0
+2.24.0
 

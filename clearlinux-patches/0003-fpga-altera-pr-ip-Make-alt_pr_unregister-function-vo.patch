@@ -1,4 +1,4 @@
-From 3f9f16c76398b6c5aa11ae9ad34b739e8484fa2f Mon Sep 17 00:00:00 2001
+From 9ade27d481504e44a678ae42951b0715594c5e06 Mon Sep 17 00:00:00 2001
 From: Moritz Fischer <mdf@kernel.org>
 Date: Wed, 26 Jun 2019 17:33:09 -0700
 Subject: [PATCH 03/49] fpga: altera-pr-ip: Make alt_pr_unregister function
@@ -64,5 +64,5 @@ index 7d4664730..0b08ac20a 100644
  
  #endif /* _ALT_PR_IP_CORE_H */
 -- 
-2.24.0.rc0
+2.24.0
 

@@ -1,4 +1,4 @@
-From b2bb9492d81f6824b4331784949208db2d2eda55 Mon Sep 17 00:00:00 2001
+From 1cde3ccfdeb9d68c3a0ec7a9aad10521e040a51c Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:50:02 +0800
 Subject: [PATCH 20/49] fpga: dfl: afu: add STP (SignalTap) support
@@ -62,5 +62,5 @@ index e11352af1..e4a34dc79 100644
  		.ops = NULL,
  	}
 -- 
-2.24.0.rc0
+2.24.0
 

@@ -1,4 +1,4 @@
-From 5aa0abbde823002a72c11599cf65172208a29b6a Mon Sep 17 00:00:00 2001
+From a5044f9ed983a1c6d8c0ff591e4b5ab292db5138 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:13 +0800
 Subject: [PATCH 07/49] fpga: dfl: afu: add AFU state related sysfs interfaces
@@ -243,5 +243,5 @@ index b3f2f53a7..6625d73ba 100644
   * struct dfl_fpga_port_ops - port ops
   *
 -- 
-2.24.0.rc0
+2.24.0
 

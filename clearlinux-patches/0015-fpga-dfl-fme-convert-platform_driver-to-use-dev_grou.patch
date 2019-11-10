@@ -1,4 +1,4 @@
-From a7e67651690d7f3c13b7b0589702bcdc529b3ed0 Mon Sep 17 00:00:00 2001
+From 8a9d14aff2fc138039ab93b6139b96d6b0840600 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:49:57 +0800
 Subject: [PATCH 15/49] fpga: dfl: fme: convert platform_driver to use
@@ -71,5 +71,5 @@ index f033f1cfd..bf8114d4d 100644
  	.probe   = fme_probe,
  	.remove  = fme_remove,
 -- 
-2.24.0.rc0
+2.24.0
 

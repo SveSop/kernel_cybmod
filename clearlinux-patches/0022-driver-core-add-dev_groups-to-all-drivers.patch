@@ -1,4 +1,4 @@
-From cad71bbb89d87a536ceaab0c5fe8ff10eae4b67e Mon Sep 17 00:00:00 2001
+From b107efcd328b9085970873736811b10c4624a960 Mon Sep 17 00:00:00 2001
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Date: Wed, 31 Jul 2019 14:43:40 +0200
 Subject: [PATCH 22/49] driver core: add dev_groups to all drivers
@@ -81,5 +81,5 @@ index 6717adee3..47ccb2029 100644
  	const struct dev_pm_ops *pm;
  	void (*coredump) (struct device *dev);
 -- 
-2.24.0.rc0
+2.24.0
 

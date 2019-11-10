@@ -1,7 +1,7 @@
-From fe99b31f0a333da7ffb4b1ac9e667c6eec791af8 Mon Sep 17 00:00:00 2001
+From 7d6c131e88f5ffc0129c7c278c1ffba7510694da Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Sat, 20 Jul 2019 14:14:47 +0000
-Subject: [PATCH 49/49] x86/microcode: echo 2 > reload to force load ucode.
+Subject: [PATCH 48/49] x86/microcode: echo 2 > reload to force load ucode.
 
 If you want to force a ucode load even if the version
 doesn't change try this
@@ -65,5 +65,5 @@ index 9e85d785b..5c67ac023 100644
  /* Current microcode patch used in early patching on the APs. */
  static struct microcode_intel *intel_ucode_patch;
 -- 
-2.24.0.rc0
+2.24.0
 

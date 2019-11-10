@@ -1,4 +1,4 @@
-From 8610deb9598075fd287770888bb6904340061acc Mon Sep 17 00:00:00 2001
+From eda3523e5588e2fdca6ba2fdf50a9a37b3509b78 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:49:56 +0800
 Subject: [PATCH 14/49] fpga: dfl: make init callback optional
@@ -37,5 +37,5 @@ index c0512afc4..96a2b8274 100644
  	feature->ops = drv->ops;
  
 -- 
-2.24.0.rc0
+2.24.0
 

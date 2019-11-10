@@ -1,4 +1,4 @@
-From 08c5aa305159953cb533659c5164b1804b51c8af Mon Sep 17 00:00:00 2001
+From 9839cd0113904b5d196d4b4197a7fef87a86d4ed Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:15 +0800
 Subject: [PATCH 08/49] fpga: dfl: add id_table for dfl private feature driver
@@ -208,5 +208,5 @@ index 6625d73ba..856ea4ebc 100644
  };
  
 -- 
-2.24.0.rc0
+2.24.0
 

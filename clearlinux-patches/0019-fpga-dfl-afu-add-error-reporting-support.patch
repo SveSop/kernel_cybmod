@@ -1,4 +1,4 @@
-From 515c7980e40eaa961ab27b54c97d569584321a1b Mon Sep 17 00:00:00 2001
+From 92690d426ccfcfeb83f464e57559fd8bae916a3a Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:50:01 +0800
 Subject: [PATCH 19/49] fpga: dfl: afu: add error reporting support.
@@ -341,5 +341,5 @@ index 83683f2e0..576e94960 100644
 +
  #endif /* __DFL_AFU_H */
 -- 
-2.24.0.rc0
+2.24.0
 

@@ -1,4 +1,4 @@
-From 16d2dc2eb7b8fb426be3d146e9534488d8e5d636 Mon Sep 17 00:00:00 2001
+From 3d5bbcf75d4dd11b7bbc432b2b373646b930f0ac Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:49:59 +0800
 Subject: [PATCH 17/49] fpga: dfl: afu: add userclock sysfs interfaces.
@@ -220,5 +220,5 @@ index 856ea4ebc..9f0e656de 100644
   * struct dfl_fpga_enum_info - DFL FPGA enumeration information
   *
 -- 
-2.24.0.rc0
+2.24.0
 

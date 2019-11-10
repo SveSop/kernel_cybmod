@@ -1,4 +1,4 @@
-From 54adaaf442fb229d52329798fbae08ec5124be6a Mon Sep 17 00:00:00 2001
+From 1c80336a71ea641c9a949dbcaad46914f14dfe6e Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:20 +0800
 Subject: [PATCH 10/49] fpga: dfl: fme: add capability sysfs interfaces
@@ -115,5 +115,5 @@ index 5fdce548f..f033f1cfd 100644
  };
  ATTRIBUTE_GROUPS(fme_hdr);
 -- 
-2.24.0.rc0
+2.24.0
 
