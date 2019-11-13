@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.3.10  
+0000 : Kernel patch 5.3.11  
 0001 : -ck patches 0.195 w/MuQSS scheduler  
 0018 : Last of the -ck patches  
 0020 : Swap-sucks.patch  

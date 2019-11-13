@@ -48,7 +48,7 @@ diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
 index 222855c..e60d501 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -2043,20 +2043,30 @@ config KEXEC_FILE
+@@ -2088,20 +2088,30 @@ config KEXEC_FILE
  config ARCH_HAS_KEXEC_PURGATORY
  	def_bool KEXEC_FILE
  

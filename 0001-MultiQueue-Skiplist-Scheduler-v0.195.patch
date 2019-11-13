@@ -61,7 +61,7 @@ diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/adm
 index 4c1971960afa..de6a82c26ebb 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4220,6 +4220,14 @@
+@@ -4247,6 +4247,14 @@
  			Memory area to be used by remote processor image,
  			managed by CMA.
  
