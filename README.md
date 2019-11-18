@@ -4,11 +4,9 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.3.7  
+0000 : Kernel patch 5.3.11  
 0001 : PDS 0.99o from TKGlitch patches  
 0002 : PDS Fixes  
-0010 : smpboot-reuse-timer-calibration.patch  
-0011 : kernel-time-reduce-ntp-wakeups.patch  
 0012 : Swap-sucks.patch  
 0013 : revert_acpi_change_for_nct6775.patch  
 0014 : zswap-tweaks.patch  
@@ -22,6 +20,8 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 ubuntu : Ubuntu kernel patchset  
 efi-lockdown : EFI lockdown patchset (se note below!)  
 bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep)  
+clearlinux-patches : Collection of patches from "Clearlinux"  
+mm-patches : Memory hugepages patches  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **This config has PDS 0.99o CPU scheduler, CONFIG_HZ=1000, and CONFIG_NO_HZ_IDLE**  
