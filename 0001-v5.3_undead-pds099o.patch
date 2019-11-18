@@ -842,7 +842,7 @@ index 515525ff1cfd..406c8f07fbe9 100644
  /*
   * Helper routine for generate_sched_domains().
   * Do cpusets a, b have overlapping effective cpus_allowed masks?
-@@ -935,7 +935,7 @@ static void rebuild_sched_domains_locked(void)
+@@ -936,7 +936,7 @@ static void rebuild_sched_domains_locked(void)
  out:
  	put_online_cpus();
  }
@@ -8122,7 +8122,7 @@ index b52ed1ada0be..b2d67e75c361 100644
  #include <linux/sched.h>
  
  #include <linux/sched/autogroup.h>
-@@ -2423,3 +2427,4 @@ static inline bool sched_energy_enabled(void)
+@@ -2419,3 +2423,4 @@ static inline bool sched_energy_enabled(void)
  static inline bool sched_energy_enabled(void) { return false; }
  
  #endif /* CONFIG_ENERGY_MODEL && CONFIG_CPU_FREQ_GOV_SCHEDUTIL */
