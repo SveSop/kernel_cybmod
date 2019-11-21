@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.3.11  
+0000 : Kernel patch 5.3.12  
 0001 : PDS 0.99o from TKGlitch patches  
 0002 : PDS Fixes  
 0012 : Swap-sucks.patch  
