@@ -1,7 +1,7 @@
-From dc801b82efe2f3a1b4d3a4cf14b507345ceed466 Mon Sep 17 00:00:00 2001
+From 3605f7068e28a94507ff634a5d07edf01e600cc7 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:50:03 +0800
-Subject: [PATCH 21/49] fpga: dfl: fme: add global error reporting support
+Subject: [PATCH 21/50] fpga: dfl: fme: add global error reporting support
 
 This patch adds support for global error reporting for FPGA
 Management Engine (FME), it introduces sysfs interfaces to
@@ -531,5 +531,5 @@ index e4131e857..6685c8ef9 100644
  
  #endif /* __DFL_FME_H */
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

@@ -1,7 +1,7 @@
-From 68170f04974803ba9bd4e3e148325db62ecb0999 Mon Sep 17 00:00:00 2001
+From 67072117814c2e42c1b075fafa6fad6a307ce492 Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 13 Aug 2018 04:01:21 -0500
-Subject: [PATCH 38/49] Add boot option to allow unsigned modules
+Subject: [PATCH 38/50] Add boot option to allow unsigned modules
 
 Add module.sig_unenforce boot parameter to allow loading unsigned kernel
 modules. Parameter is only effective if CONFIG_MODULE_SIG_FORCE is
@@ -67,5 +67,5 @@ index 9ee934212..1b4ec7cac 100644
  }
  module_init(proc_modules_init);
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

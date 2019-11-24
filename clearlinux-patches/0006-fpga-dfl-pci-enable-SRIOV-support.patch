@@ -1,7 +1,7 @@
-From 0d233fc65d8bb35ac1f1feb89c152d1e8258cc10 Mon Sep 17 00:00:00 2001
+From 5c1a5e029dc04b55e8859c66a74e29e2597fec1f Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:12 +0800
-Subject: [PATCH 06/49] fpga: dfl: pci: enable SRIOV support.
+Subject: [PATCH 06/50] fpga: dfl: pci: enable SRIOV support.
 
 This patch enables the standard sriov support. It allows user to
 enable SRIOV (and VFs), then user could pass through accelerators
@@ -184,5 +184,5 @@ index 6f7855e57..b3f2f53a7 100644
 +int dfl_fpga_cdev_config_ports_vf(struct dfl_fpga_cdev *cdev, int num_vf);
  #endif /* __FPGA_DFL_H */
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

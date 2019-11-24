@@ -1,7 +1,7 @@
-From 8a9d14aff2fc138039ab93b6139b96d6b0840600 Mon Sep 17 00:00:00 2001
+From a4a5282ec5c30be4cb0599628c507590b9d79b25 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:49:57 +0800
-Subject: [PATCH 15/49] fpga: dfl: fme: convert platform_driver to use
+Subject: [PATCH 15/50] fpga: dfl: fme: convert platform_driver to use
  dev_groups
 
 This patch takes advantage of driver core which helps to create
@@ -71,5 +71,5 @@ index f033f1cfd..bf8114d4d 100644
  	.probe   = fme_probe,
  	.remove  = fme_remove,
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

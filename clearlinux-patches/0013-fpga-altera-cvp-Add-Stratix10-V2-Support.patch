@@ -1,7 +1,7 @@
-From 6d43d731231c42a3946936b4a8c666674467dbac Mon Sep 17 00:00:00 2001
+From c19fee3fb081d08a1385e267b983dad0fbe26e46 Mon Sep 17 00:00:00 2001
 From: Thor Thayer <thor.thayer@linux.intel.com>
 Date: Mon, 19 Aug 2019 15:48:08 -0500
-Subject: [PATCH 13/49] fpga: altera-cvp: Add Stratix10 (V2) Support
+Subject: [PATCH 13/50] fpga: altera-cvp: Add Stratix10 (V2) Support
 
 Add Stratix10 specific functions that use a credit mechanism
 to throttle data to the CvP FIFOs. Add a private structure
@@ -329,5 +329,5 @@ index 3b8386fd3..4e0edb60b 100644
  	if (!conf->map) {
  		dev_warn(&pdev->dev, "Mapping CVP BAR failed\n");
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

@@ -1,7 +1,7 @@
-From 7ef86a4defdb27fcf2563f756e1daeada3e9b7de Mon Sep 17 00:00:00 2001
+From 1e99bd69c3a5994591578874ef7ea9cbca40fc50 Mon Sep 17 00:00:00 2001
 From: Jim Kukunas <james.t.kukunas@linux.intel.com>
 Date: Sat, 2 Nov 2019 00:59:52 +0000
-Subject: [PATCH 49/49] fix bug in ucode force reload revision check
+Subject: [PATCH 49/50] fix bug in ucode force reload revision check
 
 If force_ucode_load==true, reload ucode even if revision # is identical.
 ---
@@ -22,5 +22,5 @@ index 5c67ac023..2ca566bed 100644
  		goto out;
  	}
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

@@ -1,7 +1,7 @@
-From 11ffbfee754462d8f6103b998db870531e0ec5c6 Mon Sep 17 00:00:00 2001
+From 0d76631aef5c7350b6eadddab87a30047ddbdb4d Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Sat, 20 Jul 2019 14:14:47 +0000
-Subject: [PATCH 47/49] x86/microcode: Force update a uCode even if the rev is
+Subject: [PATCH 47/50] x86/microcode: Force update a uCode even if the rev is
  the same
 
 Signed-off-by: Ashok Raj <ashok.raj@intel.com>
@@ -139,5 +139,5 @@ index ce799cfe9..9e85d785b 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

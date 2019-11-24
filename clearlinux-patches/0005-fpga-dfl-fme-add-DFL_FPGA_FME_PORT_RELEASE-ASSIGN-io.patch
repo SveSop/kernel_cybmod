@@ -1,7 +1,7 @@
-From bdd2b34a1bc2084a6e4d534954a031bea1136dd3 Mon Sep 17 00:00:00 2001
+From 09d54c0d0a7a7a78b17e7e25518a634ef3ae4c34 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:11 +0800
-Subject: [PATCH 05/49] fpga: dfl: fme: add DFL_FPGA_FME_PORT_RELEASE/ASSIGN
+Subject: [PATCH 05/50] fpga: dfl: fme: add DFL_FPGA_FME_PORT_RELEASE/ASSIGN
  ioctl support.
 
 In order to support virtualization usage via PCIe SRIOV, this patch
@@ -348,5 +348,5 @@ index 2e324e515..ec70a0746 100644
 +
  #endif /* _UAPI_LINUX_FPGA_DFL_H */
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

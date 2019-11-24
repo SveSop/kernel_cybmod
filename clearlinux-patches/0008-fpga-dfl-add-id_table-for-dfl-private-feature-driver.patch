@@ -1,7 +1,7 @@
-From 9839cd0113904b5d196d4b4197a7fef87a86d4ed Mon Sep 17 00:00:00 2001
+From 296dcd8d83ad6cad21751128817d7fce50ec9c18 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:15 +0800
-Subject: [PATCH 08/49] fpga: dfl: add id_table for dfl private feature driver
+Subject: [PATCH 08/50] fpga: dfl: add id_table for dfl private feature driver
 
 This patch adds id_table for each dfl private feature driver,
 it allows to reuse same private feature driver to match and support
@@ -208,5 +208,5 @@ index 6625d73ba..856ea4ebc 100644
  };
  
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

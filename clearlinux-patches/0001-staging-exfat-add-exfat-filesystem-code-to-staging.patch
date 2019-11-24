@@ -1,7 +1,7 @@
-From 156520c831794735ac584fa31c6e8dbb7529827a Mon Sep 17 00:00:00 2001
+From 663089a331d5bf311bcba096964792ea3a037411 Mon Sep 17 00:00:00 2001
 From: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
 Date: Mon, 23 Sep 2019 13:11:26 -0500
-Subject: [PATCH 01/49] staging: exfat: add exfat filesystem code to staging
+Subject: [PATCH 01/50] staging: exfat: add exfat filesystem code to staging
 
 Taken from mainline at commit 2d70718dd576a53ae12a04d16d9f31812bb09b84
 ---
@@ -10906,5 +10906,5 @@ index 000000000..366082fb3
 +	0xFE, 0xFF, 0xFF, 0xFF
 +};
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

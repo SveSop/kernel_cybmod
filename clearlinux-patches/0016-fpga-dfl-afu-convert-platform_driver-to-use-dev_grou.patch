@@ -1,7 +1,7 @@
-From 98797d5cb60c9d2e8ca6eda6961fc50b46d13866 Mon Sep 17 00:00:00 2001
+From 91c32acd862e9458269bc935650159b03f90d6ea Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Mon, 12 Aug 2019 10:49:58 +0800
-Subject: [PATCH 16/49] fpga: dfl: afu: convert platform_driver to use
+Subject: [PATCH 16/50] fpga: dfl: afu: convert platform_driver to use
  dev_groups
 
 This patch takes advantage of driver core which helps to create
@@ -141,5 +141,5 @@ index e50c45ed4..e95514972 100644
  	.probe   = afu_probe,
  	.remove  = afu_remove,
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

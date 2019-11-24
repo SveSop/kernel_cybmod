@@ -1,7 +1,7 @@
-From 24a744813299fa2a1c8d0f56f2392f53a0279f7a Mon Sep 17 00:00:00 2001
+From 10f7856ddb6f328aecf35fb052af80fd2d91fbeb Mon Sep 17 00:00:00 2001
 From: Thor Thayer <thor.thayer@linux.intel.com>
 Date: Mon, 19 Aug 2019 15:48:07 -0500
-Subject: [PATCH 12/49] fpga: altera-cvp: Preparation for V2 parts.
+Subject: [PATCH 12/50] fpga: altera-cvp: Preparation for V2 parts.
 
 In preparation for adding newer V2 parts that use a FIFO,
 reorganize altera_cvp_chk_error() and change the write
@@ -123,5 +123,5 @@ index 9df207333..3b8386fd3 100644
  		status = altera_cvp_chk_error(mgr, count);
  
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

@@ -1,7 +1,7 @@
-From b107efcd328b9085970873736811b10c4624a960 Mon Sep 17 00:00:00 2001
+From dce831dd62e84743f2f1e0ae9df6bb7f19a3de12 Mon Sep 17 00:00:00 2001
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Date: Wed, 31 Jul 2019 14:43:40 +0200
-Subject: [PATCH 22/49] driver core: add dev_groups to all drivers
+Subject: [PATCH 22/50] driver core: add dev_groups to all drivers
 
 Add the ability for the driver core to create and remove a list of
 attribute groups automatically when the device is bound/unbound from a
@@ -81,5 +81,5 @@ index 6717adee3..47ccb2029 100644
  	const struct dev_pm_ops *pm;
  	void (*coredump) (struct device *dev);
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 

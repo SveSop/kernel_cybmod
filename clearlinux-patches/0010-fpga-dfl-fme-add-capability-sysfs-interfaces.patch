@@ -1,7 +1,7 @@
-From 1c80336a71ea641c9a949dbcaad46914f14dfe6e Mon Sep 17 00:00:00 2001
+From 3ee711d6618aef31fb2b69556dc04e63ce9f7d43 Mon Sep 17 00:00:00 2001
 From: Wu Hao <hao.wu@intel.com>
 Date: Sun, 4 Aug 2019 18:20:20 +0800
-Subject: [PATCH 10/49] fpga: dfl: fme: add capability sysfs interfaces
+Subject: [PATCH 10/50] fpga: dfl: fme: add capability sysfs interfaces
 
 This patch adds 3 read-only sysfs interfaces for FPGA Management Engine
 (FME) block for capabilities including cache_size, fabric_version and
@@ -115,5 +115,5 @@ index 5fdce548f..f033f1cfd 100644
  };
  ATTRIBUTE_GROUPS(fme_hdr);
 -- 
-2.24.0
+2.24.0.155.gd9f6f3b619
 
