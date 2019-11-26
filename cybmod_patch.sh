@@ -62,13 +62,6 @@ do
         echo -e "***************${NC}"
         patch -p1 < $each
 done
-for each in $DIR/mm-patches/0*.patch
-do
-        echo -e "${RED}***************"
-        echo -e "Applying patch: $(basename $each)"
-        echo -e "***************${NC}"
-        patch -p1 < $each
-done
 echo -e " "
 echo Done patching
 echo --

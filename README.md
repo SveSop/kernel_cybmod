@@ -21,7 +21,6 @@ ubuntu : Ubuntu kernel patchset
 efi-lockdown : EFI lockdown patchset (se note below!)  
 bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep)  
 clearlinux-patches : Collection of patches from "Clearlinux"  
-mm-patches : Memory hugepages patches  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **This config has PDS 0.99o CPU scheduler, CONFIG_HZ=1000, and CONFIG_NO_HZ_IDLE**  
