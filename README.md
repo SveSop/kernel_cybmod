@@ -21,7 +21,6 @@ ubuntu : Ubuntu kernel patchset
 efi-lockdown : EFI lockdown patchset (se note below!)  
 bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep)  
 clearlinux-patches : Collection of "Clearlinux" patches aimed at Intel processors  
-mm-patches : Hugepages patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
