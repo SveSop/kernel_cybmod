@@ -28,18 +28,6 @@ do
 done
 echo -e " "
 echo -e "${RED}***************${NC}"
-echo -e "EFI Patches"
-echo -e "${RED}***************${NC}"
-echo -e " "
-for each in $DIR/efi-lockdown/0*.patch
-do
-        echo -e "${RED}***************"
-        echo -e "Applying patch: $(basename $each)"
-        echo -e "***************${NC}"
-        patch -p1 < $each
-done
-echo -e " "
-echo -e "${RED}***************${NC}"
 echo -e "BFQ patches"
 echo -e "${RED}***************${NC}"
 echo -e " "
@@ -62,5 +50,18 @@ do
         echo -e "***************${NC}"
         patch -p1 < $each
 done
-
+echo -e " "
+echo -e "${RED}***************${NC}"
+echo -e "Futex patches"
+echo -e "${RED}***************${NC}"
+echo -e " "
+for each in $DIR/futex-patches/0*.patch
+do
+        echo -e "${RED}***************"
+        echo -e "Applying patch: $(basename $each)"
+        echo -e "***************${NC}"
+        patch -p1 < $each
+done
+echo -e " "
 echo Done patching
+echo --

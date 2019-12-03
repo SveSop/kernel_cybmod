@@ -1,29 +1,597 @@
-From 209fa70e5a5fb7c3a2dca103b5340603d541bd2b Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 15 Sep 2019 22:30:54 +0000
+From 1b594165715d02ae0e1afe20569b8813245276d9 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 28 Nov 2019 22:13:51 -0500
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 8005 +--------------------------------------
- 1 file changed, 3 insertions(+), 8002 deletions(-)
+ debian.master/changelog | 8573 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 8570 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index a66013d8ff72..0591b023fe5a 100644
+index 8d27201..3b8b7e7 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,8005 +1,6 @@
+@@ -1,8573 +1,6 @@
+-linux (5.4.0-7.8) focal; urgency=medium
++linux (5.4.0-999.201911282213) unstable; urgency=low
+ 
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: selftests/bpf: Comment out BPF_CORE_READ's which cause clang to
+-      segfault
+-    - Update nvidia-430 to nvidia-440
+-    - [Config] Enable nvidia dkms build
+-    - update dkms package versions
++  Mainline build at commit: v5.4-8836-g81b6b96
+ 
+-  [ Upstream Kernel Changes ]
++ -- Mainline Build <kernel@gloin>  Thu, 28 Nov 2019 22:13:51 -0500
+ 
+-  * Rebase to v5.4
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 25 Nov 2019 15:02:30 +0100
+-
+-linux (5.4.0-6.7) focal; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.4-rc8
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 18 Nov 2019 12:08:01 +0100
+-
+-linux (5.4.0-5.6) focal; urgency=medium
+-
+-  * refcount underflow and type confusion in shiftfs (LP: #1850867) //
+-    CVE-2019-15793
+-    - SAUCE: shiftfs: Correct id translation for lower fs operations
+-
+-  * refcount underflow and type confusion in shiftfs (LP: #1850867) //
+-    CVE-2019-15792
+-    - SAUCE: shiftfs: prevent type confusion
+-
+-  * refcount underflow and type confusion in shiftfs (LP: #1850867) //
+-    CVE-2019-15791
+-    - SAUCE: shiftfs: Fix refcount underflow in btrfs ioctl handling
+-
+-  * Some EFI systems fail to boot in efi_init() when booted via maas
+-    (LP: #1851810)
+-    - SAUCE: efi: efi_get_memory_map -- increase map headroom
+-
+-  * seccomp: fix SECCOMP_USER_NOTIF_FLAG_CONTINUE test (LP: #1849281)
+-    - SAUCE: seccomp: rework define for SECCOMP_USER_NOTIF_FLAG_CONTINUE
+-    - SAUCE: seccomp: avoid overflow in implicit constant conversion
+-
+-  * dkms artifacts may expire from the pool (LP: #1850958)
+-    - [Packaging] dkms -- try launchpad librarian for pool downloads
+-    - [Packaging] dkms -- dkms-build quieten wget verbiage
+-
+-  * tsc marked unstable after entered PC10 on Intel CoffeeLake (LP: #1840239)
+-    - SAUCE: x86/intel: Disable HPET on Intel Coffe Lake platforms
+-    - SAUCE: x86/intel: Disable HPET on Intel Ice Lake platforms
+-
+-  * shiftfs: prevent exceeding project quotas (LP: #1849483)
+-    - SAUCE: shiftfs: drop CAP_SYS_RESOURCE from effective capabilities
+-
+-  * shiftfs: fix fallocate() (LP: #1849482)
+-    - SAUCE: shiftfs: setup correct s_maxbytes limit
+-
+-  * The alsa hda driver is not loaded due to the missing of PCIID for Comet
+-    Lake-S [8086:a3f0] (LP: #1852070)
+-    - SAUCE: ALSA: hda: Add Cometlake-S PCI ID
+-
+-  * Can't adjust brightness on DELL UHD dGPU AIO (LP: #1813877)
+-    - SAUCE: platform/x86: dell-uart-backlight: add missing status command
+-    - SAUCE: platform/x86: dell-uart-backlight: load driver by scalar status
+-    - SAUCE: platform/x86: dell-uart-backlight: add force parameter
+-    - SAUCE: platform/x86: dell-uart-backlight: add quirk for old platforms
+-
+-  * s_iflags overlap prevents unprivileged overlayfs mounts (LP: #1851677)
+-    - SAUCE: fs: Move SB_I_NOSUID to the top of s_iflags
+-
+-  * ubuntu-aufs-modified mmap_region() breaks refcounting in overlayfs/shiftfs
+-    error path (LP: #1850994) // CVE-2019-15794
+-    - SAUCE: shiftfs: Restore vm_file value when lower fs mmap fails
+-    - SAUCE: ovl: Restore vm_file value when lower fs mmap fails
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] Convert update-aufs.sh to use aufs5
+-    - SAUCE: import aufs driver
+-    - update dkms package versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc7
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Wed, 13 Nov 2019 11:56:35 -0800
+-
+-linux (5.4.0-4.5) focal; urgency=medium
+-
+-  * High power consumption using 5.0.0-25-generic (LP: #1840835)
+-    - PCI: Add a helper to check Power Resource Requirements _PR3 existence
+-    - ALSA: hda: Allow HDA to be runtime suspended when dGPU is not bound to a
+-      driver
+-    - PCI: Fix missing inline for pci_pr3_present()
+-
+-  * Fix signing of staging modules in eoan (LP: #1850234)
+-    - [Packaging] Leave unsigned modules unsigned after adding .gnu_debuglink
+-
+-  * [20.04 FEAT] Set Architecture Level (ALS) to z13 (LP: #1837525)
+-    - [Config] s390x bump march to z13, with tune to z15
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian]: do not skip tests for linux-hwe-edge
+-    - update dkms package versions
+-    - [Config] re-enable zfs
+-    - [Config] rename module virtio_fs to virtiofs
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 04 Nov 2019 15:12:02 +0100
+-
+-linux (5.4.0-3.4) focal; urgency=medium
+-
+-  * seccomp: fix SECCOMP_USER_NOTIF_FLAG_CONTINUE test (LP: #1849281)
+-    - SAUCE: seccomp: fix SECCOMP_USER_NOTIF_FLAG_CONTINUE test
+-
+-  * cloudimg: no iavf/i40evf module so no network available with SR-IOV enabled
+-    cloud (LP: #1848481)
+-    - [Packaging] include iavf/i40evf in generic
+-
+-  * CVE-2019-17666
+-    - SAUCE: rtlwifi: Fix potential overflow on P2P code
+-
+-  * Change Config Option CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE for s390x from yes
+-    to no (LP: #1848492)
+-    - [Config] Change Config Option CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE for s390x
+-      from yes to no
+-
+-  * Add Intel Comet Lake ethernet support (LP: #1848555)
+-    - SAUCE: e1000e: Add support for Comet Lake
+-
+-  * seccomp: add SECCOMP_USER_NOTIF_FLAG_CONTINUE    (LP: #1847744)
+-    - SAUCE: seccomp: add SECCOMP_USER_NOTIF_FLAG_CONTINUE
+-    - SAUCE: seccomp: test SECCOMP_USER_NOTIF_FLAG_CONTINUE
+-
+-  * drm/i915: Fix the issue of "azx_get_response timeout" for hdmi audio on ICL
+-    platforms (LP: #1847192)
+-    - SAUCE: drm/i915: Fix audio power up sequence for gen10+ display
+-    - SAUCE: drm/i915: extend audio CDCLK>=2*BCLK constraint to more platforms
+-
+-  * PM / hibernate: fix potential memory corruption (LP: #1847118)
+-    - SAUCE: PM / hibernate: memory_bm_find_bit -- tighten node optimisation
+-
+-  * [regression] NoNewPrivileges incompatible with Apparmor (LP: #1844186)
+-    - SAUCE: apparmor: fix nnp subset test for unconfined
+-
+-  * overlayfs: allow with shiftfs as underlay (LP: #1846272)
+-    - SAUCE: overlayfs: allow with shiftfs as underlay
+-
+-  * eoan: alsa/sof: Enable SOF_HDA link and codec (LP: #1848490)
+-    - [Config] Fix SOF Kconfig options
+-
+-  * linux won't build when new virtualbox version is present on the archive
+-    (LP: #1848788)
+-    - [Packaging]: download virtualbox from sources
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update annotations from configs
+-    - [Config] updateconfigs after rebase to 5.4-rc5
+-    - update dkms package versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc5
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 29 Oct 2019 12:01:27 -0500
+-
+-linux (5.4.0-2.3) eoan; urgency=medium
+-
+-  * Add installer support for iwlmvm adapters (LP: #1848236)
+-    - d-i: Add iwlmvm to nic-modules
+-
+-  * shiftfs: rework how shiftfs opens files (LP: #1846265)
+-    - SAUCE: shiftfs: rework how shiftfs opens files
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.4-rc4
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc4
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 21 Oct 2019 17:31:26 +0200
+-
+-linux (5.4.0-1.2) eoan; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.4-rc3
+-    - [Config] add flexfb, fbtft_device and rio500 to modules.ignore
+-    - [Config] amd64: ignore fbtft and all dependent modules
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc3
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 14 Oct 2019 19:48:52 +0200
+-
+-linux (5.4.0-0.1) eoan; urgency=medium
+-
+-  * Enable the Dragonboards out of Eoan/master arm64 kernel (LP: #1846704)
+-    - [Packaging] arm64: snapdragon: introduce a snapdragon flavour
+-    - [Packaging] arm64: snapdragon: switch kernel format to Image
+-    - [Config] arm64: snapdragon: CONFIG_PINCTRL_MSM8916=y
+-    - [Config] arm64: snapdragon: CONFIG_PINCTRL_MSM8994=y
+-    - [Config] arm64: snapdragon: CONFIG_PINCTRL_MSM8996=y
+-    - [Config] arm64: snapdragon: CONFIG_PINCTRL_MSM8998=y
+-    - [Config] arm64: snapdragon: CONFIG_REGULATOR_QCOM_RPMH=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_BAM_DMA=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_HIDMA_MGMT=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_HIDMA=y
+-    - [Config] arm64: snapdragon: CONFIG_COMMON_CLK_QCOM=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_CLK_RPMH=y
+-    - [Config] arm64: snapdragon: CONFIG_MSM_GCC_8916=y
+-    - [Config] arm64: snapdragon: CONFIG_MSM_GCC_8994=y
+-    - [Config] arm64: snapdragon: CONFIG_MSM_MMCC_8996=y
+-    - [Config] arm64: snapdragon: CONFIG_MSM_GCC_8998=y
+-    - [Config] arm64: snapdragon: CONFIG_HWSPINLOCK_QCOM=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_APCS_IPC=y
+-    - [Config] arm64: snapdragon: CONFIG_RPMSG_QCOM_GLINK_RPM=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_GENI_SE=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_SMEM=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_SMD_RPM=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_SMP2P=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_SMSM=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_QFPROM=y
+-    - [Config] arm64: snapdragon: CONFIG_SERIAL_QCOM_GENI=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_TSENS=y
+-    - [Config] arm64: snapdragon: CONFIG_REGULATOR_QCOM_SMD_RPM=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_CLK_SMD_RPM=y
+-    - [Config] arm64: snapdragon: CONFIG_RPMSG_QCOM_SMD=y
+-    - [Config] arm64: snapdragon: CONFIG_MFD_QCOM_RPM=y
+-    - [Config] arm64: snapdragon: CONFIG_SCSI_UFSHCD=y
+-    - [Config] arm64: snapdragon: CONFIG_SCSI_UFSHCD_PLATFORM=y
+-    - [Config] arm64: snapdragon: CONFIG_SCSI_UFS_HISI=y
+-    - [Config] arm64: snapdragon: CONFIG_MMC_SDHCI=y
+-    - [Config] arm64: snapdragon: CONFIG_MMC_SDHCI_PLTFM=y
+-    - [Config] arm64: snapdragon: CONFIG_MMC_SDHCI_MSM=y
+-    - [Config] arm64: snapdragon: CONFIG_REGULATOR_QCOM_SPMI=y
+-    - [Config] arm64: snapdragon: CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
+-    - [Config] arm64: snapdragon: CONFIG_PHY_QCOM_USB_HS=y
+-    - [Config] arm64: snapdragon: CONFIG_PHY_QCOM_QMP=y
+-    - [Config] arm64: snapdragon: CONFIG_PHY_QCOM_UFS=y
+-    - [Config] arm64: snapdragon: CONFIG_PHY_QCOM_USB_HSIC=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_CHIPIDEA_OF=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_EHCI_HCD_PLATFORM=y
+-    - [Config] arm64: snapdragon: CONFIG_EXTCON_USB_GPIO=y
+-    - [Config] arm64: snapdragon: CONFIG_REGULATOR_FIXED_VOLTAGE=y
+-    - [Config] arm64: snapdragon: CONFIG_LEDS_GPIO=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_HSIC_USB3503=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_NET_DRIVERS=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_OTG=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_XHCI_PLATFORM=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_OHCI_HCD_PLATFORM=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_MUSB_HDRC=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_DWC3=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_DWC3_PCI=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_DWC3_OF_SIMPLE=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_DWC3_QCOM=y
+-    - [Config] arm64: snapdragon: CONFIG_LEDS_PWM=y
+-    - [Config] arm64: snapdragon: CONFIG_LEDS_TRIGGER_HEARTBEAT=y
+-    - [Config] arm64: snapdragon: CONFIG_LEDS_TRIGGER_DEFAULT_ON=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_A53PLL=y
+-    - [Config] arm64: snapdragon: CONFIG_QCOM_CLK_APCS_MSM8916=y
+-    - [Config] arm64: snapdragon: CONFIG_NLS_ISO8859_1=y
+-    - [Config] arm64: snapdragon: CONFIG_USB_USBNET=y
+-    - [Config] arm64: snapdragon: CONFIG_CRYPTO_DEV_QCOM_RNG=y
+-    - [Config] arm64: snapdragon: CONFIG_POWER_RESET_QCOM_PON=y
+-    - [Config] arm64: snapdragon: CONFIG_INPUT_PM8941_PWRKEY=y
+-    - [Config] arm64: snapdragon: CONFIG_KEYBOARD_GPIO=y
+-    - [Config] arm64: snapdragon: CONFIG_RTC_DRV_PM8XXX=y
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] updateconfigs after rebase to 5.4-rc2
+-    - SAUCE: (lockdown) Make get_cert_list() not complain about cert lists that
+-      aren't present.
+-    - SAUCE: (lockdown) Add efi_status_to_str() and rework efi_status_to_err().
+-    - SAUCE: (lockdown) Make get_cert_list() use efi_status_to_str() to print
+-      error messages.
+-    - SAUCE: (lockdown) security: lockdown: expose a hook to lock the kernel down
+-    - SAUCE: (lockdown) efi: Add an EFI_SECURE_BOOT flag to indicate secure boot
+-      mode
+-    - SAUCE: (lockdown) efi: Lock down the kernel if booted in secure boot mode
+-    - SAUCE: (lockdown) Add a SysRq option to lift kernel lockdown
+-    - SAUCE: (lockdown) KEYS: Make use of platform keyring for module signature
+-      verify
+-    - SAUCE: (lockdown) arm64: Allow locking down the kernel under EFI secure boot
+-    - SAUCE: (lockdown) security: lockdown: Make
+-      CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT more generic
+-    - SAUCE: (lockdown) s390/ipl: lockdown kernel when booted secure
+-    - [Config] Enable lockdown under secure boot
+-    - SAUCE: import aufs driver
+-    - SAUCE: aufs: rwsem owner changed to atmoic_long_t in 5.3
+-    - SAUCE: aufs: add "WITH Linux-syscall-note" to SPDX tag of uapi headers
+-    - [Config] enable aufs
+-    - update dkms package versions
+-    - [Config] disable zfs
+-    - [Config] disable nvidia dkms build
+-    - [Config] disable virtualbox dkms build
+-    - [Debian] Generate stub reconstruct for -rc kernels
+-    - Revert "UBUNTU: SAUCE: (namespace) block_dev: Forbid unprivileged mounting
+-      when device is opened for writing"
+-    - Revert "UBUNTU: SAUCE: (namespace) ext4: Add module parameter to enable user
+-      namespace mounts"
+-    - Revert "UBUNTU: SAUCE: (namespace) ext4: Add support for unprivileged mounts
+-      from user namespaces"
+-    - Revert "UBUNTU: SAUCE: (namespace) mtd: Check permissions towards mtd block
+-      device inode when mounting"
+-    - Revert "UBUNTU: SAUCE: (namespace) block_dev: Check permissions towards
+-      block device inode when mounting"
+-    - Revert "UBUNTU: SAUCE: (namespace) block_dev: Support checking inode
+-      permissions in lookup_bdev()"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc2
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Fri, 11 Oct 2019 16:42:41 -0500
+-
+-linux (5.4.0-0.0) eoan; urgency=medium
+-
+-  * Dummy entry.
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 08 Oct 2019 09:59:00 -0500
+-
+-linux (5.3.0-17.18) eoan; urgency=medium
+-
+-  * eoan/linux: 5.3.0-17.18 -proposed tracker (LP: #1846641)
+-
+-  * CVE-2019-17056
+-    - nfc: enforce CAP_NET_RAW for raw sockets
+-
+-  * CVE-2019-17055
+-    - mISDN: enforce CAP_NET_RAW for raw sockets
+-
+-  * CVE-2019-17054
+-    - appletalk: enforce CAP_NET_RAW for raw sockets
+-
+-  * CVE-2019-17053
+-    - ieee802154: enforce CAP_NET_RAW for raw sockets
+-
+-  * CVE-2019-17052
+-    - ax25: enforce CAP_NET_RAW for raw sockets
+-
+-  * CVE-2019-15098
+-    - ath6kl: fix a NULL-ptr-deref bug in ath6kl_usb_alloc_urb_from_pipe()
+-
+-  * xHCI on AMD Stoney Ridge cannot detect USB 2.0 or 1.1 devices.
+-    (LP: #1846470)
+-    - x86/PCI: Avoid AMD FCH XHCI USB PME# from D0 defect
+-
+-  * Re-enable linux-libc-dev build on i386 (LP: #1846508)
+-    - [Packaging] Build only linux-libc-dev for i386
+-    - [Debian] final-checks -- ignore archtictures with no binaries
+-
+-  * arm64: loop on boot after installing linux-generic-hwe-18.04-edge/bionic-
+-    proposed (LP: #1845820)
+-    - [Config] Disable CONFIG_ARM_SMMU_DISABLE_BYPASS_BY_DEFAULT
+-
+-  * Revert ESE DASD discard support (LP: #1846219)
+-    - SAUCE: Revert "s390/dasd: Add discard support for ESE volumes"
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Thu, 03 Oct 2019 16:57:05 -0500
+-
+-linux (5.3.0-16.17) eoan; urgency=medium
+-
+-  * eoan/linux: 5.3.0-16.17 -proposed tracker (LP: #1846204)
+-
+-  * zfs fails to build on s390x  with debug symbols enabled (LP: #1846143)
+-    - SAUCE: s390: Mark atomic const ops always inline
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 01 Oct 2019 07:46:43 -0500
+-
+-linux (5.3.0-15.16) eoan; urgency=medium
+-
+-  * eoan/linux: 5.3.0-15.16 -proposed tracker (LP: #1845987)
+-
+-  * Drop i386 build for 19.10 (LP: #1845714)
+-    - [Packaging] Remove x32 arch references from control files
+-    - [Debian] final-checks -- Get arch list from debian/control
+-
+-  * ZFS kernel modules lack debug symbols (LP: #1840704)
+-    - [Debian] Fix conditional for setting zfs debug package path
+-
+-  * Use pyhon3-sphinx instead of python-sphinx for building html docs
+-    (LP: #1845808)
+-    - [Packaging] Update sphinx build dependencies to python3 packages
+-
+-  * Kernel panic with 19.10 beta image (LP: #1845454)
+-    - efi/tpm: Don't access event->count when it isn't mapped.
+-    - efi/tpm: don't traverse an event log with no events
+-    - efi/tpm: only set efi_tpm_final_log_size after successful event log parsing
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Mon, 30 Sep 2019 11:57:20 -0500
+-
+-linux (5.3.0-14.15) eoan; urgency=medium
+-
+-  * eoan/linux: 5.3.0-14.15 -proposed tracker (LP: #1845728)
+-
+-  * Drop i386 build for 19.10 (LP: #1845714)
+-    - [Debian] Remove support for producing i386 kernels
+-    - [Debian] Don't use CROSS_COMPILE for i386 configs
+-
+-  * udevadm trigger will fail when trying to add /sys/devices/vio/
+-    (LP: #1845572)
+-    - SAUCE: powerpc/vio: drop bus_type from parent device
+-
+-  * Trying to online dasd drive results in invalid input/output from the kernel
+-    on z/VM (LP: #1845323)
+-    - SAUCE: s390/dasd: Fix error handling during online processing
+-
+-  * intel-lpss driver conflicts with write-combining MTRR region (LP: #1845584)
+-    - SAUCE: mfd: intel-lpss: add quirk for Dell XPS 13 7390 2-in-1
+-
+-  * Support Hi1620 zip hw accelerator (LP: #1845355)
+-    - [Config] Enable HiSilicon QM/ZIP as modules
+-    - crypto: hisilicon - add queue management driver for HiSilicon QM module
+-    - crypto: hisilicon - add hardware SGL support
+-    - crypto: hisilicon - add HiSilicon ZIP accelerator support
+-    - crypto: hisilicon - add SRIOV support for ZIP
+-    - Documentation: Add debugfs doc for hisi_zip
+-    - crypto: hisilicon - add debugfs for ZIP and QM
+-    - MAINTAINERS: add maintainer for HiSilicon QM and ZIP controller driver
+-    - crypto: hisilicon - fix kbuild warnings
+-    - crypto: hisilicon - add dependency for CRYPTO_DEV_HISI_ZIP
+-    - crypto: hisilicon - init curr_sgl_dma to fix compile warning
+-    - crypto: hisilicon - add missing single_release
+-    - crypto: hisilicon - fix error handle in hisi_zip_create_req_q
+-    - crypto: hisilicon - Fix warning on printing %p with dma_addr_t
+-    - crypto: hisilicon - Fix return value check in hisi_zip_acompress()
+-    - crypto: hisilicon - avoid unused function warning
+-
+-  * SafeSetID LSM should be built but disabled by default (LP: #1845391)
+-    - LSM: SafeSetID: Stop releasing uninitialized ruleset
+-    - [Config] Build SafeSetID LSM but don't enable it by default
+-
+-  * CONFIG_LSM should not specify loadpin since it is not built (LP: #1845383)
+-    - [Config] loadpin shouldn't be in CONFIG_LSM
+-
+-  * Add new pci-id's for CML-S, ICL (LP: #1845317)
+-    - drm/i915/icl: Add missing device ID
+-    - drm/i915/cml: Add Missing PCI IDs
+-
+-  * Thunderbolt support for ICL (LP: #1844680)
+-    - thunderbolt: Correct path indices for PCIe tunnel
+-    - thunderbolt: Move NVM upgrade support flag to struct icm
+-    - thunderbolt: Use 32-bit writes when writing ring producer/consumer
+-    - thunderbolt: Do not fail adding switch if some port is not implemented
+-    - thunderbolt: Hide switch attributes that are not set
+-    - thunderbolt: Expose active parts of NVM even if upgrade is not supported
+-    - thunderbolt: Add support for Intel Ice Lake
+-    - ACPI / property: Add two new Thunderbolt property GUIDs to the list
+-
+-  * Ubuntu 19.10 -  Additional PCI patch and fix (LP: #1844668)
+-    - s390/pci: fix MSI message data
+-
+-  * Enhanced Hardware Support - Finalize Naming (LP: #1842774)
+-    - s390: add support for IBM z15 machines
+-    - [Config] CONFIG_MARCH_Z15=n, CONFIG_TUNE_Z15=n
+-
+-  * Eoan update: v5.3.1 upstream stable release (LP: #1845642)
+-    - USB: usbcore: Fix slab-out-of-bounds bug during device reset
+-    - media: tm6000: double free if usb disconnect while streaming
+-    - phy: renesas: rcar-gen3-usb2: Disable clearing VBUS in over-current
+-    - ip6_gre: fix a dst leak in ip6erspan_tunnel_xmit
+-    - net/sched: fix race between deactivation and dequeue for NOLOCK qdisc
+-    - net_sched: let qdisc_put() accept NULL pointer
+-    - udp: correct reuseport selection with connected sockets
+-    - xen-netfront: do not assume sk_buff_head list is empty in error handling
+-    - net: dsa: Fix load order between DSA drivers and taggers
+-    - net: stmmac: Hold rtnl lock in suspend/resume callbacks
+-    - KVM: coalesced_mmio: add bounds checking
+-    - Documentation: sphinx: Add missing comma to list of strings
+-    - firmware: google: check if size is valid when decoding VPD data
+-    - serial: sprd: correct the wrong sequence of arguments
+-    - tty/serial: atmel: reschedule TX after RX was started
+-    - nl80211: Fix possible Spectre-v1 for CQM RSSI thresholds
+-    - Revert "arm64: Remove unnecessary ISBs from set_{pte,pmd,pud}"
+-    - ovl: fix regression caused by overlapping layers detection
+-    - phy: qcom-qmp: Correct ready status, again
+-    - floppy: fix usercopy direction
+-    - media: technisat-usb2: break out of loop at end of buffer
+-    - Linux 5.3.1
+-
+-  * ZFS kernel modules lack debug symbols (LP: #1840704)
+-    - [Debian]: Remove hardcoded $(pkgdir) in debug symbols handling
+-    - [Debian]: Handle debug symbols for modules in extras too
+-    - [Debian]: Check/link modules with debug symbols after DKMS modules
+-    - [Debian]: Warn about modules without debug symbols
+-    - [Debian]: dkms-build: new parameter for debug package directory
+-    - [Debian]: dkms-build: zfs: support for debug symbols
+-    - [Debian]: dkms-build: Avoid executing post-processor scripts twice
+-    - [Debian]: dkms-build: Move zfs special-casing into configure script
+-
+-  * /proc/self/maps paths missing on live session (was vlc won't start; eoan
+-    19.10 & bionic 18.04 ubuntu/lubuntu/kubuntu/xubuntu/ubuntu-mate dailies)
+-    (LP: #1842382)
+-    - SAUCE: Revert "UBUNTU: SAUCE: shiftfs: enable overlayfs on shiftfs"
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Fri, 27 Sep 2019 16:08:06 -0500
+-
+-linux (5.3.0-13.14) eoan; urgency=medium
+-
+-  * eoan/linux: 5.3.0-13.14 -proposed tracker (LP: #1845105)
+-
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update helper scripts
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] Remove binutils-dev build dependency
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Mon, 23 Sep 2019 19:26:43 -0500
+-
+-linux (5.3.0-12.13) eoan; urgency=medium
+-
+-  * Change kernel compression method to improve boot speed (LP: #1840934)
+-    - [Packaging] Add lz4 build dependency for s390x
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: Remove spl and zfs source
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 17 Sep 2019 13:36:26 +0200
+-
+-linux (5.3.0-11.12) eoan; urgency=medium
+-
+-  * eoan/linux: 5.3.0-11.12 -proposed tracker (LP: #1844144)
+-
+-  *  Suspend to RAM(S3) does not wake up for latest megaraid and mpt3sas
+-    adapters(SAS3.5 onwards) (LP: #1838751)
+-    - PCI: Restore Resizable BAR size bits correctly for 1MB BARs
+-
+-  * s390/setup: Actually init kernel lock down (LP: #1843961)
+-    - SAUCE: (lockdown) s390/setup: Actually init kernel lock down
+-
+-  * cherrypick has_sipl fix (LP: #1843960)
+-    - SAUCE: s390/sclp: Fix bit checked for has_sipl
+-
+-  * Change kernel compression method to improve boot speed (LP: #1840934)
+-    - [Config]: Switch kernel compression from LZO to LZ4 on s390x
+-
+-  * Installation fails on eoan/PowerVM : missing /dev/nvram (LP: #1837726)
+-    - [Config] CONFIG_NVRAM=y for ppc64el
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config]: remove nvram from ppc64el modules ABI
+-    - [Config] Update annotations for recent config changes
+-    - SAUCE: sched: Add __ASSEMBLY__ guards around struct clone_args
+-    - SAUCE: i2c: qcom-geni: Disable DMA processing on the Lenovo Yoga C630
+-    - SAUCE: arm64: dts: qcom: Add Lenovo Yoga C630
+-    - update dkms package versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.3
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 16 Sep 2019 16:18:27 +0200
+-
 -linux (5.3.0-10.11) eoan; urgency=medium
-+linux (5.3.0-050300.201909152230) eoan; urgency=low
- 
+-
 -  * eoan/linux: 5.3.0-10.11 -proposed tracker (LP: #1843232)
-+  Mainline build at commit: v5.3
- 
+-
 -  * No sound inputs from the external microphone and headset on a Dell machine
 -    (LP: #1842265)
 -    - SAUCE: ALSA: hda - Expand pin_match function to match upcoming new tbls
 -    - SAUCE: ALSA: hda - Define a fallback_pin_fixup_tbl for alc269 family
-+ -- Mainline Build <kernel@sita>  Sun, 15 Sep 2019 22:30:54 +0000
- 
+-
 -  * Horizontal corrupted line at top of screen caused by framebuffer compression
 -    (LP: #1840236)
 -    - SAUCE: drm/i915/fbc: disable framebuffer compression on IceLake
@@ -8021,5 +8589,5 @@ index a66013d8ff72..0591b023fe5a 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.17.1
+2.7.4
 

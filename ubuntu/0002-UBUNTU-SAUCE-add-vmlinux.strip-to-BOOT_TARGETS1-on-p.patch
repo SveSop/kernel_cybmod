@@ -1,4 +1,4 @@
-From ce3cf5ee7370513c211a14d7ad65da2c98e4e006 Mon Sep 17 00:00:00 2001
+From 5d531f10a613ce99224d53a525ef1afe46af4251 Mon Sep 17 00:00:00 2001
 From: Andy Whitcroft <apw@canonical.com>
 Date: Fri, 9 Sep 2016 14:02:29 +0100
 Subject: [PATCH 2/5] UBUNTU: SAUCE: add vmlinux.strip to BOOT_TARGETS1 on
@@ -10,10 +10,10 @@ Signed-off-by: Andy Whitcroft <apw@canonical.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index c345b79414a9..74621239b860 100644
+index 83522c9f..dcd19a7 100644
 --- a/arch/powerpc/Makefile
 +++ b/arch/powerpc/Makefile
-@@ -282,7 +282,7 @@ drivers-$(CONFIG_OPROFILE)	+= arch/powerpc/oprofile/
+@@ -281,7 +281,7 @@ drivers-$(CONFIG_OPROFILE)	+= arch/powerpc/oprofile/
  all: zImage
  
  # With make 3.82 we cannot mix normal and wildcard targets
@@ -23,5 +23,5 @@ index c345b79414a9..74621239b860 100644
  
  PHONY += $(BOOT_TARGETS1) $(BOOT_TARGETS2)
 -- 
-2.17.1
+2.7.4
 

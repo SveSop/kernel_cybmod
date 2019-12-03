@@ -1,42 +1,40 @@
-## Cybmod patches for 5.3 kernel  
+## Cybmod patches for 5.4 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.3.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.3.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.3.14  
-0001 : -ck patches 0.195 w/MuQSS scheduler  
-0018 : Last of the -ck patches  
-0020 : Swap-sucks.patch  
-0021 : revert_acpi_change_for_nct6775.patch  
-0022 : zswap-tweaks.patch  
-0023 : cpu-5.3-merge-graysky-s-patchset.patch  
-0024 : cpu-5.3-add-a-CONFIG-option-that-sets-O3.patch  
-0025 : Cake_Qdisc_default.patch  
-0026 : loop-Better-discard-for-block-devices.patch  
-0027 : v5.3-fsync.patch  
-0030 : Ubuntu based config (See note below!)  
-0031 : Add-cybmod-version.patch  
+0000 : Kernel patch 5.4.1  
+0001 : PDS kernel scheduler  
+0002 : TK-Glitch PDS patches  
+0003 : 5.4 Graysky's CPU patches  
+0004 : Add optional -O3 optimization  
+0010 : Cake_Qdisc_default.patch  
+0011 : zswap-tweaks.patch  
+0012 : Swap tuning  
+0013 : revert_acpi_change_for_nct6775.patch  
+0020 : Ubuntu based config (See note below!)  
+0021 : Add-cybmod-version.patch  
 ubuntu : Ubuntu kernel patchset  
-efi-lockdown : EFI lockdown patchset (se note below!)  
-bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep)  
+bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.4/bfq-patches-sep)  
 clearlinux-patches : Collection of "Clearlinux" patches aimed at Intel processors  
+futex-patches : Collection of "futex" patches for Wine  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has MuQSS 0.195 CPU scheduler, full -ck patchset with CONFIG_HZ=100, and CONFIG_RQ_SMT default**  
+**This config has PDS 0.99o "undead" CPU scheduler and CONFIG_HZ=1000**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.3.tar.xz    
-cd linux-5.3  
+tar xf linux-5.4.tar.xz    
+cd linux-5.4  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```
 When build is done, the .deb files is in the ../ folder relative to the source.  
 
-To benefit from patches in "efi-lockdown", and sign your kernel modules with dkms with Ubuntu you need to do:  
+To sign your kernel modules with dkms with Ubuntu you need to do:  
 `sudo mokutil --import /var/lib/shim-signed/mok/MOK.der`  
 This will put the DKMS certificate up for signing. You then need to reboot and go through the bootup sequence allowing the certificate to be signed by Ubuntu.  
 
