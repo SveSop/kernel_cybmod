@@ -1,7 +1,7 @@
-From 28c1905d4be366356bfa4d1dd6e32101f424b243 Mon Sep 17 00:00:00 2001
+From 1e6ba80d139f313e20487cec92798b527025052c Mon Sep 17 00:00:00 2001
 From: Joe Konno <joe.konno@intel.com>
 Date: Tue, 25 Jun 2019 10:35:54 -0700
-Subject: [PATCH 22/27] ata: libahci: ignore staggered spin-up
+Subject: [PATCH 22/28] ata: libahci: ignore staggered spin-up
 
 Change libahci to ignore firmware's staggered spin-up flag. End-users
 who wish to honor firmware's SSS flag can add the following kernel
@@ -38,5 +38,5 @@ index bff369d9a..30d578474 100644
  static int ahci_set_lpm(struct ata_link *link, enum ata_lpm_policy policy,
  			unsigned hints);
 -- 
-2.24.0.155.gd9f6f3b619
+2.24.0.308.g228f53135a
 

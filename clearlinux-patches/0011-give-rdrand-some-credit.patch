@@ -1,7 +1,7 @@
-From 7049fc666ac56a1970f7d849ad7803bca9007887 Mon Sep 17 00:00:00 2001
+From 2ce027d319267b2af1e2540d57afabdb6a0efb21 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 29 Jul 2016 19:10:52 +0000
-Subject: [PATCH 11/27] give rdrand some credit
+Subject: [PATCH 11/28] give rdrand some credit
 
 try to credit rdrand/rdseed with some entropy
 
@@ -26,5 +26,5 @@ index 01b8868b9..854447265 100644
  	}
  	mix_pool_bytes(r, utsname(), sizeof(*(utsname())));
 -- 
-2.24.0.155.gd9f6f3b619
+2.24.0.308.g228f53135a
 
