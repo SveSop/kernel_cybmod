@@ -1,4 +1,4 @@
-From df7cb5ce0a98efd5cbdfa671856a1798ea7d0164 Mon Sep 17 00:00:00 2001
+From 0db5c6a0d46c69617fc72827a461054c0aaca03b Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 17 May 2017 01:52:11 +0000
 Subject: [PATCH 14/28] init: wait for partition and retry scan
@@ -48,5 +48,5 @@ index 9634ecf37..7f7d64621 100644
  	md_run_setup();
  
 -- 
-2.24.0.308.g228f53135a
+2.24.1.425.g7034cd094b
 
