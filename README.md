@@ -14,6 +14,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0012 : Swap tuning  
 0013 : revert_acpi_change_for_nct6775.patch  
 0014 : Set rq_afinnity = 2 for full multithreading I/O  
+0015 : kbuild: reuse intermediate linker scripts in the final link steps  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 ubuntu : Ubuntu kernel patchset  

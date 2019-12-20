@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10455 @@
+@@ -0,0 +1,10456 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.4.5-cybmod5 Kernel Configuration
++# Linux/x86 5.4.5-cybmod6 Kernel Configuration
 +#
 +
 +#
@@ -97,7 +97,7 @@ new file mode 100644
 +CONFIG_NO_HZ_FULL=y
 +CONFIG_CONTEXT_TRACKING=y
 +# CONFIG_CONTEXT_TRACKING_FORCE is not set
-+CONFIG_NO_HZ=y
++# CONFIG_NO_HZ is not set
 +CONFIG_HIGH_RES_TIMERS=y
 +# end of Timers subsystem
 +
@@ -119,7 +119,8 @@ new file mode 100644
 +CONFIG_TASK_DELAY_ACCT=y
 +CONFIG_TASK_XACCT=y
 +CONFIG_TASK_IO_ACCOUNTING=y
-+# CONFIG_PSI is not set
++CONFIG_PSI=y
++# CONFIG_PSI_DEFAULT_DISABLED is not set
 +# end of CPU/Task time and stats accounting
 +
 +CONFIG_CPU_ISOLATION=y
@@ -138,7 +139,7 @@ new file mode 100644
 +CONFIG_RCU_FANOUT_LEAF=16
 +# CONFIG_RCU_FAST_NO_HZ is not set
 +CONFIG_RCU_BOOST=y
-+CONFIG_RCU_BOOST_DELAY=200
++CONFIG_RCU_BOOST_DELAY=0
 +CONFIG_RCU_NOCB_CPU=y
 +# end of RCU Subsystem
 +
@@ -3349,7 +3350,7 @@ new file mode 100644
 +# CONFIG_STMMAC_SELFTESTS is not set
 +CONFIG_STMMAC_PLATFORM=m
 +CONFIG_DWMAC_GENERIC=m
-+# CONFIG_STMMAC_PCI is not set
++CONFIG_STMMAC_PCI=m
 +CONFIG_NET_VENDOR_SUN=y
 +CONFIG_HAPPYMEAL=m
 +CONFIG_SUNGEM=m
@@ -9711,7 +9712,7 @@ new file mode 100644
 +# CONFIG_SECURITY_APPARMOR_DEBUG is not set
 +# CONFIG_SECURITY_LOADPIN is not set
 +CONFIG_SECURITY_YAMA=y
-+# CONFIG_SECURITY_SAFESETID is not set
++CONFIG_SECURITY_SAFESETID=y
 +CONFIG_SECURITY_LOCKDOWN_LSM=y
 +CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
 +CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y

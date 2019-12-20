@@ -1,14 +1,14 @@
-From 614a58933499efaa909109a038d5aa9f16eb00aa Mon Sep 17 00:00:00 2001
+From 35e24555561f3a9d7a075a31c219c9b80efdf0da Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Nov 2019 23:12:11 +0000
-Subject: [PATCH 28/28] nvme workaround
+Subject: [PATCH 28/30] nvme workaround
 
 ---
  drivers/nvme/host/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index fa7ba09dc..758553763 100644
+index af3212aec..7bb9b933a 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
 @@ -48,7 +48,7 @@ static u8 nvme_max_retries = 5;
@@ -21,5 +21,5 @@ index fa7ba09dc..758553763 100644
  MODULE_PARM_DESC(default_ps_max_latency_us,
  		 "max power saving latency for new devices; use PM QOS to change per device");
 -- 
-2.24.1.425.g7034cd094b
+2.24.1.590.gb02fd2acca
 

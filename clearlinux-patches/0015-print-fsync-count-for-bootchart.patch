@@ -1,7 +1,7 @@
-From 6e3c5d9175dd23504a98e4c6eaffce1e5a9a6b92 Mon Sep 17 00:00:00 2001
+From 0c43203e9b884e68b016d7cfa876f3693c049ce1 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 20 Jun 2017 20:19:08 +0000
-Subject: [PATCH 15/28] print fsync count for bootchart
+Subject: [PATCH 15/30] print fsync count for bootchart
 
 ---
  block/blk-core.c      | 3 +++
@@ -27,7 +27,7 @@ diff --git a/include/linux/sched.h b/include/linux/sched.h
 index 775503573..08eb6063d 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
-@@ -902,6 +902,7 @@ struct task_struct {
+@@ -897,6 +897,7 @@ struct task_struct {
  	/* Cached requested key. */
  	struct key			*cached_requested_key;
  #endif
@@ -48,5 +48,5 @@ index f7e4579e7..2e4e88734 100644
  	nr_switches = p->nvcsw + p->nivcsw;
  
 -- 
-2.24.1.425.g7034cd094b
+2.24.1.590.gb02fd2acca
 
