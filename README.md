@@ -5,8 +5,8 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 **Custom kernel with the following patches**  
 
 0000 : Kernel patch 5.4.5  
-0001 : PDS kernel scheduler  
-0002 : TK-Glitch PDS patches  
+0001 : BMQ kernel scheduler from [http://cchalpha.blogspot.com/](http://cchalpha.blogspot.com/)  
+0002 : TK-Glitch BMQ patches  
 0003 : 5.4 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
 0010 : Cake_Qdisc_default.patch  
@@ -24,7 +24,7 @@ futex-patches : Collection of "futex" patches for Wine
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has PDS 0.99o "undead" CPU scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**This config has BMQ v5.4-r1 CPU scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
 
 To build on Ubuntu:  
 ```

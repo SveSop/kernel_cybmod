@@ -12,7 +12,7 @@ diff --git a/init/Kconfig b/init/Kconfig
 index b4daad2bac23..c1e59dc04209 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1261,7 +1261,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
+@@ -1267,7 +1267,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
  
  config CC_OPTIMIZE_FOR_PERFORMANCE_O3
  	bool "Optimize more for performance (-O3)"
