@@ -6,7 +6,7 @@ index 3e4868a6498b..6c5d32ffd57d 100644
  PHONY := _all
  _all:
  
-+CYBVERSION = -cybmod6
++CYBVERSION = -cybmod7
 +CYBNAME = BMQ Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +
