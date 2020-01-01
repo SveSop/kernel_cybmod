@@ -4,11 +4,13 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.4.6  
+0000 : Kernel patch 5.4.7  
 0001 : PDS kernel scheduler  
 0002 : TK-Glitch PDS patches  
 0003 : 5.4 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
+0005 : AUFS filesystem patch  
+0006 : MM address space tweak  
 0010 : Cake_Qdisc_default.patch  
 0011 : zswap-tweaks.patch  
 0012 : Swap tuning  

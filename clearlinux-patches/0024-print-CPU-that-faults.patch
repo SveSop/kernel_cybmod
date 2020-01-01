@@ -1,7 +1,7 @@
-From d09dc2f3e8ed37f3cdde9051b4664cf0a05d3f64 Mon Sep 17 00:00:00 2001
+From 10d8f786821da8e22f91da2bb5ae59430903cbbd Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 10 Aug 2019 03:19:04 +0000
-Subject: [PATCH 24/30] print CPU that faults
+Subject: [PATCH 24/29] print CPU that faults
 
 print cpu number when we print a crash
 ---
@@ -25,5 +25,5 @@ index 304d31d8c..fb46992de 100644
  	print_vma_addr(KERN_CONT " in ", regs->ip);
  
 -- 
-2.24.1.590.gb02fd2acca
+2.24.1.591.g12029dc57d
 
