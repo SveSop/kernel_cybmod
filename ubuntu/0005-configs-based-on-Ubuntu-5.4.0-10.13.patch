@@ -1,6 +1,6 @@
-From 4a18333288d7bb688341cda9eccfba88f2435594 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 18 Dec 2019 16:31:32 +0000
+From ec2a149beb79b0d1bb951c44596253a9b8957a09 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Tue, 31 Dec 2019 12:35:48 -0500
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.4.0-10.13)
 
 ---
@@ -2915,7 +2915,7 @@ index 1fc93bf..7510e88 100644
  CONFIG_VFIO_PCI=m
  CONFIG_VFIO_VIRQFD=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 5558624..395cb29 100644
+index 5558624..2505a69 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -171,6 +171,7 @@ CONFIG_ADE7854_SPI=m
@@ -4229,7 +4229,7 @@ index 5558624..395cb29 100644
  CONFIG_SND_SOC_SOF_HDA_LINK_BASELINE=m
  CONFIG_SND_SOC_SOF_ICELAKE=m
  CONFIG_SND_SOC_SOF_ICELAKE_SUPPORT=y
-+CONFIG_SND_SOC_SOF_IMX8=m
++# CONFIG_SND_SOC_SOF_IMX8_SUPPORT is not set
 +CONFIG_SND_SOC_SOF_IMX_TOPLEVEL=y
  CONFIG_SND_SOC_SOF_INTEL_ACPI=m
  CONFIG_SND_SOC_SOF_INTEL_ATOM_HIFI_EP=m
