@@ -1,6 +1,6 @@
-From ec2a149beb79b0d1bb951c44596253a9b8957a09 Mon Sep 17 00:00:00 2001
+From e05971419109cbc836f7cadf06bdd46995b107ca Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 31 Dec 2019 12:35:48 -0500
+Date: Sat, 4 Jan 2020 14:37:58 -0500
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.4.0-10.13)
 
 ---
