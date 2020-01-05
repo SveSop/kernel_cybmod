@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.4.7  
+0000 : Kernel patch 5.4.8  
 0001 : BMQ kernel scheduler from [http://cchalpha.blogspot.com/](http://cchalpha.blogspot.com/)  
 0002 : TK-Glitch BMQ patches  
 0003 : 5.4 Graysky's CPU patches  
