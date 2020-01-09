@@ -39464,10 +39464,10 @@ index d99684669..fbadb91df 100644
  # Give 'page_alloc' its own module-parameter namespace
  page-alloc-y := page_alloc.o
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 85b7d087e..115275a4a 100644
+index 1f5731768..a3def534d 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
-@@ -2696,7 +2696,7 @@ vm_fault_t filemap_page_mkwrite(struct vm_fault *vmf)
+@@ -2675,7 +2675,7 @@ vm_fault_t filemap_page_mkwrite(struct vm_fault *vmf)
  	vm_fault_t ret = VM_FAULT_LOCKED;
  
  	sb_start_pagefault(inode->i_sb);
@@ -39477,10 +39477,10 @@ index 85b7d087e..115275a4a 100644
  	if (page->mapping != inode->i_mapping) {
  		unlock_page(page);
 diff --git a/mm/mmap.c b/mm/mmap.c
-index a7d8c84d1..9c350dc3f 100644
+index 4390dbea4..e697082d3 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
-@@ -182,7 +182,7 @@ static struct vm_area_struct *remove_vma(struct vm_area_struct *vma)
+@@ -176,7 +176,7 @@ static struct vm_area_struct *remove_vma(struct vm_area_struct *vma)
  	if (vma->vm_ops && vma->vm_ops->close)
  		vma->vm_ops->close(vma);
  	if (vma->vm_file)
@@ -39489,7 +39489,7 @@ index a7d8c84d1..9c350dc3f 100644
  	mpol_put(vma_policy(vma));
  	vm_area_free(vma);
  	return next;
-@@ -940,7 +940,7 @@ int __vma_adjust(struct vm_area_struct *vma, unsigned long start,
+@@ -934,7 +934,7 @@ int __vma_adjust(struct vm_area_struct *vma, unsigned long start,
  	if (remove_next) {
  		if (file) {
  			uprobe_munmap(next, next->vm_start, next->vm_end);
@@ -39498,7 +39498,7 @@ index a7d8c84d1..9c350dc3f 100644
  		}
  		if (next->anon_vma)
  			anon_vma_merge(vma, next);
-@@ -1865,8 +1865,8 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
+@@ -1859,8 +1859,8 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
  	return addr;
  
  unmap_and_free_vma:
@@ -39508,7 +39508,7 @@ index a7d8c84d1..9c350dc3f 100644
  
  	/* Undo any partial mapping done by a device driver. */
  	unmap_region(mm, vma, prev, vma->vm_start, vma->vm_end);
-@@ -2695,7 +2695,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -2689,7 +2689,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
  		goto out_free_mpol;
  
  	if (new->vm_file)
@@ -39517,7 +39517,7 @@ index a7d8c84d1..9c350dc3f 100644
  
  	if (new->vm_ops && new->vm_ops->open)
  		new->vm_ops->open(new);
-@@ -2714,7 +2714,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -2708,7 +2708,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
  	if (new->vm_ops && new->vm_ops->close)
  		new->vm_ops->close(new);
  	if (new->vm_file)
@@ -39526,7 +39526,7 @@ index a7d8c84d1..9c350dc3f 100644
  	unlink_anon_vmas(new);
   out_free_mpol:
  	mpol_put(vma_policy(new));
-@@ -2906,7 +2906,7 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
+@@ -2900,7 +2900,7 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
  	struct vm_area_struct *vma;
  	unsigned long populate = 0;
  	unsigned long ret = -EINVAL;
@@ -39535,7 +39535,7 @@ index a7d8c84d1..9c350dc3f 100644
  
  	pr_warn_once("%s (%d) uses deprecated remap_file_pages() syscall. See Documentation/vm/remap_file_pages.rst.\n",
  		     current->comm, current->pid);
-@@ -2981,10 +2981,27 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
+@@ -2975,10 +2975,27 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
  		}
  	}
  
@@ -39564,7 +39564,7 @@ index a7d8c84d1..9c350dc3f 100644
  out:
  	up_write(&mm->mmap_sem);
  	if (populate)
-@@ -3274,7 +3291,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+@@ -3268,7 +3285,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
  		if (anon_vma_clone(new_vma, vma))
  			goto out_free_mempol;
  		if (new_vma->vm_file)

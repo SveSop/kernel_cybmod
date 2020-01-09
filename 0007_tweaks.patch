@@ -1,0 +1,123 @@
+From f3885a1734a7639dfc844ef002f8563a8179d88e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Thu, 9 Jan 2020 15:25:22 +0100
+Subject: [PATCH] Cybmod Tweaks
+
+Various performance tweaks picked from TK-Glitch repo.
+---
+ drivers/infiniband/core/addr.c  | 1 +
+ drivers/input/mouse/synaptics.c | 4 +++-
+ drivers/input/mouse/synaptics.h | 1 +
+ fs/dcache.c                     | 2 +-
+ include/linux/mm.h              | 3 +--
+ kernel/sched/core.c             | 6 +++---
+ mm/page_alloc.c                 | 2 +-
+ 7 files changed, 11 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
+index 606fa6d86..70a2cad05 100644
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -816,6 +816,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
+ 	union {
+ 		struct sockaddr_in  _sockaddr_in;
+ 		struct sockaddr_in6 _sockaddr_in6;
++		struct sockaddr_ib  _sockaddr_ib;
+ 	} sgid_addr, dgid_addr;
+ 	int ret;
+ 
+diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
+index 1ae6f8bba..d87523f5c 100644
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -1343,7 +1343,9 @@ static int set_input_params(struct psmouse *psmouse,
+ 		if (psmouse_matches_pnp_id(psmouse, topbuttonpad_pnp_ids) &&
+ 		    !SYN_CAP_EXT_BUTTONS_STICK(info->ext_cap_10))
+ 			__set_bit(INPUT_PROP_TOPBUTTONPAD, dev->propbit);
+-	}
++	} else if (SYN_CAP_CLICKPAD2BTN(info->ext_cap_0c) ||
++		   SYN_CAP_CLICKPAD2BTN2(info->ext_cap_0c))
++		__set_bit(INPUT_PROP_BUTTONPAD, dev->propbit);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/input/mouse/synaptics.h b/drivers/input/mouse/synaptics.h
+index 08533d1b1..e85f840a2 100644
+--- a/drivers/input/mouse/synaptics.h
++++ b/drivers/input/mouse/synaptics.h
+@@ -83,6 +83,7 @@
+  */
+ #define SYN_CAP_CLICKPAD(ex0c)		((ex0c) & BIT(20)) /* 1-button ClickPad */
+ #define SYN_CAP_CLICKPAD2BTN(ex0c)	((ex0c) & BIT(8))  /* 2-button ClickPad */
++#define SYN_CAP_CLICKPAD2BTN2(ex0c)	((ex0c) & BIT(21)) /* 2-button ClickPad */
+ #define SYN_CAP_MAX_DIMENSIONS(ex0c)	((ex0c) & BIT(17))
+ #define SYN_CAP_MIN_DIMENSIONS(ex0c)	((ex0c) & BIT(13))
+ #define SYN_CAP_ADV_GESTURE(ex0c)	((ex0c) & BIT(19))
+diff --git a/fs/dcache.c b/fs/dcache.c
+index 00d7e6a08..c376efb76 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -71,7 +71,7 @@
+  * If no ancestor relationship:
+  * arbitrary, since it's serialized on rename_lock
+  */
+-int sysctl_vfs_cache_pressure __read_mostly = 100;
++int sysctl_vfs_cache_pressure __read_mostly = 50;
+ EXPORT_SYMBOL_GPL(sysctl_vfs_cache_pressure);
+ 
+ __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 03fd55e88..89597b83c 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -193,8 +193,7 @@ static inline void __mm_zero_struct_page(struct page *page)
+  * not a hard limit any more. Although some userspace tools can be surprised by
+  * that.
+  */
+-#define MAPCOUNT_ELF_CORE_MARGIN	(5)
+-#define DEFAULT_MAX_MAP_COUNT	(USHRT_MAX - MAPCOUNT_ELF_CORE_MARGIN)
++#define DEFAULT_MAX_MAP_COUNT	(262144)
+ 
+ extern int sysctl_max_map_count;
+ 
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 8dacda4b0..da34cc694 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -56,7 +56,7 @@ const_debug unsigned int sysctl_sched_features =
+  * Number of tasks to iterate in a single balance run.
+  * Limited because this is done with IRQs disabled.
+  */
+-const_debug unsigned int sysctl_sched_nr_migrate = 32;
++const_debug unsigned int sysctl_sched_nr_migrate = 128;
+ 
+ /*
+  * period over which we measure -rt task CPU usage in us.
+@@ -68,9 +68,9 @@ __read_mostly int scheduler_running;
+ 
+ /*
+  * part of the period that we allow rt tasks to run in us.
+- * default: 0.95s
++ * tweaked: 0.98s
+  */
+-int sysctl_sched_rt_runtime = 950000;
++int sysctl_sched_rt_runtime = 980000;
+ 
+ /*
+  * __task_rq_lock - lock the rq @p resides on.
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index f391c0c4e..d5a6551ed 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -329,7 +329,7 @@ int watermark_boost_factor __read_mostly;
+ #else
+ int watermark_boost_factor __read_mostly = 15000;
+ #endif
+-int watermark_scale_factor = 10;
++int watermark_scale_factor = 200;
+ 
+ static unsigned long nr_kernel_pages __initdata;
+ static unsigned long nr_all_pages __initdata;
+-- 
+2.17.1
+
