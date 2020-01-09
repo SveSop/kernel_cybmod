@@ -1,6 +1,6 @@
-From 039d580b9ed9e8897fbef48212ad66eecfd1cb5b Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 4 Jan 2020 14:37:03 -0500
+From 5d8770ec6ceb8c31f2ed7cbd9e5c0359eaf30a73 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 9 Jan 2020 10:38:29 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,15 +8,15 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 8315 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 45bb11c..077aa7c 100644
+index 45bb11c..8692f438 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,8318 +1,6 @@
 -linux (5.3.0-18.19) eoan; urgency=medium
-+linux (5.4.8-050408.202001041436) focal; urgency=low
++linux (5.4.10-050410.202001091038) focal; urgency=low
  
 -  * eoan/linux: 5.3.0-18.19 -proposed tracker (LP: #1847298)
-+  Mainline build at commit: v5.4.8
++  Mainline build at commit: v5.4.10
  
 -  * Enable the Dragonboards out of Eoan/master arm64 kernel (LP: #1846704)
 -    - [Packaging] arm64: snapdragon: introduce a snapdragon flavour
@@ -89,7 +89,7 @@ index 45bb11c..077aa7c 100644
 -    - [Config] arm64: snapdragon: CONFIG_INPUT_PM8941_PWRKEY=y
 -    - [Config] arm64: snapdragon: CONFIG_KEYBOARD_GPIO=y
 -    - [Config] arm64: snapdragon: CONFIG_RTC_DRV_PM8XXX=y
-+ -- Mainline Build <kernel@gloin>  Sat, 04 Jan 2020 14:37:03 -0500
++ -- Mainline Build <kernel@kathleen>  Thu, 09 Jan 2020 10:38:28 +0000
  
 - -- Seth Forshee <seth.forshee@canonical.com>  Tue, 08 Oct 2019 11:21:54 -0500
 -
