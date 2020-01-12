@@ -89,7 +89,7 @@ index 8dacda4b0..da34cc694 100644
   * Limited because this is done with IRQs disabled.
   */
 -const_debug unsigned int sysctl_sched_nr_migrate = 32;
-+const_debug unsigned int sysctl_sched_nr_migrate = 128;
++const_debug unsigned int sysctl_sched_nr_migrate = 256;
  
  /*
   * period over which we measure -rt task CPU usage in us.
