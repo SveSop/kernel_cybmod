@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,10470 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.4.13-cybmod14 Kernel Configuration
++# Linux/x86 5.4.13-cybmod15 Kernel Configuration
 +#
 +
 +#
@@ -26,8 +26,6 @@ new file mode 100644
 +#
 +# General setup
 +#
-+CONFIG_SCHED_BMQ=y
-+CONFIG_SCHED_TIMESLICE=4
 +CONFIG_INIT_ENV_ARG_LIMIT=32
 +# CONFIG_COMPILE_TEST is not set
 +# CONFIG_HEADER_TEST is not set
@@ -155,6 +153,8 @@ new file mode 100644
 +#
 +# Scheduler features
 +#
++CONFIG_SCHED_BMQ=y
++CONFIG_SCHED_TIMESLICE=2
 +# end of Scheduler features
 +
 +CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
