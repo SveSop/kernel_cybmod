@@ -1,23 +1,602 @@
-From 5d8770ec6ceb8c31f2ed7cbd9e5c0359eaf30a73 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 9 Jan 2020 10:38:29 +0000
+From 8d44913c8e122e9f3e49c262eb6f0f423ac0d411 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Tue, 14 Jan 2020 15:31:51 -0500
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 8318 +----------------------------------------------
- 1 file changed, 3 insertions(+), 8315 deletions(-)
+ debian.master/changelog | 8947 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 8944 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 45bb11c..8692f438 100644
+index 766584a..b48c053 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,8318 +1,6 @@
--linux (5.3.0-18.19) eoan; urgency=medium
-+linux (5.4.10-050410.202001091038) focal; urgency=low
+@@ -1,8947 +1,6 @@
+-linux-5.5 (5.5.0-5.6) focal; urgency=medium
++linux (5.4.12-050412.202001141531) unstable; urgency=low
  
--  * eoan/linux: 5.3.0-18.19 -proposed tracker (LP: #1847298)
-+  Mainline build at commit: v5.4.10
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
++  Mainline build at commit: v5.4.12
  
+-  [ Upstream Kernel Changes ]
++ -- Mainline Build <kernel@gloin>  Tue, 14 Jan 2020 15:31:51 -0500
+ 
+-  * Rebase to v5.5-rc6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 13 Jan 2020 15:50:12 +0100
+-
+-linux-5.5 (5.5.0-4.5) focal; urgency=medium
+-
+-  * linux build and autopkg tests need to use python2 instead of python
+-    (LP: #1858487)
+-    - [Packaging] Remove python-dev build dependency
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 08 Jan 2020 16:00:26 +0100
+-
+-linux-5.5 (5.5.0-3.4) focal; urgency=medium
+-
+-  * [SRU][B/OEM-B/OEM-OSP1/D/E/F] Add LG I2C touchscreen multitouch support
+-    (LP: #1857541)
+-    - SAUCE: HID: multitouch: Add LG MELF0410 I2C touchscreen support
+-
+-  * Make vfio-pci built-in or xhci_hcd optional (LP: #1770845)
+-    - [Config]: built-in VFIO_PCI for amd64
+-
+-  * multi-zone raid0 corruption (LP: #1850540)
+-    - SAUCE: md/raid0: Link to wiki with guidance on multi-zone RAID0 layout
+-      migration
+-
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update variants
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Change source package to linux-5.5
+-    - [Packaging] Don't use SRCPKGNAME for linux-libc-dev
+-    - [Packaging] Remove linux-source-3 Provides: from linux-source
+-    - [Packaging] Fix linux-doc in linux-image Suggests:
+-    - [Debian] Read variants list into a variable
+-    - [Packaging] Generate linux-libc-dev package only for primary variant
+-    - [Packaging] Generate linux-doc for only the primary variant
+-    - [Debian] Update linux source package name in debian/tests/*
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.5-rc3
+-    - [Config] disable PCI_MESON
+-    - [Config] Add pinctrl-equilibrium to modules.ignore
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.5-rc5
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 08 Jan 2020 11:28:43 +0100
+-
+-linux-5.5 (5.5.0-2.3) focal; urgency=medium
+-
+-  * Empty entry.
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 17 Dec 2019 22:33:59 -0600
+-
+-linux (5.5.0-2.3) focal; urgency=medium
+-
+-  * Support DPCD aux brightness control (LP: #1856134)
+-    - SAUCE: drm/i915: Fix eDP DPCD aux max backlight calculations
+-    - SAUCE: drm/i915: Assume 100% brightness when not in DPCD control mode
+-    - SAUCE: drm/i915: Fix DPCD register order in intel_dp_aux_enable_backlight()
+-    - SAUCE: drm/i915: Auto detect DPCD backlight support by default
+-    - SAUCE: drm/i915: Force DPCD backlight mode on X1 Extreme 2nd Gen 4K AMOLED
+-      panel
+-    - USUNTU: SAUCE: drm/i915: Force DPCD backlight mode on Dell Precision 4K sku
+-
+-  * change kconfig of the soundwire bus driver from y to m (LP: #1855685)
+-    - [Config]: SOUNDWIRE=m
+-
+-  * Fix unusable USB hub on Dell TB16 after S3 (LP: #1855312)
+-    - SAUCE: USB: core: Make port power cycle a seperate helper function
+-    - SAUCE: USB: core: Attempt power cycle port when it's in eSS.Disabled state
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] add python depends to ubuntu-regression-suite
+-    - SAUCE: selftests: net: tls: remove recv_rcvbuf test
+-    - update dkms package versions
+-
+-  * Miscellaneous upstream changes
+-    - [Config] updateconfigs after rebase to 5.5-rc2
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 17 Dec 2019 16:02:43 +0100
+-
+-linux (5.5.0-1.2) focal; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] disable nvidia dkms build
+-    - [Config] disable virtualbox dkms build
+-    - [Config] disable zfs dkms build
+-    - update dropped.txt after rebase to v5.5-rc1
+-    - SAUCE: (lockdown) Make get_cert_list() not complain about cert lists that
+-      aren't present.
+-    - SAUCE: (lockdown) Add efi_status_to_str() and rework efi_status_to_err().
+-    - SAUCE: (lockdown) Make get_cert_list() use efi_status_to_str() to print
+-      error messages.
+-    - SAUCE: (lockdown) security: lockdown: expose a hook to lock the kernel down
+-    - SAUCE: (lockdown) efi: Add an EFI_SECURE_BOOT flag to indicate secure boot
+-      mode
+-    - SAUCE: (lockdown) efi: Lock down the kernel if booted in secure boot mode
+-    - SAUCE: (lockdown) Add a SysRq option to lift kernel lockdown
+-    - SAUCE: (lockdown) KEYS: Make use of platform keyring for module signature
+-      verify
+-    - SAUCE: (lockdown) arm64: Allow locking down the kernel under EFI secure boot
+-    - SAUCE: (lockdown) security: lockdown: Make
+-      CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT more generic
+-    - SAUCE: (lockdown) s390/ipl: lockdown kernel when booted secure
+-    - [Config] Enable lockdown under secure boot
+-    - update dkms package versions
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 12 Dec 2019 16:54:41 +0100
+-
+-linux (5.5.0-0.1) focal; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] updateconfigs after rebase to 5.5-rc1
+-
+-   [ Upstream Kernel Changes ]
+-
+-   * Rebase to v5.5-rc1
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 09 Dec 2019 19:03:35 +0100
+-
+-linux (5.5.0-0.0) focal; urgency=medium
+-
+-  * Dummy entry.
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 09 Dec 2019 15:14:37 +0100
+-
+-linux (5.4.0-8.11) focal; urgency=medium
+-
+-  * focal/linux: 5.4.0-8.9 -proposed tracker (LP: #1855448)
+-
+-  * update ENA driver for DIMLIB dynamic interrupt moderation (LP: #1853180)
+-    - SAUCE: net: ena: fix issues in setting interrupt moderation params in
+-      ethtool
+-    - SAUCE: net: ena: fix too long default tx interrupt moderation interval
+-
+-  * Kernel build log filled with "/bin/bash: line 5: warning: command
+-    substitution: ignored null byte in input" (LP: #1853843)
+-    - [Debian] Fix warnings when checking for modules signatures
+-
+-  * hwe-edge kernel 5.3.0-23.25 kernel does not boot on Precision 5720 AIO
+-    (LP: #1852581)
+-    - [Packaging] Fix module signing with older modinfo
+-
+-  * Fix MST support on Ice Lake (LP: #1854432)
+-    - drm/i915: fix port checks for MST support on gen >= 11
+-
+-  * headphone has noise as not mute on dell machines with alc236/256
+-    (LP: #1854401)
+-    - SAUCE: ALSA: hda/realtek - Dell headphone has noise on unmute for ALC236
+-
+-  * [CML-S62] Need enable intel_pmc_core driver patch for Comet lake- S 6+2
+-    (LP: #1847450)
+-    - SAUCE: platform/x86: intel_pmc_core: Add Comet Lake (CML) platform support
+-      to intel_pmc_core driver
+-
+-  * CVE-2019-14901
+-    - SAUCE: mwifiex: Fix heap overflow in mmwifiex_process_tdls_action_frame()
+-
+-  * CVE-2019-14896 // CVE-2019-14897
+-    - SAUCE: libertas: Fix two buffer overflows at parsing bss descriptor
+-
+-  * CVE-2019-14895
+-    - SAUCE: mwifiex: fix possible heap overflow in mwifiex_process_country_ie()
+-
+-  * [CML-S62] Need enable intel_rapl patch support for Comet lake- S 6+2
+-    (LP: #1847454)
+-    - powercap/intel_rapl: add support for CometLake Mobile
+-    - powercap/intel_rapl: add support for Cometlake desktop
+-
+-  * External microphone can't work on some dell machines with the codec alc256
+-    or alc236 (LP: #1853791)
+-    - SAUCE: ALSA: hda/realtek - Move some alc256 pintbls to fallback table
+-    - SAUCE: ALSA: hda/realtek - Move some alc236 pintbls to fallback table
+-
+-  * remount of multilower moved pivoted-root overlayfs root, results in I/O
+-    errors on some modified files (LP: #1824407)
+-    - SAUCE: ovl: fix lookup failure on multi lower squashfs
+-
+-  * [CML-S62] Need enable turbostat patch support for Comet lake- S 6+2
+-    (LP: #1847451)
+-    - SAUCE: tools/power turbostat: Add Cometlake support
+-
+-  * CONFIG_ARCH_ROCKCHIP is not set in ubuntu 18.04 aarch64,arm64 (LP: #1825222)
+-    - [Config] Enable ROCKCHIP support for arm64
+-
+-  * [broadwell-rt286, playback] Since Linux 5.2rc2 audio playback no longer
+-    works on Dell Venue 11 Pro 7140 (LP: #1846539)
+-    - SAUCE: ASoC: SOF: Intel: Broadwell: clarify mutual exclusion with legacy
+-      driver
+-
+-  * i40e: general protection fault in i40e_config_vf_promiscuous_mode
+-    (LP: #1852663)
+-    - SAUCE: i40e Fix GPF when deleting VMs
+-
+-  * libbpf check_abi fails on ppc64el (LP: #1854974)
+-    - libbpf: Fix readelf output parsing on powerpc with recent binutils
+-
+-  * CVE-2019-19050
+-    - crypto: user - fix memory leak in crypto_reportstat
+-
+-  * Make hotplugging docking station to Thunderbolt port more reliable
+-    (LP: #1853991)
+-    - PCI/PM: Add pcie_wait_for_link_delay()
+-    - PCI/PM: Add missing link delays required by the PCIe spec
+-
+-  * i915: Display flickers (monitor loses signal briefly) during "flickerfree"
+-    boot, while showing the BIOS logo on a black background (LP: #1836858)
+-    - [Config] FRAMEBUFFER_CONSOLE_DEFERRED_TAKEOVER=y
+-
+-  * [CML] New device id's for CMP-H (LP: #1846335)
+-    - i2c: i801: Add support for Intel Comet Lake PCH-H
+-    - mtd: spi-nor: intel-spi: Add support for Intel Comet Lake-H SPI serial flash
+-    - mfd: intel-lpss: Add Intel Comet Lake PCH-H PCI IDs
+-
+-  * Focal update: v5.4.2 upstream stable release (LP: #1855326)
+-    - io_uring: async workers should inherit the user creds
+-    - net: separate out the msghdr copy from ___sys_{send,recv}msg()
+-    - net: disallow ancillary data for __sys_{send,recv}msg_file()
+-    - crypto: inside-secure - Fix stability issue with Macchiatobin
+-    - driver core: platform: use the correct callback type for bus_find_device
+-    - usb: dwc2: use a longer core rest timeout in dwc2_core_reset()
+-    - staging: wilc1000: fix illegal memory access in wilc_parse_join_bss_param()
+-    - staging: rtl8192e: fix potential use after free
+-    - staging: rtl8723bs: Drop ACPI device ids
+-    - staging: rtl8723bs: Add 024c:0525 to the list of SDIO device-ids
+-    - USB: serial: ftdi_sio: add device IDs for U-Blox C099-F9P
+-    - mei: bus: prefix device names on bus with the bus name
+-    - mei: me: add comet point V device id
+-    - thunderbolt: Power cycle the router if NVM authentication fails
+-    - x86/fpu: Don't cache access to fpu_fpregs_owner_ctx
+-    - gve: Fix the queue page list allocated pages count
+-    - macvlan: schedule bc_work even if error
+-    - mdio_bus: don't use managed reset-controller
+-    - net: dsa: sja1105: fix sja1105_parse_rgmii_delays()
+-    - net: macb: add missed tasklet_kill
+-    - net: psample: fix skb_over_panic
+-    - net: sched: fix `tc -s class show` no bstats on class with nolock subqueues
+-    - openvswitch: fix flow command message size
+-    - sctp: Fix memory leak in sctp_sf_do_5_2_4_dupcook
+-    - slip: Fix use-after-free Read in slip_open
+-    - sctp: cache netns in sctp_ep_common
+-    - openvswitch: drop unneeded BUG_ON() in ovs_flow_cmd_build_info()
+-    - openvswitch: remove another BUG_ON()
+-    - net/tls: take into account that bpf_exec_tx_verdict() may free the record
+-    - net/tls: free the record on encryption error
+-    - net: skmsg: fix TLS 1.3 crash with full sk_msg
+-    - selftests/tls: add a test for fragmented messages
+-    - net/tls: remove the dead inplace_crypto code
+-    - net/tls: use sg_next() to walk sg entries
+-    - selftests: bpf: test_sockmap: handle file creation failures gracefully
+-    - selftests: bpf: correct perror strings
+-    - tipc: fix link name length check
+-    - selftests: pmtu: use -oneline for ip route list cache
+-    - r8169: fix jumbo configuration for RTL8168evl
+-    - r8169: fix resume on cable plug-in
+-    - ext4: add more paranoia checking in ext4_expand_extra_isize handling
+-    - Revert "jffs2: Fix possible null-pointer dereferences in
+-      jffs2_add_frag_to_fragtree()"
+-    - crypto: talitos - Fix build error by selecting LIB_DES
+-    - HID: core: check whether Usage Page item is after Usage ID items
+-    - platform/x86: hp-wmi: Fix ACPI errors caused by too small buffer
+-    - platform/x86: hp-wmi: Fix ACPI errors caused by passing 0 as input size
+-    - Linux 5.4.2
+-
+-  * no HDMI video output since GDM greeter after linux-oem-osp1 version
+-    5.0.0-1026 (LP: #1852386)
+-    - drm/i915: Add new CNL PCH ID seen on a CML platform
+-    - SAUCE: drm/i915: Fix detection for a CMP-V PCH
+-
+-  * Please add patch fixing RK818 ID detection (LP: #1853192)
+-    - SAUCE: mfd: rk808: Fix RK818 ID template
+-
+-  * Raydium Touchscreen on ThinkPad L390 does not work (LP: #1849721)
+-    - HID: i2c-hid: fix no irq after reset on raydium 3118
+-
+-  * Touchpad doesn't work on Dell Inspiron 7000 2-in-1 (LP: #1851901)
+-    - Revert "UBUNTU: SAUCE: mfd: intel-lpss: add quirk for Dell XPS 13 7390
+-      2-in-1"
+-    - lib: devres: add a helper function for ioremap_uc
+-    - mfd: intel-lpss: Use devm_ioremap_uc for MMIO
+-
+-  * Lenovo dock MAC Address pass through doesn't work in Ubuntu  (LP: #1827961)
+-    - r8152: Add macpassthru support for ThinkPad Thunderbolt 3 Dock Gen 2
+-
+-  * Disable unreliable HPET on CFL-H system (LP: #1852216)
+-    - SAUCE: x86/intel: Disable HPET on Intel Coffe Lake H platforms
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - [Config] Enable virtualbox dkms build
+-    - [Config] update annotations to match current configs
+-    - SAUCE: Add exfat module to signature inclusion list
+-
+-  * Miscellaneous upstream changes
+-    - Bluetooth: Fix invalid-free in bcsp_close()
+-    - ath9k_hw: fix uninitialized variable data
+-    - ath10k: Fix a NULL-ptr-deref bug in ath10k_usb_alloc_urb_from_pipe
+-    - ath10k: Fix HOST capability QMI incompatibility
+-    - ath10k: restore QCA9880-AR1A (v1) detection
+-    - Revert "Bluetooth: hci_ll: set operational frequency earlier"
+-    - Revert "dm crypt: use WQ_HIGHPRI for the IO and crypt workqueues"
+-    - md/raid10: prevent access of uninitialized resync_pages offset
+-    - x86/insn: Fix awk regexp warnings
+-    - x86/speculation: Fix incorrect MDS/TAA mitigation status
+-    - x86/speculation: Fix redundant MDS mitigation message
+-    - nbd: prevent memory leak
+-    - x86/stackframe/32: Repair 32-bit Xen PV
+-    - x86/xen/32: Make xen_iret_crit_fixup() independent of frame layout
+-    - x86/xen/32: Simplify ring check in xen_iret_crit_fixup()
+-    - x86/doublefault/32: Fix stack canaries in the double fault handler
+-    - x86/pti/32: Size initial_page_table correctly
+-    - x86/cpu_entry_area: Add guard page for entry stack on 32bit
+-    - x86/entry/32: Fix IRET exception
+-    - x86/entry/32: Use %ss segment where required
+-    - x86/entry/32: Move FIXUP_FRAME after pushing %fs in SAVE_ALL
+-    - x86/entry/32: Unwind the ESPFIX stack earlier on exception entry
+-    - x86/entry/32: Fix NMI vs ESPFIX
+-    - selftests/x86/mov_ss_trap: Fix the SYSENTER test
+-    - selftests/x86/sigreturn/32: Invalidate DS and ES when abusing the kernel
+-    - x86/pti/32: Calculate the various PTI cpu_entry_area sizes correctly, make
+-      the CPU_ENTRY_AREA_PAGES assert precise
+-    - x86/entry/32: Fix FIXUP_ESPFIX_STACK with user CR3
+-    - futex: Prevent robust futex exit race
+-    - ALSA: usb-audio: Fix NULL dereference at parsing BADD
+-    - ALSA: usb-audio: Fix Scarlett 6i6 Gen 2 port data
+-    - media: vivid: Set vid_cap_streaming and vid_out_streaming to true
+-    - media: vivid: Fix wrong locking that causes race conditions on streaming
+-      stop
+-    - media: usbvision: Fix invalid accesses after device disconnect
+-    - media: usbvision: Fix races among open, close, and disconnect
+-    - cpufreq: Add NULL checks to show() and store() methods of cpufreq
+-    - futex: Move futex exit handling into futex code
+-    - futex: Replace PF_EXITPIDONE with a state
+-    - exit/exec: Seperate mm_release()
+-    - futex: Split futex_mm_release() for exit/exec
+-    - futex: Set task::futex_state to DEAD right after handling futex exit
+-    - futex: Mark the begin of futex exit explicitly
+-    - futex: Sanitize exit state handling
+-    - futex: Provide state handling for exec() as well
+-    - futex: Add mutex around futex exit
+-    - futex: Provide distinct return value when owner is exiting
+-    - futex: Prevent exit livelock
+-    - media: uvcvideo: Fix error path in control parsing failure
+-    - media: b2c2-flexcop-usb: add sanity checking
+-    - media: cxusb: detect cxusb_ctrl_msg error in query
+-    - media: imon: invalid dereference in imon_touch_event
+-    - media: mceusb: fix out of bounds read in MCE receiver buffer
+-    - ALSA: hda - Disable audio component for legacy Nvidia HDMI codecs
+-    - USBIP: add config dependency for SGL_ALLOC
+-    - usbip: tools: fix fd leakage in the function of read_attr_usbip_status
+-    - usbip: Fix uninitialized symbol 'nents' in stub_recv_cmd_submit()
+-    - usb-serial: cp201x: support Mark-10 digital force gauge
+-    - USB: chaoskey: fix error case of a timeout
+-    - appledisplay: fix error handling in the scheduled work
+-    - USB: serial: mos7840: add USB ID to support Moxa UPort 2210
+-    - USB: serial: mos7720: fix remote wakeup
+-    - USB: serial: mos7840: fix remote wakeup
+-    - USB: serial: option: add support for DW5821e with eSIM support
+-    - USB: serial: option: add support for Foxconn T77W968 LTE modules
+-    - staging: comedi: usbduxfast: usbduxfast_ai_cmdtest rounding error
+-    - powerpc/book3s64: Fix link stack flush on context switch
+-    - KVM: PPC: Book3S HV: Flush link stack on guest exit to host kernel
+-    - Linux 5.4.1
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Fri, 06 Dec 2019 15:53:53 -0600
+-
+-linux (5.4.0-7.8) focal; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: selftests/bpf: Comment out BPF_CORE_READ's which cause clang to
+-      segfault
+-    - Update nvidia-430 to nvidia-440
+-    - [Config] Enable nvidia dkms build
+-    - update dkms package versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 25 Nov 2019 15:02:30 +0100
+-
+-linux (5.4.0-6.7) focal; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.4-rc8
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 18 Nov 2019 12:08:01 +0100
+-
+-linux (5.4.0-5.6) focal; urgency=medium
+-
+-  * refcount underflow and type confusion in shiftfs (LP: #1850867) //
+-    CVE-2019-15793
+-    - SAUCE: shiftfs: Correct id translation for lower fs operations
+-
+-  * refcount underflow and type confusion in shiftfs (LP: #1850867) //
+-    CVE-2019-15792
+-    - SAUCE: shiftfs: prevent type confusion
+-
+-  * refcount underflow and type confusion in shiftfs (LP: #1850867) //
+-    CVE-2019-15791
+-    - SAUCE: shiftfs: Fix refcount underflow in btrfs ioctl handling
+-
+-  * Some EFI systems fail to boot in efi_init() when booted via maas
+-    (LP: #1851810)
+-    - SAUCE: efi: efi_get_memory_map -- increase map headroom
+-
+-  * seccomp: fix SECCOMP_USER_NOTIF_FLAG_CONTINUE test (LP: #1849281)
+-    - SAUCE: seccomp: rework define for SECCOMP_USER_NOTIF_FLAG_CONTINUE
+-    - SAUCE: seccomp: avoid overflow in implicit constant conversion
+-
+-  * dkms artifacts may expire from the pool (LP: #1850958)
+-    - [Packaging] dkms -- try launchpad librarian for pool downloads
+-    - [Packaging] dkms -- dkms-build quieten wget verbiage
+-
+-  * tsc marked unstable after entered PC10 on Intel CoffeeLake (LP: #1840239)
+-    - SAUCE: x86/intel: Disable HPET on Intel Coffe Lake platforms
+-    - SAUCE: x86/intel: Disable HPET on Intel Ice Lake platforms
+-
+-  * shiftfs: prevent exceeding project quotas (LP: #1849483)
+-    - SAUCE: shiftfs: drop CAP_SYS_RESOURCE from effective capabilities
+-
+-  * shiftfs: fix fallocate() (LP: #1849482)
+-    - SAUCE: shiftfs: setup correct s_maxbytes limit
+-
+-  * The alsa hda driver is not loaded due to the missing of PCIID for Comet
+-    Lake-S [8086:a3f0] (LP: #1852070)
+-    - SAUCE: ALSA: hda: Add Cometlake-S PCI ID
+-
+-  * Can't adjust brightness on DELL UHD dGPU AIO (LP: #1813877)
+-    - SAUCE: platform/x86: dell-uart-backlight: add missing status command
+-    - SAUCE: platform/x86: dell-uart-backlight: load driver by scalar status
+-    - SAUCE: platform/x86: dell-uart-backlight: add force parameter
+-    - SAUCE: platform/x86: dell-uart-backlight: add quirk for old platforms
+-
+-  * s_iflags overlap prevents unprivileged overlayfs mounts (LP: #1851677)
+-    - SAUCE: fs: Move SB_I_NOSUID to the top of s_iflags
+-
+-  * ubuntu-aufs-modified mmap_region() breaks refcounting in overlayfs/shiftfs
+-    error path (LP: #1850994) // CVE-2019-15794
+-    - SAUCE: shiftfs: Restore vm_file value when lower fs mmap fails
+-    - SAUCE: ovl: Restore vm_file value when lower fs mmap fails
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] Convert update-aufs.sh to use aufs5
+-    - SAUCE: import aufs driver
+-    - update dkms package versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc7
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Wed, 13 Nov 2019 11:56:35 -0800
+-
+-linux (5.4.0-4.5) focal; urgency=medium
+-
+-  * High power consumption using 5.0.0-25-generic (LP: #1840835)
+-    - PCI: Add a helper to check Power Resource Requirements _PR3 existence
+-    - ALSA: hda: Allow HDA to be runtime suspended when dGPU is not bound to a
+-      driver
+-    - PCI: Fix missing inline for pci_pr3_present()
+-
+-  * Fix signing of staging modules in eoan (LP: #1850234)
+-    - [Packaging] Leave unsigned modules unsigned after adding .gnu_debuglink
+-
+-  * [20.04 FEAT] Set Architecture Level (ALS) to z13 (LP: #1837525)
+-    - [Config] s390x bump march to z13, with tune to z15
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian]: do not skip tests for linux-hwe-edge
+-    - update dkms package versions
+-    - [Config] re-enable zfs
+-    - [Config] rename module virtio_fs to virtiofs
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 04 Nov 2019 15:12:02 +0100
+-
+-linux (5.4.0-3.4) focal; urgency=medium
+-
+-  * seccomp: fix SECCOMP_USER_NOTIF_FLAG_CONTINUE test (LP: #1849281)
+-    - SAUCE: seccomp: fix SECCOMP_USER_NOTIF_FLAG_CONTINUE test
+-
+-  * cloudimg: no iavf/i40evf module so no network available with SR-IOV enabled
+-    cloud (LP: #1848481)
+-    - [Packaging] include iavf/i40evf in generic
+-
+-  * CVE-2019-17666
+-    - SAUCE: rtlwifi: Fix potential overflow on P2P code
+-
+-  * Change Config Option CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE for s390x from yes
+-    to no (LP: #1848492)
+-    - [Config] Change Config Option CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE for s390x
+-      from yes to no
+-
+-  * Add Intel Comet Lake ethernet support (LP: #1848555)
+-    - SAUCE: e1000e: Add support for Comet Lake
+-
+-  * seccomp: add SECCOMP_USER_NOTIF_FLAG_CONTINUE    (LP: #1847744)
+-    - SAUCE: seccomp: add SECCOMP_USER_NOTIF_FLAG_CONTINUE
+-    - SAUCE: seccomp: test SECCOMP_USER_NOTIF_FLAG_CONTINUE
+-
+-  * drm/i915: Fix the issue of "azx_get_response timeout" for hdmi audio on ICL
+-    platforms (LP: #1847192)
+-    - SAUCE: drm/i915: Fix audio power up sequence for gen10+ display
+-    - SAUCE: drm/i915: extend audio CDCLK>=2*BCLK constraint to more platforms
+-
+-  * PM / hibernate: fix potential memory corruption (LP: #1847118)
+-    - SAUCE: PM / hibernate: memory_bm_find_bit -- tighten node optimisation
+-
+-  * [regression] NoNewPrivileges incompatible with Apparmor (LP: #1844186)
+-    - SAUCE: apparmor: fix nnp subset test for unconfined
+-
+-  * overlayfs: allow with shiftfs as underlay (LP: #1846272)
+-    - SAUCE: overlayfs: allow with shiftfs as underlay
+-
+-  * eoan: alsa/sof: Enable SOF_HDA link and codec (LP: #1848490)
+-    - [Config] Fix SOF Kconfig options
+-
+-  * linux won't build when new virtualbox version is present on the archive
+-    (LP: #1848788)
+-    - [Packaging]: download virtualbox from sources
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update annotations from configs
+-    - [Config] updateconfigs after rebase to 5.4-rc5
+-    - update dkms package versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc5
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 29 Oct 2019 12:01:27 -0500
+-
+-linux (5.4.0-2.3) eoan; urgency=medium
+-
+-  * Add installer support for iwlmvm adapters (LP: #1848236)
+-    - d-i: Add iwlmvm to nic-modules
+-
+-  * shiftfs: rework how shiftfs opens files (LP: #1846265)
+-    - SAUCE: shiftfs: rework how shiftfs opens files
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.4-rc4
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc4
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 21 Oct 2019 17:31:26 +0200
+-
+-linux (5.4.0-1.2) eoan; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.4-rc3
+-    - [Config] add flexfb, fbtft_device and rio500 to modules.ignore
+-    - [Config] amd64: ignore fbtft and all dependent modules
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc3
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 14 Oct 2019 19:48:52 +0200
+-
+-linux (5.4.0-0.1) eoan; urgency=medium
+-
 -  * Enable the Dragonboards out of Eoan/master arm64 kernel (LP: #1846704)
 -    - [Packaging] arm64: snapdragon: introduce a snapdragon flavour
 -    - [Packaging] arm64: snapdragon: switch kernel format to Image
@@ -89,9 +668,59 @@ index 45bb11c..8692f438 100644
 -    - [Config] arm64: snapdragon: CONFIG_INPUT_PM8941_PWRKEY=y
 -    - [Config] arm64: snapdragon: CONFIG_KEYBOARD_GPIO=y
 -    - [Config] arm64: snapdragon: CONFIG_RTC_DRV_PM8XXX=y
-+ -- Mainline Build <kernel@kathleen>  Thu, 09 Jan 2020 10:38:28 +0000
- 
-- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 08 Oct 2019 11:21:54 -0500
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] updateconfigs after rebase to 5.4-rc2
+-    - SAUCE: (lockdown) Make get_cert_list() not complain about cert lists that
+-      aren't present.
+-    - SAUCE: (lockdown) Add efi_status_to_str() and rework efi_status_to_err().
+-    - SAUCE: (lockdown) Make get_cert_list() use efi_status_to_str() to print
+-      error messages.
+-    - SAUCE: (lockdown) security: lockdown: expose a hook to lock the kernel down
+-    - SAUCE: (lockdown) efi: Add an EFI_SECURE_BOOT flag to indicate secure boot
+-      mode
+-    - SAUCE: (lockdown) efi: Lock down the kernel if booted in secure boot mode
+-    - SAUCE: (lockdown) Add a SysRq option to lift kernel lockdown
+-    - SAUCE: (lockdown) KEYS: Make use of platform keyring for module signature
+-      verify
+-    - SAUCE: (lockdown) arm64: Allow locking down the kernel under EFI secure boot
+-    - SAUCE: (lockdown) security: lockdown: Make
+-      CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT more generic
+-    - SAUCE: (lockdown) s390/ipl: lockdown kernel when booted secure
+-    - [Config] Enable lockdown under secure boot
+-    - SAUCE: import aufs driver
+-    - SAUCE: aufs: rwsem owner changed to atmoic_long_t in 5.3
+-    - SAUCE: aufs: add "WITH Linux-syscall-note" to SPDX tag of uapi headers
+-    - [Config] enable aufs
+-    - update dkms package versions
+-    - [Config] disable zfs
+-    - [Config] disable nvidia dkms build
+-    - [Config] disable virtualbox dkms build
+-    - [Debian] Generate stub reconstruct for -rc kernels
+-    - Revert "UBUNTU: SAUCE: (namespace) block_dev: Forbid unprivileged mounting
+-      when device is opened for writing"
+-    - Revert "UBUNTU: SAUCE: (namespace) ext4: Add module parameter to enable user
+-      namespace mounts"
+-    - Revert "UBUNTU: SAUCE: (namespace) ext4: Add support for unprivileged mounts
+-      from user namespaces"
+-    - Revert "UBUNTU: SAUCE: (namespace) mtd: Check permissions towards mtd block
+-      device inode when mounting"
+-    - Revert "UBUNTU: SAUCE: (namespace) block_dev: Check permissions towards
+-      block device inode when mounting"
+-    - Revert "UBUNTU: SAUCE: (namespace) block_dev: Support checking inode
+-      permissions in lookup_bdev()"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.4-rc2
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Fri, 11 Oct 2019 16:42:41 -0500
+-
+-linux (5.4.0-0.0) eoan; urgency=medium
+-
+-  * Dummy entry.
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Tue, 08 Oct 2019 09:59:00 -0500
 -
 -linux (5.3.0-17.18) eoan; urgency=medium
 -
