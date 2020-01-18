@@ -1,6 +1,6 @@
-From 8d44913c8e122e9f3e49c262eb6f0f423ac0d411 Mon Sep 17 00:00:00 2001
+From cc1e8428435bbb7f28ba1e390356e2ca92f31b50 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 14 Jan 2020 15:31:51 -0500
+Date: Fri, 17 Jan 2020 14:31:54 -0500
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 8944 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 766584a..b48c053 100644
+index 766584a..6702468 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,8947 +1,6 @@
 -linux-5.5 (5.5.0-5.6) focal; urgency=medium
-+linux (5.4.12-050412.202001141531) unstable; urgency=low
++linux (5.4.13-050413.202001171431) unstable; urgency=low
  
 -  * Miscellaneous Ubuntu changes
 -    - update dkms package versions
-+  Mainline build at commit: v5.4.12
++  Mainline build at commit: v5.4.13
  
 -  [ Upstream Kernel Changes ]
-+ -- Mainline Build <kernel@gloin>  Tue, 14 Jan 2020 15:31:51 -0500
++ -- Mainline Build <kernel@gloin>  Fri, 17 Jan 2020 14:31:53 -0500
  
 -  * Rebase to v5.5-rc6
 -
