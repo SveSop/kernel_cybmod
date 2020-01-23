@@ -1,13 +1,13 @@
-From 9783ca8e242e8efbee3dcf6e51499671c5febb8e Mon Sep 17 00:00:00 2001
+From a98c376773ae6b232af8157622b74a9f94cd9f49 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 23 Dec 2019 16:44:50 +0100
-Subject: [PATCH] AUFS 20191223
+Date: Mon, 20 Jan 2020 14:21:46 +0100
+Subject: [PATCH] AUFS 20200120
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  Documentation/ABI/testing/debugfs-aufs        |   55 +
  Documentation/ABI/testing/sysfs-aufs          |   31 +
- Documentation/filesystems/aufs/README         |  400 ++++
+ Documentation/filesystems/aufs/README         |  401 ++++
  .../filesystems/aufs/design/01intro.txt       |  171 ++
  .../filesystems/aufs/design/02struct.txt      |  258 +++
  .../filesystems/aufs/design/03atomic_open.txt |   85 +
@@ -60,8 +60,8 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  fs/aufs/hbl.h                                 |   65 +
  fs/aufs/hfsnotify.c                           |  288 +++
  fs/aufs/hfsplus.c                             |   60 +
- fs/aufs/hnotify.c                             |  721 ++++++
- fs/aufs/i_op.c                                | 1505 +++++++++++++
+ fs/aufs/hnotify.c                             |  715 ++++++
+ fs/aufs/i_op.c                                | 1498 +++++++++++++
  fs/aufs/i_op_add.c                            |  936 ++++++++
  fs/aufs/i_op_del.c                            |  513 +++++
  fs/aufs/i_op_ren.c                            | 1250 +++++++++++
@@ -90,14 +90,14 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  fs/aufs/sysaufs.c                             |   93 +
  fs/aufs/sysaufs.h                             |  102 +
  fs/aufs/sysfs.c                               |  374 ++++
- fs/aufs/sysrq.c                               |  160 ++
+ fs/aufs/sysrq.c                               |  149 ++
  fs/aufs/vdir.c                                |  896 ++++++++
  fs/aufs/vfsub.c                               |  902 ++++++++
  fs/aufs/vfsub.h                               |  354 +++
  fs/aufs/wbr_policy.c                          |  830 +++++++
  fs/aufs/whout.c                               | 1062 +++++++++
  fs/aufs/whout.h                               |   86 +
- fs/aufs/wkq.c                                 |  392 ++++
+ fs/aufs/wkq.c                                 |  372 ++++
  fs/aufs/wkq.h                                 |   89 +
  fs/aufs/xattr.c                               |  356 +++
  fs/aufs/xino.c                                | 1965 +++++++++++++++++
@@ -134,7 +134,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  mm/prfile.c                                   |   86 +
  security/device_cgroup.c                      |    1 +
  security/security.c                           |    8 +
- 129 files changed, 38200 insertions(+), 33 deletions(-)
+ 129 files changed, 38157 insertions(+), 33 deletions(-)
  create mode 100644 Documentation/ABI/testing/debugfs-aufs
  create mode 100644 Documentation/ABI/testing/sysfs-aufs
  create mode 100644 Documentation/filesystems/aufs/README
@@ -329,10 +329,10 @@ index 000000000..82f951849
 +		will be empty. About XINO files, see the aufs manual.
 diff --git a/Documentation/filesystems/aufs/README b/Documentation/filesystems/aufs/README
 new file mode 100644
-index 000000000..658beb33c
+index 000000000..3e655d357
 --- /dev/null
 +++ b/Documentation/filesystems/aufs/README
-@@ -0,0 +1,400 @@
+@@ -0,0 +1,401 @@
 +
 +Aufs5 -- advanced multi layered unification filesystem version 5.x
 +http://aufs.sf.net
@@ -658,6 +658,7 @@ index 000000000..658beb33c
 +  system, instead of the date you downloaded.
 +- configuration (define/undefine CONFIG_AUFS_xxx)
 +- kernel configuration or /proc/config.gz (if you have it)
++- LSM (linux security module, if you are using)
 +- behaviour which you think to be incorrect
 +- actual operation, reproducible one is better
 +- mailto: aufs-users at lists.sourceforge.net
@@ -2161,7 +2162,7 @@ index 000000000..13e8583f2
 +Currently this approach is applied to address_space_operations for
 +regular files only.
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d3a5c54a..f33398b47 100644
+index 4f7ac27d8..99eb7ec3c 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -2832,6 +2832,19 @@ F:	include/linux/audit.h
@@ -2344,7 +2345,7 @@ index ef6e25185..8ca95c817 100644
  }
  
 diff --git a/drivers/block/loop.h b/drivers/block/loop.h
-index af75a5ee4..1e6ee5a4f 100644
+index af75a5ee4..1d847cb19 100644
 --- a/drivers/block/loop.h
 +++ b/drivers/block/loop.h
 @@ -46,7 +46,7 @@ struct loop_device {
@@ -2352,7 +2353,7 @@ index af75a5ee4..1e6ee5a4f 100644
  				 unsigned long arg); 
  
 -	struct file *	lo_backing_file;
-+	struct file *	lo_backing_file, *lo_backing_virt_file;
++	struct file	*lo_backing_file, *lo_backing_virt_file;
  	struct block_device *lo_device;
  	void		*key_data; 
  
@@ -10673,7 +10674,7 @@ index 000000000..5c8065d25
 +#endif /* __AUFS_DIR_H__ */
 diff --git a/fs/aufs/dirren.c b/fs/aufs/dirren.c
 new file mode 100644
-index 000000000..df8a89c97
+index 000000000..2cccba009
 --- /dev/null
 +++ b/fs/aufs/dirren.c
 @@ -0,0 +1,1316 @@
@@ -10760,7 +10761,7 @@ index 000000000..df8a89c97
 +	found = 0;
 +	idx = au_dr_ihash(ino);
 +	hbl = dr->dr_h_ino + idx;
-+#if 0
++#if 0 /* debug print */
 +	{
 +		struct hlist_bl_node *tmp;
 +
@@ -13441,7 +13442,7 @@ index 000000000..1da2ca0a9
 +}
 diff --git a/fs/aufs/f_op.c b/fs/aufs/f_op.c
 new file mode 100644
-index 000000000..e3376c87d
+index 000000000..367a88f1c
 --- /dev/null
 +++ b/fs/aufs/f_op.c
 @@ -0,0 +1,819 @@
@@ -13777,7 +13778,7 @@ index 000000000..e3376c87d
 +	if (unlikely(err))
 +		goto out;
 +
-+	err = -ENOSYS;
++	err = -ENOSYS;	/* the branch doesn't have its ->(read|write)_iter() */
 +	iter = NULL;
 +	if (rw == MAY_READ)
 +		iter = h_file->f_op->read_iter;
@@ -14221,7 +14222,7 @@ index 000000000..e3376c87d
 +/* ---------------------------------------------------------------------- */
 +
 +/* no one supports this operation, currently */
-+#if 0
++#if 0 /* reserved for future use */
 +static ssize_t aufs_sendpage(struct file *file, struct page *page, int offset,
 +			     size_t len, loff_t *pos, int more)
 +{
@@ -14257,7 +14258,7 @@ index 000000000..e3376c87d
 +	.setfl		= aufs_setfl,
 +	.splice_write	= aufs_splice_write,
 +	.splice_read	= aufs_splice_read,
-+#if 0
++#if 0 /* reserved for future use */
 +	.aio_splice_write = aufs_aio_splice_write,
 +	.aio_splice_read  = aufs_aio_splice_read,
 +#endif
@@ -16909,10 +16910,10 @@ index 000000000..3bd869a69
 +}
 diff --git a/fs/aufs/hnotify.c b/fs/aufs/hnotify.c
 new file mode 100644
-index 000000000..2e7c2cdb8
+index 000000000..3bee51ad8
 --- /dev/null
 +++ b/fs/aufs/hnotify.c
-@@ -0,0 +1,721 @@
+@@ -0,0 +1,715 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2019 Junjiro R. Okajima
@@ -17097,12 +17098,6 @@ index 000000000..2e7c2cdb8
 +
 +out_dpages:
 +	au_dpages_free(&dpages);
-+
-+#if 0
-+	/* discard children */
-+	dentry_unhash(dentry);
-+	dput(dentry);
-+#endif
 +out:
 +	return err;
 +}
@@ -17636,10 +17631,10 @@ index 000000000..2e7c2cdb8
 +}
 diff --git a/fs/aufs/i_op.c b/fs/aufs/i_op.c
 new file mode 100644
-index 000000000..ef1e08c7c
+index 000000000..31ef66f03
 --- /dev/null
 +++ b/fs/aufs/i_op.c
-@@ -0,0 +1,1505 @@
+@@ -0,0 +1,1498 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2019 Junjiro R. Okajima
@@ -17714,19 +17709,6 @@ index 000000000..ef1e08c7c
 +	if (!err)
 +		err = security_inode_permission(h_inode, mask);
 +
-+#if 0
-+	if (!err) {
-+		/* todo: do we need to call ima_path_check()? */
-+		struct path h_path = {
-+			.dentry	=
-+			.mnt	= h_mnt
-+		};
-+		err = ima_path_check(&h_path,
-+				     mask & (MAY_READ | MAY_WRITE | MAY_EXEC),
-+				     IMA_COUNT_LEAVE);
-+	}
-+#endif
-+
 +out:
 +	return err;
 +}
@@ -17748,7 +17730,13 @@ index 000000000..ef1e08c7c
 +	sb = inode->i_sb;
 +	si_read_lock(sb, AuLock_FLUSH);
 +	ii_read_lock_child(inode);
-+#if 0
++#if 0 /* reserved for future use */
++	/*
++	 * This test may be rather 'too much' since the test is essentially done
++	 * in the aufs_lookup().  Theoretically it is possible that the inode
++	 * generation doesn't match to the superblock's here.  But it isn't a
++	 * big deal I suppose.
++	 */
 +	err = au_iigen_test(inode, au_sigen(sb));
 +	if (unlikely(err))
 +		goto out;
@@ -17866,7 +17854,7 @@ index 000000000..ef1e08c7c
 +	if (inode)
 +		atomic_inc(&inode->i_count);
 +	ret = d_splice_alias(inode, dentry);
-+#if 0
++#if 0 /* reserved for future use */
 +	if (unlikely(d_need_lookup(dentry))) {
 +		spin_lock(&dentry->d_lock);
 +		dentry->d_flags &= ~DCACHE_NEED_LOOKUP;
@@ -20608,7 +20596,7 @@ index 000000000..1c459dbea
 +}
 diff --git a/fs/aufs/i_op_ren.c b/fs/aufs/i_op_ren.c
 new file mode 100644
-index 000000000..91aa66594
+index 000000000..d0fa03976
 --- /dev/null
 +++ b/fs/aufs/i_op_ren.c
 @@ -0,0 +1,1250 @@
@@ -21029,7 +21017,7 @@ index 000000000..91aa66594
 +	}
 +
 +	BUG_ON(d_is_positive(a->dst_h_dentry) && a->src_btop != a->btgt);
-+#if 0
++#if 0 /* debugging */
 +	BUG_ON(!au_ftest_ren(a->auren_flags, DIRREN)
 +	       && d_is_positive(a->dst_h_dentry)
 +	       && a->src_btop != a->btgt);
@@ -22156,7 +22144,7 @@ index 000000000..098fd1150
 +}
 diff --git a/fs/aufs/inode.c b/fs/aufs/inode.c
 new file mode 100644
-index 000000000..985377d9b
+index 000000000..8d53cd08b
 --- /dev/null
 +++ b/fs/aufs/inode.c
 @@ -0,0 +1,529 @@
@@ -22374,7 +22362,7 @@ index 000000000..985377d9b
 +	struct dentry *h_dentry;
 +	struct inode *h_inode;
 +	struct au_iinfo *iinfo;
-+	struct inode_operations *iop;
++	const struct inode_operations *iop;
 +
 +	IiMustWriteLock(inode);
 +
@@ -22691,7 +22679,7 @@ index 000000000..985377d9b
 +}
 diff --git a/fs/aufs/inode.h b/fs/aufs/inode.h
 new file mode 100644
-index 000000000..e387ef16e
+index 000000000..b136bb6ef
 --- /dev/null
 +++ b/fs/aufs/inode.h
 @@ -0,0 +1,698 @@
@@ -22854,7 +22842,7 @@ index 000000000..e387ef16e
 +	AuIop_OTHER,
 +	AuIop_Last
 +};
-+extern struct inode_operations aufs_iop[AuIop_Last],
++extern struct inode_operations aufs_iop[AuIop_Last], /* not const */
 +	aufs_iop_nogetattr[AuIop_Last];
 +
 +/* au_wr_dir flags */
@@ -25248,7 +25236,7 @@ index 000000000..cbac849ea
 +}
 diff --git a/fs/aufs/opts.c b/fs/aufs/opts.c
 new file mode 100644
-index 000000000..77e17d7b3
+index 000000000..6a2d0900c
 --- /dev/null
 +++ b/fs/aufs/opts.c
 @@ -0,0 +1,1880 @@
@@ -26881,7 +26869,7 @@ index 000000000..77e17d7b3
 +		if ((br->br_perm & AuBrAttr_ICEX)
 +		    && !h_dir->i_op->listxattr)
 +			br->br_perm &= ~AuBrAttr_ICEX;
-+#if 0
++#if 0 /* untested */
 +		if ((br->br_perm & AuBrAttr_ICEX_SEC)
 +		    && (au_br_sb(br)->s_flags & SB_NOSEC))
 +			br->br_perm &= ~AuBrAttr_ICEX_SEC;
@@ -29021,7 +29009,7 @@ index 000000000..500a920b4
 +}
 diff --git a/fs/aufs/super.c b/fs/aufs/super.c
 new file mode 100644
-index 000000000..7e56cf5cc
+index 000000000..b4b9c56a5
 --- /dev/null
 +++ b/fs/aufs/super.c
 @@ -0,0 +1,1050 @@
@@ -29273,7 +29261,7 @@ index 000000000..7e56cf5cc
 +	sb = dentry->d_sb;
 +	if (sb->s_flags & SB_POSIXACL)
 +		seq_puts(m, ",acl");
-+#if 0
++#if 0 /* reserved for future use */
 +	if (sb->s_flags & SB_I_VERSION)
 +		seq_puts(m, ",i_version");
 +#endif
@@ -30077,7 +30065,7 @@ index 000000000..7e56cf5cc
 +};
 diff --git a/fs/aufs/super.h b/fs/aufs/super.h
 new file mode 100644
-index 000000000..37f02bb21
+index 000000000..6a675b727
 --- /dev/null
 +++ b/fs/aufs/super.h
 @@ -0,0 +1,589 @@
@@ -30262,7 +30250,7 @@ index 000000000..37f02bb21
 +	struct hlist_bl_head	si_files;
 +
 +	/* with/without getattr, brother of sb->s_d_op */
-+	struct inode_operations *si_iop_array;
++	const struct inode_operations *si_iop_array;
 +
 +	/*
 +	 * sysfs and lifetime management.
@@ -31259,10 +31247,10 @@ index 000000000..eda987628
 +}
 diff --git a/fs/aufs/sysrq.c b/fs/aufs/sysrq.c
 new file mode 100644
-index 000000000..db10ec528
+index 000000000..0a4d7f41b
 --- /dev/null
 +++ b/fs/aufs/sysrq.c
-@@ -0,0 +1,160 @@
+@@ -0,0 +1,149 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2019 Junjiro R. Okajima
@@ -31299,6 +31287,7 @@ index 000000000..db10ec528
 +	struct hlist_bl_head *files;
 +	struct hlist_bl_node *pos;
 +	struct au_finfo *finfo;
++	struct inode *i;
 +
 +	plevel = au_plevel;
 +	au_plevel = KERN_WARNING;
@@ -31311,14 +31300,7 @@ index 000000000..db10ec528
 +	pr("superblock\n");
 +	au_dpri_sb(sb);
 +
-+#if 0
-+	pr("root dentry\n");
-+	au_dpri_dentry(sb->s_root);
-+	pr("root inode\n");
-+	au_dpri_inode(d_inode(sb->s_root));
-+#endif
-+
-+#if 0
++#if 0 /* reserved */
 +	do {
 +		int err, i, j, ndentry;
 +		struct au_dcsub_pages dpages;
@@ -31339,21 +31321,16 @@ index 000000000..db10ec528
 +	} while (0);
 +#endif
 +
-+#if 1
-+	{
-+		struct inode *i;
-+
-+		pr("isolated inode\n");
-+		spin_lock(&sb->s_inode_list_lock);
-+		list_for_each_entry(i, &sb->s_inodes, i_sb_list) {
-+			spin_lock(&i->i_lock);
-+			if (1 || hlist_empty(&i->i_dentry))
-+				au_dpri_inode(i);
-+			spin_unlock(&i->i_lock);
-+		}
-+		spin_unlock(&sb->s_inode_list_lock);
++	pr("isolated inode\n");
++	spin_lock(&sb->s_inode_list_lock);
++	list_for_each_entry(i, &sb->s_inodes, i_sb_list) {
++		spin_lock(&i->i_lock);
++		if (hlist_empty(&i->i_dentry))
++			au_dpri_inode(i);
++		spin_unlock(&i->i_lock);
 +	}
-+#endif
++	spin_unlock(&sb->s_inode_list_lock);
++
 +	pr("files\n");
 +	files = &au_sbi(sb)->si_files;
 +	hlist_bl_lock(files);
@@ -31425,7 +31402,7 @@ index 000000000..db10ec528
 +}
 diff --git a/fs/aufs/vdir.c b/fs/aufs/vdir.c
 new file mode 100644
-index 000000000..dc768f5d9
+index 000000000..9ba228941
 --- /dev/null
 +++ b/fs/aufs/vdir.c
 @@ -0,0 +1,896 @@
@@ -31526,7 +31503,7 @@ index 000000000..dc768f5d9
 +
 +static void nhash_count(struct hlist_head *head)
 +{
-+#if 0
++#if 0 /* debugging */
 +	unsigned long n;
 +	struct hlist_node *pos;
 +
@@ -34431,7 +34408,7 @@ index 000000000..64954145c
 +};
 diff --git a/fs/aufs/whout.c b/fs/aufs/whout.c
 new file mode 100644
-index 000000000..6c9c85015
+index 000000000..5afb430b0
 --- /dev/null
 +++ b/fs/aufs/whout.c
 @@ -0,0 +1,1062 @@
@@ -34742,7 +34719,7 @@ index 000000000..6c9c85015
 +
 +	pr_err("%pd (%s) doesn't support link(2), use noplink and rw+nolwh\n",
 +	       h_root, au_sbtype(h_root->d_sb));
-+	return -ENOSYS;
++	return -ENOSYS;	/* the branch doesn't have its ->link() */
 +}
 +
 +/* todo: should this mkdir be done in /sbin/mount.aufs helper? */
@@ -35591,10 +35568,10 @@ index 000000000..06f69b24e
 +#endif /* __AUFS_WHOUT_H__ */
 diff --git a/fs/aufs/wkq.c b/fs/aufs/wkq.c
 new file mode 100644
-index 000000000..b0dd8df4e
+index 000000000..1ce0e7b80
 --- /dev/null
 +++ b/fs/aufs/wkq.c
-@@ -0,0 +1,392 @@
+@@ -0,0 +1,372 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2019 Junjiro R. Okajima
@@ -35750,8 +35727,8 @@ index 000000000..b0dd8df4e
 +		goto out;
 +
 +	err = 0;
-+#if 0
-+	if (0 && au_debug_test()) /* left for debugging */
++#if 0 /* left for debugging */
++	if (0 && au_debug_test())
 +		lockdep_print_held_locks(curr);
 +#endif
 +	held_locks = curr->held_locks;
@@ -35828,7 +35805,6 @@ index 000000000..b0dd8df4e
 +/*
 + * Since struct completion is large, try allocating it dynamically.
 + */
-+#if 1 /* defined(CONFIG_4KSTACKS) || defined(AuTest4KSTACKS) */
 +#define AuWkqCompDeclare(name)	struct completion *comp = NULL
 +
 +static int au_wkq_comp_alloc(struct au_wkinfo *wkinfo, struct completion **comp)
@@ -35846,25 +35822,6 @@ index 000000000..b0dd8df4e
 +{
 +	au_kfree_rcu(comp);
 +}
-+
-+#else
-+
-+/* no braces */
-+#define AuWkqCompDeclare(name) \
-+	DECLARE_COMPLETION_ONSTACK(_ ## name); \
-+	struct completion *comp = &_ ## name
-+
-+static int au_wkq_comp_alloc(struct au_wkinfo *wkinfo, struct completion **comp)
-+{
-+	wkinfo->comp = *comp;
-+	return 0;
-+}
-+
-+static void au_wkq_comp_free(struct completion *comp __maybe_unused)
-+{
-+	/* empty */
-+}
-+#endif /* 4KSTACKS */
 +
 +static void au_wkq_run(struct au_wkinfo *wkinfo)
 +{
@@ -36446,7 +36403,7 @@ index 000000000..8e56b15c5
 +}
 diff --git a/fs/aufs/xino.c b/fs/aufs/xino.c
 new file mode 100644
-index 000000000..35ea33469
+index 000000000..0cbf35ca2
 --- /dev/null
 +++ b/fs/aufs/xino.c
 @@ -0,0 +1,1965 @@
@@ -37807,7 +37764,7 @@ index 000000000..35ea33469
 +	if (unlikely(ul)) {
 +		pr_warn("xi_writing %lu\n", ul);
 +		hlist_bl_lock(hbl);
-+		hlist_bl_for_each_entry_safe (p, pos, n, hbl, node) {
++		hlist_bl_for_each_entry_safe(p, pos, n, hbl, node) {
 +			hlist_bl_del(&p->node);
 +			au_kfree_rcu(p);
 +		}
@@ -38457,7 +38414,7 @@ index c27231234..2b5f96e64 100644
  #ifdef CONFIG_USELIB
  /*
 diff --git a/fs/fcntl.c b/fs/fcntl.c
-index 3d40771e8..d4ad34463 100644
+index 3d40771e8..0468c8451 100644
 --- a/fs/fcntl.c
 +++ b/fs/fcntl.c
 @@ -32,7 +32,7 @@
@@ -38465,7 +38422,7 @@ index 3d40771e8..d4ad34463 100644
  #define SETFL_MASK (O_APPEND | O_NONBLOCK | O_NDELAY | O_DIRECT | O_NOATIME)
  
 -static int setfl(int fd, struct file * filp, unsigned long arg)
-+int setfl(int fd, struct file * filp, unsigned long arg)
++int setfl(int fd, struct file *filp, unsigned long arg)
  {
  	struct inode * inode = file_inode(filp);
  	int error = 0;
@@ -38507,10 +38464,10 @@ index 30d55c9a1..34b9bbf4c 100644
  void __init files_init(void)
  {
 diff --git a/fs/inode.c b/fs/inode.c
-index fef457a42..5be87f2d3 100644
+index 96d62d976..217169541 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
-@@ -1673,7 +1673,7 @@ EXPORT_SYMBOL(generic_update_time);
+@@ -1680,7 +1680,7 @@ EXPORT_SYMBOL(generic_update_time);
   * This does the actual work of updating an inodes time or version.  Must have
   * had called mnt_want_write() before calling this.
   */
@@ -38519,7 +38476,7 @@ index fef457a42..5be87f2d3 100644
  {
  	int (*update_time)(struct inode *, struct timespec64 *, int);
  
-@@ -1682,6 +1682,7 @@ static int update_time(struct inode *inode, struct timespec64 *time, int flags)
+@@ -1689,6 +1689,7 @@ static int update_time(struct inode *inode, struct timespec64 *time, int flags)
  
  	return update_time(inode, time, flags);
  }
@@ -38586,7 +38543,7 @@ index b62f5c092..89af4b9c7 100644
  long vfs_truncate(const struct path *path, loff_t length)
  {
 diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 51c9346a6..fd342b2ed 100644
+index ebea9501a..dc7edc5f7 100644
 --- a/fs/proc/base.c
 +++ b/fs/proc/base.c
 @@ -2037,7 +2037,7 @@ static int map_files_get_link(struct dentry *dentry, struct path *path)
@@ -38656,7 +38613,7 @@ index 7907e6419..d17209cf5 100644
  		ino = inode->i_ino;
  		pgoff = (loff_t)vma->vm_pgoff << PAGE_SHIFT;
 diff --git a/fs/read_write.c b/fs/read_write.c
-index 5bbf587f5..5b2dbddb0 100644
+index 5bbf587f5..eb0e2c6eb 100644
 --- a/fs/read_write.c
 +++ b/fs/read_write.c
 @@ -468,6 +468,7 @@ ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
@@ -38679,7 +38636,7 @@ index 5bbf587f5..5b2dbddb0 100644
 +		return fop->read;
 +	if (fop->read_iter)
 +		return new_sync_read;
-+	return ERR_PTR(-ENOSYS);
++	return ERR_PTR(-ENOSYS); /* doesn't have ->read(|_iter)() op */
 +}
 +EXPORT_SYMBOL_GPL(vfs_readf);
 +
@@ -38691,7 +38648,7 @@ index 5bbf587f5..5b2dbddb0 100644
 +		return fop->write;
 +	if (fop->write_iter)
 +		return new_sync_write;
-+	return ERR_PTR(-ENOSYS);
++	return ERR_PTR(-ENOSYS); /* doesn't have ->write(|_iter)() op */
 +}
 +EXPORT_SYMBOL_GPL(vfs_writef);
 +
@@ -38781,14 +38738,14 @@ index 90dd78f0e..40b01dd1b 100644
  ssize_t
  __vfs_getxattr(struct dentry *dentry, struct inode *inode, const char *name,
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 0b4d8fc79..406686b41 100644
+index 0b4d8fc79..374d40845 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -1349,6 +1349,7 @@ extern void fasync_free(struct fasync_struct *);
  /* can be called from interrupts */
  extern void kill_fasync(struct fasync_struct **, int, int);
  
-+extern int setfl(int fd, struct file * filp, unsigned long arg);
++extern int setfl(int fd, struct file *filp, unsigned long arg);
  extern void __f_setown(struct file *filp, struct pid *, enum pid_type, int force);
  extern int f_setown(struct file *filp, unsigned long arg, int force);
  extern void f_delown(struct file *filp);
@@ -38817,7 +38774,7 @@ index 0b4d8fc79..406686b41 100644
  				  struct shrink_control *);
  	long (*free_cached_objects)(struct super_block *,
  				    struct shrink_control *);
-+#if defined(CONFIG_BLK_DEV_LOOP) ||  defined(CONFIG_BLK_DEV_LOOP_MODULE)
++#if IS_ENABLED(CONFIG_BLK_DEV_LOOP) || IS_ENABLED(CONFIG_BLK_DEV_LOOP_MODULE)
 +	/* and aufs */
 +	struct file *(*real_loop)(struct file *);
 +#endif
@@ -38950,7 +38907,7 @@ index 74b4911ac..19789fbea 100644
  #endif
 diff --git a/include/uapi/linux/aufs_type.h b/include/uapi/linux/aufs_type.h
 new file mode 100644
-index 000000000..05b76a1c9
+index 000000000..b946af22e
 --- /dev/null
 +++ b/include/uapi/linux/aufs_type.h
 @@ -0,0 +1,452 @@
@@ -38989,14 +38946,14 @@ index 000000000..05b76a1c9
 +#define pr_fmt(fmt) \
 +		AUFS_NAME " %s:%d:%.*s[%d]: " fmt, __func__, __LINE__, \
 +		(int)sizeof(current->comm), current->comm, current->pid
++#include <linux/limits.h>
 +#else
 +#include <stdint.h>
 +#include <sys/types.h>
++#include <limits.h>
 +#endif /* __KERNEL__ */
 +
-+#include <linux/limits.h>
-+
-+#define AUFS_VERSION	"5.4-20191223"
++#define AUFS_VERSION	"5.4.3-20200120"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
@@ -39407,7 +39364,7 @@ index 000000000..05b76a1c9
 +
 +#endif /* __AUFS_TYPE_H__ */
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 6cabc1243..53a5a521a 100644
+index 755d8160e..9f4e472d9 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -562,7 +562,7 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
@@ -39787,5 +39744,5 @@ index 1bc000f83..306f2c9f7 100644
  int security_file_alloc(struct file *file)
  {
 -- 
-2.17.1
+2.25.0.2.g232378479e.dirty
 
