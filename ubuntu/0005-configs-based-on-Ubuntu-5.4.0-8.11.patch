@@ -1,25 +1,25 @@
-From a5bf63a642f3cdda6003030a0c1a8b352e83dc57 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 17 Jan 2020 14:32:50 -0500
+From 04af16bd98c9998ae0a606c12b80b641835c2906 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 23 Jan 2020 08:33:30 +0000
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.4.0-8.11)
 
 ---
- debian.master/config/amd64/config.common.amd64     |  16 +-
- debian.master/config/amd64/config.flavour.generic  |   2 -
- .../config/amd64/config.flavour.lowlatency         |   2 -
- debian.master/config/annotations                   |  16 +-
- debian.master/config/arm64/config.common.arm64     |  12 +-
- debian.master/config/armhf/config.common.armhf     |   9 +-
- debian.master/config/config.common.ubuntu          | 249 ++++-----------------
- debian.master/config/i386/config.common.i386       |   9 +-
- debian.master/config/i386/config.flavour.generic   |   1 -
- .../config/i386/config.flavour.lowlatency          |   1 -
- debian.master/config/ppc64el/config.common.ppc64el |   8 +-
- debian.master/config/s390x/config.common.s390x     |   8 +-
- 12 files changed, 78 insertions(+), 255 deletions(-)
+ .../config/amd64/config.common.amd64          |  16 +-
+ .../config/amd64/config.flavour.generic       |   2 -
+ .../config/amd64/config.flavour.lowlatency    |   2 -
+ debian.master/config/annotations              |  40 ++-
+ .../config/arm64/config.common.arm64          |  12 +-
+ .../config/armhf/config.common.armhf          |   9 +-
+ debian.master/config/config.common.ubuntu     | 264 ++++--------------
+ debian.master/config/i386/config.common.i386  |   9 +-
+ .../config/i386/config.flavour.generic        |   1 -
+ .../config/i386/config.flavour.lowlatency     |   1 -
+ .../config/ppc64el/config.common.ppc64el      |   8 +-
+ .../config/s390x/config.common.s390x          |   8 +-
+ 12 files changed, 95 insertions(+), 277 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 2bbd7db..795d8a1 100644
+index 2bbd7db15b75..795d8a150aaa 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -63,15 +63,14 @@ CONFIG_CAN=m
@@ -92,7 +92,7 @@ index 2bbd7db..795d8a1 100644
  CONFIG_ZIIRAVE_WATCHDOG=m
 +CONFIG_ZLIB_DEFLATE=y
 diff --git a/debian.master/config/amd64/config.flavour.generic b/debian.master/config/amd64/config.flavour.generic
-index 18a9a95..5938d9b 100644
+index 18a9a95b7995..5938d9ba3f6c 100644
 --- a/debian.master/config/amd64/config.flavour.generic
 +++ b/debian.master/config/amd64/config.flavour.generic
 @@ -4,8 +4,6 @@
@@ -105,7 +105,7 @@ index 18a9a95..5938d9b 100644
  CONFIG_PREEMPT_VOLUNTARY=y
 -CONFIG_SND_SOC_SOF_DEVELOPER_SUPPORT=y
 diff --git a/debian.master/config/amd64/config.flavour.lowlatency b/debian.master/config/amd64/config.flavour.lowlatency
-index 8d90b9b..42de09f 100644
+index 8d90b9bbc137..42de09fb0bff 100644
 --- a/debian.master/config/amd64/config.flavour.lowlatency
 +++ b/debian.master/config/amd64/config.flavour.lowlatency
 @@ -4,8 +4,6 @@
@@ -118,9 +118,27 @@ index 8d90b9b..42de09f 100644
  # CONFIG_PREEMPT_VOLUNTARY is not set
 -# CONFIG_SND_SOC_SOF_DEVELOPER_SUPPORT is not set
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index a0815ff..1243e8f 100644
+index cbc9a88336ad..1243e8f9ce22 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
+@@ -711,7 +711,8 @@ CONFIG_CONSOLE_TRANSLATIONS                     policy<{'amd64': 'y', 'arm64': '
+ CONFIG_VT_CONSOLE                               policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_VT_HW_CONSOLE_BINDING                    policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_UNIX98_PTYS                              policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_LEGACY_PTYS                              policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
++CONFIG_LEGACY_PTYS                              policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
++CONFIG_LEGACY_PTY_COUNT                         policy<{'amd64': '0', 'arm64': '0', 'armhf': '0', 'i386': '0', 'ppc64el': '0', 's390x': '0'}>
+ CONFIG_NOZOMI                                   policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'i386': 'm', 'ppc64el': 'm', 's390x': 'n'}>
+ CONFIG_N_GSM                                    policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'i386': 'm', 'ppc64el': 'm', 's390x': 'n'}>
+ CONFIG_TRACE_ROUTER                             policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'i386': 'm', 'ppc64el': 'm'}>
+@@ -720,7 +721,6 @@ CONFIG_PPC_EPAPR_HV_BYTECHAN                    policy<{'ppc64el': 'n'}>
+ CONFIG_NULL_TTY                                 policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'i386': 'm', 'ppc64el': 'm', 's390x': 'm'}>
+ CONFIG_LDISC_AUTOLOAD                           policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ #
+-CONFIG_LEGACY_PTYS                              mark<ENFORCED> note<LP#1855339>
+ CONFIG_N_GSM                                    note<LP#1404670>
+ 
+ # Menu: Device Drivers >> Character devices >> Enable TTY >> Non-standard serial port support
 @@ -6407,7 +6407,7 @@ CONFIG_PCIE_QCOM                                policy<{'arm64': 'y', 'armhf': '
  CONFIG_PCIE_ARMADA_8K                           policy<{'arm64': 'y', 'armhf': 'y'}>
  CONFIG_PCIE_KIRIN                               policy<{'arm64': 'y'}>
@@ -169,7 +187,68 @@ index a0815ff..1243e8f 100644
  CONFIG_VFIO_PCI_VGA                             policy<{'amd64': 'y', 'i386': 'y'}>
  CONFIG_VFIO_PCI_IGD                             policy<{'amd64': 'y', 'i386': 'y'}>
  CONFIG_VFIO_MDEV                                policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'i386': 'm', 'ppc64el': 'm', 's390x': 'm'}>
-@@ -12363,7 +12361,7 @@ CONFIG_MATH_EMULATION                           policy<{'i386': 'n'}>
+@@ -10284,7 +10282,7 @@ CONFIG_SWAP                                     policy<{'amd64': 'y', 'arm64': '
+ CONFIG_SYSVIPC                                  policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_POSIX_MQUEUE                             policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_CROSS_MEMORY_ATTACH                      policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_USELIB                                   policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
++CONFIG_USELIB                                   policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_AUDIT                                    policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_CPU_ISOLATION                            policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_IKCONFIG                                 policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+@@ -10311,7 +10309,6 @@ CONFIG_SHUFFLE_PAGE_ALLOCATOR                   policy<{'amd64': 'y', 'arm64': '
+ CONFIG_SLUB_CPU_PARTIAL                         policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_PROFILING                                policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ #
+-CONFIG_USELIB                                   mark<ENFORCED> note<LP:1855341>
+ CONFIG_SYSFS_DEPRECATED                         mark<ENFORCED> note<ensure nothing is using these deprecated interfaces>
+ CONFIG_COMPAT_BRK                               mark<ENFORCED> note<disables brk ASLR>
+ CONFIG_NUMA_BALANCING_DEFAULT_ENABLED           note<LP:1557690>
+@@ -10502,7 +10499,7 @@ CONFIG_PROVIDE_OHCI1394_DMA_INIT                policy<{'amd64': 'n', 'i386': 'n
+ CONFIG_MEMTEST                                  policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_BUG_ON_DATA_CORRUPTION                   policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_STRICT_DEVMEM                            policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_IO_STRICT_DEVMEM                         policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
++CONFIG_IO_STRICT_DEVMEM                         policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_PID_IN_CONTEXTIDR                        policy<{'arm64': 'n', 'armhf': 'n'}>
+ CONFIG_DEBUG_WX                                 policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y'}>
+ CONFIG_DEBUG_ALIGN_RODATA                       policy<{'arm64': 'n', 'armhf': 'y'}>
+@@ -10511,7 +10508,6 @@ CONFIG_EARLY_PRINTK                             policy<{'amd64': 'y', 'i386': 'y
+ CONFIG_PANIC_ON_OOPS                            note<keep working if at all possible>
+ CONFIG_BUG_ON_DATA_CORRUPTION                   flag<REVIEW>
+ CONFIG_STRICT_DEVMEM                            mark<ENFORCED>
+-CONFIG_IO_STRICT_DEVMEM                         mark<ENFORCED> note<LP:1855338>
+ 
+ # Menu: Kernel hacking >> Architecture: arm
+ CONFIG_DEBUG_USER                               policy<{'armhf': 'n'}>
+@@ -10618,21 +10614,17 @@ CONFIG_SCHED_STACK_END_CHECK                    policy<{'amd64': 'y', 'arm64': '
+ CONFIG_DEBUG_PREEMPT                            policy<{'amd64-lowlatency': 'n', 'i386-lowlatency': 'n'}>
+ CONFIG_DEBUG_KOBJECT                            policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_DEBUG_BUGVERBOSE                         policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_DEBUG_LIST                               policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
++CONFIG_DEBUG_LIST                               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_DEBUG_PLIST                              policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+-CONFIG_DEBUG_SG                                 policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_DEBUG_NOTIFIERS                          policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_DEBUG_CREDENTIALS                        policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'i386': 'y', 'ppc64el': 'y', 's390x': 'y'}>
++CONFIG_DEBUG_SG                                 policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
++CONFIG_DEBUG_NOTIFIERS                          policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
++CONFIG_DEBUG_CREDENTIALS                        policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_DEBUG_WQ_FORCE_RR_CPU                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_DEBUG_BLOCK_EXT_DEVT                     policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_CPU_HOTPLUG_STATE_CONTROL                policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_LATENCYTOP                               policy<{'amd64-generic': 'n', 'amd64-lowlatency': 'y', 'arm64': 'n', 'armhf': 'n', 'i386': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ #
+-CONFIG_DEBUG_LIST                               mark<ENFORCED> note<LP:1855334>
+-CONFIG_DEBUG_CREDENTIALS                        mark<ENFORCED> note<LP:1855335>
+-CONFIG_DEBUG_SG                                 mark<ENFORCED> note<LP:1855336>
+-CONFIG_DEBUG_NOTIFIERS                          mark<ENFORCED> note<LP:1855337>
+-CONFIG_LATENCYTOP                               mark<ENFORCED> note<https://lists.ubuntu.com/archives/kernel-team/2014-July/045006.html, LP#1655986>
++CONFIG_LATENCYTOP                               marl<ENFORCED> note<https://lists.ubuntu.com/archives/kernel-team/2014-July/045006.html, LP#1655986>
+ 
+ # Menu: Kernel hacking >> Kernel debugging >> Architecture: arm
+ CONFIG_ARM_PTDUMP_DEBUGFS                       policy<{'armhf': 'n'}>
+@@ -12369,7 +12361,7 @@ CONFIG_MATH_EMULATION                           policy<{'i386': 'n'}>
  CONFIG_CMDLINE_BOOL                             policy<{'amd64': 'n', 'i386': 'n', 'ppc64el': 'n'}>
  CONFIG_HIGHMEM                                  policy<{'armhf': 'y', 'i386': 'y'}>
  CONFIG_FORCE_MAX_ZONEORDER                      policy<{'arm64': '13', 'armhf-generic': '12', 'armhf-generic-lpae': '11', 'ppc64el': '9', 's390x': '9'}>
@@ -179,7 +258,7 @@ index a0815ff..1243e8f 100644
  CONFIG_RELOCATABLE                              flag<REVIEW>
  CONFIG_HOTPLUG_CPU                              flag<REVIEW>
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index bd4ebc1..2cc54be 100644
+index bd4ebc1f0a8c..2cc54be684a5 100644
 --- a/debian.master/config/arm64/config.common.arm64
 +++ b/debian.master/config/arm64/config.common.arm64
 @@ -59,7 +59,6 @@ CONFIG_BLK_DEV_SKD=m
@@ -266,7 +345,7 @@ index bd4ebc1..2cc54be 100644
  CONFIG_ZIIRAVE_WATCHDOG=m
 +CONFIG_ZLIB_DEFLATE=y
 diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index c9bf33e..5a3f45a 100644
+index c9bf33e629e1..5a3f45afbb4a 100644
 --- a/debian.master/config/armhf/config.common.armhf
 +++ b/debian.master/config/armhf/config.common.armhf
 @@ -66,12 +66,10 @@ CONFIG_COUNTER=m
@@ -336,7 +415,7 @@ index c9bf33e..5a3f45a 100644
  CONFIG_ZIIRAVE_WATCHDOG=m
 +CONFIG_ZLIB_DEFLATE=y
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 71e03bc..7140580 100644
+index 52d6909e2015..714058061316 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -5,6 +5,7 @@ CONFIG_104_QUAD_8=m
@@ -669,6 +748,42 @@ index 71e03bc..7140580 100644
  CONFIG_CRYPTO_SM3=m
  CONFIG_CRYPTO_SM3_ARM64_CE=m
  CONFIG_CRYPTO_SM4=m
+@@ -2321,7 +2280,7 @@ CONFIG_DEBUGGER=y
+ # CONFIG_DEBUG_BLOCK_EXT_DEVT is not set
+ # CONFIG_DEBUG_BOOT_PARAMS is not set
+ CONFIG_DEBUG_BUGVERBOSE=y
+-CONFIG_DEBUG_CREDENTIALS=y
++# CONFIG_DEBUG_CREDENTIALS is not set
+ # CONFIG_DEBUG_DEVRES is not set
+ # CONFIG_DEBUG_DRIVER is not set
+ # CONFIG_DEBUG_EFI is not set
+@@ -2340,7 +2299,7 @@ CONFIG_DEBUG_KERNEL=y
+ # CONFIG_DEBUG_KERNEL_DC is not set
+ # CONFIG_DEBUG_KMEMLEAK is not set
+ # CONFIG_DEBUG_KOBJECT is not set
+-CONFIG_DEBUG_LIST=y
++# CONFIG_DEBUG_LIST is not set
+ # CONFIG_DEBUG_LL is not set
+ CONFIG_DEBUG_LL_INCLUDE="mach/debug-macro.S"
+ # CONFIG_DEBUG_LOCKING_API_SELFTESTS is not set
+@@ -2349,7 +2308,7 @@ CONFIG_DEBUG_LL_INCLUDE="mach/debug-macro.S"
+ CONFIG_DEBUG_MISC=y
+ # CONFIG_DEBUG_MUTEXES is not set
+ # CONFIG_DEBUG_NMI_SELFTEST is not set
+-CONFIG_DEBUG_NOTIFIERS=y
++# CONFIG_DEBUG_NOTIFIERS is not set
+ # CONFIG_DEBUG_OBJECTS is not set
+ # CONFIG_DEBUG_PAGEALLOC is not set
+ # CONFIG_DEBUG_PAGE_REF is not set
+@@ -2363,7 +2322,7 @@ CONFIG_DEBUG_NOTIFIERS=y
+ # CONFIG_DEBUG_RT_MUTEXES is not set
+ # CONFIG_DEBUG_RWSEMS is not set
+ # CONFIG_DEBUG_SECTION_MISMATCH is not set
+-CONFIG_DEBUG_SG=y
++# CONFIG_DEBUG_SG is not set
+ # CONFIG_DEBUG_SHIRQ is not set
+ # CONFIG_DEBUG_SPINLOCK is not set
+ # CONFIG_DEBUG_STACKOVERFLOW is not set
 @@ -2406,7 +2365,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
@@ -947,9 +1062,12 @@ index 71e03bc..7140580 100644
  CONFIG_INTERCONNECT_QCOM_QCS404=m
  CONFIG_INTERCONNECT_QCOM_SDM845=m
  CONFIG_INTERCONNECT_QCOM_SMD_RPM=m
-@@ -4664,7 +4590,6 @@ CONFIG_IO_DELAY_0XED=y
+@@ -4662,9 +4588,8 @@ CONFIG_IO_DELAY_0XED=y
+ # CONFIG_IO_DELAY_NONE is not set
+ # CONFIG_IO_DELAY_UDELAY is not set
  CONFIG_IO_EVENT_IRQ=y
- # CONFIG_IO_STRICT_DEVMEM is not set
+-CONFIG_IO_STRICT_DEVMEM=y
++# CONFIG_IO_STRICT_DEVMEM is not set
  CONFIG_IO_URING=y
 -CONFIG_IO_WQ=y
  CONFIG_IP6_NF_FILTER=m
@@ -987,7 +1105,17 @@ index 71e03bc..7140580 100644
  CONFIG_LEDS_INTEL_SS4200=m
  CONFIG_LEDS_IS31FL319X=m
  CONFIG_LEDS_IS31FL32XX=m
-@@ -5291,7 +5214,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -5247,7 +5170,8 @@ CONFIG_LEDS_WM831X_STATUS=m
+ CONFIG_LEDS_WM8350=m
+ CONFIG_LEDS_WRAP=m
+ CONFIG_LED_TRIGGER_PHY=y
+-# CONFIG_LEGACY_PTYS is not set
++CONFIG_LEGACY_PTYS=y
++CONFIG_LEGACY_PTY_COUNT=0
+ # CONFIG_LEGACY_VSYSCALL_EMULATE is not set
+ # CONFIG_LEGACY_VSYSCALL_NONE is not set
+ CONFIG_LEGACY_VSYSCALL_XONLY=y
+@@ -5290,7 +5214,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -995,7 +1123,7 @@ index 71e03bc..7140580 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -5313,14 +5235,12 @@ CONFIG_LRU_CACHE=m
+@@ -5312,14 +5235,12 @@ CONFIG_LRU_CACHE=m
  CONFIG_LSI_ET1011C_PHY=m
  CONFIG_LSM="lockdown,yama,integrity,apparmor"
  CONFIG_LSM_MMAP_MIN_ADDR=0
@@ -1010,7 +1138,7 @@ index 71e03bc..7140580 100644
  CONFIG_LTE_GDM724X=m
  CONFIG_LTPC=m
  CONFIG_LTR501=m
-@@ -5334,7 +5254,6 @@ CONFIG_LZ4_DECOMPRESS=y
+@@ -5333,7 +5254,6 @@ CONFIG_LZ4_DECOMPRESS=y
  CONFIG_LZO_COMPRESS=y
  CONFIG_LZO_DECOMPRESS=y
  # CONFIG_M486 is not set
@@ -1018,7 +1146,7 @@ index 71e03bc..7140580 100644
  # CONFIG_M586 is not set
  # CONFIG_M586MMX is not set
  # CONFIG_M586TSC is not set
-@@ -5396,7 +5315,6 @@ CONFIG_MAILBOX_TEST=m
+@@ -5395,7 +5315,6 @@ CONFIG_MAILBOX_TEST=m
  CONFIG_MANAGER_SBS=m
  CONFIG_MANDATORY_FILE_LOCKING=y
  CONFIG_MANTIS_CORE=m
@@ -1026,7 +1154,7 @@ index 71e03bc..7140580 100644
  # CONFIG_MARCH_Z10 is not set
  CONFIG_MARCH_Z13=y
  # CONFIG_MARCH_Z14 is not set
-@@ -5409,6 +5327,7 @@ CONFIG_MARCH_Z15_TUNE=y
+@@ -5408,6 +5327,7 @@ CONFIG_MARCH_Z15_TUNE=y
  # CONFIG_MARCH_ZEC12 is not set
  CONFIG_MARVELL_10G_PHY=m
  CONFIG_MARVELL_PHY=m
@@ -1034,7 +1162,7 @@ index 71e03bc..7140580 100644
  # CONFIG_MATOM is not set
  CONFIG_MAX1027=m
  CONFIG_MAX11100=m
-@@ -5551,7 +5470,6 @@ CONFIG_MEMORY_HOTPLUG_SPARSE=y
+@@ -5550,7 +5470,6 @@ CONFIG_MEMORY_HOTPLUG_SPARSE=y
  CONFIG_MEMORY_HOTREMOVE=y
  CONFIG_MEMORY_ISOLATION=y
  CONFIG_MEMORY_NOTIFIER_ERROR_INJECT=m
@@ -1042,7 +1170,7 @@ index 71e03bc..7140580 100644
  # CONFIG_MEMSTICK_DEBUG is not set
  CONFIG_MEMSTICK_JMICRON_38X=m
  CONFIG_MEMSTICK_R592=m
-@@ -5690,9 +5608,7 @@ CONFIG_MICROSEMI_PHY=m
+@@ -5689,9 +5608,7 @@ CONFIG_MICROSEMI_PHY=m
  CONFIG_MIC_COSM=m
  CONFIG_MIGHT_HAVE_CACHE_L2X0=y
  CONFIG_MIGRATION=y
@@ -1052,7 +1180,7 @@ index 71e03bc..7140580 100644
  CONFIG_MISC_FILESYSTEMS=y
  CONFIG_MISC_RTSX=m
  CONFIG_MISC_RTSX_USB=m
-@@ -5740,7 +5656,6 @@ CONFIG_MLX5_SW_STEERING=y
+@@ -5739,7 +5656,6 @@ CONFIG_MLX5_SW_STEERING=y
  CONFIG_MLX5_TLS=y
  CONFIG_MLX90614=m
  CONFIG_MLX90632=m
@@ -1060,7 +1188,7 @@ index 71e03bc..7140580 100644
  CONFIG_MLXBF_TMFIFO=m
  CONFIG_MLXFW=m
  CONFIG_MLXREG_HOTPLUG=m
-@@ -5788,7 +5703,6 @@ CONFIG_MMC_MVSDIO=m
+@@ -5787,7 +5703,6 @@ CONFIG_MMC_MVSDIO=m
  CONFIG_MMC_MXC=m
  CONFIG_MMC_OMAP=m
  CONFIG_MMC_OMAP_HS=y
@@ -1068,7 +1196,7 @@ index 71e03bc..7140580 100644
  CONFIG_MMC_QCOM_DML=y
  CONFIG_MMC_REALTEK_PCI=m
  CONFIG_MMC_REALTEK_USB=m
-@@ -5802,7 +5716,6 @@ CONFIG_MMC_SDHCI_DOVE=m
+@@ -5801,7 +5716,6 @@ CONFIG_MMC_SDHCI_DOVE=m
  CONFIG_MMC_SDHCI_F_SDH30=m
  CONFIG_MMC_SDHCI_IO_ACCESSORS=y
  CONFIG_MMC_SDHCI_IPROC=m
@@ -1076,7 +1204,7 @@ index 71e03bc..7140580 100644
  CONFIG_MMC_SDHCI_OF_ARASAN=m
  CONFIG_MMC_SDHCI_OF_ASPEED=m
  CONFIG_MMC_SDHCI_OF_AT91=m
-@@ -5942,7 +5855,6 @@ CONFIG_MSI_WMI=m
+@@ -5941,7 +5855,6 @@ CONFIG_MSI_WMI=m
  CONFIG_MSM_GCC_8660=m
  CONFIG_MSM_GCC_8960=m
  CONFIG_MSM_GCC_8974=m
@@ -1084,7 +1212,7 @@ index 71e03bc..7140580 100644
  # CONFIG_MSM_IOMMU is not set
  CONFIG_MSM_LCC_8960=m
  CONFIG_MSM_MMCC_8960=m
-@@ -6002,7 +5914,6 @@ CONFIG_MTD_MAP_BANK_WIDTH_4=y
+@@ -6001,7 +5914,6 @@ CONFIG_MTD_MAP_BANK_WIDTH_4=y
  CONFIG_MTD_MCHP23K256=m
  CONFIG_MTD_MTDRAM=m
  CONFIG_MTD_NAND_BRCMNAND=m
@@ -1092,7 +1220,7 @@ index 71e03bc..7140580 100644
  CONFIG_MTD_NAND_CAFE=m
  CONFIG_MTD_NAND_CS553X=m
  CONFIG_MTD_NAND_DENALI=m
-@@ -6051,7 +5962,6 @@ CONFIG_MTD_PHRAM=m
+@@ -6050,7 +5962,6 @@ CONFIG_MTD_PHRAM=m
  CONFIG_MTD_PHYSMAP=m
  # CONFIG_MTD_PHYSMAP_COMPAT is not set
  CONFIG_MTD_PHYSMAP_GPIO_ADDR=y
@@ -1100,7 +1228,7 @@ index 71e03bc..7140580 100644
  CONFIG_MTD_PHYSMAP_OF=y
  CONFIG_MTD_PLATRAM=m
  CONFIG_MTD_PMC551=m
-@@ -6154,7 +6064,6 @@ CONFIG_NATSEMI=m
+@@ -6153,7 +6064,6 @@ CONFIG_NATSEMI=m
  CONFIG_NAU7802=m
  CONFIG_NBPFAXI_DMA=m
  CONFIG_NCSI_OEM_CMD_GET_MAC=y
@@ -1108,7 +1236,7 @@ index 71e03bc..7140580 100644
  CONFIG_ND_BLK=m
  CONFIG_ND_BTT=m
  CONFIG_ND_CLAIM=y
-@@ -6325,7 +6234,6 @@ CONFIG_NET_DSA_MICROCHIP_KSZ9477=m
+@@ -6324,7 +6234,6 @@ CONFIG_NET_DSA_MICROCHIP_KSZ9477=m
  CONFIG_NET_DSA_MICROCHIP_KSZ9477_I2C=m
  CONFIG_NET_DSA_MICROCHIP_KSZ9477_SPI=m
  CONFIG_NET_DSA_MICROCHIP_KSZ_COMMON=m
@@ -1116,7 +1244,7 @@ index 71e03bc..7140580 100644
  CONFIG_NET_DSA_MT7530=m
  CONFIG_NET_DSA_MV88E6060=m
  CONFIG_NET_DSA_MV88E6XXX=m
-@@ -6349,7 +6257,6 @@ CONFIG_NET_DSA_TAG_GSWIP=m
+@@ -6348,7 +6257,6 @@ CONFIG_NET_DSA_TAG_GSWIP=m
  CONFIG_NET_DSA_TAG_KSZ=m
  CONFIG_NET_DSA_TAG_LAN9303=m
  CONFIG_NET_DSA_TAG_MTK=m
@@ -1124,7 +1252,7 @@ index 71e03bc..7140580 100644
  CONFIG_NET_DSA_TAG_QCA=m
  CONFIG_NET_DSA_TAG_SJA1105=m
  CONFIG_NET_DSA_TAG_TRAILER=m
-@@ -6448,7 +6355,6 @@ CONFIG_NET_VENDOR_FARADAY=y
+@@ -6447,7 +6355,6 @@ CONFIG_NET_VENDOR_FARADAY=y
  CONFIG_NET_VENDOR_FREESCALE=y
  CONFIG_NET_VENDOR_FUJITSU=y
  CONFIG_NET_VENDOR_HISILICON=y
@@ -1132,7 +1260,7 @@ index 71e03bc..7140580 100644
  CONFIG_NET_VENDOR_I825XX=y
  CONFIG_NET_VENDOR_IBM=y
  # CONFIG_NET_VENDOR_MEDIATEK is not set
-@@ -6482,7 +6388,6 @@ CONFIG_NFC_NCI_SPI=m
+@@ -6481,7 +6388,6 @@ CONFIG_NFC_NCI_SPI=m
  CONFIG_NFC_NCI_UART=m
  CONFIG_NFC_NXP_NCI=m
  CONFIG_NFC_NXP_NCI_I2C=m
@@ -1140,7 +1268,7 @@ index 71e03bc..7140580 100644
  CONFIG_NFC_PN533=m
  CONFIG_NFC_PN533_I2C=m
  CONFIG_NFC_PN533_USB=m
-@@ -6758,7 +6663,6 @@ CONFIG_NVMEM_ZYNQMP=y
+@@ -6757,7 +6663,6 @@ CONFIG_NVMEM_ZYNQMP=y
  CONFIG_NVME_CORE=m
  CONFIG_NVME_FABRICS=m
  CONFIG_NVME_FC=m
@@ -1148,7 +1276,7 @@ index 71e03bc..7140580 100644
  CONFIG_NVME_MULTIPATH=y
  CONFIG_NVME_RDMA=m
  CONFIG_NVME_TARGET=m
-@@ -6999,6 +6903,7 @@ CONFIG_PCI200SYN=m
+@@ -6998,6 +6903,7 @@ CONFIG_PCI200SYN=m
  CONFIG_PCIEAER=y
  # CONFIG_PCIEAER_INJECT is not set
  CONFIG_PCIEASPM=y
@@ -1156,7 +1284,7 @@ index 71e03bc..7140580 100644
  CONFIG_PCIEASPM_DEFAULT=y
  # CONFIG_PCIEASPM_PERFORMANCE is not set
  # CONFIG_PCIEASPM_POWERSAVE is not set
-@@ -7011,9 +6916,6 @@ CONFIG_PCIE_ARMADA_8K=y
+@@ -7010,9 +6916,6 @@ CONFIG_PCIE_ARMADA_8K=y
  CONFIG_PCIE_CADENCE=y
  CONFIG_PCIE_CADENCE_EP=y
  CONFIG_PCIE_CADENCE_HOST=y
@@ -1166,7 +1294,7 @@ index 71e03bc..7140580 100644
  CONFIG_PCIE_DPC=y
  CONFIG_PCIE_DW=y
  CONFIG_PCIE_DW_EP=y
-@@ -7077,7 +6979,7 @@ CONFIG_PCI_KEYSTONE_HOST=y
+@@ -7076,7 +6979,7 @@ CONFIG_PCI_KEYSTONE_HOST=y
  CONFIG_PCI_LABEL=y
  CONFIG_PCI_LAYERSCAPE_EP=y
  CONFIG_PCI_LOCKLESS_CONFIG=y
@@ -1175,7 +1303,7 @@ index 71e03bc..7140580 100644
  CONFIG_PCI_MMCONFIG=y
  CONFIG_PCI_MSI=y
  CONFIG_PCI_MSI_IRQ_DOMAIN=y
-@@ -7190,7 +7092,6 @@ CONFIG_PHY_RCAR_GEN3_USB2=m
+@@ -7189,7 +7092,6 @@ CONFIG_PHY_RCAR_GEN3_USB2=m
  CONFIG_PHY_RCAR_GEN3_USB3=m
  CONFIG_PHY_ROCKCHIP_DP=m
  CONFIG_PHY_ROCKCHIP_EMMC=m
@@ -1183,7 +1311,7 @@ index 71e03bc..7140580 100644
  CONFIG_PHY_ROCKCHIP_INNO_HDMI=m
  CONFIG_PHY_ROCKCHIP_INNO_USB2=m
  CONFIG_PHY_ROCKCHIP_PCIE=m
-@@ -7198,7 +7099,6 @@ CONFIG_PHY_ROCKCHIP_TYPEC=m
+@@ -7197,7 +7099,6 @@ CONFIG_PHY_ROCKCHIP_TYPEC=m
  CONFIG_PHY_ROCKCHIP_USB=m
  CONFIG_PHY_SAMSUNG_USB2=m
  CONFIG_PHY_SUN4I_USB=m
@@ -1191,7 +1319,7 @@ index 71e03bc..7140580 100644
  CONFIG_PHY_SUN6I_MIPI_DPHY=m
  # CONFIG_PHY_SUN9I_USB is not set
  CONFIG_PHY_TEGRA_XUSB=m
-@@ -7246,7 +7146,6 @@ CONFIG_PINCTRL_CS47L90=y
+@@ -7245,7 +7146,6 @@ CONFIG_PINCTRL_CS47L90=y
  CONFIG_PINCTRL_CS47L92=y
  CONFIG_PINCTRL_DENVERTON=m
  CONFIG_PINCTRL_DOVE=y
@@ -1199,7 +1327,7 @@ index 71e03bc..7140580 100644
  CONFIG_PINCTRL_EXYNOS=y
  CONFIG_PINCTRL_EXYNOS_ARM=y
  CONFIG_PINCTRL_GEMINILAKE=m
-@@ -7283,7 +7182,6 @@ CONFIG_PINCTRL_MESON=y
+@@ -7282,7 +7182,6 @@ CONFIG_PINCTRL_MESON=y
  CONFIG_PINCTRL_MESON8=y
  CONFIG_PINCTRL_MESON8B=y
  CONFIG_PINCTRL_MESON8_PMX=y
@@ -1207,7 +1335,7 @@ index 71e03bc..7140580 100644
  CONFIG_PINCTRL_MESON_AXG=y
  CONFIG_PINCTRL_MESON_AXG_PMX=y
  CONFIG_PINCTRL_MESON_G12A=y
-@@ -7292,7 +7190,6 @@ CONFIG_PINCTRL_MESON_GXL=y
+@@ -7291,7 +7190,6 @@ CONFIG_PINCTRL_MESON_GXL=y
  CONFIG_PINCTRL_MSM=y
  CONFIG_PINCTRL_MSM8660=m
  CONFIG_PINCTRL_MSM8960=m
@@ -1215,7 +1343,7 @@ index 71e03bc..7140580 100644
  CONFIG_PINCTRL_MSM8X74=m
  CONFIG_PINCTRL_MT2701=y
  CONFIG_PINCTRL_MT2712=y
-@@ -7323,7 +7220,6 @@ CONFIG_PINCTRL_PFC_R8A7744=y
+@@ -7322,7 +7220,6 @@ CONFIG_PINCTRL_PFC_R8A7744=y
  CONFIG_PINCTRL_PFC_R8A7745=y
  CONFIG_PINCTRL_PFC_R8A77470=y
  CONFIG_PINCTRL_PFC_R8A774A1=y
@@ -1223,7 +1351,7 @@ index 71e03bc..7140580 100644
  CONFIG_PINCTRL_PFC_R8A774C0=y
  CONFIG_PINCTRL_PFC_R8A7778=y
  CONFIG_PINCTRL_PFC_R8A7779=y
-@@ -7333,8 +7229,7 @@ CONFIG_PINCTRL_PFC_R8A7792=y
+@@ -7332,8 +7229,7 @@ CONFIG_PINCTRL_PFC_R8A7792=y
  CONFIG_PINCTRL_PFC_R8A7793=y
  CONFIG_PINCTRL_PFC_R8A7794=y
  CONFIG_PINCTRL_PFC_R8A7795=y
@@ -1233,7 +1361,7 @@ index 71e03bc..7140580 100644
  CONFIG_PINCTRL_PFC_R8A77965=y
  CONFIG_PINCTRL_PFC_R8A77970=y
  CONFIG_PINCTRL_PFC_R8A77980=y
-@@ -7390,7 +7285,6 @@ CONFIG_PINCTRL_TEGRA124=y
+@@ -7389,7 +7285,6 @@ CONFIG_PINCTRL_TEGRA124=y
  CONFIG_PINCTRL_TEGRA20=y
  CONFIG_PINCTRL_TEGRA30=y
  CONFIG_PINCTRL_TEGRA_XUSB=y
@@ -1241,7 +1369,7 @@ index 71e03bc..7140580 100644
  CONFIG_PINCTRL_TI_IODELAY=y
  CONFIG_PINCTRL_UNIPHIER=y
  CONFIG_PINCTRL_UNIPHIER_LD11=y
-@@ -7483,7 +7377,6 @@ CONFIG_POWER_RESET_GPIO_RESTART=y
+@@ -7482,7 +7377,6 @@ CONFIG_POWER_RESET_GPIO_RESTART=y
  CONFIG_POWER_RESET_HISI=y
  CONFIG_POWER_RESET_LTC2952=y
  CONFIG_POWER_RESET_MSM=y
@@ -1249,7 +1377,7 @@ index 71e03bc..7140580 100644
  # CONFIG_POWER_RESET_QNAP is not set
  CONFIG_POWER_RESET_RESTART=y
  CONFIG_POWER_RESET_RMOBILE=m
-@@ -7551,7 +7444,6 @@ CONFIG_PPC_SUBPAGE_PROT=y
+@@ -7550,7 +7444,6 @@ CONFIG_PPC_SUBPAGE_PROT=y
  CONFIG_PPC_SVM=y
  CONFIG_PPC_TRANSACTIONAL_MEM=y
  CONFIG_PPC_UDBG_16550=y
@@ -1257,7 +1385,7 @@ index 71e03bc..7140580 100644
  CONFIG_PPC_VAS=y
  CONFIG_PPC_WATCHDOG=y
  CONFIG_PPC_WERROR=y
-@@ -7627,7 +7519,6 @@ CONFIG_PSTORE_DEFLATE_COMPRESS_DEFAULT=y
+@@ -7626,7 +7519,6 @@ CONFIG_PSTORE_DEFLATE_COMPRESS_DEFAULT=y
  # CONFIG_PSTORE_PMSG is not set
  # CONFIG_PSTORE_ZSTD_COMPRESS is not set
  CONFIG_PTP_1588_CLOCK_DTE=m
@@ -1265,7 +1393,7 @@ index 71e03bc..7140580 100644
  CONFIG_PTP_1588_CLOCK_KVM=m
  CONFIG_PTP_1588_CLOCK_PCH=m
  CONFIG_PTP_1588_CLOCK_QORIQ=m
-@@ -7664,6 +7555,7 @@ CONFIG_PWM_STMPE=y
+@@ -7663,6 +7555,7 @@ CONFIG_PWM_STMPE=y
  CONFIG_PWM_SUN4I=m
  CONFIG_PWM_SYSFS=y
  CONFIG_PWM_TEGRA=m
@@ -1273,7 +1401,7 @@ index 71e03bc..7140580 100644
  CONFIG_PWM_TWL=m
  CONFIG_PWM_TWL_LED=m
  CONFIG_PWRSEQ_EMMC=m
-@@ -7694,7 +7586,6 @@ CONFIG_QCOM_L2_PMU=y
+@@ -7693,7 +7586,6 @@ CONFIG_QCOM_L2_PMU=y
  CONFIG_QCOM_L3_PMU=y
  CONFIG_QCOM_LLCC=m
  CONFIG_QCOM_MDT_LOADER=m
@@ -1281,7 +1409,7 @@ index 71e03bc..7140580 100644
  CONFIG_QCOM_PDC=y
  CONFIG_QCOM_PM=y
  CONFIG_QCOM_PM8XXX_XOADC=m
-@@ -7715,6 +7606,7 @@ CONFIG_QCOM_SCM=y
+@@ -7714,6 +7606,7 @@ CONFIG_QCOM_SCM=y
  CONFIG_QCOM_SCM_32=y
  CONFIG_QCOM_SCM_64=y
  # CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is not set
@@ -1289,7 +1417,7 @@ index 71e03bc..7140580 100644
  CONFIG_QCOM_SMEM_STATE=y
  CONFIG_QCOM_SOCINFO=m
  CONFIG_QCOM_SPMI_ADC5=m
-@@ -7727,7 +7619,6 @@ CONFIG_QCOM_WCNSS_CTRL=m
+@@ -7726,7 +7619,6 @@ CONFIG_QCOM_WCNSS_CTRL=m
  # CONFIG_QCOM_WCNSS_PIL is not set
  CONFIG_QCOM_WDT=m
  CONFIG_QCS_GCC_404=m
@@ -1297,7 +1425,7 @@ index 71e03bc..7140580 100644
  CONFIG_QCS_TURING_404=m
  CONFIG_QDIO=m
  CONFIG_QED=m
-@@ -8070,7 +7961,6 @@ CONFIG_ROCKCHIP_IODOMAIN=m
+@@ -8069,7 +7961,6 @@ CONFIG_ROCKCHIP_IODOMAIN=m
  CONFIG_ROCKCHIP_IOMMU=y
  CONFIG_ROCKCHIP_LVDS=y
  CONFIG_ROCKCHIP_MBOX=y
@@ -1305,7 +1433,7 @@ index 71e03bc..7140580 100644
  CONFIG_ROCKCHIP_PHY=m
  CONFIG_ROCKCHIP_PM_DOMAINS=y
  CONFIG_ROCKCHIP_RGB=y
-@@ -8330,15 +8220,12 @@ CONFIG_S390_PTDUMP=y
+@@ -8329,15 +8220,12 @@ CONFIG_S390_PTDUMP=y
  CONFIG_S390_TAPE=m
  CONFIG_S390_TAPE_34XX=m
  CONFIG_S390_TAPE_3590=m
@@ -1321,7 +1449,7 @@ index 71e03bc..7140580 100644
  # CONFIG_SAMPLE_KDB is not set
  # CONFIG_SAMPLE_KFIFO is not set
  # CONFIG_SAMPLE_KOBJECT is not set
-@@ -8346,7 +8233,6 @@ CONFIG_SAMPLE_FTRACE_DIRECT=m
+@@ -8345,7 +8233,6 @@ CONFIG_SAMPLE_FTRACE_DIRECT=m
  # CONFIG_SAMPLE_LIVEPATCH is not set
  # CONFIG_SAMPLE_QMI_CLIENT is not set
  # CONFIG_SAMPLE_RPMSG_CLIENT is not set
@@ -1329,7 +1457,7 @@ index 71e03bc..7140580 100644
  # CONFIG_SAMPLE_TRACE_EVENTS is not set
  CONFIG_SAMPLE_TRACE_PRINTK=m
  # CONFIG_SAMPLE_VFIO_MDEV_MBOCHS is not set
-@@ -8491,7 +8377,6 @@ CONFIG_SCSI_UFS_CDNS_PLATFORM=m
+@@ -8490,7 +8377,6 @@ CONFIG_SCSI_UFS_CDNS_PLATFORM=m
  CONFIG_SCSI_UFS_DWC_TC_PCI=m
  CONFIG_SCSI_UFS_DWC_TC_PLATFORM=m
  CONFIG_SCSI_UFS_MEDIATEK=m
@@ -1337,7 +1465,7 @@ index 71e03bc..7140580 100644
  CONFIG_SCSI_VIRTIO=m
  CONFIG_SCTP_COOKIE_HMAC_MD5=y
  CONFIG_SCTP_COOKIE_HMAC_SHA1=y
-@@ -8499,7 +8384,6 @@ CONFIG_SCTP_COOKIE_HMAC_SHA1=y
+@@ -8498,7 +8384,6 @@ CONFIG_SCTP_COOKIE_HMAC_SHA1=y
  # CONFIG_SCTP_DEFAULT_COOKIE_HMAC_MD5 is not set
  # CONFIG_SCTP_DEFAULT_COOKIE_HMAC_NONE is not set
  CONFIG_SCTP_DEFAULT_COOKIE_HMAC_SHA1=y
@@ -1345,7 +1473,7 @@ index 71e03bc..7140580 100644
  CONFIG_SCx200=m
  CONFIG_SCx200HR_TIMER=m
  CONFIG_SCx200_ACB=m
-@@ -8591,7 +8475,6 @@ CONFIG_SENSORS_ASC7621=m
+@@ -8590,7 +8475,6 @@ CONFIG_SENSORS_ASC7621=m
  CONFIG_SENSORS_ASPEED=m
  CONFIG_SENSORS_ATK0110=m
  CONFIG_SENSORS_ATXP1=m
@@ -1353,7 +1481,7 @@ index 71e03bc..7140580 100644
  CONFIG_SENSORS_CORETEMP=m
  CONFIG_SENSORS_DA9052_ADC=m
  CONFIG_SENSORS_DA9055=m
-@@ -8662,9 +8545,6 @@ CONFIG_SENSORS_LM95241=m
+@@ -8661,9 +8545,6 @@ CONFIG_SENSORS_LM95241=m
  CONFIG_SENSORS_LM95245=m
  CONFIG_SENSORS_LOCHNAGAR=m
  CONFIG_SENSORS_LTC2945=m
@@ -1363,7 +1491,7 @@ index 71e03bc..7140580 100644
  CONFIG_SENSORS_LTC2978=m
  CONFIG_SENSORS_LTC2978_REGULATOR=y
  CONFIG_SENSORS_LTC2990=m
-@@ -8736,7 +8616,6 @@ CONFIG_SENSORS_TMP103=m
+@@ -8735,7 +8616,6 @@ CONFIG_SENSORS_TMP103=m
  CONFIG_SENSORS_TMP108=m
  CONFIG_SENSORS_TMP401=m
  CONFIG_SENSORS_TMP421=m
@@ -1371,7 +1499,7 @@ index 71e03bc..7140580 100644
  CONFIG_SENSORS_TPS40422=m
  CONFIG_SENSORS_TPS53679=m
  CONFIG_SENSORS_TSL2563=m
-@@ -8878,13 +8757,10 @@ CONFIG_SFC_MTD=y
+@@ -8877,13 +8757,10 @@ CONFIG_SFC_MTD=y
  CONFIG_SFC_SRIOV=y
  CONFIG_SFI=y
  CONFIG_SFP=m
@@ -1385,7 +1513,7 @@ index 71e03bc..7140580 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -8898,6 +8774,7 @@ CONFIG_SI7020=m
+@@ -8897,6 +8774,7 @@ CONFIG_SI7020=m
  CONFIG_SIGNALFD=y
  CONFIG_SIGNATURE=y
  CONFIG_SIGNED_PE_FILE_VERIFICATION=y
@@ -1393,7 +1521,7 @@ index 71e03bc..7140580 100644
  CONFIG_SIMPLE_PM_BUS=y
  CONFIG_SIOX=m
  CONFIG_SIOX_BUS_GPIO=m
-@@ -9056,6 +8933,7 @@ CONFIG_SND_HDA_I915=y
+@@ -9055,6 +8933,7 @@ CONFIG_SND_HDA_I915=y
  CONFIG_SND_HDA_INPUT_BEEP=y
  CONFIG_SND_HDA_INPUT_BEEP_MODE=0
  CONFIG_SND_HDA_INTEL=m
@@ -1401,7 +1529,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_HDA_PATCH_LOADER=y
  CONFIG_SND_HDA_POWER_SAVE_DEFAULT=1
  CONFIG_SND_HDA_PREALLOC_SIZE=64
-@@ -9075,8 +8953,7 @@ CONFIG_SND_INDIGOIO=m
+@@ -9074,8 +8953,7 @@ CONFIG_SND_INDIGOIO=m
  CONFIG_SND_INDIGOIOX=m
  CONFIG_SND_INTEL8X0=m
  CONFIG_SND_INTEL8X0M=m
@@ -1411,7 +1539,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_INTERWAVE=m
  CONFIG_SND_INTERWAVE_STB=m
  CONFIG_SND_ISA=y
-@@ -9182,9 +9059,6 @@ CONFIG_SND_SOC_ADAU1761_I2C=m
+@@ -9181,9 +9059,6 @@ CONFIG_SND_SOC_ADAU1761_I2C=m
  CONFIG_SND_SOC_ADAU1761_SPI=m
  CONFIG_SND_SOC_ADAU17X1=m
  CONFIG_SND_SOC_ADAU7002=m
@@ -1421,7 +1549,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_ADAU_UTILS=m
  CONFIG_SND_SOC_AK4104=m
  CONFIG_SND_SOC_AK4118=m
-@@ -9202,7 +9076,7 @@ CONFIG_SND_SOC_AMD_CZ_DA7219MX98357_MACH=m
+@@ -9201,7 +9076,7 @@ CONFIG_SND_SOC_AMD_CZ_DA7219MX98357_MACH=m
  CONFIG_SND_SOC_AMD_CZ_RT5645_MACH=m
  CONFIG_SND_SOC_APQ8016_SBC=m
  CONFIG_SND_SOC_ARIZONA=m
@@ -1430,7 +1558,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_BD28623=m
  CONFIG_SND_SOC_BT_SCO=m
  CONFIG_SND_SOC_COMPRESS=y
-@@ -9247,7 +9121,6 @@ CONFIG_SND_SOC_FSL_ASRC=m
+@@ -9246,7 +9121,6 @@ CONFIG_SND_SOC_FSL_ASRC=m
  CONFIG_SND_SOC_FSL_AUDMIX=m
  CONFIG_SND_SOC_FSL_ESAI=m
  CONFIG_SND_SOC_FSL_MICFIL=m
@@ -1438,7 +1566,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_FSL_SAI=m
  CONFIG_SND_SOC_FSL_SPDIF=m
  CONFIG_SND_SOC_FSL_UTILS=m
-@@ -9273,7 +9146,6 @@ CONFIG_SND_SOC_INNO_RK3036=m
+@@ -9272,7 +9146,6 @@ CONFIG_SND_SOC_INNO_RK3036=m
  CONFIG_SND_SOC_INTEL_APL=m
  CONFIG_SND_SOC_INTEL_BDW_RT5677_MACH=m
  CONFIG_SND_SOC_INTEL_BROADWELL_MACH=m
@@ -1446,7 +1574,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_INTEL_BXT_DA7219_MAX98357A_MACH=m
  CONFIG_SND_SOC_INTEL_BXT_RT298_MACH=m
  CONFIG_SND_SOC_INTEL_BYTCR_RT5640_MACH=m
-@@ -9293,7 +9165,6 @@ CONFIG_SND_SOC_INTEL_CML_LP_DA7219_MAX98357A_MACH=m
+@@ -9292,7 +9165,6 @@ CONFIG_SND_SOC_INTEL_CML_LP_DA7219_MAX98357A_MACH=m
  # CONFIG_SND_SOC_INTEL_CNL is not set
  CONFIG_SND_SOC_INTEL_DA7219_MAX98357A_GENERIC=m
  CONFIG_SND_SOC_INTEL_GLK=m
@@ -1454,7 +1582,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_INTEL_GLK_RT5682_MAX98357A_MACH=m
  CONFIG_SND_SOC_INTEL_HASWELL=m
  CONFIG_SND_SOC_INTEL_HASWELL_MACH=m
-@@ -9314,7 +9185,6 @@ CONFIG_SND_SOC_INTEL_SKYLAKE_COMMON=m
+@@ -9313,7 +9185,6 @@ CONFIG_SND_SOC_INTEL_SKYLAKE_COMMON=m
  CONFIG_SND_SOC_INTEL_SKYLAKE_FAMILY=m
  # CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC is not set
  CONFIG_SND_SOC_INTEL_SKYLAKE_SSP_CLK=m
@@ -1462,7 +1590,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_INTEL_SOF_RT5682_MACH=m
  CONFIG_SND_SOC_INTEL_SST=m
  CONFIG_SND_SOC_INTEL_SST_ACPI=m
-@@ -9405,7 +9275,6 @@ CONFIG_SND_SOC_ROCKCHIP_MAX98090=m
+@@ -9404,7 +9275,6 @@ CONFIG_SND_SOC_ROCKCHIP_MAX98090=m
  CONFIG_SND_SOC_ROCKCHIP_PDM=m
  CONFIG_SND_SOC_ROCKCHIP_RT5645=m
  CONFIG_SND_SOC_ROCKCHIP_SPDIF=m
@@ -1470,7 +1598,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_RT286=m
  CONFIG_SND_SOC_RT298=m
  CONFIG_SND_SOC_RT5514=m
-@@ -9439,6 +9308,8 @@ CONFIG_SND_SOC_SOF=m
+@@ -9438,6 +9308,8 @@ CONFIG_SND_SOC_SOF=m
  CONFIG_SND_SOC_SOF_ACPI=m
  CONFIG_SND_SOC_SOF_APOLLOLAKE=m
  CONFIG_SND_SOC_SOF_APOLLOLAKE_SUPPORT=y
@@ -1479,7 +1607,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_SOF_CANNONLAKE=m
  CONFIG_SND_SOC_SOF_CANNONLAKE_SUPPORT=y
  CONFIG_SND_SOC_SOF_COFFEELAKE=m
-@@ -9456,13 +9327,11 @@ CONFIG_SND_SOC_SOF_HDA=m
+@@ -9455,13 +9327,11 @@ CONFIG_SND_SOC_SOF_HDA=m
  CONFIG_SND_SOC_SOF_HDA_ALWAYS_ENABLE_DMI_L1=y
  CONFIG_SND_SOC_SOF_HDA_AUDIO_CODEC=y
  CONFIG_SND_SOC_SOF_HDA_COMMON=m
@@ -1494,7 +1622,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_SOF_IMX_TOPLEVEL=y
  CONFIG_SND_SOC_SOF_INTEL_ACPI=m
  CONFIG_SND_SOC_SOF_INTEL_ATOM_HIFI_EP=m
-@@ -9470,12 +9339,11 @@ CONFIG_SND_SOC_SOF_INTEL_COMMON=m
+@@ -9469,12 +9339,11 @@ CONFIG_SND_SOC_SOF_INTEL_COMMON=m
  CONFIG_SND_SOC_SOF_INTEL_HIFI_EP_IPC=m
  CONFIG_SND_SOC_SOF_INTEL_PCI=m
  CONFIG_SND_SOC_SOF_INTEL_TOPLEVEL=y
@@ -1508,7 +1636,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_SOF_PCI=m
  CONFIG_SND_SOC_SOF_PROBE_WORK_QUEUE=y
  # CONFIG_SND_SOC_SOF_STRICT_ABI_CHECKS is not set
-@@ -9496,8 +9364,6 @@ CONFIG_SND_SOC_STA350=m
+@@ -9495,8 +9364,6 @@ CONFIG_SND_SOC_STA350=m
  CONFIG_SND_SOC_STI_SAS=m
  CONFIG_SND_SOC_STORM=m
  CONFIG_SND_SOC_TAS2552=m
@@ -1517,7 +1645,7 @@ index 71e03bc..7140580 100644
  CONFIG_SND_SOC_TAS5086=m
  CONFIG_SND_SOC_TAS571X=m
  CONFIG_SND_SOC_TAS5720=m
-@@ -9661,8 +9527,6 @@ CONFIG_SOC_OMAP3430=y
+@@ -9660,8 +9527,6 @@ CONFIG_SOC_OMAP3430=y
  # CONFIG_SOC_OMAP5 is not set
  CONFIG_SOC_RENESAS=y
  CONFIG_SOC_SAMSUNG=y
@@ -1526,7 +1654,7 @@ index 71e03bc..7140580 100644
  CONFIG_SOC_TEGRA_FLOWCTRL=y
  CONFIG_SOC_TEGRA_FUSE=y
  CONFIG_SOC_TEGRA_PMC=y
-@@ -9676,7 +9540,7 @@ CONFIG_SONYPI=m
+@@ -9675,7 +9540,7 @@ CONFIG_SONYPI=m
  CONFIG_SONYPI_COMPAT=y
  CONFIG_SONY_FF=y
  CONFIG_SONY_LAPTOP=m
@@ -1535,7 +1663,7 @@ index 71e03bc..7140580 100644
  CONFIG_SOUNDWIRE_CADENCE=m
  CONFIG_SOUNDWIRE_INTEL=m
  CONFIG_SOUND_OSS_CORE=y
-@@ -9787,7 +9651,6 @@ CONFIG_SPMI_MSM_PMIC_ARB=m
+@@ -9786,7 +9651,6 @@ CONFIG_SPMI_MSM_PMIC_ARB=m
  CONFIG_SPMI_PMIC_CLKDIV=m
  CONFIG_SPRD_COMMON_CLK=m
  CONFIG_SPRD_DMA=m
@@ -1543,7 +1671,7 @@ index 71e03bc..7140580 100644
  CONFIG_SPRD_SC9860_CLK=m
  CONFIG_SPRD_TIMER=y
  CONFIG_SPRD_WATCHDOG=m
-@@ -9913,7 +9776,6 @@ CONFIG_SWP_EMULATION=y
+@@ -9912,7 +9776,6 @@ CONFIG_SWP_EMULATION=y
  CONFIG_SW_SYNC=y
  CONFIG_SX9500=m
  CONFIG_SXGBE_ETH=m
@@ -1551,7 +1679,7 @@ index 71e03bc..7140580 100644
  CONFIG_SYNCLINK=m
  CONFIG_SYNCLINKMP=m
  CONFIG_SYNCLINK_CS=m
-@@ -9923,11 +9785,11 @@ CONFIG_SYN_COOKIES=y
+@@ -9922,11 +9785,11 @@ CONFIG_SYN_COOKIES=y
  CONFIG_SYSCON_REBOOT_MODE=m
  CONFIG_SYSCTL=y
  CONFIG_SYSCTL_EXCEPTION_TRACE=y
@@ -1564,7 +1692,7 @@ index 71e03bc..7140580 100644
  CONFIG_SYSC_R8A774C0=y
  CONFIG_SYSC_R8A7779=y
  CONFIG_SYSC_R8A7790=y
-@@ -9935,8 +9797,7 @@ CONFIG_SYSC_R8A7791=y
+@@ -9934,8 +9797,7 @@ CONFIG_SYSC_R8A7791=y
  CONFIG_SYSC_R8A7792=y
  CONFIG_SYSC_R8A7794=y
  CONFIG_SYSC_R8A7795=y
@@ -1574,7 +1702,7 @@ index 71e03bc..7140580 100644
  CONFIG_SYSC_R8A77965=y
  CONFIG_SYSC_R8A77970=y
  CONFIG_SYSC_R8A77980=y
-@@ -9947,7 +9808,6 @@ CONFIG_SYSC_RMOBILE=y
+@@ -9946,7 +9808,6 @@ CONFIG_SYSC_RMOBILE=y
  CONFIG_SYSFS=y
  # CONFIG_SYSFS_DEPRECATED is not set
  CONFIG_SYSFS_SYSCALL=y
@@ -1582,7 +1710,7 @@ index 71e03bc..7140580 100644
  CONFIG_SYSTEMPORT=m
  CONFIG_SYSTEM_BLACKLIST_HASH_LIST=""
  CONFIG_SYSTEM_BLACKLIST_KEYRING=y
-@@ -9993,7 +9853,6 @@ CONFIG_TCG_NSC=m
+@@ -9992,7 +9853,6 @@ CONFIG_TCG_NSC=m
  CONFIG_TCG_TIS=y
  CONFIG_TCG_TIS_CORE=y
  CONFIG_TCG_TIS_SPI=m
@@ -1590,7 +1718,7 @@ index 71e03bc..7140580 100644
  CONFIG_TCG_TIS_ST33ZP24=m
  CONFIG_TCG_TIS_ST33ZP24_SPI=m
  CONFIG_TCG_TPM=y
-@@ -10028,11 +9887,9 @@ CONFIG_TCP_MD5SIG=y
+@@ -10027,11 +9887,9 @@ CONFIG_TCP_MD5SIG=y
  CONFIG_TCS3414=m
  CONFIG_TCS3472=m
  CONFIG_TEE=m
@@ -1602,7 +1730,7 @@ index 71e03bc..7140580 100644
  CONFIG_TEGRA_AHB=y
  CONFIG_TEGRA_BPMP=y
  CONFIG_TEGRA_BPMP_THERMAL=m
-@@ -10091,12 +9948,14 @@ CONFIG_TEXTSEARCH_BM=m
+@@ -10090,12 +9948,14 @@ CONFIG_TEXTSEARCH_BM=m
  CONFIG_TEXTSEARCH_FSM=m
  CONFIG_TEXTSEARCH_KMP=m
  # CONFIG_THERMAL_DEFAULT_GOV_FAIR_SHARE is not set
@@ -1617,7 +1745,7 @@ index 71e03bc..7140580 100644
  CONFIG_THERMAL_GOV_STEP_WISE=y
  CONFIG_THERMAL_GOV_USER_SPACE=y
  CONFIG_THERMAL_HWMON=y
-@@ -10142,7 +10001,6 @@ CONFIG_TINYDRM_REPAPER=m
+@@ -10141,7 +10001,6 @@ CONFIG_TINYDRM_REPAPER=m
  CONFIG_TINYDRM_ST7586=m
  CONFIG_TINYDRM_ST7735R=m
  CONFIG_TIPC=m
@@ -1625,7 +1753,7 @@ index 71e03bc..7140580 100644
  CONFIG_TIPC_DIAG=m
  CONFIG_TIPC_MEDIA_IB=y
  CONFIG_TIPC_MEDIA_UDP=y
-@@ -10162,7 +10020,6 @@ CONFIG_TI_AM335X_ADC=m
+@@ -10161,7 +10020,6 @@ CONFIG_TI_AM335X_ADC=m
  CONFIG_TI_CPPI41=m
  CONFIG_TI_CPSW=y
  # CONFIG_TI_CPSW_PHY_SEL is not set
@@ -1633,7 +1761,7 @@ index 71e03bc..7140580 100644
  CONFIG_TI_CPTS=y
  CONFIG_TI_CPTS_MOD=y
  CONFIG_TI_DAC082S085=m
-@@ -10175,10 +10032,8 @@ CONFIG_TI_DMA_CROSSBAR=y
+@@ -10174,10 +10032,8 @@ CONFIG_TI_DMA_CROSSBAR=y
  CONFIG_TI_EDMA=y
  CONFIG_TI_EMIF=m
  CONFIG_TI_EMIF_SRAM=m
@@ -1644,7 +1772,7 @@ index 71e03bc..7140580 100644
  CONFIG_TI_SCI_CLK=m
  # CONFIG_TI_SCI_CLK_PROBE_FROM_FW is not set
  CONFIG_TI_SCI_INTA_IRQCHIP=y
-@@ -10193,7 +10048,6 @@ CONFIG_TI_THERMAL=y
+@@ -10192,7 +10048,6 @@ CONFIG_TI_THERMAL=y
  CONFIG_TI_TLC4541=m
  CONFIG_TLAN=m
  CONFIG_TLS_DEVICE=y
@@ -1652,7 +1780,7 @@ index 71e03bc..7140580 100644
  CONFIG_TMD_HERMES=m
  CONFIG_TMP006=m
  CONFIG_TMP007=m
-@@ -10334,7 +10188,6 @@ CONFIG_TRACER_SNAPSHOT=y
+@@ -10333,7 +10188,6 @@ CONFIG_TRACER_SNAPSHOT=y
  # CONFIG_TRACER_SNAPSHOT_PER_CPU_SWAP is not set
  CONFIG_TRACE_CLOCK=y
  # CONFIG_TRACE_EVAL_MAP_FILE is not set
@@ -1660,7 +1788,7 @@ index 71e03bc..7140580 100644
  CONFIG_TRACE_IRQFLAGS_SUPPORT=y
  CONFIG_TRACE_ROUTER=m
  CONFIG_TRACING=y
-@@ -10384,7 +10237,6 @@ CONFIG_TWL6040_CORE=y
+@@ -10383,7 +10237,6 @@ CONFIG_TWL6040_CORE=y
  CONFIG_TYPEC=m
  CONFIG_TYPEC_DP_ALTMODE=m
  CONFIG_TYPEC_FUSB302=m
@@ -1668,7 +1796,7 @@ index 71e03bc..7140580 100644
  CONFIG_TYPEC_MUX_PI3USB30532=m
  CONFIG_TYPEC_NVIDIA_ALTMODE=m
  CONFIG_TYPEC_RT1711H=m
-@@ -10490,7 +10342,6 @@ CONFIG_USB_CDNS3=m
+@@ -10489,7 +10342,6 @@ CONFIG_USB_CDNS3=m
  CONFIG_USB_CDNS3_GADGET=y
  CONFIG_USB_CDNS3_HOST=y
  CONFIG_USB_CDNS3_PCI_WRAP=m
@@ -1676,7 +1804,7 @@ index 71e03bc..7140580 100644
  CONFIG_USB_CHAOSKEY=m
  CONFIG_USB_CHIPIDEA_HOST=y
  CONFIG_USB_CHIPIDEA_PCI=m
-@@ -10868,7 +10719,6 @@ CONFIG_USB_STORAGE_SDDR55=m
+@@ -10867,7 +10719,6 @@ CONFIG_USB_STORAGE_SDDR55=m
  CONFIG_USB_STORAGE_USBAT=m
  CONFIG_USB_STV06XX=m
  CONFIG_USB_TEGRA_PHY=m
@@ -1684,7 +1812,16 @@ index 71e03bc..7140580 100644
  CONFIG_USB_TEST=m
  CONFIG_USB_TMC=m
  CONFIG_USB_TRANCEVIBRATOR=m
-@@ -10932,9 +10782,7 @@ CONFIG_VALIDATE_FS_PARSER=y
+@@ -10905,7 +10756,7 @@ CONFIG_USB_ZD1201=m
+ CONFIG_USB_ZERO=m
+ # CONFIG_USB_ZERO_HNPTEST is not set
+ CONFIG_USB_ZR364XX=m
+-# CONFIG_USELIB is not set
++CONFIG_USELIB=y
+ CONFIG_USERFAULTFD=y
+ CONFIG_USERIO=m
+ CONFIG_USER_NS=y
+@@ -10931,9 +10782,7 @@ CONFIG_VALIDATE_FS_PARSER=y
  CONFIG_VCNL4000=m
  CONFIG_VCNL4035=m
  CONFIG_VDSO=y
@@ -1694,7 +1831,7 @@ index 71e03bc..7140580 100644
  CONFIG_VETH=m
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VEXPRESS_SYSCFG=y
-@@ -10945,6 +10793,7 @@ CONFIG_VFIO_AMBA=m
+@@ -10944,6 +10793,7 @@ CONFIG_VFIO_AMBA=m
  CONFIG_VFIO_AP=m
  CONFIG_VFIO_CCW=m
  CONFIG_VFIO_IOMMU_SPAPR_TCE=y
@@ -1702,7 +1839,7 @@ index 71e03bc..7140580 100644
  CONFIG_VFIO_MDEV=m
  CONFIG_VFIO_MDEV_DEVICE=m
  CONFIG_VFIO_NOIOMMU=y
-@@ -11069,12 +10918,10 @@ CONFIG_VIDEO_GS1662=m
+@@ -11068,12 +10918,10 @@ CONFIG_VIDEO_GS1662=m
  CONFIG_VIDEO_HDPVR=m
  CONFIG_VIDEO_HEXIUM_GEMINI=m
  CONFIG_VIDEO_HEXIUM_ORION=m
@@ -1715,7 +1852,7 @@ index 71e03bc..7140580 100644
  CONFIG_VIDEO_IMX319=m
  CONFIG_VIDEO_IMX355=m
  CONFIG_VIDEO_IMX7_CSI=m
-@@ -11194,7 +11041,6 @@ CONFIG_VIDEO_STK1160_COMMON=m
+@@ -11193,7 +11041,6 @@ CONFIG_VIDEO_STK1160_COMMON=m
  CONFIG_VIDEO_ST_MIPID02=m
  CONFIG_VIDEO_SUN4I_CSI=m
  CONFIG_VIDEO_SUN6I_CSI=m
@@ -1723,7 +1860,7 @@ index 71e03bc..7140580 100644
  CONFIG_VIDEO_SUNXI=y
  CONFIG_VIDEO_TC358743=m
  CONFIG_VIDEO_TC358743_CEC=y
-@@ -11331,7 +11177,6 @@ CONFIG_W1_SLAVE_DS2408=m
+@@ -11330,7 +11177,6 @@ CONFIG_W1_SLAVE_DS2408=m
  CONFIG_W1_SLAVE_DS2408_READBACK=y
  CONFIG_W1_SLAVE_DS2413=m
  CONFIG_W1_SLAVE_DS2423=m
@@ -1731,7 +1868,7 @@ index 71e03bc..7140580 100644
  CONFIG_W1_SLAVE_DS2431=m
  CONFIG_W1_SLAVE_DS2433=m
  # CONFIG_W1_SLAVE_DS2433_CRC is not set
-@@ -11367,7 +11212,6 @@ CONFIG_WATCHDOG_RTAS=m
+@@ -11366,7 +11212,6 @@ CONFIG_WATCHDOG_RTAS=m
  CONFIG_WATCHDOG_SYSFS=y
  CONFIG_WCN36XX=m
  # CONFIG_WCN36XX_DEBUGFS is not set
@@ -1739,7 +1876,7 @@ index 71e03bc..7140580 100644
  CONFIG_WD80x3=m
  CONFIG_WDAT_WDT=m
  CONFIG_WDT=m
-@@ -11375,7 +11219,6 @@ CONFIG_WEXT_CORE=y
+@@ -11374,7 +11219,6 @@ CONFIG_WEXT_CORE=y
  CONFIG_WEXT_PRIV=y
  CONFIG_WEXT_PROC=y
  CONFIG_WEXT_SPY=y
@@ -1747,7 +1884,7 @@ index 71e03bc..7140580 100644
  CONFIG_WIL6210=m
  CONFIG_WIL6210_DEBUGFS=y
  CONFIG_WIL6210_ISR_COR=y
-@@ -11489,9 +11332,9 @@ CONFIG_X86_INTEL_PSTATE=y
+@@ -11488,9 +11332,9 @@ CONFIG_X86_INTEL_PSTATE=y
  # CONFIG_X86_INTEL_TSX_MODE_AUTO is not set
  CONFIG_X86_INTEL_TSX_MODE_OFF=y
  # CONFIG_X86_INTEL_TSX_MODE_ON is not set
@@ -1758,7 +1895,7 @@ index 71e03bc..7140580 100644
  CONFIG_X86_IO_APIC=y
  CONFIG_X86_L1_CACHE_SHIFT=6
  CONFIG_X86_LEGACY_VM86=y
-@@ -11538,7 +11381,6 @@ CONFIG_X86_SUPPORTS_MEMORY_FAILURE=y
+@@ -11537,7 +11381,6 @@ CONFIG_X86_SUPPORTS_MEMORY_FAILURE=y
  # CONFIG_X86_SYSFB is not set
  CONFIG_X86_THERMAL_VECTOR=y
  CONFIG_X86_TSC=y
@@ -1766,7 +1903,7 @@ index 71e03bc..7140580 100644
  CONFIG_X86_USE_PPRO_CHECKSUM=y
  # CONFIG_X86_UV is not set
  # CONFIG_X86_VERBOSE_BOOTUP is not set
-@@ -11651,7 +11493,6 @@ CONFIG_ZD1211RW=m
+@@ -11650,7 +11493,6 @@ CONFIG_ZD1211RW=m
  CONFIG_ZEROPLUS_FF=y
  CONFIG_ZFCP=m
  CONFIG_ZISOFS=y
@@ -1775,7 +1912,7 @@ index 71e03bc..7140580 100644
  CONFIG_ZONE_DEVICE=y
  CONFIG_ZONE_DMA=y
 diff --git a/debian.master/config/i386/config.common.i386 b/debian.master/config/i386/config.common.i386
-index e427ab2..9c0231a 100644
+index e427ab2ec240..9c0231a51c96 100644
 --- a/debian.master/config/i386/config.common.i386
 +++ b/debian.master/config/i386/config.common.i386
 @@ -61,14 +61,13 @@ CONFIG_CAN=m
@@ -1840,7 +1977,7 @@ index e427ab2..9c0231a 100644
  CONFIG_ZIIRAVE_WATCHDOG=m
 +CONFIG_ZLIB_DEFLATE=y
 diff --git a/debian.master/config/i386/config.flavour.generic b/debian.master/config/i386/config.flavour.generic
-index 5c2e4e1..965113b 100644
+index 5c2e4e1d3a9f..965113b110ce 100644
 --- a/debian.master/config/i386/config.flavour.generic
 +++ b/debian.master/config/i386/config.flavour.generic
 @@ -4,6 +4,5 @@
@@ -1851,7 +1988,7 @@ index 5c2e4e1..965113b 100644
  # CONFIG_PREEMPT is not set
  CONFIG_PREEMPT_VOLUNTARY=y
 diff --git a/debian.master/config/i386/config.flavour.lowlatency b/debian.master/config/i386/config.flavour.lowlatency
-index 6b121e3..0af82e0 100644
+index 6b121e3f433b..0af82e00adce 100644
 --- a/debian.master/config/i386/config.flavour.lowlatency
 +++ b/debian.master/config/i386/config.flavour.lowlatency
 @@ -4,6 +4,5 @@
@@ -1862,7 +1999,7 @@ index 6b121e3..0af82e0 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index b6f7993..94307ed 100644
+index b6f7993b40c1..94307ed49267 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
 +++ b/debian.master/config/ppc64el/config.common.ppc64el
 @@ -64,12 +64,10 @@ CONFIG_COUNTER=m
@@ -1924,7 +2061,7 @@ index b6f7993..94307ed 100644
  CONFIG_ZIIRAVE_WATCHDOG=m
 +CONFIG_ZLIB_DEFLATE=y
 diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index c836912..129d543 100644
+index c8369129a08b..129d5435c975 100644
 --- a/debian.master/config/s390x/config.common.s390x
 +++ b/debian.master/config/s390x/config.common.s390x
 @@ -50,16 +50,15 @@ CONFIG_BPF_JIT_ALWAYS_ON=y
@@ -1983,5 +2120,5 @@ index c836912..129d543 100644
  # CONFIG_ZIIRAVE_WATCHDOG is not set
 +CONFIG_ZLIB_DEFLATE=m
 -- 
-2.7.4
+2.17.1
 

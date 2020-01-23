@@ -1,27 +1,40 @@
-From cc1e8428435bbb7f28ba1e390356e2ca92f31b50 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 17 Jan 2020 14:31:54 -0500
+From 97b36c5563e33d951ab8fbb72ae1b7bd6a1c5727 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 23 Jan 2020 08:32:54 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 8947 +----------------------------------------------
- 1 file changed, 3 insertions(+), 8944 deletions(-)
+ debian.master/changelog | 8960 +--------------------------------------
+ 1 file changed, 3 insertions(+), 8957 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 766584a..6702468 100644
+index 6f0434566b1e..adbf4e690c2e 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,8947 +1,6 @@
--linux-5.5 (5.5.0-5.6) focal; urgency=medium
-+linux (5.4.13-050413.202001171431) unstable; urgency=low
+@@ -1,8960 +1,6 @@
+-linux-5.5 (5.5.0-6.7) focal; urgency=medium
++linux (5.4.14-050414.202001230832) unstable; urgency=low
  
 -  * Miscellaneous Ubuntu changes
+-    - [Packaging] Update ubuntu-regression-suite dependency to python2
+-    - [Packaging] Fix ubuntu-regression-suite python dependency for hwe kernel
 -    - update dkms package versions
-+  Mainline build at commit: v5.4.13
++  Mainline build at commit: v5.4.14
  
 -  [ Upstream Kernel Changes ]
-+ -- Mainline Build <kernel@gloin>  Fri, 17 Jan 2020 14:31:53 -0500
++ -- Mainline Build <kernel@sita>  Thu, 23 Jan 2020 08:32:54 +0000
  
+-  * Rebase to v5.5-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 20 Jan 2020 10:16:01 +0100
+-
+-linux-5.5 (5.5.0-5.6) focal; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-
+-  [ Upstream Kernel Changes ]
+-
 -  * Rebase to v5.5-rc6
 -
 - -- Andrea Righi <andrea.righi@canonical.com>  Mon, 13 Jan 2020 15:50:12 +0100
@@ -8963,5 +8976,5 @@ index 766584a..6702468 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.7.4
+2.17.1
 
