@@ -1,6 +1,6 @@
-From 97b36c5563e33d951ab8fbb72ae1b7bd6a1c5727 Mon Sep 17 00:00:00 2001
+From 77669aba030bc51d0e8a947198c4104d836ac846 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 23 Jan 2020 08:32:54 +0000
+Date: Sun, 26 Jan 2020 10:31:12 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 8957 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 6f0434566b1e..adbf4e690c2e 100644
+index 6f0434566b1e..e1465cb79007 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,8960 +1,6 @@
 -linux-5.5 (5.5.0-6.7) focal; urgency=medium
-+linux (5.4.14-050414.202001230832) unstable; urgency=low
++linux (5.4.15-050415.202001261031) unstable; urgency=low
  
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] Update ubuntu-regression-suite dependency to python2
 -    - [Packaging] Fix ubuntu-regression-suite python dependency for hwe kernel
 -    - update dkms package versions
-+  Mainline build at commit: v5.4.14
++  Mainline build at commit: v5.4.15
  
 -  [ Upstream Kernel Changes ]
-+ -- Mainline Build <kernel@sita>  Thu, 23 Jan 2020 08:32:54 +0000
++ -- Mainline Build <kernel@sita>  Sun, 26 Jan 2020 10:31:12 +0000
  
 -  * Rebase to v5.5-rc7
 -

@@ -1,6 +1,6 @@
-From 04af16bd98c9998ae0a606c12b80b641835c2906 Mon Sep 17 00:00:00 2001
+From 26e09c1ec8d4c22f29bc527f62ca789508463708 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 23 Jan 2020 08:33:30 +0000
+Date: Sun, 26 Jan 2020 10:31:49 +0000
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.4.0-8.11)
 
 ---
