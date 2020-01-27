@@ -40,18 +40,6 @@ do
 done
 echo -e " "
 echo -e "${RED}***************${NC}"
-echo -e "Clearlinux patches"
-echo -e "${RED}***************${NC}"
-echo -e " "
-for each in $DIR/clearlinux-patches/0*.patch
-do
-        echo -e "${RED}***************"
-        echo -e "Applying patch: $(basename $each)"
-        echo -e "***************${NC}"
-        patch -p1 < $each
-done
-echo -e " "
-echo -e "${RED}***************${NC}"
 echo -e "Futex patches"
 echo -e "${RED}***************${NC}"
 echo -e " "

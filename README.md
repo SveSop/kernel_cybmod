@@ -1,38 +1,36 @@
-## Cybmod patches for 5.4 kernel  
+## Cybmod patches for 5.5 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.5.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.5.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.4.15  
-0001 : PDS kernel scheduler  
-0002 : TK-Glitch PDS patches  
-0003 : 5.4 Graysky's CPU patches  
+0001 : BMQ v5.5-r0 patch  
+0002 : AUFS filesystem patch  
+0003 : 5.5 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
-0005 : AUFS filesystem patch  
+0005 : MM address space tweak  
 0006 : MM address space tweak  
 0010 : Cake_Qdisc_default.patch  
 0011 : zswap-tweaks.patch  
 0012 : Swap tuning  
 0013 : revert_acpi_change_for_nct6775.patch  
-0014 : Set rq_afinnity = 2 for full multithreading I/O  
-0015 : kbuild: reuse intermediate linker scripts in the final link steps  
+0014 : kbuild: reuse intermediate linker scripts in the final link steps  
+0015 : ClearLinux patches  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 ubuntu : Ubuntu kernel patchset  
 bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.4/bfq-patches-sep)  
-clearlinux-patches : Collection of "Clearlinux" patches aimed at Intel processors  
 futex-patches : Collection of "futex" patches for Wine  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has PDS 0.99o "undead" CPU scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**This config has BMQ v5.5-r0 CPU scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.4.tar.xz    
-cd linux-5.4  
+tar xf linux-5.5.tar.xz    
+cd linux-5.5  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```

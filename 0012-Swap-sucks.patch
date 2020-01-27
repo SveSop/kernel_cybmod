@@ -8,10 +8,10 @@ Subject: [PATCH 15/17] Swap sucks.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 910e02c793ff..b55e217a15ba 100644
+index 572fb17c6..9764e7be2 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -164,7 +164,7 @@ struct scan_control {
+@@ -177,7 +177,7 @@ struct scan_control {
  /*
   * From 0 .. 100.  Higher means more swappy.
   */
@@ -21,5 +21,5 @@ index 910e02c793ff..b55e217a15ba 100644
   * The total number of pages which are beyond the high watermark within all
   * zones.
 -- 
-2.19.1
+2.17.1
 

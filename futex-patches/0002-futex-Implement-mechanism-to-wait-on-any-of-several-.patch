@@ -1,4 +1,4 @@
-From 29f2d000336a9172973e4cd3269b9b8def68708a Mon Sep 17 00:00:00 2001
+From 52d022bb1aa34f3d5e8e6e7c7dd68d8cc617dcb9 Mon Sep 17 00:00:00 2001
 From: Gabriel Krisman Bertazi <krisman@collabora.com>
 Date: Tue, 30 Jul 2019 18:06:02 -0400
 Subject: [PATCH 2/3] futex: Implement mechanism to wait on any of several
@@ -89,7 +89,7 @@ index a89eb0acc..2401c4cf5 100644
 +
  #endif /* _UAPI_LINUX_FUTEX_H */
 diff --git a/kernel/futex.c b/kernel/futex.c
-index 69e878694..329197edc 100644
+index a9523a03b..02dc222a4 100644
 --- a/kernel/futex.c
 +++ b/kernel/futex.c
 @@ -183,6 +183,7 @@ static int  __read_mostly futex_cmpxchg_enabled;
@@ -100,7 +100,7 @@ index 69e878694..329197edc 100644
  
  /*
   * Priority Inheritance state:
-@@ -2795,6 +2796,150 @@ static int futex_wait_setup(u32 __user *uaddr, u32 val, unsigned int flags,
+@@ -2796,6 +2797,150 @@ static int futex_wait_setup(u32 __user *uaddr, u32 val, unsigned int flags,
  	return ret;
  }
  
@@ -251,7 +251,7 @@ index 69e878694..329197edc 100644
  static int futex_wait(u32 __user *uaddr, unsigned int flags, u32 val,
  		      ktime_t *abs_time, u32 bitset)
  {
-@@ -2872,6 +3017,10 @@ static long futex_wait_restart(struct restart_block *restart)
+@@ -2873,6 +3018,10 @@ static long futex_wait_restart(struct restart_block *restart)
  	}
  	restart->fn = do_no_restart_syscall;
  
@@ -262,7 +262,7 @@ index 69e878694..329197edc 100644
  	return (long)futex_wait(uaddr, restart->futex.flags,
  				restart->futex.val, tp, restart->futex.bitset);
  }
-@@ -3915,6 +4064,8 @@ long do_futex(u32 __user *uaddr, int op, u32 val, ktime_t *timeout,
+@@ -3916,6 +4065,8 @@ long do_futex(u32 __user *uaddr, int op, u32 val, ktime_t *timeout,
  					     uaddr2);
  	case FUTEX_CMP_REQUEUE_PI:
  		return futex_requeue(uaddr, flags, uaddr2, val, val2, &val3, 1);
@@ -271,7 +271,7 @@ index 69e878694..329197edc 100644
  	}
  	return -ENOSYS;
  }
-@@ -3931,7 +4082,8 @@ SYSCALL_DEFINE6(futex, u32 __user *, uaddr, int, op, u32, val,
+@@ -3932,7 +4083,8 @@ SYSCALL_DEFINE6(futex, u32 __user *, uaddr, int, op, u32, val,
  
  	if (utime && (cmd == FUTEX_WAIT || cmd == FUTEX_LOCK_PI ||
  		      cmd == FUTEX_WAIT_BITSET ||
@@ -281,7 +281,7 @@ index 69e878694..329197edc 100644
  		if (unlikely(should_fail_futex(!(op & FUTEX_PRIVATE_FLAG))))
  			return -EFAULT;
  		if (get_timespec64(&ts, utime))
-@@ -3940,7 +4092,7 @@ SYSCALL_DEFINE6(futex, u32 __user *, uaddr, int, op, u32, val,
+@@ -3941,7 +4093,7 @@ SYSCALL_DEFINE6(futex, u32 __user *, uaddr, int, op, u32, val,
  			return -EINVAL;
  
  		t = timespec64_to_ktime(ts);
@@ -290,7 +290,7 @@ index 69e878694..329197edc 100644
  			t = ktime_add_safe(ktime_get(), t);
  		tp = &t;
  	}
-@@ -4125,14 +4277,15 @@ SYSCALL_DEFINE6(futex_time32, u32 __user *, uaddr, int, op, u32, val,
+@@ -4126,14 +4278,15 @@ SYSCALL_DEFINE6(futex_time32, u32 __user *, uaddr, int, op, u32, val,
  
  	if (utime && (cmd == FUTEX_WAIT || cmd == FUTEX_LOCK_PI ||
  		      cmd == FUTEX_WAIT_BITSET ||
@@ -309,5 +309,5 @@ index 69e878694..329197edc 100644
  		tp = &t;
  	}
 -- 
-2.24.0.155.gd9f6f3b619
+2.25.0.2.g232378479e.dirty
 

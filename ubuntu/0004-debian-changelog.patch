@@ -1,28 +1,28 @@
-From 77669aba030bc51d0e8a947198c4104d836ac846 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 26 Jan 2020 10:31:12 +0000
+From 3429868abdfa81f6e039e73a665948168f8756a8 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 26 Jan 2020 20:30:59 -0500
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 8960 +--------------------------------------
+ debian.master/changelog | 8960 +----------------------------------------------
  1 file changed, 3 insertions(+), 8957 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 6f0434566b1e..e1465cb79007 100644
+index 6f04345..0d7c625 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,8960 +1,6 @@
 -linux-5.5 (5.5.0-6.7) focal; urgency=medium
-+linux (5.4.15-050415.202001261031) unstable; urgency=low
++linux (5.5.0-050500.202001262030) unstable; urgency=low
  
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] Update ubuntu-regression-suite dependency to python2
 -    - [Packaging] Fix ubuntu-regression-suite python dependency for hwe kernel
 -    - update dkms package versions
-+  Mainline build at commit: v5.4.15
++  Mainline build at commit: v5.5
  
 -  [ Upstream Kernel Changes ]
-+ -- Mainline Build <kernel@sita>  Sun, 26 Jan 2020 10:31:12 +0000
++ -- Mainline Build <kernel@tangerine>  Sun, 26 Jan 2020 20:30:59 -0500
  
 -  * Rebase to v5.5-rc7
 -
@@ -8976,5 +8976,5 @@ index 6f0434566b1e..e1465cb79007 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.17.1
+2.7.4
 

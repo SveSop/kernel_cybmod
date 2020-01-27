@@ -1,0 +1,190 @@
+From 44966723714086e3eff60d154619a572580137e4 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Mon, 27 Jan 2020 19:01:30 +0100
+Subject: [PATCH] Cybmod tweaks
+
+---
+ drivers/infiniband/core/addr.c              |  1 +
+ drivers/input/mouse/synaptics.c             |  4 +++-
+ drivers/input/mouse/synaptics.h             |  1 +
+ drivers/net/ethernet/intel/e1000e/defines.h |  3 ---
+ drivers/net/ethernet/intel/e1000e/netdev.c  | 18 +-----------------
+ fs/dcache.c                                 |  2 +-
+ include/linux/blkdev.h                      |  3 ++-
+ include/linux/mm.h                          |  3 +--
+ kernel/sched/core.c                         |  6 +++---
+ mm/page_alloc.c                             |  2 +-
+ 10 files changed, 14 insertions(+), 29 deletions(-)
+
+diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
+index 606fa6d86..70a2cad05 100644
+--- a/drivers/infiniband/core/addr.c
++++ b/drivers/infiniband/core/addr.c
+@@ -816,6 +816,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
+ 	union {
+ 		struct sockaddr_in  _sockaddr_in;
+ 		struct sockaddr_in6 _sockaddr_in6;
++		struct sockaddr_ib  _sockaddr_ib;
+ 	} sgid_addr, dgid_addr;
+ 	int ret;
+ 
+diff --git a/drivers/input/mouse/synaptics.c b/drivers/input/mouse/synaptics.c
+index 1ae6f8bba..d87523f5c 100644
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -1343,7 +1343,9 @@ static int set_input_params(struct psmouse *psmouse,
+ 		if (psmouse_matches_pnp_id(psmouse, topbuttonpad_pnp_ids) &&
+ 		    !SYN_CAP_EXT_BUTTONS_STICK(info->ext_cap_10))
+ 			__set_bit(INPUT_PROP_TOPBUTTONPAD, dev->propbit);
+-	}
++	} else if (SYN_CAP_CLICKPAD2BTN(info->ext_cap_0c) ||
++		   SYN_CAP_CLICKPAD2BTN2(info->ext_cap_0c))
++		__set_bit(INPUT_PROP_BUTTONPAD, dev->propbit);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/input/mouse/synaptics.h b/drivers/input/mouse/synaptics.h
+index 08533d1b1..e85f840a2 100644
+--- a/drivers/input/mouse/synaptics.h
++++ b/drivers/input/mouse/synaptics.h
+@@ -83,6 +83,7 @@
+  */
+ #define SYN_CAP_CLICKPAD(ex0c)		((ex0c) & BIT(20)) /* 1-button ClickPad */
+ #define SYN_CAP_CLICKPAD2BTN(ex0c)	((ex0c) & BIT(8))  /* 2-button ClickPad */
++#define SYN_CAP_CLICKPAD2BTN2(ex0c)	((ex0c) & BIT(21)) /* 2-button ClickPad */
+ #define SYN_CAP_MAX_DIMENSIONS(ex0c)	((ex0c) & BIT(17))
+ #define SYN_CAP_MIN_DIMENSIONS(ex0c)	((ex0c) & BIT(13))
+ #define SYN_CAP_ADV_GESTURE(ex0c)	((ex0c) & BIT(19))
+diff --git a/drivers/net/ethernet/intel/e1000e/defines.h b/drivers/net/ethernet/intel/e1000e/defines.h
+index 63c3c7938..fd550dee4 100644
+--- a/drivers/net/ethernet/intel/e1000e/defines.h
++++ b/drivers/net/ethernet/intel/e1000e/defines.h
+@@ -222,9 +222,6 @@
+ #define E1000_STATUS_PHYRA      0x00000400      /* PHY Reset Asserted */
+ #define E1000_STATUS_GIO_MASTER_ENABLE	0x00080000	/* Master Req status */
+ 
+-/* PCIm function state */
+-#define E1000_STATUS_PCIM_STATE	0x40000000
+-
+ #define HALF_DUPLEX 1
+ #define FULL_DUPLEX 2
+ 
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index 7c5b18d87..7b0575658 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -5176,9 +5176,8 @@ static void e1000_watchdog_task(struct work_struct *work)
+ 	struct e1000_mac_info *mac = &adapter->hw.mac;
+ 	struct e1000_phy_info *phy = &adapter->hw.phy;
+ 	struct e1000_ring *tx_ring = adapter->tx_ring;
+-	u32 dmoff_exit_timeout = 100, tries = 0;
+ 	struct e1000_hw *hw = &adapter->hw;
+-	u32 link, tctl, pcim_state;
++	u32 link, tctl;
+ 
+ 	if (test_bit(__E1000_DOWN, &adapter->state))
+ 		return;
+@@ -5203,21 +5202,6 @@ static void e1000_watchdog_task(struct work_struct *work)
+ 			/* Cancel scheduled suspend requests. */
+ 			pm_runtime_resume(netdev->dev.parent);
+ 
+-			/* Checking if MAC is in DMoff state*/
+-			pcim_state = er32(STATUS);
+-			while (pcim_state & E1000_STATUS_PCIM_STATE) {
+-				if (tries++ == dmoff_exit_timeout) {
+-					e_dbg("Error in exiting dmoff\n");
+-					break;
+-				}
+-				usleep_range(10000, 20000);
+-				pcim_state = er32(STATUS);
+-
+-				/* Checking if MAC exited DMoff state */
+-				if (!(pcim_state & E1000_STATUS_PCIM_STATE))
+-					e1000_phy_hw_reset(&adapter->hw);
+-			}
+-
+ 			/* update snapshot of PHY registers on LSC */
+ 			e1000_phy_read_status(adapter);
+ 			mac->ops.get_link_up_info(&adapter->hw,
+diff --git a/fs/dcache.c b/fs/dcache.c
+index 15aa871d1..ca7d5fcc8 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -71,7 +71,7 @@
+  * If no ancestor relationship:
+  * arbitrary, since it's serialized on rename_lock
+  */
+-int sysctl_vfs_cache_pressure __read_mostly = 100;
++int sysctl_vfs_cache_pressure __read_mostly = 50;
+ EXPORT_SYMBOL_GPL(sysctl_vfs_cache_pressure);
+ 
+ __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 4c636c42a..d0e089ba4 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -614,7 +614,8 @@ struct request_queue {
+ #define QUEUE_FLAG_RQ_ALLOC_TIME 27	/* record rq->alloc_time_ns */
+ 
+ #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
+-				 (1 << QUEUE_FLAG_SAME_COMP))
++				 (1 << QUEUE_FLAG_SAME_COMP)	|	\
++				 (1 << QUEUE_FLAG_SAME_FORCE))
+ 
+ void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
+ void blk_queue_flag_clear(unsigned int flag, struct request_queue *q);
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index cc0c6949a..71b93f85c 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -193,8 +193,7 @@ static inline void __mm_zero_struct_page(struct page *page)
+  * not a hard limit any more. Although some userspace tools can be surprised by
+  * that.
+  */
+-#define MAPCOUNT_ELF_CORE_MARGIN	(5)
+-#define DEFAULT_MAX_MAP_COUNT	(USHRT_MAX - MAPCOUNT_ELF_CORE_MARGIN)
++#define DEFAULT_MAX_MAP_COUNT	(262144)
+ 
+ extern int sysctl_max_map_count;
+ 
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 90e4b00ac..307683979 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
+  * Number of tasks to iterate in a single balance run.
+  * Limited because this is done with IRQs disabled.
+  */
+-const_debug unsigned int sysctl_sched_nr_migrate = 32;
++const_debug unsigned int sysctl_sched_nr_migrate = 128;
+ 
+ /*
+  * period over which we measure -rt task CPU usage in us.
+@@ -69,9 +69,9 @@ __read_mostly int scheduler_running;
+ 
+ /*
+  * part of the period that we allow rt tasks to run in us.
+- * default: 0.95s
++ * tweaked: 0.98s
+  */
+-int sysctl_sched_rt_runtime = 950000;
++int sysctl_sched_rt_runtime = 980000;
+ 
+ /*
+  * __task_rq_lock - lock the rq @p resides on.
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index d047bf7d8..c3b0bb717 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -329,7 +329,7 @@ int watermark_boost_factor __read_mostly;
+ #else
+ int watermark_boost_factor __read_mostly = 15000;
+ #endif
+-int watermark_scale_factor = 10;
++int watermark_scale_factor = 200;
+ 
+ static unsigned long nr_kernel_pages __initdata;
+ static unsigned long nr_all_pages __initdata;
+-- 
+2.17.1
+

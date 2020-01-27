@@ -1,4 +1,4 @@
-From 805b037f7887f5d39c47321578f818d8dde52b00 Mon Sep 17 00:00:00 2001
+From f78f365d4da06a1bfab17cd1c0a82f2db32724a2 Mon Sep 17 00:00:00 2001
 From: Gabriel Krisman Bertazi <krisman@collabora.com>
 Date: Wed, 17 Jul 2019 14:28:26 -0400
 Subject: [PATCH 3/3] futex: Change WAIT_MULTIPLE opcode to 31
@@ -22,5 +22,5 @@ index 2401c4cf5..c34e52e0f 100644
  #define FUTEX_PRIVATE_FLAG	128
  #define FUTEX_CLOCK_REALTIME	256
 -- 
-2.24.0.155.gd9f6f3b619
+2.25.0.2.g232378479e.dirty
 
