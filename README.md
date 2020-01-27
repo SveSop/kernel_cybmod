@@ -9,7 +9,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0003 : 5.5 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
 0005 : MM address space tweak  
-0006 : MM address space tweak  
+0006 : Various kernel tweaks patch  
 0010 : Cake_Qdisc_default.patch  
 0011 : zswap-tweaks.patch  
 0012 : Swap tuning  
