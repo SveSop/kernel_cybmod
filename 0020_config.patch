@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10571 @@
+@@ -0,0 +1,10564 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.5.0-cybmod1 Kernel Configuration
++# Linux/x86 5.5.1-cybmod2 Kernel Configuration
 +#
 +
 +#
@@ -10094,14 +10094,7 @@ new file mode 100644
 +#
 +# Library routines
 +#
-+
-+#
-+# RAID 6
-+#
 +CONFIG_RAID6_PQ=m
-+# CONFIG_RAID6_FORCE_ALGO is not set
-+# end of RAID 6
-+
 +CONFIG_RAID6_PQ_BENCHMARK=y
 +CONFIG_PACKING=y
 +CONFIG_BITREVERSE=y
