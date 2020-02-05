@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10564 @@
+@@ -0,0 +1,10558 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.5.1-cybmod2 Kernel Configuration
++# Linux/x86 5.5.2-cybmod3 Kernel Configuration
 +#
 +
 +#
@@ -153,7 +153,6 @@ new file mode 100644
 +# Scheduler features
 +#
 +CONFIG_SCHED_BMQ=y
-+CONFIG_SCHED_TIMESLICE=2
 +# end of Scheduler features
 +
 +CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
@@ -8372,13 +8371,6 @@ new file mode 100644
 +CONFIG_UWB_HWA=m
 +CONFIG_UWB_WHCI=m
 +CONFIG_UWB_I1480U=m
-+CONFIG_EXFAT_FS=m
-+CONFIG_EXFAT_DISCARD=y
-+# CONFIG_EXFAT_DELAYED_SYNC is not set
-+# CONFIG_EXFAT_KERNEL_DEBUG is not set
-+# CONFIG_EXFAT_DEBUG_MSG is not set
-+CONFIG_EXFAT_DEFAULT_CODEPAGE=437
-+CONFIG_EXFAT_DEFAULT_IOCHARSET="utf8"
 +CONFIG_QLGE=m
 +CONFIG_NET_VENDOR_HP=y
 +CONFIG_HP100=m
@@ -9442,7 +9434,7 @@ new file mode 100644
 +# end of CD-ROM/DVD Filesystems
 +
 +#
-+# DOS/FAT/NT Filesystems
++# DOS/FAT/EXFAT/NT Filesystems
 +#
 +CONFIG_FAT_FS=y
 +CONFIG_MSDOS_FS=m
@@ -9450,10 +9442,12 @@ new file mode 100644
 +CONFIG_FAT_DEFAULT_CODEPAGE=437
 +CONFIG_FAT_DEFAULT_IOCHARSET="iso8859-1"
 +# CONFIG_FAT_DEFAULT_UTF8 is not set
++CONFIG_EXFAT_FS=m
++CONFIG_EXFAT_DEFAULT_IOCHARSET="utf8"
 +CONFIG_NTFS_FS=m
 +# CONFIG_NTFS_DEBUG is not set
 +# CONFIG_NTFS_RW is not set
-+# end of DOS/FAT/NT Filesystems
++# end of DOS/FAT/EXFAT/NT Filesystems
 +
 +#
 +# Pseudo filesystems

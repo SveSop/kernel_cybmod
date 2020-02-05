@@ -1,6 +1,6 @@
-From 627f631dc0e8be367cf49cd5f4955ddfcc17f8de Mon Sep 17 00:00:00 2001
+From 28715064dce2e88db398481ef2e37a7306fd9f53 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 1 Feb 2020 10:32:21 +0000
+Date: Tue, 4 Feb 2020 19:31:12 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 9005 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 32fb10d277de..b5abb0bb2867 100644
+index 32fb10d277de..53255999016a 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,9008 +1,6 @@
 -linux-5.5 (5.5.0-7.8) focal; urgency=medium
-+linux (5.5.1-050501.202002011032) unstable; urgency=low
++linux (5.5.2-050502.202002041931) unstable; urgency=low
  
 -  * CONFIG_USELIB should be disabled (LP: #1855341)
 -    - [Config] Disable the uselib system call
-+  Mainline build at commit: v5.5.1
++  Mainline build at commit: v5.5.2
  
 -  * CONFIG_LEGACY_PTYS should be disabled (LP: #1855339)
 -    - [Config] Disable legacy PTY naming
-+ -- Mainline Build <kernel@sita>  Sat, 01 Feb 2020 10:32:21 +0000
++ -- Mainline Build <kernel@sita>  Tue, 04 Feb 2020 19:31:12 +0000
  
 -  * CONFIG_IO_STRICT_DEVMEM should be enabled (LP: #1855338)
 -    - [Config] Enforce filtered access to iomem

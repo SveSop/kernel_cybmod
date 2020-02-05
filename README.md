@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.5.1  
+0000 : Kernel patch 5.5.2  
 0001 : BMQ v5.5-r0 patch  
 0002 : AUFS filesystem patch  
 0003 : 5.5 Graysky's CPU patches  
@@ -19,6 +19,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0015 : ClearLinux patches  
 0016 : Kbuild: Add fcf-protection-none to retpoline flags  
 0017 : Trace: Add trace events for open-exec-use  
+0018 : ALSA-Hda fix for NVIDIA codecs  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 ubuntu : Ubuntu kernel patchset  

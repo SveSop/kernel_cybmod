@@ -16,10 +16,10 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index b2ed8e537..f7617070e 100644
+index 86f8619a9..3a4e16564 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1249,7 +1249,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
+@@ -1242,7 +1242,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
  
  config CC_OPTIMIZE_FOR_PERFORMANCE_O3
  	bool "Optimize more for performance (-O3)"
