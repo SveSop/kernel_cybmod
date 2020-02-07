@@ -2,7 +2,7 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10558 @@
+@@ -0,0 +1,10553 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
 +# Linux/x86 5.5.2-cybmod3 Kernel Configuration
@@ -8565,7 +8565,7 @@ new file mode 100644
 +CONFIG_RPMSG_VIRTIO=m
 +# end of Rpmsg drivers
 +
-+CONFIG_SOUNDWIRE=y
++CONFIG_SOUNDWIRE=m
 +
 +#
 +# SoundWire Devices
@@ -10233,12 +10233,7 @@ new file mode 100644
 +#
 +# Compile-time checks and compiler options
 +#
-+CONFIG_DEBUG_INFO=y
-+# CONFIG_DEBUG_INFO_REDUCED is not set
-+# CONFIG_DEBUG_INFO_SPLIT is not set
-+CONFIG_DEBUG_INFO_DWARF4=y
-+# CONFIG_DEBUG_INFO_BTF is not set
-+CONFIG_GDB_SCRIPTS=y
++# CONFIG_DEBUG_INFO is not set
 +# CONFIG_ENABLE_MUST_CHECK is not set
 +CONFIG_FRAME_WARN=1024
 +# CONFIG_STRIP_ASM_SYMS is not set
@@ -10366,14 +10361,14 @@ new file mode 100644
 +#
 +# Debug kernel data structures
 +#
-+# CONFIG_DEBUG_LIST is not set
++CONFIG_DEBUG_LIST=y
 +# CONFIG_DEBUG_PLIST is not set
-+# CONFIG_DEBUG_SG is not set
-+# CONFIG_DEBUG_NOTIFIERS is not set
++CONFIG_DEBUG_SG=y
++CONFIG_DEBUG_NOTIFIERS=y
 +# CONFIG_BUG_ON_DATA_CORRUPTION is not set
 +# end of Debug kernel data structures
 +
-+# CONFIG_DEBUG_CREDENTIALS is not set
++CONFIG_DEBUG_CREDENTIALS=y
 +
 +#
 +# RCU Debugging

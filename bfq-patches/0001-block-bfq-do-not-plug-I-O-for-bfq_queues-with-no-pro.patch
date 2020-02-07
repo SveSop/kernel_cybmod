@@ -1,7 +1,7 @@
-From 18e7c84d04dc7596913cad1063a009758df77a15 Mon Sep 17 00:00:00 2001
+From c6df9ff2d068672b17d92ad6d6b93ade3c044372 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
-Date: Fri, 31 Jan 2020 10:24:04 +0100
-Subject: [PATCH 1/6] block, bfq: do not plug I/O for bfq_queues with no proc
+Date: Mon, 3 Feb 2020 11:40:54 +0100
+Subject: [PATCH 1/7] block, bfq: do not plug I/O for bfq_queues with no proc
  refs
 
 Commit 478de3380c1c ("block, bfq: deschedule empty bfq_queues not
@@ -21,15 +21,17 @@ plugged for the in-service bfq_queue, if the latter has no process
 reference (the bfq_queue is then prevented from remaining in service).
 
 Fixes: 3726112ec731 ("block, bfq: re-schedule empty queues if they deserve I/O plugging")
+Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 Reported-by: Patrick Dung <patdung100@gmail.com>
 Tested-by: Patrick Dung <patdung100@gmail.com>
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 ---
  block/bfq-iosched.c | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 4686b68b48b4..55d4328e7c12 100644
+index 4686b68b4..55d4328e7 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -3443,6 +3443,10 @@ static void bfq_dispatch_remove(struct request_queue *q, struct request *rq)
@@ -66,5 +68,5 @@ index 4686b68b48b4..55d4328e7c12 100644
  		return true;
  
 -- 
-2.25.0.24.gbc7a3d4dc0.dirty
+2.25.0.114.g5b0ca878e0.dirty
 

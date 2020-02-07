@@ -1,7 +1,7 @@
-From 9560827806113da580d5033ccbed8f9b65a04623 Mon Sep 17 00:00:00 2001
+From d774e9deb7227260b1de7d2a8f0c15370f309989 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
-Date: Fri, 31 Jan 2020 10:24:06 +0100
-Subject: [PATCH 3/6] block, bfq: get extra ref to prevent a queue from being
+Date: Mon, 3 Feb 2020 11:40:56 +0100
+Subject: [PATCH 3/7] block, bfq: get extra ref to prevent a queue from being
  freed during a group move
 
 In bfq_bfqq_move(), the bfq_queue, say Q, to be moved to a new group
@@ -15,13 +15,15 @@ the possible deactivation, and releasing this extra reference after Q
 has been moved.
 
 Tested-by: Chris Evich <cevich@redhat.com>
+Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 ---
  block/bfq-cgroup.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
-index e1419edde2ec..8ab7f18ff8cb 100644
+index e1419edde..8ab7f18ff 100644
 --- a/block/bfq-cgroup.c
 +++ b/block/bfq-cgroup.c
 @@ -651,6 +651,12 @@ void bfq_bfqq_move(struct bfq_data *bfqd, struct bfq_queue *bfqq,
@@ -47,5 +49,5 @@ index e1419edde2ec..8ab7f18ff8cb 100644
  
  /**
 -- 
-2.25.0.24.gbc7a3d4dc0.dirty
+2.25.0.114.g5b0ca878e0.dirty
 

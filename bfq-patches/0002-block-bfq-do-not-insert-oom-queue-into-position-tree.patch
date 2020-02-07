@@ -1,7 +1,7 @@
-From 0d3dbdaab7ecbc146baa32e407de04e0d8d7d737 Mon Sep 17 00:00:00 2001
+From 75a584d37c1f90609e4130a5da60ca56bccf26f7 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
-Date: Fri, 31 Jan 2020 10:24:05 +0100
-Subject: [PATCH 2/6] block, bfq: do not insert oom queue into position tree
+Date: Mon, 3 Feb 2020 11:40:55 +0100
+Subject: [PATCH 2/7] block, bfq: do not insert oom queue into position tree
 
 BFQ maintains an ordered list, implemented with an RB tree, of
 head-request positions of non-empty bfq_queues. This position tree,
@@ -17,13 +17,15 @@ out-of-memory situation. This commit prevents the oom bfq_queue from
 being inserted into the position tree.
 
 Tested-by: Patrick Dung <patdung100@gmail.com>
+Tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 ---
  block/bfq-iosched.c | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 55d4328e7c12..15dfb0844644 100644
+index 55d4328e7..15dfb0844 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -613,6 +613,10 @@ bfq_pos_tree_add_move(struct bfq_data *bfqd, struct bfq_queue *bfqq)
@@ -38,5 +40,5 @@ index 55d4328e7c12..15dfb0844644 100644
  	 * bfqq cannot be merged any longer (see comments in
  	 * bfq_setup_cooperator): no point in adding bfqq into the
 -- 
-2.25.0.24.gbc7a3d4dc0.dirty
+2.25.0.114.g5b0ca878e0.dirty
 
