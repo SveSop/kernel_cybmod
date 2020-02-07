@@ -1,6 +1,6 @@
-From 44966723714086e3eff60d154619a572580137e4 Mon Sep 17 00:00:00 2001
+From 1553bcf3a1f7f1c64e739c336f3f3c91b9c692ea Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Mon, 27 Jan 2020 19:01:30 +0100
+Date: Fri, 7 Feb 2020 19:23:34 +0100
 Subject: [PATCH] Cybmod tweaks
 
 ---
@@ -12,9 +12,12 @@ Subject: [PATCH] Cybmod tweaks
  fs/dcache.c                                 |  2 +-
  include/linux/blkdev.h                      |  3 ++-
  include/linux/mm.h                          |  3 +--
+ init/Kconfig                                |  2 +-
+ kernel/sched/Makefile                       |  2 +-
  kernel/sched/core.c                         |  6 +++---
+ kernel/sched/pds.c                          | 17 ++++++++++++++++-
  mm/page_alloc.c                             |  2 +-
- 10 files changed, 14 insertions(+), 29 deletions(-)
+ 13 files changed, 32 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
 index 606fa6d86..70a2cad05 100644
@@ -147,6 +150,45 @@ index cc0c6949a..71b93f85c 100644
  
  extern int sysctl_max_map_count;
  
+diff --git a/init/Kconfig b/init/Kconfig
+index 965aa713c..870ae0056 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -716,6 +716,7 @@ menu "Scheduler features"
+ config UCLAMP_TASK
+ 	bool "Enable utilization clamping for RT/FAIR tasks"
+ 	depends on CPU_FREQ_GOV_SCHEDUTIL
++	depends on !SCHED_PDS
+ 	help
+ 	  This feature enables the scheduler to track the clamped utilization
+ 	  of each CPU based on RUNNABLE tasks scheduled on that CPU.
+@@ -1033,7 +1034,6 @@ config CGROUP_DEVICE
+ 
+ config CGROUP_CPUACCT
+ 	bool "Simple CPU accounting controller"
+-	depends on !SCHED_PDS
+ 	help
+ 	  Provides a simple controller for monitoring the
+ 	  total CPU consumed by the tasks in a cgroup.
+diff --git a/kernel/sched/Makefile b/kernel/sched/Makefile
+index 8ebe4e33f..55ba1d4a9 100644
+--- a/kernel/sched/Makefile
++++ b/kernel/sched/Makefile
+@@ -24,13 +24,13 @@ obj-y += fair.o rt.o deadline.o
+ obj-$(CONFIG_SMP) += cpudeadline.o topology.o stop_task.o
+ obj-$(CONFIG_SCHED_AUTOGROUP) += autogroup.o
+ obj-$(CONFIG_SCHED_DEBUG) += debug.o
+-obj-$(CONFIG_CGROUP_CPUACCT) += cpuacct.o
+ endif
+ obj-y += loadavg.o clock.o cputime.o
+ obj-y += idle.o
+ obj-y += wait.o wait_bit.o swait.o completion.o
+ obj-$(CONFIG_SMP) += cpupri.o pelt.o
+ obj-$(CONFIG_SCHEDSTATS) += stats.o
++obj-$(CONFIG_CGROUP_CPUACCT) += cpuacct.o
+ obj-$(CONFIG_CPU_FREQ) += cpufreq.o
+ obj-$(CONFIG_CPU_FREQ_GOV_SCHEDUTIL) += cpufreq_schedutil.o
+ obj-$(CONFIG_MEMBARRIER) += membarrier.o
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
 index 90e4b00ac..307683979 100644
 --- a/kernel/sched/core.c
@@ -172,6 +214,41 @@ index 90e4b00ac..307683979 100644
  
  /*
   * __task_rq_lock - lock the rq @p resides on.
+diff --git a/kernel/sched/pds.c b/kernel/sched/pds.c
+index eaa1edbdb..7c592046f 100644
+--- a/kernel/sched/pds.c
++++ b/kernel/sched/pds.c
+@@ -82,6 +82,18 @@ enum {
+ 	NR_CPU_AFFINITY_CHK_LEVEL
+ };
+ 
++/*
++ * This allows printing both to /proc/sched_debug and
++ * to the console
++ */
++#define SEQ_printf(m, x...)			\
++ do {						\
++	if (m)					\
++		seq_printf(m, x);		\
++	else					\
++		pr_cont(x);			\
++ } while (0)
++
+ static inline void print_scheduler_version(void)
+ {
+ 	printk(KERN_INFO "pds: PDS-mq CPU Scheduler 0.99o by Alfred Chen and kept alive artificially by Tk-Glitch.\n");
+@@ -6399,7 +6411,10 @@ void ia64_set_curr_task(int cpu, struct task_struct *p)
+ #ifdef CONFIG_SCHED_DEBUG
+ void proc_sched_show_task(struct task_struct *p, struct pid_namespace *ns,
+ 			  struct seq_file *m)
+-{}
++{
++	SEQ_printf(m, "%s (%d, #threads: %d)\n", p->comm, task_pid_nr_ns(p, ns),
++						get_nr_threads(p));
++}
+ 
+ void proc_sched_set_task(struct task_struct *p)
+ {}
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
 index d047bf7d8..c3b0bb717 100644
 --- a/mm/page_alloc.c
