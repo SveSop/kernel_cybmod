@@ -16,7 +16,6 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0012 : Swap tuning  
 0013 : revert_acpi_change_for_nct6775.patch  
 0014 : Kbuild: reuse intermediate linker scripts in the final link steps  
-0015 : ClearLinux patches  
 0016 : Kbuild: Add fcf-protection-none to retpoline flags  
 0017 : Trace: Add trace events for open-exec-use  
 0018 : ALSA-Hda fix for NVIDIA codecs  
@@ -26,10 +25,11 @@ ubuntu : Ubuntu kernel patchset
 bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.4/bfq-patches-sep)  
 futex-patches : Collection of "futex" patches for Wine  
 exfat-patches : Collection of "ex-fat" filesystem patches  
+clearlinux : Collection of "clearlinux" patches  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has PDS v0.99o CPU scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**This config has PDS v0.99o CPU scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
 
 To build on Ubuntu:  
 ```

@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10554 @@
+@@ -0,0 +1,10565 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.5.2-cybmod4 Kernel Configuration
++# Linux/x86 5.5.2-cybmod6 Kernel Configuration
 +#
 +
 +#
@@ -92,8 +92,8 @@ new file mode 100644
 +CONFIG_TICK_ONESHOT=y
 +CONFIG_NO_HZ_COMMON=y
 +# CONFIG_HZ_PERIODIC is not set
-+# CONFIG_NO_HZ_IDLE is not set
-+CONFIG_NO_HZ_FULL=y
++CONFIG_NO_HZ_IDLE=y
++# CONFIG_NO_HZ_FULL is not set
 +CONFIG_CONTEXT_TRACKING=y
 +# CONFIG_CONTEXT_TRACKING_FORCE is not set
 +# CONFIG_NO_HZ is not set
@@ -110,6 +110,7 @@ new file mode 100644
 +# CPU/Task time and stats accounting
 +#
 +CONFIG_VIRT_CPU_ACCOUNTING=y
++# CONFIG_TICK_CPU_ACCOUNTING is not set
 +CONFIG_VIRT_CPU_ACCOUNTING_GEN=y
 +# CONFIG_IRQ_TIME_ACCOUNTING is not set
 +CONFIG_BSD_PROCESS_ACCT=y
@@ -10089,7 +10090,17 @@ new file mode 100644
 +#
 +# Library routines
 +#
++
++#
++# RAID 6
++#
 +CONFIG_RAID6_PQ=m
++CONFIG_RAID6_FORCE_ALGO=y
++# CONFIG_RAID6_FORCE_INT is not set
++# CONFIG_RAID6_FORCE_SSSE3 is not set
++CONFIG_RAID6_FORCE_AVX2=y
++# end of RAID 6
++
 +CONFIG_RAID6_PQ_BENCHMARK=y
 +CONFIG_PACKING=y
 +CONFIG_BITREVERSE=y
