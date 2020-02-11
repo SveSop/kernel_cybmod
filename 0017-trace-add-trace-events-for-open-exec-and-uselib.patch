@@ -32,7 +32,7 @@ Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
  create mode 100644 include/trace/events/fs.h
 
 diff --git a/fs/exec.c b/fs/exec.c
-index 74d88da..be5635f 100644
+index 71eb4fcac..c0bcea022 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
 @@ -63,6 +63,8 @@
@@ -44,7 +44,7 @@ index 74d88da..be5635f 100644
  #include <linux/uaccess.h>
  #include <asm/mmu_context.h>
  #include <asm/tlb.h>
-@@ -871,6 +873,8 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
+@@ -872,6 +874,8 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
  	if (name->name[0] != '\0')
  		fsnotify_open(file);
  
@@ -54,7 +54,7 @@ index 74d88da..be5635f 100644
  	return file;
  
 diff --git a/fs/open.c b/fs/open.c
-index b62f5c0..ced2089 100644
+index 89af4b9c7..6377a023e 100644
 --- a/fs/open.c
 +++ b/fs/open.c
 @@ -35,6 +35,9 @@
@@ -67,7 +67,7 @@ index b62f5c0..ced2089 100644
  int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
  	struct file *filp)
  {
-@@ -1101,6 +1104,7 @@ long do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
+@@ -1102,6 +1105,7 @@ long do_sys_open(int dfd, const char __user *filename, int flags, umode_t mode)
  		} else {
  			fsnotify_open(f);
  			fd_install(fd, f);
@@ -77,7 +77,7 @@ index b62f5c0..ced2089 100644
  	putname(tmp);
 diff --git a/include/trace/events/fs.h b/include/trace/events/fs.h
 new file mode 100644
-index 0000000..230b47a
+index 000000000..230b47a65
 --- /dev/null
 +++ b/include/trace/events/fs.h
 @@ -0,0 +1,53 @@
@@ -135,5 +135,5 @@ index 0000000..230b47a
 +/* This part must be outside protection */
 +#include <trace/define_trace.h> 
 -- 
-2.25.0.24.gbc7a3d4dc0.dirty
+2.17.1
 

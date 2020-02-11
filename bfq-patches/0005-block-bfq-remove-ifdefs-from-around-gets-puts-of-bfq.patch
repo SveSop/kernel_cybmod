@@ -32,10 +32,10 @@ index c818c6476..cae488b58 100644
  {
  	struct bfq_group *bfqg;
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 28770ec7c..fff76c920 100644
+index d9b9c1ad8..98b75c2e4 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -4825,9 +4825,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+@@ -4826,9 +4826,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
  {
  	struct bfq_queue *item;
  	struct hlist_node *n;
@@ -45,7 +45,7 @@ index 28770ec7c..fff76c920 100644
  
  	if (bfqq->bfqd)
  		bfq_log_bfqq(bfqq->bfqd, bfqq, "put_queue: %p %d",
-@@ -4900,9 +4898,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+@@ -4901,9 +4899,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
  		bfqq->bfqd->last_completed_rq_bfqq = NULL;
  
  	kmem_cache_free(bfq_pool, bfqq);
@@ -55,7 +55,7 @@ index 28770ec7c..fff76c920 100644
  }
  
  static void bfq_put_cooperator(struct bfq_queue *bfqq)
-@@ -6390,10 +6386,10 @@ static void bfq_exit_queue(struct elevator_queue *e)
+@@ -6391,10 +6387,10 @@ static void bfq_exit_queue(struct elevator_queue *e)
  
  	hrtimer_cancel(&bfqd->idle_slice_timer);
  
@@ -80,5 +80,5 @@ index f1cb89def..2c7cec737 100644
  
  	struct bfq_queue *async_bfqq[2][IOPRIO_BE_NR];
 -- 
-2.25.0.114.g5b0ca878e0.dirty
+2.17.1
 

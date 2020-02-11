@@ -25,10 +25,10 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 4 insertions(+)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 55d4328e7..15dfb0844 100644
+index 5c239c540..3dbd0666f 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -613,6 +613,10 @@ bfq_pos_tree_add_move(struct bfq_data *bfqd, struct bfq_queue *bfqq)
+@@ -614,6 +614,10 @@ bfq_pos_tree_add_move(struct bfq_data *bfqd, struct bfq_queue *bfqq)
  		bfqq->pos_root = NULL;
  	}
  
@@ -40,5 +40,5 @@ index 55d4328e7..15dfb0844 100644
  	 * bfqq cannot be merged any longer (see comments in
  	 * bfq_setup_cooperator): no point in adding bfqq into the
 -- 
-2.25.0.114.g5b0ca878e0.dirty
+2.17.1
 

@@ -48,10 +48,10 @@ index 2c7cec737..d1233af9c 100644
  
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
 diff --git a/block/bfq-wf2q.c b/block/bfq-wf2q.c
-index 26776bdbd..eb0e2a6da 100644
+index be8e96155..92f1746e3 100644
 --- a/block/bfq-wf2q.c
 +++ b/block/bfq-wf2q.c
-@@ -533,7 +533,9 @@ static void bfq_get_entity(struct bfq_entity *entity)
+@@ -536,7 +536,9 @@ static void bfq_get_entity(struct bfq_entity *entity)
  		bfqq->ref++;
  		bfq_log_bfqq(bfqq->bfqd, bfqq, "get_entity: %p %d",
  			     bfqq, bfqq->ref);
@@ -62,7 +62,7 @@ index 26776bdbd..eb0e2a6da 100644
  }
  
  /**
-@@ -647,8 +649,14 @@ static void bfq_forget_entity(struct bfq_service_tree *st,
+@@ -650,8 +652,14 @@ static void bfq_forget_entity(struct bfq_service_tree *st,
  
  	entity->on_st_or_in_serv = false;
  	st->wsum -= entity->weight;
@@ -79,5 +79,5 @@ index 26776bdbd..eb0e2a6da 100644
  
  /**
 -- 
-2.25.0.114.g5b0ca878e0.dirty
+2.17.1
 

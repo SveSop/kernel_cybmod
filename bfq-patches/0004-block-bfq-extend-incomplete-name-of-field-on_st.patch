@@ -32,10 +32,10 @@ index 8ab7f18ff..c818c6476 100644
  	bfqg_and_blkg_put(bfqq_group(bfqq));
  
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 15dfb0844..28770ec7c 100644
+index 3dbd0666f..d9b9c1ad8 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -1059,7 +1059,7 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
+@@ -1060,7 +1060,7 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
  
  static int bfqq_process_refs(struct bfq_queue *bfqq)
  {
@@ -58,10 +58,10 @@ index 8526f20c5..f1cb89def 100644
  	/* B-WF2Q+ start and finish timestamps [sectors/weight] */
  	u64 start, finish;
 diff --git a/block/bfq-wf2q.c b/block/bfq-wf2q.c
-index ffe9ce9fa..26776bdbd 100644
+index 05f0bf4a1..be8e96155 100644
 --- a/block/bfq-wf2q.c
 +++ b/block/bfq-wf2q.c
-@@ -645,7 +645,7 @@ static void bfq_forget_entity(struct bfq_service_tree *st,
+@@ -648,7 +648,7 @@ static void bfq_forget_entity(struct bfq_service_tree *st,
  {
  	struct bfq_queue *bfqq = bfq_entity_to_bfqq(entity);
  
@@ -70,7 +70,7 @@ index ffe9ce9fa..26776bdbd 100644
  	st->wsum -= entity->weight;
  	if (bfqq && !is_in_service)
  		bfq_put_queue(bfqq);
-@@ -999,7 +999,7 @@ static void __bfq_activate_entity(struct bfq_entity *entity,
+@@ -1002,7 +1002,7 @@ static void __bfq_activate_entity(struct bfq_entity *entity,
  		 */
  		bfq_get_entity(entity);
  
@@ -79,7 +79,7 @@ index ffe9ce9fa..26776bdbd 100644
  	}
  
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
-@@ -1165,7 +1165,10 @@ bool __bfq_deactivate_entity(struct bfq_entity *entity, bool ins_into_idle_tree)
+@@ -1168,7 +1168,10 @@ bool __bfq_deactivate_entity(struct bfq_entity *entity, bool ins_into_idle_tree)
  	struct bfq_service_tree *st;
  	bool is_in_service;
  
@@ -91,7 +91,7 @@ index ffe9ce9fa..26776bdbd 100644
  		return false;
  
  	/*
-@@ -1620,7 +1623,7 @@ bool __bfq_bfqd_reset_in_service(struct bfq_data *bfqd)
+@@ -1623,7 +1626,7 @@ bool __bfq_bfqd_reset_in_service(struct bfq_data *bfqd)
  	 * service tree either, then release the service reference to
  	 * the queue it represents (taken with bfq_get_entity).
  	 */
@@ -101,5 +101,5 @@ index ffe9ce9fa..26776bdbd 100644
  		 * If no process is referencing in_serv_bfqq any
  		 * longer, then the service reference may be the only
 -- 
-2.25.0.114.g5b0ca878e0.dirty
+2.17.1
 

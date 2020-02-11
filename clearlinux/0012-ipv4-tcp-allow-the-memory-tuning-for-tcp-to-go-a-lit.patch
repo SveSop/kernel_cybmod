@@ -9,10 +9,10 @@ Subject: [PATCH 12/29] ipv4/tcp: allow the memory tuning for tcp to go a
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index a7d766e63..bc3c1f14f 100644
+index 94e137f7a..33fb0aa97 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -4003,8 +4003,8 @@ void __init tcp_init(void)
+@@ -4009,8 +4009,8 @@ void __init tcp_init(void)
  	tcp_init_mem();
  	/* Set per-socket limits to no more than 1/128 the pressure threshold */
  	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
@@ -24,5 +24,5 @@ index a7d766e63..bc3c1f14f 100644
  	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
  	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-2.25.0.2.g232378479e.dirty
+2.17.1
 
