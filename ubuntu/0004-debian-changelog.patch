@@ -1,6 +1,6 @@
-From 40402be1957c237d38d6e6c24c0f6dfd9bc53023 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 11 Feb 2020 08:32:37 -0500
+From 58244a6a4dfa39fc20247b42f15c319c6ad512db Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 15 Feb 2020 04:47:20 -0500
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 9005 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 32fb10d..823759f 100644
+index 32fb10d..96e55f5 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,9008 +1,6 @@
 -linux-5.5 (5.5.0-7.8) focal; urgency=medium
-+linux (5.5.3-050503.202002110832) unstable; urgency=low
++linux (5.5.4-050504.202002150446) unstable; urgency=low
  
 -  * CONFIG_USELIB should be disabled (LP: #1855341)
 -    - [Config] Disable the uselib system call
-+  Mainline build at commit: v5.5.3
++  Mainline build at commit: v5.5.4
  
 -  * CONFIG_LEGACY_PTYS should be disabled (LP: #1855339)
 -    - [Config] Disable legacy PTY naming
-+ -- Mainline Build <kernel@gloin>  Tue, 11 Feb 2020 08:32:37 -0500
++ -- Mainline Build <kernel@tangerine>  Sat, 15 Feb 2020 04:47:20 -0500
  
 -  * CONFIG_IO_STRICT_DEVMEM should be enabled (LP: #1855338)
 -    - [Config] Enforce filtered access to iomem
