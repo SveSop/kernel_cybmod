@@ -1,28 +1,71 @@
-From 58244a6a4dfa39fc20247b42f15c319c6ad512db Mon Sep 17 00:00:00 2001
+From 9851fe07189635529a380687150b66309b102b26 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 15 Feb 2020 04:47:20 -0500
+Date: Wed, 19 Feb 2020 14:33:13 -0500
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9008 +----------------------------------------------
- 1 file changed, 3 insertions(+), 9005 deletions(-)
+ debian.master/changelog | 9051 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 9048 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 32fb10d..96e55f5 100644
+index 6c24b5d..9184534 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9008 +1,6 @@
--linux-5.5 (5.5.0-7.8) focal; urgency=medium
-+linux (5.5.4-050504.202002150446) unstable; urgency=low
+@@ -1,9051 +1,6 @@
+-linux-5.6 (5.6.0-1.1) focal; urgency=medium
++linux (5.5.5-050505.202002191432) unstable; urgency=low
  
+-  *  Integrate Intel SGX driver into linux-azure (LP: #1844245)
+-    - [Packaging] Add systemd service to load intel_sgx
++  Mainline build at commit: v5.5.5
+ 
+-  * QAT drivers for C3XXX and C62X not included as modules (LP: #1845959)
+-    - [Config] CRYPTO_DEV_QAT_C3XXX=m, CRYPTO_DEV_QAT_C62X=m and
+-      CRYPTO_DEV_QAT_DH895xCC=m
++ -- Mainline Build <kernel@tangerine>  Wed, 19 Feb 2020 14:33:13 -0500
+ 
+-  * 5.4.0-11 crash on cryptsetup open (LP: #1860231)
+-    - SAUCE: blk/core: Gracefully handle unset make_request_fn
+-
+-  * multi-zone raid0 corruption (LP: #1850540)
+-    - SAUCE: md/raid0: Use kernel specific layout
+-
+-  * Miscellaneous Ubuntu changes
+-    - update dkms package versions
+-    - update dropped.txt after rebase to v5.6-rc1
+-    - [Config] updateconfigs after rebase to 5.6-rc1
+-    - hio -- proc_create() requires a "struct proc_ops" in 5.6
+-    - SAUCE: arm: fix build error in kvm tracepoint
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Config] Disable the uselib system call"
+-    - Revert "UBUNTU: [Config] Disable legacy PTY naming"
+-    - Revert "UBUNTU: [Config] Enforce filtered access to iomem"
+-    - Revert "UBUNTU: [Config] Enable notifier call chain validations"
+-    - Revert "UBUNTU: [Config] Enable scatterlist validation"
+-    - Revert "UBUNTU: [Config] Enable cred sanity checks"
+-    - Revert "UBUNTU: [Config] Enable linked list manipulation checks"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.6-rc1
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 13 Feb 2020 17:20:27 +0100
+-
+-linux-5.6 (5.6.0-0.0) focal; urgency=medium
+-
+-  * Dummy entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 10 Feb 2020 11:06:18 +0100
+-
+-linux-5.5 (5.5.0-7.8) focal; urgency=medium
+-
 -  * CONFIG_USELIB should be disabled (LP: #1855341)
 -    - [Config] Disable the uselib system call
-+  Mainline build at commit: v5.5.4
- 
+-
 -  * CONFIG_LEGACY_PTYS should be disabled (LP: #1855339)
 -    - [Config] Disable legacy PTY naming
-+ -- Mainline Build <kernel@tangerine>  Sat, 15 Feb 2020 04:47:20 -0500
- 
+-
 -  * CONFIG_IO_STRICT_DEVMEM should be enabled (LP: #1855338)
 -    - [Config] Enforce filtered access to iomem
 -
