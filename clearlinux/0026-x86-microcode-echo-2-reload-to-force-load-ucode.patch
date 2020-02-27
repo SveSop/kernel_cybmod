@@ -1,4 +1,4 @@
-From c6dd89861a8654c83fd1cca8e9384a0a632738f2 Mon Sep 17 00:00:00 2001
+From 889b8828596ff3379a87b1367dc7ffab5719f112 Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Sat, 20 Jul 2019 14:14:47 +0000
 Subject: [PATCH 26/29] x86/microcode: echo 2 > reload to force load ucode.
@@ -65,5 +65,5 @@ index f08b4b59c..efa492cd3 100644
  /* Current microcode patch used in early patching on the APs. */
  static struct microcode_intel *intel_ucode_patch;
 -- 
-2.25.0.2.g232378479e.dirty
+2.25.1.291.ge68e29171c.dirty
 

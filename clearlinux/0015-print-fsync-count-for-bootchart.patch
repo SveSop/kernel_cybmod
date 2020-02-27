@@ -1,4 +1,4 @@
-From fa5caa91c08bebaf91b3d5a997a6d3891a4c0ded Mon Sep 17 00:00:00 2001
+From 51fae718aec4dd6f0e2cc3fd4203d77b343302f6 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 20 Jun 2017 20:19:08 +0000
 Subject: [PATCH 15/29] print fsync count for bootchart
@@ -24,10 +24,10 @@ index 089e890ab..1f450510a 100644
  			char b[BDEVNAME_SIZE];
  			printk(KERN_DEBUG "%s(%d): %s block %Lu on %s (%u sectors)\n",
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index f06e1ec60..ffbb886a0 100644
+index 716ad1d8d..a9971844a 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
-@@ -907,6 +907,7 @@ struct task_struct {
+@@ -886,6 +886,7 @@ struct task_struct {
  	/* Cached requested key. */
  	struct key			*cached_requested_key;
  #endif
@@ -48,5 +48,5 @@ index f7e4579e7..2e4e88734 100644
  	nr_switches = p->nvcsw + p->nivcsw;
  
 -- 
-2.17.1
+2.25.1.291.ge68e29171c.dirty
 

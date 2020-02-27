@@ -1,4 +1,4 @@
-From f0c305dab7b1fbf11397eed0ac105dc54b2a1dc9 Mon Sep 17 00:00:00 2001
+From 055fec1672cba7b0534f8d1db7df1bad88c7e11d Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 13 Aug 2018 04:01:21 -0500
 Subject: [PATCH 16/29] Add boot option to allow unsigned modules
@@ -67,5 +67,5 @@ index b56f3224b..2c82aadca 100644
  }
  module_init(proc_modules_init);
 -- 
-2.25.0.2.g232378479e.dirty
+2.25.1.291.ge68e29171c.dirty
 

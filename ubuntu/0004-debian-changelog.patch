@@ -1,6 +1,6 @@
-From 9851fe07189635529a380687150b66309b102b26 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 19 Feb 2020 14:33:13 -0500
+From d52ab2773aab49c608167508e870224ba0233684 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Mon, 24 Feb 2020 08:32:30 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 9048 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 6c24b5d..9184534 100644
+index 6c24b5d..c2a3f23 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,9051 +1,6 @@
 -linux-5.6 (5.6.0-1.1) focal; urgency=medium
-+linux (5.5.5-050505.202002191432) unstable; urgency=low
++linux (5.5.6-050506.202002240832) unstable; urgency=low
  
 -  *  Integrate Intel SGX driver into linux-azure (LP: #1844245)
 -    - [Packaging] Add systemd service to load intel_sgx
-+  Mainline build at commit: v5.5.5
++  Mainline build at commit: v5.5.6
  
 -  * QAT drivers for C3XXX and C62X not included as modules (LP: #1845959)
 -    - [Config] CRYPTO_DEV_QAT_C3XXX=m, CRYPTO_DEV_QAT_C62X=m and
 -      CRYPTO_DEV_QAT_DH895xCC=m
-+ -- Mainline Build <kernel@tangerine>  Wed, 19 Feb 2020 14:33:13 -0500
++ -- Mainline Build <kernel@kathleen>  Mon, 24 Feb 2020 08:32:30 +0000
  
 -  * 5.4.0-11 crash on cryptsetup open (LP: #1860231)
 -    - SAUCE: blk/core: Gracefully handle unset make_request_fn

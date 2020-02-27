@@ -1,4 +1,4 @@
-From 47aeb6740995b94693326febe6fc1d2b64cd20fe Mon Sep 17 00:00:00 2001
+From 973ed67de0d5fd5da6aac54920ce2ea2808cfd48 Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Sat, 20 Jul 2019 14:14:47 +0000
 Subject: [PATCH 25/29] x86/microcode: Force update a uCode even if the rev is
@@ -139,5 +139,5 @@ index 6a99535d7..f08b4b59c 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.25.0.2.g232378479e.dirty
+2.25.1.291.ge68e29171c.dirty
 

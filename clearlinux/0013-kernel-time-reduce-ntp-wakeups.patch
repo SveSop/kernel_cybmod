@@ -1,4 +1,4 @@
-From aed8d18a6f4432ccef69405272e334deedc5634a Mon Sep 17 00:00:00 2001
+From 2f0f158641989c798d42aef6be3dd5213d98e916 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 29 Apr 2017 22:24:34 +0000
 Subject: [PATCH 13/29] kernel: time: reduce ntp wakeups
@@ -21,5 +21,5 @@ index 069ca78fb..22d82f21f 100644
  
  	/* Compute the needed delay that will get to tv_nsec == target_nsec */
 -- 
-2.25.0.2.g232378479e.dirty
+2.25.1.291.ge68e29171c.dirty
 
