@@ -1,29 +1,68 @@
-From d52ab2773aab49c608167508e870224ba0233684 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Mon, 24 Feb 2020 08:32:30 +0000
+From 4031cf9b49e5b2e0002aaff39acbadfbe528716a Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Fri, 28 Feb 2020 18:05:29 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9051 +----------------------------------------------
- 1 file changed, 3 insertions(+), 9048 deletions(-)
+ debian.master/changelog | 9090 +--------------------------------------
+ 1 file changed, 3 insertions(+), 9087 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 6c24b5d..c2a3f23 100644
+index 9b7acb8c8b52..668f9494f498 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9051 +1,6 @@
--linux-5.6 (5.6.0-1.1) focal; urgency=medium
-+linux (5.5.6-050506.202002240832) unstable; urgency=low
+@@ -1,9090 +1,6 @@
+-linux-5.6 (5.6.0-2.2) focal; urgency=medium
++linux (5.5.7-050507.202002281805) unstable; urgency=low
  
+-  * Sometimes can't adjust brightness on Dell AIO (LP: #1862885)
+-    - SAUCE: platform/x86: dell-uart-backlight: increase retry times
++  Mainline build at commit: v5.5.7
+ 
+-  * Dell XPS 13 (7390) Display Flickering - 19.10  (LP: #1849947)
+-    - SAUCE: drm/i915: Disable PSR by default on all platforms
++ -- Mainline Build <kernel@sita>  Fri, 28 Feb 2020 18:05:29 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [debian] ignore missing wireguard module
+-    - SAUCE: (lockdown) Add efi_status_to_str() and rework efi_status_to_err().
+-    - SAUCE: (lockdown) security: lockdown: expose a hook to lock the kernel down
+-    - SAUCE: (lockdown) efi: Add an EFI_SECURE_BOOT flag to indicate secure boot
+-      mode
+-    - SAUCE: (lockdown) efi: Lock down the kernel if booted in secure boot mode
+-    - SAUCE: (lockdown) s390: Lock down the kernel when the IPL secure flag is set
+-    - SAUCE: (lockdown) KEYS: Make use of platform keyring for module signature
+-      verify
+-    - SAUCE: (lockdown) arm64: Allow locking down the kernel under EFI secure boot
+-    - SAUCE: (lockdown) security: lockdown: Make
+-      CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT more generic
+-    - [Config] CONFIG_LOCK_DOWN_IN_SECURE_BOOT=y
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.6-rc3
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: SAUCE: (lockdown) s390/ipl: lockdown kernel when booted
+-      secure"
+-    - Revert "UBUNTU: SAUCE: (lockdown) KEYS: Make use of platform keyring for
+-      module signature verify"
+-    - Revert "UBUNTU: SAUCE: (lockdown) Add a SysRq option to lift kernel
+-      lockdown"
+-    - Revert "UBUNTU: SAUCE: (lockdown) security: lockdown: expose a hook to lock
+-      the kernel down"
+-    - Revert "UBUNTU: SAUCE: (lockdown) Add efi_status_to_str() and rework
+-      efi_status_to_err()."
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 24 Feb 2020 18:57:22 +0100
+-
+-linux-5.6 (5.6.0-1.1) focal; urgency=medium
+-
 -  *  Integrate Intel SGX driver into linux-azure (LP: #1844245)
 -    - [Packaging] Add systemd service to load intel_sgx
-+  Mainline build at commit: v5.5.6
- 
+-
 -  * QAT drivers for C3XXX and C62X not included as modules (LP: #1845959)
 -    - [Config] CRYPTO_DEV_QAT_C3XXX=m, CRYPTO_DEV_QAT_C62X=m and
 -      CRYPTO_DEV_QAT_DH895xCC=m
-+ -- Mainline Build <kernel@kathleen>  Mon, 24 Feb 2020 08:32:30 +0000
- 
+-
 -  * 5.4.0-11 crash on cryptsetup open (LP: #1860231)
 -    - SAUCE: blk/core: Gracefully handle unset make_request_fn
 -
@@ -9067,5 +9106,5 @@ index 6c24b5d..c2a3f23 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.7.4
+2.17.1
 
