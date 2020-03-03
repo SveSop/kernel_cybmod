@@ -1,7 +1,7 @@
-From 1773f8eed4a1785d9d765b5a512d4e8e7cb2b31d Mon Sep 17 00:00:00 2001
+From 8e7eaa62b4cb711bbd4ad92a53f1876672d26577 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 27 Jan 2020 15:06:03 +0100
-Subject: [PATCH] AUFS 20200127
+Date: Mon, 2 Mar 2020 11:20:07 +0100
+Subject: [PATCH] AUFS-20200302
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -100,7 +100,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  fs/aufs/wkq.c                                 |  372 ++++
  fs/aufs/wkq.h                                 |   89 +
  fs/aufs/xattr.c                               |  356 +++
- fs/aufs/xino.c                                | 1965 +++++++++++++++++
+ fs/aufs/xino.c                                | 1966 +++++++++++++++++
  fs/dcache.c                                   |    4 +-
  fs/exec.c                                     |    1 +
  fs/fcntl.c                                    |    5 +-
@@ -133,7 +133,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  mm/nommu.c                                    |   10 +-
  mm/prfile.c                                   |   86 +
  security/security.c                           |    8 +
- 128 files changed, 38156 insertions(+), 33 deletions(-)
+ 128 files changed, 38157 insertions(+), 33 deletions(-)
  create mode 100644 Documentation/ABI/testing/debugfs-aufs
  create mode 100644 Documentation/ABI/testing/sysfs-aufs
  create mode 100644 Documentation/filesystems/aufs/README
@@ -2161,7 +2161,7 @@ index 000000000..d55cae285
 +Currently this approach is applied to address_space_operations for
 +regular files only.
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 56765f542..edbd784b8 100644
+index e73a47a88..4bd56b55a 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -2877,6 +2877,19 @@ F:	include/linux/audit.h
@@ -36402,10 +36402,10 @@ index 000000000..b5ba7e32c
 +}
 diff --git a/fs/aufs/xino.c b/fs/aufs/xino.c
 new file mode 100644
-index 000000000..f007ddc65
+index 000000000..b3152c0ce
 --- /dev/null
 +++ b/fs/aufs/xino.c
-@@ -0,0 +1,1965 @@
+@@ -0,0 +1,1966 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -37765,7 +37765,8 @@ index 000000000..f007ddc65
 +		hlist_bl_lock(hbl);
 +		hlist_bl_for_each_entry_safe(p, pos, n, hbl, node) {
 +			hlist_bl_del(&p->node);
-+			au_kfree_rcu(p);
++			/* kmemleak reported au_kfree_rcu() doesn't free it */
++			kfree(p);
 +		}
 +		hlist_bl_unlock(hbl);
 +	}
@@ -38612,7 +38613,7 @@ index 7907e6419..d17209cf5 100644
  		ino = inode->i_ino;
  		pgoff = (loff_t)vma->vm_pgoff << PAGE_SHIFT;
 diff --git a/fs/read_write.c b/fs/read_write.c
-index 5bbf587f5..eb0e2c6eb 100644
+index 7458fccc5..9f5ff742f 100644
 --- a/fs/read_write.c
 +++ b/fs/read_write.c
 @@ -468,6 +468,7 @@ ssize_t vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos)
@@ -38906,7 +38907,7 @@ index 74b4911ac..19789fbea 100644
  #endif
 diff --git a/include/uapi/linux/aufs_type.h b/include/uapi/linux/aufs_type.h
 new file mode 100644
-index 000000000..47a5c5389
+index 000000000..376fa6b84
 --- /dev/null
 +++ b/include/uapi/linux/aufs_type.h
 @@ -0,0 +1,452 @@
@@ -38952,7 +38953,7 @@ index 000000000..47a5c5389
 +#include <limits.h>
 +#endif /* __KERNEL__ */
 +
-+#define AUFS_VERSION	"5.x-rcN-20200127"
++#define AUFS_VERSION	"5.5-20200302"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
@@ -39433,7 +39434,7 @@ index bf6aa30be..32ca075c0 100644
  	if (page->mapping != inode->i_mapping) {
  		unlock_page(page);
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 71e4ffc83..7256e8b98 100644
+index cb2c79a3e..ca06e9c65 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -176,7 +176,7 @@ static struct vm_area_struct *remove_vma(struct vm_area_struct *vma)
@@ -39445,7 +39446,7 @@ index 71e4ffc83..7256e8b98 100644
  	mpol_put(vma_policy(vma));
  	vm_area_free(vma);
  	return next;
-@@ -909,7 +909,7 @@ int __vma_adjust(struct vm_area_struct *vma, unsigned long start,
+@@ -907,7 +907,7 @@ int __vma_adjust(struct vm_area_struct *vma, unsigned long start,
  	if (remove_next) {
  		if (file) {
  			uprobe_munmap(next, next->vm_start, next->vm_end);
@@ -39454,7 +39455,7 @@ index 71e4ffc83..7256e8b98 100644
  		}
  		if (next->anon_vma)
  			anon_vma_merge(vma, next);
-@@ -1837,8 +1837,8 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
+@@ -1833,8 +1833,8 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
  	return addr;
  
  unmap_and_free_vma:
@@ -39464,7 +39465,7 @@ index 71e4ffc83..7256e8b98 100644
  
  	/* Undo any partial mapping done by a device driver. */
  	unmap_region(mm, vma, prev, vma->vm_start, vma->vm_end);
-@@ -2667,7 +2667,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -2663,7 +2663,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
  		goto out_free_mpol;
  
  	if (new->vm_file)
@@ -39473,7 +39474,7 @@ index 71e4ffc83..7256e8b98 100644
  
  	if (new->vm_ops && new->vm_ops->open)
  		new->vm_ops->open(new);
-@@ -2686,7 +2686,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -2682,7 +2682,7 @@ int __split_vma(struct mm_struct *mm, struct vm_area_struct *vma,
  	if (new->vm_ops && new->vm_ops->close)
  		new->vm_ops->close(new);
  	if (new->vm_file)
@@ -39482,7 +39483,7 @@ index 71e4ffc83..7256e8b98 100644
  	unlink_anon_vmas(new);
   out_free_mpol:
  	mpol_put(vma_policy(new));
-@@ -2878,7 +2878,7 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
+@@ -2874,7 +2874,7 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
  	struct vm_area_struct *vma;
  	unsigned long populate = 0;
  	unsigned long ret = -EINVAL;
@@ -39491,7 +39492,7 @@ index 71e4ffc83..7256e8b98 100644
  
  	pr_warn_once("%s (%d) uses deprecated remap_file_pages() syscall. See Documentation/vm/remap_file_pages.rst.\n",
  		     current->comm, current->pid);
-@@ -2953,10 +2953,27 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
+@@ -2949,10 +2949,27 @@ SYSCALL_DEFINE5(remap_file_pages, unsigned long, start, unsigned long, size,
  		}
  	}
  
@@ -39520,7 +39521,7 @@ index 71e4ffc83..7256e8b98 100644
  out:
  	up_write(&mm->mmap_sem);
  	if (populate)
-@@ -3247,7 +3264,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+@@ -3243,7 +3260,7 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
  		if (anon_vma_clone(new_vma, vma))
  			goto out_free_mempol;
  		if (new_vma->vm_file)
@@ -39734,5 +39735,5 @@ index cd2d18d2d..fbf716450 100644
  int security_file_alloc(struct file *file)
  {
 -- 
-2.25.0.2.g232378479e.dirty
+2.25.1.377.g2d2118b814.dirty
 
