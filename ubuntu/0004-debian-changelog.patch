@@ -1,28 +1,70 @@
-From 4031cf9b49e5b2e0002aaff39acbadfbe528716a Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 28 Feb 2020 18:05:29 +0000
+From 5b17beb648071e6807584aaf99d0a1fe7e422a34 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 5 Mar 2020 16:34:03 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9090 +--------------------------------------
- 1 file changed, 3 insertions(+), 9087 deletions(-)
+ debian.master/changelog | 9132 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 9129 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 9b7acb8c8b52..668f9494f498 100644
+index 9acc837..82cda311 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9090 +1,6 @@
--linux-5.6 (5.6.0-2.2) focal; urgency=medium
-+linux (5.5.7-050507.202002281805) unstable; urgency=low
+@@ -1,9132 +1,6 @@
+-linux-5.6 (5.6.0-3.3) focal; urgency=medium
++linux (5.5.8-050508.202003051633) unstable; urgency=low
  
+-  * nsleep-lat / set-timer-lat / inconsistency-check / raw_skew from timer in
+-    ubuntu_kernel_selftests timeout on 5.3 / 5.4 (LP: #1864626)
+-    - selftests/timers: Turn off timeout setting
++  Mainline build at commit: v5.5.8
+ 
+-  * Update kernel options CONFIG_NR_CPUS and CONFIG_NUMA_EMU for focal
+-    (LP: #1864198)
+-    - Ubuntu: [Config] Update kernel options CONFIG_NR_CPUS and CONFIG_NUMA_EMU
++ -- Mainline Build <kernel@kathleen>  Thu, 05 Mar 2020 16:34:03 +0000
+ 
+-  * alsa/hda/realtek: fix a mute led regression on Lenovo X1 Carbon
+-    (LP: #1864576)
+-    - SAUCE: ALSA: hda/realtek - Fix a regression for mute led on Lenovo Carbon X1
+-
+-  * r8152 init may take up to 40 seconds at initialization with Dell WD19/WD19DC
+-    during hotplug (LP: #1864284)
+-    - UBUNTU SAUCE: r8151: check disconnect status after long sleep
+-
+-  * Another Dell AIO backlight issue (LP: #1863880)
+-    - SAUCE: platform/x86: dell-uart-backlight: move retry block
+-
+-  * Backport GetFB2 ioctl (LP: #1863874)
+-    - SAUCE: drm: Add getfb2 ioctl
+-
+-  * Focal Fossa (20.04) feature request - Enable CONFIG_X86_UV (LP: #1863810)
+-    - [Config] CONFIG_X86_UV=y
+-
+-  * Miscellaneous Ubuntu changes
+-    - debian: remove snapdragon config, rules and flavour
+-    - remove snapdragon abi files
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.6-rc4
+-
+-  * Miscellaneous upstream changes
+-    - updateconfigs following snapdragon removal
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.6-rc4
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 04 Mar 2020 08:21:10 +0100
+-
+-linux-5.6 (5.6.0-2.2) focal; urgency=medium
+-
 -  * Sometimes can't adjust brightness on Dell AIO (LP: #1862885)
 -    - SAUCE: platform/x86: dell-uart-backlight: increase retry times
-+  Mainline build at commit: v5.5.7
- 
+-
 -  * Dell XPS 13 (7390) Display Flickering - 19.10  (LP: #1849947)
 -    - SAUCE: drm/i915: Disable PSR by default on all platforms
-+ -- Mainline Build <kernel@sita>  Fri, 28 Feb 2020 18:05:29 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [debian] ignore missing wireguard module
 -    - SAUCE: (lockdown) Add efi_status_to_str() and rework efi_status_to_err().
@@ -9106,5 +9148,5 @@ index 9b7acb8c8b52..668f9494f498 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.17.1
+2.7.4
 
