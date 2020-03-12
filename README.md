@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.5.8  
+0000 : Kernel patch 5.5.9  
 0001 : PDS 0.99o "TKG Undead" patch  
 0002 : AUFS filesystem patch  
 0003 : 5.5 Graysky's CPU patches  

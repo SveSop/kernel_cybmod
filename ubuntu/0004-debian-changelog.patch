@@ -1,30 +1,68 @@
-From 5b17beb648071e6807584aaf99d0a1fe7e422a34 Mon Sep 17 00:00:00 2001
+From 5e46d1f3a3fce5201285a39715788ea6bbd5839f Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 5 Mar 2020 16:34:03 +0000
+Date: Thu, 12 Mar 2020 07:38:33 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9132 +----------------------------------------------
- 1 file changed, 3 insertions(+), 9129 deletions(-)
+ debian.master/changelog | 9170 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 9167 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 9acc837..82cda311 100644
+index 1a1043b..d78d7c3 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9132 +1,6 @@
--linux-5.6 (5.6.0-3.3) focal; urgency=medium
-+linux (5.5.8-050508.202003051633) unstable; urgency=low
+@@ -1,9170 +1,6 @@
+-linux-5.6 (5.6.0-4.4) focal; urgency=medium
++linux (5.5.9-050509.202003120738) unstable; urgency=low
  
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] resync getabis
+-    - [Packaging] update helper scripts
++  Mainline build at commit: v5.5.9
+ 
+-  * Add sysfs attribute to show remapped NVMe (LP: #1863621)
+-    - SAUCE: ata: ahci: Add sysfs attribute to show remapped NVMe device count
++ -- Mainline Build <kernel@kathleen>  Thu, 12 Mar 2020 07:38:33 +0000
+ 
+-  * [20.04 FEAT] Compression improvements in Linux kernel (LP: #1830208)
+-    - [Config] Introducing s390x specific kernel config option CONFIG_ZLIB_DFLTCC
+-
+-  * [UBUNTU 20.04] s390x/pci: increase CONFIG_PCI_NR_FUNCTIONS to 512 in kernel
+-    config (LP: #1866056)
+-    - [Config] Increase CONFIG_PCI_NR_FUNCTIONS from 64 to 512 starting with focal
+-      on s390x
+-
+-  * CONFIG_IP_MROUTE_MULTIPLE_TABLES is not set (LP: #1865332)
+-    - [Config] CONFIG_IP_MROUTE_MULTIPLE_TABLES=y
+-
+-  * [UBUNTU 20.04] Enable CONFIG_NET_SWITCHDEV in kernel config for s390x
+-    starting with focal (LP: #1865452)
+-    - [Config] Enable CONFIG_NET_SWITCHDEV in kernel config for s390x starting
+-      with focal
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: Revert "UBUNTU: SAUCE: blk/core: Gracefully handle unset
+-      make_request_fn"
+-    - [Packaging] prevent duplicated entries in modules.ignore
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.6-rc5
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.6-rc5
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 09 Mar 2020 09:42:06 +0100
+-
+-linux-5.6 (5.6.0-3.3) focal; urgency=medium
+-
 -  * nsleep-lat / set-timer-lat / inconsistency-check / raw_skew from timer in
 -    ubuntu_kernel_selftests timeout on 5.3 / 5.4 (LP: #1864626)
 -    - selftests/timers: Turn off timeout setting
-+  Mainline build at commit: v5.5.8
- 
+-
 -  * Update kernel options CONFIG_NR_CPUS and CONFIG_NUMA_EMU for focal
 -    (LP: #1864198)
 -    - Ubuntu: [Config] Update kernel options CONFIG_NR_CPUS and CONFIG_NUMA_EMU
-+ -- Mainline Build <kernel@kathleen>  Thu, 05 Mar 2020 16:34:03 +0000
- 
+-
 -  * alsa/hda/realtek: fix a mute led regression on Lenovo X1 Carbon
 -    (LP: #1864576)
 -    - SAUCE: ALSA: hda/realtek - Fix a regression for mute led on Lenovo Carbon X1
