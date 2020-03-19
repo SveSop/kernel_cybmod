@@ -19,10 +19,10 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  4 files changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
-index 8ab7f18ff..c818c6476 100644
+index facbf4db1..f0ff6654a 100644
 --- a/block/bfq-cgroup.c
 +++ b/block/bfq-cgroup.c
-@@ -659,7 +659,7 @@ void bfq_bfqq_move(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -660,7 +660,7 @@ void bfq_bfqq_move(struct bfq_data *bfqd, struct bfq_queue *bfqq,
  
  	if (bfq_bfqq_busy(bfqq))
  		bfq_deactivate_bfqq(bfqd, bfqq, false, false);
@@ -32,7 +32,7 @@ index 8ab7f18ff..c818c6476 100644
  	bfqg_and_blkg_put(bfqq_group(bfqq));
  
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 3dbd0666f..d9b9c1ad8 100644
+index 6b8976493..f1bc89a08 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1060,7 +1060,7 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
@@ -45,7 +45,7 @@ index 3dbd0666f..d9b9c1ad8 100644
  }
  
 diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index 8526f20c5..f1cb89def 100644
+index 355b8bbd1..d1233af9c 100644
 --- a/block/bfq-iosched.h
 +++ b/block/bfq-iosched.h
 @@ -150,7 +150,7 @@ struct bfq_entity {
@@ -58,19 +58,19 @@ index 8526f20c5..f1cb89def 100644
  	/* B-WF2Q+ start and finish timestamps [sectors/weight] */
  	u64 start, finish;
 diff --git a/block/bfq-wf2q.c b/block/bfq-wf2q.c
-index 05f0bf4a1..be8e96155 100644
+index 44079147e..92f1746e3 100644
 --- a/block/bfq-wf2q.c
 +++ b/block/bfq-wf2q.c
-@@ -648,7 +648,7 @@ static void bfq_forget_entity(struct bfq_service_tree *st,
+@@ -650,7 +650,7 @@ static void bfq_forget_entity(struct bfq_service_tree *st,
  {
  	struct bfq_queue *bfqq = bfq_entity_to_bfqq(entity);
  
 -	entity->on_st = false;
 +	entity->on_st_or_in_serv = false;
  	st->wsum -= entity->weight;
- 	if (bfqq && !is_in_service)
- 		bfq_put_queue(bfqq);
-@@ -1002,7 +1002,7 @@ static void __bfq_activate_entity(struct bfq_entity *entity,
+ 	if (is_in_service)
+ 		return;
+@@ -1010,7 +1010,7 @@ static void __bfq_activate_entity(struct bfq_entity *entity,
  		 */
  		bfq_get_entity(entity);
  
@@ -79,7 +79,7 @@ index 05f0bf4a1..be8e96155 100644
  	}
  
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
-@@ -1168,7 +1168,10 @@ bool __bfq_deactivate_entity(struct bfq_entity *entity, bool ins_into_idle_tree)
+@@ -1176,7 +1176,10 @@ bool __bfq_deactivate_entity(struct bfq_entity *entity, bool ins_into_idle_tree)
  	struct bfq_service_tree *st;
  	bool is_in_service;
  
@@ -91,7 +91,7 @@ index 05f0bf4a1..be8e96155 100644
  		return false;
  
  	/*
-@@ -1623,7 +1626,7 @@ bool __bfq_bfqd_reset_in_service(struct bfq_data *bfqd)
+@@ -1631,7 +1634,7 @@ bool __bfq_bfqd_reset_in_service(struct bfq_data *bfqd)
  	 * service tree either, then release the service reference to
  	 * the queue it represents (taken with bfq_get_entity).
  	 */

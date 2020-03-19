@@ -1,28 +1,28 @@
-From 5e46d1f3a3fce5201285a39715788ea6bbd5839f Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 12 Mar 2020 07:38:33 +0000
+From 1d412959bc39019a3dee46758c626b484694f912 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 18 Mar 2020 07:32:08 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9170 +----------------------------------------------
+ debian.master/changelog | 9170 +--------------------------------------
  1 file changed, 3 insertions(+), 9167 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 1a1043b..d78d7c3 100644
+index 1a1043b11882..259be800be69 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,9170 +1,6 @@
 -linux-5.6 (5.6.0-4.4) focal; urgency=medium
-+linux (5.5.9-050509.202003120738) unstable; urgency=low
++linux (5.5.10-050510.202003180732) unstable; urgency=low
  
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] resync getabis
 -    - [Packaging] update helper scripts
-+  Mainline build at commit: v5.5.9
++  Mainline build at commit: v5.5.10
  
 -  * Add sysfs attribute to show remapped NVMe (LP: #1863621)
 -    - SAUCE: ata: ahci: Add sysfs attribute to show remapped NVMe device count
-+ -- Mainline Build <kernel@kathleen>  Thu, 12 Mar 2020 07:38:33 +0000
++ -- Mainline Build <kernel@sita>  Wed, 18 Mar 2020 07:32:08 +0000
  
 -  * [20.04 FEAT] Compression improvements in Linux kernel (LP: #1830208)
 -    - [Config] Introducing s390x specific kernel config option CONFIG_ZLIB_DFLTCC
@@ -9186,5 +9186,5 @@ index 1a1043b..d78d7c3 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.7.4
+2.17.1
 

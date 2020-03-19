@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.5.9  
+0000 : Kernel patch 5.5.10  
 0001 : PDS 0.99o "TKG Undead" patch  
 0002 : AUFS filesystem patch  
 0003 : 5.5 Graysky's CPU patches  
@@ -20,6 +20,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0016 : Kbuild: Add fcf-protection-none to retpoline flags  
 0017 : Trace: Add trace events for open-exec-use  
 0018 : mm: Stop kswap early  
+0019 : VFS/mm: Page cache patch  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 ubuntu : Ubuntu kernel patchset  
