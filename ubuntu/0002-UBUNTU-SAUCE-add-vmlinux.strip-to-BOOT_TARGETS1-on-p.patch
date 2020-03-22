@@ -1,4 +1,4 @@
-From cdccda15e9a64d9c23a30569d7de9e9c75e6ab1d Mon Sep 17 00:00:00 2001
+From d535c5beedd9f3056606ba644c46c46e4b3fb633 Mon Sep 17 00:00:00 2001
 From: Andy Whitcroft <apw@canonical.com>
 Date: Fri, 9 Sep 2016 14:02:29 +0100
 Subject: [PATCH 2/5] UBUNTU: SAUCE: add vmlinux.strip to BOOT_TARGETS1 on
@@ -10,7 +10,7 @@ Signed-off-by: Andy Whitcroft <apw@canonical.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/Makefile b/arch/powerpc/Makefile
-index f35730548e42..fbda4b5a9916 100644
+index f357305..fbda4b5 100644
 --- a/arch/powerpc/Makefile
 +++ b/arch/powerpc/Makefile
 @@ -285,7 +285,7 @@ drivers-$(CONFIG_OPROFILE)	+= arch/powerpc/oprofile/
@@ -23,5 +23,5 @@ index f35730548e42..fbda4b5a9916 100644
  
  PHONY += $(BOOT_TARGETS1) $(BOOT_TARGETS2)
 -- 
-2.17.1
+2.7.4
 

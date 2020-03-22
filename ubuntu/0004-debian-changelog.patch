@@ -1,29 +1,51 @@
-From 1d412959bc39019a3dee46758c626b484694f912 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 18 Mar 2020 07:32:08 +0000
+From 8d1b143e1c1699fae5b617544cb3a7c101bbaaa3 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 21 Mar 2020 08:37:10 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9170 +--------------------------------------
- 1 file changed, 3 insertions(+), 9167 deletions(-)
+ debian.master/changelog | 9192 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 9189 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 1a1043b11882..259be800be69 100644
+index a52b798..3bfa63e 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9170 +1,6 @@
--linux-5.6 (5.6.0-4.4) focal; urgency=medium
-+linux (5.5.10-050510.202003180732) unstable; urgency=low
+@@ -1,9192 +1,6 @@
+-linux-5.6 (5.6.0-5.5) focal; urgency=medium
++linux (5.5.11-050511.202003210837) unstable; urgency=low
  
+-  * please help enable CONFIG_EROFS_FS_ZIP (LP: #1867099)
+-    - [Config] CONFIG_EROFS_FS_ZIP=y
+-    - [Config] CONFIG_EROFS_FS_CLUSTER_PAGE_LIMIT=1
++  Mainline build at commit: v5.5.11
+ 
+-  * Miscellaneous Ubuntu changes
+-    - Config: Fix SND_HDA_PREALLOC_SIZE annotations
+-    - Config: Fix DATA_SHIFT annotations
+-    - Config: remove ANDROID_VSOC from annotations
+-    - Config: remove arm arch from annotations
+-    - Config: Update SOC_R8A7796X annotations
+-    - Config: Update CLK_R8A7796X annotations
+-    - update dkms package versions
+-    - [Config] updateconfigs after rebase to 5.6-rc6
++ -- Mainline Build <kernel@kathleen>  Sat, 21 Mar 2020 08:37:10 +0000
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.6-rc6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 18 Mar 2020 17:25:30 +0100
+-
+-linux-5.6 (5.6.0-4.4) focal; urgency=medium
+-
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] resync getabis
 -    - [Packaging] update helper scripts
-+  Mainline build at commit: v5.5.10
- 
+-
 -  * Add sysfs attribute to show remapped NVMe (LP: #1863621)
 -    - SAUCE: ata: ahci: Add sysfs attribute to show remapped NVMe device count
-+ -- Mainline Build <kernel@sita>  Wed, 18 Mar 2020 07:32:08 +0000
- 
+-
 -  * [20.04 FEAT] Compression improvements in Linux kernel (LP: #1830208)
 -    - [Config] Introducing s390x specific kernel config option CONFIG_ZLIB_DFLTCC
 -
@@ -9186,5 +9208,5 @@ index 1a1043b11882..259be800be69 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.17.1
+2.7.4
 
