@@ -1,6 +1,6 @@
-From 8d1b143e1c1699fae5b617544cb3a7c101bbaaa3 Mon Sep 17 00:00:00 2001
+From 42cfffa86b0f5df9fc686e5d69b4c0d3d80e5e65 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 21 Mar 2020 08:37:10 +0000
+Date: Wed, 25 Mar 2020 08:33:49 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,17 +8,17 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 9189 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index a52b798..3bfa63e 100644
+index a52b798..e990d3b 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,9192 +1,6 @@
 -linux-5.6 (5.6.0-5.5) focal; urgency=medium
-+linux (5.5.11-050511.202003210837) unstable; urgency=low
++linux (5.5.12-050512.202003250833) unstable; urgency=low
  
 -  * please help enable CONFIG_EROFS_FS_ZIP (LP: #1867099)
 -    - [Config] CONFIG_EROFS_FS_ZIP=y
 -    - [Config] CONFIG_EROFS_FS_CLUSTER_PAGE_LIMIT=1
-+  Mainline build at commit: v5.5.11
++  Mainline build at commit: v5.5.12
  
 -  * Miscellaneous Ubuntu changes
 -    - Config: Fix SND_HDA_PREALLOC_SIZE annotations
@@ -29,7 +29,7 @@ index a52b798..3bfa63e 100644
 -    - Config: Update CLK_R8A7796X annotations
 -    - update dkms package versions
 -    - [Config] updateconfigs after rebase to 5.6-rc6
-+ -- Mainline Build <kernel@kathleen>  Sat, 21 Mar 2020 08:37:10 +0000
++ -- Mainline Build <kernel@kathleen>  Wed, 25 Mar 2020 08:33:49 +0000
  
 -  [ Upstream Kernel Changes ]
 -
