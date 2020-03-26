@@ -253,7 +253,7 @@ index 56765f542244..e73a47a881b0 100644
  ISDN/CAPI SUBSYSTEM
  M:	Karsten Keil <isdn@linux-pingi.de>
 diff --git a/Makefile b/Makefile
-index 6a01b073915e..d962fe0f26ce 100644
+index 6a01b073915e..d1574c99f83c 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1,7 +1,7 @@
@@ -261,7 +261,7 @@ index 6a01b073915e..d962fe0f26ce 100644
  VERSION = 5
  PATCHLEVEL = 5
 -SUBLEVEL = 0
-+SUBLEVEL = 12
++SUBLEVEL = 13
  EXTRAVERSION =
  NAME = Kleptomaniac Octopus
  
@@ -12530,10 +12530,19 @@ index 532a3a5d8f63..1fdbd6ff2058 100644
  	mutex_unlock(&component_mutex);
  
 diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 42a672456432..3306d5ae92a6 100644
+index 42a672456432..dbb0f9130f42 100644
 --- a/drivers/base/core.c
 +++ b/drivers/base/core.c
-@@ -745,25 +745,31 @@ static void __device_links_queue_sync_state(struct device *dev,
+@@ -718,6 +718,8 @@ static void __device_links_queue_sync_state(struct device *dev,
+ {
+ 	struct device_link *link;
+ 
++	if (!dev_has_sync_state(dev))
++		return;
+ 	if (dev->state_synced)
+ 		return;
+ 
+@@ -745,25 +747,31 @@ static void __device_links_queue_sync_state(struct device *dev,
  /**
   * device_links_flush_sync_list - Call sync_state() on a list of devices
   * @list: List of devices to call sync_state() on
@@ -12569,7 +12578,7 @@ index 42a672456432..3306d5ae92a6 100644
  
  		put_device(dev);
  	}
-@@ -801,7 +807,7 @@ void device_links_supplier_sync_state_resume(void)
+@@ -801,7 +809,7 @@ void device_links_supplier_sync_state_resume(void)
  out:
  	device_links_write_unlock();
  
@@ -12578,7 +12587,16 @@ index 42a672456432..3306d5ae92a6 100644
  }
  
  static int sync_state_resume_initcall(void)
-@@ -865,6 +871,11 @@ void device_links_driver_bound(struct device *dev)
+@@ -813,7 +821,7 @@ late_initcall(sync_state_resume_initcall);
+ 
+ static void __device_links_supplier_defer_sync(struct device *sup)
+ {
+-	if (list_empty(&sup->links.defer_sync))
++	if (list_empty(&sup->links.defer_sync) && dev_has_sync_state(sup))
+ 		list_add_tail(&sup->links.defer_sync, &deferred_sync);
+ }
+ 
+@@ -865,6 +873,11 @@ void device_links_driver_bound(struct device *dev)
  			driver_deferred_probe_add(link->consumer);
  	}
  
@@ -12590,7 +12608,7 @@ index 42a672456432..3306d5ae92a6 100644
  	list_for_each_entry(link, &dev->links.suppliers, c_node) {
  		if (!(link->flags & DL_FLAG_MANAGED))
  			continue;
-@@ -883,7 +894,7 @@ void device_links_driver_bound(struct device *dev)
+@@ -883,7 +896,7 @@ void device_links_driver_bound(struct device *dev)
  
  	device_links_write_unlock();
  
@@ -57418,6 +57436,28 @@ index fb376b5b7281..95816a8e3d26 100644
  
  	struct srcu_notifier_head transition_notifier_list;
  
+diff --git a/include/linux/device.h b/include/linux/device.h
+index 96ff76731e93..50d97767d8d6 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1522,6 +1522,17 @@ static inline struct device_node *dev_of_node(struct device *dev)
+ 
+ void driver_init(void);
+ 
++static inline bool dev_has_sync_state(struct device *dev)
++{
++	if (!dev)
++		return false;
++	if (dev->driver && dev->driver->sync_state)
++		return true;
++	if (dev->bus && dev->bus->sync_state)
++		return true;
++	return false;
++}
++
+ /*
+  * High level routines for use by the bus drivers
+  */
 diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
 index dad4a68fa009..8013562751a5 100644
 --- a/include/linux/dmaengine.h
