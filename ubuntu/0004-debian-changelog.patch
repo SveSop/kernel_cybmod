@@ -1,25 +1,205 @@
-From 2fcdf14289803e2bd61a61c847dd4039bb461dd0 Mon Sep 17 00:00:00 2001
+From d192b1689941dc6f80112d5b7a18e504dd114862 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 25 Mar 2020 16:31:40 +0000
+Date: Wed, 1 Apr 2020 10:32:56 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9192 +----------------------------------------------
- 1 file changed, 3 insertions(+), 9189 deletions(-)
+ debian.master/changelog | 9371 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 9368 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index a52b798..d71c8d7 100644
+index 8657f9d..63d2386 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9192 +1,6 @@
--linux-5.6 (5.6.0-5.5) focal; urgency=medium
-+linux (5.5.13-050513.202003251631) unstable; urgency=low
+@@ -1,9371 +1,6 @@
+-linux-5.6 (5.6.0-7.7) focal; urgency=medium
++linux (5.5.14-050514.202004011032) unstable; urgency=low
  
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
++  Mainline build at commit: v5.5.14
+ 
+-  * Kernel Oops - general protection fault: 0000 [#1] SMP PTI after
+-    disconnecting thunderbolt docking station (LP: #1864754)
+-    - SAUCE: ptp: free ptp clock properly
++ -- Mainline Build <kernel@kathleen>  Wed, 01 Apr 2020 10:32:56 +0000
+ 
+-  * swap storms kills interactive use (LP: #1861359)
+-    - SAUCE: mm/page_alloc.c: disable memory reclaim watermark boosting by default
+-
+-  * sysfs: incorrect network device permissions on network namespace change
+-    (LP: #1865359)
+-    - sysfs: add sysfs_file_change_owner()
+-    - sysfs: add sysfs_link_change_owner()
+-    - sysfs: add sysfs_group{s}_change_owner()
+-    - sysfs: add sysfs_change_owner()
+-    - device: add device_change_owner()
+-    - drivers/base/power: add dpm_sysfs_change_owner()
+-    - net-sysfs: add netdev_change_owner()
+-    - net-sysfs: add queue_change_owner()
+-    - net: fix sysfs permssions when device changes network namespace
+-    - sysfs: fix static inline declaration of sysfs_groups_change_owner()
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] updateconfigs after rebase to 5.6
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 31 Mar 2020 10:45:09 +0200
+-
+-linux-5.6 (5.6.0-6.6) focal; urgency=medium
+-
+-  * suspend only works once on ThinkPad X1 Carbon gen 7 (LP: #1865570)
+-    - SAUCE: e1000e: Disable s0ix flow for X1 Carbon 7th
+-
+-  *  Make Dell WD19 dock more reliable after suspend (LP: #1868217)
+-    - xhci: Ensure link state is U3 after setting USB_SS_PORT_LS_U3
+-    - xhci: Wait until link state trainsits to U0 after setting USB_SS_PORT_LS_U0
+-    - xhci: Finetune host initiated USB3 rootport link suspend and resume
+-
+-  * update-version-dkms doesn't add a BugLink (LP: #1867790)
+-    - [Packaging] Add BugLink to update-version-dkms commit
+-
+-  * Add support for Realtek 8723DE wireless adapter (LP: #1780590)
+-    - SAUCE: rtw88: add regulatory process strategy for different chipset
+-    - SAUCE: rtw88: support dynamic user regulatory setting
+-    - SAUCE: rtw88: Use secondary channel offset enumeration
+-    - SAUCE: rtw88: 8822c: modify rf protection setting
+-    - SAUCE: rtw88: disable TX-AMSDU on 2.4G band
+-    - SAUCE: Revert "rtw88: disable TX-AMSDU on 2.4G band"
+-    - SAUCE: rtw88: disable TX-AMSDU on 2.4G band
+-    - SAUCE: rtw88: remove unused parameter vif in rtw_lps_pg_info_get()
+-    - SAUCE: rtw88: add rtw_read8_mask and rtw_read16_mask
+-    - SAUCE: rtw88: pci: 8822c should set clock delay to zero
+-    - SAUCE: rtw88: move rtw_enter_ips() to the last when config
+-    - SAUCE: rtw88: avoid holding mutex for cancel_delayed_work_sync()
+-    - SAUCE: rtw88: add ciphers to suppress error message
+-    - SAUCE: rtw88: 8822c: update power sequence to v16
+-    - SAUCE: rtw88: Fix incorrect beamformee role setting
+-    - SAUCE: rtw88: don't hold all IRQs disabled for PS operations
+-    - SAUCE: rtw88: extract alloc rsvd_page and h2c skb routines
+-    - SAUCE: rtw88: associate reserved pages with each vif
+-    - SAUCE: rtw88: add adaptivity support for EU/JP regulatory
+-    - SAUCE: rtw88: 8723d: Add basic chip capabilities
+-    - SAUCE: rtw88: 8723d: add beamform wrapper functions
+-    - SAUCE: rtw88: 8723d: Add power sequence
+-    - SAUCE: rtw88: 8723d: Add RF read/write ops
+-    - SAUCE: rtw88: 8723d: Add mac/bb/rf/agc/power_limit tables
+-    - SAUCE: rtw88: 8723d: Add cfg_ldo25 to control LDO25
+-    - SAUCE: rtw88: 8723d: Add new chip op efuse_grant() to control efuse access
+-    - SAUCE: rtw88: 8723d: Add read_efuse to recognize efuse info from map
+-    - SAUCE: rtw88: add legacy firmware download for 8723D devices
+-    - SAUCE: rtw88: no need to send additional information to legacy firmware
+-    - SAUCE: rtw88: 8723d: Add mac power-on/-off function
+-    - SAUCE: rtw88: decompose while(1) loop of power sequence polling command
+-    - SAUCE: rtw88: 8723d: 11N chips don't support H2C queue
+-    - SAUCE: rtw88: 8723d: implement set_tx_power_index ops
+-    - SAUCE: rtw88: 8723d: Organize chip TX/RX FIFO
+-    - SAUCE: rtw88: 8723d: initialize mac/bb/rf basic functions
+-    - SAUCE: rtw88: 8723d: Add DIG parameter
+-    - SAUCE: rtw88: 8723d: Add query_rx_desc
+-    - SAUCE: rtw88: 8723d: Add set_channel
+-    - SAUCE: rtw88: handle C2H_CCX_TX_RPT to know if packet TX'ed successfully
+-    - SAUCE: rtw88: 8723d: 11N chips don't support LDPC
+-    - SAUCE: rtw88: set default port to firmware
+-    - SAUCE: rtw88: update tx descriptor of mgmt and rsvd page packets
+-    - SAUCE: rtw88: sar: add SAR of TX power limit
+-    - SAUCE: rtw88: sar: Load static SAR table from ACPI WRDS method
+-    - SAUCE: rtw88: sar: Load dynamic SAR table from ACPI methods
+-    - SAUCE: rtw88: sar: apply dynamic SAR table to tx power limit
+-    - SAUCE: rtw88: sar: add sar_work to poll if dynamic SAR table is changed
+-    - SAUCE: rtw88: sar: dump sar information via debugfs
+-    - SAUCE: rtw88: 8723d: Add chip_ops::false_alarm_statistics
+-    - SAUCE: rtw88: 8723d: Set IG register for CCK rate
+-    - SAUCE: rtw88: 8723d: add interface configurations table
+-    - SAUCE: rtw88: 8723d: Add LC calibration
+-    - SAUCE: rtw88: 8723d: add IQ calibration
+-    - SAUCE: rtw88: 8723d: Add power tracking
+-    - SAUCE: rtw88: 8723d: Add shutdown callback to disable BT USB suspend
+-    - SAUCE: rtw88: 8723d: implement flush queue
+-    - SAUCE: rtw88: 8723d: set ltecoex register address in chip_info
+-    - SAUCE: rtw88: 8723d: Add coex support
+-    - SAUCE: rtw88: fill zeros to words 0x06 and 0x07 of security cam entry
+-    - SAUCE: rtw88: 8723d: Add 8723DE to Kconfig and Makefile
+-    - [Config] CONFIG_RTW88_8723DE=y
+-
+-  * [Ubuntu 20.04] Unset HIBERNATION and PM kernel config options for focal
+-    (LP: #1867753)
+-    - [Config] CONFIG_HIBERNATION=n and CONFIG_PM=n for s390x
+-
+-  * [20.04 FEAT] Base KVM setup for secure guests - kernel part (LP: #1835531)
+-    - s390/protvirt: introduce host side setup
+-    - s390/protvirt: add ultravisor initialization
+-    - s390/mm: provide memory management functions for protected KVM guests
+-    - s390/mm: add (non)secure page access exceptions handlers
+-    - s390/protvirt: Add sysfs firmware interface for Ultravisor information
+-    - KVM: s390/interrupt: do not pin adapter interrupt pages
+-    - KVM: s390: protvirt: Add UV debug trace
+-    - KVM: s390: add new variants of UV CALL
+-    - KVM: s390: protvirt: Add initial vm and cpu lifecycle handling
+-    - KVM: s390: protvirt: Secure memory is not mergeable
+-    - KVM: s390/mm: Make pages accessible before destroying the guest
+-    - KVM: s390: protvirt: Handle SE notification interceptions
+-    - KVM: s390: protvirt: Instruction emulation
+-    - KVM: s390: protvirt: Implement interrupt injection
+-    - KVM: s390: protvirt: Add SCLP interrupt handling
+-    - KVM: s390: protvirt: Handle spec exception loops
+-    - KVM: s390: protvirt: Add new gprs location handling
+-    - KVM: S390: protvirt: Introduce instruction data area bounce buffer
+-    - KVM: s390: protvirt: handle secure guest prefix pages
+-    - KVM: s390/mm: handle guest unpin events
+-    - KVM: s390: protvirt: Write sthyi data to instruction data area
+-    - KVM: s390: protvirt: STSI handling
+-    - KVM: s390: protvirt: disallow one_reg
+-    - KVM: s390: protvirt: Do only reset registers that are accessible
+-    - KVM: s390: protvirt: Only sync fmt4 registers
+-    - KVM: s390: protvirt: Add program exception injection
+-    - KVM: s390: protvirt: UV calls in support of diag308 0, 1
+-    - KVM: s390: protvirt: Report CPU state to Ultravisor
+-    - KVM: s390: protvirt: Support cmd 5 operation state
+-    - KVM: s390: protvirt: Mask PSW interrupt bits for interception 104 and 112
+-    - KVM: s390: protvirt: do not inject interrupts after start
+-    - KVM: s390: protvirt: Add UV cpu reset calls
+-    - DOCUMENTATION: Protected virtual machine introduction and IPL
+-    - KVM: s390: protvirt: introduce and enable KVM_CAP_S390_PROTECTED
+-    - KVM: s390: protvirt: Add KVM api documentation
+-    - mm/gup/writeback: add callbacks for inaccessible pages
+-
+-  * All PS/2 ports on PS/2 Serial add-in bracket are not working after S3
+-    (LP: #1866734)
+-    - SAUCE: Input: i8042 - fix the selftest retry logic
+-
+-  * Sys oopsed with sysfs test in ubuntu_stress_smoke_test on X-hwe ARM64
+-    (LP: #1866772)
+-    - ACPI: sysfs: copy ACPI data using io memory copying
+-
+-  * Miscellaneous Ubuntu changes
+-    - hio -- remove duplicated MODULE_DEVICE_TABLE declaration
+-    - SAUCE: r8169: disable ASPM L1.1
+-    - [Config] update annotations from configs
+-    - [Config] update configs after annotation file review
+-    - SAUCE: Revert "tools/power turbostat: Fix 32-bit capabilities warning"
+-
+-  * Miscellaneous upstream changes
+-    - drm/i915: Fix eDP DPCD aux max backlight calculations
+-    - drm/dp: Introduce EDID-based quirks
+-    - drm/i915: Force DPCD backlight mode on X1 Extreme 2nd Gen 4K AMOLED panel
+-    - drm/i915: Force DPCD backlight mode for some Dell CML 2020 panels
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.6-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 25 Mar 2020 18:09:13 +0100
+-
+-linux-5.6 (5.6.0-5.5) focal; urgency=medium
+-
 -  * please help enable CONFIG_EROFS_FS_ZIP (LP: #1867099)
 -    - [Config] CONFIG_EROFS_FS_ZIP=y
 -    - [Config] CONFIG_EROFS_FS_CLUSTER_PAGE_LIMIT=1
-+  Mainline build at commit: v5.5.13
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - Config: Fix SND_HDA_PREALLOC_SIZE annotations
 -    - Config: Fix DATA_SHIFT annotations
@@ -29,8 +209,7 @@ index a52b798..d71c8d7 100644
 -    - Config: Update CLK_R8A7796X annotations
 -    - update dkms package versions
 -    - [Config] updateconfigs after rebase to 5.6-rc6
-+ -- Mainline Build <kernel@kathleen>  Wed, 25 Mar 2020 16:31:40 +0000
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v5.6-rc6
