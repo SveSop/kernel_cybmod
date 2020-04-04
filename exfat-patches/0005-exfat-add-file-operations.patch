@@ -1,29 +1,24 @@
-From b427e5247f1447f9162568840e53f2c075e6f143 Mon Sep 17 00:00:00 2001
+From 2739b86fcbdf63b22b37558f393db61024778660 Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:19 +0900
-Subject: [PATCH 05/13] exfat: add file operations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:38 +0900
+Subject: [PATCH 05/15] exfat: add file operations
 
 This adds the implementation of file operations for exfat.
 
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
 ---
- fs/exfat/file.c | 360 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 360 insertions(+)
+ fs/exfat/file.c | 355 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 355 insertions(+)
  create mode 100644 fs/exfat/file.c
 
 diff --git a/fs/exfat/file.c b/fs/exfat/file.c
 new file mode 100644
-index 000000000..483f68375
+index 000000000000..b4b8af0cae0a
 --- /dev/null
 +++ b/fs/exfat/file.c
-@@ -0,0 +1,360 @@
+@@ -0,0 +1,355 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
@@ -186,12 +181,11 @@ index 000000000..483f68375
 +			return -EIO;
 +		ep2 = ep + 1;
 +
-+		ts = current_time(inode);
++		ktime_get_real_ts64(&ts);
 +		exfat_set_entry_time(sbi, &ts,
-+				&ep->dentry.file.modify_tz,
 +				&ep->dentry.file.modify_time,
 +				&ep->dentry.file.modify_date,
-+				&ep->dentry.file.modify_time_ms);
++				&ep->dentry.file.modify_tz);
 +		ep->dentry.file.attr = cpu_to_le16(ei->attr);
 +
 +		/* File size should be zero if there is no cluster allocated */
@@ -296,12 +290,8 @@ index 000000000..483f68375
 +		unsigned int request_mask, unsigned int query_flags)
 +{
 +	struct inode *inode = d_backing_inode(path->dentry);
-+	struct exfat_inode_info *ei = EXFAT_I(inode);
 +
 +	generic_fillattr(inode, stat);
-+	stat->result_mask |= STATX_BTIME;
-+	stat->btime.tv_sec = ei->i_crtime.tv_sec;
-+	stat->btime.tv_nsec = ei->i_crtime.tv_nsec;
 +	stat->blksize = EXFAT_SB(inode->i_sb)->cluster_size;
 +	return 0;
 +}
@@ -385,5 +375,5 @@ index 000000000..483f68375
 +	.getattr     = exfat_getattr,
 +};
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 

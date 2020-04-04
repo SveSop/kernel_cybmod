@@ -1,4 +1,4 @@
-From 95691ae8f5542081b6cd4f2ca47cdb49c2c4306d Mon Sep 17 00:00:00 2001
+From 7c5867cf7ca85012bda28bf2de871825e057d1a3 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 17 May 2017 01:52:11 +0000
 Subject: [PATCH 14/29] init: wait for partition and retry scan
@@ -14,7 +14,7 @@ Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
  1 file changed, 10 insertions(+)
 
 diff --git a/init/do_mounts.c b/init/do_mounts.c
-index 0ae9cc22f..6cd4e294b 100644
+index 0ae9cc22f2ae..6cd4e294bbd0 100644
 --- a/init/do_mounts.c
 +++ b/init/do_mounts.c
 @@ -226,11 +226,19 @@ dev_t name_to_dev_t(const char *name)
@@ -48,5 +48,5 @@ index 0ae9cc22f..6cd4e294b 100644
  	md_run_setup();
  
 -- 
-2.25.1.291.ge68e29171c.dirty
+2.26.0.51.ga7d14a4428
 

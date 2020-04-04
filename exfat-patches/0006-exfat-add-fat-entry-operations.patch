@@ -1,17 +1,13 @@
-From 0a2b798808b659cc67e6eada68c09232923b1e40 Mon Sep 17 00:00:00 2001
+From 506ea0497b656b2d9e6be4109335f43d39507862 Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:20 +0900
-Subject: [PATCH 06/13] exfat: add fat entry operations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:39 +0900
+Subject: [PATCH 06/15] exfat: add fat entry operations
 
 This adds the implementation of fat entry operations for exfat.
 
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
 ---
  fs/exfat/fatent.c | 463 ++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 463 insertions(+)
@@ -19,7 +15,7 @@ Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
 
 diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
 new file mode 100644
-index 000000000..a855b1769
+index 000000000000..a855b1769a96
 --- /dev/null
 +++ b/fs/exfat/fatent.c
 @@ -0,0 +1,463 @@
@@ -487,5 +483,5 @@ index 000000000..a855b1769
 +	return 0;
 +}
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 

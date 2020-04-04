@@ -1,28 +1,24 @@
-From 16ed1ea0139b9195f44e8e6d80ddb510a6b0285a Mon Sep 17 00:00:00 2001
+From 9a2fdf1679688eed07305512d90cd1c5b6a6786f Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:21 +0900
-Subject: [PATCH 07/13] exfat: add bitmap operations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:40 +0900
+Subject: [PATCH 07/15] exfat: add bitmap operations
 
 This adds the implementation of bitmap operations for exfat.
 
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
 ---
- fs/exfat/balloc.c | 280 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 280 insertions(+)
+ fs/exfat/balloc.c | 282 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 282 insertions(+)
  create mode 100644 fs/exfat/balloc.c
 
 diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
 new file mode 100644
-index 000000000..6a04cc025
+index 000000000000..b568f5efc984
 --- /dev/null
 +++ b/fs/exfat/balloc.c
-@@ -0,0 +1,280 @@
+@@ -0,0 +1,282 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
@@ -158,9 +154,10 @@ index 000000000..6a04cc025
 +	return -EINVAL;
 +}
 +
-+void exfat_free_bitmap(struct exfat_sb_info *sbi)
++void exfat_free_bitmap(struct super_block *sb)
 +{
 +	int i;
++	struct exfat_sb_info *sbi = EXFAT_SB(sb);
 +
 +	brelse(sbi->pbr_bh);
 +
@@ -168,6 +165,7 @@ index 000000000..6a04cc025
 +		__brelse(sbi->vol_amap[i]);
 +
 +	kfree(sbi->vol_amap);
++	sbi->vol_amap = NULL;
 +}
 +
 +/*
@@ -304,5 +302,5 @@ index 000000000..6a04cc025
 +	return 0;
 +}
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 

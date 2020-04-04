@@ -1,28 +1,24 @@
-From 899f9e89fa37c862cd2477c194c82d3d389ef921 Mon Sep 17 00:00:00 2001
+From 5d1cd9afcdf92914511c6993148cfe18b7aca256 Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:18 +0900
-Subject: [PATCH 04/13] exfat: add directory operations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:37 +0900
+Subject: [PATCH 04/15] exfat: add directory operations
 
 This adds the implementation of directory operations for exfat.
 
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
 ---
- fs/exfat/dir.c | 1238 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 1238 insertions(+)
+ fs/exfat/dir.c | 1244 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 1244 insertions(+)
  create mode 100644 fs/exfat/dir.c
 
 diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
 new file mode 100644
-index 000000000..4b91afb0f
+index 000000000000..81a95557a6a3
 --- /dev/null
 +++ b/fs/exfat/dir.c
-@@ -0,0 +1,1238 @@
+@@ -0,0 +1,1244 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
@@ -158,21 +154,18 @@ index 000000000..4b91afb0f
 +			}
 +
 +			dir_entry->attr = le16_to_cpu(ep->dentry.file.attr);
-+			exfat_get_entry_time(sbi, &dir_entry->crtime,
-+					ep->dentry.file.create_tz,
++			exfat_get_entry_time(sbi, &dir_entry->ctime,
 +					ep->dentry.file.create_time,
 +					ep->dentry.file.create_date,
-+					ep->dentry.file.create_time_ms);
++					ep->dentry.file.create_tz);
 +			exfat_get_entry_time(sbi, &dir_entry->mtime,
-+					ep->dentry.file.modify_tz,
 +					ep->dentry.file.modify_time,
 +					ep->dentry.file.modify_date,
-+					ep->dentry.file.modify_time_ms);
++					ep->dentry.file.modify_tz);
 +			exfat_get_entry_time(sbi, &dir_entry->atime,
-+					ep->dentry.file.access_tz,
 +					ep->dentry.file.access_time,
 +					ep->dentry.file.access_date,
-+					0);
++					ep->dentry.file.access_tz);
 +
 +			*uni_name.name = 0x0;
 +			exfat_get_uniname_from_ext_entry(sb, &dir, dentry,
@@ -435,6 +428,31 @@ index 000000000..4b91afb0f
 +	}
 +}
 +
++static void exfat_init_file_entry(struct super_block *sb,
++		struct exfat_dentry *ep, unsigned int type)
++{
++	struct exfat_sb_info *sbi = EXFAT_SB(sb);
++	struct timespec64 ts;
++
++	ktime_get_real_ts64(&ts);
++
++	exfat_set_entry_type(ep, type);
++	exfat_set_entry_time(sbi, &ts,
++			&ep->dentry.file.create_time,
++			&ep->dentry.file.create_date,
++			&ep->dentry.file.create_tz);
++	exfat_set_entry_time(sbi, &ts,
++			&ep->dentry.file.modify_time,
++			&ep->dentry.file.modify_date,
++			&ep->dentry.file.modify_tz);
++	exfat_set_entry_time(sbi, &ts,
++			&ep->dentry.file.access_time,
++			&ep->dentry.file.access_date,
++			&ep->dentry.file.access_tz);
++	ep->dentry.file.create_time_ms = 0;
++	ep->dentry.file.modify_time_ms = 0;
++}
++
 +static void exfat_init_stream_entry(struct exfat_dentry *ep,
 +		unsigned char flags, unsigned int start_clu,
 +		unsigned long long size)
@@ -467,11 +485,13 @@ index 000000000..4b91afb0f
 +		unsigned long long size)
 +{
 +	struct super_block *sb = inode->i_sb;
-+	struct exfat_sb_info *sbi = EXFAT_SB(sb);
-+	struct timespec64 ts = current_time(inode);
 +	sector_t sector;
++	unsigned char flags;
 +	struct exfat_dentry *ep;
 +	struct buffer_head *bh;
++	int sync = IS_DIRSYNC(inode);
++
++	flags = (type == TYPE_FILE) ? ALLOC_FAT_CHAIN : ALLOC_NO_FAT_CHAIN;
 +
 +	/*
 +	 * We cannot use exfat_get_dentry_set here because file ep is not
@@ -481,34 +501,16 @@ index 000000000..4b91afb0f
 +	if (!ep)
 +		return -EIO;
 +
-+	exfat_set_entry_type(ep, type);
-+	exfat_set_entry_time(sbi, &ts,
-+			&ep->dentry.file.create_tz,
-+			&ep->dentry.file.create_time,
-+			&ep->dentry.file.create_date,
-+			&ep->dentry.file.create_time_ms);
-+	exfat_set_entry_time(sbi, &ts,
-+			&ep->dentry.file.modify_tz,
-+			&ep->dentry.file.modify_time,
-+			&ep->dentry.file.modify_date,
-+			&ep->dentry.file.modify_time_ms);
-+	exfat_set_entry_time(sbi, &ts,
-+			&ep->dentry.file.access_tz,
-+			&ep->dentry.file.access_time,
-+			&ep->dentry.file.access_date,
-+			NULL);
-+
-+	exfat_update_bh(sb, bh, IS_DIRSYNC(inode));
++	exfat_init_file_entry(sb, ep, type);
++	exfat_update_bh(sb, bh, sync);
 +	brelse(bh);
 +
 +	ep = exfat_get_dentry(sb, p_dir, entry + 1, &bh, &sector);
 +	if (!ep)
 +		return -EIO;
 +
-+	exfat_init_stream_entry(ep,
-+		(type == TYPE_FILE) ? ALLOC_FAT_CHAIN : ALLOC_NO_FAT_CHAIN,
-+		start_clu, size);
-+	exfat_update_bh(sb, bh, IS_DIRSYNC(inode));
++	exfat_init_stream_entry(ep, flags, start_clu, size);
++	exfat_update_bh(sb, bh, sync);
 +	brelse(bh);
 +
 +	return 0;
@@ -1262,5 +1264,5 @@ index 000000000..4b91afb0f
 +	return count;
 +}
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 

@@ -1,4 +1,4 @@
-From 96c8352f739ad6110cddd226dd2e97528048402c Mon Sep 17 00:00:00 2001
+From 6371fd2e86c55b81713090ff674bb29958b8c25b Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 17:28:14 -0600
 Subject: [PATCH 08/29] smpboot: reuse timer calibration
@@ -10,7 +10,7 @@ saves 200ms+ of boot time.
  1 file changed, 3 insertions(+)
 
 diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
-index 7e322e2da..bb2c9b5ee 100644
+index 7e322e2daaf5..bb2c9b5eed71 100644
 --- a/arch/x86/kernel/tsc.c
 +++ b/arch/x86/kernel/tsc.c
 @@ -1528,6 +1528,9 @@ unsigned long calibrate_delay_is_known(void)
@@ -24,5 +24,5 @@ index 7e322e2da..bb2c9b5ee 100644
  	if (sibling < nr_cpu_ids)
  		return cpu_data(sibling).loops_per_jiffy;
 -- 
-2.25.1.291.ge68e29171c.dirty
+2.26.0.51.ga7d14a4428
 

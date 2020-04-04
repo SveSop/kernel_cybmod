@@ -1,29 +1,23 @@
-From 73eebdc200f06214445aaea5e08565d6e669fdcb Mon Sep 17 00:00:00 2001
+From 3b87e64951538b1d1fa5167db79580c1d6240033 Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:23 +0900
-Subject: [PATCH 09/13] exfat: add misc operations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:42 +0900
+Subject: [PATCH 09/15] exfat: add misc operations
 
 This adds the implementation of misc operations for exfat.
 
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 ---
- fs/exfat/misc.c | 163 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 163 insertions(+)
+ fs/exfat/misc.c | 162 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 162 insertions(+)
  create mode 100644 fs/exfat/misc.c
 
 diff --git a/fs/exfat/misc.c b/fs/exfat/misc.c
 new file mode 100644
-index 000000000..14a330084
+index 000000000000..ed3dae7b54c3
 --- /dev/null
 +++ b/fs/exfat/misc.c
-@@ -0,0 +1,163 @@
+@@ -0,0 +1,162 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + *  Written 1992,1993 by Werner Almesberger
@@ -99,55 +93,54 @@ index 000000000..14a330084
 +		ts->tv_sec += TIMEZONE_SEC(0x80 - tz_off);
 +}
 +
++static inline int exfat_tz_offset(struct exfat_sb_info *sbi)
++{
++	if (sbi->options.time_offset)
++		return sbi->options.time_offset;
++	return sys_tz.tz_minuteswest;
++}
++
 +/* Convert a EXFAT time/date pair to a UNIX date (seconds since 1 1 70). */
 +void exfat_get_entry_time(struct exfat_sb_info *sbi, struct timespec64 *ts,
-+		u8 tz, __le16 time, __le16 date, u8 time_ms)
++		__le16 time, __le16 date, u8 tz)
 +{
 +	u16 t = le16_to_cpu(time);
 +	u16 d = le16_to_cpu(date);
 +
 +	ts->tv_sec = mktime64(1980 + (d >> 9), d >> 5 & 0x000F, d & 0x001F,
 +			      t >> 11, (t >> 5) & 0x003F, (t & 0x001F) << 1);
-+
-+
-+	/* time_ms field represent 0 ~ 199(1990 ms) */
-+	if (time_ms) {
-+		ts->tv_sec += time_ms / 100;
-+		ts->tv_nsec = (time_ms % 100) * 10 * NSEC_PER_MSEC;
-+	}
++	ts->tv_nsec = 0;
 +
 +	if (tz & EXFAT_TZ_VALID)
-+		/* Adjust timezone to UTC0. */
++		/* Treat as UTC time, but need to adjust timezone to UTC0 */
 +		exfat_adjust_tz(ts, tz & ~EXFAT_TZ_VALID);
 +	else
-+		/* Convert from local time to UTC using time_offset. */
-+		ts->tv_sec -= sbi->options.time_offset * SECS_PER_MIN;
++		/* Treat as local time */
++		ts->tv_sec -= exfat_tz_offset(sbi) * SECS_PER_MIN;
 +}
 +
 +/* Convert linear UNIX date to a EXFAT time/date pair. */
 +void exfat_set_entry_time(struct exfat_sb_info *sbi, struct timespec64 *ts,
-+		u8 *tz, __le16 *time, __le16 *date, u8 *time_ms)
++		__le16 *time, __le16 *date, u8 *tz)
 +{
 +	struct tm tm;
 +	u16 t, d;
 +
-+	time64_to_tm(ts->tv_sec, 0, &tm);
++	/* clamp to the range valid in the exfat on-disk representation. */
++	time64_to_tm(clamp_t(time64_t, ts->tv_sec, EXFAT_MIN_TIMESTAMP_SECS,
++		EXFAT_MAX_TIMESTAMP_SECS), -exfat_tz_offset(sbi) * SECS_PER_MIN,
++		&tm);
 +	t = (tm.tm_hour << 11) | (tm.tm_min << 5) | (tm.tm_sec >> 1);
 +	d = ((tm.tm_year - 80) <<  9) | ((tm.tm_mon + 1) << 5) | tm.tm_mday;
 +
 +	*time = cpu_to_le16(t);
 +	*date = cpu_to_le16(d);
 +
-+	/* time_ms field represent 0 ~ 199(1990 ms) */
-+	if (time_ms)
-+		*time_ms = (tm.tm_sec & 1) * 100 +
-+			ts->tv_nsec / (10 * NSEC_PER_MSEC);
-+
 +	/*
-+	 * Record 00h value for OffsetFromUtc field and 1 value for OffsetValid
-+	 * to indicate that local time and UTC are the same.
++	 * exfat ondisk tz offset field decribes the offset from UTF
++	 * in 15 minute interval.
 +	 */
-+	*tz = EXFAT_TZ_VALID;
++	*tz = ((exfat_tz_offset(sbi) / -15) & 0x7F) | EXFAT_TZ_VALID;
 +}
 +
 +unsigned short exfat_calc_chksum_2byte(void *data, int len,
@@ -188,5 +181,5 @@ index 000000000..14a330084
 +	return exfat_chain_set(dup, ec->dir, ec->size, ec->flags);
 +}
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 

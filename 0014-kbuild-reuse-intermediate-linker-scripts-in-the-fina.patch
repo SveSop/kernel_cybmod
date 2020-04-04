@@ -1,7 +1,7 @@
-From 45080ac95a9260571a3a3ed40a211c0c69a0264a Mon Sep 17 00:00:00 2001
+From 9e855e5afca1a7f2c27537aa9cbcb8a8d7317c2a Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Sat, 30 Nov 2019 13:48:03 -0300
-Subject: [PATCH 6/6] kbuild: reuse intermediate linker scripts in the final
+Subject: [PATCH 4/6] kbuild: reuse intermediate linker scripts in the final
  link steps
 
 ld.bfd forces `--undefined X` symbols to be added to the resulting
@@ -27,7 +27,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  3 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6a01b0739..5c94264d3 100644
+index 75d17e7f7..04d778b06 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1033,6 +1033,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
@@ -53,10 +53,10 @@ index 6a01b0739..5c94264d3 100644
  # Recurse until adjust_autoksyms.sh is satisfied
  PHONY += autoksyms_recursive
 diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index b734ac8a6..fb413683d 100644
+index a1730d42e..f2184dfed 100644
 --- a/scripts/Makefile.build
 +++ b/scripts/Makefile.build
-@@ -417,7 +417,7 @@ cmd_export_list = $(OBJDUMP) -h $< | \
+@@ -419,7 +419,7 @@ cmd_export_list = $(OBJDUMP) -h $< | \
  	rm -f $(dummy-object);\
  	echo | $(CC) $(a_flags) -c -o $(dummy-object) -x assembler -;\
  	$(LD) $(ld_flags) -r -o $@ -T $(ksyms-lds) $(dummy-object);\
@@ -66,7 +66,7 @@ index b734ac8a6..fb413683d 100644
  $(obj)/lib-ksyms.o: $(lib-target) FORCE
  	$(call if_changed,export_list)
 diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index 436379940..1b8771288 100755
+index dd484e927..b1d556b56 100755
 --- a/scripts/link-vmlinux.sh
 +++ b/scripts/link-vmlinux.sh
 @@ -61,6 +61,7 @@ modpost_link()

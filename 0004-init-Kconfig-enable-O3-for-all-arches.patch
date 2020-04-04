@@ -1,25 +1,18 @@
-From d384c6dd410446ac66aca6b3fb962bbfb4ef2548 Mon Sep 17 00:00:00 2001
-From: Oleksandr Natalenko <oleksandr@redhat.com>
-Date: Wed, 11 Dec 2019 11:46:19 +0100
+From 12de7f2230bdf03b2a8c81573887a420e587d43f Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Wed, 1 Apr 2020 02:14:23 +0100
 Subject: [PATCH 2/2] init/Kconfig: enable -O3 for all arches
 
-Building a kernel with -O3 may help in hunting bugs like [1] and thus
-using this switch should not be restricted to one specific arch only.
-
-With that, lets expose it for everyone.
-
-[1] https://lore.kernel.org/lkml/673b885183fb64f1cbb3ed2387524077@natalenko.name/
-
-Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  init/Kconfig | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index 594b472b3..965aa713c 100644
+index 85dad8f08..a54a37458 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1247,7 +1247,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
+@@ -1266,7 +1266,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
  
  config CC_OPTIMIZE_FOR_PERFORMANCE_O3
  	bool "Optimize more for performance (-O3)"

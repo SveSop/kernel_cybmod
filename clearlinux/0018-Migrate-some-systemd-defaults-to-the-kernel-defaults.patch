@@ -1,4 +1,4 @@
-From a90cbb485d1c43b858ed160ba88d3b3d69177d31 Mon Sep 17 00:00:00 2001
+From 2a89259dddef1425cb236eec3024915d96686edd Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Thu, 2 Aug 2018 12:03:22 -0700
 Subject: [PATCH 18/29] Migrate some systemd defaults to the kernel defaults.
@@ -15,7 +15,7 @@ if we're not going to do anything else ever.
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/dummy.c b/drivers/net/dummy.c
-index 3031a5fc5..d267c6d1d 100644
+index 3031a5fc5427..d267c6d1db4a 100644
 --- a/drivers/net/dummy.c
 +++ b/drivers/net/dummy.c
 @@ -44,7 +44,7 @@
@@ -28,7 +28,7 @@ index 3031a5fc5..d267c6d1d 100644
  /* fake multicast ability */
  static void set_multicast_list(struct net_device *dev)
 diff --git a/include/uapi/linux/if_bonding.h b/include/uapi/linux/if_bonding.h
-index 790585f0e..85560927e 100644
+index 45f3750aa861..317f8326ddd7 100644
 --- a/include/uapi/linux/if_bonding.h
 +++ b/include/uapi/linux/if_bonding.h
 @@ -82,7 +82,7 @@
@@ -41,5 +41,5 @@ index 790585f0e..85560927e 100644
  #define BOND_DEFAULT_TX_QUEUES 16   /* Default number of tx queues per device */
  
 -- 
-2.25.1.291.ge68e29171c.dirty
+2.26.0.51.ga7d14a4428
 

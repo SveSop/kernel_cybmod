@@ -1,4 +1,4 @@
-From 051e309cc8f6c46269ff6d832e4bb19d3cf4f28d Mon Sep 17 00:00:00 2001
+From 2321a8e24dea21f80af30c3444bb32f21205b69b Mon Sep 17 00:00:00 2001
 From: Jim Kukunas <james.t.kukunas@linux.intel.com>
 Date: Sat, 2 Nov 2019 00:59:52 +0000
 Subject: [PATCH 27/29] fix bug in ucode force reload revision check
@@ -9,7 +9,7 @@ If force_ucode_load==true, reload ucode even if revision # is identical.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index efa492cd3..e8a4d84a8 100644
+index efa492cd38ac..e8a4d84a86ef 100644
 --- a/arch/x86/kernel/cpu/microcode/intel.c
 +++ b/arch/x86/kernel/cpu/microcode/intel.c
 @@ -866,7 +866,7 @@ static enum ucode_state apply_microcode_intel(int cpu)
@@ -22,5 +22,5 @@ index efa492cd3..e8a4d84a8 100644
  		goto out;
  	}
 -- 
-2.25.1.291.ge68e29171c.dirty
+2.26.0.51.ga7d14a4428
 

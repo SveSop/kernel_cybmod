@@ -9,10 +9,10 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index e95741388311..4505c3aac0e7 100644
+index edde0e519..fba9b6dfb 100644
 --- a/net/sched/Kconfig
 +++ b/net/sched/Kconfig
-@@ -441,6 +441,9 @@ choice
+@@ -471,6 +471,9 @@ choice
  	config DEFAULT_SFQ
  		bool "Stochastic Fair Queue" if NET_SCH_SFQ
  
@@ -22,7 +22,7 @@ index e95741388311..4505c3aac0e7 100644
  	config DEFAULT_PFIFO_FAST
  		bool "Priority FIFO Fast"
  endchoice
-@@ -451,6 +454,7 @@ config DEFAULT_NET_SCH
+@@ -481,6 +484,7 @@ config DEFAULT_NET_SCH
  	default "fq" if DEFAULT_FQ
  	default "fq_codel" if DEFAULT_FQ_CODEL
  	default "sfq" if DEFAULT_SFQ
@@ -30,3 +30,6 @@ index e95741388311..4505c3aac0e7 100644
  	default "pfifo_fast"
  endif
  
+-- 
+2.17.1
+

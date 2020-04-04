@@ -1,30 +1,25 @@
-From b336b95c727edf84f18f17aecad9a60b5459e1e8 Mon Sep 17 00:00:00 2001
+From f2aeb5d258ef029943fbef47ff227cfcfeab3472 Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:17 +0900
-Subject: [PATCH 03/13] exfat: add inode operations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:36 +0900
+Subject: [PATCH 03/15] exfat: add inode operations
 
 This adds the implementation of inode operations for exfat.
 
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 ---
- fs/exfat/inode.c |  671 +++++++++++++++++++++
- fs/exfat/namei.c | 1448 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 2119 insertions(+)
+ fs/exfat/inode.c |  667 +++++++++++++++++++++
+ fs/exfat/namei.c | 1442 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 2109 insertions(+)
  create mode 100644 fs/exfat/inode.c
  create mode 100644 fs/exfat/namei.c
 
 diff --git a/fs/exfat/inode.c b/fs/exfat/inode.c
 new file mode 100644
-index 000000000..06887492f
+index 000000000000..56cf09db1920
 --- /dev/null
 +++ b/fs/exfat/inode.c
-@@ -0,0 +1,671 @@
+@@ -0,0 +1,667 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
@@ -79,21 +74,18 @@ index 000000000..06887492f
 +	ep->dentry.file.attr = cpu_to_le16(exfat_make_attr(inode));
 +
 +	/* set FILE_INFO structure using the acquired struct exfat_dentry */
-+	exfat_set_entry_time(sbi, &ei->i_crtime,
-+			&ep->dentry.file.create_tz,
++	exfat_set_entry_time(sbi, &inode->i_ctime,
 +			&ep->dentry.file.create_time,
 +			&ep->dentry.file.create_date,
-+			&ep->dentry.file.create_time_ms);
++			&ep->dentry.file.create_tz);
 +	exfat_set_entry_time(sbi, &inode->i_mtime,
-+			&ep->dentry.file.modify_tz,
 +			&ep->dentry.file.modify_time,
 +			&ep->dentry.file.modify_date,
-+			&ep->dentry.file.modify_time_ms);
++			&ep->dentry.file.modify_tz);
 +	exfat_set_entry_time(sbi, &inode->i_atime,
-+			&ep->dentry.file.access_tz,
 +			&ep->dentry.file.access_time,
 +			&ep->dentry.file.access_date,
-+			NULL);
++			&ep->dentry.file.access_tz);
 +
 +	/* File size should be zero if there is no cluster allocated */
 +	on_disk_size = i_size_read(inode);
@@ -643,8 +635,7 @@ index 000000000..06887492f
 +	inode->i_blocks = ((i_size_read(inode) + (sbi->cluster_size - 1)) &
 +		~(sbi->cluster_size - 1)) >> inode->i_blkbits;
 +	inode->i_mtime = info->mtime;
-+	inode->i_ctime = info->mtime;
-+	ei->i_crtime = info->crtime;
++	inode->i_ctime = info->ctime;
 +	inode->i_atime = info->atime;
 +
 +	exfat_cache_init_inode(inode);
@@ -698,10 +689,10 @@ index 000000000..06887492f
 +}
 diff --git a/fs/exfat/namei.c b/fs/exfat/namei.c
 new file mode 100644
-index 000000000..a8681d91f
+index 000000000000..7298de74e9b8
 --- /dev/null
 +++ b/fs/exfat/namei.c
-@@ -0,0 +1,1448 @@
+@@ -0,0 +1,1442 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
@@ -1259,7 +1250,7 @@ index 000000000..a8681d91f
 +			return -EIO;
 +		info->num_subdirs = count + EXFAT_MIN_SUBDIR;
 +	}
-+	memset(&info->crtime, 0, sizeof(info->crtime));
++	memset(&info->ctime, 0, sizeof(info->ctime));
 +	memset(&info->mtime, 0, sizeof(info->mtime));
 +	memset(&info->atime, 0, sizeof(info->atime));
 +out:
@@ -1285,7 +1276,7 @@ index 000000000..a8681d91f
 +		goto unlock;
 +
 +	inode_inc_iversion(dir);
-+	dir->i_ctime = dir->i_mtime = current_time(dir);
++	dir->i_ctime = dir->i_mtime = dir->i_atime = current_time(dir);
 +	if (IS_DIRSYNC(dir))
 +		exfat_sync_inode(dir);
 +	else
@@ -1297,8 +1288,7 @@ index 000000000..a8681d91f
 +		goto unlock;
 +
 +	inode_inc_iversion(inode);
-+	inode->i_mtime = inode->i_atime = inode->i_ctime =
-+		EXFAT_I(inode)->i_crtime = current_time(inode);
++	inode->i_mtime = inode->i_atime = inode->i_ctime = current_time(inode);
 +	/* timestamp is already written, so mark_inode_dirty() is unneeded. */
 +
 +	d_instantiate(dentry, inode);
@@ -1359,7 +1349,7 @@ index 000000000..a8681d91f
 +		info->attr = ATTR_SUBDIR;
 +		info->flags = ALLOC_FAT_CHAIN;
 +		info->start_clu = sbi->root_dir;
-+		memset(&info->crtime, 0, sizeof(info->crtime));
++		memset(&info->ctime, 0, sizeof(info->ctime));
 +		memset(&info->mtime, 0, sizeof(info->mtime));
 +		memset(&info->atime, 0, sizeof(info->atime));
 +
@@ -1398,21 +1388,18 @@ index 000000000..a8681d91f
 +			return -EIO;
 +		}
 +
-+		exfat_get_entry_time(sbi, &info->crtime,
-+				ep->dentry.file.create_tz,
++		exfat_get_entry_time(sbi, &info->ctime,
 +				ep->dentry.file.create_time,
 +				ep->dentry.file.create_date,
-+				ep->dentry.file.create_time_ms);
++				ep->dentry.file.create_tz);
 +		exfat_get_entry_time(sbi, &info->mtime,
-+				ep->dentry.file.modify_tz,
 +				ep->dentry.file.modify_time,
 +				ep->dentry.file.modify_date,
-+				ep->dentry.file.modify_time_ms);
++				ep->dentry.file.modify_tz);
 +		exfat_get_entry_time(sbi, &info->atime,
-+				ep->dentry.file.access_tz,
 +				ep->dentry.file.access_time,
 +				ep->dentry.file.access_date,
-+				0);
++				ep->dentry.file.access_tz);
 +		kfree(es);
 +
 +		if (info->type == TYPE_DIR) {
@@ -1590,7 +1577,7 @@ index 000000000..a8681d91f
 +		goto unlock;
 +
 +	inode_inc_iversion(dir);
-+	dir->i_ctime = dir->i_mtime = current_time(dir);
++	dir->i_ctime = dir->i_mtime = dir->i_atime = current_time(dir);
 +	if (IS_DIRSYNC(dir))
 +		exfat_sync_inode(dir);
 +	else
@@ -1605,8 +1592,7 @@ index 000000000..a8681d91f
 +	}
 +
 +	inode_inc_iversion(inode);
-+	inode->i_mtime = inode->i_atime = inode->i_ctime =
-+		EXFAT_I(inode)->i_crtime = current_time(inode);
++	inode->i_mtime = inode->i_atime = inode->i_ctime = current_time(inode);
 +	/* timestamp is already written, so mark_inode_dirty() is unneeded. */
 +
 +	d_instantiate(dentry, inode);
@@ -2090,7 +2076,7 @@ index 000000000..a8681d91f
 +
 +	inode_inc_iversion(new_dir);
 +	new_dir->i_ctime = new_dir->i_mtime = new_dir->i_atime =
-+		EXFAT_I(new_dir)->i_crtime = current_time(new_dir);
++		current_time(new_dir);
 +	if (IS_DIRSYNC(new_dir))
 +		exfat_sync_inode(new_dir);
 +	else
@@ -2131,8 +2117,7 @@ index 000000000..a8681d91f
 +					"abnormal access to an inode dropped");
 +			WARN_ON(new_inode->i_nlink == 0);
 +		}
-+		new_inode->i_ctime = EXFAT_I(new_inode)->i_crtime =
-+			current_time(new_inode);
++		new_inode->i_ctime = current_time(new_inode);
 +	}
 +
 +unlock:
@@ -2151,5 +2136,5 @@ index 000000000..a8681d91f
 +	.getattr	= exfat_getattr,
 +};
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 

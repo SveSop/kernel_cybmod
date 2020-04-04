@@ -1,4 +1,4 @@
-From 973ed67de0d5fd5da6aac54920ce2ea2808cfd48 Mon Sep 17 00:00:00 2001
+From 130563e5f50bf2b68f7881b73742d41fdbb18d19 Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Sat, 20 Jul 2019 14:14:47 +0000
 Subject: [PATCH 25/29] x86/microcode: Force update a uCode even if the rev is
@@ -11,7 +11,7 @@ Signed-off-by: Ashok Raj <ashok.raj@intel.com>
  2 files changed, 55 insertions(+), 3 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 7019d4b2d..675f0df97 100644
+index 7019d4b2df0c..675f0df977cb 100644
 --- a/arch/x86/kernel/cpu/microcode/core.c
 +++ b/arch/x86/kernel/cpu/microcode/core.c
 @@ -607,6 +607,7 @@ static int microcode_reload_late(void)
@@ -23,7 +23,7 @@ index 7019d4b2d..675f0df97 100644
  	if (ret > 0)
  		microcode_check();
 diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index 6a99535d7..f08b4b59c 100644
+index 6a99535d7f37..f08b4b59cd38 100644
 --- a/arch/x86/kernel/cpu/microcode/intel.c
 +++ b/arch/x86/kernel/cpu/microcode/intel.c
 @@ -30,6 +30,7 @@
@@ -139,5 +139,5 @@ index 6a99535d7..f08b4b59c 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.25.1.291.ge68e29171c.dirty
+2.26.0.51.ga7d14a4428
 

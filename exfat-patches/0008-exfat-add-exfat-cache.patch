@@ -1,17 +1,13 @@
-From 973eb4a51d44630e26acf49dea4b4851ac702959 Mon Sep 17 00:00:00 2001
+From a42d7d8312370c70f7291f0fe1bb10b11aeef41b Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:22 +0900
-Subject: [PATCH 08/13] exfat: add exfat cache
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:41 +0900
+Subject: [PATCH 08/15] exfat: add exfat cache
 
 This adds the implementation of exfat cache.
 
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
 ---
  fs/exfat/cache.c | 325 +++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 325 insertions(+)
@@ -19,7 +15,7 @@ Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
 
 diff --git a/fs/exfat/cache.c b/fs/exfat/cache.c
 new file mode 100644
-index 000000000..03d0824fc
+index 000000000000..03d0824fc368
 --- /dev/null
 +++ b/fs/exfat/cache.c
 @@ -0,0 +1,325 @@
@@ -349,5 +345,5 @@ index 000000000..03d0824fc
 +	return 0;
 +}
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 

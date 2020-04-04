@@ -1,4 +1,4 @@
-From 6b451e39ec5d3e120531050db8ba3b94430e956e Mon Sep 17 00:00:00 2001
+From 39b1dc054b849a4eec25c723007cd14f656e366b Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Jan 2016 10:01:44 -0600
 Subject: [PATCH 02/29] Increase the ext4 default commit age
@@ -18,7 +18,7 @@ Signed-off-by: Jose Carlos Venegas Munoz <jose.carlos.venegas.munoz@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index ce44b687d..4f11cac05 100644
+index f613d8529863..90619e937e73 100644
 --- a/include/linux/jbd2.h
 +++ b/include/linux/jbd2.h
 @@ -44,7 +44,7 @@
@@ -31,5 +31,5 @@ index ce44b687d..4f11cac05 100644
  #ifdef CONFIG_JBD2_DEBUG
  /*
 -- 
-2.25.1.291.ge68e29171c.dirty
+2.26.0.51.ga7d14a4428
 

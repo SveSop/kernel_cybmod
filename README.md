@@ -1,13 +1,13 @@
-## Cybmod patches for 5.5 kernel  
+## Cybmod patches for 5.6 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.5.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.5.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.6.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.6.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.5.14  
+0000 : Kernel patch 5.6.2  
 0001 : PDS 0.99o "TKG Undead" patch  
 0002 : AUFS filesystem patch  
-0003 : 5.5 Graysky's CPU patches  
+0003 : 5.6 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
 0005 : MM address space tweak  
 0006 : Various kernel tweaks patch  
@@ -16,15 +16,14 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0012 : Swap tuning  
 0013 : revert_acpi_change_for_nct6775.patch  
 0014 : Kbuild: reuse intermediate linker scripts in the final link steps  
-0015 : Pipe: use exclusive waits when reading or writing  
-0016 : Kbuild: Add fcf-protection-none to retpoline flags  
-0017 : Trace: Add trace events for open-exec-use  
-0018 : mm: Stop kswap early  
-0019 : VFS/mm: Page cache patch  
+0015 : Kbuild: Add fcf protection none to retpoline flags  
+0016 : mm: Stop kswap early  
+0017 : vfs: Keep inodes with page cache off inode shrink  
+0018 : drm: Remove PageReserved manipulation  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
-ubuntu : Ubuntu kernel patchset  
-bfq-patches : Collection of "bfq" patches picked from [https://github.com/sirlucjan/kernel-patches/tree/master/5.3/bfq-patches-sep](https://github.com/sirlucjan/kernel-patches/tree/master/5.4/bfq-patches-sep)  
+ubuntu : Ubuntu mainline kernel patchset  
+bfq-patches : Collection of "bfq" patches  
 futex-patches : Collection of "futex" patches for Wine  
 exfat-patches : Collection of "ex-fat" filesystem patches  
 clearlinux : Collection of "clearlinux" patches  
@@ -36,8 +35,8 @@ clearlinux : Collection of "clearlinux" patches
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.5.tar.xz    
-cd linux-5.5  
+tar xf linux-5.6.tar.xz    
+cd linux-5.6  
 /path/to/patches/and/cybmod.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```

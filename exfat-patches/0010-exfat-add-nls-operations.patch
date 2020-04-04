@@ -1,28 +1,23 @@
-From 6f758134ad6af93ca40ebdf7c8609320b1d14f4b Mon Sep 17 00:00:00 2001
+From e8d9ac2fe59632c3275b34db28af50e44317a60c Mon Sep 17 00:00:00 2001
 From: Namjae Jeon <namjae.jeon@samsung.com>
-Date: Tue, 21 Jan 2020 21:57:24 +0900
-Subject: [PATCH 10/13] exfat: add nls operations
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 15 Jan 2020 17:24:43 +0900
+Subject: [PATCH 10/15] exfat: add nls operations
 
 This adds the implementation of nls operations for exfat.
 
 Signed-off-by: Namjae Jeon <namjae.jeon@samsung.com>
 Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Pali Rohár <pali.rohar@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 ---
- fs/exfat/nls.c | 831 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 831 insertions(+)
+ fs/exfat/nls.c | 834 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 834 insertions(+)
  create mode 100644 fs/exfat/nls.c
 
 diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
 new file mode 100644
-index 000000000..6d1c3ae13
+index 000000000000..65931b8cdcb7
 --- /dev/null
 +++ b/fs/exfat/nls.c
-@@ -0,0 +1,831 @@
+@@ -0,0 +1,834 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Copyright (C) 2012-2013 Samsung Electronics Co., Ltd.
@@ -752,7 +747,7 @@ index 000000000..6d1c3ae13
 +			index, checksum, utbl_checksum);
 +	ret = -EINVAL;
 +free_table:
-+	exfat_free_upcase_table(sbi);
++	exfat_free_upcase_table(sb);
 +	return ret;
 +}
 +
@@ -789,7 +784,7 @@ index 000000000..6d1c3ae13
 +		return 0;
 +
 +	/* FATAL error: default upcase table has error */
-+	exfat_free_upcase_table(sbi);
++	exfat_free_upcase_table(sb);
 +	return ret;
 +}
 +
@@ -850,10 +845,13 @@ index 000000000..6d1c3ae13
 +	return exfat_load_default_upcase_table(sb);
 +}
 +
-+void exfat_free_upcase_table(struct exfat_sb_info *sbi)
++void exfat_free_upcase_table(struct super_block *sb)
 +{
++	struct exfat_sb_info *sbi = EXFAT_SB(sb);
++
 +	kfree(sbi->vol_utbl);
++	sbi->vol_utbl = NULL;
 +}
 -- 
-2.25.0.2.g232378479e.dirty
+2.26.0.51.ga7d14a4428
 
