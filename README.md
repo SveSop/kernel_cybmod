@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.2  
+0000 : Kernel patch 5.6.3  
 0001 : PDS 0.99o "TKG Undead" patch  
 0002 : AUFS filesystem patch  
 0003 : 5.6 Graysky's CPU patches  
@@ -37,7 +37,7 @@ To build on Ubuntu:
 ** Requires lz4lib-tool to compile **
 tar xf linux-5.6.tar.xz    
 cd linux-5.6  
-/path/to/patches/and/cybmod.sh  
+/path/to/patches/and/cybmod_patch.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```
 When build is done, the .deb files is in the ../ folder relative to the source.  
