@@ -1,6 +1,6 @@
-From ffb15e6825bb5f41a5cccb9a9841ca725797eb10 Mon Sep 17 00:00:00 2001
+From e8013350e61dfd4405f6190c89100a887818d933 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 8 Apr 2020 08:37:35 +0000
+Date: Mon, 13 Apr 2020 12:34:37 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 9368 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 8657f9d..3211dfd 100644
+index 8657f9d..14ff267 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,9371 +1,6 @@
 -linux-5.6 (5.6.0-7.7) focal; urgency=medium
-+linux (5.6.3-050603.202004080837) unstable; urgency=low
++linux (5.6.4-050604.202004131234) unstable; urgency=low
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+  Mainline build at commit: v5.6.3
++  Mainline build at commit: v5.6.4
  
 -  * Kernel Oops - general protection fault: 0000 [#1] SMP PTI after
 -    disconnecting thunderbolt docking station (LP: #1864754)
 -    - SAUCE: ptp: free ptp clock properly
-+ -- Mainline Build <kernel@kathleen>  Wed, 08 Apr 2020 08:37:35 +0000
++ -- Mainline Build <kernel@kathleen>  Mon, 13 Apr 2020 12:34:37 +0000
  
 -  * swap storms kills interactive use (LP: #1861359)
 -    - SAUCE: mm/page_alloc.c: disable memory reclaim watermark boosting by default
