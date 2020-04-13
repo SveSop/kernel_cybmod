@@ -2,7 +2,7 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10625 @@
+@@ -0,0 +1,10624 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
 +# Linux/x86 5.6.4-cybmod3 Kernel Configuration
@@ -26,7 +26,6 @@ new file mode 100644
 +#
 +# General setup
 +#
-+CONFIG_SCHED_PDS=y
 +CONFIG_INIT_ENV_ARG_LIMIT=32
 +# CONFIG_COMPILE_TEST is not set
 +CONFIG_LOCALVERSION=""
@@ -155,6 +154,7 @@ new file mode 100644
 +#
 +# Scheduler features
 +#
++CONFIG_SCHED_BMQ=y
 +# end of Scheduler features
 +
 +CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
@@ -415,7 +415,6 @@ new file mode 100644
 +CONFIG_NR_CPUS_DEFAULT=64
 +CONFIG_NR_CPUS=64
 +CONFIG_SCHED_SMT=y
-+CONFIG_SMT_NICE=y
 +CONFIG_SCHED_MC=y
 +CONFIG_SCHED_MC_PRIO=y
 +CONFIG_X86_LOCAL_APIC=y
