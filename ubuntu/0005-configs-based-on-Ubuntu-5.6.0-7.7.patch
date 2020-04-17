@@ -1,24 +1,24 @@
-From 970d41b2455d1157aa1770553b34e25948a0cf9f Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Mon, 13 Apr 2020 12:35:16 +0000
+From 42050990dc22431d045070866b3425fa845eea22 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Fri, 17 Apr 2020 16:30:43 +0000
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.6.0-7.7)
 
 ---
- debian.master/config/amd64/config.common.amd64       |  1 -
- debian.master/config/amd64/config.flavour.generic    |  1 -
- debian.master/config/amd64/config.flavour.lowlatency |  1 -
- debian.master/config/arm64/config.common.arm64       |  4 +---
- debian.master/config/armhf/config.common.armhf       |  2 --
- debian.master/config/config.common.ubuntu            | 17 +++--------------
- debian.master/config/i386/config.common.i386         |  1 -
- debian.master/config/i386/config.flavour.generic     |  1 -
- debian.master/config/i386/config.flavour.lowlatency  |  1 -
- debian.master/config/ppc64el/config.common.ppc64el   |  2 --
- debian.master/config/s390x/config.common.s390x       |  1 -
+ debian.master/config/amd64/config.common.amd64  |  1 -
+ .../config/amd64/config.flavour.generic         |  1 -
+ .../config/amd64/config.flavour.lowlatency      |  1 -
+ debian.master/config/arm64/config.common.arm64  |  4 +---
+ debian.master/config/armhf/config.common.armhf  |  2 --
+ debian.master/config/config.common.ubuntu       | 17 +++--------------
+ debian.master/config/i386/config.common.i386    |  1 -
+ .../config/i386/config.flavour.generic          |  1 -
+ .../config/i386/config.flavour.lowlatency       |  1 -
+ .../config/ppc64el/config.common.ppc64el        |  2 --
+ debian.master/config/s390x/config.common.s390x  |  1 -
  11 files changed, 4 insertions(+), 28 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index a473a9a..d0098d1 100644
+index a473a9a03a7f..d0098d1ed9c1 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -183,7 +183,6 @@ CONFIG_HFSPLUS_FS=m
@@ -30,7 +30,7 @@ index a473a9a..d0098d1 100644
  CONFIG_HOTPLUG_PCI=y
  CONFIG_HOTPLUG_PCI_SHPC=y
 diff --git a/debian.master/config/amd64/config.flavour.generic b/debian.master/config/amd64/config.flavour.generic
-index d166237..5938d9b 100644
+index d1662374ea94..5938d9ba3f6c 100644
 --- a/debian.master/config/amd64/config.flavour.generic
 +++ b/debian.master/config/amd64/config.flavour.generic
 @@ -4,7 +4,6 @@
@@ -42,7 +42,7 @@ index d166237..5938d9b 100644
  # CONFIG_PREEMPT is not set
  CONFIG_PREEMPT_VOLUNTARY=y
 diff --git a/debian.master/config/amd64/config.flavour.lowlatency b/debian.master/config/amd64/config.flavour.lowlatency
-index 814348d..42de09f 100644
+index 814348dc984b..42de09fb0bff 100644
 --- a/debian.master/config/amd64/config.flavour.lowlatency
 +++ b/debian.master/config/amd64/config.flavour.lowlatency
 @@ -4,7 +4,6 @@
@@ -54,7 +54,7 @@ index 814348d..42de09f 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index dfe622d..6918057 100644
+index dfe622def83c..69180578ddf4 100644
 --- a/debian.master/config/arm64/config.common.arm64
 +++ b/debian.master/config/arm64/config.common.arm64
 @@ -165,7 +165,7 @@ CONFIG_FEALNX=m
@@ -83,7 +83,7 @@ index dfe622d..6918057 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index 5407bc1..97651f0 100644
+index 5407bc1cd66b..97651f0e6512 100644
 --- a/debian.master/config/armhf/config.common.armhf
 +++ b/debian.master/config/armhf/config.common.armhf
 @@ -184,7 +184,6 @@ CONFIG_HFSPLUS_FS=m
@@ -103,7 +103,7 @@ index 5407bc1..97651f0 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index b638784..c26dcf1 100644
+index b63878493c30..c26dcf10c136 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -281,10 +281,7 @@ CONFIG_AMD_XGBE_DCB=y
@@ -193,7 +193,7 @@ index b638784..c26dcf1 100644
  CONFIG_WDAT_WDT=m
  CONFIG_WDT=m
 diff --git a/debian.master/config/i386/config.common.i386 b/debian.master/config/i386/config.common.i386
-index 52b3038..0268d7a 100644
+index 52b30381e1b2..0268d7a4c6da 100644
 --- a/debian.master/config/i386/config.common.i386
 +++ b/debian.master/config/i386/config.common.i386
 @@ -180,7 +180,6 @@ CONFIG_HFSPLUS_FS=m
@@ -205,7 +205,7 @@ index 52b3038..0268d7a 100644
  CONFIG_HOTPLUG_PCI=y
  CONFIG_HOTPLUG_PCI_SHPC=y
 diff --git a/debian.master/config/i386/config.flavour.generic b/debian.master/config/i386/config.flavour.generic
-index 5c2e4e1..965113b 100644
+index 5c2e4e1d3a9f..965113b110ce 100644
 --- a/debian.master/config/i386/config.flavour.generic
 +++ b/debian.master/config/i386/config.flavour.generic
 @@ -4,6 +4,5 @@
@@ -216,7 +216,7 @@ index 5c2e4e1..965113b 100644
  # CONFIG_PREEMPT is not set
  CONFIG_PREEMPT_VOLUNTARY=y
 diff --git a/debian.master/config/i386/config.flavour.lowlatency b/debian.master/config/i386/config.flavour.lowlatency
-index 6b121e3..0af82e0 100644
+index 6b121e3f433b..0af82e00adce 100644
 --- a/debian.master/config/i386/config.flavour.lowlatency
 +++ b/debian.master/config/i386/config.flavour.lowlatency
 @@ -4,6 +4,5 @@
@@ -227,7 +227,7 @@ index 6b121e3..0af82e0 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index 7761c34..1945b45 100644
+index 7761c349c82c..1945b4564116 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
 +++ b/debian.master/config/ppc64el/config.common.ppc64el
 @@ -182,7 +182,6 @@ CONFIG_HFSPLUS_FS=m
@@ -247,7 +247,7 @@ index 7761c34..1945b45 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index 6ea96d8..12fbc11 100644
+index 6ea96d850eae..12fbc11c1c32 100644
 --- a/debian.master/config/s390x/config.common.s390x
 +++ b/debian.master/config/s390x/config.common.s390x
 @@ -169,7 +169,6 @@ CONFIG_GPIO_GENERIC_PLATFORM=m
@@ -259,5 +259,5 @@ index 6ea96d8..12fbc11 100644
  CONFIG_HOTPLUG_PCI=y
  # CONFIG_HOTPLUG_PCI_SHPC is not set
 -- 
-2.7.4
+2.17.1
 

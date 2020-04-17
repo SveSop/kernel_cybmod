@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.4  
+0000 : Kernel patch 5.6.5  
 0001 : BMQ v5.6-r2 patch   
 0002 : AUFS filesystem patch  
 0003 : 5.6 Graysky's CPU patches  
@@ -19,7 +19,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0015 : Kbuild: Add fcf protection none to retpoline flags  
 0016 : mm: Stop kswap early  
 0017 : vfs: Keep inodes with page cache off inode shrink  
-0018 : drm: Remove PageReserved manipulation  
+0018 : mm: Add "Proactive" tunable patch  
 0019 : mm: Disable watermark boosting  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
