@@ -4,8 +4,8 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.5  
-0001 : BMQ v5.6-r2 patch   
+0000 : Kernel patch 5.6.6  
+0001 : BMQ v5.6-r3 patch   
 0002 : AUFS filesystem patch  
 0003 : 5.6 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
@@ -23,6 +23,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0019 : mm: Disable watermark boosting  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
+0022 : mm: x86 Restore large pages after fragmentation  
 ubuntu : Ubuntu mainline kernel patchset  
 bfq-patches : Collection of "bfq" patches  
 futex-patches : Collection of "futex" patches for Wine  
