@@ -5,11 +5,11 @@ new file mode 100644
 @@ -0,0 +1,10625 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.6.6-cybmod6 Kernel Configuration
++# Linux/x86 5.6.7-cybmod7 Kernel Configuration
 +#
 +
 +#
-+# Compiler: gcc (Ubuntu 9.3.0-10ubuntu2~18.04) 9.3.0
++# Compiler: gcc (Ubuntu 9.3.0-11ubuntu0~18.04.1) 9.3.0
 +#
 +CONFIG_CC_IS_GCC=y
 +CONFIG_GCC_VERSION=90300
