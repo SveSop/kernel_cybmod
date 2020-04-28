@@ -1,14 +1,14 @@
-From 1807bc03b89cfecc232aa44eb3bacc985720537c Mon Sep 17 00:00:00 2001
+From af26cd6954dc975fd9c986386211b5b5cabaac6b Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 12 Aug 2017 12:02:04 +1000
-Subject: [PATCH 15/17] Swap sucks.
+Subject: [PATCH 14/16] Swap sucks.
 
 ---
  mm/vmscan.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 572fb17c6..9764e7be2 100644
+index 876370565455..42d9b07c13fe 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -163,7 +163,7 @@ struct scan_control {
@@ -21,5 +21,5 @@ index 572fb17c6..9764e7be2 100644
   * The total number of pages which are beyond the high watermark within all
   * zones.
 -- 
-2.17.1
+2.25.1
 

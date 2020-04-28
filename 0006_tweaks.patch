@@ -14,14 +14,14 @@ Subject: [PATCH] Cybmod tweaks
  7 files changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-index 1130e0f5d..b86158ca6 100644
+index 82a4d37dd..f64c3b7ce 100644
 --- a/drivers/cpufreq/cpufreq_ondemand.c
 +++ b/drivers/cpufreq/cpufreq_ondemand.c
 @@ -18,10 +18,10 @@
  #include "cpufreq_ondemand.h"
  
  /* On-demand governor macros */
--#define DEF_FREQUENCY_UP_THRESHOLD		(63)
+-#define DEF_FREQUENCY_UP_THRESHOLD		(80)
 -#define DEF_SAMPLING_DOWN_FACTOR		(1)
 +#define DEF_FREQUENCY_UP_THRESHOLD		(55)
 +#define DEF_SAMPLING_DOWN_FACTOR		(5)

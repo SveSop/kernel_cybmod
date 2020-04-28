@@ -9,10 +9,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 deletion(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index 85dad8f08..a54a37458 100644
+index 4f717bfdb..9efb9af8f 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1266,7 +1266,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
+@@ -1248,7 +1248,6 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
  
  config CC_OPTIMIZE_FOR_PERFORMANCE_O3
  	bool "Optimize more for performance (-O3)"

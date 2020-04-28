@@ -5,7 +5,6 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 **Custom kernel with the following patches**  
 
 0000 : Kernel patch 5.6.6  
-0001 : PDS 0.99o "TKG Undead" patch  
 0002 : AUFS filesystem patch  
 0003 : 5.6 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
@@ -13,7 +12,6 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0006 : Various kernel tweaks patch  
 0010 : Cake_Qdisc_default.patch  
 0011 : zswap-tweaks.patch  
-0012 : Swap tuning  
 0013 : revert_acpi_change_for_nct6775.patch  
 0014 : Kbuild: reuse intermediate linker scripts in the final link steps  
 0015 : Kbuild: Add fcf protection none to retpoline flags  
@@ -25,15 +23,15 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0021 : Add-cybmod-version.patch  
 0022 : mm: x86 Restore large pages after fragmentation  
 0023 : Cpufreq Intel pstate patch  
+ck1  : -ck1 MuQSS patchset from Con Kolivas  
 ubuntu : Ubuntu mainline kernel patchset  
-bfq-patches : Collection of "bfq" patches  
 futex-patches : Collection of "futex" patches for Wine  
 exfat-patches : Collection of "ex-fat" filesystem patches  
 clearlinux : Collection of "clearlinux" patches  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has PDS v0.99o CPU scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
+**This config has MuQSS 0.199 scheduler and CONFIG_HZ=100 + NO_HZ_IDLE**  
 
 To build on Ubuntu:  
 ```

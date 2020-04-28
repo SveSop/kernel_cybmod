@@ -38401,7 +38401,7 @@ index b280e07e1..15aa871d1 100644
  /**
   * d_ancestor - search for an ancestor
 diff --git a/fs/exec.c b/fs/exec.c
-index db17be51b..4bb61917a 100644
+index a58625f27..60d0598ae 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
 @@ -109,6 +109,7 @@ bool path_noexec(const struct path *path)
@@ -38540,10 +38540,10 @@ index b69d6eed6..cb777a188 100644
  long vfs_truncate(const struct path *path, loff_t length)
  {
 diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 399424174..00db04e68 100644
+index a8a38790e..bdeec6ead 100644
 --- a/fs/proc/base.c
 +++ b/fs/proc/base.c
-@@ -2128,7 +2128,7 @@ static int map_files_get_link(struct dentry *dentry, struct path *path)
+@@ -2140,7 +2140,7 @@ static int map_files_get_link(struct dentry *dentry, struct path *path)
  	rc = -ENOENT;
  	vma = find_exact_vma(mm, vm_start, vm_end);
  	if (vma && vma->vm_file) {
@@ -39374,7 +39374,7 @@ index d90af1343..01316a9e2 100644
  				atomic_dec(&inode->i_writecount);
  			i_mmap_lock_write(mapping);
 diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 32406ef0d..d9bc5cbe9 100644
+index 5142a6b11..e7b843c3c 100644
 --- a/kernel/locking/lockdep.c
 +++ b/kernel/locking/lockdep.c
 @@ -153,7 +153,7 @@ static

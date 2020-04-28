@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10625 @@
+@@ -0,0 +1,10635 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.6.7-cybmod7 Kernel Configuration
++# Linux/x86 5.6.7-cybmod8 Kernel Configuration
 +#
 +
 +#
@@ -26,7 +26,7 @@ new file mode 100644
 +#
 +# General setup
 +#
-+CONFIG_SCHED_PDS=y
++CONFIG_SCHED_MUQSS=y
 +CONFIG_INIT_ENV_ARG_LIMIT=32
 +# CONFIG_COMPILE_TEST is not set
 +CONFIG_LOCALVERSION=""
@@ -72,6 +72,7 @@ new file mode 100644
 +CONFIG_GENERIC_IRQ_MATRIX_ALLOCATOR=y
 +CONFIG_GENERIC_IRQ_RESERVATION_MODE=y
 +CONFIG_IRQ_FORCED_THREADING=y
++# CONFIG_FORCE_IRQ_THREADING is not set
 +CONFIG_SPARSE_IRQ=y
 +# CONFIG_GENERIC_IRQ_DEBUGFS is not set
 +# end of IRQ subsystem
@@ -93,7 +94,7 @@ new file mode 100644
 +CONFIG_NO_HZ_COMMON=y
 +# CONFIG_HZ_PERIODIC is not set
 +CONFIG_NO_HZ_IDLE=y
-+# CONFIG_NO_HZ_FULL is not set
++# CONFIG_NO_HZ_FULL_NODEF is not set
 +CONFIG_CONTEXT_TRACKING=y
 +# CONFIG_CONTEXT_TRACKING_FORCE is not set
 +# CONFIG_NO_HZ is not set
@@ -155,6 +156,8 @@ new file mode 100644
 +#
 +# Scheduler features
 +#
++CONFIG_UCLAMP_TASK=y
++CONFIG_UCLAMP_BUCKETS_COUNT=5
 +# end of Scheduler features
 +
 +CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
@@ -170,6 +173,7 @@ new file mode 100644
 +CONFIG_BLK_CGROUP=y
 +CONFIG_CGROUP_WRITEBACK=y
 +CONFIG_CGROUP_SCHED=y
++CONFIG_UCLAMP_TASK_GROUP=y
 +CONFIG_CGROUP_PIDS=y
 +CONFIG_CGROUP_RDMA=y
 +CONFIG_CGROUP_FREEZER=y
@@ -177,7 +181,6 @@ new file mode 100644
 +CONFIG_CPUSETS=y
 +CONFIG_PROC_PID_CPUSET=y
 +CONFIG_CGROUP_DEVICE=y
-+CONFIG_CGROUP_CPUACCT=y
 +CONFIG_CGROUP_PERF=y
 +CONFIG_CGROUP_BPF=y
 +# CONFIG_CGROUP_DEBUG is not set
@@ -418,6 +421,13 @@ new file mode 100644
 +CONFIG_SMT_NICE=y
 +CONFIG_SCHED_MC=y
 +CONFIG_SCHED_MC_PRIO=y
++# CONFIG_RQ_NONE is not set
++CONFIG_RQ_SMT=y
++# CONFIG_RQ_MC is not set
++# CONFIG_RQ_MC_LLC is not set
++# CONFIG_RQ_SMP is not set
++# CONFIG_RQ_ALL is not set
++CONFIG_SHARERQ=1
 +CONFIG_X86_LOCAL_APIC=y
 +CONFIG_X86_IO_APIC=y
 +CONFIG_X86_REROUTE_FOR_BROKEN_BOOT_IRQS=y
@@ -484,11 +494,11 @@ new file mode 100644
 +CONFIG_EFI_STUB=y
 +CONFIG_EFI_MIXED=y
 +CONFIG_SECCOMP=y
-+# CONFIG_HZ_100 is not set
-+# CONFIG_HZ_250 is not set
-+# CONFIG_HZ_300 is not set
-+CONFIG_HZ_1000=y
-+CONFIG_HZ=1000
++CONFIG_HZ_100=y
++# CONFIG_HZ_250_NODEF is not set
++# CONFIG_HZ_300_NODEF is not set
++# CONFIG_HZ_1000_NODEF is not set
++CONFIG_HZ=100
 +CONFIG_SCHED_HRTICK=y
 +CONFIG_KEXEC=y
 +CONFIG_KEXEC_FILE=y

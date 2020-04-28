@@ -138,10 +138,10 @@ Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
  14 files changed, 209 insertions(+), 35 deletions(-)
 
 diff --git a/fs/block_dev.c b/fs/block_dev.c
-index 69bf2fb6f..46f67147a 100644
+index 84fe0162f..8f3db4a19 100644
 --- a/fs/block_dev.c
 +++ b/fs/block_dev.c
-@@ -79,7 +79,7 @@ void kill_bdev(struct block_device *bdev)
+@@ -80,7 +80,7 @@ void kill_bdev(struct block_device *bdev)
  {
  	struct address_space *mapping = bdev->bd_inode->i_mapping;
  
@@ -229,7 +229,7 @@ index dc1a1d5d8..a5e9e9053 100644
  			continue;
  		}
 diff --git a/fs/inode.c b/fs/inode.c
-index 93d9252a0..9127296e4 100644
+index 6284b41fc..578a37d6d 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
 @@ -431,26 +431,101 @@ static void inode_lru_list_add(struct inode *inode)
@@ -398,7 +398,7 @@ index f3f280b95..4a9dc77e8 100644
  
  /*
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index abedbffe2..387d95496 100644
+index eccc62765..0970c7478 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -585,6 +585,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
@@ -413,7 +413,7 @@ index abedbffe2..387d95496 100644
  /*
   * Use sequence counter to get consistent i_size on 32-bit processors.
   */
-@@ -2151,6 +2156,9 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+@@ -2163,6 +2168,9 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
   *
   * I_CREATING		New object's inode in the middle of setting up.
   *
@@ -423,7 +423,7 @@ index abedbffe2..387d95496 100644
   * Q: What is the difference between I_WILL_FREE and I_FREEING?
   */
  #define I_DIRTY_SYNC		(1 << 0)
-@@ -2173,6 +2181,7 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+@@ -2185,6 +2193,7 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
  #define I_WB_SWITCH		(1 << 13)
  #define I_OVL_INUSE		(1 << 14)
  #define I_CREATING		(1 << 15)
@@ -431,7 +431,7 @@ index abedbffe2..387d95496 100644
  
  #define I_DIRTY_INODE (I_DIRTY_SYNC | I_DIRTY_DATASYNC)
  #define I_DIRTY (I_DIRTY_INODE | I_DIRTY_PAGES)
-@@ -3098,6 +3107,14 @@ static inline void remove_inode_hash(struct inode *inode)
+@@ -3112,6 +3121,14 @@ static inline void remove_inode_hash(struct inode *inode)
  		__remove_inode_hash(inode);
  }
  
@@ -474,7 +474,7 @@ index 47a3441cf..f31026ccf 100644
  		PAGEOUTRUN, PGROTATED,
  		DROP_PAGECACHE, DROP_SLAB,
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 178447827..fcc24b3b3 100644
+index fb03735cd..83ad760a8 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -116,8 +116,8 @@
@@ -730,7 +730,7 @@ index dd9ebc1da..8fb6c2f76 100644
  
  	pagevec_init(&pvec);
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 876370565..b46a31b76 100644
+index 2a88bde48..b36c0db82 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -901,6 +901,7 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
@@ -802,5 +802,5 @@ index 474186b76..7ce9c74eb 100644
  out:
  	cond_resched();
 -- 
-2.26.1.107.gefe3874640
+2.17.1
 

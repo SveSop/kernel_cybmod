@@ -16,6 +16,18 @@ do
 done
 echo -e " "
 echo -e "${RED}***************${NC}"
+echo -e "-ck1 patches"
+echo -e "${RED}***************${NC}"
+echo -e " "
+for each in $DIR/ck1/0*.patch
+do
+        echo -e "${RED}***************"
+        echo -e "Applying patch: $(basename $each)"
+        echo -e "***************${NC}"
+        patch -p1 < $each
+done
+echo -e " "
+echo -e "${RED}***************${NC}"
 echo -e "Ubuntu patches"
 echo -e "${RED}***************${NC}"
 echo -e " "
