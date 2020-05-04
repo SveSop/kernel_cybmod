@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.8  
+0000 : Kernel patch 5.6.10  
 0002 : AUFS filesystem patch  
 0003 : 5.6 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
@@ -28,6 +28,7 @@ ubuntu : Ubuntu mainline kernel patchset
 futex-patches : Collection of "futex" patches for Wine  
 exfat-patches : Collection of "ex-fat" filesystem patches  
 clearlinux : Collection of "clearlinux" patches  
+padata : Collection of "padata" patches (mm)  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
