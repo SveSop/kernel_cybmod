@@ -1,0 +1,25 @@
+From 710ff6b35dc43794777d47f08e7dd29d71cfbb41 Mon Sep 17 00:00:00 2001
+From: Con Kolivas <kernel@kolivas.org>
+Date: Tue, 5 May 2020 15:18:15 +1000
+Subject: [PATCH 18/19] Bump MuQSS to version 0.2.
+
+---
+ kernel/sched/MuQSS.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/sched/MuQSS.c b/kernel/sched/MuQSS.c
+index 48e64c76b476..43cb43a60716 100644
+--- a/kernel/sched/MuQSS.c
++++ b/kernel/sched/MuQSS.c
+@@ -113,7 +113,7 @@
+ 
+ void print_scheduler_version(void)
+ {
+-	printk(KERN_INFO "MuQSS CPU scheduler v0.199 by Con Kolivas.\n");
++	printk(KERN_INFO "MuQSS CPU scheduler v0.200 by Con Kolivas.\n");
+ }
+ 
+ /* Define RQ share levels */
+-- 
+2.25.1
+

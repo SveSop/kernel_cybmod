@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.10  
+0000 : Kernel patch 5.6.12  
 0002 : AUFS filesystem patch  
 0003 : 5.6 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
@@ -23,7 +23,10 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0021 : Add-cybmod-version.patch  
 0022 : mm: x86 Restore large pages after fragmentation  
 0023 : Cpufreq Intel pstate patch  
-ck1  : -ck1 MuQSS patchset from Con Kolivas  
+0024 : mm: Update proactive compaction (ref. patch 0018)  
+0025 : Scatterlist patch  
+
+ck2  : -ck1 MuQSS patchset from Con Kolivas  
 ubuntu : Ubuntu mainline kernel patchset  
 futex-patches : Collection of "futex" patches for Wine  
 exfat-patches : Collection of "ex-fat" filesystem patches  

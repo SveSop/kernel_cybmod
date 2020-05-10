@@ -1,0 +1,25 @@
+From 9d5803abf5e4879291bba9505fd05b6b3ce45343 Mon Sep 17 00:00:00 2001
+From: Con Kolivas <kernel@kolivas.org>
+Date: Tue, 5 May 2020 14:53:23 +1000
+Subject: [PATCH 15/19] Fix full dynticks build.
+
+---
+ kernel/sched/MuQSS.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/sched/MuQSS.c b/kernel/sched/MuQSS.c
+index 25d06f15e4e6..9c225b179ddb 100644
+--- a/kernel/sched/MuQSS.c
++++ b/kernel/sched/MuQSS.c
+@@ -3478,7 +3478,7 @@ static void sched_tick_remote(struct work_struct *work)
+ 		 * Make sure the next tick runs within a reasonable
+ 		 * amount of time.
+ 		 */
+-		delta = rq_clock_task(rq) - curr->se.exec_start;
++		delta = rq_clock_task(rq) - curr->last_ran;
+ 		WARN_ON_ONCE(delta > (u64)NSEC_PER_SEC * 3);
+ 	}
+ 	task_tick(rq);
+-- 
+2.25.1
+
