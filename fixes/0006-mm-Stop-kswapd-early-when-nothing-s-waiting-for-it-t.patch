@@ -1,7 +1,7 @@
-From f700ce0357d4b079b8d412b7bac9a794d6d65b9d Mon Sep 17 00:00:00 2001
+From e02244f9fcdfbb64789b1e8bf5b807243c5e6f97 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 8/8] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 06/10] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -30,10 +30,10 @@ index 462f68739..23861cdaa 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index d72bf6b2e..6a2f35d51 100644
+index e091a1a9c..e35ed9d0f 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4401,6 +4401,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4388,6 +4388,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -42,7 +42,7 @@ index d72bf6b2e..6a2f35d51 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4434,8 +4436,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4421,8 +4423,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -57,7 +57,7 @@ index d72bf6b2e..6a2f35d51 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -4640,9 +4647,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4627,9 +4634,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -72,7 +72,7 @@ index d72bf6b2e..6a2f35d51 100644
  	return page;
  }
  
-@@ -6711,6 +6721,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6698,6 +6708,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -81,7 +81,7 @@ index d72bf6b2e..6a2f35d51 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 68f32fb58..5a69315c0 100644
+index 876370565..2a88bde48 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -3697,7 +3697,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
@@ -95,5 +95,5 @@ index 68f32fb58..5a69315c0 100644
  
  		/*
 -- 
-2.17.1
+2.26.2.266.ge870325ee8
 

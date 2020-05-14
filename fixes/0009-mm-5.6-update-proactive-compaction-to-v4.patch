@@ -1,7 +1,7 @@
-From 36df8fd2967294af48390fda482ecd7cb5ff8d86 Mon Sep 17 00:00:00 2001
+From 01c596b64ef06f064a2a2e83a40cc252135a05ab Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 29 Apr 2020 09:03:42 +0200
-Subject: [PATCH 9/9] mm-5.6: update proactive compaction to v4
+Subject: [PATCH 09/10] mm-5.6: update proactive compaction to v4
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
 ---

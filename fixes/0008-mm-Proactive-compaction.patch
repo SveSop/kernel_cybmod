@@ -1,7 +1,7 @@
-From b836737af1d5e0bed32a33387c0e602b8481f1bd Mon Sep 17 00:00:00 2001
+From 64e1cd0e020907de0b55b9988ec58705cf5d645c Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Tue, 10 Mar 2020 15:25:39 -0700
-Subject: [PATCH 8/8] mm: Proactive compaction
+Subject: [PATCH 08/10] mm: Proactive compaction
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -512,10 +512,10 @@ index 3cf20ab3c..e66bafd6c 100644
  	bool contended;			/* Signal lock or sched contention */
  	bool rescan;			/* Rescanning the same pageblock */
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 6a2f35d51..445c8b62a 100644
+index 7719c422b..093880c86 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -8413,6 +8413,7 @@ int alloc_contig_range(unsigned long start, unsigned long end,
+@@ -8402,6 +8402,7 @@ int alloc_contig_range(unsigned long start, unsigned long end,
  		.ignore_skip_hint = true,
  		.no_set_skip_hint = true,
  		.gfp_mask = current_gfp_context(gfp_mask),
@@ -524,7 +524,7 @@ index 6a2f35d51..445c8b62a 100644
  	INIT_LIST_HEAD(&cc.migratepages);
  
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index ae802253f..75dd75191 100644
+index 78d53378d..70d724122 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1074,6 +1074,18 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -547,5 +547,5 @@ index ae802253f..75dd75191 100644
  int fragmentation_index(struct zone *zone, unsigned int order)
  {
 -- 
-2.17.1
+2.26.2.266.ge870325ee8
 

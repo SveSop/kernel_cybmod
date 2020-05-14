@@ -4,38 +4,32 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.12  
-0002 : AUFS filesystem patch  
-0003 : 5.6 Graysky's CPU patches  
-0004 : Add optional -O3 optimization  
-0005 : MM address space tweak  
-0006 : Various kernel tweaks patch  
+0000 : Kernel patch 5.6.13  
+0001 : AUFS filesystem patch  
+0002 : 5.6 Graysky's CPU patches  
+0003 : Add optional -O3 optimization  
+0004 : MM address space tweak  
+0005 : Various kernel tweaks patch  
 0010 : Cake_Qdisc_default.patch  
 0011 : zswap-tweaks.patch  
 0013 : revert_acpi_change_for_nct6775.patch  
-0014 : Kbuild: reuse intermediate linker scripts in the final link steps  
-0015 : Kbuild: Add fcf protection none to retpoline flags  
-0016 : mm: Stop kswap early  
-0017 : vfs: Keep inodes with page cache off inode shrink  
-0018 : mm: Add "Proactive" tunable patch  
-0019 : mm: Disable watermark boosting  
+0014 : vfs: Keep inodes with page cache off inode shrink  
+0015 : Scatterlist patch  
+0016 : Cpufreq Intel pstate patch  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
-0022 : mm: x86 Restore large pages after fragmentation  
-0023 : Cpufreq Intel pstate patch  
-0024 : mm: Update proactive compaction (ref. patch 0018)  
-0025 : Scatterlist patch  
 
+fixes : Various fixes/patches  
 ck2  : -ck1 MuQSS patchset from Con Kolivas  
 ubuntu : Ubuntu mainline kernel patchset  
+clearlinux : Collection of "clearlinux" patches  
 futex-patches : Collection of "futex" patches for Wine  
 exfat-patches : Collection of "ex-fat" filesystem patches  
-clearlinux : Collection of "clearlinux" patches  
 padata : Collection of "padata" patches (mm)  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has MuQSS 0.199 scheduler and CONFIG_HZ=100 + NO_HZ_IDLE**  
+**This config has MuQSS 0.199 scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
 
 To build on Ubuntu:  
 ```

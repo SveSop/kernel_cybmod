@@ -1,7 +1,7 @@
-From 4e72d5abf24cfdfe6626f410b470aef53ef8be21 Mon Sep 17 00:00:00 2001
+From 0fb2a576bba0b4635450b56f3a93912c67aae05c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH] mm Fully disable watermark boosting
+Subject: [PATCH 05/10] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -25,17 +25,13 @@ Disable watermark boosting by default since it's a total dumpster fire.
 I can't imagine why anyone would want to explicitly enable it, but the
 option is there in case someone does.
 
-The watermark boosting code still wakes kswapd even when there's no
-watermark boost in effect. Change it to only wake kswapd when there is
-actually a watermark boost.
-
 Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
 ---
- mm/page_alloc.c | 21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ mm/page_alloc.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 6a2f35d51..8e4da6c5d 100644
+index 3c4eb750a..e091a1a9c 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -315,20 +315,7 @@ compound_page_dtor * const compound_page_dtors[] = {
@@ -59,21 +55,6 @@ index 6a2f35d51..8e4da6c5d 100644
  int watermark_scale_factor = 200;
  
  static unsigned long nr_kernel_pages __initdata;
-@@ -2407,9 +2394,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
- 	 * likelihood of future fallbacks. Wake kswapd now as the node
- 	 * may be balanced overall and kswapd will not wake naturally.
- 	 */
--	boost_watermark(zone);
--	if (alloc_flags & ALLOC_KSWAPD)
--		set_bit(ZONE_BOOSTED_WATERMARK, &zone->flags);
-+	if (alloc_flags & ALLOC_KSWAPD) {
-+		boost_watermark(zone);
-+		if (zone->watermark_boost)
-+			set_bit(ZONE_BOOSTED_WATERMARK, &zone->flags);
-+	}
- 
- 	/* We are not allowed to try stealing from the whole block */
- 	if (!whole_block)
 -- 
-2.17.1
+2.26.2.266.ge870325ee8
 
