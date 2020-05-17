@@ -1,8 +1,17 @@
+From 6ba185a242322898cefcda065605751cc7b29190 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Sat, 16 May 2020 13:56:51 +0200
+Subject: [PATCH] Zswap
+
+---
+ mm/zswap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/mm/zswap.c b/mm/zswap.c
-index cd91fd9d96b8..bcddebfe9c57 100644
+index 55094e63b..e2df9174f 100644
 --- a/mm/zswap.c
 +++ b/mm/zswap.c
-@@ -88,7 +88,7 @@
+@@ -88,7 +88,7 @@ static struct kernel_param_ops zswap_enabled_param_ops = {
  module_param_cb(enabled, &zswap_enabled_param_ops, &zswap_enabled, 0644);
  
  /* Crypto compressor to use */
@@ -11,7 +20,6 @@ index cd91fd9d96b8..bcddebfe9c57 100644
  static char *zswap_compressor = ZSWAP_COMPRESSOR_DEFAULT;
  static int zswap_compressor_param_set(const char *,
  				      const struct kernel_param *);
---
-1.0
-
+-- 
+2.17.1
 

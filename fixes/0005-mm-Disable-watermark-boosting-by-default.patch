@@ -52,7 +52,7 @@ index 3c4eb750a..e091a1a9c 100644
 -#else
 -int watermark_boost_factor __read_mostly = 15000;
 -#endif
- int watermark_scale_factor = 200;
+ int watermark_scale_factor = 10;
  
  static unsigned long nr_kernel_pages __initdata;
 -- 

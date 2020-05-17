@@ -1,8 +1,17 @@
+From 3dd48358f4880cd5dad8ca4d9a3f9172c61492cb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Sat, 16 May 2020 13:58:19 +0200
+Subject: [PATCH] Revert ACPI change for nct6775 chips
+
+---
+ drivers/acpi/acpica/dsopcode.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
 diff --git a/drivers/acpi/acpica/dsopcode.c b/drivers/acpi/acpica/dsopcode.c
-index e9fb0bf3c8d2..78f9de260d5f 100644
+index d9c26e720..f72484b0a 100644
 --- a/drivers/acpi/acpica/dsopcode.c
 +++ b/drivers/acpi/acpica/dsopcode.c
-@@ -431,10 +431,6 @@
+@@ -431,10 +431,6 @@ acpi_ds_eval_region_operands(struct acpi_walk_state *walk_state,
  			  ACPI_FORMAT_UINT64(obj_desc->region.address),
  			  obj_desc->region.length));
  
@@ -13,5 +22,6 @@ index e9fb0bf3c8d2..78f9de260d5f 100644
  	/* Now the address and length are valid for this opregion */
  
  	obj_desc->region.flags |= AOPOBJ_DATA_VALID;
---
-1.0
+-- 
+2.17.1
+

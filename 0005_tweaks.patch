@@ -1,19 +1,17 @@
 From 993b4a894244db4e01032a79a56a272f6be6ffe4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Thu, 23 Apr 2020 22:55:47 +0200
+Date: Sat, 16 May 2020 13:54:54 +0200
 Subject: [PATCH] Cybmod tweaks
 
 ---
  drivers/cpufreq/cpufreq_ondemand.c | 6 +++---
  fs/dcache.c                        | 2 +-
  include/linux/blkdev.h             | 3 ++-
- include/linux/mm.h                 | 3 +--
  kernel/sched/core.c                | 6 +++---
- mm/page_alloc.c                    | 2 +-
- 6 files changed, 11 insertions(+), 11 deletions(-)
+ 4 files changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-index 82a4d37dd..f64c3b7ce 100644
+index 82a4d37dd..bd4631415 100644
 --- a/drivers/cpufreq/cpufreq_ondemand.c
 +++ b/drivers/cpufreq/cpufreq_ondemand.c
 @@ -18,10 +18,10 @@
@@ -22,11 +20,11 @@ index 82a4d37dd..f64c3b7ce 100644
  /* On-demand governor macros */
 -#define DEF_FREQUENCY_UP_THRESHOLD		(80)
 -#define DEF_SAMPLING_DOWN_FACTOR		(1)
-+#define DEF_FREQUENCY_UP_THRESHOLD		(55)
-+#define DEF_SAMPLING_DOWN_FACTOR		(5)
++#define DEF_FREQUENCY_UP_THRESHOLD		(63)
++#define DEF_SAMPLING_DOWN_FACTOR		(100)
  #define MAX_SAMPLING_DOWN_FACTOR		(100000)
 -#define MICRO_FREQUENCY_UP_THRESHOLD		(95)
-+#define MICRO_FREQUENCY_UP_THRESHOLD		(63)
++#define MICRO_FREQUENCY_UP_THRESHOLD		(70)
  #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(10000)
  #define MIN_FREQUENCY_UP_THRESHOLD		(1)
  #define MAX_FREQUENCY_UP_THRESHOLD		(100)
@@ -57,22 +55,8 @@ index f629d40c6..fe054270d 100644
  
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
  void blk_queue_flag_clear(unsigned int flag, struct request_queue *q);
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index d78f1b256..617bfefb3 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -188,8 +188,7 @@ static inline void __mm_zero_struct_page(struct page *page)
-  * not a hard limit any more. Although some userspace tools can be surprised by
-  * that.
-  */
--#define MAPCOUNT_ELF_CORE_MARGIN	(5)
--#define DEFAULT_MAX_MAP_COUNT	(USHRT_MAX - MAPCOUNT_ELF_CORE_MARGIN)
-+#define DEFAULT_MAX_MAP_COUNT  (262144)
- 
- extern int sysctl_max_map_count;
- 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 3dd675697..b6f2b9fee 100644
+index 3dd675697..5be8fb650 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
@@ -80,7 +64,7 @@ index 3dd675697..b6f2b9fee 100644
   * Limited because this is done with IRQs disabled.
   */
 -const_debug unsigned int sysctl_sched_nr_migrate = 32;
-+const_debug unsigned int sysctl_sched_nr_migrate = 128;
++const_debug unsigned int sysctl_sched_nr_migrate = 256;
  
  /*
   * period over which we measure -rt task CPU usage in us.
@@ -96,19 +80,6 @@ index 3dd675697..b6f2b9fee 100644
  
  /*
   * __task_rq_lock - lock the rq @p resides on.
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index a97de355a..9a6109866 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -329,7 +329,7 @@ int watermark_boost_factor __read_mostly;
- #else
- int watermark_boost_factor __read_mostly = 15000;
- #endif
--int watermark_scale_factor = 10;
-+int watermark_scale_factor = 200;
- 
- static unsigned long nr_kernel_pages __initdata;
- static unsigned long nr_all_pages __initdata;
 -- 
 2.17.1
 

@@ -12,6 +12,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0005 : Various kernel tweaks patch  
 0010 : Cake_Qdisc_default.patch  
 0011 : zswap-tweaks.patch  
+0012 : Swap tuning patch  
 0013 : revert_acpi_change_for_nct6775.patch  
 0014 : vfs: Keep inodes with page cache off inode shrink  
 0015 : Scatterlist patch  
@@ -19,8 +20,8 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 
+zstd : Patched to enable zstd compression  
 fixes : Various fixes/patches  
-ck2  : -ck1 MuQSS patchset from Con Kolivas  
 ubuntu : Ubuntu mainline kernel patchset  
 clearlinux : Collection of "clearlinux" patches  
 futex-patches : Collection of "futex" patches for Wine  
@@ -29,7 +30,7 @@ padata : Collection of "padata" patches (mm)
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has MuQSS 0.199 scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
+**This config has CFS scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
 
 To build on Ubuntu:  
 ```
