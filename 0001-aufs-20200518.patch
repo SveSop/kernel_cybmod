@@ -1,7 +1,7 @@
-From 0972af334a5ce68f95b61d7758e419b08ff902b1 Mon Sep 17 00:00:00 2001
+From c181e94f0565e6e5682bdcfacf0452e2d8bd14ca Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 2 Mar 2020 11:12:16 +0100
-Subject: [PATCH] AUFS-20200302
+Date: Mon, 18 May 2020 12:30:13 +0200
+Subject: [PATCH] AUFS-20200518
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -61,7 +61,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  fs/aufs/hfsnotify.c                           |  288 +++
  fs/aufs/hfsplus.c                             |   60 +
  fs/aufs/hnotify.c                             |  715 ++++++
- fs/aufs/i_op.c                                | 1498 +++++++++++++
+ fs/aufs/i_op.c                                | 1502 +++++++++++++
  fs/aufs/i_op_add.c                            |  936 ++++++++
  fs/aufs/i_op_del.c                            |  513 +++++
  fs/aufs/i_op_ren.c                            | 1250 +++++++++++
@@ -133,7 +133,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  mm/nommu.c                                    |   10 +-
  mm/prfile.c                                   |   86 +
  security/security.c                           |    8 +
- 128 files changed, 38156 insertions(+), 33 deletions(-)
+ 128 files changed, 38160 insertions(+), 33 deletions(-)
  create mode 100644 Documentation/ABI/testing/debugfs-aufs
  create mode 100644 Documentation/ABI/testing/sysfs-aufs
  create mode 100644 Documentation/filesystems/aufs/README
@@ -10533,7 +10533,7 @@ index 000000000..0bcb39ee7
 +};
 diff --git a/fs/aufs/dir.h b/fs/aufs/dir.h
 new file mode 100644
-index 000000000..ef4d1addf
+index 000000000..e44c2a1a8
 --- /dev/null
 +++ b/fs/aufs/dir.h
 @@ -0,0 +1,134 @@
@@ -10577,7 +10577,7 @@ index 000000000..ef4d1addf
 +
 +struct au_vdir_destr {
 +	unsigned char	len;
-+	unsigned char	name[0];
++	unsigned char	name[];
 +} __packed;
 +
 +struct au_vdir_dehstr {
@@ -10673,7 +10673,7 @@ index 000000000..ef4d1addf
 +#endif /* __AUFS_DIR_H__ */
 diff --git a/fs/aufs/dirren.c b/fs/aufs/dirren.c
 new file mode 100644
-index 000000000..354997f3e
+index 000000000..ba4bf56cf
 --- /dev/null
 +++ b/fs/aufs/dirren.c
 @@ -0,0 +1,1316 @@
@@ -11263,7 +11263,7 @@ index 000000000..354997f3e
 +struct au_drinfo_rev {
 +	unsigned char			already;
 +	aufs_bindex_t			nelm;
-+	struct au_drinfo_rev_elm	elm[0];
++	struct au_drinfo_rev_elm	elm[];
 +};
 +
 +/* todo: isn't it too large? */
@@ -17630,10 +17630,10 @@ index 000000000..231edd1b4
 +}
 diff --git a/fs/aufs/i_op.c b/fs/aufs/i_op.c
 new file mode 100644
-index 000000000..e982bbbc4
+index 000000000..2d09f8015
 --- /dev/null
 +++ b/fs/aufs/i_op.c
-@@ -0,0 +1,1498 @@
+@@ -0,0 +1,1502 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -18816,15 +18816,14 @@ index 000000000..e982bbbc4
 + * returns zero or negative (an error).
 + * @dentry will be read-locked in success.
 + */
-+int au_h_path_getattr(struct dentry *dentry, int force, struct path *h_path,
-+		      int locked)
++int au_h_path_getattr(struct dentry *dentry, struct inode *inode, int force,
++		      struct path *h_path, int locked)
 +{
 +	int err;
 +	unsigned int mnt_flags, sigen;
 +	unsigned char udba_none;
 +	aufs_bindex_t bindex;
 +	struct super_block *sb, *h_sb;
-+	struct inode *inode;
 +
 +	h_path->mnt = NULL;
 +	h_path->dentry = NULL;
@@ -18865,7 +18864,11 @@ index 000000000..e982bbbc4
 +		di_read_lock_child(dentry, AuLock_IR);
 +
 +body:
-+	inode = d_inode(dentry);
++	if (!inode) {
++		inode = d_inode(dentry);
++		if (unlikely(!inode))
++			goto out;
++	}
 +	bindex = au_ibtop(inode);
 +	h_path->mnt = au_sbr_mnt(sb, bindex);
 +	h_sb = h_path->mnt->mnt_sb;
@@ -18905,7 +18908,8 @@ index 000000000..e982bbbc4
 +	err = si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLM);
 +	if (unlikely(err))
 +		goto out;
-+	err = au_h_path_getattr(dentry, /*force*/0, &h_path, /*locked*/0);
++	err = au_h_path_getattr(dentry, /*inode*/NULL, /*force*/0, &h_path,
++				/*locked*/0);
 +	if (unlikely(err))
 +		goto out_si;
 +	if (unlikely(!h_path.dentry))
@@ -22678,7 +22682,7 @@ index 000000000..4de1b7507
 +}
 diff --git a/fs/aufs/inode.h b/fs/aufs/inode.h
 new file mode 100644
-index 000000000..f34ea8739
+index 000000000..af32a2332
 --- /dev/null
 +++ b/fs/aufs/inode.h
 @@ -0,0 +1,698 @@
@@ -22891,8 +22895,8 @@ index 000000000..f34ea8739
 +int au_pin_and_icpup(struct dentry *dentry, struct iattr *ia,
 +		     struct au_icpup_args *a);
 +
-+int au_h_path_getattr(struct dentry *dentry, int force, struct path *h_path,
-+		      int locked);
++int au_h_path_getattr(struct dentry *dentry, struct inode *inode, int force,
++		      struct path *h_path, int locked);
 +
 +/* i_op_add.c */
 +int au_may_add(struct dentry *dentry, aufs_bindex_t bindex,
@@ -36039,7 +36043,7 @@ index 000000000..5be76b69d
 +#endif /* __AUFS_WKQ_H__ */
 diff --git a/fs/aufs/xattr.c b/fs/aufs/xattr.c
 new file mode 100644
-index 000000000..b5ba7e32c
+index 000000000..103c4275e
 --- /dev/null
 +++ b/fs/aufs/xattr.c
 @@ -0,0 +1,356 @@
@@ -36239,7 +36243,7 @@ index 000000000..b5ba7e32c
 +
 +static int au_smack_reentering(struct super_block *sb)
 +{
-+#if IS_ENABLED(CONFIG_SECURITY_SMACK)
++#if IS_ENABLED(CONFIG_SECURITY_SMACK) || IS_ENABLED(CONFIG_SECURITY_SELINUX)
 +	/*
 +	 * as a part of lookup, smack_d_instantiate() is called, and it calls
 +	 * i_op->getxattr(). ouch.
@@ -36270,7 +36274,8 @@ index 000000000..b5ba7e32c
 +	} u;
 +};
 +
-+static ssize_t au_lgxattr(struct dentry *dentry, struct au_lgxattr *arg)
++static ssize_t au_lgxattr(struct dentry *dentry, struct inode *inode,
++			  struct au_lgxattr *arg)
 +{
 +	ssize_t err;
 +	int reenter;
@@ -36284,7 +36289,7 @@ index 000000000..b5ba7e32c
 +		if (unlikely(err))
 +			goto out;
 +	}
-+	err = au_h_path_getattr(dentry, /*force*/1, &h_path, reenter);
++	err = au_h_path_getattr(dentry, inode, /*force*/1, &h_path, reenter);
 +	if (unlikely(err))
 +		goto out_si;
 +	if (unlikely(!h_path.dentry))
@@ -36326,11 +36331,10 @@ index 000000000..b5ba7e32c
 +		},
 +	};
 +
-+	return au_lgxattr(dentry, &arg);
++	return au_lgxattr(dentry, /*inode*/NULL, &arg);
 +}
 +
-+static ssize_t au_getxattr(struct dentry *dentry,
-+			   struct inode *inode __maybe_unused,
++static ssize_t au_getxattr(struct dentry *dentry, struct inode *inode,
 +			   const char *name, void *value, size_t size)
 +{
 +	struct au_lgxattr arg = {
@@ -36342,7 +36346,7 @@ index 000000000..b5ba7e32c
 +		},
 +	};
 +
-+	return au_lgxattr(dentry, &arg);
++	return au_lgxattr(dentry, inode, &arg);
 +}
 +
 +static int au_setxattr(struct dentry *dentry, struct inode *inode,
@@ -38904,7 +38908,7 @@ index 74b4911ac..19789fbea 100644
  #endif
 diff --git a/include/uapi/linux/aufs_type.h b/include/uapi/linux/aufs_type.h
 new file mode 100644
-index 000000000..28ef4bb88
+index 000000000..469d55428
 --- /dev/null
 +++ b/include/uapi/linux/aufs_type.h
 @@ -0,0 +1,452 @@
@@ -38950,7 +38954,7 @@ index 000000000..28ef4bb88
 +#include <limits.h>
 +#endif /* __KERNEL__ */
 +
-+#define AUFS_VERSION	"5.x-rcN-20200302"
++#define AUFS_VERSION	"5.6-20200518"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
@@ -39197,7 +39201,7 @@ index 000000000..28ef4bb88
 +	uint8_t		type;
 +	uint8_t		nlen;
 +	uint8_t		wh;
-+	char		name[0];
++	char		name[];
 +} __aligned(8);
 +
 +static inline int au_rdu_len(int nlen)
@@ -39248,7 +39252,7 @@ index 000000000..28ef4bb88
 +		uint8_t oldnamelen;
 +		uint64_t _padding;
 +	};
-+	uint8_t oldname[0];
++	uint8_t oldname[];
 +} __aligned(8);
 +
 +struct au_drinfo_fdata {
@@ -39342,7 +39346,7 @@ index 000000000..28ef4bb88
 +	struct {
 +		int16_t	id;
 +		int	perm;
-+		char	path[0];
++		char	path[];
 +	};
 +} __aligned(8);
 +
@@ -39732,5 +39736,5 @@ index 565bc9b67..248a63945 100644
  int security_file_alloc(struct file *file)
  {
 -- 
-2.17.1
+2.26.2.593.gb994622632
 

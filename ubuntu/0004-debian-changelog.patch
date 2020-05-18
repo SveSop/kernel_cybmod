@@ -1,31 +1,58 @@
-From 06a1cf53a7349577f67fe7ee5cb42eb069c6fe4f Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 6 May 2020 10:22:58 +0000
+From 0180c85935632e9bdf00f7b0394baee5a2208ab0 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 14 May 2020 13:10:46 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9635 +----------------------------------------------
- 1 file changed, 3 insertions(+), 9632 deletions(-)
+ debian.master/changelog | 9662 +--------------------------------------
+ 1 file changed, 3 insertions(+), 9659 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 865cdd5..ef1f8ee 100644
+index b22f4d52e2a8..c0be9a829eee 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9635 +1,6 @@
--linux-5.7 (5.7.0-2.3) groovy; urgency=medium
-+linux (5.6.11-050611.202005061022) unstable; urgency=low
+@@ -1,9662 +1,6 @@
+-linux-5.7 (5.7.0-3.4) groovy; urgency=medium
++linux (5.6.13-050613.202005141310) unstable; urgency=low
  
+-  [ Upstream Kernel Changes ]
++  Mainline build at commit: v5.6.13
+ 
+-  * Rebase to v5.7-rc5
++ -- Mainline Build <kernel@sita>  Thu, 14 May 2020 13:10:46 +0000
+ 
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * getitimer returns it_value=0 erroneously (LP: #1349028)
+-    - [Config] CONTEXT_TRACKING_FORCE policy should be unset
+-
+-  * lockdown on power (LP: #1855668) // Ubuntu Kernel Support for OpenPOWER NV
+-    Secure & Trusted Boot (LP: #1866909)
+-    - [Config] Enable configs for OpenPOWER NV Secure & Trusted Boot
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: Import aufs driver
+-    - [Config] Enable aufs
+-    - [Config] annotations: remove SND_SOC_SOF_HDA_COMMON_HDMI_CODEC
+-    - [Config] Remove CONFIG_SND_HDA_INTEL_DETECT_DMIC from annotations
+-    - [Debian] final-checks -- Do not remove ~* from abi
+-    - [Config] Enable 5-level page table support for x86
+-    - [Config] updateconfigs after 5.7-rc5 rebase
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 11 May 2020 10:25:42 +0200
+-
+-linux-5.7 (5.7.0-2.3) groovy; urgency=medium
+-
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update helper scripts
 -    - update dkms package versions
 -    - [Packaging] update helper scripts
-+  Mainline build at commit: v5.6.11
- 
+-
 -  * ASUS T100HAN boots to a blank screen with a cursor [i965: Failed to submit
 -    batchbuffer: Input/output error] (LP: #1860754)
 -    - [Config] CONFIG_PMIC_OPREGION=y and CONFIG_GPIO_CRYSTAL_COVE=y for amd64
-+ -- Mainline Build <kernel@kathleen>  Wed, 06 May 2020 10:22:58 +0000
- 
+-
 -  * ubuntu/focal64 fails to mount Vagrant shared folders  (LP: #1873506)
 -    - [Packaging] Move virtualbox modules to linux-modules
 -    - [Packaging] Remove vbox and zfs modules from generic.inclusion-list
@@ -9651,5 +9678,5 @@ index 865cdd5..ef1f8ee 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.7.4
+2.17.1
 
