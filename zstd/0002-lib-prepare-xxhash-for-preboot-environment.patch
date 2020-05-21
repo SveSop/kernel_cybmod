@@ -1,7 +1,7 @@
-From 3c777b565fb649075b629a5a6f393395e4669802 Mon Sep 17 00:00:00 2001
+From f2f7175166743fee3fe359a487f341dfb2f1ee50 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Tue, 31 Mar 2020 22:39:07 -0700
-Subject: [PATCH 2/7] lib: prepare xxhash for preboot environment
+Subject: [PATCH 2/9] lib: prepare xxhash for preboot environment
 
 Don't export symbols if XXH_PREBOOT is defined.
 
@@ -110,5 +110,5 @@ index aa61e2a38..b4364e011 100644
  MODULE_DESCRIPTION("xxHash");
 +#endif
 -- 
-2.17.1
+2.27.0.rc0
 

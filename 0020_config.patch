@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10639 @@
+@@ -0,0 +1,10637 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.6.13-cybmod14 Kernel Configuration
++# Linux/x86 5.6.14-cybmod15 Kernel Configuration
 +#
 +
 +#
@@ -17,8 +17,6 @@ new file mode 100644
 +CONFIG_CC_CAN_LINK=y
 +CONFIG_CC_HAS_ASM_GOTO=y
 +CONFIG_CC_HAS_ASM_INLINE=y
-+CONFIG_CC_HAS_WARN_MAYBE_UNINITIALIZED=y
-+CONFIG_CC_DISABLE_WARN_MAYBE_UNINITIALIZED=y
 +CONFIG_IRQ_WORK=y
 +CONFIG_BUILDTIME_TABLE_SORT=y
 +CONFIG_THREAD_INFO_IN_TASK=y

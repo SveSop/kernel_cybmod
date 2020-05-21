@@ -1,7 +1,7 @@
-From 83db126865aeec4a2636abb5b24f1165dc251c67 Mon Sep 17 00:00:00 2001
+From 1f95b525c42775a393bf9525767748f55fe38b53 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Tue, 31 Mar 2020 22:39:10 -0700
-Subject: [PATCH 5/7] usr: add support for zstd compressed initramfs
+Subject: [PATCH 5/9] usr: add support for zstd compressed initramfs
 
 * Add support for a zstd compressed initramfs.
 * Add compression for compressing built-in initramfs with zstd.
@@ -79,5 +79,5 @@ index c12e6b15c..b1a81a40e 100644
  obj-$(CONFIG_BLK_DEV_INITRD) := initramfs_data.o
  
 -- 
-2.17.1
+2.27.0.rc0
 

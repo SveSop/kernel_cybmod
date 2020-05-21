@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.13  
+0000 : Kernel patch 5.6.14  
 0001 : AUFS filesystem patch  
 0002 : 5.6 Graysky's CPU patches  
 0003 : Add optional -O3 optimization  
@@ -15,7 +15,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0012 : Swap tuning patch  
 0013 : revert_acpi_change_for_nct6775.patch  
 0014 : vfs: Keep inodes with page cache off inode shrink  
-0015 : Scatterlist patch  
+0015 : KVM patch  
 0016 : Cpufreq Intel pstate patch  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  

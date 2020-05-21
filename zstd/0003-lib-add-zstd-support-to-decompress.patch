@@ -1,7 +1,7 @@
-From 96d14836fdc57762f5fd0d31e64eb40b52e1e785 Mon Sep 17 00:00:00 2001
+From 2800faddf67a8fabbb4532cb520b84acaadd054e Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Tue, 31 Mar 2020 22:39:08 -0700
-Subject: [PATCH 3/7] lib: add zstd support to decompress
+Subject: [PATCH 3/9] lib: add zstd support to decompress
 
 * Add unzstd() and the zstd decompress interface.
 * Add zstd support to decompress_method().
@@ -449,5 +449,5 @@ index 000000000..f317afab5
 +}
 +#endif
 -- 
-2.17.1
+2.27.0.rc0
 

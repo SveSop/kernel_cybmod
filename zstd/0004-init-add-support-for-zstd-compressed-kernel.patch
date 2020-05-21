@@ -1,7 +1,7 @@
-From 58500f3779298060b294a494ec4c88f41563609b Mon Sep 17 00:00:00 2001
+From 9bf3c117ce579a699388ad7877b06be37f9f74b0 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Tue, 31 Mar 2020 22:39:09 -0700
-Subject: [PATCH 4/7] init: add support for zstd compressed kernel
+Subject: [PATCH 4/9] init: add support for zstd compressed kernel
 
 * Adds the zstd cmd to scripts/Makefile.lib
 * Adds the HAVE_KERNEL_ZSTD and KERNEL_ZSTD options
@@ -17,7 +17,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  2 files changed, 29 insertions(+), 1 deletion(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index 9efb9af8f..a23b10dbf 100644
+index 4f717bfdb..b7c280818 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -173,13 +173,16 @@ config HAVE_KERNEL_LZO
@@ -82,5 +82,5 @@ index f24ff5a90..373b1f9ab 100644
  # ---------------------------------------------------------------------------
  
 -- 
-2.17.1
+2.27.0.rc0
 
