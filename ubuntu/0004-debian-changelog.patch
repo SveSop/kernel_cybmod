@@ -1,29 +1,48 @@
-From f3e893ebb0d805e205d53d3ea0b53e54f57e0eb8 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 20 May 2020 07:33:59 +0000
+From d92e8861a9b192ec328196dd6800c4775a56e712 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 27 May 2020 16:38:47 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 9704 +--------------------------------------
- 1 file changed, 3 insertions(+), 9701 deletions(-)
+ debian.master/changelog | 9723 +----------------------------------------------
+ 1 file changed, 3 insertions(+), 9720 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index eec96fa907dc..828f884b491d 100644
+index 27360b8..b13dd41 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,9704 +1,6 @@
--linux-5.7 (5.7.0-4.5) groovy; urgency=medium
-+linux (5.6.14-050614.202005200733) unstable; urgency=low
+@@ -1,9723 +1,6 @@
+-linux-5.7 (5.7.0-5.6) groovy; urgency=medium
++linux (5.6.15-050615.202005271638) unstable; urgency=low
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+  Mainline build at commit: v5.6.14
++  Mainline build at commit: v5.6.15
  
+-  * [UBUNTU 20.04] PSI generates overhead on s390x (LP: #1876044)
+-    - Ubuntu: [Config] CONFIG_PSI is enabled by default, but creates additional
+-      overhead on s390x, hence should be disabled by default on s390x only.
++ -- Mainline Build <kernel@kathleen>  Wed, 27 May 2020 16:38:47 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - Rebase to v5.7-rc7
+-    - [Config] ppc64el: disable STRICT_KERNEL_RWX
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.7-rc7
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 25 May 2020 11:44:09 +0200
+-
+-linux-5.7 (5.7.0-4.5) groovy; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
 -  * update-initramfs complains of missing amdgpu firmware files (LP: #1873325)
 -    - SAUCE: drm/amdgpu: Remove unreleased arcturus and navi12 firmware from
 -      modinfo
-+ -- Mainline Build <kernel@sita>  Wed, 20 May 2020 07:33:59 +0000
- 
+-
 -  * Support DMIC micmute LED on HP platforms (LP: #1876859)
 -    - ALSA: hda/realtek - Introduce polarity for micmute LED GPIO
 -    - ALSA: hda/realtek - Enable micmute LED on and HP system
@@ -9720,5 +9739,5 @@ index eec96fa907dc..828f884b491d 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.17.1
+2.7.4
 
