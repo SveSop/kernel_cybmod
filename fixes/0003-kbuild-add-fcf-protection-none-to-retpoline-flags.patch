@@ -1,7 +1,7 @@
-From 0136f52ed35fe6181b96929235560aa1ba6a972e Mon Sep 17 00:00:00 2001
+From a09cda7595394717a5252af0c77fc523881bcd88 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/11] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/14] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -14,7 +14,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 713f93c..3459023 100644
+index 3eca0c523..b13ef6665 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -647,6 +647,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -29,5 +29,5 @@ index 713f93c..3459023 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

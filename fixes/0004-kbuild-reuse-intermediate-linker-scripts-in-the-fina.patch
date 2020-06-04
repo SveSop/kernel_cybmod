@@ -1,7 +1,7 @@
-From e320c3708e623b5890670826b0d15c9e69230de0 Mon Sep 17 00:00:00 2001
+From 80633ed04088e08f86130164ff2513b94ae689d3 Mon Sep 17 00:00:00 2001
 From: Ilie Halip <ilie.halip@gmail.com>
 Date: Sat, 30 Nov 2019 13:48:03 -0300
-Subject: [PATCH 04/11] kbuild: reuse intermediate linker scripts in the final
+Subject: [PATCH 04/14] kbuild: reuse intermediate linker scripts in the final
  link steps
 
 ld.bfd forces `--undefined X` symbols to be added to the resulting
@@ -27,7 +27,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  3 files changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 3459023..6e02a3b 100644
+index b13ef6665..2065f3afb 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1045,6 +1045,7 @@ drivers-y	:= $(patsubst %/, %/built-in.a, $(drivers-y))
@@ -53,7 +53,7 @@ index 3459023..6e02a3b 100644
  # Recurse until adjust_autoksyms.sh is satisfied
  PHONY += autoksyms_recursive
 diff --git a/scripts/Makefile.build b/scripts/Makefile.build
-index a1730d4..f2184df 100644
+index a1730d42e..f2184dfed 100644
 --- a/scripts/Makefile.build
 +++ b/scripts/Makefile.build
 @@ -419,7 +419,7 @@ cmd_export_list = $(OBJDUMP) -h $< | \
@@ -66,7 +66,7 @@ index a1730d4..f2184df 100644
  $(obj)/lib-ksyms.o: $(lib-target) FORCE
  	$(call if_changed,export_list)
 diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index dd484e9..b1d556b 100755
+index ac569e197..49cbe87af 100755
 --- a/scripts/link-vmlinux.sh
 +++ b/scripts/link-vmlinux.sh
 @@ -61,6 +61,7 @@ modpost_link()
@@ -76,9 +76,9 @@ index dd484e9..b1d556b 100755
 +	local extra_lds=""
  	local output=${1}
  	local objects
- 
-@@ -70,6 +71,11 @@ vmlinux_link()
- 	shift
+ 	local strip_debug
+@@ -76,6 +77,11 @@ vmlinux_link()
+ 	fi
  
  	if [ "${SRCARCH}" != "um" ]; then
 +		for extra_ld in ${KBUILD_EXTRA_LDS}
@@ -89,9 +89,9 @@ index dd484e9..b1d556b 100755
  		objects="--whole-archive			\
  			${KBUILD_VMLINUX_OBJS}			\
  			--no-whole-archive			\
-@@ -80,8 +86,13 @@ vmlinux_link()
- 
+@@ -87,8 +93,13 @@ vmlinux_link()
  		${LD} ${KBUILD_LDFLAGS} ${LDFLAGS_vmlinux}	\
+ 			${strip_debug#-Wl,}			\
  			-o ${output}				\
 -			-T ${lds} ${objects}
 +			-T ${lds} ${extra_lds} ${objects}
@@ -104,8 +104,8 @@ index dd484e9..b1d556b 100755
  		objects="-Wl,--whole-archive			\
  			${KBUILD_VMLINUX_OBJS}			\
  			-Wl,--no-whole-archive			\
-@@ -93,6 +104,7 @@ vmlinux_link()
- 		${CC} ${CFLAGS_vmlinux}				\
+@@ -101,6 +112,7 @@ vmlinux_link()
+ 			${strip_debug}				\
  			-o ${output}				\
  			-Wl,-T,${lds}				\
 +			${extra_lds}				\
@@ -113,5 +113,5 @@ index dd484e9..b1d556b 100755
  			-lutil -lrt -lpthread
  		rm -f linux
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

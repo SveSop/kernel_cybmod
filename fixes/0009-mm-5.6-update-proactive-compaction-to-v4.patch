@@ -1,7 +1,7 @@
-From 862df61e335b495443b50c858a56d9af880538bb Mon Sep 17 00:00:00 2001
+From 3bcb9f913a229b8aaf8d9e0f2307d62563e9cf75 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 29 Apr 2020 09:03:42 +0200
-Subject: [PATCH 09/11] mm-5.6: update proactive compaction to v4
+Subject: [PATCH 09/14] mm-5.6: update proactive compaction to v4
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
 ---
@@ -14,7 +14,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
 
 diff --git a/Documentation/admin-guide/mm/proactive-compaction.rst b/Documentation/admin-guide/mm/proactive-compaction.rst
 new file mode 100644
-index 0000000..510f47e
+index 000000000..510f47e38
 --- /dev/null
 +++ b/Documentation/admin-guide/mm/proactive-compaction.rst
 @@ -0,0 +1,26 @@
@@ -45,7 +45,7 @@ index 0000000..510f47e
 +various heuristics to avoid wasting CPU cycles if it detects that
 +proactive compaction is not being effective.
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 5a5332b..1fdb5f1 100644
+index 5a5332b35..1fdb5f1b4 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -18547,6 +18547,12 @@ L:	linux-mm@kvack.org
@@ -62,7 +62,7 @@ index 5a5332b..1fdb5f1 100644
  M:	Linus Torvalds <torvalds@linux-foundation.org>
  L:	linux-kernel@vger.kernel.org
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 0344315..3d29940 100644
+index 0344315ae..3d299404d 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -26,6 +26,14 @@
@@ -205,7 +205,7 @@ index 0344315..3d29940 100644
  					0 : 1 << COMPACT_MAX_DEFER_SHIFT;
  		}
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 70d7241..825aae0 100644
+index 70d724122..825aae086 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1074,6 +1074,11 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -221,5 +221,5 @@ index 70d7241..825aae0 100644
  {
  	struct contig_page_info info;
 -- 
-2.27.0.rc0
+2.27.0.rc2
 

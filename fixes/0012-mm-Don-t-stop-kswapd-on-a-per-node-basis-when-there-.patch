@@ -1,7 +1,7 @@
-From 6d65ec710873d0196c0d7fd5549464b45ae6ae6a Mon Sep 17 00:00:00 2001
+From 47b5a42e1379bf0d3bb1ab80ea86f3f910465541 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 12/12] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 12/14] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -102,5 +102,5 @@ index 2a88bde48..c493664f9 100644
  
  		/*
 -- 
-2.27.0.rc1.28.gd2ecc46c09
+2.27.0.rc2
 
