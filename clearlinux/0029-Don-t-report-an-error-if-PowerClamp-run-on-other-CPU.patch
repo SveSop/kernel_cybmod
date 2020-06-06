@@ -1,4 +1,4 @@
-From f33dd42494d200487a25a8efde6862d35afdd2ee Mon Sep 17 00:00:00 2001
+From 7fb423611ef3417cf8b6e24d660f93bf2db59867 Mon Sep 17 00:00:00 2001
 From: Alexander Koskovich <zvnexus@outlook.com>
 Date: Wed, 12 Feb 2020 22:47:12 +0000
 Subject: [PATCH 29/29] Don't report an error if PowerClamp run on other CPU
@@ -8,7 +8,7 @@ Subject: [PATCH 29/29] Don't report an error if PowerClamp run on other CPU
  1 file changed, 10 insertions(+)
 
 diff --git a/drivers/thermal/intel/intel_powerclamp.c b/drivers/thermal/intel/intel_powerclamp.c
-index 53216dcbe173..b6df6a3a0675 100644
+index f74b24734..bf60ab105 100644
 --- a/drivers/thermal/intel/intel_powerclamp.c
 +++ b/drivers/thermal/intel/intel_powerclamp.c
 @@ -650,6 +650,11 @@ static struct thermal_cooling_device_ops powerclamp_cooling_ops = {
@@ -21,7 +21,7 @@ index 53216dcbe173..b6df6a3a0675 100644
 +};
 +
  static const struct x86_cpu_id __initconst intel_powerclamp_ids[] = {
- 	{ X86_VENDOR_INTEL, X86_FAMILY_ANY, X86_MODEL_ANY, X86_FEATURE_MWAIT },
+ 	X86_MATCH_VENDOR_FEATURE(INTEL, X86_FEATURE_MWAIT, NULL),
  	{}
 @@ -659,6 +664,11 @@ MODULE_DEVICE_TABLE(x86cpu, intel_powerclamp_ids);
  static int __init powerclamp_probe(void)
@@ -36,5 +36,5 @@ index 53216dcbe173..b6df6a3a0675 100644
  		pr_err("CPU does not support MWAIT\n");
  		return -ENODEV;
 -- 
-2.26.0.51.ga7d14a4428
+2.27.0.rc2
 

@@ -1,0 +1,113 @@
+From 4541b62b6d3fe6422d892d465b5fae148fd463fa Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Sat, 6 Jun 2020 13:40:27 +0200
+Subject: [PATCH] Tweaks
+
+---
+ drivers/cpufreq/Kconfig            | 2 --
+ drivers/cpufreq/Kconfig.x86        | 2 --
+ drivers/cpufreq/cpufreq_ondemand.c | 6 +++---
+ fs/dcache.c                        | 2 +-
+ include/linux/blkdev.h             | 3 ++-
+ kernel/sched/core.c                | 6 +++---
+ 6 files changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/cpufreq/Kconfig b/drivers/cpufreq/Kconfig
+index c3e6bd59e..d3d0d2f33 100644
+--- a/drivers/cpufreq/Kconfig
++++ b/drivers/cpufreq/Kconfig
+@@ -37,8 +37,6 @@ config CPU_FREQ_STAT
+ choice
+ 	prompt "Default CPUFreq governor"
+ 	default CPU_FREQ_DEFAULT_GOV_USERSPACE if ARM_SA1100_CPUFREQ || ARM_SA1110_CPUFREQ
+-	default CPU_FREQ_DEFAULT_GOV_SCHEDUTIL if BIG_LITTLE
+-	default CPU_FREQ_DEFAULT_GOV_SCHEDUTIL if X86_INTEL_PSTATE && SMP
+ 	default CPU_FREQ_DEFAULT_GOV_PERFORMANCE
+ 	help
+ 	  This option sets which CPUFreq governor shall be loaded at
+diff --git a/drivers/cpufreq/Kconfig.x86 b/drivers/cpufreq/Kconfig.x86
+index bc58a0809..62502d0e4 100644
+--- a/drivers/cpufreq/Kconfig.x86
++++ b/drivers/cpufreq/Kconfig.x86
+@@ -8,8 +8,6 @@ config X86_INTEL_PSTATE
+ 	depends on X86
+ 	select ACPI_PROCESSOR if ACPI
+ 	select ACPI_CPPC_LIB if X86_64 && ACPI && SCHED_MC_PRIO
+-	select CPU_FREQ_GOV_PERFORMANCE
+-	select CPU_FREQ_GOV_SCHEDUTIL if SMP
+ 	help
+ 	  This driver provides a P state for Intel core processors.
+ 	  The driver implements an internal governor and will become
+diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
+index 82a4d37dd..bd4631415 100644
+--- a/drivers/cpufreq/cpufreq_ondemand.c
++++ b/drivers/cpufreq/cpufreq_ondemand.c
+@@ -18,10 +18,10 @@
+ #include "cpufreq_ondemand.h"
+ 
+ /* On-demand governor macros */
+-#define DEF_FREQUENCY_UP_THRESHOLD		(80)
+-#define DEF_SAMPLING_DOWN_FACTOR		(1)
++#define DEF_FREQUENCY_UP_THRESHOLD		(63)
++#define DEF_SAMPLING_DOWN_FACTOR		(100)
+ #define MAX_SAMPLING_DOWN_FACTOR		(100000)
+-#define MICRO_FREQUENCY_UP_THRESHOLD		(95)
++#define MICRO_FREQUENCY_UP_THRESHOLD		(70)
+ #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(10000)
+ #define MIN_FREQUENCY_UP_THRESHOLD		(1)
+ #define MAX_FREQUENCY_UP_THRESHOLD		(100)
+diff --git a/fs/dcache.c b/fs/dcache.c
+index 15aa871d1..ca7d5fcc8 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -71,7 +71,7 @@
+  * If no ancestor relationship:
+  * arbitrary, since it's serialized on rename_lock
+  */
+-int sysctl_vfs_cache_pressure __read_mostly = 100;
++int sysctl_vfs_cache_pressure __read_mostly = 50;
+ EXPORT_SYMBOL_GPL(sysctl_vfs_cache_pressure);
+ 
+ __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 32868fbed..452398f06 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -614,7 +614,8 @@ struct request_queue {
+ #define QUEUE_FLAG_RQ_ALLOC_TIME 27	/* record rq->alloc_time_ns */
+ 
+ #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
+-				 (1 << QUEUE_FLAG_SAME_COMP))
++				(1 << QUEUE_FLAG_SAME_COMP)    |       \
++				(1 << QUEUE_FLAG_SAME_FORCE))
+ 
+ void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
+ void blk_queue_flag_clear(unsigned int flag, struct request_queue *q);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 9a2fbf98f..f84943c43 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -57,7 +57,7 @@ const_debug unsigned int sysctl_sched_features =
+  * Number of tasks to iterate in a single balance run.
+  * Limited because this is done with IRQs disabled.
+  */
+-const_debug unsigned int sysctl_sched_nr_migrate = 32;
++const_debug unsigned int sysctl_sched_nr_migrate = 256;
+ 
+ /*
+  * period over which we measure -rt task CPU usage in us.
+@@ -69,9 +69,9 @@ __read_mostly int scheduler_running;
+ 
+ /*
+  * part of the period that we allow rt tasks to run in us.
+- * default: 0.95s
++ * tweaked: 0.98s
+  */
+-int sysctl_sched_rt_runtime = 950000;
++int sysctl_sched_rt_runtime = 980000;
+ 
+ /*
+  * __task_rq_lock - lock the rq @p resides on.
+-- 
+2.17.1
+

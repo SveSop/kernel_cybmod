@@ -1,4 +1,4 @@
-From a9642201f9bfd3dfd7d462b0f2232b69a0c10f01 Mon Sep 17 00:00:00 2001
+From d6a501b9a2d4b6d7a3aac8bd7f8f76b36a5a6d6e Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Wed, 20 Jun 2018 17:23:21 +0000
 Subject: [PATCH 17/29] Enable stateless firmware loading
@@ -11,7 +11,7 @@ firmware and distribution firmware.
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 57133a9dad09..7d77b978e90d 100644
+index 76f799139..ca94e86b8 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -439,6 +439,8 @@ static int fw_decompress_xz(struct device *dev, struct fw_priv *fw_priv,
@@ -24,5 +24,5 @@ index 57133a9dad09..7d77b978e90d 100644
  	"/lib/firmware/updates",
  	"/lib/firmware/" UTS_RELEASE,
 -- 
-2.26.0.51.ga7d14a4428
+2.27.0.rc2
 

@@ -1,41 +1,39 @@
-## Cybmod patches for 5.6 kernel  
+## Cybmod patches for 5.7 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.6.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.6.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.6.13  
 0001 : AUFS filesystem patch  
 0002 : 5.6 Graysky's CPU patches  
 0003 : Add optional -O3 optimization  
 0004 : MM address space tweak  
 0005 : Various kernel tweaks patch  
-0010 : Cake_Qdisc_default.patch  
-0011 : zswap-tweaks.patch  
-0013 : revert_acpi_change_for_nct6775.patch  
-0014 : vfs: Keep inodes with page cache off inode shrink  
-0015 : Scatterlist patch  
-0016 : Cpufreq Intel pstate patch  
+0010 : swap-tweaks.patch  
+0011 : revert_acpi_change_for_nct6775.patch  
+0012 : vfs: Keep inodes with page cache off inode shrink  
+0013 : KVM workaround patch  
+0014 : Cpufreq Intel pstate patch  
+0015 : ZFS fix  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 
-fixes : Various fixes/patches  
-ck2  : -ck1 MuQSS patchset from Con Kolivas  
-ubuntu : Ubuntu mainline kernel patchset  
 clearlinux : Collection of "clearlinux" patches  
+fixes : Various fixes/patches  
 futex-patches : Collection of "futex" patches for Wine  
-exfat-patches : Collection of "ex-fat" filesystem patches  
 padata : Collection of "padata" patches (mm)  
+ubuntu : Ubuntu mainline kernel patchset  
+zstd : zstd patchset  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has MuQSS 0.199 scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
+**This config has default CFS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.6.tar.xz    
-cd linux-5.6  
+tar xf linux-5.7.tar.xz    
+cd linux-5.7  
 /path/to/patches/and/cybmod_patch.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```

@@ -1,4 +1,4 @@
-From c253bca98df5476739d47ec1d233a85ea0683516 Mon Sep 17 00:00:00 2001
+From 81ddba56f4c1f3fdb3d00d0da52fbdbf7d00e471 Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 13 Aug 2018 04:01:21 -0500
 Subject: [PATCH 16/29] Add boot option to allow unsigned modules
@@ -14,7 +14,7 @@ Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
  1 file changed, 20 insertions(+)
 
 diff --git a/kernel/module.c b/kernel/module.c
-index 33569a01d6e1..bacd343439f6 100644
+index 646f1e233..fc67585ab 100644
 --- a/kernel/module.c
 +++ b/kernel/module.c
 @@ -53,6 +53,7 @@
@@ -45,7 +45,7 @@ index 33569a01d6e1..bacd343439f6 100644
  #ifndef CONFIG_MODVERSIONS
  #define symversion(base, idx) NULL
  #else
-@@ -4364,6 +4371,19 @@ static const struct proc_ops modules_proc_ops = {
+@@ -4365,6 +4372,19 @@ static const struct proc_ops modules_proc_ops = {
  static int __init proc_modules_init(void)
  {
  	proc_create("modules", 0, NULL, &modules_proc_ops);
@@ -66,5 +66,5 @@ index 33569a01d6e1..bacd343439f6 100644
  }
  module_init(proc_modules_init);
 -- 
-2.26.0.51.ga7d14a4428
+2.27.0.rc2
 

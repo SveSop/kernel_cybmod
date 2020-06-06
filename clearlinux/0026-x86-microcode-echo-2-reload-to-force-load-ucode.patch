@@ -1,4 +1,4 @@
-From 32a1289441b22f77a2c31406712780cee7488318 Mon Sep 17 00:00:00 2001
+From d0fc59931e09196622e108af29f5807906109636 Mon Sep 17 00:00:00 2001
 From: Ashok Raj <ashok.raj@intel.com>
 Date: Sat, 20 Jul 2019 14:14:47 +0000
 Subject: [PATCH 26/29] x86/microcode: echo 2 > reload to force load ucode.
@@ -15,7 +15,7 @@ Signed-off-by: Ashok Raj <ashok.raj@intel.com>
  2 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 675f0df977cb..595dbfe80c88 100644
+index 675f0df97..595dbfe80 100644
 --- a/arch/x86/kernel/cpu/microcode/core.c
 +++ b/arch/x86/kernel/cpu/microcode/core.c
 @@ -621,18 +621,23 @@ static ssize_t reload_store(struct device *dev,
@@ -52,7 +52,7 @@ index 675f0df977cb..595dbfe80c88 100644
  
  	if (ret >= 0)
 diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index f08b4b59cd38..efa492cd38ac 100644
+index f08b4b59c..efa492cd3 100644
 --- a/arch/x86/kernel/cpu/microcode/intel.c
 +++ b/arch/x86/kernel/cpu/microcode/intel.c
 @@ -39,7 +39,7 @@
@@ -65,5 +65,5 @@ index f08b4b59cd38..efa492cd38ac 100644
  /* Current microcode patch used in early patching on the APs. */
  static struct microcode_intel *intel_ucode_patch;
 -- 
-2.26.0.51.ga7d14a4428
+2.27.0.rc2
 

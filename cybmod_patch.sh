@@ -16,10 +16,10 @@ do
 done
 echo -e " "
 echo -e "${RED}***************${NC}"
-echo -e "Misc fixes"
+echo -e "Zstd compression patches"
 echo -e "${RED}***************${NC}"
 echo -e " "
-for each in $DIR/fixes/0*.patch
+for each in $DIR/zstd/0*.patch
 do
         echo -e "${RED}***************"
         echo -e "Applying patch: $(basename $each)"
@@ -28,10 +28,10 @@ do
 done
 echo -e " "
 echo -e "${RED}***************${NC}"
-echo -e "-ck1 patches"
+echo -e "Misc fixes"
 echo -e "${RED}***************${NC}"
 echo -e " "
-for each in $DIR/ck1/0*.patch
+for each in $DIR/fixes/0*.patch
 do
         echo -e "${RED}***************"
         echo -e "Applying patch: $(basename $each)"
@@ -68,18 +68,6 @@ echo -e "Futex patches"
 echo -e "${RED}***************${NC}"
 echo -e " "
 for each in $DIR/futex-patches/0*.patch
-do
-        echo -e "${RED}***************"
-        echo -e "Applying patch: $(basename $each)"
-        echo -e "***************${NC}"
-        patch -p1 < $each
-done
-echo -e " "
-echo -e "${RED}***************${NC}"
-echo -e "Ex-fat patches"
-echo -e "${RED}***************${NC}"
-echo -e " "
-for each in $DIR/exfat-patches/0*.patch
 do
         echo -e "${RED}***************"
         echo -e "Applying patch: $(basename $each)"
