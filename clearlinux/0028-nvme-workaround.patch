@@ -1,7 +1,7 @@
-From 340f4c1cfd8657762289ab9b8ff485b374ec9a3c Mon Sep 17 00:00:00 2001
+From 50ec060e5a0b8ae7fbd6ce898db4f7af73109bb6 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Nov 2019 23:12:11 +0000
-Subject: [PATCH 28/29] nvme workaround
+Subject: [PATCH 28/30] nvme workaround
 
 ---
  drivers/nvme/host/core.c | 2 +-
@@ -21,5 +21,5 @@ index f3c037f5a..c4e2ead25 100644
  MODULE_PARM_DESC(default_ps_max_latency_us,
  		 "max power saving latency for new devices; use PM QOS to change per device");
 -- 
-2.27.0.rc2
+2.27.0.83.g0313f36c6e
 

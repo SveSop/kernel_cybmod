@@ -1,7 +1,7 @@
-From 9cd3709362cd168a02bdc611551b7a0286535ad9 Mon Sep 17 00:00:00 2001
+From dab4f7faa8effadbcafc44b6c1b2a2435f560ab4 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 20 Jun 2017 20:19:08 +0000
-Subject: [PATCH 15/29] print fsync count for bootchart
+Subject: [PATCH 15/30] print fsync count for bootchart
 
 ---
  block/blk-core.c      | 3 +++
@@ -10,10 +10,10 @@ Subject: [PATCH 15/29] print fsync count for bootchart
  3 files changed, 5 insertions(+)
 
 diff --git a/block/blk-core.c b/block/blk-core.c
-index 4cd531df4..d847bb35f 100644
+index 9bfaee050..aeaf17696 100644
 --- a/block/blk-core.c
 +++ b/block/blk-core.c
-@@ -1174,6 +1174,9 @@ blk_qc_t submit_bio(struct bio *bio)
+@@ -1175,6 +1175,9 @@ blk_qc_t submit_bio(struct bio *bio)
  			count_vm_events(PGPGIN, count);
  		}
  
@@ -48,5 +48,5 @@ index 239970b99..90578eefb 100644
  	nr_switches = p->nvcsw + p->nivcsw;
  
 -- 
-2.27.0.rc2
+2.27.0.83.g0313f36c6e
 

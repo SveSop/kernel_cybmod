@@ -1,7 +1,7 @@
-From 7fb423611ef3417cf8b6e24d660f93bf2db59867 Mon Sep 17 00:00:00 2001
+From 897c823617ca2700344c47f734a1036f455aebe3 Mon Sep 17 00:00:00 2001
 From: Alexander Koskovich <zvnexus@outlook.com>
 Date: Wed, 12 Feb 2020 22:47:12 +0000
-Subject: [PATCH 29/29] Don't report an error if PowerClamp run on other CPU
+Subject: [PATCH 29/30] Don't report an error if PowerClamp run on other CPU
 
 ---
  drivers/thermal/intel/intel_powerclamp.c | 10 ++++++++++
@@ -36,5 +36,5 @@ index f74b24734..bf60ab105 100644
  		pr_err("CPU does not support MWAIT\n");
  		return -ENODEV;
 -- 
-2.27.0.rc2
+2.27.0.83.g0313f36c6e
 
