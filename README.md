@@ -4,16 +4,14 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.7.2  
+0000 : Kernel patch 5.7.4  
 0001 : AUFS filesystem patch  
-0002 : 5.6 Graysky's CPU patches  
+0002 : 5.7 Graysky's CPU patches  
 0003 : Add optional -O3 optimization  
 0004 : MM address space tweak  
 0005 : Various kernel tweaks patch  
 0010 : swap-tweaks.patch  
-0011 : revert_acpi_change_for_nct6775.patch  
 0012 : vfs: Keep inodes with page cache off inode shrink  
-0013 : KVM workaround patch  
 0014 : Cpufreq Intel pstate patch  
 0015 : ZFS fix  
 0020 : Ubuntu based config (See note below!)  

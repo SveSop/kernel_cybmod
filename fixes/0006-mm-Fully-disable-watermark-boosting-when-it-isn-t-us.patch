@@ -1,7 +1,7 @@
-From ef5b57f555142bfdb072e77b497bd8a069a58fb2 Mon Sep 17 00:00:00 2001
+From 85dc47fa548de9f184d16384cfc9778ca0df3652 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/11] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/14] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -32,5 +32,5 @@ index de9b191fa..325f42f59 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.27.0.rc2
+2.27.0.90.geebb51ba8c
 

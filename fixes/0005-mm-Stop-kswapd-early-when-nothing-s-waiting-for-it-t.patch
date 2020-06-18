@@ -1,7 +1,7 @@
-From d75bfd2149d286bd96402e5fa4c34311a328fa0b Mon Sep 17 00:00:00 2001
+From 27c7812b0609e286ab01edd3bfb28d26184a305b Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/11] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/14] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -95,5 +95,5 @@ index a37c87b5a..b5e6b2eca 100644
  
  		/*
 -- 
-2.27.0.rc2
+2.27.0.90.geebb51ba8c
 

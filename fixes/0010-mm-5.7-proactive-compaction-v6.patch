@@ -1,7 +1,7 @@
-From 747effc949e666c70276d0e69fb73c5de46dce5d Mon Sep 17 00:00:00 2001
+From afe50ac508fa711acbfaaba23c0d485cc572fea7 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 1 Jun 2020 22:00:28 +0200
-Subject: [PATCH 10/11] mm-5.7: proactive compaction v6
+Subject: [PATCH 10/14] mm-5.7: proactive compaction v6
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -109,5 +109,5 @@ index d7ab7dbdc..cc88f7533 100644
  
  /* Same as __fragmentation index but allocs contig_page_info on stack */
 -- 
-2.27.0.rc2
+2.27.0.90.geebb51ba8c
 

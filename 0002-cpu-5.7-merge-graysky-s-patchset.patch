@@ -1,15 +1,15 @@
-From ea1a6802fd64272f302bcfd723a20a63caa7e883 Mon Sep 17 00:00:00 2001
+From ca8ae6ac879c4dece90a19dd2b489369a19355ba Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Sat, 16 May 2020 17:57:22 +0200
+Date: Mon, 15 Jun 2020 17:17:35 +0200
 Subject: [PATCH 1/2] cpu-5.7: merge graysky's patchset
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  arch/x86/Kconfig.cpu            | 301 ++++++++++++++++++++++++++++----
- arch/x86/Makefile               |  50 +++++-
+ arch/x86/Makefile               |  53 +++++-
  arch/x86/Makefile_32.cpu        |  32 +++-
  arch/x86/include/asm/vermagic.h |  56 ++++++
- 4 files changed, 404 insertions(+), 35 deletions(-)
+ 4 files changed, 407 insertions(+), 35 deletions(-)
 
 diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
 index bc3a497c0..06d78fdbb 100644
@@ -415,10 +415,10 @@ index bc3a497c0..06d78fdbb 100644
  config X86_MINIMUM_CPU_FAMILY
  	int
 diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index b65ec63c7..565a537ef 100644
+index b65ec63c7..e93fe320d 100644
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
-@@ -119,13 +119,57 @@ else
+@@ -119,13 +119,60 @@ else
  	KBUILD_CFLAGS += $(call cc-option,-mskip-rax-setup)
  
          # FIXME - should be integrated in Makefile.cpu (Makefile_32.cpu)
@@ -431,8 +431,11 @@ index b65ec63c7..565a537ef 100644
 +        cflags-$(CONFIG_MJAGUAR) += $(call cc-option,-march=btver2)
 +        cflags-$(CONFIG_MBULLDOZER) += $(call cc-option,-march=bdver1)
 +        cflags-$(CONFIG_MPILEDRIVER) += $(call cc-option,-march=bdver2)
++        cflags-$(CONFIG_MPILEDRIVER) += $(call cc-option,-mno-tbm)
 +        cflags-$(CONFIG_MSTEAMROLLER) += $(call cc-option,-march=bdver3)
++        cflags-$(CONFIG_MSTEAMROLLER) += $(call cc-option,-mno-tbm)
 +        cflags-$(CONFIG_MEXCAVATOR) += $(call cc-option,-march=bdver4)
++        cflags-$(CONFIG_MEXCAVATOR) += $(call cc-option,-mno-tbm)
 +        cflags-$(CONFIG_MZEN) += $(call cc-option,-march=znver1)
 +        cflags-$(CONFIG_MZEN2) += $(call cc-option,-march=znver2)
          cflags-$(CONFIG_MPSC) += $(call cc-option,-march=nocona)
@@ -605,5 +608,5 @@ index 75884d2cd..14c222e78 100644
  #define MODULE_PROC_FAMILY "ELAN "
  #elif defined CONFIG_MCRUSOE
 -- 
-2.27.0.rc2
+2.27.0.83.g0313f36c6e
 
