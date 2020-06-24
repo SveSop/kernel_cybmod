@@ -1,7 +1,7 @@
-From afe50ac508fa711acbfaaba23c0d485cc572fea7 Mon Sep 17 00:00:00 2001
+From a80385dd4f979dd18545ed5f6f88e7937e57c4a4 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 1 Jun 2020 22:00:28 +0200
-Subject: [PATCH 10/14] mm-5.7: proactive compaction v6
+Subject: [PATCH 10/15] mm-5.7: proactive compaction v6
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---

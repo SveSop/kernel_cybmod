@@ -1,7 +1,7 @@
-From ecff2cabe8ccac8460fac769aaa6407938338667 Mon Sep 17 00:00:00 2001
+From b752cd25cc386f6385a859c4752674af9368b8c7 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 17 Jun 2020 14:24:20 -0500
-Subject: [PATCH 13/14] Add OpenRGB patch - 0c45e26c
+Subject: [PATCH 13/15] Add OpenRGB patch - 0c45e26c
 
 Source:
 https://gitlab.com/CalcProgrammer1/OpenRGB/-/raw/master/OpenRGB.patch

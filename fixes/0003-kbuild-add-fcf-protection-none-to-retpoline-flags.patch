@@ -1,7 +1,7 @@
-From b9f1dcb96994248904c4657d3e02849404e111e6 Mon Sep 17 00:00:00 2001
+From 168178e767f1d460236b042f6d078466d11f63d9 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/14] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/15] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -14,10 +14,10 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index a6dda75d1..b6f9fdffe 100644
+index c48d489f8..f0c927488 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -667,6 +667,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
+@@ -663,6 +663,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
  RETPOLINE_VDSO_CFLAGS_CLANG := -mretpoline
  RETPOLINE_CFLAGS := $(call cc-option,$(RETPOLINE_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_CFLAGS_CLANG)))
  RETPOLINE_VDSO_CFLAGS := $(call cc-option,$(RETPOLINE_VDSO_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_VDSO_CFLAGS_CLANG)))

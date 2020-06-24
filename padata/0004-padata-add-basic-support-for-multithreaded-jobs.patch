@@ -1,7 +1,7 @@
-From 2c41403837b5fa7341a5a7054322f8d0f8b6cb3d Mon Sep 17 00:00:00 2001
+From a60b81884565e00a28eb20f06bfd044148c5d65d Mon Sep 17 00:00:00 2001
 From: Daniel Jordan <daniel.m.jordan@oracle.com>
 Date: Tue, 26 Nov 2019 02:38:09 -0500
-Subject: [PATCH 07/10] padata: add basic support for multithreaded jobs
+Subject: [PATCH 4/7] padata: add basic support for multithreaded jobs
 
 Sometimes the kernel doesn't take full advantage of system memory
 bandwidth, leading to a single CPU spending excessive time in
@@ -24,7 +24,7 @@ Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
  2 files changed, 178 insertions(+), 3 deletions(-)
 
 diff --git a/include/linux/padata.h b/include/linux/padata.h
-index 3bfa50350..b0affa466 100644
+index b4da88f8588c..7302efff5e65 100644
 --- a/include/linux/padata.h
 +++ b/include/linux/padata.h
 @@ -4,6 +4,9 @@
@@ -69,7 +69,7 @@ index 3bfa50350..b0affa466 100644
  /**
   * struct padata_instance - The overall control structure.
   *
-@@ -171,6 +199,7 @@ extern void padata_free_shell(struct padata_shell *ps);
+@@ -173,6 +201,7 @@ extern void padata_free_shell(struct padata_shell *ps);
  extern int padata_do_parallel(struct padata_shell *ps,
  			      struct padata_priv *padata, int *cb_cpu);
  extern void padata_do_serial(struct padata_priv *padata);
@@ -78,7 +78,7 @@ index 3bfa50350..b0affa466 100644
  			      cpumask_var_t cpumask);
  extern int padata_start(struct padata_instance *pinst);
 diff --git a/kernel/padata.c b/kernel/padata.c
-index 78ff9aa52..e78f57d9a 100644
+index d779a73d4d92..29fc5d87a4cd 100644
 --- a/kernel/padata.c
 +++ b/kernel/padata.c
 @@ -7,6 +7,9 @@
@@ -294,5 +294,5 @@ index 78ff9aa52..e78f57d9a 100644
  {
  	INIT_LIST_HEAD(&pd_list->list);
 -- 
-2.27.0.rc2
+2.27.0.90.geebb51ba8c
 

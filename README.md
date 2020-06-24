@@ -23,6 +23,7 @@ futex-patches : Collection of "futex" patches for Wine
 padata : Collection of "padata" patches (mm)  
 ubuntu : Ubuntu mainline kernel patchset  
 zstd : zstd patchset  
+fsgsbase : fsgsbase patchset  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  

@@ -1,7 +1,7 @@
-From 4ce0b12c4093f14980c9dafa03cd32257baaf68d Mon Sep 17 00:00:00 2001
+From f51fcd5ce67645716cbe4604df2715bb6f053f6a Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 17 Jun 2020 10:07:18 +0200
-Subject: [PATCH 12/14] mm-5.7: fix proactive compaction build with THP
+Subject: [PATCH 12/15] mm-5.7: fix proactive compaction build with THP
  disabled
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>

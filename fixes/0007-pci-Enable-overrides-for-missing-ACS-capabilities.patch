@@ -1,7 +1,7 @@
-From cf51449e7d610e2fcd2c756f7ec1880fbbca1556 Mon Sep 17 00:00:00 2001
+From f492bc58ade810c639b31dc43fa52bd71720a49a Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 07/14] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 07/15] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -73,7 +73,7 @@ index 5e2ce88d6..ffa53aaa6 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index ca9ed5774..7431f7343 100644
+index 506756292..80a368341 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -3544,6 +3544,106 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
@@ -183,7 +183,7 @@ index ca9ed5774..7431f7343 100644
  /*
   * Some Atheros AR9xxx and QCA988x chips do not behave after a bus reset.
   * The device will throw a Link Down error on AER-capable systems and
-@@ -4796,6 +4896,8 @@ static const struct pci_dev_acs_enabled {
+@@ -4811,6 +4911,8 @@ static const struct pci_dev_acs_enabled {
  	{ PCI_VENDOR_ID_ZHAOXIN, 0x9083, pci_quirk_mf_endpoint_acs },
  	/* Zhaoxin Root/Downstream Ports */
  	{ PCI_VENDOR_ID_ZHAOXIN, PCI_ANY_ID, pci_quirk_zhaoxin_pcie_ports_acs },

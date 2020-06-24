@@ -1,7 +1,7 @@
-From 27c7812b0609e286ab01edd3bfb28d26184a305b Mon Sep 17 00:00:00 2001
+From 47b0e455d24a6442d8241318bd05549e088f7b3c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/14] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/15] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -18,10 +18,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 1b9de7d22..a4d6de702 100644
+index 6196fd16b..cf114661a 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
-@@ -692,6 +692,7 @@ typedef struct pglist_data {
+@@ -694,6 +694,7 @@ typedef struct pglist_data {
  	unsigned long node_spanned_pages; /* total size of physical page
  					     range, including holes */
  	int node_id;
@@ -30,10 +30,10 @@ index 1b9de7d22..a4d6de702 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 3cf8b030a..de9b191fa 100644
+index af43525de..ef8db5a0f 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4469,6 +4469,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4464,6 +4464,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -42,7 +42,7 @@ index 3cf8b030a..de9b191fa 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4502,8 +4504,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4497,8 +4499,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -57,7 +57,7 @@ index 3cf8b030a..de9b191fa 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -4708,9 +4715,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4703,9 +4710,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -72,7 +72,7 @@ index 3cf8b030a..de9b191fa 100644
  	return page;
  }
  
-@@ -6778,6 +6788,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6773,6 +6783,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
