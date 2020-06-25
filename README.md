@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.7.4  
+0000 : Kernel patch 5.7.6  
 0001 : AUFS filesystem patch  
 0002 : 5.7 Graysky's CPU patches  
 0003 : Add optional -O3 optimization  
@@ -16,14 +16,15 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0015 : ZFS fix  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
+0030 : Clearlinux patchset  
+0031 : Misc fixes  
+0032 : Fsgsbase patchset  
+0033 : Futex patchset  
+0034 : Padata patchset  
+0035 : Zstd config patchset  
+0036 : Block patchset  
 
-clearlinux : Collection of "clearlinux" patches  
-fixes : Various fixes/patches  
-futex-patches : Collection of "futex" patches for Wine  
-padata : Collection of "padata" patches (mm)  
 ubuntu : Ubuntu mainline kernel patchset  
-zstd : zstd patchset  
-fsgsbase : fsgsbase patchset  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
