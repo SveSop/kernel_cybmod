@@ -1,7 +1,7 @@
-From b2bed1199d4272ad34551078a4b498e0044bc454 Mon Sep 17 00:00:00 2001
+From 63d744adf3a4b5bb90e8bdddbafcb5aeae7165e4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 18 May 2020 12:36:09 +0200
-Subject: [PATCH] AUFS-20200518
+Date: Mon, 29 Jun 2020 14:08:10 +0200
+Subject: [PATCH] AUFS-20200622
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -30,7 +30,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  fs/aufs/Kconfig                               |  199 ++
  fs/aufs/Makefile                              |   46 +
  fs/aufs/aufs.h                                |   62 +
- fs/aufs/branch.c                              | 1428 ++++++++++++
+ fs/aufs/branch.c                              | 1427 ++++++++++++
  fs/aufs/branch.h                              |  366 +++
  fs/aufs/conf.mk                               |   40 +
  fs/aufs/cpup.c                                | 1458 ++++++++++++
@@ -92,7 +92,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  fs/aufs/sysfs.c                               |  374 ++++
  fs/aufs/sysrq.c                               |  149 ++
  fs/aufs/vdir.c                                |  896 ++++++++
- fs/aufs/vfsub.c                               |  902 ++++++++
+ fs/aufs/vfsub.c                               |  895 ++++++++
  fs/aufs/vfsub.h                               |  354 +++
  fs/aufs/wbr_policy.c                          |  830 +++++++
  fs/aufs/whout.c                               | 1062 +++++++++
@@ -133,7 +133,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  mm/nommu.c                                    |   10 +-
  mm/prfile.c                                   |   86 +
  security/security.c                           |    8 +
- 128 files changed, 38160 insertions(+), 33 deletions(-)
+ 128 files changed, 38152 insertions(+), 33 deletions(-)
  create mode 100644 Documentation/ABI/testing/debugfs-aufs
  create mode 100644 Documentation/ABI/testing/sysfs-aufs
  create mode 100644 Documentation/filesystems/aufs/README
@@ -2704,10 +2704,10 @@ index 000000000..9a5734458
 +#endif /* __AUFS_H__ */
 diff --git a/fs/aufs/branch.c b/fs/aufs/branch.c
 new file mode 100644
-index 000000000..1f141fc8f
+index 000000000..26d41e1bc
 --- /dev/null
 +++ b/fs/aufs/branch.c
-@@ -0,0 +1,1428 @@
+@@ -0,0 +1,1427 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -4000,11 +4000,10 @@ index 000000000..1f141fc8f
 +		spin_unlock(&hf->f_lock);
 +		if (writer) {
 +			h_inode = file_inode(hf);
++			if (hf->f_mode & FMODE_READ)
++				i_readcount_inc(h_inode);
 +			put_write_access(h_inode);
 +			__mnt_drop_write(hf->f_path.mnt);
-+			if ((hf->f_mode & (FMODE_READ | FMODE_WRITE))
-+			    == FMODE_READ)
-+				i_readcount_inc(h_inode);
 +		}
 +	}
 +
@@ -32306,10 +32305,10 @@ index 000000000..5ba006b80
 +}
 diff --git a/fs/aufs/vfsub.c b/fs/aufs/vfsub.c
 new file mode 100644
-index 000000000..e954cd7d0
+index 000000000..a5e10c5c0
 --- /dev/null
 +++ b/fs/aufs/vfsub.c
-@@ -0,0 +1,902 @@
+@@ -0,0 +1,895 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
 + * Copyright (C) 2005-2020 Junjiro R. Okajima
@@ -32388,15 +32387,8 @@ index 000000000..e954cd7d0
 +
 +struct file *vfsub_dentry_open(struct path *path, int flags)
 +{
-+	struct file *file;
-+
-+	file = dentry_open(path, flags /* | __FMODE_NONOTIFY */,
++	return dentry_open(path, flags /* | __FMODE_NONOTIFY */,
 +			   current_cred());
-+	if (!IS_ERR_OR_NULL(file)
-+	    && (file->f_mode & (FMODE_READ | FMODE_WRITE)) == FMODE_READ)
-+		i_readcount_inc(d_inode(path->dentry));
-+
-+	return file;
 +}
 +
 +struct file *vfsub_filp_open(const char *path, int oflags, int mode)
@@ -38544,7 +38536,7 @@ index 719b320ed..f88ce55c1 100644
  long vfs_truncate(const struct path *path, loff_t length)
  {
 diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 62b8cedbc..d3ca400f9 100644
+index eb2255e95..92f606242 100644
 --- a/fs/proc/base.c
 +++ b/fs/proc/base.c
 @@ -2162,7 +2162,7 @@ static int map_files_get_link(struct dentry *dentry, struct path *path)
@@ -38820,10 +38812,10 @@ index 206774ac6..e5eda5226 100644
  
  #define lockdep_assert_held(l)			do { (void)(l); } while (0)
 diff --git a/include/linux/mm.h b/include/linux/mm.h
-index f3fe73718..a5b9751a5 100644
+index 465e8ad67..d11050f1c 100644
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
-@@ -1688,6 +1688,28 @@ static inline void unmap_shared_mapping_range(struct address_space *mapping,
+@@ -1689,6 +1689,28 @@ static inline void unmap_shared_mapping_range(struct address_space *mapping,
  	unmap_mapping_range(mapping, holebegin, holelen, 0);
  }
  
@@ -38908,7 +38900,7 @@ index ebbbfea48..d68d57425 100644
  #endif
 diff --git a/include/uapi/linux/aufs_type.h b/include/uapi/linux/aufs_type.h
 new file mode 100644
-index 000000000..531acb8f8
+index 000000000..34738b8cf
 --- /dev/null
 +++ b/include/uapi/linux/aufs_type.h
 @@ -0,0 +1,452 @@
@@ -38954,7 +38946,7 @@ index 000000000..531acb8f8
 +#include <limits.h>
 +#endif /* __KERNEL__ */
 +
-+#define AUFS_VERSION	"5.x-rcN-20200518"
++#define AUFS_VERSION	"5.7-20200622"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
@@ -39736,5 +39728,5 @@ index 51de970fb..b21f1ffd9 100644
  int security_file_alloc(struct file *file)
  {
 -- 
-2.17.1
+2.27.0.112.g101b3204f3
 

@@ -11,7 +11,6 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0004 : MM address space tweak  
 0005 : Various kernel tweaks patch  
 0010 : swap-tweaks.patch  
-0012 : vfs: Keep inodes with page cache off inode shrink  
 0014 : Cpufreq Intel pstate patch  
 0015 : ZFS fix  
 0020 : Ubuntu based config (See note below!)  

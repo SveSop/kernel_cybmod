@@ -1,7 +1,7 @@
-From 9a272e76c0d4fbb557533e06b4ab21e4a1fcf8a5 Mon Sep 17 00:00:00 2001
+From 9a02fb4a5c70b8aa666f528a63db0963b49e0326 Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:13:47 -0400
-Subject: [PATCH 01/20] x86/ptrace: Prevent ptrace from clearing the FS/GS
+Subject: [PATCH 01/22] x86/ptrace: Prevent ptrace from clearing the FS/GS
  selector
 
 When a ptracer writes a ptracee's FS/GSBASE with a different value, the
@@ -63,13 +63,13 @@ index f0e1ddbc2..cc56efb75 100644
  #endif
  	}
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From e07784bf5bfe456533ebb2980cb61f1f43ab9983 Mon Sep 17 00:00:00 2001
+From a061a7f4f61c87bbfd638829ddf39cd1f3f44215 Mon Sep 17 00:00:00 2001
 From: Andy Lutomirski <luto@kernel.org>
 Date: Thu, 28 May 2020 16:13:48 -0400
-Subject: [PATCH 02/20] x86/cpu: Add 'unsafe_fsgsbase' to enable CR4.FSGSBASE
+Subject: [PATCH 02/22] x86/cpu: Add 'unsafe_fsgsbase' to enable CR4.FSGSBASE
 
 This is temporary.  It will allow the next few patches to be tested
 incrementally.
@@ -149,13 +149,13 @@ index 8293ee514..7e2954ba6 100644
  	 * The vendor-specific functions might have changed features.
  	 * Now we do "generic changes."
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 9c181ea5821ed99cc8d6e7867ca1a14b8dcce4c1 Mon Sep 17 00:00:00 2001
+From 169619930fc9d2f9f13e13a7f0fe0fc7833f8bb7 Mon Sep 17 00:00:00 2001
 From: Andi Kleen <ak@linux.intel.com>
 Date: Thu, 28 May 2020 16:13:49 -0400
-Subject: [PATCH 03/20] x86/fsgsbase/64: Add intrinsics for FSGSBASE
+Subject: [PATCH 03/22] x86/fsgsbase/64: Add intrinsics for FSGSBASE
  instructions
 
 [ luto: Rename the variables from FS and GS to FSBASE and GSBASE and
@@ -217,13 +217,13 @@ index bca4c743d..fdd117749 100644
  
  static inline unsigned long x86_fsbase_read_cpu(void)
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From e93cf981d2dac83939cad805ee0451eee95f4126 Mon Sep 17 00:00:00 2001
+From 122fb111d130fa92962f086b4e86603e4f170124 Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:13:50 -0400
-Subject: [PATCH 04/20] x86/fsgsbase/64: Enable FSGSBASE instructions in helper
+Subject: [PATCH 04/22] x86/fsgsbase/64: Enable FSGSBASE instructions in helper
  functions
 
 Add cpu feature conditional FSGSBASE access to the relevant helper
@@ -392,13 +392,13 @@ index 5ef9d8f25..062468982 100644
  {
  	unsigned long fsbase;
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 96072aeaa35d0bc500ba887bbd9938c133ce18b7 Mon Sep 17 00:00:00 2001
+From 18af067c87c6f2c667b30ce2785d20fa50b78cc8 Mon Sep 17 00:00:00 2001
 From: Andy Lutomirski <luto@kernel.org>
 Date: Thu, 28 May 2020 16:13:51 -0400
-Subject: [PATCH 05/20] x86/process/64: Use FSBSBASE in switch_to() if
+Subject: [PATCH 05/22] x86/process/64: Use FSBSBASE in switch_to() if
  available
 
 With the new FSGSBASE instructions, FS and GSABSE can be efficiently read
@@ -486,13 +486,13 @@ index 062468982..85c7f9cab 100644
  
  static unsigned long x86_fsgsbase_read_task(struct task_struct *task,
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 6e5caa9f0ab0703672ae48303c95b9a8f858a315 Mon Sep 17 00:00:00 2001
+From 78f52d92cb1c1f3503d97eae701f219abcfebf25 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 28 May 2020 16:13:52 -0400
-Subject: [PATCH 06/20] x86/process/64: Make save_fsgs() public available
+Subject: [PATCH 06/22] x86/process/64: Make save_fsgs() public available
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -564,13 +564,13 @@ index d7aa0dfab..430774bff 100644
  		gs_sel = current->thread.gsindex;
  		fs_base = current->thread.fsbase;
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 03ff646e4a21e559ddcd8a1a015884eaefde9412 Mon Sep 17 00:00:00 2001
+From 0404121ba0ed52336152142d81905778af8223b5 Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:13:53 -0400
-Subject: [PATCH 07/20] x86/process/64: Use FSGSBASE instructions on thread
+Subject: [PATCH 07/22] x86/process/64: Use FSGSBASE instructions on thread
  copy and ptrace
 
 When FSGSBASE is enabled, copying threads and reading fsbase and gsbase
@@ -643,13 +643,13 @@ index aefb30bc5..0bcb48a12 100644
  	else
  		gsbase = x86_fsgsbase_read_task(task, task->thread.gsindex);
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 631bcd1f07f44f8b49d0634ce0c7110c88b7e69a Mon Sep 17 00:00:00 2001
+From 75e4545a96b9d9079e1c2b58922dd76385197397 Mon Sep 17 00:00:00 2001
 From: Tony Luck <tony.luck@intel.com>
 Date: Thu, 28 May 2020 16:13:54 -0400
-Subject: [PATCH 08/20] x86/speculation/swapgs: Check FSGSBASE in enabling
+Subject: [PATCH 08/22] x86/speculation/swapgs: Check FSGSBASE in enabling
  SWAPGS mitigation
 
 Before enabling FSGSBASE the kernel could safely assume that the content
@@ -701,13 +701,13 @@ index b53dcff21..b3004dda4 100644
  			 * Mitigation can be provided from SWAPGS itself or
  			 * PTI as the CR3 write in the Meltdown mitigation
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 1ef6faf9c0d188236e1cd059802d16ef35cffcc6 Mon Sep 17 00:00:00 2001
+From fd9b8347ac7c1b8a9d7300e726e1cd19ca26fe69 Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:13:55 -0400
-Subject: [PATCH 09/20] x86/entry/64: Switch CR3 before SWAPGS in paranoid
+Subject: [PATCH 09/22] x86/entry/64: Switch CR3 before SWAPGS in paranoid
  entry
 
 When FSGSBASE is enabled, the GSBASE handling in paranoid entry will need
@@ -805,13 +805,13 @@ index 3063aa909..3b9ccba6c 100644
  	TRACE_IRQS_IRETQ
  	/* Always restore stashed CR3 value (see paranoid_entry) */
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From e1faee6b41a00fa7288253635e9b4d47f9eef7f4 Mon Sep 17 00:00:00 2001
+From b1c3bcdb8fb0980d9990b1efdb86320dbe7e1460 Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:13:56 -0400
-Subject: [PATCH 10/20] x86/entry/64: Introduce the FIND_PERCPU_BASE macro
+Subject: [PATCH 10/22] x86/entry/64: Introduce the FIND_PERCPU_BASE macro
 
 GSBASE is used to find per-CPU data in the kernel. But when GSBASE is
 unknown, the per-CPU base can be found from the per_cpu_offset table with a
@@ -917,13 +917,13 @@ index f5a796da0..d063841a1 100644
  
  #endif
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 00a9d2c9136cb49cb4326ecbb0dc12937b89e710 Mon Sep 17 00:00:00 2001
+From 1bd826bf3bf337e7aab2df18acb483292b4a302e Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:13:57 -0400
-Subject: [PATCH 11/20] x86/entry/64: Handle FSGSBASE enabled paranoid
+Subject: [PATCH 11/22] x86/entry/64: Handle FSGSBASE enabled paranoid
  entry/exit
 
 Without FSGSBASE, user space cannot change GSBASE other than through a
@@ -1148,13 +1148,13 @@ index 3b9ccba6c..53246c470 100644
  	POP_REGS
  
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 6d810b3ea54153197ac3e483467b27de23fe4c18 Mon Sep 17 00:00:00 2001
+From 623cd107680b3623970f8fabf95d34bed7a5d1a1 Mon Sep 17 00:00:00 2001
 From: Andy Lutomirski <luto@kernel.org>
 Date: Thu, 28 May 2020 16:13:58 -0400
-Subject: [PATCH 12/20] x86/cpu: Enable FSGSBASE on 64bit by default and add a
+Subject: [PATCH 12/22] x86/cpu: Enable FSGSBASE on 64bit by default and add a
  chicken bit
 
 Now that FSGSBASE is fully supported, remove unsafe_fsgsbase, enable
@@ -1241,13 +1241,13 @@ index 7e2954ba6..9d891f63b 100644
  	/*
  	 * The vendor-specific functions might have changed features.
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 7c28b43515dbe2646a8952584ffb4be23ecb789c Mon Sep 17 00:00:00 2001
+From 28e60b6d56087010c93043e5782a90aebacd7872 Mon Sep 17 00:00:00 2001
 From: Andi Kleen <ak@linux.intel.com>
 Date: Thu, 28 May 2020 16:13:59 -0400
-Subject: [PATCH 13/20] x86/elf: Enumerate kernel FSGSBASE capability in
+Subject: [PATCH 13/22] x86/elf: Enumerate kernel FSGSBASE capability in
  AT_HWCAP2
 
 The kernel needs to explicitly enable FSGSBASE. So, the application needs
@@ -1309,13 +1309,13 @@ index 9d891f63b..74f6a08e7 100644
  	/*
  	 * The vendor-specific functions might have changed features.
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 3602c4fd1f5d9cfd5b628724abaab0aafc39b2df Mon Sep 17 00:00:00 2001
+From b67ec5f8cfd316c01ec2ceaa4ca144cc0e19d971 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 28 May 2020 16:14:00 -0400
-Subject: [PATCH 14/20] Documentation/x86/64: Add documentation for GS/FS
+Subject: [PATCH 14/22] Documentation/x86/64: Add documentation for GS/FS
  addressing mode
 
 Explain how the GS/FS based addressing can be utilized in user space
@@ -1557,13 +1557,13 @@ index d6eaaa5a3..a56070fc8 100644
     machinecheck
 +   fsgs
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From b5a5173ed6e42e717944ebbaefd637e95a00ee80 Mon Sep 17 00:00:00 2001
+From b3c5ecd5a4ccabe6f965055cb304387be8af037c Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:14:01 -0400
-Subject: [PATCH 15/20] selftests/x86/fsgsbase: Test GS selector on
+Subject: [PATCH 15/22] selftests/x86/fsgsbase: Test GS selector on
  ptracer-induced GS base write
 
 The test validates that the selector is not changed when a ptracer writes
@@ -1632,13 +1632,13 @@ index 15a329da5..950a48b2e 100644
  	}
  
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From d6ffbe26aed0ffb9b074608b28aa468f96e41cf1 Mon Sep 17 00:00:00 2001
+From f496738eaf85f4f9db762d824927a4e5ccb62b0c Mon Sep 17 00:00:00 2001
 From: "Chang S. Bae" <chang.seok.bae@intel.com>
 Date: Thu, 28 May 2020 16:14:02 -0400
-Subject: [PATCH 16/20] selftests/x86/fsgsbase: Test ptracer-induced GS base
+Subject: [PATCH 16/22] selftests/x86/fsgsbase: Test ptracer-induced GS base
  write with FSGSBASE
 
 This validates that GS selector and base are independently preserved in
@@ -1697,13 +1697,13 @@ index 950a48b2e..9a4349813 100644
  	}
  
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 2ac08ddd750ec674b94c89d5fd2e3bd0bbe17fd7 Mon Sep 17 00:00:00 2001
+From f2b3f23e09cc4f6b2e5c7c99acbe3a15a1cce00e Mon Sep 17 00:00:00 2001
 From: Andy Lutomirski <luto@kernel.org>
 Date: Fri, 19 Jun 2020 16:46:33 -0700
-Subject: [PATCH 17/20] selftests/x86/fsgsbase: Fix a comment in the
+Subject: [PATCH 17/22] selftests/x86/fsgsbase: Fix a comment in the
  ptrace_write_gsbase test
 
 A comment was unclear.  Fix it.
@@ -1729,13 +1729,13 @@ index 9a4349813..f47495d2f 100644
  			if (gs == 0)
  				printf("\tNote: this is expected behavior on older kernels.\n");
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 85695f25fb5ac57feba957ffefb3b31e74533ecc Mon Sep 17 00:00:00 2001
+From 1cc726923bfe076ff8964fb25a15c3b58805a081 Mon Sep 17 00:00:00 2001
 From: Andy Lutomirski <luto@kernel.org>
 Date: Fri, 19 Jun 2020 22:20:35 -0700
-Subject: [PATCH 18/20] selftests/x86/fsgsbase: Add a missing memory constraint
+Subject: [PATCH 18/22] selftests/x86/fsgsbase: Add a missing memory constraint
 
 The manual call to set_thread_area() via int $0x80 was missing any
 indication that the descriptor was a pointer, causing gcc to
@@ -1761,13 +1761,13 @@ index f47495d2f..998319553 100644
  		memcpy(&desc, low_desc, sizeof(desc));
  		munmap(low_desc, sizeof(desc));
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 8d36f520703ec628ca9e8a4ada32ce0319427ef9 Mon Sep 17 00:00:00 2001
+From 5cd6491fc9f2a38d764dfb609afe9e2119fa3cd4 Mon Sep 17 00:00:00 2001
 From: Andy Lutomirski <luto@kernel.org>
 Date: Sat, 20 Jun 2020 08:29:44 -0700
-Subject: [PATCH 19/20] x86/ptrace: Fix 32-bit PTRACE_SETREGS vs fsbase and
+Subject: [PATCH 19/22] x86/ptrace: Fix 32-bit PTRACE_SETREGS vs fsbase and
  gsbase
 
 Debuggers expect that doing PTRACE_GETREGS, then poking at a tracee
@@ -2164,13 +2164,13 @@ index 000000000..70502a708
 +	return 0;
 +}
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
 
 
-From 0847dd07b121fde70f2b98c7c2d4c9b6b5cd75aa Mon Sep 17 00:00:00 2001
+From e238ed0d05355624aafc1164733e2c9f86d92e69 Mon Sep 17 00:00:00 2001
 From: Andy Lutomirski <luto@kernel.org>
 Date: Wed, 27 May 2020 16:02:36 -0700
-Subject: [PATCH 20/20] selftests/x86: Add a syscall_arg_fault_64 test for
+Subject: [PATCH 20/22] selftests/x86: Add a syscall_arg_fault_64 test for
  negative GSBASE
 
 If the kernel erroneously allows WRGSBASE and user code writes a
@@ -2237,5 +2237,92 @@ index bc0ecc2e8..62fba4086 100644
  	return 0;
  }
 -- 
-2.27.0.90.geebb51ba8c
+2.27.0.112.g101b3204f3
+
+
+From 68dc9ba445be093ec3d37d0866eb391eed91f999 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@redhat.com>
+Date: Fri, 26 Jun 2020 09:32:08 +0200
+Subject: [PATCH 21/22] fsgsbase-5.7: remove erroneous if expression bit
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
+---
+ tools/testing/selftests/x86/fsgsbase_restore.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/testing/selftests/x86/fsgsbase_restore.c b/tools/testing/selftests/x86/fsgsbase_restore.c
+index 70502a708..6fffadc51 100644
+--- a/tools/testing/selftests/x86/fsgsbase_restore.c
++++ b/tools/testing/selftests/x86/fsgsbase_restore.c
+@@ -70,7 +70,7 @@ static void init_seg(void)
+ 		.seg_not_present = 0,
+ 		.useable         = 0
+ 	};
+-	if (false && syscall(SYS_modify_ldt, 1, &desc, sizeof(desc)) == 0) {
++	if (syscall(SYS_modify_ldt, 1, &desc, sizeof(desc)) == 0) {
+ 		printf("\tusing LDT slot 0\n");
+ 		asm volatile ("mov %0, %" SEG :: "rm" ((unsigned short)0x7));
+ 	} else {
+-- 
+2.27.0.112.g101b3204f3
+
+
+From 97fb08b21dc3dfe553580429c5d0fa83c745c2aa Mon Sep 17 00:00:00 2001
+From: Andy Lutomirski <luto@kernel.org>
+Date: Wed, 24 Jun 2020 17:48:40 -0700
+Subject: [PATCH 22/22] x86/fsgsbase: Fix Xen PV support
+
+On Xen PV, SWAPGS doesn't work.  Teach __rdfsbase_inactive() and
+__wrgsbase_inactive() to use rdmsrl()/wrmsrl() on Xen PV.  The Xen
+pvop code will understand this and issue the correct hypercalls.
+
+Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: xen-devel@lists.xenproject.org
+Signed-off-by: Andy Lutomirski <luto@kernel.org>
+---
+ arch/x86/kernel/process_64.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/arch/x86/kernel/process_64.c b/arch/x86/kernel/process_64.c
+index b4e56f827..86b2eeb7c 100644
+--- a/arch/x86/kernel/process_64.c
++++ b/arch/x86/kernel/process_64.c
+@@ -161,9 +161,13 @@ static noinline unsigned long __rdgsbase_inactive(void)
+ 
+ 	lockdep_assert_irqs_disabled();
+ 
+-	native_swapgs();
+-	gsbase = rdgsbase();
+-	native_swapgs();
++	if (!static_cpu_has(X86_FEATURE_XENPV)) {
++		native_swapgs();
++		gsbase = rdgsbase();
++		native_swapgs();
++	} else {
++		rdmsrl(MSR_KERNEL_GS_BASE, gsbase);
++	}
+ 
+ 	return gsbase;
+ }
+@@ -178,9 +182,13 @@ static noinline void __wrgsbase_inactive(unsigned long gsbase)
+ {
+ 	lockdep_assert_irqs_disabled();
+ 
+-	native_swapgs();
+-	wrgsbase(gsbase);
+-	native_swapgs();
++	if (!static_cpu_has(X86_FEATURE_XENPV)) {
++		native_swapgs();
++		wrgsbase(gsbase);
++		native_swapgs();
++	} else {
++		wrmsrl(MSR_KERNEL_GS_BASE, gsbase);
++	}
+ }
+ NOKPROBE_SYMBOL(__wrgsbase_inactive);
+ 
+-- 
+2.27.0.112.g101b3204f3
 
