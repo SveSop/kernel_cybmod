@@ -1,9 +1,8 @@
-From c436f863940cd0e6fdfedee844c04dea2541f6bf Mon Sep 17 00:00:00 2001
+From 0a132449700befe2c0203e3210b5910e7ae88393 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Tue, 31 Mar 2020 22:39:06 -0700
-Subject: [PATCH 1/9] lib: prepare zstd for preboot environment
+Date: Wed, 8 Jul 2020 11:50:18 -0700
+Subject: [PATCH 1/8] lib: prepare zstd for preboot environment
 
-* Don't export symbols if ZSTD_PREBOOT is defined.
 * Remove a double definition of the CHECK_F macro when the zstd
   library is amalgamated.
 * Switch ZSTD_copy8() to __builtin_memcpy(), because in the preboot
@@ -21,28 +20,10 @@ Reviewed-by: Kees Cook <keescook@chromium.org>
 Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
 Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
- lib/zstd/decompress.c     |  2 ++
  lib/zstd/fse_decompress.c |  9 +--------
  lib/zstd/zstd_internal.h  | 14 ++++++++++++--
- 3 files changed, 15 insertions(+), 10 deletions(-)
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/lib/zstd/decompress.c b/lib/zstd/decompress.c
-index 269ee9a79..73ded6327 100644
---- a/lib/zstd/decompress.c
-+++ b/lib/zstd/decompress.c
-@@ -2490,6 +2490,7 @@ size_t ZSTD_decompressStream(ZSTD_DStream *zds, ZSTD_outBuffer *output, ZSTD_inB
- 	}
- }
- 
-+#ifndef ZSTD_PREBOOT
- EXPORT_SYMBOL(ZSTD_DCtxWorkspaceBound);
- EXPORT_SYMBOL(ZSTD_initDCtx);
- EXPORT_SYMBOL(ZSTD_decompressDCtx);
-@@ -2529,3 +2530,4 @@ EXPORT_SYMBOL(ZSTD_insertBlock);
- 
- MODULE_LICENSE("Dual BSD/GPL");
- MODULE_DESCRIPTION("Zstd Decompressor");
-+#endif
 diff --git a/lib/zstd/fse_decompress.c b/lib/zstd/fse_decompress.c
 index a84300e5a..0b353530f 100644
 --- a/lib/zstd/fse_decompress.c
@@ -109,128 +90,13 @@ index 1a79fab9e..dac753397 100644
  		ZSTD_copy8(op, ip);
  		op += 8;
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 
 
-From 384e01d123813ddfcd076e44a9cf28ce95bcdd74 Mon Sep 17 00:00:00 2001
+From 6406095d27f3c30b65a68ca384b21b40f4ba5962 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Tue, 31 Mar 2020 22:39:07 -0700
-Subject: [PATCH 2/9] lib: prepare xxhash for preboot environment
-
-Don't export symbols if XXH_PREBOOT is defined.
-
-This change is necessary to get xxhash to work in a preboot environment,
-which is needed to support zstd-compressed kernels.
-
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
-Signed-off-by: Nick Terrell <terrelln@fb.com>
----
- lib/xxhash.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
-
-diff --git a/lib/xxhash.c b/lib/xxhash.c
-index aa61e2a38..b4364e011 100644
---- a/lib/xxhash.c
-+++ b/lib/xxhash.c
-@@ -80,13 +80,11 @@ void xxh32_copy_state(struct xxh32_state *dst, const struct xxh32_state *src)
- {
- 	memcpy(dst, src, sizeof(*dst));
- }
--EXPORT_SYMBOL(xxh32_copy_state);
- 
- void xxh64_copy_state(struct xxh64_state *dst, const struct xxh64_state *src)
- {
- 	memcpy(dst, src, sizeof(*dst));
- }
--EXPORT_SYMBOL(xxh64_copy_state);
- 
- /*-***************************
-  * Simple Hash Functions
-@@ -151,7 +149,6 @@ uint32_t xxh32(const void *input, const size_t len, const uint32_t seed)
- 
- 	return h32;
- }
--EXPORT_SYMBOL(xxh32);
- 
- static uint64_t xxh64_round(uint64_t acc, const uint64_t input)
- {
-@@ -234,7 +231,6 @@ uint64_t xxh64(const void *input, const size_t len, const uint64_t seed)
- 
- 	return h64;
- }
--EXPORT_SYMBOL(xxh64);
- 
- /*-**************************************************
-  * Advanced Hash Functions
-@@ -251,7 +247,6 @@ void xxh32_reset(struct xxh32_state *statePtr, const uint32_t seed)
- 	state.v4 = seed - PRIME32_1;
- 	memcpy(statePtr, &state, sizeof(state));
- }
--EXPORT_SYMBOL(xxh32_reset);
- 
- void xxh64_reset(struct xxh64_state *statePtr, const uint64_t seed)
- {
-@@ -265,7 +260,6 @@ void xxh64_reset(struct xxh64_state *statePtr, const uint64_t seed)
- 	state.v4 = seed - PRIME64_1;
- 	memcpy(statePtr, &state, sizeof(state));
- }
--EXPORT_SYMBOL(xxh64_reset);
- 
- int xxh32_update(struct xxh32_state *state, const void *input, const size_t len)
- {
-@@ -334,7 +328,6 @@ int xxh32_update(struct xxh32_state *state, const void *input, const size_t len)
- 
- 	return 0;
- }
--EXPORT_SYMBOL(xxh32_update);
- 
- uint32_t xxh32_digest(const struct xxh32_state *state)
- {
-@@ -372,7 +365,6 @@ uint32_t xxh32_digest(const struct xxh32_state *state)
- 
- 	return h32;
- }
--EXPORT_SYMBOL(xxh32_digest);
- 
- int xxh64_update(struct xxh64_state *state, const void *input, const size_t len)
- {
-@@ -439,7 +431,6 @@ int xxh64_update(struct xxh64_state *state, const void *input, const size_t len)
- 
- 	return 0;
- }
--EXPORT_SYMBOL(xxh64_update);
- 
- uint64_t xxh64_digest(const struct xxh64_state *state)
- {
-@@ -494,7 +485,19 @@ uint64_t xxh64_digest(const struct xxh64_state *state)
- 
- 	return h64;
- }
-+
-+#ifndef XXH_PREBOOT
-+EXPORT_SYMBOL(xxh32_copy_state);
-+EXPORT_SYMBOL(xxh64_copy_state);
-+EXPORT_SYMBOL(xxh32);
-+EXPORT_SYMBOL(xxh64);
-+EXPORT_SYMBOL(xxh32_reset);
-+EXPORT_SYMBOL(xxh64_reset);
-+EXPORT_SYMBOL(xxh32_update);
-+EXPORT_SYMBOL(xxh32_digest);
-+EXPORT_SYMBOL(xxh64_update);
- EXPORT_SYMBOL(xxh64_digest);
- 
- MODULE_LICENSE("Dual BSD/GPL");
- MODULE_DESCRIPTION("xxHash");
-+#endif
--- 
-2.27.0.rc2
-
-
-From 47e836d161e2de7240a2bc722716dc7e4976e3de Mon Sep 17 00:00:00 2001
-From: Nick Terrell <terrelln@fb.com>
-Date: Tue, 31 Mar 2020 22:39:08 -0700
-Subject: [PATCH 3/9] lib: add zstd support to decompress
+Date: Wed, 8 Jul 2020 11:50:19 -0700
+Subject: [PATCH 2/8] lib: add zstd support to decompress
 
 * Add unzstd() and the zstd decompress interface.
 * Add zstd support to decompress_method().
@@ -250,8 +116,8 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  lib/Kconfig                       |   4 +
  lib/Makefile                      |   1 +
  lib/decompress.c                  |   5 +
- lib/decompress_unzstd.c           | 342 ++++++++++++++++++++++++++++++
- 5 files changed, 363 insertions(+)
+ lib/decompress_unzstd.c           | 345 ++++++++++++++++++++++++++++++
+ 5 files changed, 366 insertions(+)
  create mode 100644 include/linux/decompress/unzstd.h
  create mode 100644 lib/decompress_unzstd.c
 
@@ -273,10 +139,10 @@ index 000000000..56d539ae8
 +	   void (*error_fn)(char *x));
 +#endif
 diff --git a/lib/Kconfig b/lib/Kconfig
-index 712243942..eeb4b5360 100644
+index 5d53f9609..e883aecb9 100644
 --- a/lib/Kconfig
 +++ b/lib/Kconfig
-@@ -335,6 +335,10 @@ config DECOMPRESS_LZ4
+@@ -336,6 +336,10 @@ config DECOMPRESS_LZ4
  	select LZ4_DECOMPRESS
  	tristate
  
@@ -288,7 +154,7 @@ index 712243942..eeb4b5360 100644
  # Generic allocator support is selected if needed
  #
 diff --git a/lib/Makefile b/lib/Makefile
-index e9584575b..124d68ad9 100644
+index 685aee60d..46a4c7a39 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
 @@ -163,6 +163,7 @@ lib-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
@@ -331,10 +197,10 @@ index 857ab1af1..ab3fc90ff 100644
  
 diff --git a/lib/decompress_unzstd.c b/lib/decompress_unzstd.c
 new file mode 100644
-index 000000000..f317afab5
+index 000000000..053834f24
 --- /dev/null
 +++ b/lib/decompress_unzstd.c
-@@ -0,0 +1,342 @@
+@@ -0,0 +1,345 @@
 +// SPDX-License-Identifier: GPL-2.0
 +
 +/*
@@ -396,12 +262,15 @@ index 000000000..f317afab5
 + * zstd's only source dependeny is xxhash, which has no source
 + * dependencies.
 + *
-+ * zstd and xxhash avoid declaring themselves as modules
-+ * when ZSTD_PREBOOT and XXH_PREBOOT are defined.
++ * When UNZSTD_PREBOOT is defined we declare __decompress(), which is
++ * used for kernel decompression, instead of unzstd().
++ *
++ * __DISABLE_EXPORTS stops zstd and xxhash from declaring themselves
++ * as modules by disabling the EXPORT_SYMBOL macro.
 + */
 +#ifdef STATIC
-+# define ZSTD_PREBOOT
-+# define XXH_PREBOOT
++# define UNZSTD_PREBOOT
++# define __DISABLE_EXPORTS
 +# include "xxhash.c"
 +# include "zstd/entropy_common.c"
 +# include "zstd/fse_decompress.c"
@@ -656,7 +525,7 @@ index 000000000..f317afab5
 +	return err;
 +}
 +
-+#ifndef ZSTD_PREBOOT
++#ifndef UNZSTD_PREBOOT
 +STATIC int INIT unzstd(unsigned char *buf, long len,
 +		       long (*fill)(void*, unsigned long),
 +		       long (*flush)(void*, unsigned long),
@@ -678,15 +547,15 @@ index 000000000..f317afab5
 +}
 +#endif
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 
 
-From 36ef3ece9e89fab338554ef3b78a51f1b8790363 Mon Sep 17 00:00:00 2001
+From d3a94c4046a7a969fbbe9776b52eca005306e4ec Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Tue, 31 Mar 2020 22:39:09 -0700
-Subject: [PATCH 4/9] init: add support for zstd compressed kernel
+Date: Wed, 8 Jul 2020 11:50:20 -0700
+Subject: [PATCH 3/8] init: add support for zstd compressed kernel
 
-* Adds the zstd cmd to scripts/Makefile.lib
+* Adds the zstd and zstd22 cmds to scripts/Makefile.lib
 * Adds the HAVE_KERNEL_ZSTD and KERNEL_ZSTD options
 
 Architecture specific support is still needed for decompression.
@@ -695,12 +564,33 @@ Reviewed-by: Kees Cook <keescook@chromium.org>
 Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
 Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
+ Makefile             |  2 ++
  init/Kconfig         | 15 ++++++++++++++-
- scripts/Makefile.lib | 15 +++++++++++++++
- 2 files changed, 29 insertions(+), 1 deletion(-)
+ scripts/Makefile.lib | 22 ++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 1 deletion(-)
 
+diff --git a/Makefile b/Makefile
+index 0baa6eb4a..014da1a1f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -447,6 +447,7 @@ PYTHON		= python
+ PYTHON3		= python3
+ CHECK		= sparse
+ BASH		= bash
++ZSTD		= zstd
+ 
+ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
+ 		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
+@@ -495,6 +496,7 @@ CLANG_FLAGS :=
+ export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC
+ export CPP AR NM STRIP OBJCOPY OBJDUMP OBJSIZE READELF PAHOLE LEX YACC AWK INSTALLKERNEL
+ export PERL PYTHON PYTHON3 CHECK CHECKFLAGS MAKE UTS_MACHINE HOSTCXX
++export ZSTD
+ export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS LDFLAGS_MODULE
+ 
+ export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
 diff --git a/init/Kconfig b/init/Kconfig
-index 4b3ee74cc..923772555 100644
+index 74a5ac656..c3f7f0630 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -160,13 +160,16 @@ config HAVE_KERNEL_LZO
@@ -739,10 +629,10 @@ index 4b3ee74cc..923772555 100644
  	bool "None"
  	depends on HAVE_KERNEL_UNCOMPRESSED
 diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index 4b7997377..41063ffd9 100644
+index 4b7997377..fa0a4f10d 100644
 --- a/scripts/Makefile.lib
 +++ b/scripts/Makefile.lib
-@@ -395,6 +395,21 @@ quiet_cmd_xzkern = XZKERN  $@
+@@ -395,6 +395,28 @@ quiet_cmd_xzkern = XZKERN  $@
  quiet_cmd_xzmisc = XZMISC  $@
        cmd_xzmisc = cat $(real-prereqs) | xz --check=crc32 --lzma2=dict=1MiB > $@
  
@@ -752,26 +642,33 @@ index 4b7997377..41063ffd9 100644
 +# format has the size information available at the beginning of the file too,
 +# but it's in a more complex format and it's good to avoid changing the part
 +# of the boot code that reads the uncompressed size.
++#
 +# Note that the bytes added by size_append will make the zstd tool think that
 +# the file is corrupt. This is expected.
++#
++# zstd uses a maximum window size of 8 MB. zstd22 uses a maximum window size of
++# 128 MB. zstd22 is used for kernel compression because it is decompressed in a
++# single pass, so zstd doesn't need to allocate a window buffer. When streaming
++# decompression is used, like initramfs decompression, zstd22 should likely not
++# be used because it would require zstd to allocate a 128 MB buffer.
 +
 +quiet_cmd_zstd = ZSTD    $@
-+cmd_zstd = (cat $(filter-out FORCE,$^) | \
-+	zstd -19 && \
-+        $(call size_append, $(filter-out FORCE,$^))) > $@ || \
-+	(rm -f $@ ; false)
++      cmd_zstd = { cat $(real-prereqs) | $(ZSTD) -19; $(size_append); } > $@
++
++quiet_cmd_zstd22 = ZSTD22  $@
++      cmd_zstd22 = { cat $(real-prereqs) | $(ZSTD) -22 --ultra; $(size_append); } > $@
 +
  # ASM offsets
  # ---------------------------------------------------------------------------
  
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 
 
-From e059299f25ae915d1268d32d063564d0f7dac616 Mon Sep 17 00:00:00 2001
+From 100a805f5a4b6100a971dec08fa01b44e004c6b4 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Tue, 31 Mar 2020 22:39:10 -0700
-Subject: [PATCH 5/9] usr: add support for zstd compressed initramfs
+Date: Wed, 8 Jul 2020 11:50:21 -0700
+Subject: [PATCH 4/8] usr: add support for zstd compressed initramfs
 
 * Add support for a zstd compressed initramfs.
 * Add compression for compressing built-in initramfs with zstd.
@@ -849,13 +746,13 @@ index c12e6b15c..b1a81a40e 100644
  obj-$(CONFIG_BLK_DEV_INITRD) := initramfs_data.o
  
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 
 
-From 792194f542b58b6fb5b65da227ab0d423061c10f Mon Sep 17 00:00:00 2001
+From 1bd4638dce200015c255d583facf40ec4853a177 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Tue, 31 Mar 2020 22:39:11 -0700
-Subject: [PATCH 6/9] x86: bump ZO_z_extra_bytes margin for zstd
+Date: Wed, 8 Jul 2020 11:50:22 -0700
+Subject: [PATCH 5/8] x86: bump ZO_z_extra_bytes margin for zstd
 
 Bump the ZO_z_extra_bytes margin for zstd.
 
@@ -863,6 +760,11 @@ Zstd needs 3 bytes per 128 KB, and has a 22 byte fixed overhead.
 Zstd needs to maintain 128 KB of space at all times, since that is
 the maximum block size. See the comments regarding in-place
 decompression added in lib/decompress_unzstd.c for details.
+
+The existing code is written so that all the compression algorithms use
+the same ZO_z_extra_bytes. It is taken to be the maximum of the growth
+rate plus the maximum fixed overhead. The comments just above this diff
+state that:
 
 Reviewed-by: Kees Cook <keescook@chromium.org>
 Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
@@ -892,13 +794,13 @@ index 735ad7f21..6dbd7e9f7 100644
  # define ZO_z_extract_offset	(ZO_z_output_len + ZO_z_extra_bytes - \
  				 ZO_z_input_len)
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 
 
-From 08b7a212044b515c28ff781670ca79f7652b507b Mon Sep 17 00:00:00 2001
+From d55fc2876194264f3be951a831e2083d8b1ef4c4 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Tue, 31 Mar 2020 22:39:12 -0700
-Subject: [PATCH 7/9] x86: Add support for ZSTD compressed kernel
+Date: Wed, 8 Jul 2020 11:50:23 -0700
+Subject: [PATCH 6/8] x86: Add support for ZSTD compressed kernel
 
 * Add support for zstd compressed kernel
 * Bump the heap size for zstd.
@@ -958,7 +860,7 @@ index 2d3f963fd..897b32531 100644
  	select HAVE_KPROBES_ON_FTRACE
  	select HAVE_FUNCTION_ERROR_INJECTION
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 5f7c262bc..7f0aaf9c0 100644
+index 5f7c262bc..480cd5836 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
 @@ -24,7 +24,7 @@ OBJECT_FILES_NON_STANDARD	:= y
@@ -975,7 +877,7 @@ index 5f7c262bc..7f0aaf9c0 100644
  $(obj)/vmlinux.bin.lz4: $(vmlinux.bin.all-y) FORCE
  	$(call if_changed,lz4)
 +$(obj)/vmlinux.bin.zst: $(vmlinux.bin.all-y) FORCE
-+	$(call if_changed,zstd)
++	$(call if_changed,zstd22)
  
  suffix-$(CONFIG_KERNEL_GZIP)	:= gz
  suffix-$(CONFIG_KERNEL_BZIP2)	:= bz2
@@ -1021,13 +923,13 @@ index 680c32036..d6dd43d25 100644
  #endif
  
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 
 
-From c162496dbf8c6b9bca8303b332ad63d68b197744 Mon Sep 17 00:00:00 2001
+From 553249a41358922372ef61dc619f1d54641c851c Mon Sep 17 00:00:00 2001
 From: Adam Borowski <kilobyte@angband.pl>
-Date: Tue, 31 Mar 2020 22:39:13 -0700
-Subject: [PATCH 8/9] .gitignore: add ZSTD-compressed files
+Date: Wed, 8 Jul 2020 11:50:24 -0700
+Subject: [PATCH 7/8] .gitignore: add ZSTD-compressed files
 
 For now, that's arch/x86/boot/compressed/vmlinux.bin.zst but probably more
 will come, thus let's be consistent with all other compressors.
@@ -1053,14 +955,14 @@ index 2258e906f..23871de69 100644
  modules.builtin
  modules.order
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 
 
-From 24c84c06db48b7915e575ce67c8800a5763502f0 Mon Sep 17 00:00:00 2001
+From 9591c1520faa65a7d3034d6b895050652cb50498 Mon Sep 17 00:00:00 2001
 From: NihilisticPandemoniun
  <152417+nihilisticpandemonium@users.noreply.github.com>
 Date: Thu, 19 Dec 2019 00:08:37 -0800
-Subject: [PATCH 9/9] init: add support for zstd compressed modules
+Subject: [PATCH 8/8] init: add support for zstd compressed modules
 
 Signed-off-by: Alexandre Frade <admfrade@gmail.com>
 ---
@@ -1069,10 +971,10 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index ae63afc4c..9ea0e55aa 100644
+index 014da1a1f..5b3a25ba9 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1007,8 +1007,8 @@ endif # INSTALL_MOD_STRIP
+@@ -998,8 +998,8 @@ endif # INSTALL_MOD_STRIP
  export mod_strip_cmd
  
  # CONFIG_MODULE_COMPRESS, if defined, will cause module to be compressed
@@ -1083,7 +985,7 @@ index ae63afc4c..9ea0e55aa 100644
  
  mod_compress_cmd = true
  ifdef CONFIG_MODULE_COMPRESS
-@@ -1018,6 +1018,9 @@ ifdef CONFIG_MODULE_COMPRESS
+@@ -1009,6 +1009,9 @@ ifdef CONFIG_MODULE_COMPRESS
    ifdef CONFIG_MODULE_COMPRESS_XZ
      mod_compress_cmd = xz -f
    endif # CONFIG_MODULE_COMPRESS_XZ
@@ -1094,10 +996,10 @@ index ae63afc4c..9ea0e55aa 100644
  export mod_compress_cmd
  
 diff --git a/init/Kconfig b/init/Kconfig
-index 923772555..20a7b63db 100644
+index c3f7f0630..b2d38ea4f 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -2164,8 +2164,8 @@ config MODULE_COMPRESS
+@@ -2149,8 +2149,8 @@ config MODULE_COMPRESS
  	bool "Compress modules on installation"
  	help
  
@@ -1108,7 +1010,7 @@ index 923772555..20a7b63db 100644
  
  	  module-init-tools MAY support gzip, and kmod MAY support gzip and xz.
  
-@@ -2187,7 +2187,7 @@ choice
+@@ -2172,7 +2172,7 @@ choice
  	  This determines which sort of compression will be used during
  	  'make modules_install'.
  
@@ -1117,7 +1019,7 @@ index 923772555..20a7b63db 100644
  
  config MODULE_COMPRESS_GZIP
  	bool "GZIP"
-@@ -2195,6 +2195,9 @@ config MODULE_COMPRESS_GZIP
+@@ -2180,6 +2180,9 @@ config MODULE_COMPRESS_GZIP
  config MODULE_COMPRESS_XZ
  	bool "XZ"
  
@@ -1128,5 +1030,5 @@ index 923772555..20a7b63db 100644
  
  config MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS
 -- 
-2.27.0.rc2
+2.27.0.221.ga08a83db2b
 

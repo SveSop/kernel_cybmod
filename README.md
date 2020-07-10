@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.7.6  
+0000 : Kernel patch 5.7.8  
 0001 : AUFS filesystem patch  
 0002 : 5.7 Graysky's CPU patches  
 0003 : Add optional -O3 optimization  

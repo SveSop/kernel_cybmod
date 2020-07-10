@@ -1,7 +1,7 @@
-From 8ac2d3b451bfd967322785bb70a46b00722f0b27 Mon Sep 17 00:00:00 2001
+From 8c5b91e33abc902e71120608dfb8b7aac8c863cd Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <admfrade@gmail.com>
 Date: Wed, 24 Oct 2018 16:58:52 -0300
-Subject: [PATCH 01/15] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/18] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Alexandre Frade <admfrade@gmail.com>
 ---
@@ -31,13 +31,13 @@ index bfbefb7bf..690a42e51 100644
  endif
  
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 0efa700441e9a840d0815ace593d95423e2266ca Mon Sep 17 00:00:00 2001
+From c716e75dd2de512d9afa16f227d38d386279f533 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/15] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/18] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 1753a9801..184b30282 100644
  	int ret;
  
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 6a95c21a370c5a2f933abd1b37e5c42e0574029c Mon Sep 17 00:00:00 2001
+From 5a5cf3b68a9673230b1a8701ca5ddc07d2cd733e Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/15] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/18] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index f928cd1df..dd4690ed3 100644
+index 5a5e329d9..6a30a21e4 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -663,6 +663,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index f928cd1df..dd4690ed3 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 7deaf8ad261c16eb4a7f600c40397cdcfbae5c71 Mon Sep 17 00:00:00 2001
+From d9d9c84844b6d8cd6ef6e5c730dd1878df24a723 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/15] mm: Disable watermark boosting by default
+Subject: [PATCH 04/18] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -152,13 +152,13 @@ index d0c0d9364..af43525de 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 428a5cfe2647eba1c4c1928a6e8635f8099634f1 Mon Sep 17 00:00:00 2001
+From d1fa0dcf1dad8c08711572519f52e6569b652799 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/15] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/18] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -252,13 +252,13 @@ index a37c87b5a..b5e6b2eca 100644
  
  		/*
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From de742d30ef28b8db660a8ec5238d109de5498e8f Mon Sep 17 00:00:00 2001
+From e0740b363ab5293c7f78d97d5d0e032a742ecea6 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/15] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/18] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -289,13 +289,13 @@ index ef8db5a0f..f68da2a9e 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 408b4cce491da6bc05b03fb35d4c5fe888f1082d Mon Sep 17 00:00:00 2001
+From db20e7c8534142b6f3d1d663c5960228b1577c66 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 07/15] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 07/18] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -487,13 +487,13 @@ index 506756292..80a368341 100644
  };
  
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From d19039c488eb762b12e300a96812b6805f59a42b Mon Sep 17 00:00:00 2001
+From 7b6ea516fadd40a34059b83080963bdfc4c81093 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 08/15] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 08/18] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -594,13 +594,13 @@ index b5e6b2eca..496c83529 100644
  
  		/*
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From bf0ad96233dd8f044d53165b1e4c3c669ec34da7 Mon Sep 17 00:00:00 2001
+From f2b6780d12616c6e0f8dce7bc3e66b8f6e18bc43 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 18 May 2020 11:14:46 -0700
-Subject: [PATCH 09/15] mm: Proactive compaction
+Subject: [PATCH 09/18] mm: Proactive compaction
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -856,7 +856,7 @@ index 8a176d872..51c90906e 100644
  		.procname	= "extfrag_threshold",
  		.data		= &sysctl_extfrag_threshold,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 46f0fcc93..bf7f57a47 100644
+index 65b568e19..dbcb38109 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -50,6 +50,11 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -977,7 +977,7 @@ index 46f0fcc93..bf7f57a47 100644
  	if (cc->contended || fatal_signal_pending(current))
  		ret = COMPACT_CONTENDED;
  
-@@ -2412,6 +2502,41 @@ enum compact_result try_to_compact_pages(gfp_t gfp_mask, unsigned int order,
+@@ -2423,6 +2513,41 @@ enum compact_result try_to_compact_pages(gfp_t gfp_mask, unsigned int order,
  	return rc;
  }
  
@@ -1019,7 +1019,7 @@ index 46f0fcc93..bf7f57a47 100644
  
  /* Compact all zones within a node */
  static void compact_node(int nid)
-@@ -2458,6 +2583,13 @@ static void compact_nodes(void)
+@@ -2469,6 +2594,13 @@ static void compact_nodes(void)
  /* The written value is actually unused, all memory is compacted */
  int sysctl_compact_memory;
  
@@ -1033,7 +1033,7 @@ index 46f0fcc93..bf7f57a47 100644
  /*
   * This is the entry point for compacting all nodes via
   * /proc/sys/vm/compact_memory
-@@ -2637,6 +2769,7 @@ static int kcompactd(void *p)
+@@ -2648,6 +2780,7 @@ static int kcompactd(void *p)
  {
  	pg_data_t *pgdat = (pg_data_t*)p;
  	struct task_struct *tsk = current;
@@ -1041,7 +1041,7 @@ index 46f0fcc93..bf7f57a47 100644
  
  	const struct cpumask *cpumask = cpumask_of_node(pgdat->node_id);
  
-@@ -2652,12 +2785,34 @@ static int kcompactd(void *p)
+@@ -2663,12 +2796,34 @@ static int kcompactd(void *p)
  		unsigned long pflags;
  
  		trace_mm_compaction_kcompactd_sleep(pgdat->node_id);
@@ -1122,13 +1122,13 @@ index 96d21a792..d7ab7dbdc 100644
  int fragmentation_index(struct zone *zone, unsigned int order)
  {
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 0f8c60f057dabd60a632fe20f0e7e77b852f2890 Mon Sep 17 00:00:00 2001
+From c5c0fba7f2d59458877370532994e73653cbbb9a Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 1 Jun 2020 22:00:28 +0200
-Subject: [PATCH 10/15] mm-5.7: proactive compaction v6
+Subject: [PATCH 10/18] mm-5.7: proactive compaction v6
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -1151,7 +1151,7 @@ index e5d88cabe..360914b4f 100644
  compact_unevictable_allowed
  ===========================
 diff --git a/mm/compaction.c b/mm/compaction.c
-index bf7f57a47..822ff7281 100644
+index dbcb38109..b684af734 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -55,6 +55,19 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -1210,7 +1210,7 @@ index bf7f57a47..822ff7281 100644
  	return low ? wmark_low : min(wmark_low + 10, 100);
  }
  
-@@ -2588,7 +2606,7 @@ int sysctl_compact_memory;
+@@ -2599,7 +2617,7 @@ int sysctl_compact_memory;
   * aggressively the kernel should compact memory in the
   * background. It takes values in the range [0, 100].
   */
@@ -1236,13 +1236,13 @@ index d7ab7dbdc..cc88f7533 100644
  
  /* Same as __fragmentation index but allocs contig_page_info on stack */
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 815ab2ea23eeaf17c88a675aab2aa924df600a96 Mon Sep 17 00:00:00 2001
+From b9ff61b4d42a6c792e6c197f8fc3ff3db852a4f8 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 11/15] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 11/18] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -1255,7 +1255,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index dd4690ed3..3355781fc 100644
+index 6a30a21e4..0baa6eb4a 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -903,9 +903,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
@@ -1269,13 +1269,13 @@ index dd4690ed3..3355781fc 100644
  KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
  
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 67431b8aabc02a6c0b1cf748443796ec35d4de40 Mon Sep 17 00:00:00 2001
+From 1515ee6d6ee5aa8b960188c4c5c0b86954a2cd9e Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 17 Jun 2020 10:07:18 +0200
-Subject: [PATCH 12/15] mm-5.7: fix proactive compaction build with THP
+Subject: [PATCH 12/18] mm-5.7: fix proactive compaction build with THP
  disabled
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
@@ -1284,7 +1284,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 822ff7281..99579a1fa 100644
+index b684af734..93e703cdf 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -60,7 +60,7 @@ static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
@@ -1297,13 +1297,13 @@ index 822ff7281..99579a1fa 100644
  #elif defined HUGETLB_PAGE_ORDER
  #define COMPACTION_HPAGE_ORDER	HUGETLB_PAGE_ORDER
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 65bd17d59ffd68b1b6dd98d7fd5ecb5793ccd001 Mon Sep 17 00:00:00 2001
+From a8bc69d87fc3628f4ab45a411f82d74670e029e6 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 17 Jun 2020 14:24:20 -0500
-Subject: [PATCH 13/15] Add OpenRGB patch - 0c45e26c
+Subject: [PATCH 13/18] Add OpenRGB patch - 0c45e26c
 
 Source:
 https://gitlab.com/CalcProgrammer1/OpenRGB/-/raw/master/OpenRGB.patch
@@ -2034,13 +2034,13 @@ index 69740a4ff..fb3fd68b8 100644
  		/* Try to add the aux adapter if it exists,
  		 * piix4_add_adapter will clean up if this fails */
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 5d1e24bb1bce1ceabb6674be8942d63d7003fa8f Mon Sep 17 00:00:00 2001
+From 5edce5d489c112f8fbf853b7de316815c826bc70 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Wed, 17 Jun 2020 18:03:17 -0700
-Subject: [PATCH 14/15] mm: Use unsigned types for fragmentation score
+Subject: [PATCH 14/18] mm: Use unsigned types for fragmentation score
 
 Proactive compaction uses per-node/zone "fragmentation score" which
 is always in range [0, 100], so use unsigned type of these scores
@@ -2088,7 +2088,7 @@ index 51c90906e..454bd8256 100644
  		.proc_handler	= proc_dointvec_minmax,
  		.extra1		= SYSCTL_ZERO,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 99579a1fa..6e909fe81 100644
+index 93e703cdf..211763020 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -53,7 +53,7 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -2143,7 +2143,7 @@ index 99579a1fa..6e909fe81 100644
  }
  
  static bool should_proactive_compact_node(pg_data_t *pgdat)
-@@ -2606,7 +2606,7 @@ int sysctl_compact_memory;
+@@ -2617,7 +2617,7 @@ int sysctl_compact_memory;
   * aggressively the kernel should compact memory in the
   * background. It takes values in the range [0, 100].
   */
@@ -2166,13 +2166,13 @@ index cc88f7533..4ad37205d 100644
  	struct contig_page_info info;
  
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
 
 
-From 682d8759bec94aca8a491c77dce47967f7786629 Mon Sep 17 00:00:00 2001
+From 8f7ac373983c84ff8c3d50ef0c0c1f20f68e80ae Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 22 Jun 2020 23:45:44 -0700
-Subject: [PATCH 15/15] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
+Subject: [PATCH 15/18] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
 
 Fix compile error when COMPACTION_HPAGE_ORDER is assigned
 to HUGETLB_PAGE_ORDER. The correct way to check if this
@@ -2187,7 +2187,7 @@ Tested-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 6e909fe81..0685933ac 100644
+index 211763020..93fb89f91 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -62,7 +62,7 @@ static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
@@ -2200,5 +2200,136 @@ index 6e909fe81..0685933ac 100644
  #else
  #define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
 -- 
-2.27.0.112.g101b3204f3
+2.27.0.203.gf402ea6816
+
+
+From 72b18e9b06c05a80080319bc310457e56db1a519 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultan@kerneltoast.com>
+Date: Sun, 5 Jul 2020 00:16:32 -0700
+Subject: [PATCH 16/18] i2c: designware: Fix transfer failures for invalid
+ SMBus block reads
+
+SMBus block reads can be broken because the read function will just skip
+over bytes it doesn't like until reaching a byte that conforms to the
+length restrictions for block reads. This is problematic when it isn't
+known if the incoming payload is indeed a conforming block read.
+
+According to the SMBus specification, block reads will only send the
+payload length in the first byte, so we can fix this by only considering
+the first byte in a sequence for block read length purposes.
+
+In addition, when the length byte is invalid, the original transfer
+length still needs to be adjusted to avoid a controller timeout.
+
+Fixes: c3ae106050b9 ("i2c: designware: Implement support for SMBus block read and write")
+Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
+---
+ drivers/i2c/busses/i2c-designware-master.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
+index 3a58eef20..83906bb97 100644
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -394,10 +394,12 @@ i2c_dw_read(struct dw_i2c_dev *dev)
+ 			u32 flags = msgs[dev->msg_read_idx].flags;
+ 
+ 			*buf = dw_readl(dev, DW_IC_DATA_CMD);
+-			/* Ensure length byte is a valid value */
+-			if (flags & I2C_M_RECV_LEN &&
+-				*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0) {
+-				len = i2c_dw_recv_len(dev, *buf);
++			if (flags & I2C_M_RECV_LEN) {
++				/* Ensure length byte is a valid value */
++				if (*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0)
++					len = i2c_dw_recv_len(dev, *buf);
++				else
++					len = i2c_dw_recv_len(dev, len);
+ 			}
+ 			buf++;
+ 			dev->rx_outstanding--;
+-- 
+2.27.0.203.gf402ea6816
+
+
+From 9a2b057efe24a5c223e7c788f0b0d732b196aa03 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultan@kerneltoast.com>
+Date: Sun, 5 Jul 2020 00:21:22 -0700
+Subject: [PATCH 17/18] i2c: designware: Allow SMBus block reads up to 255
+ bytes in length
+
+According to the SMBus 3.0 protocol specification, block transfer limits
+were increased from 32 bytes to 255 bytes. Remove the obsolete 32-byte
+limitation.
+
+Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
+---
+ drivers/i2c/busses/i2c-designware-master.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
+index 83906bb97..00abc02c7 100644
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -396,7 +396,7 @@ i2c_dw_read(struct dw_i2c_dev *dev)
+ 			*buf = dw_readl(dev, DW_IC_DATA_CMD);
+ 			if (flags & I2C_M_RECV_LEN) {
+ 				/* Ensure length byte is a valid value */
+-				if (*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0)
++				if (*buf > 0)
+ 					len = i2c_dw_recv_len(dev, *buf);
+ 				else
+ 					len = i2c_dw_recv_len(dev, len);
+-- 
+2.27.0.203.gf402ea6816
+
+
+From 19ecabf5b296df40209153a39e88e3d02e5e3235 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultan@kerneltoast.com>
+Date: Sun, 5 Jul 2020 00:23:49 -0700
+Subject: [PATCH 18/18] HID: i2c-hid: Use block reads when possible to save
+ power
+
+We have no way of knowing how large an incoming payload is going to be,
+so the only strategy available up until now has been to always retrieve
+the maximum possible report length over i2c, which can be quite
+inefficient. For devices that send reports in block read format, the i2c
+controller driver can read the payload length on the fly and terminate
+the i2c transaction early, resulting in considerable power savings.
+
+On a Dell Precision 15 5540 with an i9-9880H, resting my finger on the
+touchpad causes psys power readings to go up by about 4W and hover there
+until I remove my finger. With this patch, my psys readings go from 4.7W
+down to 3.1W, yielding about 1.6W in savings. This is because my
+touchpad's max report length is 60 bytes, but all of the regular reports
+it sends for touch events are only 32 bytes, so the i2c transfer is
+roughly halved for the common case.
+
+Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
+---
+ drivers/hid/i2c-hid/i2c-hid-core.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 294c84e13..739dccfc5 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -472,11 +472,14 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
+ 	int ret;
+ 	u32 ret_size;
+ 	int size = le16_to_cpu(ihid->hdesc.wMaxInputLength);
++	u16 flags;
+ 
+ 	if (size > ihid->bufsize)
+ 		size = ihid->bufsize;
+ 
+-	ret = i2c_master_recv(ihid->client, ihid->inbuf, size);
++	/* Try to do a block read if the size fits in one byte */
++	flags = size > 255 ? I2C_M_RD : I2C_M_RD | I2C_M_RECV_LEN;
++	ret = i2c_transfer_buffer_flags(ihid->client, ihid->inbuf, size, flags);
+ 	if (ret != size) {
+ 		if (ret < 0)
+ 			return;
+-- 
+2.27.0.203.gf402ea6816
 
