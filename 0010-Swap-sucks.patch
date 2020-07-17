@@ -16,7 +16,7 @@ index 876370565455..42d9b07c13fe 100644
   * From 0 .. 100.  Higher means more swappy.
   */
 -int vm_swappiness = 60;
-+int vm_swappiness = 33;
++int vm_swappiness = 20;
  /*
   * The total number of pages which are beyond the high watermark within all
   * zones.
