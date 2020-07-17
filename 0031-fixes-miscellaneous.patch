@@ -1,7 +1,7 @@
-From 8c5b91e33abc902e71120608dfb8b7aac8c863cd Mon Sep 17 00:00:00 2001
+From 58b9d958ec5396eb897df9173d29b25aada2d06f Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <admfrade@gmail.com>
 Date: Wed, 24 Oct 2018 16:58:52 -0300
-Subject: [PATCH 01/18] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/20] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Alexandre Frade <admfrade@gmail.com>
 ---
@@ -31,13 +31,13 @@ index bfbefb7bf..690a42e51 100644
  endif
  
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From c716e75dd2de512d9afa16f227d38d386279f533 Mon Sep 17 00:00:00 2001
+From 30b9d26371de553dc70cb09a2c727478ebef409c Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/18] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/20] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 1753a9801..184b30282 100644
  	int ret;
  
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 5a5cf3b68a9673230b1a8701ca5ddc07d2cd733e Mon Sep 17 00:00:00 2001
+From 8a27f65c022c820bdf58396c074c84c51966951d Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/18] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/20] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 5a5e329d9..6a30a21e4 100644
+index 6163d607c..5fb16e687 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -663,6 +663,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index 5a5e329d9..6a30a21e4 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From d9d9c84844b6d8cd6ef6e5c730dd1878df24a723 Mon Sep 17 00:00:00 2001
+From 4af767660383238ac67304560e8e6638f815c3b0 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/18] mm: Disable watermark boosting by default
+Subject: [PATCH 04/20] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -152,13 +152,13 @@ index d0c0d9364..af43525de 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From d1fa0dcf1dad8c08711572519f52e6569b652799 Mon Sep 17 00:00:00 2001
+From 77bb112434d798768925c3e89732c4f79de1e620 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/18] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/20] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -252,13 +252,13 @@ index a37c87b5a..b5e6b2eca 100644
  
  		/*
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From e0740b363ab5293c7f78d97d5d0e032a742ecea6 Mon Sep 17 00:00:00 2001
+From b320eaac609653f5d3d3dc3f8cf30f592df1997f Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/18] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/20] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -289,13 +289,13 @@ index ef8db5a0f..f68da2a9e 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From db20e7c8534142b6f3d1d663c5960228b1577c66 Mon Sep 17 00:00:00 2001
+From 8e782852a0be7dfd3b91b0e406b48fe8f83e7353 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 07/18] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 07/20] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -487,13 +487,13 @@ index 506756292..80a368341 100644
  };
  
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 7b6ea516fadd40a34059b83080963bdfc4c81093 Mon Sep 17 00:00:00 2001
+From 7ea2703694064fba71441e35296f59002d229b8d Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 08/18] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 08/20] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -594,13 +594,13 @@ index b5e6b2eca..496c83529 100644
  
  		/*
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From f2b6780d12616c6e0f8dce7bc3e66b8f6e18bc43 Mon Sep 17 00:00:00 2001
+From 97f35f48c63ae462e92dae48ac33258029e94b5a Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 18 May 2020 11:14:46 -0700
-Subject: [PATCH 09/18] mm: Proactive compaction
+Subject: [PATCH 09/20] mm: Proactive compaction
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -1122,13 +1122,13 @@ index 96d21a792..d7ab7dbdc 100644
  int fragmentation_index(struct zone *zone, unsigned int order)
  {
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From c5c0fba7f2d59458877370532994e73653cbbb9a Mon Sep 17 00:00:00 2001
+From 98043f7cab100ddbbc76b14b95ff874b07f6b53f Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 1 Jun 2020 22:00:28 +0200
-Subject: [PATCH 10/18] mm-5.7: proactive compaction v6
+Subject: [PATCH 10/20] mm-5.7: proactive compaction v6
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -1236,13 +1236,13 @@ index d7ab7dbdc..cc88f7533 100644
  
  /* Same as __fragmentation index but allocs contig_page_info on stack */
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From b9ff61b4d42a6c792e6c197f8fc3ff3db852a4f8 Mon Sep 17 00:00:00 2001
+From 0d89c93207679f921397acaea845200a88aed25c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 11/18] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 11/20] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -1255,7 +1255,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6a30a21e4..0baa6eb4a 100644
+index 5fb16e687..d2a9c3ed8 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -903,9 +903,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
@@ -1269,13 +1269,13 @@ index 6a30a21e4..0baa6eb4a 100644
  KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
  
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 1515ee6d6ee5aa8b960188c4c5c0b86954a2cd9e Mon Sep 17 00:00:00 2001
+From 105e7722a8340735d8821fe2f3c58441155097a0 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 17 Jun 2020 10:07:18 +0200
-Subject: [PATCH 12/18] mm-5.7: fix proactive compaction build with THP
+Subject: [PATCH 12/20] mm-5.7: fix proactive compaction build with THP
  disabled
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
@@ -1297,13 +1297,13 @@ index b684af734..93e703cdf 100644
  #elif defined HUGETLB_PAGE_ORDER
  #define COMPACTION_HPAGE_ORDER	HUGETLB_PAGE_ORDER
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From a8bc69d87fc3628f4ab45a411f82d74670e029e6 Mon Sep 17 00:00:00 2001
+From c62fc214be3002facfb57cf5773c14c846a6ea88 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 17 Jun 2020 14:24:20 -0500
-Subject: [PATCH 13/18] Add OpenRGB patch - 0c45e26c
+Subject: [PATCH 13/20] Add OpenRGB patch - 0c45e26c
 
 Source:
 https://gitlab.com/CalcProgrammer1/OpenRGB/-/raw/master/OpenRGB.patch
@@ -2034,13 +2034,13 @@ index 69740a4ff..fb3fd68b8 100644
  		/* Try to add the aux adapter if it exists,
  		 * piix4_add_adapter will clean up if this fails */
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 5edce5d489c112f8fbf853b7de316815c826bc70 Mon Sep 17 00:00:00 2001
+From 6f097b603620ebfba1cbcc5d2170e57a0035dad6 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Wed, 17 Jun 2020 18:03:17 -0700
-Subject: [PATCH 14/18] mm: Use unsigned types for fragmentation score
+Subject: [PATCH 14/20] mm: Use unsigned types for fragmentation score
 
 Proactive compaction uses per-node/zone "fragmentation score" which
 is always in range [0, 100], so use unsigned type of these scores
@@ -2166,13 +2166,13 @@ index cc88f7533..4ad37205d 100644
  	struct contig_page_info info;
  
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 8f7ac373983c84ff8c3d50ef0c0c1f20f68e80ae Mon Sep 17 00:00:00 2001
+From f0f151ab613a8b645d0d740eb251ff1c4ba6cb42 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 22 Jun 2020 23:45:44 -0700
-Subject: [PATCH 15/18] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
+Subject: [PATCH 15/20] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
 
 Fix compile error when COMPACTION_HPAGE_ORDER is assigned
 to HUGETLB_PAGE_ORDER. The correct way to check if this
@@ -2200,13 +2200,13 @@ index 211763020..93fb89f91 100644
  #else
  #define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 72b18e9b06c05a80080319bc310457e56db1a519 Mon Sep 17 00:00:00 2001
+From 3caf97512d124b62856648e1e3e44bdd4c4dca1b Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 5 Jul 2020 00:16:32 -0700
-Subject: [PATCH 16/18] i2c: designware: Fix transfer failures for invalid
+Subject: [PATCH 16/20] i2c: designware: Fix transfer failures for invalid
  SMBus block reads
 
 SMBus block reads can be broken because the read function will just skip
@@ -2249,13 +2249,13 @@ index 3a58eef20..83906bb97 100644
  			buf++;
  			dev->rx_outstanding--;
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 9a2b057efe24a5c223e7c788f0b0d732b196aa03 Mon Sep 17 00:00:00 2001
+From f63ea6fd7e40af1d304170e54865659b7c9822df Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 5 Jul 2020 00:21:22 -0700
-Subject: [PATCH 17/18] i2c: designware: Allow SMBus block reads up to 255
+Subject: [PATCH 17/20] i2c: designware: Allow SMBus block reads up to 255
  bytes in length
 
 According to the SMBus 3.0 protocol specification, block transfer limits
@@ -2281,13 +2281,13 @@ index 83906bb97..00abc02c7 100644
  				else
  					len = i2c_dw_recv_len(dev, len);
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
 
 
-From 19ecabf5b296df40209153a39e88e3d02e5e3235 Mon Sep 17 00:00:00 2001
+From 26e237d322ff30345cd5dfdb02a7a6ada84a61c6 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 5 Jul 2020 00:23:49 -0700
-Subject: [PATCH 18/18] HID: i2c-hid: Use block reads when possible to save
+Subject: [PATCH 18/20] HID: i2c-hid: Use block reads when possible to save
  power
 
 We have no way of knowing how large an incoming payload is going to be,
@@ -2331,5 +2331,103 @@ index 294c84e13..739dccfc5 100644
  		if (ret < 0)
  			return;
 -- 
-2.27.0.203.gf402ea6816
+2.28.0.rc0
+
+
+From 2c1b260bb47b7b874e2074398c3bce84ec44ee31 Mon Sep 17 00:00:00 2001
+From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
+Date: Fri, 10 Jul 2020 16:41:43 +0200
+Subject: [PATCH 19/20] drivers: Revert i2c patches
+
+i2c_designware i2c_designware.0: controller timed out
+i2c_designware i2c_designware.0: timeout in disabling adapter
+i2c_designware i2c_designware.0: timeout waiting for bus ready
+i2c_designware i2c_designware.0: timeout waiting for bus ready
+i2c_designware i2c_designware.0: timeout waiting for bus ready
+
+And the last message repeating multiple times per second, ad infinitum.
+---
+ drivers/hid/i2c-hid/i2c-hid-core.c         |  5 +----
+ drivers/i2c/busses/i2c-designware-master.c | 10 ++++------
+ 2 files changed, 5 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 739dccfc5..294c84e13 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -472,14 +472,11 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
+ 	int ret;
+ 	u32 ret_size;
+ 	int size = le16_to_cpu(ihid->hdesc.wMaxInputLength);
+-	u16 flags;
+ 
+ 	if (size > ihid->bufsize)
+ 		size = ihid->bufsize;
+ 
+-	/* Try to do a block read if the size fits in one byte */
+-	flags = size > 255 ? I2C_M_RD : I2C_M_RD | I2C_M_RECV_LEN;
+-	ret = i2c_transfer_buffer_flags(ihid->client, ihid->inbuf, size, flags);
++	ret = i2c_master_recv(ihid->client, ihid->inbuf, size);
+ 	if (ret != size) {
+ 		if (ret < 0)
+ 			return;
+diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
+index 00abc02c7..3a58eef20 100644
+--- a/drivers/i2c/busses/i2c-designware-master.c
++++ b/drivers/i2c/busses/i2c-designware-master.c
+@@ -394,12 +394,10 @@ i2c_dw_read(struct dw_i2c_dev *dev)
+ 			u32 flags = msgs[dev->msg_read_idx].flags;
+ 
+ 			*buf = dw_readl(dev, DW_IC_DATA_CMD);
+-			if (flags & I2C_M_RECV_LEN) {
+-				/* Ensure length byte is a valid value */
+-				if (*buf > 0)
+-					len = i2c_dw_recv_len(dev, *buf);
+-				else
+-					len = i2c_dw_recv_len(dev, len);
++			/* Ensure length byte is a valid value */
++			if (flags & I2C_M_RECV_LEN &&
++				*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0) {
++				len = i2c_dw_recv_len(dev, *buf);
+ 			}
+ 			buf++;
+ 			dev->rx_outstanding--;
+-- 
+2.28.0.rc0
+
+
+From 6ce996259b62a5c7b92434910294e84f764046e5 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Wed, 15 Jul 2020 10:54:43 +0200
+Subject: [PATCH 20/20] net: sched: Allow changing default qdisc to FQ-PIE
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ net/sched/Kconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/net/sched/Kconfig b/net/sched/Kconfig
+index 690a42e51..cd2b1b171 100644
+--- a/net/sched/Kconfig
++++ b/net/sched/Kconfig
+@@ -468,6 +468,9 @@ choice
+ 	config DEFAULT_FQ_CODEL
+ 		bool "Fair Queue Controlled Delay" if NET_SCH_FQ_CODEL
+ 
++	config DEFAULT_FQ_PIE
++		bool "Flow Queue Proportional Integral controller Enhanced" if NET_SCH_FQ_PIE
++
+ 	config DEFAULT_SFQ
+ 		bool "Stochastic Fair Queue" if NET_SCH_SFQ
+ 
+@@ -483,6 +486,7 @@ config DEFAULT_NET_SCH
+ 	default "pfifo_fast" if DEFAULT_PFIFO_FAST
+ 	default "fq" if DEFAULT_FQ
+ 	default "fq_codel" if DEFAULT_FQ_CODEL
++	default "fq_pie" if DEFAULT_FQ_PIE
+ 	default "sfq" if DEFAULT_SFQ
+ 	default "cake" if DEFAULT_CAKE
+ 	default "pfifo_fast"
+-- 
+2.28.0.rc0
 
