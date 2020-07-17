@@ -5,7 +5,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 **Custom kernel with the following patches**  
 
 0000 : Kernel patch 5.7.9  
-0001 : v5.7 "Undead" PDS patch
+0001 : v5.7 "Undead" PDS patch  
 0002 : AUFS filesystem patch  
 0003 : 5.7 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
