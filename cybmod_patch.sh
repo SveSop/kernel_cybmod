@@ -29,3 +29,7 @@ done
 echo -e " "
 echo Done patching
 echo --
+echo Cleaning possible patch-crud!
+find . -name \*.orig -type f -delete
+find . -name \*.rej -type f -delete
+echo --
