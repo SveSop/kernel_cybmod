@@ -1,7 +1,7 @@
-From 58b9d958ec5396eb897df9173d29b25aada2d06f Mon Sep 17 00:00:00 2001
+From 0bf84ac5c95175f5ddb25111e2896a201c1a334a Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <admfrade@gmail.com>
 Date: Wed, 24 Oct 2018 16:58:52 -0300
-Subject: [PATCH 01/20] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/21] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Alexandre Frade <admfrade@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index bfbefb7bf..690a42e51 100644
+index bfbefb7..690a42e 100644
 --- a/net/sched/Kconfig
 +++ b/net/sched/Kconfig
 @@ -471,6 +471,9 @@ choice
@@ -34,10 +34,10 @@ index bfbefb7bf..690a42e51 100644
 2.28.0.rc0
 
 
-From 30b9d26371de553dc70cb09a2c727478ebef409c Mon Sep 17 00:00:00 2001
+From d225c72826a67f3181a4d9c38078bb979c51983e Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/20] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/21] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -45,7 +45,7 @@ Subject: [PATCH 02/20] infiniband: Fix __read_overflow2 error with -O3
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
-index 1753a9801..184b30282 100644
+index 1753a98..184b302 100644
 --- a/drivers/infiniband/core/addr.c
 +++ b/drivers/infiniband/core/addr.c
 @@ -816,6 +816,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
@@ -60,10 +60,10 @@ index 1753a9801..184b30282 100644
 2.28.0.rc0
 
 
-From 8a27f65c022c820bdf58396c074c84c51966951d Mon Sep 17 00:00:00 2001
+From 19b94aa5a580d569fe3c74b63cfc87035506ec60 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/20] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/21] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 6163d607c..5fb16e687 100644
+index e622e08..a9e08f9 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -663,6 +663,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -94,10 +94,10 @@ index 6163d607c..5fb16e687 100644
 2.28.0.rc0
 
 
-From 4af767660383238ac67304560e8e6638f815c3b0 Mon Sep 17 00:00:00 2001
+From 728b550a1420d3cb12de530475dcc547911829bf Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/20] mm: Disable watermark boosting by default
+Subject: [PATCH 04/21] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -127,7 +127,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index d0c0d9364..af43525de 100644
+index d0c0d93..af43525 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -315,20 +315,7 @@ compound_page_dtor * const compound_page_dtors[] = {
@@ -155,10 +155,10 @@ index d0c0d9364..af43525de 100644
 2.28.0.rc0
 
 
-From 77bb112434d798768925c3e89732c4f79de1e620 Mon Sep 17 00:00:00 2001
+From 940ddeadf3dce7943f4af68bf5fb4e66d4503393 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/20] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/21] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -175,7 +175,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 6196fd16b..cf114661a 100644
+index 6196fd1..cf11466 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
 @@ -694,6 +694,7 @@ typedef struct pglist_data {
@@ -187,7 +187,7 @@ index 6196fd16b..cf114661a 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index af43525de..ef8db5a0f 100644
+index af43525..ef8db5a 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -4464,6 +4464,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
@@ -238,7 +238,7 @@ index af43525de..ef8db5a0f 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index a37c87b5a..b5e6b2eca 100644
+index a37c87b..b5e6b2e 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -3693,7 +3693,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
@@ -255,10 +255,10 @@ index a37c87b5a..b5e6b2eca 100644
 2.28.0.rc0
 
 
-From b320eaac609653f5d3d3dc3f8cf30f592df1997f Mon Sep 17 00:00:00 2001
+From 354d870f66cfb5d0e88efa314591f94d74e48251 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/20] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/21] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -270,7 +270,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ef8db5a0f..f68da2a9e 100644
+index ef8db5a..f68da2a 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -2447,9 +2447,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
@@ -292,10 +292,10 @@ index ef8db5a0f..f68da2a9e 100644
 2.28.0.rc0
 
 
-From 8e782852a0be7dfd3b91b0e406b48fe8f83e7353 Mon Sep 17 00:00:00 2001
+From 341aebe3712ffb346ff8678d73feacfad1201aef Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 07/20] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 07/21] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -347,7 +347,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 5e2ce88d6..ffa53aaa6 100644
+index 5e2ce88..ffa53aa 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -3509,6 +3509,15 @@
@@ -367,7 +367,7 @@ index 5e2ce88d6..ffa53aaa6 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 506756292..80a368341 100644
+index 5067562..80a3683 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -3544,6 +3544,106 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
@@ -490,10 +490,10 @@ index 506756292..80a368341 100644
 2.28.0.rc0
 
 
-From 7ea2703694064fba71441e35296f59002d229b8d Mon Sep 17 00:00:00 2001
+From c4cafbba864498f1c184565bc12353f62a5bbcdc Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 08/20] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 08/21] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -510,7 +510,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  4 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index cf114661a..6196fd16b 100644
+index cf11466..6196fd1 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
 @@ -694,7 +694,6 @@ typedef struct pglist_data {
@@ -522,7 +522,7 @@ index cf114661a..6196fd16b 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/internal.h b/mm/internal.h
-index b5634e78f..96372dd70 100644
+index b5634e7..96372dd 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
 @@ -189,6 +189,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
@@ -534,7 +534,7 @@ index b5634e78f..96372dd70 100644
  extern void zone_pcp_update(struct zone *zone);
  extern void zone_pcp_reset(struct zone *zone);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index f68da2a9e..667f34a27 100644
+index f68da2a..667f34a 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -76,6 +76,8 @@
@@ -581,7 +581,7 @@ index f68da2a9e..667f34a27 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index b5e6b2eca..496c83529 100644
+index b5e6b2e..496c835 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -3694,7 +3694,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
@@ -597,10 +597,10 @@ index b5e6b2eca..496c83529 100644
 2.28.0.rc0
 
 
-From 97f35f48c63ae462e92dae48ac33258029e94b5a Mon Sep 17 00:00:00 2001
+From e8450c4837e468e3b90373ead5c6fb8763148843 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 18 May 2020 11:14:46 -0700
-Subject: [PATCH 09/20] mm: Proactive compaction
+Subject: [PATCH 09/21] mm: Proactive compaction
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -794,7 +794,7 @@ Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
  6 files changed, 202 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/admin-guide/sysctl/vm.rst b/Documentation/admin-guide/sysctl/vm.rst
-index 0329a4d3f..e5d88cabe 100644
+index 0329a4d..e5d88ca 100644
 --- a/Documentation/admin-guide/sysctl/vm.rst
 +++ b/Documentation/admin-guide/sysctl/vm.rst
 @@ -119,6 +119,19 @@ all zones are compacted such that free memory is available in contiguous
@@ -818,7 +818,7 @@ index 0329a4d3f..e5d88cabe 100644
  compact_unevictable_allowed
  ===========================
 diff --git a/include/linux/compaction.h b/include/linux/compaction.h
-index 4b898cdbd..ccd28978b 100644
+index 4b898cd..ccd2897 100644
 --- a/include/linux/compaction.h
 +++ b/include/linux/compaction.h
 @@ -85,11 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
@@ -836,7 +836,7 @@ index 4b898cdbd..ccd28978b 100644
  extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
  		unsigned int order, unsigned int alloc_flags,
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 8a176d872..51c90906e 100644
+index 8a176d8..51c9090 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
 @@ -1458,6 +1458,15 @@ static struct ctl_table vm_table[] = {
@@ -856,7 +856,7 @@ index 8a176d872..51c90906e 100644
  		.procname	= "extfrag_threshold",
  		.data		= &sysctl_extfrag_threshold,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 65b568e19..dbcb38109 100644
+index 65b568e..dbcb381 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -50,6 +50,11 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -1082,7 +1082,7 @@ index 65b568e19..dbcb38109 100644
  
  	return 0;
 diff --git a/mm/internal.h b/mm/internal.h
-index 96372dd70..565992704 100644
+index 96372dd..5659927 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
 @@ -229,6 +229,7 @@ struct compact_control {
@@ -1094,7 +1094,7 @@ index 96372dd70..565992704 100644
  	bool contended;			/* Signal lock or sched contention */
  	bool rescan;			/* Rescanning the same pageblock */
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 96d21a792..d7ab7dbdc 100644
+index 96d21a7..d7ab7db 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1074,6 +1074,23 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -1125,10 +1125,10 @@ index 96d21a792..d7ab7dbdc 100644
 2.28.0.rc0
 
 
-From 98043f7cab100ddbbc76b14b95ff874b07f6b53f Mon Sep 17 00:00:00 2001
+From 25e818014fa2a856873124b45308ec6b8013ad4d Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 1 Jun 2020 22:00:28 +0200
-Subject: [PATCH 10/20] mm-5.7: proactive compaction v6
+Subject: [PATCH 10/21] mm-5.7: proactive compaction v6
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -1138,7 +1138,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
  3 files changed, 29 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/admin-guide/sysctl/vm.rst b/Documentation/admin-guide/sysctl/vm.rst
-index e5d88cabe..360914b4f 100644
+index e5d88ca..360914b 100644
 --- a/Documentation/admin-guide/sysctl/vm.rst
 +++ b/Documentation/admin-guide/sysctl/vm.rst
 @@ -132,6 +132,8 @@ to latency spikes in unsuspecting applications. The kernel employs
@@ -1151,7 +1151,7 @@ index e5d88cabe..360914b4f 100644
  compact_unevictable_allowed
  ===========================
 diff --git a/mm/compaction.c b/mm/compaction.c
-index dbcb38109..b684af734 100644
+index dbcb381..b684af7 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -55,6 +55,19 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -1220,7 +1220,7 @@ index dbcb38109..b684af734 100644
  /*
   * This is the entry point for compacting all nodes via
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index d7ab7dbdc..cc88f7533 100644
+index d7ab7db..cc88f75 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1087,8 +1087,9 @@ int extfrag_for_order(struct zone *zone, unsigned int order)
@@ -1239,10 +1239,10 @@ index d7ab7dbdc..cc88f7533 100644
 2.28.0.rc0
 
 
-From 0d89c93207679f921397acaea845200a88aed25c Mon Sep 17 00:00:00 2001
+From 9a2a48639746567c1ce9290ea98fef8dc62feba3 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 11/20] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 11/21] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -1255,7 +1255,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 5fb16e687..d2a9c3ed8 100644
+index a9e08f9..3e79897 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -903,9 +903,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
@@ -1272,10 +1272,10 @@ index 5fb16e687..d2a9c3ed8 100644
 2.28.0.rc0
 
 
-From 105e7722a8340735d8821fe2f3c58441155097a0 Mon Sep 17 00:00:00 2001
+From 501dc6623e23376d69a25bc20db42c8b215d2dce Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@redhat.com>
 Date: Wed, 17 Jun 2020 10:07:18 +0200
-Subject: [PATCH 12/20] mm-5.7: fix proactive compaction build with THP
+Subject: [PATCH 12/21] mm-5.7: fix proactive compaction build with THP
  disabled
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
@@ -1284,7 +1284,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/compaction.c b/mm/compaction.c
-index b684af734..93e703cdf 100644
+index b684af7..93e703c 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -60,7 +60,7 @@ static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
@@ -1300,10 +1300,10 @@ index b684af734..93e703cdf 100644
 2.28.0.rc0
 
 
-From c62fc214be3002facfb57cf5773c14c846a6ea88 Mon Sep 17 00:00:00 2001
+From 7c76563950daec2ffb84caf39cfd8734084c1b7a Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 17 Jun 2020 14:24:20 -0500
-Subject: [PATCH 13/20] Add OpenRGB patch - 0c45e26c
+Subject: [PATCH 13/21] Add OpenRGB patch - 0c45e26c
 
 Source:
 https://gitlab.com/CalcProgrammer1/OpenRGB/-/raw/master/OpenRGB.patch
@@ -1319,7 +1319,7 @@ https://gitlab.com/CalcProgrammer1/OpenRGB/-/commits/master/OpenRGB.patch
  create mode 100644 drivers/i2c/busses/i2c-nct6775.c
 
 diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 2ddca08f8..72647850f 100644
+index 2ddca08..7264785 100644
 --- a/drivers/i2c/busses/Kconfig
 +++ b/drivers/i2c/busses/Kconfig
 @@ -217,6 +217,15 @@ config I2C_CHT_WC
@@ -1339,7 +1339,7 @@ index 2ddca08f8..72647850f 100644
  	tristate "Nvidia nForce2, nForce3 and nForce4"
  	depends on PCI
 diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-index 25d608897..3c2a9b237 100644
+index 25d6088..3c2a9b2 100644
 --- a/drivers/i2c/busses/Makefile
 +++ b/drivers/i2c/busses/Makefile
 @@ -17,6 +17,7 @@ obj-$(CONFIG_I2C_CHT_WC)	+= i2c-cht-wc.o
@@ -1352,7 +1352,7 @@ index 25d608897..3c2a9b237 100644
  obj-$(CONFIG_I2C_NVIDIA_GPU)	+= i2c-nvidia-gpu.o
 diff --git a/drivers/i2c/busses/i2c-nct6775.c b/drivers/i2c/busses/i2c-nct6775.c
 new file mode 100644
-index 000000000..0462f0952
+index 0000000..0462f09
 --- /dev/null
 +++ b/drivers/i2c/busses/i2c-nct6775.c
 @@ -0,0 +1,647 @@
@@ -2004,7 +2004,7 @@ index 000000000..0462f0952
 +module_init(i2c_nct6775_init);
 +module_exit(i2c_nct6775_exit);
 diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
-index 69740a4ff..fb3fd68b8 100644
+index 69740a4..fb3fd68 100644
 --- a/drivers/i2c/busses/i2c-piix4.c
 +++ b/drivers/i2c/busses/i2c-piix4.c
 @@ -467,11 +467,11 @@ static int piix4_transaction(struct i2c_adapter *piix4_adapter)
@@ -2037,10 +2037,10 @@ index 69740a4ff..fb3fd68b8 100644
 2.28.0.rc0
 
 
-From 6f097b603620ebfba1cbcc5d2170e57a0035dad6 Mon Sep 17 00:00:00 2001
+From b74fbdc94197dab3919e89f26f4ac2fbf68bf3ea Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Wed, 17 Jun 2020 18:03:17 -0700
-Subject: [PATCH 14/20] mm: Use unsigned types for fragmentation score
+Subject: [PATCH 14/21] mm: Use unsigned types for fragmentation score
 
 Proactive compaction uses per-node/zone "fragmentation score" which
 is always in range [0, 100], so use unsigned type of these scores
@@ -2055,7 +2055,7 @@ Signed-off-by: Nitin Gupta <nigupta@nvidia.com>
  4 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/include/linux/compaction.h b/include/linux/compaction.h
-index ccd28978b..1d1f8ae7f 100644
+index ccd2897..1d1f8ae 100644
 --- a/include/linux/compaction.h
 +++ b/include/linux/compaction.h
 @@ -85,13 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
@@ -2075,7 +2075,7 @@ index ccd28978b..1d1f8ae7f 100644
  extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
  		unsigned int order, unsigned int alloc_flags,
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 51c90906e..454bd8256 100644
+index 51c9090..454bd82 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
 @@ -1461,7 +1461,7 @@ static struct ctl_table vm_table[] = {
@@ -2088,7 +2088,7 @@ index 51c90906e..454bd8256 100644
  		.proc_handler	= proc_dointvec_minmax,
  		.extra1		= SYSCTL_ZERO,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 93e703cdf..211763020 100644
+index 93e703c..2117630 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -53,7 +53,7 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -2153,7 +2153,7 @@ index 93e703cdf..211763020 100644
  /*
   * This is the entry point for compacting all nodes via
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index cc88f7533..4ad37205d 100644
+index cc88f75..4ad3720 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1079,7 +1079,7 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -2169,10 +2169,10 @@ index cc88f7533..4ad37205d 100644
 2.28.0.rc0
 
 
-From f0f151ab613a8b645d0d740eb251ff1c4ba6cb42 Mon Sep 17 00:00:00 2001
+From 8bd78e69c262a7f9bea3720dbd08be1570bb9632 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 22 Jun 2020 23:45:44 -0700
-Subject: [PATCH 15/20] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
+Subject: [PATCH 15/21] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
 
 Fix compile error when COMPACTION_HPAGE_ORDER is assigned
 to HUGETLB_PAGE_ORDER. The correct way to check if this
@@ -2187,7 +2187,7 @@ Tested-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 211763020..93fb89f91 100644
+index 2117630..93fb89f 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -62,7 +62,7 @@ static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
@@ -2203,10 +2203,10 @@ index 211763020..93fb89f91 100644
 2.28.0.rc0
 
 
-From 3caf97512d124b62856648e1e3e44bdd4c4dca1b Mon Sep 17 00:00:00 2001
+From 33ae6d465a65626a41a2de0736be9456d664c5ef Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 5 Jul 2020 00:16:32 -0700
-Subject: [PATCH 16/20] i2c: designware: Fix transfer failures for invalid
+Subject: [PATCH 16/21] i2c: designware: Fix transfer failures for invalid
  SMBus block reads
 
 SMBus block reads can be broken because the read function will just skip
@@ -2228,7 +2228,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 3a58eef20..83906bb97 100644
+index 3a58eef..83906bb 100644
 --- a/drivers/i2c/busses/i2c-designware-master.c
 +++ b/drivers/i2c/busses/i2c-designware-master.c
 @@ -394,10 +394,12 @@ i2c_dw_read(struct dw_i2c_dev *dev)
@@ -2252,10 +2252,10 @@ index 3a58eef20..83906bb97 100644
 2.28.0.rc0
 
 
-From f63ea6fd7e40af1d304170e54865659b7c9822df Mon Sep 17 00:00:00 2001
+From 5b7610bcca875baec7e388b6326f910733ce8d96 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 5 Jul 2020 00:21:22 -0700
-Subject: [PATCH 17/20] i2c: designware: Allow SMBus block reads up to 255
+Subject: [PATCH 17/21] i2c: designware: Allow SMBus block reads up to 255
  bytes in length
 
 According to the SMBus 3.0 protocol specification, block transfer limits
@@ -2268,7 +2268,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 83906bb97..00abc02c7 100644
+index 83906bb..00abc02 100644
 --- a/drivers/i2c/busses/i2c-designware-master.c
 +++ b/drivers/i2c/busses/i2c-designware-master.c
 @@ -396,7 +396,7 @@ i2c_dw_read(struct dw_i2c_dev *dev)
@@ -2284,10 +2284,10 @@ index 83906bb97..00abc02c7 100644
 2.28.0.rc0
 
 
-From 26e237d322ff30345cd5dfdb02a7a6ada84a61c6 Mon Sep 17 00:00:00 2001
+From edff535c6b7597e28af5110a17b4fcbd8a03468a Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 5 Jul 2020 00:23:49 -0700
-Subject: [PATCH 18/20] HID: i2c-hid: Use block reads when possible to save
+Subject: [PATCH 18/21] HID: i2c-hid: Use block reads when possible to save
  power
 
 We have no way of knowing how large an incoming payload is going to be,
@@ -2311,7 +2311,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 294c84e13..739dccfc5 100644
+index 294c84e..739dccf 100644
 --- a/drivers/hid/i2c-hid/i2c-hid-core.c
 +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
 @@ -472,11 +472,14 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
@@ -2334,10 +2334,10 @@ index 294c84e13..739dccfc5 100644
 2.28.0.rc0
 
 
-From 2c1b260bb47b7b874e2074398c3bce84ec44ee31 Mon Sep 17 00:00:00 2001
+From 8e728067f52ca3ada2dfc7293501650a8ded5fdd Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Fri, 10 Jul 2020 16:41:43 +0200
-Subject: [PATCH 19/20] drivers: Revert i2c patches
+Subject: [PATCH 19/21] drivers: Revert i2c patches
 
 i2c_designware i2c_designware.0: controller timed out
 i2c_designware i2c_designware.0: timeout in disabling adapter
@@ -2352,7 +2352,7 @@ And the last message repeating multiple times per second, ad infinitum.
  2 files changed, 5 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 739dccfc5..294c84e13 100644
+index 739dccf..294c84e 100644
 --- a/drivers/hid/i2c-hid/i2c-hid-core.c
 +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
 @@ -472,14 +472,11 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
@@ -2372,7 +2372,7 @@ index 739dccfc5..294c84e13 100644
  		if (ret < 0)
  			return;
 diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 00abc02c7..3a58eef20 100644
+index 00abc02..3a58eef 100644
 --- a/drivers/i2c/busses/i2c-designware-master.c
 +++ b/drivers/i2c/busses/i2c-designware-master.c
 @@ -394,12 +394,10 @@ i2c_dw_read(struct dw_i2c_dev *dev)
@@ -2396,10 +2396,10 @@ index 00abc02c7..3a58eef20 100644
 2.28.0.rc0
 
 
-From 6ce996259b62a5c7b92434910294e84f764046e5 Mon Sep 17 00:00:00 2001
+From 5fc78f1cbcec55940bf74c55b60c32ca0de406f8 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 15 Jul 2020 10:54:43 +0200
-Subject: [PATCH 20/20] net: sched: Allow changing default qdisc to FQ-PIE
+Subject: [PATCH 20/21] net: sched: Allow changing default qdisc to FQ-PIE
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -2407,7 +2407,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index 690a42e51..cd2b1b171 100644
+index 690a42e..cd2b1b1 100644
 --- a/net/sched/Kconfig
 +++ b/net/sched/Kconfig
 @@ -468,6 +468,9 @@ choice
@@ -2428,6 +2428,183 @@ index 690a42e51..cd2b1b171 100644
  	default "sfq" if DEFAULT_SFQ
  	default "cake" if DEFAULT_CAKE
  	default "pfifo_fast"
+-- 
+2.28.0.rc0
+
+
+From 029991f1d5d165d5eef2cc69536525e7400dbbec Mon Sep 17 00:00:00 2001
+From: Harsha Priya <harshapriya.n@intel.com>
+Date: Mon, 6 Jul 2020 13:53:17 -0700
+Subject: [PATCH 21/21] ALSA: hda/hdmi: Add Intel silent stream support
+
+External HDMI receivers have analog circuitry that needs to be powered-on
+when exiting standby, and a mechanism to detect PCM v. IEC61937 data.
+These two steps take time and up to 2-3 seconds of audio may be muted
+when starting playback.
+
+Intel hardware (Haswell and beyond) can keep the link active
+with a 'silent stream', so that the receiver does not go through those
+two steps when valid audio is transmitted. This mechanism relies
+on an setting the channel_id as 0xf, sending info packet and preventing
+the codec from going to D3,  which will increase the platform
+static power consumption. The info packet assumes a basic 2ch stereo,
+and the silent stream is enabled when connecting a monitor.
+In case of format changes the detection of PCM v. IEC61937 needs to
+be re-run. In this case there is no way to avoid the 2-3s mute.
+
+The silent stream is enabled with a Kconfig option, as well as a kernel
+parameter should there be a need to override the build time default.
+This approach is used based on the power_save capability as an example,
+but in the future, it may be used with a kcontrol,
+depending on UCM support for HDaudio legacy.
+
+Signed-off-by: Harsha Priya <harshapriya.n@intel.com>
+Signed-off-by: Emmanuel Jillela <emmanuel.jillela@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/1594068797-14011-1-git-send-email-harshapriya.n@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ sound/pci/hda/Kconfig      | 14 +++++++++
+ sound/pci/hda/patch_hdmi.c | 64 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+)
+
+diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
+index e1d3082..d61667c 100644
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -230,6 +230,20 @@ config SND_HDA_POWER_SAVE_DEFAULT
+ 	  The default time-out value in seconds for HD-audio automatic
+ 	  power-save mode.  0 means to disable the power-save mode.
+ 
++config SND_HDA_INTEL_HDMI_SILENT_STREAM
++	bool "Enable Silent Stream always for HDMI"
++	depends on SND_HDA_INTEL
++	help
++	  Intel hardware has a feature called 'silent stream', that
++	  keeps external HDMI receiver's analog circuitry powered on
++	  avoiding 2-3 sec silence during playback start. This mechanism
++	  relies on setting channel_id as 0xf, sending info packet and
++	  preventing codec D3 entry (increasing  platform static power
++	  consumption when HDMI receiver is plugged-in). 2-3 sec silence
++	  at the playback start is expected whenever there is format change.
++	  (default is 2 channel format).
++	  Say Y to enable Silent Stream feature.
++
+ endif
+ 
+ endmenu
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index 137d655..602c7ad 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -42,6 +42,11 @@ static bool enable_acomp = true;
+ module_param(enable_acomp, bool, 0444);
+ MODULE_PARM_DESC(enable_acomp, "Enable audio component binding (default=yes)");
+ 
++static bool enable_silent_stream =
++IS_ENABLED(CONFIG_SND_HDA_INTEL_HDMI_SILENT_STREAM);
++module_param(enable_silent_stream, bool, 0644);
++MODULE_PARM_DESC(enable_silent_stream, "Enable Silent Stream for HDMI devices");
++
+ struct hdmi_spec_per_cvt {
+ 	hda_nid_t cvt_nid;
+ 	int assigned;
+@@ -167,6 +172,7 @@ struct hdmi_spec {
+ 	hda_nid_t vendor_nid;
+ 	const int *port_map;
+ 	int port_num;
++	bool send_silent_stream; /* Flag to enable silent stream feature */
+ };
+ 
+ #ifdef CONFIG_SND_HDA_COMPONENT
+@@ -1634,21 +1640,72 @@ static void hdmi_present_sense_via_verbs(struct hdmi_spec_per_pin *per_pin,
+ 	snd_hda_power_down_pm(codec);
+ }
+ 
++static void silent_stream_enable(struct hda_codec *codec,
++				struct hdmi_spec_per_pin *per_pin)
++{
++	unsigned int newval, oldval;
++
++	codec_dbg(codec, "hdmi: enabling silent stream for NID %d\n",
++			per_pin->pin_nid);
++
++	mutex_lock(&per_pin->lock);
++
++	if (!per_pin->channels)
++		per_pin->channels = 2;
++
++	oldval = snd_hda_codec_read(codec, per_pin->pin_nid, 0,
++			AC_VERB_GET_CONV, 0);
++	newval = (oldval & 0xF0) | 0xF;
++	snd_hda_codec_write(codec, per_pin->pin_nid, 0,
++			AC_VERB_SET_CHANNEL_STREAMID, newval);
++
++	hdmi_setup_audio_infoframe(codec, per_pin, per_pin->non_pcm);
++
++	mutex_unlock(&per_pin->lock);
++}
++
+ /* update ELD and jack state via audio component */
+ static void sync_eld_via_acomp(struct hda_codec *codec,
+ 			       struct hdmi_spec_per_pin *per_pin)
+ {
+ 	struct hdmi_spec *spec = codec->spec;
+ 	struct hdmi_eld *eld = &spec->temp_eld;
++	bool monitor_prev, monitor_next;
+ 
+ 	mutex_lock(&per_pin->lock);
+ 	eld->monitor_present = false;
++	monitor_prev = per_pin->sink_eld.monitor_present;
+ 	eld->eld_size = snd_hdac_acomp_get_eld(&codec->core, per_pin->pin_nid,
+ 				      per_pin->dev_id, &eld->monitor_present,
+ 				      eld->eld_buffer, ELD_MAX_SIZE);
+ 	eld->eld_valid = (eld->eld_size > 0);
+ 	update_eld(codec, per_pin, eld, 0);
++	monitor_next = per_pin->sink_eld.monitor_present;
+ 	mutex_unlock(&per_pin->lock);
++
++	/*
++	 * Power-up will call hdmi_present_sense, so the PM calls
++	 * have to be done without mutex held.
++	 */
++
++	if (spec->send_silent_stream) {
++		int pm_ret;
++
++		if (!monitor_prev && monitor_next) {
++			pm_ret = snd_hda_power_up_pm(codec);
++			if (pm_ret < 0)
++				codec_err(codec,
++				"Monitor plugged-in, Failed to power up codec ret=[%d]\n",
++				pm_ret);
++			silent_stream_enable(codec, per_pin);
++		} else if (monitor_prev && !monitor_next) {
++			pm_ret = snd_hda_power_down_pm(codec);
++			if (pm_ret < 0)
++				codec_err(codec,
++				"Monitor plugged-out, Failed to power down codec ret=[%d]\n",
++				pm_ret);
++		}
++	}
+ }
+ 
+ static void hdmi_present_sense(struct hdmi_spec_per_pin *per_pin, int repoll)
+@@ -2791,6 +2848,13 @@ static int intel_hsw_common_init(struct hda_codec *codec, hda_nid_t vendor_nid,
+ 	spec->ops.setup_stream = i915_hsw_setup_stream;
+ 	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
+ 
++	/*
++	 * Enable silent stream feature, if it is enabled via
++	 * module param or Kconfig option
++	 */
++	if (enable_silent_stream)
++		spec->send_silent_stream = true;
++
+ 	return parse_intel_hdmi(codec);
+ }
+ 
 -- 
 2.28.0.rc0
 
