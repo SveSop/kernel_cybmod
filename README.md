@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.7.10  
+0000 : Kernel patch 5.7.11  
 0001 : v5.7 "Undead" PDS patch  
 0002 : AUFS filesystem patch  
 0003 : 5.7 Graysky's CPU patches  
@@ -27,7 +27,7 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default PDS scheduler (Thanks to TKGlitch) and CONFIG_HZ=1000 + NO_HZ_IDLE**  
+**This config has default PDS scheduler (Thanks to TKGlitch) and CONFIG_HZ=1000 + NO_HZ_FULL**  
 
 To build on Ubuntu:  
 ```
