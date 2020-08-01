@@ -1,7 +1,513 @@
-From 0a132449700befe2c0203e3210b5910e7ae88393 Mon Sep 17 00:00:00 2001
+From ec039c2365a23a5357ebc65e6447697a8fc81edd Mon Sep 17 00:00:00 2001
+From: Denis Efremov <efremov@linux.com>
+Date: Fri, 5 Jun 2020 10:39:55 +0300
+Subject: [PATCH 01/11] kbuild: add variables for compression tools
+
+Allow user to use alternative implementations of compression tools,
+such as pigz, pbzip2, pxz. For example, multi-threaded tools to
+speed up the build:
+$ make GZIP=pigz BZIP2=pbzip2
+
+Variables _GZIP, _BZIP2, _LZOP are used internally because original env
+vars are reserved by the tools. The use of GZIP in gzip tool is obsolete
+since 2015. However, alternative implementations (e.g., pigz) still rely
+on it. BZIP2, BZIP, LZOP vars are not obsolescent.
+
+The credit goes to @grsecurity.
+
+As a sidenote, for multi-threaded lzma, xz compression one can use:
+$ export XZ_OPT="--threads=0"
+
+Signed-off-by: Denis Efremov <efremov@linux.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+---
+ Makefile                          | 25 +++++++++++++++++++++++--
+ arch/arm/boot/deflate_xip_data.sh |  2 +-
+ arch/ia64/Makefile                |  2 +-
+ arch/m68k/Makefile                |  8 ++++----
+ arch/parisc/Makefile              |  2 +-
+ kernel/gen_kheaders.sh            |  2 +-
+ scripts/Makefile.lib              | 12 ++++++------
+ scripts/Makefile.package          |  8 ++++----
+ scripts/package/buildtar          |  6 +++---
+ scripts/xz_wrap.sh                |  2 +-
+ 10 files changed, 45 insertions(+), 24 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bc1f9c6b9..e947e07da 100644
+--- a/Makefile
++++ b/Makefile
+@@ -447,6 +447,26 @@ PYTHON		= python
+ PYTHON3		= python3
+ CHECK		= sparse
+ BASH		= bash
++GZIP		= gzip
++BZIP2		= bzip2
++LZOP		= lzop
++LZMA		= lzma
++LZ4		= lz4c
++XZ		= xz
++
++# GZIP, BZIP2, LZOP env vars are used by the tools. Support them as the command
++# line interface, but use _GZIP, _BZIP2, _LZOP internally.
++_GZIP          := $(GZIP)
++_BZIP2         := $(BZIP2)
++_LZOP          := $(LZOP)
++
++# Reset GZIP, BZIP2, LZOP in this Makefile
++override GZIP=
++override BZIP2=
++override LZOP=
++
++# Reset GZIP, BZIP2, LZOP in recursive invocations
++MAKEOVERRIDES += GZIP= BZIP2= LZOP=
+ 
+ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
+ 		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
+@@ -495,6 +515,7 @@ CLANG_FLAGS :=
+ export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC
+ export CPP AR NM STRIP OBJCOPY OBJDUMP OBJSIZE READELF PAHOLE LEX YACC AWK INSTALLKERNEL
+ export PERL PYTHON PYTHON3 CHECK CHECKFLAGS MAKE UTS_MACHINE HOSTCXX
++export _GZIP _BZIP2 _LZOP LZMA LZ4 XZ
+ export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS LDFLAGS_MODULE
+ 
+ export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
+@@ -1002,10 +1023,10 @@ export mod_strip_cmd
+ mod_compress_cmd = true
+ ifdef CONFIG_MODULE_COMPRESS
+   ifdef CONFIG_MODULE_COMPRESS_GZIP
+-    mod_compress_cmd = gzip -n -f
++    mod_compress_cmd = $(_GZIP) -n -f
+   endif # CONFIG_MODULE_COMPRESS_GZIP
+   ifdef CONFIG_MODULE_COMPRESS_XZ
+-    mod_compress_cmd = xz -f
++    mod_compress_cmd = $(XZ) -f
+   endif # CONFIG_MODULE_COMPRESS_XZ
+ endif # CONFIG_MODULE_COMPRESS
+ export mod_compress_cmd
+diff --git a/arch/arm/boot/deflate_xip_data.sh b/arch/arm/boot/deflate_xip_data.sh
+index 40937248c..739f04643 100755
+--- a/arch/arm/boot/deflate_xip_data.sh
++++ b/arch/arm/boot/deflate_xip_data.sh
+@@ -56,7 +56,7 @@ trap 'rm -f "$XIPIMAGE.tmp"; exit 1' 1 2 3
+ # substitute the data section by a compressed version
+ $DD if="$XIPIMAGE" count=$data_start iflag=count_bytes of="$XIPIMAGE.tmp"
+ $DD if="$XIPIMAGE"  skip=$data_start iflag=skip_bytes |
+-gzip -9 >> "$XIPIMAGE.tmp"
++$_GZIP -9 >> "$XIPIMAGE.tmp"
+ 
+ # replace kernel binary
+ mv -f "$XIPIMAGE.tmp" "$XIPIMAGE"
+diff --git a/arch/ia64/Makefile b/arch/ia64/Makefile
+index 32240000d..f817f3d5e 100644
+--- a/arch/ia64/Makefile
++++ b/arch/ia64/Makefile
+@@ -40,7 +40,7 @@ $(error Sorry, you need a newer version of the assember, one that is built from
+ endif
+ 
+ quiet_cmd_gzip = GZIP    $@
+-cmd_gzip = cat $(real-prereqs) | gzip -n -f -9 > $@
++cmd_gzip = cat $(real-prereqs) | $(_GZIP) -n -f -9 > $@
+ 
+ quiet_cmd_objcopy = OBJCOPY $@
+ cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $(OBJCOPYFLAGS_$(@F)) $< $@
+diff --git a/arch/m68k/Makefile b/arch/m68k/Makefile
+index 5d9288384..ce6db5e5a 100644
+--- a/arch/m68k/Makefile
++++ b/arch/m68k/Makefile
+@@ -135,10 +135,10 @@ vmlinux.gz: vmlinux
+ ifndef CONFIG_KGDB
+ 	cp vmlinux vmlinux.tmp
+ 	$(STRIP) vmlinux.tmp
+-	gzip -9c vmlinux.tmp >vmlinux.gz
++	$(_GZIP) -9c vmlinux.tmp >vmlinux.gz
+ 	rm vmlinux.tmp
+ else
+-	gzip -9c vmlinux >vmlinux.gz
++	$(_GZIP) -9c vmlinux >vmlinux.gz
+ endif
+ 
+ bzImage: vmlinux.bz2
+@@ -148,10 +148,10 @@ vmlinux.bz2: vmlinux
+ ifndef CONFIG_KGDB
+ 	cp vmlinux vmlinux.tmp
+ 	$(STRIP) vmlinux.tmp
+-	bzip2 -1c vmlinux.tmp >vmlinux.bz2
++	$(_BZIP2) -1c vmlinux.tmp >vmlinux.bz2
+ 	rm vmlinux.tmp
+ else
+-	bzip2 -1c vmlinux >vmlinux.bz2
++	$(_BZIP2) -1c vmlinux >vmlinux.bz2
+ endif
+ 
+ archclean:
+diff --git a/arch/parisc/Makefile b/arch/parisc/Makefile
+index 628cd8bb7..e1aa514ae 100644
+--- a/arch/parisc/Makefile
++++ b/arch/parisc/Makefile
+@@ -162,7 +162,7 @@ vmlinuz: bzImage
+ 	$(OBJCOPY) $(boot)/bzImage $@
+ else
+ vmlinuz: vmlinux
+-	@gzip -cf -9 $< > $@
++	@$(_GZIP) -cf -9 $< > $@
+ endif
+ 
+ install:
+diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
+index e13ca842e..c1510f0ab 100755
+--- a/kernel/gen_kheaders.sh
++++ b/kernel/gen_kheaders.sh
+@@ -88,7 +88,7 @@ find $cpio_dir -type f -print0 |
+ find $cpio_dir -printf "./%P\n" | LC_ALL=C sort | \
+     tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
+     --owner=0 --group=0 --numeric-owner --no-recursion \
+-    -Jcf $tarfile -C $cpio_dir/ -T - > /dev/null
++    -I $XZ -cf $tarfile -C $cpio_dir/ -T - > /dev/null
+ 
+ echo $headers_md5 > kernel/kheaders.md5
+ echo "$this_file_md5" >> kernel/kheaders.md5
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index 4b7997377..a1c1424e6 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -241,7 +241,7 @@ cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $(OBJCOPYFLAGS_$(@F)) $< $@
+ # ---------------------------------------------------------------------------
+ 
+ quiet_cmd_gzip = GZIP    $@
+-      cmd_gzip = cat $(real-prereqs) | gzip -n -f -9 > $@
++      cmd_gzip = cat $(real-prereqs) | $(_GZIP) -n -f -9 > $@
+ 
+ # DTC
+ # ---------------------------------------------------------------------------
+@@ -334,19 +334,19 @@ printf "%08x\n" $$dec_size |						\
+ )
+ 
+ quiet_cmd_bzip2 = BZIP2   $@
+-      cmd_bzip2 = { cat $(real-prereqs) | bzip2 -9; $(size_append); } > $@
++      cmd_bzip2 = { cat $(real-prereqs) | $(_BZIP2) -9; $(size_append); } > $@
+ 
+ # Lzma
+ # ---------------------------------------------------------------------------
+ 
+ quiet_cmd_lzma = LZMA    $@
+-      cmd_lzma = { cat $(real-prereqs) | lzma -9; $(size_append); } > $@
++      cmd_lzma = { cat $(real-prereqs) | $(LZMA) -9; $(size_append); } > $@
+ 
+ quiet_cmd_lzo = LZO     $@
+-      cmd_lzo = { cat $(real-prereqs) | lzop -9; $(size_append); } > $@
++      cmd_lzo = { cat $(real-prereqs) | $(_LZOP) -9; $(size_append); } > $@
+ 
+ quiet_cmd_lz4 = LZ4     $@
+-      cmd_lz4 = { cat $(real-prereqs) | lz4c -l -c1 stdin stdout; \
++      cmd_lz4 = { cat $(real-prereqs) | $(LZ4) -l -c1 stdin stdout; \
+                   $(size_append); } > $@
+ 
+ # U-Boot mkimage
+@@ -393,7 +393,7 @@ quiet_cmd_xzkern = XZKERN  $@
+                      $(size_append); } > $@
+ 
+ quiet_cmd_xzmisc = XZMISC  $@
+-      cmd_xzmisc = cat $(real-prereqs) | xz --check=crc32 --lzma2=dict=1MiB > $@
++      cmd_xzmisc = cat $(real-prereqs) | $(XZ) --check=crc32 --lzma2=dict=1MiB > $@
+ 
+ # ASM offsets
+ # ---------------------------------------------------------------------------
+diff --git a/scripts/Makefile.package b/scripts/Makefile.package
+index 02135d267..b2b6153af 100644
+--- a/scripts/Makefile.package
++++ b/scripts/Makefile.package
+@@ -45,7 +45,7 @@ if test "$(objtree)" != "$(srctree)"; then \
+ 	false; \
+ fi ; \
+ $(srctree)/scripts/setlocalversion --save-scmversion; \
+-tar -cz $(RCS_TAR_IGNORE) -f $(2).tar.gz \
++tar -I $(_GZIP) -c $(RCS_TAR_IGNORE) -f $(2).tar.gz \
+ 	--transform 's:^:$(2)/:S' $(TAR_CONTENT) $(3); \
+ rm -f $(objtree)/.scmversion
+ 
+@@ -127,9 +127,9 @@ util/PERF-VERSION-GEN $(CURDIR)/$(perf-tar)/);              \
+ tar rf $(perf-tar).tar $(perf-tar)/HEAD $(perf-tar)/PERF-VERSION-FILE; \
+ rm -r $(perf-tar);                                                  \
+ $(if $(findstring tar-src,$@),,                                     \
+-$(if $(findstring bz2,$@),bzip2,                                    \
+-$(if $(findstring gz,$@),gzip,                                      \
+-$(if $(findstring xz,$@),xz,                                        \
++$(if $(findstring bz2,$@),$(_BZIP2),                                 \
++$(if $(findstring gz,$@),$(_GZIP),                                  \
++$(if $(findstring xz,$@),$(XZ),                                     \
+ $(error unknown target $@))))                                       \
+ 	-f -9 $(perf-tar).tar)
+ 
+diff --git a/scripts/package/buildtar b/scripts/package/buildtar
+index 77c7caefe..ad62c6879 100755
+--- a/scripts/package/buildtar
++++ b/scripts/package/buildtar
+@@ -28,15 +28,15 @@ case "${1}" in
+ 		opts=
+ 		;;
+ 	targz-pkg)
+-		opts=--gzip
++		opts="-I ${_GZIP}"
+ 		tarball=${tarball}.gz
+ 		;;
+ 	tarbz2-pkg)
+-		opts=--bzip2
++		opts="-I ${_BZIP2}"
+ 		tarball=${tarball}.bz2
+ 		;;
+ 	tarxz-pkg)
+-		opts=--xz
++		opts="-I ${XZ}"
+ 		tarball=${tarball}.xz
+ 		;;
+ 	*)
+diff --git a/scripts/xz_wrap.sh b/scripts/xz_wrap.sh
+index 7a2d372f4..76e9cbcfb 100755
+--- a/scripts/xz_wrap.sh
++++ b/scripts/xz_wrap.sh
+@@ -20,4 +20,4 @@ case $SRCARCH in
+ 	sparc)          BCJ=--sparc ;;
+ esac
+ 
+-exec xz --check=crc32 $BCJ --lzma2=$LZMA2OPTS,dict=32MiB
++exec $XZ --check=crc32 $BCJ --lzma2=$LZMA2OPTS,dict=32MiB
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 1e05989a4679587d5e291351439bbe5ddd334de4 Mon Sep 17 00:00:00 2001
+From: Denis Efremov <efremov@linux.com>
+Date: Mon, 8 Jun 2020 12:59:44 +0300
+Subject: [PATCH 02/11] kbuild: fix broken builds because of GZIP,BZIP2,LZOP
+ variables
+
+Redefine GZIP, BZIP2, LZOP variables as KGZIP, KBZIP2, KLZOP resp.
+GZIP, BZIP2, LZOP env variables are reserved by the tools. The original
+attempt to redefine them internally doesn't work in makefiles/scripts
+intercall scenarios, e.g., "make GZIP=gzip bindeb-pkg" and results in
+broken builds. There can be other broken build commands because of this,
+so the universal solution is to use non-reserved env variables for the
+compression tools.
+
+Fixes: 8dfb61dcbace ("kbuild: add variables for compression tools")
+Signed-off-by: Denis Efremov <efremov@linux.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+---
+ Makefile                          | 24 +++++-------------------
+ arch/arm/boot/deflate_xip_data.sh |  2 +-
+ arch/ia64/Makefile                |  2 +-
+ arch/m68k/Makefile                |  8 ++++----
+ arch/parisc/Makefile              |  2 +-
+ scripts/Makefile.lib              |  6 +++---
+ scripts/Makefile.package          |  6 +++---
+ scripts/package/buildtar          |  4 ++--
+ 8 files changed, 20 insertions(+), 34 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e947e07da..cd44a11f8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -447,27 +447,13 @@ PYTHON		= python
+ PYTHON3		= python3
+ CHECK		= sparse
+ BASH		= bash
+-GZIP		= gzip
+-BZIP2		= bzip2
+-LZOP		= lzop
++KGZIP		= gzip
++KBZIP2		= bzip2
++KLZOP		= lzop
+ LZMA		= lzma
+ LZ4		= lz4c
+ XZ		= xz
+ 
+-# GZIP, BZIP2, LZOP env vars are used by the tools. Support them as the command
+-# line interface, but use _GZIP, _BZIP2, _LZOP internally.
+-_GZIP          := $(GZIP)
+-_BZIP2         := $(BZIP2)
+-_LZOP          := $(LZOP)
+-
+-# Reset GZIP, BZIP2, LZOP in this Makefile
+-override GZIP=
+-override BZIP2=
+-override LZOP=
+-
+-# Reset GZIP, BZIP2, LZOP in recursive invocations
+-MAKEOVERRIDES += GZIP= BZIP2= LZOP=
+-
+ CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
+ 		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
+ NOSTDINC_FLAGS :=
+@@ -515,7 +501,7 @@ CLANG_FLAGS :=
+ export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC
+ export CPP AR NM STRIP OBJCOPY OBJDUMP OBJSIZE READELF PAHOLE LEX YACC AWK INSTALLKERNEL
+ export PERL PYTHON PYTHON3 CHECK CHECKFLAGS MAKE UTS_MACHINE HOSTCXX
+-export _GZIP _BZIP2 _LZOP LZMA LZ4 XZ
++export KGZIP KBZIP2 KLZOP LZMA LZ4 XZ
+ export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS LDFLAGS_MODULE
+ 
+ export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
+@@ -1023,7 +1009,7 @@ export mod_strip_cmd
+ mod_compress_cmd = true
+ ifdef CONFIG_MODULE_COMPRESS
+   ifdef CONFIG_MODULE_COMPRESS_GZIP
+-    mod_compress_cmd = $(_GZIP) -n -f
++    mod_compress_cmd = $(KGZIP) -n -f
+   endif # CONFIG_MODULE_COMPRESS_GZIP
+   ifdef CONFIG_MODULE_COMPRESS_XZ
+     mod_compress_cmd = $(XZ) -f
+diff --git a/arch/arm/boot/deflate_xip_data.sh b/arch/arm/boot/deflate_xip_data.sh
+index 739f04643..304495c3c 100755
+--- a/arch/arm/boot/deflate_xip_data.sh
++++ b/arch/arm/boot/deflate_xip_data.sh
+@@ -56,7 +56,7 @@ trap 'rm -f "$XIPIMAGE.tmp"; exit 1' 1 2 3
+ # substitute the data section by a compressed version
+ $DD if="$XIPIMAGE" count=$data_start iflag=count_bytes of="$XIPIMAGE.tmp"
+ $DD if="$XIPIMAGE"  skip=$data_start iflag=skip_bytes |
+-$_GZIP -9 >> "$XIPIMAGE.tmp"
++$KGZIP -9 >> "$XIPIMAGE.tmp"
+ 
+ # replace kernel binary
+ mv -f "$XIPIMAGE.tmp" "$XIPIMAGE"
+diff --git a/arch/ia64/Makefile b/arch/ia64/Makefile
+index f817f3d5e..2876a7df1 100644
+--- a/arch/ia64/Makefile
++++ b/arch/ia64/Makefile
+@@ -40,7 +40,7 @@ $(error Sorry, you need a newer version of the assember, one that is built from
+ endif
+ 
+ quiet_cmd_gzip = GZIP    $@
+-cmd_gzip = cat $(real-prereqs) | $(_GZIP) -n -f -9 > $@
++cmd_gzip = cat $(real-prereqs) | $(KGZIP) -n -f -9 > $@
+ 
+ quiet_cmd_objcopy = OBJCOPY $@
+ cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $(OBJCOPYFLAGS_$(@F)) $< $@
+diff --git a/arch/m68k/Makefile b/arch/m68k/Makefile
+index ce6db5e5a..0415d28db 100644
+--- a/arch/m68k/Makefile
++++ b/arch/m68k/Makefile
+@@ -135,10 +135,10 @@ vmlinux.gz: vmlinux
+ ifndef CONFIG_KGDB
+ 	cp vmlinux vmlinux.tmp
+ 	$(STRIP) vmlinux.tmp
+-	$(_GZIP) -9c vmlinux.tmp >vmlinux.gz
++	$(KGZIP) -9c vmlinux.tmp >vmlinux.gz
+ 	rm vmlinux.tmp
+ else
+-	$(_GZIP) -9c vmlinux >vmlinux.gz
++	$(KGZIP) -9c vmlinux >vmlinux.gz
+ endif
+ 
+ bzImage: vmlinux.bz2
+@@ -148,10 +148,10 @@ vmlinux.bz2: vmlinux
+ ifndef CONFIG_KGDB
+ 	cp vmlinux vmlinux.tmp
+ 	$(STRIP) vmlinux.tmp
+-	$(_BZIP2) -1c vmlinux.tmp >vmlinux.bz2
++	$(KBZIP2) -1c vmlinux.tmp >vmlinux.bz2
+ 	rm vmlinux.tmp
+ else
+-	$(_BZIP2) -1c vmlinux >vmlinux.bz2
++	$(KBZIP2) -1c vmlinux >vmlinux.bz2
+ endif
+ 
+ archclean:
+diff --git a/arch/parisc/Makefile b/arch/parisc/Makefile
+index e1aa514ae..412ddec02 100644
+--- a/arch/parisc/Makefile
++++ b/arch/parisc/Makefile
+@@ -162,7 +162,7 @@ vmlinuz: bzImage
+ 	$(OBJCOPY) $(boot)/bzImage $@
+ else
+ vmlinuz: vmlinux
+-	@$(_GZIP) -cf -9 $< > $@
++	@$(KGZIP) -cf -9 $< > $@
+ endif
+ 
+ install:
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index a1c1424e6..642630197 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -241,7 +241,7 @@ cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $(OBJCOPYFLAGS_$(@F)) $< $@
+ # ---------------------------------------------------------------------------
+ 
+ quiet_cmd_gzip = GZIP    $@
+-      cmd_gzip = cat $(real-prereqs) | $(_GZIP) -n -f -9 > $@
++      cmd_gzip = cat $(real-prereqs) | $(KGZIP) -n -f -9 > $@
+ 
+ # DTC
+ # ---------------------------------------------------------------------------
+@@ -334,7 +334,7 @@ printf "%08x\n" $$dec_size |						\
+ )
+ 
+ quiet_cmd_bzip2 = BZIP2   $@
+-      cmd_bzip2 = { cat $(real-prereqs) | $(_BZIP2) -9; $(size_append); } > $@
++      cmd_bzip2 = { cat $(real-prereqs) | $(KBZIP2) -9; $(size_append); } > $@
+ 
+ # Lzma
+ # ---------------------------------------------------------------------------
+@@ -343,7 +343,7 @@ quiet_cmd_lzma = LZMA    $@
+       cmd_lzma = { cat $(real-prereqs) | $(LZMA) -9; $(size_append); } > $@
+ 
+ quiet_cmd_lzo = LZO     $@
+-      cmd_lzo = { cat $(real-prereqs) | $(_LZOP) -9; $(size_append); } > $@
++      cmd_lzo = { cat $(real-prereqs) | $(KLZOP) -9; $(size_append); } > $@
+ 
+ quiet_cmd_lz4 = LZ4     $@
+       cmd_lz4 = { cat $(real-prereqs) | $(LZ4) -l -c1 stdin stdout; \
+diff --git a/scripts/Makefile.package b/scripts/Makefile.package
+index b2b6153af..f952fb647 100644
+--- a/scripts/Makefile.package
++++ b/scripts/Makefile.package
+@@ -45,7 +45,7 @@ if test "$(objtree)" != "$(srctree)"; then \
+ 	false; \
+ fi ; \
+ $(srctree)/scripts/setlocalversion --save-scmversion; \
+-tar -I $(_GZIP) -c $(RCS_TAR_IGNORE) -f $(2).tar.gz \
++tar -I $(KGZIP) -c $(RCS_TAR_IGNORE) -f $(2).tar.gz \
+ 	--transform 's:^:$(2)/:S' $(TAR_CONTENT) $(3); \
+ rm -f $(objtree)/.scmversion
+ 
+@@ -127,8 +127,8 @@ util/PERF-VERSION-GEN $(CURDIR)/$(perf-tar)/);              \
+ tar rf $(perf-tar).tar $(perf-tar)/HEAD $(perf-tar)/PERF-VERSION-FILE; \
+ rm -r $(perf-tar);                                                  \
+ $(if $(findstring tar-src,$@),,                                     \
+-$(if $(findstring bz2,$@),$(_BZIP2),                                 \
+-$(if $(findstring gz,$@),$(_GZIP),                                  \
++$(if $(findstring bz2,$@),$(KBZIP2),                                 \
++$(if $(findstring gz,$@),$(KGZIP),                                  \
+ $(if $(findstring xz,$@),$(XZ),                                     \
+ $(error unknown target $@))))                                       \
+ 	-f -9 $(perf-tar).tar)
+diff --git a/scripts/package/buildtar b/scripts/package/buildtar
+index ad62c6879..fb1578e72 100755
+--- a/scripts/package/buildtar
++++ b/scripts/package/buildtar
+@@ -28,11 +28,11 @@ case "${1}" in
+ 		opts=
+ 		;;
+ 	targz-pkg)
+-		opts="-I ${_GZIP}"
++		opts="-I ${KGZIP}"
+ 		tarball=${tarball}.gz
+ 		;;
+ 	tarbz2-pkg)
+-		opts="-I ${_BZIP2}"
++		opts="-I ${KBZIP2}"
+ 		tarball=${tarball}.bz2
+ 		;;
+ 	tarxz-pkg)
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From ac54e40babcfe4a7cb2d505d7c87c70fdaed8722 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Wed, 8 Jul 2020 11:50:18 -0700
-Subject: [PATCH 1/8] lib: prepare zstd for preboot environment
+Date: Thu, 30 Jul 2020 12:08:34 -0700
+Subject: [PATCH 03/11] lib: prepare zstd for preboot environment
 
 * Remove a double definition of the CHECK_F macro when the zstd
   library is amalgamated.
@@ -90,13 +596,13 @@ index 1a79fab9e..dac753397 100644
  		ZSTD_copy8(op, ip);
  		op += 8;
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 6406095d27f3c30b65a68ca384b21b40f4ba5962 Mon Sep 17 00:00:00 2001
+From 58d81a7900dc0c80879e5e896e962a78c012cbb9 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Wed, 8 Jul 2020 11:50:19 -0700
-Subject: [PATCH 2/8] lib: add zstd support to decompress
+Date: Thu, 30 Jul 2020 12:08:35 -0700
+Subject: [PATCH 04/11] lib: add zstd support to decompress
 
 * Add unzstd() and the zstd decompress interface.
 * Add zstd support to decompress_method().
@@ -197,7 +703,7 @@ index 857ab1af1..ab3fc90ff 100644
  
 diff --git a/lib/decompress_unzstd.c b/lib/decompress_unzstd.c
 new file mode 100644
-index 000000000..053834f24
+index 000000000..0ad2c1547
 --- /dev/null
 +++ b/lib/decompress_unzstd.c
 @@ -0,0 +1,345 @@
@@ -265,12 +771,11 @@ index 000000000..053834f24
 + * When UNZSTD_PREBOOT is defined we declare __decompress(), which is
 + * used for kernel decompression, instead of unzstd().
 + *
-+ * __DISABLE_EXPORTS stops zstd and xxhash from declaring themselves
-+ * as modules by disabling the EXPORT_SYMBOL macro.
++ * Define __DISABLE_EXPORTS in preboot environments to prevent symbols
++ * from xxhash and zstd from being exported by the EXPORT_SYMBOL macro.
 + */
 +#ifdef STATIC
 +# define UNZSTD_PREBOOT
-+# define __DISABLE_EXPORTS
 +# include "xxhash.c"
 +# include "zstd/entropy_common.c"
 +# include "zstd/fse_decompress.c"
@@ -285,10 +790,11 @@ index 000000000..053834f24
 +
 +/* 128MB is the maximum window size supported by zstd. */
 +#define ZSTD_WINDOWSIZE_MAX	(1 << ZSTD_WINDOWLOG_MAX)
-+/* Size of the input and output buffers in multi-call mode.
++/*
++ * Size of the input and output buffers in multi-call mode.
 + * Pick a larger size because it isn't used during kernel decompression,
 + * since that is single pass, and we have to allocate a large buffer for
-+ * zstd's window anyways. The larger size speeds up initramfs decompression.
++ * zstd's window anyway. The larger size speeds up initramfs decompression.
 + */
 +#define ZSTD_IOBUF_SIZE		(1 << 17)
 +
@@ -547,13 +1053,13 @@ index 000000000..053834f24
 +}
 +#endif
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 
 
-From d3a94c4046a7a969fbbe9776b52eca005306e4ec Mon Sep 17 00:00:00 2001
+From d50eeccc4e7f4ae64ef764b817299ca69eed3cd2 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Wed, 8 Jul 2020 11:50:20 -0700
-Subject: [PATCH 3/8] init: add support for zstd compressed kernel
+Date: Thu, 30 Jul 2020 12:08:36 -0700
+Subject: [PATCH 05/11] init: add support for zstd compressed kernel
 
 * Adds the zstd and zstd22 cmds to scripts/Makefile.lib
 * Adds the HAVE_KERNEL_ZSTD and KERNEL_ZSTD options
@@ -564,33 +1070,34 @@ Reviewed-by: Kees Cook <keescook@chromium.org>
 Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
 Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
- Makefile             |  2 ++
+ Makefile             |  3 ++-
  init/Kconfig         | 15 ++++++++++++++-
  scripts/Makefile.lib | 22 ++++++++++++++++++++++
- 3 files changed, 38 insertions(+), 1 deletion(-)
+ 3 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0baa6eb4a..014da1a1f 100644
+index cd44a11f8..c387381aa 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -447,6 +447,7 @@ PYTHON		= python
- PYTHON3		= python3
- CHECK		= sparse
- BASH		= bash
+@@ -453,6 +453,7 @@ KLZOP		= lzop
+ LZMA		= lzma
+ LZ4		= lz4c
+ XZ		= xz
 +ZSTD		= zstd
  
  CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
  		  -Wbitwise -Wno-return-void -Wno-unknown-attribute $(CF)
-@@ -495,6 +496,7 @@ CLANG_FLAGS :=
+@@ -501,7 +502,7 @@ CLANG_FLAGS :=
  export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC
  export CPP AR NM STRIP OBJCOPY OBJDUMP OBJSIZE READELF PAHOLE LEX YACC AWK INSTALLKERNEL
  export PERL PYTHON PYTHON3 CHECK CHECKFLAGS MAKE UTS_MACHINE HOSTCXX
-+export ZSTD
+-export KGZIP KBZIP2 KLZOP LZMA LZ4 XZ
++export KGZIP KBZIP2 KLZOP LZMA LZ4 XZ ZSTD
  export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS LDFLAGS_MODULE
  
  export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
 diff --git a/init/Kconfig b/init/Kconfig
-index 74a5ac656..c3f7f0630 100644
+index 74a5ac656..7142f0f5a 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -160,13 +160,16 @@ config HAVE_KERNEL_LZO
@@ -623,18 +1130,18 @@ index 74a5ac656..c3f7f0630 100644
 +	  with fast decompression speed. It will compress better than GZIP and
 +	  decompress around the same speed as LZO, but slower than LZ4. You
 +	  will need at least 192 KB RAM or more for booting. The zstd command
-+	  line tools is required for compression.
++	  line tool is required for compression.
 +
  config KERNEL_UNCOMPRESSED
  	bool "None"
  	depends on HAVE_KERNEL_UNCOMPRESSED
 diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index 4b7997377..fa0a4f10d 100644
+index 642630197..af8bfc13e 100644
 --- a/scripts/Makefile.lib
 +++ b/scripts/Makefile.lib
 @@ -395,6 +395,28 @@ quiet_cmd_xzkern = XZKERN  $@
  quiet_cmd_xzmisc = XZMISC  $@
-       cmd_xzmisc = cat $(real-prereqs) | xz --check=crc32 --lzma2=dict=1MiB > $@
+       cmd_xzmisc = cat $(real-prereqs) | $(XZ) --check=crc32 --lzma2=dict=1MiB > $@
  
 +# ZSTD
 +# ---------------------------------------------------------------------------
@@ -662,13 +1169,13 @@ index 4b7997377..fa0a4f10d 100644
  # ---------------------------------------------------------------------------
  
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 100a805f5a4b6100a971dec08fa01b44e004c6b4 Mon Sep 17 00:00:00 2001
+From a341b87cc3c7f489bb84fd3d30602191a04f235a Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Wed, 8 Jul 2020 11:50:21 -0700
-Subject: [PATCH 4/8] usr: add support for zstd compressed initramfs
+Date: Thu, 30 Jul 2020 12:08:37 -0700
+Subject: [PATCH 06/11] usr: add support for zstd compressed initramfs
 
 * Add support for a zstd compressed initramfs.
 * Add compression for compressing built-in initramfs with zstd.
@@ -746,13 +1253,13 @@ index c12e6b15c..b1a81a40e 100644
  obj-$(CONFIG_BLK_DEV_INITRD) := initramfs_data.o
  
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 1bd4638dce200015c255d583facf40ec4853a177 Mon Sep 17 00:00:00 2001
+From e45eb5668dff40f0dc15e3854daf4c96b71bc8a3 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Wed, 8 Jul 2020 11:50:22 -0700
-Subject: [PATCH 5/8] x86: bump ZO_z_extra_bytes margin for zstd
+Date: Thu, 30 Jul 2020 12:08:38 -0700
+Subject: [PATCH 07/11] x86: bump ZO_z_extra_bytes margin for zstd
 
 Bump the ZO_z_extra_bytes margin for zstd.
 
@@ -794,15 +1301,17 @@ index 735ad7f21..6dbd7e9f7 100644
  # define ZO_z_extract_offset	(ZO_z_output_len + ZO_z_extra_bytes - \
  				 ZO_z_input_len)
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 
 
-From d55fc2876194264f3be951a831e2083d8b1ef4c4 Mon Sep 17 00:00:00 2001
+From 2ef15b1b629967a9a88ede80e1ef6db0cef12fa9 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Wed, 8 Jul 2020 11:50:23 -0700
-Subject: [PATCH 6/8] x86: Add support for ZSTD compressed kernel
+Date: Thu, 30 Jul 2020 12:08:39 -0700
+Subject: [PATCH 08/11] x86: Add support for ZSTD compressed kernel
 
 * Add support for zstd compressed kernel
+* Define __DISABLE_EXPORTS in Makefile
+* Remove __DISABLE_EXPORTS definition from kaslr.c
 * Bump the heap size for zstd.
 * Update the documentation.
 
@@ -811,6 +1320,10 @@ Integrates the ZSTD decompression code to the x86 pre-boot code.
 Zstandard requires slightly more memory during the kernel decompression
 on x86 (192 KB vs 64 KB), and the memory usage is independent of the
 window size.
+
+__DISABLE_EXPORTS is now defined in the Makefile, which covers both
+the existing use in kaslr.c, and the use needed by the zstd decompressor
+in misc.c.
 
 This patch has been boot tested with both a zstd and gzip compressed
 kernel on i386 and x86_64 using buildroot and QEMU.
@@ -823,12 +1336,13 @@ Reviewed-by: Kees Cook <keescook@chromium.org>
 Tested-by: Sedat Dilek <sedat.dilek@gmail.com>
 Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
- Documentation/x86/boot.rst        | 6 +++---
- arch/x86/Kconfig                  | 1 +
- arch/x86/boot/compressed/Makefile | 5 ++++-
- arch/x86/boot/compressed/misc.c   | 4 ++++
- arch/x86/include/asm/boot.h       | 6 ++++--
- 5 files changed, 16 insertions(+), 6 deletions(-)
+ Documentation/x86/boot.rst        |  6 +++---
+ arch/x86/Kconfig                  |  1 +
+ arch/x86/boot/compressed/Makefile |  6 +++++-
+ arch/x86/boot/compressed/kaslr.c  |  7 -------
+ arch/x86/boot/compressed/misc.c   |  4 ++++
+ arch/x86/include/asm/boot.h       | 11 +++++++++--
+ 6 files changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/Documentation/x86/boot.rst b/Documentation/x86/boot.rst
 index 5325c71ca..7fafc7ac0 100644
@@ -860,7 +1374,7 @@ index 2d3f963fd..897b32531 100644
  	select HAVE_KPROBES_ON_FTRACE
  	select HAVE_FUNCTION_ERROR_INJECTION
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 5f7c262bc..480cd5836 100644
+index 20aac9968..6fddf6e41 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
 @@ -24,7 +24,7 @@ OBJECT_FILES_NON_STANDARD	:= y
@@ -872,7 +1386,15 @@ index 5f7c262bc..480cd5836 100644
  
  KBUILD_CFLAGS := -m$(BITS) -O2
  KBUILD_CFLAGS += -fno-strict-aliasing $(call cc-option, -fPIE, -fPIC)
-@@ -143,6 +143,8 @@ $(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y) FORCE
+@@ -40,6 +40,7 @@ KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
+ KBUILD_CFLAGS += -Wno-pointer-sign
+ KBUILD_CFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
+ KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
++KBUILD_CFLAGS += -D__DISABLE_EXPORTS
+ 
+ KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
+ GCOV_PROFILE := n
+@@ -143,6 +144,8 @@ $(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y) FORCE
  	$(call if_changed,lzo)
  $(obj)/vmlinux.bin.lz4: $(vmlinux.bin.all-y) FORCE
  	$(call if_changed,lz4)
@@ -881,7 +1403,7 @@ index 5f7c262bc..480cd5836 100644
  
  suffix-$(CONFIG_KERNEL_GZIP)	:= gz
  suffix-$(CONFIG_KERNEL_BZIP2)	:= bz2
-@@ -150,6 +152,7 @@ suffix-$(CONFIG_KERNEL_LZMA)	:= lzma
+@@ -150,6 +153,7 @@ suffix-$(CONFIG_KERNEL_LZMA)	:= lzma
  suffix-$(CONFIG_KERNEL_XZ)	:= xz
  suffix-$(CONFIG_KERNEL_LZO) 	:= lzo
  suffix-$(CONFIG_KERNEL_LZ4) 	:= lz4
@@ -889,6 +1411,24 @@ index 5f7c262bc..480cd5836 100644
  
  quiet_cmd_mkpiggy = MKPIGGY $@
        cmd_mkpiggy = $(obj)/mkpiggy $< > $@
+diff --git a/arch/x86/boot/compressed/kaslr.c b/arch/x86/boot/compressed/kaslr.c
+index d7408af55..004826918 100644
+--- a/arch/x86/boot/compressed/kaslr.c
++++ b/arch/x86/boot/compressed/kaslr.c
+@@ -19,13 +19,6 @@
+  */
+ #define BOOT_CTYPE_H
+ 
+-/*
+- * _ctype[] in lib/ctype.c is needed by isspace() of linux/ctype.h.
+- * While both lib/ctype.c and lib/cmdline.c will bring EXPORT_SYMBOL
+- * which is meaningless and will cause compiling error in some cases.
+- */
+-#define __DISABLE_EXPORTS
+-
+ #include "misc.h"
+ #include "error.h"
+ #include "../string.h"
 diff --git a/arch/x86/boot/compressed/misc.c b/arch/x86/boot/compressed/misc.c
 index 9652d5c2a..39e592d0e 100644
 --- a/arch/x86/boot/compressed/misc.c
@@ -905,10 +1445,10 @@ index 9652d5c2a..39e592d0e 100644
   * NOTE: When adding a new decompressor, please update the analysis in
   * ../header.S.
 diff --git a/arch/x86/include/asm/boot.h b/arch/x86/include/asm/boot.h
-index 680c32036..d6dd43d25 100644
+index 680c32036..9191280d9 100644
 --- a/arch/x86/include/asm/boot.h
 +++ b/arch/x86/include/asm/boot.h
-@@ -24,9 +24,11 @@
+@@ -24,9 +24,16 @@
  # error "Invalid value for CONFIG_PHYSICAL_ALIGN"
  #endif
  
@@ -917,19 +1457,24 @@ index 680c32036..d6dd43d25 100644
  # define BOOT_HEAP_SIZE		0x400000
 -#else /* !CONFIG_KERNEL_BZIP2 */
 +#elif defined(CONFIG_KERNEL_ZSTD)
++/*
++ * Zstd needs to allocate the ZSTD_DCtx in order to decompress the kernel.
++ * The ZSTD_DCtx is ~160KB, so set the heap size to 192KB because it is a
++ * round number and to allow some slack.
++ */
 +# define BOOT_HEAP_SIZE		 0x30000
 +#else
  # define BOOT_HEAP_SIZE		 0x10000
  #endif
  
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 553249a41358922372ef61dc619f1d54641c851c Mon Sep 17 00:00:00 2001
+From bf1ec458dde022cc61a0227df6d7bf8bf6af1051 Mon Sep 17 00:00:00 2001
 From: Adam Borowski <kilobyte@angband.pl>
-Date: Wed, 8 Jul 2020 11:50:24 -0700
-Subject: [PATCH 7/8] .gitignore: add ZSTD-compressed files
+Date: Thu, 30 Jul 2020 12:08:40 -0700
+Subject: [PATCH 09/11] .gitignore: add ZSTD-compressed files
 
 For now, that's arch/x86/boot/compressed/vmlinux.bin.zst but probably more
 will come, thus let's be consistent with all other compressors.
@@ -955,26 +1500,54 @@ index 2258e906f..23871de69 100644
  modules.builtin
  modules.order
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 9591c1520faa65a7d3034d6b895050652cb50498 Mon Sep 17 00:00:00 2001
-From: NihilisticPandemoniun
- <152417+nihilisticpandemonium@users.noreply.github.com>
-Date: Thu, 19 Dec 2019 00:08:37 -0800
-Subject: [PATCH 8/8] init: add support for zstd compressed modules
+From d11152b406c64d415bf4b906e43849920f6f1a93 Mon Sep 17 00:00:00 2001
+From: Nick Terrell <terrelln@fb.com>
+Date: Thu, 30 Jul 2020 12:08:41 -0700
+Subject: [PATCH 10/11] Documentation: dontdiff: Add zstd compressed files
 
-Signed-off-by: Alexandre Frade <admfrade@gmail.com>
+For now, that's arch/x86/boot/compressed/vmlinux.bin.zst but probably
+more will come, thus let's be consistent with all other compressors.
+
+Signed-off-by: Nick Terrell <terrelln@fb.com>
+---
+ Documentation/dontdiff | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/dontdiff b/Documentation/dontdiff
+index 72fc2e9e2..bdd2cd649 100644
+--- a/Documentation/dontdiff
++++ b/Documentation/dontdiff
+@@ -55,6 +55,7 @@
+ *.ver
+ *.xml
+ *.xz
++*.zst
+ *_MODULES
+ *_vga16.c
+ *~
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 9b250a43ff403a78e8ec31e51d6083ba2624f212 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Thu, 30 Jul 2020 16:53:12 -0800
+Subject: [PATCH 11/11] init: add support for zstd compressed modules
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  Makefile     | 7 +++++--
  init/Kconfig | 9 ++++++---
  2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 014da1a1f..5b3a25ba9 100644
+index c387381aa..3a6713cf5 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -998,8 +998,8 @@ endif # INSTALL_MOD_STRIP
+@@ -1004,8 +1004,8 @@ endif # INSTALL_MOD_STRIP
  export mod_strip_cmd
  
  # CONFIG_MODULE_COMPRESS, if defined, will cause module to be compressed
@@ -985,18 +1558,18 @@ index 014da1a1f..5b3a25ba9 100644
  
  mod_compress_cmd = true
  ifdef CONFIG_MODULE_COMPRESS
-@@ -1009,6 +1009,9 @@ ifdef CONFIG_MODULE_COMPRESS
+@@ -1015,6 +1015,9 @@ ifdef CONFIG_MODULE_COMPRESS
    ifdef CONFIG_MODULE_COMPRESS_XZ
-     mod_compress_cmd = xz -f
+     mod_compress_cmd = $(XZ) -f
    endif # CONFIG_MODULE_COMPRESS_XZ
 +  ifdef CONFIG_MODULE_COMPRESS_ZSTD
-+    mod_compress_cmd = zstd -T0 -20 --ultra --rm -f
++    mod_compress_cmd = $(ZSTD) -T0 -20 --ultra --rm -f
 +  endif
  endif # CONFIG_MODULE_COMPRESS
  export mod_compress_cmd
  
 diff --git a/init/Kconfig b/init/Kconfig
-index c3f7f0630..b2d38ea4f 100644
+index 7142f0f5a..5c58fde6c 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -2149,8 +2149,8 @@ config MODULE_COMPRESS
@@ -1030,5 +1603,5 @@ index c3f7f0630..b2d38ea4f 100644
  
  config MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS
 -- 
-2.27.0.221.ga08a83db2b
+2.28.0.rc2.1.g3d20111cbd
 

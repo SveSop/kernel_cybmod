@@ -4,13 +4,14 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.7.11  
+0000 : Kernel patch 5.7.12  
 0001 : v5.7 "Undead" PDS patch  
 0002 : AUFS filesystem patch  
 0003 : 5.7 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
 0005 : MM address space tweak  
 0006 : Various kernel tweaks patch  
+0007 : AMDGPU fixes patch  
 0010 : swap-tweaks.patch  
 0015 : ZFS fix  
 0020 : Ubuntu based config (See note below!)  

@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10714 @@
+@@ -0,0 +1,10715 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.7.11-cybmod16 Kernel Configuration
++# Linux/x86 5.7.12-cybmod17 Kernel Configuration
 +#
 +
 +#
@@ -954,6 +954,7 @@ new file mode 100644
 +# IO Schedulers
 +#
 +CONFIG_MQ_IOSCHED_DEADLINE=y
++# CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT is not set
 +CONFIG_MQ_IOSCHED_KYBER=y
 +CONFIG_IOSCHED_BFQ=y
 +CONFIG_BFQ_GROUP_IOSCHED=y

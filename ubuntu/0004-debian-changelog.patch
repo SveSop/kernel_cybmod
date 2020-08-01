@@ -1,27 +1,48 @@
-From 2d3d7ca3a9699b661ae716a1855e75d56be5a0b2 Mon Sep 17 00:00:00 2001
+From bd19f3258e290ed1db4b543c7878312fcda1d0f4 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 29 Jul 2020 05:40:29 -0400
+Date: Fri, 31 Jul 2020 13:39:20 -0400
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 10152 +-------------------------------------
- 1 file changed, 3 insertions(+), 10149 deletions(-)
+ debian.master/changelog | 10173 +-------------------------------------
+ 1 file changed, 3 insertions(+), 10170 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index b1a05fb7aeb4..4fb346715881 100644
+index 29cd5f50d4eb..13c87df593f9 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,10152 +1,6 @@
+@@ -1,10173 +1,6 @@
+-linux (5.8.0-12.13) groovy; urgency=medium
++linux (5.7.12-050712.202007311339) groovy; urgency=low
+ 
+-  * groovy/linux: 5.8.0-12.13 -proposed tracker (LP: #1889481)
++  Mainline build at commit: v5.7.12
+ 
+-  * Fix right speaker of HP laptop (LP: #1889375)
+-    - SAUCE: hda/realtek: Fix right speaker of HP laptop
++ -- Mainline Build <kernel@tangerine>  Fri, 31 Jul 2020 13:39:20 -0400
+ 
+-  * blk_update_request error when mount nvme partition (LP: #1872383)
+-    - SAUCE: nvme-pci: prevent SK hynix PC400 from using Write Zeroes command
+-
+-  * Add support for Atlantic NIC firmware v4 (LP: #1886908)
+-    - Revert "UBUNTU: SAUCE: net: atlantic: Add support for firmware v4"
+-    - net: atlantic: align return value of ver_match function with function name
+-    - net: atlantic: add support for FW 4.x
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] Fix debian/tests for linux-5.8 -> linux rename
+-    - SAUCE: selftests/powerpc: return skip code for spectre_v2
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Wed, 29 Jul 2020 16:58:47 -0500
+-
 -linux (5.8.0-11.12) groovy; urgency=medium
-+linux (5.7.11-050711.202007290540) groovy; urgency=low
- 
+-
 -  * groovy/linux: 5.8.0-11.12 -proposed tracker (LP: #1889336)
-+  Mainline build at commit: v5.7.11
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] dwarves is not required for linux-libc-dev or stage1
-+ -- Mainline Build <kernel@tangerine>  Wed, 29 Jul 2020 05:40:29 -0400
- 
+-
 - -- Seth Forshee <seth.forshee@canonical.com>  Tue, 28 Jul 2020 22:33:24 -0500
 -
 -linux (5.8.0-10.11) groovy; urgency=medium
