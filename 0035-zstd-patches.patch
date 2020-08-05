@@ -1,7 +1,7 @@
-From ec039c2365a23a5357ebc65e6447697a8fc81edd Mon Sep 17 00:00:00 2001
+From ca0eb6b6113f650ab8538f5cbc5ce7878f8fae1a Mon Sep 17 00:00:00 2001
 From: Denis Efremov <efremov@linux.com>
 Date: Fri, 5 Jun 2020 10:39:55 +0300
-Subject: [PATCH 01/11] kbuild: add variables for compression tools
+Subject: [PATCH 01/12] kbuild: add variables for compression tools
 
 Allow user to use alternative implementations of compression tools,
 such as pigz, pbzip2, pxz. For example, multi-threaded tools to
@@ -276,10 +276,10 @@ index 7a2d372f4..76e9cbcfb 100755
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 1e05989a4679587d5e291351439bbe5ddd334de4 Mon Sep 17 00:00:00 2001
+From bd1c52764062e5e9a8e16514ce2000a43fd4513e Mon Sep 17 00:00:00 2001
 From: Denis Efremov <efremov@linux.com>
 Date: Mon, 8 Jun 2020 12:59:44 +0300
-Subject: [PATCH 02/11] kbuild: fix broken builds because of GZIP,BZIP2,LZOP
+Subject: [PATCH 02/12] kbuild: fix broken builds because of GZIP,BZIP2,LZOP
  variables
 
 Redefine GZIP, BZIP2, LZOP variables as KGZIP, KBZIP2, KLZOP resp.
@@ -504,10 +504,10 @@ index ad62c6879..fb1578e72 100755
 2.28.0.rc2.1.g3d20111cbd
 
 
-From ac54e40babcfe4a7cb2d505d7c87c70fdaed8722 Mon Sep 17 00:00:00 2001
+From dbfb394728c7e49422f049a5f3e64c5583729724 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:34 -0700
-Subject: [PATCH 03/11] lib: prepare zstd for preboot environment
+Subject: [PATCH 03/12] lib: prepare zstd for preboot environment
 
 * Remove a double definition of the CHECK_F macro when the zstd
   library is amalgamated.
@@ -599,10 +599,10 @@ index 1a79fab9e..dac753397 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 58d81a7900dc0c80879e5e896e962a78c012cbb9 Mon Sep 17 00:00:00 2001
+From 7cacd9f62944449768214886c26c8705c7888afc Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:35 -0700
-Subject: [PATCH 04/11] lib: add zstd support to decompress
+Subject: [PATCH 04/12] lib: add zstd support to decompress
 
 * Add unzstd() and the zstd decompress interface.
 * Add zstd support to decompress_method().
@@ -1056,10 +1056,10 @@ index 000000000..0ad2c1547
 2.28.0.rc2.1.g3d20111cbd
 
 
-From d50eeccc4e7f4ae64ef764b817299ca69eed3cd2 Mon Sep 17 00:00:00 2001
+From b9d822d355912b70b6ed705129ba063fb55f397c Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:36 -0700
-Subject: [PATCH 05/11] init: add support for zstd compressed kernel
+Subject: [PATCH 05/12] init: add support for zstd compressed kernel
 
 * Adds the zstd and zstd22 cmds to scripts/Makefile.lib
 * Adds the HAVE_KERNEL_ZSTD and KERNEL_ZSTD options
@@ -1172,10 +1172,10 @@ index 642630197..af8bfc13e 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From a341b87cc3c7f489bb84fd3d30602191a04f235a Mon Sep 17 00:00:00 2001
+From 427515e70ba8c461457e7e0bd39146dd1ed872d3 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:37 -0700
-Subject: [PATCH 06/11] usr: add support for zstd compressed initramfs
+Subject: [PATCH 06/12] usr: add support for zstd compressed initramfs
 
 * Add support for a zstd compressed initramfs.
 * Add compression for compressing built-in initramfs with zstd.
@@ -1256,10 +1256,10 @@ index c12e6b15c..b1a81a40e 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From e45eb5668dff40f0dc15e3854daf4c96b71bc8a3 Mon Sep 17 00:00:00 2001
+From b75646f16849623b8d244dd033f0945e922e9285 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:38 -0700
-Subject: [PATCH 07/11] x86: bump ZO_z_extra_bytes margin for zstd
+Subject: [PATCH 07/12] x86: bump ZO_z_extra_bytes margin for zstd
 
 Bump the ZO_z_extra_bytes margin for zstd.
 
@@ -1304,10 +1304,10 @@ index 735ad7f21..6dbd7e9f7 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 2ef15b1b629967a9a88ede80e1ef6db0cef12fa9 Mon Sep 17 00:00:00 2001
+From f1b569d85776619f7ed440b5cf2fb4addad4c0e4 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:39 -0700
-Subject: [PATCH 08/11] x86: Add support for ZSTD compressed kernel
+Subject: [PATCH 08/12] x86: Add support for ZSTD compressed kernel
 
 * Add support for zstd compressed kernel
 * Define __DISABLE_EXPORTS in Makefile
@@ -1471,10 +1471,10 @@ index 680c32036..9191280d9 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From bf1ec458dde022cc61a0227df6d7bf8bf6af1051 Mon Sep 17 00:00:00 2001
+From 65bd2563fdab5d4ca16dfb4827a629b5695898fc Mon Sep 17 00:00:00 2001
 From: Adam Borowski <kilobyte@angband.pl>
 Date: Thu, 30 Jul 2020 12:08:40 -0700
-Subject: [PATCH 09/11] .gitignore: add ZSTD-compressed files
+Subject: [PATCH 09/12] .gitignore: add ZSTD-compressed files
 
 For now, that's arch/x86/boot/compressed/vmlinux.bin.zst but probably more
 will come, thus let's be consistent with all other compressors.
@@ -1503,10 +1503,10 @@ index 2258e906f..23871de69 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From d11152b406c64d415bf4b906e43849920f6f1a93 Mon Sep 17 00:00:00 2001
+From fa3cf2edd35f87c9123deca5cc9a479f7dc31d1d Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:41 -0700
-Subject: [PATCH 10/11] Documentation: dontdiff: Add zstd compressed files
+Subject: [PATCH 10/12] Documentation: dontdiff: Add zstd compressed files
 
 For now, that's arch/x86/boot/compressed/vmlinux.bin.zst but probably
 more will come, thus let's be consistent with all other compressors.
@@ -1532,10 +1532,10 @@ index 72fc2e9e2..bdd2cd649 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 9b250a43ff403a78e8ec31e51d6083ba2624f212 Mon Sep 17 00:00:00 2001
+From 4c47beef5c906d7affb299b07301d51c882c8bb0 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Thu, 30 Jul 2020 16:53:12 -0800
-Subject: [PATCH 11/11] init: add support for zstd compressed modules
+Date: Wed, 5 Aug 2020 16:41:38 -0800
+Subject: [PATCH 11/12] init: add support for zstd compressed modules
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1544,7 +1544,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index c387381aa..3a6713cf5 100644
+index c387381aa..a61f35d3a 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1004,8 +1004,8 @@ endif # INSTALL_MOD_STRIP
@@ -1564,7 +1564,7 @@ index c387381aa..3a6713cf5 100644
    endif # CONFIG_MODULE_COMPRESS_XZ
 +  ifdef CONFIG_MODULE_COMPRESS_ZSTD
 +    mod_compress_cmd = $(ZSTD) -T0 -20 --ultra --rm -f
-+  endif
++  endif # CONFIG_MODULE_COMPRESS_ZSTD
  endif # CONFIG_MODULE_COMPRESS
  export mod_compress_cmd
  
@@ -1602,6 +1602,98 @@ index 7142f0f5a..5c58fde6c 100644
  endchoice
  
  config MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 3c9f66916d2c70ffa522717a1544568ddae505c0 Mon Sep 17 00:00:00 2001
+From: Arvind Sankar <nivedita@alum.mit.edu>
+Date: Tue, 4 Aug 2020 19:48:17 -0400
+Subject: [PATCH 12/12] x86/boot/compressed: Use builtin mem functions for
+ decompressor
+
+Since commits
+
+  c041b5ad8640 ("x86, boot: Create a separate string.h file to provide standard string functions")
+  fb4cac573ef6 ("x86, boot: Move memcmp() into string.h and string.c")
+
+the decompressor stub has been using the compiler's builtin memcpy,
+memset and memcmp functions, _except_ where it would likely have the
+largest impact, in the decompression code itself.
+
+Remove the #undef's of memcpy and memset in misc.c so that the
+decompressor code also uses the compiler builtins.
+
+The rationale given in the comment doesn't really apply: just because
+some functions use the out-of-line version is no reason to not use the
+builtin version in the rest.
+
+Replace the comment with an explanation of why memzero and memmove are
+being #define'd.
+
+Drop the suggestion to #undef in boot/string.h as well: the out-of-line
+versions are not really optimized versions, they're generic code that's
+good enough for the preboot environment. The compiler will likely
+generate better code for constant-size memcpy/memset/memcmp if it is
+allowed to.
+
+Most decompressors' performance is unchanged, with the exception of LZ4
+and 64-bit ZSTD.
+
+	Before	After ARCH
+LZ4	  73ms	 10ms   32
+LZ4	 120ms	 10ms	64
+ZSTD	  90ms	 74ms	64
+
+Measurements on QEMU on 2.2GHz Broadwell Xeon, using defconfig kernels.
+
+Decompressor code size has small differences, with the largest being
+that 64-bit ZSTD decreases just over 2k. The largest code size increase
+was on 64-bit XZ, of about 400 bytes.
+
+Signed-off-by: Arvind Sankar <nivedita@alum.mit.edu>
+Suggested-by: Nick Terrell <nickrterrell@gmail.com>
+Tested-by: Nick Terrell <nickrterrell@gmail.com>
+---
+ arch/x86/boot/compressed/misc.c | 7 ++-----
+ arch/x86/boot/string.h          | 5 +----
+ 2 files changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/arch/x86/boot/compressed/misc.c b/arch/x86/boot/compressed/misc.c
+index 39e592d0e..e478e40fb 100644
+--- a/arch/x86/boot/compressed/misc.c
++++ b/arch/x86/boot/compressed/misc.c
+@@ -30,12 +30,9 @@
+ #define STATIC		static
+ 
+ /*
+- * Use normal definitions of mem*() from string.c. There are already
+- * included header files which expect a definition of memset() and by
+- * the time we define memset macro, it is too late.
++ * Provide definitions of memzero and memmove as some of the decompressors will
++ * try to define their own functions if these are not defined as macros.
+  */
+-#undef memcpy
+-#undef memset
+ #define memzero(s, n)	memset((s), 0, (n))
+ #define memmove		memmove
+ 
+diff --git a/arch/x86/boot/string.h b/arch/x86/boot/string.h
+index 38d8f2f5e..c0d980dec 100644
+--- a/arch/x86/boot/string.h
++++ b/arch/x86/boot/string.h
+@@ -11,10 +11,7 @@ void *memcpy(void *dst, const void *src, size_t len);
+ void *memset(void *dst, int c, size_t len);
+ int memcmp(const void *s1, const void *s2, size_t len);
+ 
+-/*
+- * Access builtin version by default. If one needs to use optimized version,
+- * do "undef memcpy" in .c file and link against right string.c
+- */
++/* Access builtin version by default. */
+ #define memcpy(d,s,l) __builtin_memcpy(d,s,l)
+ #define memset(d,c,l) __builtin_memset(d,c,l)
+ #define memcmp	__builtin_memcmp
 -- 
 2.28.0.rc2.1.g3d20111cbd
 

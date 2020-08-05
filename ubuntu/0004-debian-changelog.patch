@@ -1,27 +1,44 @@
-From bd19f3258e290ed1db4b543c7878312fcda1d0f4 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 31 Jul 2020 13:39:20 -0400
+From 6f07a1b99eded66d6fe5e56eed31aa784de399ec Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 5 Aug 2020 08:30:47 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 10173 +-------------------------------------
- 1 file changed, 3 insertions(+), 10170 deletions(-)
+ debian.master/changelog | 10190 +-------------------------------------
+ 1 file changed, 3 insertions(+), 10187 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 29cd5f50d4eb..13c87df593f9 100644
+index d88b815807a4..5ce5c7086c21 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,10173 +1,6 @@
+@@ -1,10190 +1,6 @@
+-linux (5.8.0-13.14) groovy; urgency=medium
++linux (5.7.13-050713.202008050830) groovy; urgency=low
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Config] Remove i386 configs
+-    - SAUCE: apply a workaround to re-enable CONFIG_CRYPTO_AEGIS128_SIMD
+-    - SAUCE: export __get_vm_area_caller() and map_kernel_range()
+-    - [Config] drop CONFIG_BINFMT_AOUT enforcement
++  Mainline build at commit: v5.7.13
+ 
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Config] disable CONFIG_CRYPTO_AEGIS128_SIMD"
++ -- Mainline Build <kernel@sita>  Wed, 05 Aug 2020 08:30:47 +0000
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.8
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 04 Aug 2020 09:51:50 +0200
+-
 -linux (5.8.0-12.13) groovy; urgency=medium
-+linux (5.7.12-050712.202007311339) groovy; urgency=low
- 
+-
 -  * groovy/linux: 5.8.0-12.13 -proposed tracker (LP: #1889481)
-+  Mainline build at commit: v5.7.12
- 
+-
 -  * Fix right speaker of HP laptop (LP: #1889375)
 -    - SAUCE: hda/realtek: Fix right speaker of HP laptop
-+ -- Mainline Build <kernel@tangerine>  Fri, 31 Jul 2020 13:39:20 -0400
- 
+-
 -  * blk_update_request error when mount nvme partition (LP: #1872383)
 -    - SAUCE: nvme-pci: prevent SK hynix PC400 from using Write Zeroes command
 -

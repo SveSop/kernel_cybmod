@@ -77,24 +77,6 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  include/linux/blkdev.h | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 02809e4dd..23eb3a644 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -615,7 +615,8 @@ struct request_queue {
- #define QUEUE_FLAG_RQ_ALLOC_TIME 27	/* record rq->alloc_time_ns */
- 
- #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
--				 (1 << QUEUE_FLAG_SAME_COMP))
-+				 (1 << QUEUE_FLAG_SAME_COMP)	|	\
-+				 (1 << QUEUE_FLAG_SAME_FORCE))
- 
- void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
- void blk_queue_flag_clear(unsigned int flag, struct request_queue *q);
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
 From ca6a5ffa3746210aa5c1d83e5f925f68e6005043 Mon Sep 17 00:00:00 2001
 From: Christoph Hellwig <hch () lst ! de>
 Date: Sat, 16 May 2020 15:40:59 +0000
