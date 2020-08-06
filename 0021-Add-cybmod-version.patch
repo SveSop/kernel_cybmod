@@ -7,7 +7,7 @@ index 3e4868a6498b..6c5d32ffd57d 100644
  _all:
  
 +CYBVERSION = -cybmod18
-+CYBNAME = MuQSS Powered
++CYBNAME = PDS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +
  # We are using a recursive build, so we need to do a little thinking
