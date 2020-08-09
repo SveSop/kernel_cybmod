@@ -1,7 +1,7 @@
-From 269a7addcc97a9936551546cf6a2576a8779513a Mon Sep 17 00:00:00 2001
+From 3023ca7464240063aa08f86607c553e2381e7278 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <admfrade@gmail.com>
 Date: Wed, 24 Oct 2018 16:58:52 -0300
-Subject: [PATCH 01/22] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Alexandre Frade <admfrade@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index bfbefb7bf..690a42e51 100644
+index 84badf006..6a922bca9 100644
 --- a/net/sched/Kconfig
 +++ b/net/sched/Kconfig
 @@ -471,6 +471,9 @@ choice
@@ -34,10 +34,10 @@ index bfbefb7bf..690a42e51 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 2c5d653d416c9edd73ce8922f9b31fc238182092 Mon Sep 17 00:00:00 2001
+From b66d037c8a8f3bb8bd64073707074242f06a246c Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/22] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -45,10 +45,10 @@ Subject: [PATCH 02/22] infiniband: Fix __read_overflow2 error with -O3
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
-index 1753a9801..184b30282 100644
+index 3a98439bb..6efc4f907 100644
 --- a/drivers/infiniband/core/addr.c
 +++ b/drivers/infiniband/core/addr.c
-@@ -816,6 +816,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
+@@ -820,6 +820,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
  	union {
  		struct sockaddr_in  _sockaddr_in;
  		struct sockaddr_in6 _sockaddr_in6;
@@ -60,10 +60,10 @@ index 1753a9801..184b30282 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 1bd3c1855f2e8ad5e5db957f4eb6e2b817bd6301 Mon Sep 17 00:00:00 2001
+From 8f514c6c92e85b70187a7ccddcc05b691312558b Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/22] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/16] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,10 +76,10 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 12777a958..d7d1ccd3c 100644
+index 24a4c1b97..92492ca6a 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -663,6 +663,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
+@@ -679,6 +679,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
  RETPOLINE_VDSO_CFLAGS_CLANG := -mretpoline
  RETPOLINE_CFLAGS := $(call cc-option,$(RETPOLINE_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_CFLAGS_CLANG)))
  RETPOLINE_VDSO_CFLAGS := $(call cc-option,$(RETPOLINE_VDSO_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_VDSO_CFLAGS_CLANG)))
@@ -94,10 +94,10 @@ index 12777a958..d7d1ccd3c 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 7f685d1be8748b1452b107080eeee02e2af62e2a Mon Sep 17 00:00:00 2001
+From c1a47d78f8b8c1a0db2ba1d561fcab57280ae3a9 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/22] mm: Disable watermark boosting by default
+Subject: [PATCH 04/16] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -127,10 +127,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index d0c0d9364..af43525de 100644
+index e028b87ce..7e8481455 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -315,20 +315,7 @@ compound_page_dtor * const compound_page_dtors[] = {
+@@ -316,20 +316,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
  
  int min_free_kbytes = 1024;
  int user_min_free_kbytes = -1;
@@ -155,10 +155,10 @@ index d0c0d9364..af43525de 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 8396b97e04aff2f519a1f25098e38c608eef1dd0 Mon Sep 17 00:00:00 2001
+From 4703798ede122e0482f61863c775b83ab801e69e Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/22] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/16] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -175,10 +175,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 6196fd16b..cf114661a 100644
+index f6f884970..c43fcd738 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
-@@ -694,6 +694,7 @@ typedef struct pglist_data {
+@@ -701,6 +701,7 @@ typedef struct pglist_data {
  	unsigned long node_spanned_pages; /* total size of physical page
  					     range, including holes */
  	int node_id;
@@ -187,10 +187,10 @@ index 6196fd16b..cf114661a 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index af43525de..ef8db5a0f 100644
+index 7e8481455..9a2161a0f 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4464,6 +4464,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4501,6 +4501,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -199,7 +199,7 @@ index af43525de..ef8db5a0f 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4497,8 +4499,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4534,8 +4536,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -214,7 +214,7 @@ index af43525de..ef8db5a0f 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -4703,9 +4710,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4740,9 +4747,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -229,7 +229,7 @@ index af43525de..ef8db5a0f 100644
  	return page;
  }
  
-@@ -6773,6 +6783,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6710,6 +6720,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -238,10 +238,10 @@ index af43525de..ef8db5a0f 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index a37c87b5a..b5e6b2eca 100644
+index 749d239c6..2f7ec8221 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3693,7 +3693,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
+@@ -3688,7 +3688,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		__fs_reclaim_release();
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
@@ -255,10 +255,10 @@ index a37c87b5a..b5e6b2eca 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 0c6b506120d08d50197211728e6a12c24b8955ee Mon Sep 17 00:00:00 2001
+From 8e02ce784092cadcb1d45c2ce0d9a104b27e6658 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/22] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/16] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -270,10 +270,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ef8db5a0f..f68da2a9e 100644
+index 9a2161a0f..b1870faf8 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -2447,9 +2447,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
+@@ -2468,9 +2468,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
  	 * likelihood of future fallbacks. Wake kswapd now as the node
  	 * may be balanced overall and kswapd will not wake naturally.
  	 */
@@ -292,10 +292,150 @@ index ef8db5a0f..f68da2a9e 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 2b1f066ebb0a43bcb805488f7f1cf37a45a8d3db Mon Sep 17 00:00:00 2001
+From 501f329d6dae25a58a0e74d3659826b39b8ceb95 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultan@kerneltoast.com>
+Date: Wed, 20 May 2020 09:55:17 -0700
+Subject: [PATCH 07/16] mm: Don't stop kswapd on a per-node basis when there
+ are no waiters
+
+The page allocator wakes all kswapds in an allocation context's allowed
+nodemask in the slow path, so it doesn't make sense to have the kswapd-
+waiter count per each NUMA node. Instead, it should be a global counter
+to stop all kswapds when there are no failed allocation requests.
+
+Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
+---
+ include/linux/mmzone.h | 1 -
+ mm/internal.h          | 1 +
+ mm/page_alloc.c        | 8 ++++----
+ mm/vmscan.c            | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index c43fcd738..f6f884970 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -701,7 +701,6 @@ typedef struct pglist_data {
+ 	unsigned long node_spanned_pages; /* total size of physical page
+ 					     range, including holes */
+ 	int node_id;
+-	atomic_t kswapd_waiters;
+ 	wait_queue_head_t kswapd_wait;
+ 	wait_queue_head_t pfmemalloc_wait;
+ 	struct task_struct *kswapd;	/* Protected by
+diff --git a/mm/internal.h b/mm/internal.h
+index 9886db20d..aecb9df10 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -200,6 +200,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
+ extern void post_alloc_hook(struct page *page, unsigned int order,
+ 					gfp_t gfp_flags);
+ extern int user_min_free_kbytes;
++extern atomic_long_t kswapd_waiters;
+ 
+ extern void zone_pcp_update(struct zone *zone);
+ extern void zone_pcp_reset(struct zone *zone);
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index b1870faf8..d2ecce74b 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -77,6 +77,8 @@
+ #include "shuffle.h"
+ #include "page_reporting.h"
+ 
++atomic_long_t kswapd_waiters = ATOMIC_LONG_INIT(0);
++
+ /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
+ static DEFINE_MUTEX(pcp_batch_high_lock);
+ #define MIN_PERCPU_PAGELIST_FRACTION	(8)
+@@ -4503,7 +4505,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 	int no_progress_loops;
+ 	unsigned int cpuset_mems_cookie;
+ 	int reserve_flags;
+-	pg_data_t *pgdat = ac->preferred_zoneref->zone->zone_pgdat;
+ 	bool woke_kswapd = false;
+ 
+ 	/*
+@@ -4540,7 +4541,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 
+ 	if (alloc_flags & ALLOC_KSWAPD) {
+ 		if (!woke_kswapd) {
+-			atomic_inc(&pgdat->kswapd_waiters);
++			atomic_long_inc(&kswapd_waiters);
+ 			woke_kswapd = true;
+ 		}
+ 		wake_all_kswapds(order, gfp_mask, ac);
+@@ -4751,7 +4752,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ fail:
+ got_pg:
+ 	if (woke_kswapd)
+-		atomic_dec(&pgdat->kswapd_waiters);
++		atomic_long_dec(&kswapd_waiters);
+ 	if (!page)
+ 		warn_alloc(gfp_mask, ac->nodemask,
+ 				"page allocation failure: order:%u", order);
+@@ -6722,7 +6723,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+ 	pgdat_page_ext_init(pgdat);
+ 	spin_lock_init(&pgdat->lru_lock);
+ 	lruvec_init(&pgdat->__lruvec);
+-	pgdat->kswapd_waiters = (atomic_t)ATOMIC_INIT(0);
+ }
+ 
+ static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 2f7ec8221..09a710c85 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -3689,7 +3689,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+ 		ret = try_to_freeze();
+ 		__fs_reclaim_acquire();
+ 		if (ret || kthread_should_stop() ||
+-		    !atomic_read(&pgdat->kswapd_waiters))
++		    !atomic_long_read(&kswapd_waiters))
+ 			break;
+ 
+ 		/*
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 799f510f3aade50ed8ea19653fa31566aff7a4cf Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultan@kerneltoast.com>
+Date: Sun, 8 Mar 2020 00:31:35 -0800
+Subject: [PATCH 08/16] kbuild: Disable stack conservation for GCC
+
+There's plenty of room on the stack for a few more inlined bytes here
+and there. The measured stack usage at runtime is still safe without
+this, and performance is surely improved at a microscopic level, so
+remove it.
+
+Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
+---
+ Makefile | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 92492ca6a..0cf3f5317 100644
+--- a/Makefile
++++ b/Makefile
+@@ -931,9 +931,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
+ # Make sure -fstack-check isn't enabled (like gentoo apparently did)
+ KBUILD_CFLAGS  += $(call cc-option,-fno-stack-check,)
+ 
+-# conserve stack if available
+-KBUILD_CFLAGS   += $(call cc-option,-fconserve-stack)
+-
+ # Prohibit date/time macros, which would make the build non-deterministic
+ KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
+ 
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 1a3870359bdcb05eea9eb6632b2da9364420103e Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 07/22] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/16] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -347,10 +487,10 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 5e2ce88d6..ffa53aaa6 100644
+index fb95fad81..c49741530 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -3509,6 +3509,15 @@
+@@ -3568,6 +3568,15 @@
  		nomsi		[MSI] If the PCI_MSI kernel config parameter is
  				enabled, this kernel boot option can be used to
  				disable the use of MSI interrupts system-wide.
@@ -367,10 +507,10 @@ index 5e2ce88d6..ffa53aaa6 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 506756292..80a368341 100644
+index 2ea61abd5..edcee41a6 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -3544,6 +3544,106 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
+@@ -3557,6 +3557,106 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
  	dev->dev_flags |= PCI_DEV_FLAGS_NO_BUS_RESET;
  }
  
@@ -477,7 +617,7 @@ index 506756292..80a368341 100644
  /*
   * Some Atheros AR9xxx and QCA988x chips do not behave after a bus reset.
   * The device will throw a Link Down error on AER-capable systems and
-@@ -4811,6 +4911,8 @@ static const struct pci_dev_acs_enabled {
+@@ -4824,6 +4924,8 @@ static const struct pci_dev_acs_enabled {
  	{ PCI_VENDOR_ID_ZHAOXIN, 0x9083, pci_quirk_mf_endpoint_acs },
  	/* Zhaoxin Root/Downstream Ports */
  	{ PCI_VENDOR_ID_ZHAOXIN, PCI_ANY_ID, pci_quirk_zhaoxin_pcie_ports_acs },
@@ -490,117 +630,10 @@ index 506756292..80a368341 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 3de7f893ae176914fd02e16e2c6c93a4c742c4ed Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 08/22] mm: Don't stop kswapd on a per-node basis when there
- are no waiters
-
-The page allocator wakes all kswapds in an allocation context's allowed
-nodemask in the slow path, so it doesn't make sense to have the kswapd-
-waiter count per each NUMA node. Instead, it should be a global counter
-to stop all kswapds when there are no failed allocation requests.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- include/linux/mmzone.h | 1 -
- mm/internal.h          | 1 +
- mm/page_alloc.c        | 8 ++++----
- mm/vmscan.c            | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index cf114661a..6196fd16b 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -694,7 +694,6 @@ typedef struct pglist_data {
- 	unsigned long node_spanned_pages; /* total size of physical page
- 					     range, including holes */
- 	int node_id;
--	atomic_t kswapd_waiters;
- 	wait_queue_head_t kswapd_wait;
- 	wait_queue_head_t pfmemalloc_wait;
- 	struct task_struct *kswapd;	/* Protected by
-diff --git a/mm/internal.h b/mm/internal.h
-index b5634e78f..96372dd70 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -189,6 +189,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
- extern void post_alloc_hook(struct page *page, unsigned int order,
- 					gfp_t gfp_flags);
- extern int user_min_free_kbytes;
-+extern atomic_long_t kswapd_waiters;
- 
- extern void zone_pcp_update(struct zone *zone);
- extern void zone_pcp_reset(struct zone *zone);
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index f68da2a9e..667f34a27 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -76,6 +76,8 @@
- #include "shuffle.h"
- #include "page_reporting.h"
- 
-+atomic_long_t kswapd_waiters = ATOMIC_LONG_INIT(0);
-+
- /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
- static DEFINE_MUTEX(pcp_batch_high_lock);
- #define MIN_PERCPU_PAGELIST_FRACTION	(8)
-@@ -4466,7 +4468,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 	int no_progress_loops;
- 	unsigned int cpuset_mems_cookie;
- 	int reserve_flags;
--	pg_data_t *pgdat = ac->preferred_zoneref->zone->zone_pgdat;
- 	bool woke_kswapd = false;
- 
- 	/*
-@@ -4503,7 +4504,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 
- 	if (alloc_flags & ALLOC_KSWAPD) {
- 		if (!woke_kswapd) {
--			atomic_inc(&pgdat->kswapd_waiters);
-+			atomic_long_inc(&kswapd_waiters);
- 			woke_kswapd = true;
- 		}
- 		wake_all_kswapds(order, gfp_mask, ac);
-@@ -4714,7 +4715,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- fail:
- got_pg:
- 	if (woke_kswapd)
--		atomic_dec(&pgdat->kswapd_waiters);
-+		atomic_long_dec(&kswapd_waiters);
- 	if (!page)
- 		warn_alloc(gfp_mask, ac->nodemask,
- 				"page allocation failure: order:%u", order);
-@@ -6785,7 +6786,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
- 	pgdat_page_ext_init(pgdat);
- 	spin_lock_init(&pgdat->lru_lock);
- 	lruvec_init(&pgdat->__lruvec);
--	pgdat->kswapd_waiters = (atomic_t)ATOMIC_INIT(0);
- }
- 
- static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index b5e6b2eca..496c83529 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3694,7 +3694,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
- 		ret = try_to_freeze();
- 		__fs_reclaim_acquire();
- 		if (ret || kthread_should_stop() ||
--		    !atomic_read(&pgdat->kswapd_waiters))
-+		    !atomic_long_read(&kswapd_waiters))
- 			break;
- 
- 		/*
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From 9c2980003177b2d72cef598c8836caf7ed942497 Mon Sep 17 00:00:00 2001
+From 1a34bdae1eecbf14f03b9f0fb6e3e375b9111163 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
-Date: Mon, 18 May 2020 11:14:46 -0700
-Subject: [PATCH 09/22] mm: Proactive compaction
+Date: Tue, 16 Jun 2020 13:45:27 -0700
+Subject: [PATCH 10/16] mm: Proactive compaction
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -616,19 +649,15 @@ state within <1 sec for a 32G system. Such data suggests that a more
 proactive compaction can help us allocate a large fraction of memory as
 hugepages keeping allocation latencies low.
 
-For a more proactive compaction, the approach taken here is to define
-a new tunable called 'proactiveness' which dictates bounds for external
-fragmentation wrt HUGETLB_PAGE_ORDER order which kcompactd tries to
-maintain.
+For a more proactive compaction, the approach taken here is to define a
+new sysctl called 'vm.compaction_proactiveness' which dictates bounds
+for external fragmentation which kcompactd tries to maintain.
 
-The tunable is exposed through sysctl:
-  /proc/sys/vm/compaction_proactiveness
+The tunable takes a value in range [0, 100], with a default of 20.
 
-It takes value in range [0, 100], with a default of 20.
-
-Note that a previous version of this patch [1] was found to introduce too
-many tunables (per-order extfrag{low, high}), but this one reduces them
-to just one (proactiveness). Also, the new tunable is an opaque value
+Note that a previous version of this patch [1] was found to introduce
+too many tunables (per-order extfrag{low, high}), but this one reduces
+them to just one sysctl. Also, the new tunable is an opaque value
 instead of asking for specific bounds of "external fragmentation", which
 would have been difficult to estimate. The internal interpretation of
 this opaque value allows for future fine-tuning.
@@ -636,8 +665,7 @@ this opaque value allows for future fine-tuning.
 Currently, we use a simple translation from this tunable to [low, high]
 "fragmentation score" thresholds (low=100-proactiveness, high=low+10%).
 The score for a node is defined as weighted mean of per-zone external
-fragmentation wrt HUGETLB_PAGE_ORDER order. A zone's present_pages
-determines its weight.
+fragmentation. A zone's present_pages determines its weight.
 
 To periodically check per-node score, we reuse per-node kcompactd
 threads, which are woken up every 500 milliseconds to check the same. If
@@ -646,8 +674,8 @@ proactiveness value), proactive compaction is started until its score
 reaches its low threshold value. By default, proactiveness is set to 20,
 which implies threshold values of low=80 and high=90.
 
-This patch is largely based on ideas from Michal Hocko posted here:
-https://lore.kernel.org/linux-mm/20161230131412.GI13301@dhcp22.suse.cz/
+This patch is largely based on ideas from Michal Hocko [2]. See also the
+LWN article [3].
 
 Performance data
 ================
@@ -667,14 +695,13 @@ hugepage allocations hit direct compaction.
 
 1. Kernel hugepage allocation latencies
 
-With the system in such a fragmented state, a kernel driver then allocates
-as many hugepages as possible and measures allocation latency:
+With the system in such a fragmented state, a kernel driver then
+allocates as many hugepages as possible and measures allocation
+latency:
 
 (all latency values are in microseconds)
 
 - With vanilla 5.6.0-rc3
-
-echo 0 | sudo tee /sys/kernel/mm/compaction/node-*/proactiveness
 
   percentile latency
   –––––––––– –––––––
@@ -695,7 +722,7 @@ Total 2M hugepages allocated = 383859 (749G worth of hugepages out of
 
 - With 5.6.0-rc3 + this patch, with proactiveness=20
 
-echo 20 | sudo tee /sys/kernel/mm/compaction/node-*/proactiveness
+sysctl -w vm.compaction_proactiveness=20
 
   percentile latency
   –––––––––– –––––––
@@ -745,7 +772,7 @@ extreme proactiveness values, like 80 or 90.
 In the above Java workload, proactiveness is set to 20. The test starts
 with a node's score of 80 or higher, depending on the delay between the
 fragmentation step and starting the benchmark, which gives more-or-less
-time for the initial round of compaction. As the benchmark consumes
+time for the initial round of compaction. As t	he benchmark consumes
 hugepages, node's score quickly rises above the high threshold (90) and
 proactive compaction starts again, which brings down the score to the
 low threshold level (80).  Repeat.
@@ -769,35 +796,42 @@ should essentially back off. To test this aspect:
   (=> ~30 seconds between retries).
 
 [1] https://patchwork.kernel.org/patch/11098289/
+[2] https://lore.kernel.org/linux-mm/20161230131412.GI13301@dhcp22.suse.cz/
+[3] https://lwn.net/Articles/817905/
 
 Signed-off-by: Nitin Gupta <nigupta@nvidia.com>
-To: Mel Gorman <mgorman@techsingularity.net>
-To: Michal Hocko <mhocko@suse.com>
-To: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Khalid Aziz <khalid.aziz@oracle.com>
+Reviewed-by: Oleksandr Natalenko <oleksandr@redhat.com>
+Tested-by: Oleksandr Natalenko <oleksandr@redhat.com>
+To: Andrew Morton <akpm@linux-foundation.org>
+CC: Vlastimil Babka <vbabka@suse.cz>
+CC: Khalid Aziz <khalid.aziz@oracle.com>
+CC: Michal Hocko <mhocko@suse.com>
+CC: Mel Gorman <mgorman@techsingularity.net>
 CC: Matthew Wilcox <willy@infradead.org>
-CC: Andrew Morton <akpm@linux-foundation.org>
 CC: Mike Kravetz <mike.kravetz@oracle.com>
 CC: Joonsoo Kim <iamjoonsoo.kim@lge.com>
 CC: David Rientjes <rientjes@google.com>
 CC: Nitin Gupta <ngupta@nitingupta.dev>
+CC: Oleksandr Natalenko <oleksandr@redhat.com>
 CC: linux-kernel <linux-kernel@vger.kernel.org>
 CC: linux-mm <linux-mm@kvack.org>
 CC: Linux API <linux-api@vger.kernel.org>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- Documentation/admin-guide/sysctl/vm.rst |  13 ++
+ Documentation/admin-guide/sysctl/vm.rst |  15 ++
  include/linux/compaction.h              |   2 +
  kernel/sysctl.c                         |   9 ++
- mm/compaction.c                         | 165 +++++++++++++++++++++++-
+ mm/compaction.c                         | 183 +++++++++++++++++++++++-
  mm/internal.h                           |   1 +
- mm/vmstat.c                             |  17 +++
- 6 files changed, 202 insertions(+), 5 deletions(-)
+ mm/vmstat.c                             |  18 +++
+ 6 files changed, 223 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/admin-guide/sysctl/vm.rst b/Documentation/admin-guide/sysctl/vm.rst
-index 0329a4d3f..e5d88cabe 100644
+index d46d5b701..4b7c49619 100644
 --- a/Documentation/admin-guide/sysctl/vm.rst
 +++ b/Documentation/admin-guide/sysctl/vm.rst
-@@ -119,6 +119,19 @@ all zones are compacted such that free memory is available in contiguous
+@@ -119,6 +119,21 @@ all zones are compacted such that free memory is available in contiguous
  blocks where possible. This can be important for example in the allocation of
  huge pages although processes will also directly compact memory as required.
  
@@ -814,11 +848,13 @@ index 0329a4d3f..e5d88cabe 100644
 +various heuristics to avoid wasting CPU cycles if it detects that
 +proactive compaction is not being effective.
 +
++Be careful when setting it to extreme values like 100, as that may
++cause excessive background compaction activity.
  
  compact_unevictable_allowed
  ===========================
 diff --git a/include/linux/compaction.h b/include/linux/compaction.h
-index 4b898cdbd..ccd28978b 100644
+index 6fa0eea3f..7a242d464 100644
 --- a/include/linux/compaction.h
 +++ b/include/linux/compaction.h
 @@ -85,11 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
@@ -827,7 +863,7 @@ index 4b898cdbd..ccd28978b 100644
  extern int sysctl_compact_memory;
 +extern int sysctl_compaction_proactiveness;
  extern int sysctl_compaction_handler(struct ctl_table *table, int write,
- 			void __user *buffer, size_t *length, loff_t *ppos);
+ 			void *buffer, size_t *length, loff_t *ppos);
  extern int sysctl_extfrag_threshold;
  extern int sysctl_compact_unevictable_allowed;
  
@@ -836,10 +872,10 @@ index 4b898cdbd..ccd28978b 100644
  extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
  		unsigned int order, unsigned int alloc_flags,
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 8a176d872..51c90906e 100644
+index db1ce7af2..58b0a59c9 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -1458,6 +1458,15 @@ static struct ctl_table vm_table[] = {
+@@ -2830,6 +2830,15 @@ static struct ctl_table vm_table[] = {
  		.mode		= 0200,
  		.proc_handler	= sysctl_compaction_handler,
  	},
@@ -856,10 +892,10 @@ index 8a176d872..51c90906e 100644
  		.procname	= "extfrag_threshold",
  		.data		= &sysctl_extfrag_threshold,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 65b568e19..dbcb38109 100644
+index 86375605f..544a98811 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
-@@ -50,6 +50,11 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
+@@ -50,6 +50,24 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
  #define pageblock_start_pfn(pfn)	block_start_pfn(pfn, pageblock_order)
  #define pageblock_end_pfn(pfn)		block_end_pfn(pfn, pageblock_order)
  
@@ -868,10 +904,23 @@ index 65b568e19..dbcb38109 100644
 + */
 +static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
 +
++/*
++ * Page order with-respect-to which proactive compaction
++ * calculates external fragmentation, which is used as
++ * the "fragmentation score" of a node/zone.
++ */
++#if defined CONFIG_TRANSPARENT_HUGEPAGE
++#define COMPACTION_HPAGE_ORDER	HPAGE_PMD_ORDER
++#elif defined HUGETLB_PAGE_ORDER
++#define COMPACTION_HPAGE_ORDER	HUGETLB_PAGE_ORDER
++#else
++#define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
++#endif
++
  static unsigned long release_freepages(struct list_head *freelist)
  {
  	struct page *page, *next;
-@@ -1855,6 +1860,71 @@ static inline bool is_via_compact_memory(int order)
+@@ -1857,6 +1875,76 @@ static inline bool is_via_compact_memory(int order)
  	return order == -1;
  }
  
@@ -882,9 +931,9 @@ index 65b568e19..dbcb38109 100644
 +
 +/*
 + * A zone's fragmentation score is the external fragmentation wrt to the
-+ * HUGETLB_PAGE_ORDER scaled by the zone's size. It returns a value in the
-+ * range [0, 100].
-+
++ * COMPACTION_HPAGE_ORDER scaled by the zone's size. It returns a value
++ * in the range [0, 100].
++ *
 + * The scaling factor ensures that proactive compaction focuses on larger
 + * zones like ZONE_NORMAL, rather than smaller, specialized zones like
 + * ZONE_DMA32. For smaller zones, the score value remains close to zero,
@@ -895,7 +944,7 @@ index 65b568e19..dbcb38109 100644
 +	unsigned long score;
 +
 +	score = zone->present_pages *
-+			extfrag_for_order(zone, HPAGE_PMD_ORDER);
++			extfrag_for_order(zone, COMPACTION_HPAGE_ORDER);
 +	return div64_ul(score, zone->zone_pgdat->node_present_pages + 1);
 +}
 +
@@ -925,7 +974,12 @@ index 65b568e19..dbcb38109 100644
 +{
 +	int wmark_low;
 +
-+	wmark_low = 100 - sysctl_compaction_proactiveness;
++	/*
++	 * Cap the low watermak to avoid excessive compaction
++	 * activity in case a user sets the proactivess tunable
++	 * close to 100 (maximum).
++	 */
++	wmark_low = max(100 - sysctl_compaction_proactiveness, 5);
 +	return low ? wmark_low : min(wmark_low + 10, 100);
 +}
 +
@@ -943,7 +997,7 @@ index 65b568e19..dbcb38109 100644
  static enum compact_result __compact_finished(struct compact_control *cc)
  {
  	unsigned int order;
-@@ -1881,6 +1951,25 @@ static enum compact_result __compact_finished(struct compact_control *cc)
+@@ -1883,6 +1971,25 @@ static enum compact_result __compact_finished(struct compact_control *cc)
  			return COMPACT_PARTIAL_SKIPPED;
  	}
  
@@ -969,7 +1023,7 @@ index 65b568e19..dbcb38109 100644
  	if (is_via_compact_memory(cc->order))
  		return COMPACT_CONTINUE;
  
-@@ -1939,6 +2028,7 @@ static enum compact_result __compact_finished(struct compact_control *cc)
+@@ -1941,6 +2048,7 @@ static enum compact_result __compact_finished(struct compact_control *cc)
  		}
  	}
  
@@ -977,7 +1031,7 @@ index 65b568e19..dbcb38109 100644
  	if (cc->contended || fatal_signal_pending(current))
  		ret = COMPACT_CONTENDED;
  
-@@ -2423,6 +2513,41 @@ enum compact_result try_to_compact_pages(gfp_t gfp_mask, unsigned int order,
+@@ -2421,6 +2529,41 @@ enum compact_result try_to_compact_pages(gfp_t gfp_mask, unsigned int order,
  	return rc;
  }
  
@@ -1019,7 +1073,7 @@ index 65b568e19..dbcb38109 100644
  
  /* Compact all zones within a node */
  static void compact_node(int nid)
-@@ -2469,6 +2594,13 @@ static void compact_nodes(void)
+@@ -2467,6 +2610,13 @@ static void compact_nodes(void)
  /* The written value is actually unused, all memory is compacted */
  int sysctl_compact_memory;
  
@@ -1028,12 +1082,12 @@ index 65b568e19..dbcb38109 100644
 + * aggressively the kernel should compact memory in the
 + * background. It takes values in the range [0, 100].
 + */
-+int sysctl_compaction_proactiveness = 20;
++int __read_mostly sysctl_compaction_proactiveness = 20;
 +
  /*
   * This is the entry point for compacting all nodes via
   * /proc/sys/vm/compact_memory
-@@ -2648,6 +2780,7 @@ static int kcompactd(void *p)
+@@ -2646,6 +2796,7 @@ static int kcompactd(void *p)
  {
  	pg_data_t *pgdat = (pg_data_t*)p;
  	struct task_struct *tsk = current;
@@ -1041,7 +1095,7 @@ index 65b568e19..dbcb38109 100644
  
  	const struct cpumask *cpumask = cpumask_of_node(pgdat->node_id);
  
-@@ -2663,12 +2796,34 @@ static int kcompactd(void *p)
+@@ -2661,12 +2812,34 @@ static int kcompactd(void *p)
  		unsigned long pflags;
  
  		trace_mm_compaction_kcompactd_sleep(pgdat->node_id);
@@ -1082,10 +1136,10 @@ index 65b568e19..dbcb38109 100644
  
  	return 0;
 diff --git a/mm/internal.h b/mm/internal.h
-index 96372dd70..565992704 100644
+index aecb9df10..26f39eeaa 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
-@@ -229,6 +229,7 @@ struct compact_control {
+@@ -240,6 +240,7 @@ struct compact_control {
  	bool no_set_skip_hint;		/* Don't mark blocks for skipping */
  	bool ignore_block_suitable;	/* Scan blocks considered unsuitable */
  	bool direct_compaction;		/* False from kcompactd or /proc/... */
@@ -1094,10 +1148,10 @@ index 96372dd70..565992704 100644
  	bool contended;			/* Signal lock or sched contention */
  	bool rescan;			/* Rescanning the same pageblock */
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 96d21a792..d7ab7dbdc 100644
+index 3fb23a21f..3e7ba8bce 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
-@@ -1074,6 +1074,23 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
+@@ -1074,6 +1074,24 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
  	return 1000 - div_u64( (1000+(div_u64(info->free_pages * 1000ULL, requested))), info->free_blocks_total);
  }
  
@@ -1114,8 +1168,9 @@ index 96d21a792..d7ab7dbdc 100644
 +	if (info.free_pages == 0)
 +		return 0;
 +
-+	return (info.free_pages - (info.free_blocks_suitable << order)) * 100
-+							/ info.free_pages;
++	return div_u64((info.free_pages -
++			(info.free_blocks_suitable << order)) * 100,
++			info.free_pages);
 +}
 +
  /* Same as __fragmentation index but allocs contig_page_info on stack */
@@ -1125,201 +1180,429 @@ index 96d21a792..d7ab7dbdc 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 02b58165d90f2b1b7ea98df4f88089ccd198eb7f Mon Sep 17 00:00:00 2001
-From: Oleksandr Natalenko <oleksandr@natalenko.name>
-Date: Mon, 1 Jun 2020 22:00:28 +0200
-Subject: [PATCH 10/22] mm-5.7: proactive compaction v6
+From f522ccbd3b9b9845aa727df5fc213b834635b445 Mon Sep 17 00:00:00 2001
+From: Nitin Gupta <nigupta@nvidia.com>
+Date: Wed, 17 Jun 2020 18:03:17 -0700
+Subject: [PATCH 11/16] mm: Use unsigned types for fragmentation score
 
-Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Proactive compaction uses per-node/zone "fragmentation score" which
+is always in range [0, 100], so use unsigned type of these scores
+as well as for related constants.
+
+Signed-off-by: Nitin Gupta <nigupta@nvidia.com>
 ---
- Documentation/admin-guide/sysctl/vm.rst |  2 ++
- mm/compaction.c                         | 30 ++++++++++++++++++++-----
- mm/vmstat.c                             |  5 +++--
- 3 files changed, 29 insertions(+), 8 deletions(-)
+ include/linux/compaction.h |  4 ++--
+ kernel/sysctl.c            |  2 +-
+ mm/compaction.c            | 18 +++++++++---------
+ mm/vmstat.c                |  2 +-
+ 4 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/admin-guide/sysctl/vm.rst b/Documentation/admin-guide/sysctl/vm.rst
-index e5d88cabe..360914b4f 100644
---- a/Documentation/admin-guide/sysctl/vm.rst
-+++ b/Documentation/admin-guide/sysctl/vm.rst
-@@ -132,6 +132,8 @@ to latency spikes in unsuspecting applications. The kernel employs
- various heuristics to avoid wasting CPU cycles if it detects that
- proactive compaction is not being effective.
+diff --git a/include/linux/compaction.h b/include/linux/compaction.h
+index 7a242d464..25a521d29 100644
+--- a/include/linux/compaction.h
++++ b/include/linux/compaction.h
+@@ -85,13 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
  
-+Be careful when setting it to extreme values like 100, as that may
-+cause excessive background compaction activity.
+ #ifdef CONFIG_COMPACTION
+ extern int sysctl_compact_memory;
+-extern int sysctl_compaction_proactiveness;
++extern unsigned int sysctl_compaction_proactiveness;
+ extern int sysctl_compaction_handler(struct ctl_table *table, int write,
+ 			void *buffer, size_t *length, loff_t *ppos);
+ extern int sysctl_extfrag_threshold;
+ extern int sysctl_compact_unevictable_allowed;
  
- compact_unevictable_allowed
- ===========================
+-extern int extfrag_for_order(struct zone *zone, unsigned int order);
++extern unsigned int extfrag_for_order(struct zone *zone, unsigned int order);
+ extern int fragmentation_index(struct zone *zone, unsigned int order);
+ extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
+ 		unsigned int order, unsigned int alloc_flags,
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index 58b0a59c9..40180cdde 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -2833,7 +2833,7 @@ static struct ctl_table vm_table[] = {
+ 	{
+ 		.procname	= "compaction_proactiveness",
+ 		.data		= &sysctl_compaction_proactiveness,
+-		.maxlen		= sizeof(int),
++		.maxlen		= sizeof(sysctl_compaction_proactiveness),
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dointvec_minmax,
+ 		.extra1		= SYSCTL_ZERO,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index dbcb38109..b684af734 100644
+index 544a98811..2ca208eb6 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
-@@ -55,6 +55,19 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
+@@ -53,7 +53,7 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
+ /*
+  * Fragmentation score check interval for proactive compaction purposes.
   */
- static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
- 
-+/*
-+ * Page order with-respect-to which proactive compaction
-+ * calculates external fragmentation, which is used as
-+ * the "fragmentation score" of a node/zone.
-+ */
-+#if defined HPAGE_PMD_ORDER
-+#define COMPACTION_HPAGE_ORDER	HPAGE_PMD_ORDER
-+#elif defined HUGETLB_PAGE_ORDER
-+#define COMPACTION_HPAGE_ORDER	HUGETLB_PAGE_ORDER
-+#else
-+#define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
-+#endif
-+
- static unsigned long release_freepages(struct list_head *freelist)
- {
- 	struct page *page, *next;
-@@ -1867,9 +1880,9 @@ static bool kswapd_is_running(pg_data_t *pgdat)
+-static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
++static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
  
  /*
-  * A zone's fragmentation score is the external fragmentation wrt to the
-- * HUGETLB_PAGE_ORDER scaled by the zone's size. It returns a value in the
-- * range [0, 100].
--
-+ * COMPACTION_HPAGE_ORDER scaled by the zone's size. It returns a value
-+ * in the range [0, 100].
-+ *
-  * The scaling factor ensures that proactive compaction focuses on larger
-  * zones like ZONE_NORMAL, rather than smaller, specialized zones like
+  * Page order with-respect-to which proactive compaction
+@@ -1890,7 +1890,7 @@ static bool kswapd_is_running(pg_data_t *pgdat)
   * ZONE_DMA32. For smaller zones, the score value remains close to zero,
-@@ -1880,7 +1893,7 @@ static int fragmentation_score_zone(struct zone *zone)
+  * and thus never exceeds the high threshold for proactive compaction.
+  */
+-static int fragmentation_score_zone(struct zone *zone)
++static unsigned int fragmentation_score_zone(struct zone *zone)
+ {
  	unsigned long score;
  
- 	score = zone->present_pages *
--			extfrag_for_order(zone, HPAGE_PMD_ORDER);
-+			extfrag_for_order(zone, COMPACTION_HPAGE_ORDER);
- 	return div64_ul(score, zone->zone_pgdat->node_present_pages + 1);
- }
- 
-@@ -1910,7 +1923,12 @@ static int fragmentation_score_wmark(pg_data_t *pgdat, bool low)
+@@ -1906,9 +1906,9 @@ static int fragmentation_score_zone(struct zone *zone)
+  * the node's score falls below the low threshold, or one of the back-off
+  * conditions is met.
+  */
+-static int fragmentation_score_node(pg_data_t *pgdat)
++static unsigned int fragmentation_score_node(pg_data_t *pgdat)
  {
- 	int wmark_low;
+-	unsigned long score = 0;
++	unsigned int score = 0;
+ 	int zoneid;
  
--	wmark_low = 100 - sysctl_compaction_proactiveness;
-+	/*
-+	 * Cap the low watermak to avoid excessive compaction
-+	 * activity in case a user sets the proactivess tunable
-+	 * close to 100 (maximum).
-+	 */
-+	wmark_low = max(100 - sysctl_compaction_proactiveness, 5);
- 	return low ? wmark_low : min(wmark_low + 10, 100);
+ 	for (zoneid = 0; zoneid < MAX_NR_ZONES; zoneid++) {
+@@ -1921,17 +1921,17 @@ static int fragmentation_score_node(pg_data_t *pgdat)
+ 	return score;
  }
  
-@@ -2599,7 +2617,7 @@ int sysctl_compact_memory;
+-static int fragmentation_score_wmark(pg_data_t *pgdat, bool low)
++static unsigned int fragmentation_score_wmark(pg_data_t *pgdat, bool low)
+ {
+-	int wmark_low;
++	unsigned int wmark_low;
+ 
+ 	/*
+ 	 * Cap the low watermak to avoid excessive compaction
+ 	 * activity in case a user sets the proactivess tunable
+ 	 * close to 100 (maximum).
+ 	 */
+-	wmark_low = max(100 - sysctl_compaction_proactiveness, 5);
+-	return low ? wmark_low : min(wmark_low + 10, 100);
++	wmark_low = max(100U - sysctl_compaction_proactiveness, 5U);
++	return low ? wmark_low : min(wmark_low + 10, 100U);
+ }
+ 
+ static bool should_proactive_compact_node(pg_data_t *pgdat)
+@@ -2615,7 +2615,7 @@ int sysctl_compact_memory;
   * aggressively the kernel should compact memory in the
   * background. It takes values in the range [0, 100].
   */
--int sysctl_compaction_proactiveness = 20;
-+int __read_mostly sysctl_compaction_proactiveness = 20;
+-int __read_mostly sysctl_compaction_proactiveness = 20;
++unsigned int __read_mostly sysctl_compaction_proactiveness = 20;
  
  /*
   * This is the entry point for compacting all nodes via
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index d7ab7dbdc..cc88f7533 100644
+index 3e7ba8bce..b1de695b8 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
-@@ -1087,8 +1087,9 @@ int extfrag_for_order(struct zone *zone, unsigned int order)
- 	if (info.free_pages == 0)
- 		return 0;
- 
--	return (info.free_pages - (info.free_blocks_suitable << order)) * 100
--							/ info.free_pages;
-+	return div_u64((info.free_pages -
-+			(info.free_blocks_suitable << order)) * 100,
-+			info.free_pages);
- }
- 
- /* Same as __fragmentation index but allocs contig_page_info on stack */
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From b5cdff352867e1af2e1493e7ecf5cd672aaa7222 Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 11/22] kbuild: Disable stack conservation for GCC
-
-There's plenty of room on the stack for a few more inlined bytes here
-and there. The measured stack usage at runtime is still safe without
-this, and performance is surely improved at a microscopic level, so
-remove it.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- Makefile | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index d7d1ccd3c..bc1f9c6b9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -903,9 +903,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
- # Make sure -fstack-check isn't enabled (like gentoo apparently did)
- KBUILD_CFLAGS  += $(call cc-option,-fno-stack-check,)
- 
--# conserve stack if available
--KBUILD_CFLAGS   += $(call cc-option,-fconserve-stack)
--
- # Prohibit date/time macros, which would make the build non-deterministic
- KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
+@@ -1079,7 +1079,7 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
+  * It is defined as the percentage of pages found in blocks of size
+  * less than 1 << order. It returns values in range [0, 100].
+  */
+-int extfrag_for_order(struct zone *zone, unsigned int order)
++unsigned int extfrag_for_order(struct zone *zone, unsigned int order)
+ {
+ 	struct contig_page_info info;
  
 -- 
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 3876748adfbe622d4d02d1bb143dfcf5dd66723b Mon Sep 17 00:00:00 2001
-From: Oleksandr Natalenko <oleksandr@redhat.com>
-Date: Wed, 17 Jun 2020 10:07:18 +0200
-Subject: [PATCH 12/22] mm-5.7: fix proactive compaction build with THP
- disabled
+From dc214aeaa3a0334aa1453ee52810a734f503a0bd Mon Sep 17 00:00:00 2001
+From: Nitin Gupta <nigupta@nvidia.com>
+Date: Mon, 22 Jun 2020 23:45:44 -0700
+Subject: [PATCH 12/16] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
 
-Signed-off-by: Oleksandr Natalenko <oleksandr@redhat.com>
+Fix compile error when COMPACTION_HPAGE_ORDER is assigned
+to HUGETLB_PAGE_ORDER. The correct way to check if this
+constant is defined is to check for CONFIG_HUGETLBFS.
+
+Signed-off-by: Nitin Gupta <nigupta@nvidia.com>
+To: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Nathan Chancellor <natechancellor@gmail.com>
+Tested-by: Nathan Chancellor <natechancellor@gmail.com>
 ---
  mm/compaction.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/compaction.c b/mm/compaction.c
-index b684af734..93e703cdf 100644
+index 2ca208eb6..b7d433f17 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
-@@ -60,7 +60,7 @@ static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
-  * calculates external fragmentation, which is used as
-  * the "fragmentation score" of a node/zone.
+@@ -62,7 +62,7 @@ static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
   */
--#if defined HPAGE_PMD_ORDER
-+#if defined CONFIG_TRANSPARENT_HUGEPAGE
+ #if defined CONFIG_TRANSPARENT_HUGEPAGE
  #define COMPACTION_HPAGE_ORDER	HPAGE_PMD_ORDER
- #elif defined HUGETLB_PAGE_ORDER
+-#elif defined HUGETLB_PAGE_ORDER
++#elif defined CONFIG_HUGETLBFS
  #define COMPACTION_HPAGE_ORDER	HUGETLB_PAGE_ORDER
+ #else
+ #define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
 -- 
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 166c05f707405d225e533be47e5af040164c5603 Mon Sep 17 00:00:00 2001
-From: Steven Barrett <steven@liquorix.net>
-Date: Wed, 17 Jun 2020 14:24:20 -0500
-Subject: [PATCH 13/22] Add OpenRGB patch - 0c45e26c
+From ca032616d811ea23f95e524d82ba03040874b532 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Wed, 15 Jul 2020 10:54:43 +0200
+Subject: [PATCH 13/16] net: sched: Allow changing default qdisc to FQ-PIE
 
-Source:
-https://gitlab.com/CalcProgrammer1/OpenRGB/-/raw/master/OpenRGB.patch
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ net/sched/Kconfig | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-History:
-https://gitlab.com/CalcProgrammer1/OpenRGB/-/commits/master/OpenRGB.patch
+diff --git a/net/sched/Kconfig b/net/sched/Kconfig
+index 6a922bca9..1fcfd47d1 100644
+--- a/net/sched/Kconfig
++++ b/net/sched/Kconfig
+@@ -468,6 +468,9 @@ choice
+ 	config DEFAULT_FQ_CODEL
+ 		bool "Fair Queue Controlled Delay" if NET_SCH_FQ_CODEL
+ 
++	config DEFAULT_FQ_PIE
++		bool "Flow Queue Proportional Integral controller Enhanced" if NET_SCH_FQ_PIE
++
+ 	config DEFAULT_SFQ
+ 		bool "Stochastic Fair Queue" if NET_SCH_SFQ
+ 
+@@ -483,6 +486,7 @@ config DEFAULT_NET_SCH
+ 	default "pfifo_fast" if DEFAULT_PFIFO_FAST
+ 	default "fq" if DEFAULT_FQ
+ 	default "fq_codel" if DEFAULT_FQ_CODEL
++	default "fq_pie" if DEFAULT_FQ_PIE
+ 	default "sfq" if DEFAULT_SFQ
+ 	default "cake" if DEFAULT_CAKE
+ 	default "pfifo_fast"
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 618375e1e79e7e3bae38ec14be1dee04d53626af Mon Sep 17 00:00:00 2001
+From: Harsha Priya <harshapriya.n@intel.com>
+Date: Mon, 6 Jul 2020 13:53:17 -0700
+Subject: [PATCH 14/16] ALSA: hda/hdmi: Add Intel silent stream support
+
+External HDMI receivers have analog circuitry that needs to be powered-on
+when exiting standby, and a mechanism to detect PCM v. IEC61937 data.
+These two steps take time and up to 2-3 seconds of audio may be muted
+when starting playback.
+
+Intel hardware (Haswell and beyond) can keep the link active
+with a 'silent stream', so that the receiver does not go through those
+two steps when valid audio is transmitted. This mechanism relies
+on an setting the channel_id as 0xf, sending info packet and preventing
+the codec from going to D3,  which will increase the platform
+static power consumption. The info packet assumes a basic 2ch stereo,
+and the silent stream is enabled when connecting a monitor.
+In case of format changes the detection of PCM v. IEC61937 needs to
+be re-run. In this case there is no way to avoid the 2-3s mute.
+
+The silent stream is enabled with a Kconfig option, as well as a kernel
+parameter should there be a need to override the build time default.
+This approach is used based on the power_save capability as an example,
+but in the future, it may be used with a kcontrol,
+depending on UCM support for HDaudio legacy.
+
+Signed-off-by: Harsha Priya <harshapriya.n@intel.com>
+Signed-off-by: Emmanuel Jillela <emmanuel.jillela@intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/r/1594068797-14011-1-git-send-email-harshapriya.n@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ sound/pci/hda/Kconfig      | 14 +++++++++
+ sound/pci/hda/patch_hdmi.c | 64 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 78 insertions(+)
+
+diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
+index 7ba542e45..84aa04ecd 100644
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -230,6 +230,20 @@ config SND_HDA_POWER_SAVE_DEFAULT
+ 	  The default time-out value in seconds for HD-audio automatic
+ 	  power-save mode.  0 means to disable the power-save mode.
+ 
++config SND_HDA_INTEL_HDMI_SILENT_STREAM
++	bool "Enable Silent Stream always for HDMI"
++	depends on SND_HDA_INTEL
++	help
++	  Intel hardware has a feature called 'silent stream', that
++	  keeps external HDMI receiver's analog circuitry powered on
++	  avoiding 2-3 sec silence during playback start. This mechanism
++	  relies on setting channel_id as 0xf, sending info packet and
++	  preventing codec D3 entry (increasing  platform static power
++	  consumption when HDMI receiver is plugged-in). 2-3 sec silence
++	  at the playback start is expected whenever there is format change.
++	  (default is 2 channel format).
++	  Say Y to enable Silent Stream feature.
++
+ endif
+ 
+ endmenu
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index cd4624798..cccf6d517 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -42,6 +42,11 @@ static bool enable_acomp = true;
+ module_param(enable_acomp, bool, 0444);
+ MODULE_PARM_DESC(enable_acomp, "Enable audio component binding (default=yes)");
+ 
++static bool enable_silent_stream =
++IS_ENABLED(CONFIG_SND_HDA_INTEL_HDMI_SILENT_STREAM);
++module_param(enable_silent_stream, bool, 0644);
++MODULE_PARM_DESC(enable_silent_stream, "Enable Silent Stream for HDMI devices");
++
+ struct hdmi_spec_per_cvt {
+ 	hda_nid_t cvt_nid;
+ 	int assigned;
+@@ -167,6 +172,7 @@ struct hdmi_spec {
+ 	hda_nid_t vendor_nid;
+ 	const int *port_map;
+ 	int port_num;
++	bool send_silent_stream; /* Flag to enable silent stream feature */
+ };
+ 
+ #ifdef CONFIG_SND_HDA_COMPONENT
+@@ -1635,21 +1641,72 @@ static void hdmi_present_sense_via_verbs(struct hdmi_spec_per_pin *per_pin,
+ 	snd_hda_power_down_pm(codec);
+ }
+ 
++static void silent_stream_enable(struct hda_codec *codec,
++				struct hdmi_spec_per_pin *per_pin)
++{
++	unsigned int newval, oldval;
++
++	codec_dbg(codec, "hdmi: enabling silent stream for NID %d\n",
++			per_pin->pin_nid);
++
++	mutex_lock(&per_pin->lock);
++
++	if (!per_pin->channels)
++		per_pin->channels = 2;
++
++	oldval = snd_hda_codec_read(codec, per_pin->pin_nid, 0,
++			AC_VERB_GET_CONV, 0);
++	newval = (oldval & 0xF0) | 0xF;
++	snd_hda_codec_write(codec, per_pin->pin_nid, 0,
++			AC_VERB_SET_CHANNEL_STREAMID, newval);
++
++	hdmi_setup_audio_infoframe(codec, per_pin, per_pin->non_pcm);
++
++	mutex_unlock(&per_pin->lock);
++}
++
+ /* update ELD and jack state via audio component */
+ static void sync_eld_via_acomp(struct hda_codec *codec,
+ 			       struct hdmi_spec_per_pin *per_pin)
+ {
+ 	struct hdmi_spec *spec = codec->spec;
+ 	struct hdmi_eld *eld = &spec->temp_eld;
++	bool monitor_prev, monitor_next;
+ 
+ 	mutex_lock(&per_pin->lock);
+ 	eld->monitor_present = false;
++	monitor_prev = per_pin->sink_eld.monitor_present;
+ 	eld->eld_size = snd_hdac_acomp_get_eld(&codec->core, per_pin->pin_nid,
+ 				      per_pin->dev_id, &eld->monitor_present,
+ 				      eld->eld_buffer, ELD_MAX_SIZE);
+ 	eld->eld_valid = (eld->eld_size > 0);
+ 	update_eld(codec, per_pin, eld, 0);
++	monitor_next = per_pin->sink_eld.monitor_present;
+ 	mutex_unlock(&per_pin->lock);
++
++	/*
++	 * Power-up will call hdmi_present_sense, so the PM calls
++	 * have to be done without mutex held.
++	 */
++
++	if (spec->send_silent_stream) {
++		int pm_ret;
++
++		if (!monitor_prev && monitor_next) {
++			pm_ret = snd_hda_power_up_pm(codec);
++			if (pm_ret < 0)
++				codec_err(codec,
++				"Monitor plugged-in, Failed to power up codec ret=[%d]\n",
++				pm_ret);
++			silent_stream_enable(codec, per_pin);
++		} else if (monitor_prev && !monitor_next) {
++			pm_ret = snd_hda_power_down_pm(codec);
++			if (pm_ret < 0)
++				codec_err(codec,
++				"Monitor plugged-out, Failed to power down codec ret=[%d]\n",
++				pm_ret);
++		}
++	}
+ }
+ 
+ static void hdmi_present_sense(struct hdmi_spec_per_pin *per_pin, int repoll)
+@@ -2802,6 +2859,13 @@ static int intel_hsw_common_init(struct hda_codec *codec, hda_nid_t vendor_nid,
+ 	spec->ops.setup_stream = i915_hsw_setup_stream;
+ 	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
+ 
++	/*
++	 * Enable silent stream feature, if it is enabled via
++	 * module param or Kconfig option
++	 */
++	if (enable_silent_stream)
++		spec->send_silent_stream = true;
++
+ 	return parse_intel_hdmi(codec);
+ }
+ 
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 3127f8ff2813fa33ec953626ae7d8f7067cc057f Mon Sep 17 00:00:00 2001
+From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
+Date: Mon, 3 Aug 2020 21:18:53 +0200
+Subject: [PATCH 15/16] ZEN: Add OpenRGB patches
+
+Squashed commit of the following:
+
+commit 942ded8f8652a4b4e6b46d04938bb66f1eac4c78
+Author: Steven Barrett <steven@liquorix.net>
+Date:   Sat Jul 4 21:28:54 2020 -0500
+
+    openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ SMBUS
+
+    In the original OpenRGB patches, the initialization code for CZ
+    secondary SMBus controllers was copied.  Later, an upstream commit
+    landed in 5.7 stable that combined the initialization code for both
+    primary/secondary smbus channels.
+
+    Combine the initialization code ahead of time so upstream merges
+    correctly with OpenRGB.
+
+    Fixes: https://github.com/zen-kernel/zen-kernel/issues/176
+
+commit a65e3ecf90b24fd44689cc0713af602965ffaf4e
+Author: Steven Barrett <steven@liquorix.net>
+Date:   Wed Jun 17 14:24:20 2020 -0500
+
+    Add OpenRGB patch - 0c45e26c
+
+    Source:
+    https://gitlab.com/CalcProgrammer1/OpenRGB/-/raw/master/OpenRGB.patch
+
+    History:
+    https://gitlab.com/CalcProgrammer1/OpenRGB/-/commits/master/OpenRGB.patch
 ---
  drivers/i2c/busses/Kconfig       |   9 +
  drivers/i2c/busses/Makefile      |   1 +
  drivers/i2c/busses/i2c-nct6775.c | 647 +++++++++++++++++++++++++++++++
- drivers/i2c/busses/i2c-piix4.c   |   9 +-
- 4 files changed, 664 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-piix4.c   |   4 +-
+ 4 files changed, 659 insertions(+), 2 deletions(-)
  create mode 100644 drivers/i2c/busses/i2c-nct6775.c
 
 diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 2ddca08f8..72647850f 100644
+index 735bf31a3..3bf00363c 100644
 --- a/drivers/i2c/busses/Kconfig
 +++ b/drivers/i2c/busses/Kconfig
 @@ -217,6 +217,15 @@ config I2C_CHT_WC
@@ -1339,7 +1622,7 @@ index 2ddca08f8..72647850f 100644
  	tristate "Nvidia nForce2, nForce3 and nForce4"
  	depends on PCI
 diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-index 25d608897..3c2a9b237 100644
+index 306d5dc3f..7e75d45c6 100644
 --- a/drivers/i2c/busses/Makefile
 +++ b/drivers/i2c/busses/Makefile
 @@ -17,6 +17,7 @@ obj-$(CONFIG_I2C_CHT_WC)	+= i2c-cht-wc.o
@@ -2004,7 +2287,7 @@ index 000000000..0462f0952
 +module_init(i2c_nct6775_init);
 +module_exit(i2c_nct6775_exit);
 diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
-index 69740a4ff..fb3fd68b8 100644
+index 69740a4ff..b70738fbe 100644
 --- a/drivers/i2c/busses/i2c-piix4.c
 +++ b/drivers/i2c/busses/i2c-piix4.c
 @@ -467,11 +467,11 @@ static int piix4_transaction(struct i2c_adapter *piix4_adapter)
@@ -2021,629 +2304,701 @@ index 69740a4ff..fb3fd68b8 100644
  
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
-@@ -982,6 +982,11 @@ static int piix4_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 		retval = piix4_setup_sb800(dev, id, 1);
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 7addb56f4a5e36638a588dcb60060df0eb7d4c46 Mon Sep 17 00:00:00 2001
+From: Johannes Weiner <hannes@cmpxchg.org>
+Date: Thu, 13 Feb 2020 13:34:59 -0500
+Subject: [PATCH 16/16] vfs: keep inodes with page cache off the inode shrinker
+ LRU
+
+Changes since v1:
+- retain inode-driven cache reclaim for CONFIG_HIGHMEM
+- fix a compile bug in fs/dax.c (mapping->inode -> mapping->host)
+
+I'm going to start wider-scale testing with this updated version.
+---
+ fs/block_dev.c                |   2 +-
+ fs/dax.c                      |  14 +++++
+ fs/drop_caches.c              |   2 +-
+ fs/inode.c                    | 112 +++++++++++++++++++++++++++++++---
+ fs/internal.h                 |   2 +-
+ include/linux/fs.h            |  17 ++++++
+ include/linux/pagemap.h       |   2 +-
+ include/linux/vm_event_item.h |   3 +-
+ mm/filemap.c                  |  39 +++++++++---
+ mm/huge_memory.c              |   3 +-
+ mm/truncate.c                 |  34 ++++++++---
+ mm/vmscan.c                   |   6 +-
+ mm/vmstat.c                   |   4 +-
+ mm/workingset.c               |   4 ++
+ 14 files changed, 209 insertions(+), 35 deletions(-)
+
+diff --git a/fs/block_dev.c b/fs/block_dev.c
+index 0ae656e02..c431dd896 100644
+--- a/fs/block_dev.c
++++ b/fs/block_dev.c
+@@ -79,7 +79,7 @@ static void kill_bdev(struct block_device *bdev)
+ {
+ 	struct address_space *mapping = bdev->bd_inode->i_mapping;
+ 
+-	if (mapping->nrpages == 0 && mapping->nrexceptional == 0)
++	if (mapping_empty(mapping))
+ 		return;
+ 
+ 	invalidate_bh_lrus();
+diff --git a/fs/dax.c b/fs/dax.c
+index 11b16729b..80f96daab 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -478,9 +478,11 @@ static void *grab_mapping_entry(struct xa_state *xas,
+ {
+ 	unsigned long index = xas->xa_index;
+ 	bool pmd_downgrade = false; /* splitting PMD entry into PTE entries? */
++	int populated;
+ 	void *entry;
+ 
+ retry:
++	populated = 0;
+ 	xas_lock_irq(xas);
+ 	entry = get_unlocked_entry(xas, order);
+ 
+@@ -526,6 +528,8 @@ static void *grab_mapping_entry(struct xa_state *xas,
+ 		xas_store(xas, NULL);	/* undo the PMD join */
+ 		dax_wake_entry(xas, entry, true);
+ 		mapping->nrexceptional--;
++		if (mapping_empty(mapping))
++			populated = -1;
+ 		entry = NULL;
+ 		xas_set(xas, index);
+ 	}
+@@ -541,11 +545,17 @@ static void *grab_mapping_entry(struct xa_state *xas,
+ 		dax_lock_entry(xas, entry);
+ 		if (xas_error(xas))
+ 			goto out_unlock;
++		if (mapping_empty(mapping))
++			populated++;
+ 		mapping->nrexceptional++;
  	}
  
-+	if (dev->vendor == PCI_VENDOR_ID_AMD &&
-+	    dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS) {
-+		retval = piix4_setup_sb800(dev, id, 1);
-+	}
-+
- 	if (retval > 0) {
- 		/* Try to add the aux adapter if it exists,
- 		 * piix4_add_adapter will clean up if this fails */
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From 69dd3677c9b31dc267b19eec7fefd4ac88e1ab22 Mon Sep 17 00:00:00 2001
-From: Nitin Gupta <nigupta@nvidia.com>
-Date: Wed, 17 Jun 2020 18:03:17 -0700
-Subject: [PATCH 14/22] mm: Use unsigned types for fragmentation score
-
-Proactive compaction uses per-node/zone "fragmentation score" which
-is always in range [0, 100], so use unsigned type of these scores
-as well as for related constants.
-
-Signed-off-by: Nitin Gupta <nigupta@nvidia.com>
----
- include/linux/compaction.h |  4 ++--
- kernel/sysctl.c            |  2 +-
- mm/compaction.c            | 18 +++++++++---------
- mm/vmstat.c                |  2 +-
- 4 files changed, 13 insertions(+), 13 deletions(-)
-
-diff --git a/include/linux/compaction.h b/include/linux/compaction.h
-index ccd28978b..1d1f8ae7f 100644
---- a/include/linux/compaction.h
-+++ b/include/linux/compaction.h
-@@ -85,13 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
- 
- #ifdef CONFIG_COMPACTION
- extern int sysctl_compact_memory;
--extern int sysctl_compaction_proactiveness;
-+extern unsigned int sysctl_compaction_proactiveness;
- extern int sysctl_compaction_handler(struct ctl_table *table, int write,
- 			void __user *buffer, size_t *length, loff_t *ppos);
- extern int sysctl_extfrag_threshold;
- extern int sysctl_compact_unevictable_allowed;
- 
--extern int extfrag_for_order(struct zone *zone, unsigned int order);
-+extern unsigned int extfrag_for_order(struct zone *zone, unsigned int order);
- extern int fragmentation_index(struct zone *zone, unsigned int order);
- extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
- 		unsigned int order, unsigned int alloc_flags,
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 51c90906e..454bd8256 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -1461,7 +1461,7 @@ static struct ctl_table vm_table[] = {
- 	{
- 		.procname	= "compaction_proactiveness",
- 		.data		= &sysctl_compaction_proactiveness,
--		.maxlen		= sizeof(int),
-+		.maxlen		= sizeof(sysctl_compaction_proactiveness),
- 		.mode		= 0644,
- 		.proc_handler	= proc_dointvec_minmax,
- 		.extra1		= SYSCTL_ZERO,
-diff --git a/mm/compaction.c b/mm/compaction.c
-index 93e703cdf..211763020 100644
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -53,7 +53,7 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
- /*
-  * Fragmentation score check interval for proactive compaction purposes.
-  */
--static const int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
-+static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
- 
- /*
-  * Page order with-respect-to which proactive compaction
-@@ -1888,7 +1888,7 @@ static bool kswapd_is_running(pg_data_t *pgdat)
-  * ZONE_DMA32. For smaller zones, the score value remains close to zero,
-  * and thus never exceeds the high threshold for proactive compaction.
-  */
--static int fragmentation_score_zone(struct zone *zone)
-+static unsigned int fragmentation_score_zone(struct zone *zone)
+ out_unlock:
+ 	xas_unlock_irq(xas);
++	if (populated == -1)
++		inode_pages_clear(mapping->host);
++	else if (populated == 1)
++		inode_pages_set(mapping->host);
+ 	if (xas_nomem(xas, mapping_gfp_mask(mapping) & ~__GFP_HIGHMEM))
+ 		goto retry;
+ 	if (xas->xa_node == XA_ERROR(-ENOMEM))
+@@ -631,6 +641,7 @@ static int __dax_invalidate_entry(struct address_space *mapping,
+ 					  pgoff_t index, bool trunc)
  {
- 	unsigned long score;
+ 	XA_STATE(xas, &mapping->i_pages, index);
++	bool empty = false;
+ 	int ret = 0;
+ 	void *entry;
  
-@@ -1904,9 +1904,9 @@ static int fragmentation_score_zone(struct zone *zone)
-  * the node's score falls below the low threshold, or one of the back-off
-  * conditions is met.
-  */
--static int fragmentation_score_node(pg_data_t *pgdat)
-+static unsigned int fragmentation_score_node(pg_data_t *pgdat)
- {
--	unsigned long score = 0;
-+	unsigned int score = 0;
- 	int zoneid;
- 
- 	for (zoneid = 0; zoneid < MAX_NR_ZONES; zoneid++) {
-@@ -1919,17 +1919,17 @@ static int fragmentation_score_node(pg_data_t *pgdat)
- 	return score;
+@@ -645,10 +656,13 @@ static int __dax_invalidate_entry(struct address_space *mapping,
+ 	dax_disassociate_entry(entry, mapping, trunc);
+ 	xas_store(&xas, NULL);
+ 	mapping->nrexceptional--;
++	empty = mapping_empty(mapping);
+ 	ret = 1;
+ out:
+ 	put_unlocked_entry(&xas, entry);
+ 	xas_unlock_irq(&xas);
++	if (empty)
++		inode_pages_clear(mapping->host);
+ 	return ret;
  }
  
--static int fragmentation_score_wmark(pg_data_t *pgdat, bool low)
-+static unsigned int fragmentation_score_wmark(pg_data_t *pgdat, bool low)
- {
--	int wmark_low;
-+	unsigned int wmark_low;
- 
- 	/*
- 	 * Cap the low watermak to avoid excessive compaction
- 	 * activity in case a user sets the proactivess tunable
- 	 * close to 100 (maximum).
- 	 */
--	wmark_low = max(100 - sysctl_compaction_proactiveness, 5);
--	return low ? wmark_low : min(wmark_low + 10, 100);
-+	wmark_low = max(100U - sysctl_compaction_proactiveness, 5U);
-+	return low ? wmark_low : min(wmark_low + 10, 100U);
+diff --git a/fs/drop_caches.c b/fs/drop_caches.c
+index f00fcc4a4..20e845ff4 100644
+--- a/fs/drop_caches.c
++++ b/fs/drop_caches.c
+@@ -27,7 +27,7 @@ static void drop_pagecache_sb(struct super_block *sb, void *unused)
+ 		 * we need to reschedule to avoid softlockups.
+ 		 */
+ 		if ((inode->i_state & (I_FREEING|I_WILL_FREE|I_NEW)) ||
+-		    (inode->i_mapping->nrpages == 0 && !need_resched())) {
++		    (mapping_empty(inode->i_mapping) && !need_resched())) {
+ 			spin_unlock(&inode->i_lock);
+ 			continue;
+ 		}
+diff --git a/fs/inode.c b/fs/inode.c
+index 72c4c347a..edb37276d 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -431,26 +431,101 @@ static void inode_lru_list_add(struct inode *inode)
+ 		inode->i_state |= I_REFERENCED;
  }
  
- static bool should_proactive_compact_node(pg_data_t *pgdat)
-@@ -2617,7 +2617,7 @@ int sysctl_compact_memory;
-  * aggressively the kernel should compact memory in the
-  * background. It takes values in the range [0, 100].
-  */
--int __read_mostly sysctl_compaction_proactiveness = 20;
-+unsigned int __read_mostly sysctl_compaction_proactiveness = 20;
- 
- /*
-  * This is the entry point for compacting all nodes via
-diff --git a/mm/vmstat.c b/mm/vmstat.c
-index cc88f7533..4ad37205d 100644
---- a/mm/vmstat.c
-+++ b/mm/vmstat.c
-@@ -1079,7 +1079,7 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
-  * It is defined as the percentage of pages found in blocks of size
-  * less than 1 << order. It returns values in range [0, 100].
-  */
--int extfrag_for_order(struct zone *zone, unsigned int order)
-+unsigned int extfrag_for_order(struct zone *zone, unsigned int order)
- {
- 	struct contig_page_info info;
- 
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From ad66557a6f03db5a142941bfb52cf63862e2af51 Mon Sep 17 00:00:00 2001
-From: Nitin Gupta <nigupta@nvidia.com>
-Date: Mon, 22 Jun 2020 23:45:44 -0700
-Subject: [PATCH 15/22] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
-
-Fix compile error when COMPACTION_HPAGE_ORDER is assigned
-to HUGETLB_PAGE_ORDER. The correct way to check if this
-constant is defined is to check for CONFIG_HUGETLBFS.
-
-Signed-off-by: Nitin Gupta <nigupta@nvidia.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Nathan Chancellor <natechancellor@gmail.com>
-Tested-by: Nathan Chancellor <natechancellor@gmail.com>
----
- mm/compaction.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mm/compaction.c b/mm/compaction.c
-index 211763020..93fb89f91 100644
---- a/mm/compaction.c
-+++ b/mm/compaction.c
-@@ -62,7 +62,7 @@ static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
-  */
- #if defined CONFIG_TRANSPARENT_HUGEPAGE
- #define COMPACTION_HPAGE_ORDER	HPAGE_PMD_ORDER
--#elif defined HUGETLB_PAGE_ORDER
-+#elif defined CONFIG_HUGETLBFS
- #define COMPACTION_HPAGE_ORDER	HUGETLB_PAGE_ORDER
- #else
- #define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From 7f25b4d379c14a05f56d14867f22b4abcc53e0a6 Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Sun, 5 Jul 2020 00:16:32 -0700
-Subject: [PATCH 16/22] i2c: designware: Fix transfer failures for invalid
- SMBus block reads
-
-SMBus block reads can be broken because the read function will just skip
-over bytes it doesn't like until reaching a byte that conforms to the
-length restrictions for block reads. This is problematic when it isn't
-known if the incoming payload is indeed a conforming block read.
-
-According to the SMBus specification, block reads will only send the
-payload length in the first byte, so we can fix this by only considering
-the first byte in a sequence for block read length purposes.
-
-In addition, when the length byte is invalid, the original transfer
-length still needs to be adjusted to avoid a controller timeout.
-
-Fixes: c3ae106050b9 ("i2c: designware: Implement support for SMBus block read and write")
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- drivers/i2c/busses/i2c-designware-master.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 3a58eef20..83906bb97 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -394,10 +394,12 @@ i2c_dw_read(struct dw_i2c_dev *dev)
- 			u32 flags = msgs[dev->msg_read_idx].flags;
- 
- 			*buf = dw_readl(dev, DW_IC_DATA_CMD);
--			/* Ensure length byte is a valid value */
--			if (flags & I2C_M_RECV_LEN &&
--				*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0) {
--				len = i2c_dw_recv_len(dev, *buf);
-+			if (flags & I2C_M_RECV_LEN) {
-+				/* Ensure length byte is a valid value */
-+				if (*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0)
-+					len = i2c_dw_recv_len(dev, *buf);
-+				else
-+					len = i2c_dw_recv_len(dev, len);
- 			}
- 			buf++;
- 			dev->rx_outstanding--;
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From 27e82888d1b626a47339778259e244897090986f Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Sun, 5 Jul 2020 00:21:22 -0700
-Subject: [PATCH 17/22] i2c: designware: Allow SMBus block reads up to 255
- bytes in length
-
-According to the SMBus 3.0 protocol specification, block transfer limits
-were increased from 32 bytes to 255 bytes. Remove the obsolete 32-byte
-limitation.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- drivers/i2c/busses/i2c-designware-master.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 83906bb97..00abc02c7 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -396,7 +396,7 @@ i2c_dw_read(struct dw_i2c_dev *dev)
- 			*buf = dw_readl(dev, DW_IC_DATA_CMD);
- 			if (flags & I2C_M_RECV_LEN) {
- 				/* Ensure length byte is a valid value */
--				if (*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0)
-+				if (*buf > 0)
- 					len = i2c_dw_recv_len(dev, *buf);
- 				else
- 					len = i2c_dw_recv_len(dev, len);
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From aafedaa6aaada67308d5ad9e80252f612eed16a6 Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Sun, 5 Jul 2020 00:23:49 -0700
-Subject: [PATCH 18/22] HID: i2c-hid: Use block reads when possible to save
- power
-
-We have no way of knowing how large an incoming payload is going to be,
-so the only strategy available up until now has been to always retrieve
-the maximum possible report length over i2c, which can be quite
-inefficient. For devices that send reports in block read format, the i2c
-controller driver can read the payload length on the fly and terminate
-the i2c transaction early, resulting in considerable power savings.
-
-On a Dell Precision 15 5540 with an i9-9880H, resting my finger on the
-touchpad causes psys power readings to go up by about 4W and hover there
-until I remove my finger. With this patch, my psys readings go from 4.7W
-down to 3.1W, yielding about 1.6W in savings. This is because my
-touchpad's max report length is 60 bytes, but all of the regular reports
-it sends for touch events are only 32 bytes, so the i2c transfer is
-roughly halved for the common case.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- drivers/hid/i2c-hid/i2c-hid-core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 294c84e13..739dccfc5 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -472,11 +472,14 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
- 	int ret;
- 	u32 ret_size;
- 	int size = le16_to_cpu(ihid->hdesc.wMaxInputLength);
-+	u16 flags;
- 
- 	if (size > ihid->bufsize)
- 		size = ihid->bufsize;
- 
--	ret = i2c_master_recv(ihid->client, ihid->inbuf, size);
-+	/* Try to do a block read if the size fits in one byte */
-+	flags = size > 255 ? I2C_M_RD : I2C_M_RD | I2C_M_RECV_LEN;
-+	ret = i2c_transfer_buffer_flags(ihid->client, ihid->inbuf, size, flags);
- 	if (ret != size) {
- 		if (ret < 0)
- 			return;
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From 0977fffc6bafe803f0e3b8f568eb49b8d20d2d0e Mon Sep 17 00:00:00 2001
-From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
-Date: Fri, 10 Jul 2020 16:41:43 +0200
-Subject: [PATCH 19/22] drivers: Revert i2c patches
-
-i2c_designware i2c_designware.0: controller timed out
-i2c_designware i2c_designware.0: timeout in disabling adapter
-i2c_designware i2c_designware.0: timeout waiting for bus ready
-i2c_designware i2c_designware.0: timeout waiting for bus ready
-i2c_designware i2c_designware.0: timeout waiting for bus ready
-
-And the last message repeating multiple times per second, ad infinitum.
----
- drivers/hid/i2c-hid/i2c-hid-core.c         |  5 +----
- drivers/i2c/busses/i2c-designware-master.c | 10 ++++------
- 2 files changed, 5 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 739dccfc5..294c84e13 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -472,14 +472,11 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
- 	int ret;
- 	u32 ret_size;
- 	int size = le16_to_cpu(ihid->hdesc.wMaxInputLength);
--	u16 flags;
- 
- 	if (size > ihid->bufsize)
- 		size = ihid->bufsize;
- 
--	/* Try to do a block read if the size fits in one byte */
--	flags = size > 255 ? I2C_M_RD : I2C_M_RD | I2C_M_RECV_LEN;
--	ret = i2c_transfer_buffer_flags(ihid->client, ihid->inbuf, size, flags);
-+	ret = i2c_master_recv(ihid->client, ihid->inbuf, size);
- 	if (ret != size) {
- 		if (ret < 0)
- 			return;
-diff --git a/drivers/i2c/busses/i2c-designware-master.c b/drivers/i2c/busses/i2c-designware-master.c
-index 00abc02c7..3a58eef20 100644
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -394,12 +394,10 @@ i2c_dw_read(struct dw_i2c_dev *dev)
- 			u32 flags = msgs[dev->msg_read_idx].flags;
- 
- 			*buf = dw_readl(dev, DW_IC_DATA_CMD);
--			if (flags & I2C_M_RECV_LEN) {
--				/* Ensure length byte is a valid value */
--				if (*buf > 0)
--					len = i2c_dw_recv_len(dev, *buf);
--				else
--					len = i2c_dw_recv_len(dev, len);
-+			/* Ensure length byte is a valid value */
-+			if (flags & I2C_M_RECV_LEN &&
-+				*buf <= I2C_SMBUS_BLOCK_MAX && *buf > 0) {
-+				len = i2c_dw_recv_len(dev, *buf);
- 			}
- 			buf++;
- 			dev->rx_outstanding--;
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From c5356bed3e1b24f4ff57e558b0a620151abc11cc Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Wed, 15 Jul 2020 10:54:43 +0200
-Subject: [PATCH 20/22] net: sched: Allow changing default qdisc to FQ-PIE
-
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
----
- net/sched/Kconfig | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index 690a42e51..cd2b1b171 100644
---- a/net/sched/Kconfig
-+++ b/net/sched/Kconfig
-@@ -468,6 +468,9 @@ choice
- 	config DEFAULT_FQ_CODEL
- 		bool "Fair Queue Controlled Delay" if NET_SCH_FQ_CODEL
- 
-+	config DEFAULT_FQ_PIE
-+		bool "Flow Queue Proportional Integral controller Enhanced" if NET_SCH_FQ_PIE
-+
- 	config DEFAULT_SFQ
- 		bool "Stochastic Fair Queue" if NET_SCH_SFQ
- 
-@@ -483,6 +486,7 @@ config DEFAULT_NET_SCH
- 	default "pfifo_fast" if DEFAULT_PFIFO_FAST
- 	default "fq" if DEFAULT_FQ
- 	default "fq_codel" if DEFAULT_FQ_CODEL
-+	default "fq_pie" if DEFAULT_FQ_PIE
- 	default "sfq" if DEFAULT_SFQ
- 	default "cake" if DEFAULT_CAKE
- 	default "pfifo_fast"
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From 5c3eddfa3421d37aca45993bdeaad35e5f92e4ec Mon Sep 17 00:00:00 2001
-From: Harsha Priya <harshapriya.n@intel.com>
-Date: Mon, 6 Jul 2020 13:53:17 -0700
-Subject: [PATCH 21/22] ALSA: hda/hdmi: Add Intel silent stream support
-
-External HDMI receivers have analog circuitry that needs to be powered-on
-when exiting standby, and a mechanism to detect PCM v. IEC61937 data.
-These two steps take time and up to 2-3 seconds of audio may be muted
-when starting playback.
-
-Intel hardware (Haswell and beyond) can keep the link active
-with a 'silent stream', so that the receiver does not go through those
-two steps when valid audio is transmitted. This mechanism relies
-on an setting the channel_id as 0xf, sending info packet and preventing
-the codec from going to D3,  which will increase the platform
-static power consumption. The info packet assumes a basic 2ch stereo,
-and the silent stream is enabled when connecting a monitor.
-In case of format changes the detection of PCM v. IEC61937 needs to
-be re-run. In this case there is no way to avoid the 2-3s mute.
-
-The silent stream is enabled with a Kconfig option, as well as a kernel
-parameter should there be a need to override the build time default.
-This approach is used based on the power_save capability as an example,
-but in the future, it may be used with a kcontrol,
-depending on UCM support for HDaudio legacy.
-
-Signed-off-by: Harsha Priya <harshapriya.n@intel.com>
-Signed-off-by: Emmanuel Jillela <emmanuel.jillela@intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/r/1594068797-14011-1-git-send-email-harshapriya.n@intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
----
- sound/pci/hda/Kconfig      | 14 +++++++++
- sound/pci/hda/patch_hdmi.c | 64 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+)
-
-diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
-index e1d3082a4..d61667cf6 100644
---- a/sound/pci/hda/Kconfig
-+++ b/sound/pci/hda/Kconfig
-@@ -230,6 +230,20 @@ config SND_HDA_POWER_SAVE_DEFAULT
- 	  The default time-out value in seconds for HD-audio automatic
- 	  power-save mode.  0 means to disable the power-save mode.
- 
-+config SND_HDA_INTEL_HDMI_SILENT_STREAM
-+	bool "Enable Silent Stream always for HDMI"
-+	depends on SND_HDA_INTEL
-+	help
-+	  Intel hardware has a feature called 'silent stream', that
-+	  keeps external HDMI receiver's analog circuitry powered on
-+	  avoiding 2-3 sec silence during playback start. This mechanism
-+	  relies on setting channel_id as 0xf, sending info packet and
-+	  preventing codec D3 entry (increasing  platform static power
-+	  consumption when HDMI receiver is plugged-in). 2-3 sec silence
-+	  at the playback start is expected whenever there is format change.
-+	  (default is 2 channel format).
-+	  Say Y to enable Silent Stream feature.
-+
- endif
- 
- endmenu
-diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index e821c9df8..8834905e3 100644
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -42,6 +42,11 @@ static bool enable_acomp = true;
- module_param(enable_acomp, bool, 0444);
- MODULE_PARM_DESC(enable_acomp, "Enable audio component binding (default=yes)");
- 
-+static bool enable_silent_stream =
-+IS_ENABLED(CONFIG_SND_HDA_INTEL_HDMI_SILENT_STREAM);
-+module_param(enable_silent_stream, bool, 0644);
-+MODULE_PARM_DESC(enable_silent_stream, "Enable Silent Stream for HDMI devices");
-+
- struct hdmi_spec_per_cvt {
- 	hda_nid_t cvt_nid;
- 	int assigned;
-@@ -167,6 +172,7 @@ struct hdmi_spec {
- 	hda_nid_t vendor_nid;
- 	const int *port_map;
- 	int port_num;
-+	bool send_silent_stream; /* Flag to enable silent stream feature */
- };
- 
- #ifdef CONFIG_SND_HDA_COMPONENT
-@@ -1634,21 +1640,72 @@ static void hdmi_present_sense_via_verbs(struct hdmi_spec_per_pin *per_pin,
- 	snd_hda_power_down_pm(codec);
- }
- 
-+static void silent_stream_enable(struct hda_codec *codec,
-+				struct hdmi_spec_per_pin *per_pin)
++static void inode_lru_list_del(struct inode *inode)
 +{
-+	unsigned int newval, oldval;
-+
-+	codec_dbg(codec, "hdmi: enabling silent stream for NID %d\n",
-+			per_pin->pin_nid);
-+
-+	mutex_lock(&per_pin->lock);
-+
-+	if (!per_pin->channels)
-+		per_pin->channels = 2;
-+
-+	oldval = snd_hda_codec_read(codec, per_pin->pin_nid, 0,
-+			AC_VERB_GET_CONV, 0);
-+	newval = (oldval & 0xF0) | 0xF;
-+	snd_hda_codec_write(codec, per_pin->pin_nid, 0,
-+			AC_VERB_SET_CHANNEL_STREAMID, newval);
-+
-+	hdmi_setup_audio_infoframe(codec, per_pin, per_pin->non_pcm);
-+
-+	mutex_unlock(&per_pin->lock);
++	if (list_lru_del(&inode->i_sb->s_inode_lru, &inode->i_lru))
++		this_cpu_dec(nr_unused);
 +}
 +
- /* update ELD and jack state via audio component */
- static void sync_eld_via_acomp(struct hda_codec *codec,
- 			       struct hdmi_spec_per_pin *per_pin)
+ /*
+  * Add inode to LRU if needed (inode is unused and clean).
+  *
+  * Needs inode->i_lock held.
+  */
+-void inode_add_lru(struct inode *inode)
++bool inode_add_lru(struct inode *inode)
  {
- 	struct hdmi_spec *spec = codec->spec;
- 	struct hdmi_eld *eld = &spec->temp_eld;
-+	bool monitor_prev, monitor_next;
+-	if (!(inode->i_state & (I_DIRTY_ALL | I_SYNC |
+-				I_FREEING | I_WILL_FREE)) &&
+-	    !atomic_read(&inode->i_count) && inode->i_sb->s_flags & SB_ACTIVE)
+-		inode_lru_list_add(inode);
++	if (inode->i_state &
++	    (I_DIRTY_ALL | I_SYNC | I_FREEING | I_WILL_FREE | I_PAGES))
++		return false;
++	if (atomic_read(&inode->i_count))
++		return false;
++	if (!(inode->i_sb->s_flags & SB_ACTIVE))
++		return false;
++	inode_lru_list_add(inode);
++	return true;
+ }
  
- 	mutex_lock(&per_pin->lock);
- 	eld->monitor_present = false;
-+	monitor_prev = per_pin->sink_eld.monitor_present;
- 	eld->eld_size = snd_hdac_acomp_get_eld(&codec->core, per_pin->pin_nid,
- 				      per_pin->dev_id, &eld->monitor_present,
- 				      eld->eld_buffer, ELD_MAX_SIZE);
- 	eld->eld_valid = (eld->eld_size > 0);
- 	update_eld(codec, per_pin, eld, 0);
-+	monitor_next = per_pin->sink_eld.monitor_present;
- 	mutex_unlock(&per_pin->lock);
-+
-+	/*
-+	 * Power-up will call hdmi_present_sense, so the PM calls
-+	 * have to be done without mutex held.
-+	 */
-+
-+	if (spec->send_silent_stream) {
-+		int pm_ret;
-+
-+		if (!monitor_prev && monitor_next) {
-+			pm_ret = snd_hda_power_up_pm(codec);
-+			if (pm_ret < 0)
-+				codec_err(codec,
-+				"Monitor plugged-in, Failed to power up codec ret=[%d]\n",
-+				pm_ret);
-+			silent_stream_enable(codec, per_pin);
-+		} else if (monitor_prev && !monitor_next) {
-+			pm_ret = snd_hda_power_down_pm(codec);
-+			if (pm_ret < 0)
-+				codec_err(codec,
-+				"Monitor plugged-out, Failed to power down codec ret=[%d]\n",
-+				pm_ret);
++/*
++ * Usually, inodes become reclaimable when they are no longer
++ * referenced and their page cache has been reclaimed. The following
++ * API allows the VM to communicate cache population state to the VFS.
++ *
++ * However, on CONFIG_HIGHMEM we can't wait for the page cache to go
++ * away: cache pages allocated in a large highmem zone could pin
++ * struct inode memory allocated in relatively small lowmem zones. So
++ * when CONFIG_HIGHMEM is enabled, we tie cache to the inode lifetime.
++ */
+ 
+-static void inode_lru_list_del(struct inode *inode)
++#ifndef CONFIG_HIGHMEM
++/**
++ * inode_pages_set - mark the inode as holding page cache
++ * @inode: the inode whose first cache page was just added
++ *
++ * Tell the VFS that this inode has populated page cache and must not
++ * be reclaimed by the inode shrinker.
++ *
++ * The caller must hold the page lock of the just-added page: by
++ * pinning the page, the page cache cannot become depopulated, and we
++ * can safely set I_PAGES without a race check under the i_pages lock.
++ *
++ * This function acquires the i_lock.
++ */
++void inode_pages_set(struct inode *inode)
+ {
++	spin_lock(&inode->i_lock);
++	if (!(inode->i_state & I_PAGES)) {
++		inode->i_state |= I_PAGES;
++		if (!list_empty(&inode->i_lru)) {
++			count_vm_event(PGINODERESCUE);
++			inode_lru_list_del(inode);
 +		}
 +	}
- }
++	spin_unlock(&inode->i_lock);
++}
  
- static void hdmi_present_sense(struct hdmi_spec_per_pin *per_pin, int repoll)
-@@ -2801,6 +2858,13 @@ static int intel_hsw_common_init(struct hda_codec *codec, hda_nid_t vendor_nid,
- 	spec->ops.setup_stream = i915_hsw_setup_stream;
- 	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
- 
-+	/*
-+	 * Enable silent stream feature, if it is enabled via
-+	 * module param or Kconfig option
-+	 */
-+	if (enable_silent_stream)
-+		spec->send_silent_stream = true;
+-	if (list_lru_del(&inode->i_sb->s_inode_lru, &inode->i_lru))
+-		this_cpu_dec(nr_unused);
++/**
++ * inode_pages_clear - mark the inode as not holding page cache
++ * @inode: the inode whose last cache page was just removed
++ *
++ * Tell the VFS that the inode no longer holds page cache and that its
++ * lifetime is to be handed over to the inode shrinker LRU.
++ *
++ * This function acquires the i_lock and the i_pages lock.
++ */
++void inode_pages_clear(struct inode *inode)
++{
++	struct address_space *mapping = &inode->i_data;
++	bool add_to_lru = false;
++	unsigned long flags;
 +
- 	return parse_intel_hdmi(codec);
++	spin_lock(&inode->i_lock);
++
++	xa_lock_irqsave(&mapping->i_pages, flags);
++	if ((inode->i_state & I_PAGES) && mapping_empty(mapping)) {
++		inode->i_state &= ~I_PAGES;
++		add_to_lru = true;
++	}
++	xa_unlock_irqrestore(&mapping->i_pages, flags);
++
++	if (add_to_lru) {
++		WARN_ON_ONCE(!list_empty(&inode->i_lru));
++		if (inode_add_lru(inode))
++			__count_vm_event(PGINODEDELAYED);
++	}
++
++	spin_unlock(&inode->i_lock);
  }
++#endif /* CONFIG_HIGHMEM */
  
--- 
-2.28.0.rc2.1.g3d20111cbd
-
-
-From ef0f115ff8223e002c6eb98518639c30c0975bf9 Mon Sep 17 00:00:00 2001
-From: Steven Barrett <steven@liquorix.net>
-Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 22/22] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
- SMBUS
-
-In the original OpenRGB patches, the initialization code for CZ
-secondary SMBus controllers was copied.  Later, an upstream commit
-landed in 5.7 stable that combined the initialization code for both
-primary/secondary smbus channels.
-
-Combine the initialization code ahead of time so upstream merges
-correctly with OpenRGB.
-
-Fixes: https://github.com/zen-kernel/zen-kernel/issues/176
----
- drivers/i2c/busses/i2c-piix4.c | 5 -----
- 1 file changed, 5 deletions(-)
-
-diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
-index fb3fd68b8..b70738fbe 100644
---- a/drivers/i2c/busses/i2c-piix4.c
-+++ b/drivers/i2c/busses/i2c-piix4.c
-@@ -982,11 +982,6 @@ static int piix4_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 		retval = piix4_setup_sb800(dev, id, 1);
+ /**
+  * inode_sb_list_add - add inode to the superblock list of inodes
+@@ -743,6 +818,8 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+ 	if (!spin_trylock(&inode->i_lock))
+ 		return LRU_SKIP;
+ 
++	WARN_ON_ONCE(inode->i_state & I_PAGES);
++
+ 	/*
+ 	 * Referenced or dirty inodes are still in use. Give them another pass
+ 	 * through the LRU as we canot reclaim them now.
+@@ -762,7 +839,18 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+ 		return LRU_ROTATE;
  	}
  
--	if (dev->vendor == PCI_VENDOR_ID_AMD &&
--	    dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS) {
--		retval = piix4_setup_sb800(dev, id, 1);
--	}
--
- 	if (retval > 0) {
- 		/* Try to add the aux adapter if it exists,
- 		 * piix4_add_adapter will clean up if this fails */
+-	if (inode_has_buffers(inode) || inode->i_data.nrpages) {
++	/*
++	 * Usually, populated inodes shouldn't be on the shrinker LRU,
++	 * but they can be briefly visible when a new page is added to
++	 * an inode that was already linked but inode_pages_set()
++	 * hasn't run yet to move them off.
++	 *
++	 * The other exception is on HIGHMEM systems: highmem cache
++	 * can pin lowmem struct inodes, and we might be in dire
++	 * straits in the lower zones. Purge cache to free the inode.
++	 */
++	if (inode_has_buffers(inode) || !mapping_empty(&inode->i_data)) {
++#ifdef CONFIG_HIGHMEM
+ 		__iget(inode);
+ 		spin_unlock(&inode->i_lock);
+ 		spin_unlock(lru_lock);
+@@ -779,6 +867,12 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+ 		iput(inode);
+ 		spin_lock(lru_lock);
+ 		return LRU_RETRY;
++#else
++		list_lru_isolate(lru, &inode->i_lru);
++		spin_unlock(&inode->i_lock);
++		this_cpu_dec(nr_unused);
++		return LRU_REMOVED;
++#endif
+ 	}
+ 
+ 	WARN_ON(inode->i_state & I_NEW);
+diff --git a/fs/internal.h b/fs/internal.h
+index 9b863a7bd..1c8abce4a 100644
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -136,7 +136,7 @@ extern int vfs_open(const struct path *, struct file *);
+  * inode.c
+  */
+ extern long prune_icache_sb(struct super_block *sb, struct shrink_control *sc);
+-extern void inode_add_lru(struct inode *inode);
++extern bool inode_add_lru(struct inode *inode);
+ extern int dentry_needs_remove_privs(struct dentry *dentry);
+ 
+ /*
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index f5abba861..39e0bf96c 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -593,6 +593,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
+ 	atomic_inc(&mapping->i_mmap_writable);
+ }
+ 
++static inline bool mapping_empty(struct address_space *mapping)
++{
++	return mapping->nrpages + mapping->nrexceptional == 0;
++}
++
+ /*
+  * Use sequence counter to get consistent i_size on 32-bit processors.
+  */
+@@ -2158,6 +2163,9 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+  *
+  * I_DONTCACHE		Evict inode as soon as it is not used anymore.
+  *
++ * I_PAGES		Inode is holding page cache that needs to get reclaimed
++ *			first before the inode can go onto the shrinker LRU.
++ *
+  * Q: What is the difference between I_WILL_FREE and I_FREEING?
+  */
+ #define I_DIRTY_SYNC		(1 << 0)
+@@ -2181,6 +2189,7 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+ #define I_OVL_INUSE		(1 << 14)
+ #define I_CREATING		(1 << 15)
+ #define I_DONTCACHE		(1 << 16)
++#define I_PAGES			(1 << 17)
+ 
+ #define I_DIRTY_INODE (I_DIRTY_SYNC | I_DIRTY_DATASYNC)
+ #define I_DIRTY (I_DIRTY_INODE | I_DIRTY_PAGES)
+@@ -3121,6 +3130,14 @@ static inline void remove_inode_hash(struct inode *inode)
+ 		__remove_inode_hash(inode);
+ }
+ 
++#ifndef CONFIG_HIGHMEM
++extern void inode_pages_set(struct inode *inode);
++extern void inode_pages_clear(struct inode *inode);
++#else
++static inline void inode_pages_set(struct inode *inode) {}
++static inline void inode_pages_clear(struct inode *inode) {}
++#endif
++
+ extern void inode_sb_list_add(struct inode *inode);
+ 
+ #ifdef CONFIG_BLOCK
+diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
+index cf2468da6..22920afd3 100644
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -650,7 +650,7 @@ int add_to_page_cache_locked(struct page *page, struct address_space *mapping,
+ int add_to_page_cache_lru(struct page *page, struct address_space *mapping,
+ 				pgoff_t index, gfp_t gfp_mask);
+ extern void delete_from_page_cache(struct page *page);
+-extern void __delete_from_page_cache(struct page *page, void *shadow);
++extern bool __delete_from_page_cache(struct page *page, void *shadow);
+ int replace_page_cache_page(struct page *old, struct page *new, gfp_t gfp_mask);
+ void delete_from_page_cache_batch(struct address_space *mapping,
+ 				  struct pagevec *pvec);
+diff --git a/include/linux/vm_event_item.h b/include/linux/vm_event_item.h
+index 24fc7c3ae..5d0cdcaa8 100644
+--- a/include/linux/vm_event_item.h
++++ b/include/linux/vm_event_item.h
+@@ -42,7 +42,8 @@ enum vm_event_item { PGPGIN, PGPGOUT, PSWPIN, PSWPOUT,
+ #ifdef CONFIG_NUMA
+ 		PGSCAN_ZONE_RECLAIM_FAILED,
+ #endif
+-		PGINODESTEAL, SLABS_SCANNED, KSWAPD_INODESTEAL,
++		SLABS_SCANNED,
++		PGINODESTEAL, KSWAPD_INODESTEAL, PGINODERESCUE, PGINODEDELAYED,
+ 		KSWAPD_LOW_WMARK_HIT_QUICKLY, KSWAPD_HIGH_WMARK_HIT_QUICKLY,
+ 		PAGEOUTRUN, PGROTATED,
+ 		DROP_PAGECACHE, DROP_SLAB,
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 385759c4c..dedc10f64 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -116,8 +116,8 @@
+  *   ->tasklist_lock            (memory_failure, collect_procs_ao)
+  */
+ 
+-static void page_cache_delete(struct address_space *mapping,
+-				   struct page *page, void *shadow)
++static bool __must_check page_cache_delete(struct address_space *mapping,
++					   struct page *page, void *shadow)
+ {
+ 	XA_STATE(xas, &mapping->i_pages, page->index);
+ 	unsigned int nr = 1;
+@@ -151,6 +151,8 @@ static void page_cache_delete(struct address_space *mapping,
+ 		smp_wmb();
+ 	}
+ 	mapping->nrpages -= nr;
++
++	return mapping_empty(mapping);
+ }
+ 
+ static void unaccount_page_cache_page(struct address_space *mapping,
+@@ -227,15 +229,18 @@ static void unaccount_page_cache_page(struct address_space *mapping,
+  * Delete a page from the page cache and free it. Caller has to make
+  * sure the page is locked and that nobody else uses it - or that usage
+  * is safe.  The caller must hold the i_pages lock.
++ *
++ * If this returns true, the caller must call inode_pages_clear()
++ * after dropping the i_pages lock.
+  */
+-void __delete_from_page_cache(struct page *page, void *shadow)
++bool __must_check __delete_from_page_cache(struct page *page, void *shadow)
+ {
+ 	struct address_space *mapping = page->mapping;
+ 
+ 	trace_mm_filemap_delete_from_page_cache(page);
+ 
+ 	unaccount_page_cache_page(mapping, page);
+-	page_cache_delete(mapping, page, shadow);
++	return page_cache_delete(mapping, page, shadow);
+ }
+ 
+ static void page_cache_free_page(struct address_space *mapping,
+@@ -267,12 +272,16 @@ void delete_from_page_cache(struct page *page)
+ {
+ 	struct address_space *mapping = page_mapping(page);
+ 	unsigned long flags;
++	bool empty;
+ 
+ 	BUG_ON(!PageLocked(page));
+ 	xa_lock_irqsave(&mapping->i_pages, flags);
+-	__delete_from_page_cache(page, NULL);
++	empty = __delete_from_page_cache(page, NULL);
+ 	xa_unlock_irqrestore(&mapping->i_pages, flags);
+ 
++	if (empty)
++		inode_pages_clear(mapping->host);
++
+ 	page_cache_free_page(mapping, page);
+ }
+ EXPORT_SYMBOL(delete_from_page_cache);
+@@ -291,8 +300,8 @@ EXPORT_SYMBOL(delete_from_page_cache);
+  *
+  * The function expects the i_pages lock to be held.
+  */
+-static void page_cache_delete_batch(struct address_space *mapping,
+-			     struct pagevec *pvec)
++static bool __must_check page_cache_delete_batch(struct address_space *mapping,
++						 struct pagevec *pvec)
+ {
+ 	XA_STATE(xas, &mapping->i_pages, pvec->pages[0]->index);
+ 	int total_pages = 0;
+@@ -337,12 +346,15 @@ static void page_cache_delete_batch(struct address_space *mapping,
+ 		total_pages++;
+ 	}
+ 	mapping->nrpages -= total_pages;
++
++	return mapping_empty(mapping);
+ }
+ 
+ void delete_from_page_cache_batch(struct address_space *mapping,
+ 				  struct pagevec *pvec)
+ {
+ 	int i;
++	bool empty;
+ 	unsigned long flags;
+ 
+ 	if (!pagevec_count(pvec))
+@@ -354,9 +366,12 @@ void delete_from_page_cache_batch(struct address_space *mapping,
+ 
+ 		unaccount_page_cache_page(mapping, pvec->pages[i]);
+ 	}
+-	page_cache_delete_batch(mapping, pvec);
++	empty = page_cache_delete_batch(mapping, pvec);
+ 	xa_unlock_irqrestore(&mapping->i_pages, flags);
+ 
++	if (empty)
++		inode_pages_clear(mapping->host);
++
+ 	for (i = 0; i < pagevec_count(pvec); i++)
+ 		page_cache_free_page(mapping, pvec->pages[i]);
+ }
+@@ -832,8 +847,9 @@ static int __add_to_page_cache_locked(struct page *page,
+ 				      void **shadowp)
+ {
+ 	XA_STATE(xas, &mapping->i_pages, offset);
+-	int huge = PageHuge(page);
+ 	int error;
++	int huge = PageHuge(page);
++	bool populated = false;
+ 	void *old;
+ 
+ 	VM_BUG_ON_PAGE(!PageLocked(page), page);
+@@ -859,6 +875,7 @@ static int __add_to_page_cache_locked(struct page *page,
+ 		if (xas_error(&xas))
+ 			goto unlock;
+ 
++		populated = mapping_empty(mapping);
+ 		if (xa_is_value(old)) {
+ 			mapping->nrexceptional--;
+ 			if (shadowp)
+@@ -879,6 +896,10 @@ static int __add_to_page_cache_locked(struct page *page,
+ 	}
+ 
+ 	trace_mm_filemap_add_to_page_cache(page);
++
++	if (populated)
++		inode_pages_set(mapping->host);
++
+ 	return 0;
+ error:
+ 	page->mapping = NULL;
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 78c84bee7..23a2df809 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2430,7 +2430,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
+ 		/* Some pages can be beyond i_size: drop them from page cache */
+ 		if (head[i].index >= end) {
+ 			ClearPageDirty(head + i);
+-			__delete_from_page_cache(head + i, NULL);
++			/* We know we're not removing the last page */
++			(void)__delete_from_page_cache(head + i, NULL);
+ 			if (IS_ENABLED(CONFIG_SHMEM) && PageSwapBacked(head))
+ 				shmem_uncharge(head->mapping->host, 1);
+ 			put_page(head + i);
+diff --git a/mm/truncate.c b/mm/truncate.c
+index dd9ebc1da..8fb6c2f76 100644
+--- a/mm/truncate.c
++++ b/mm/truncate.c
+@@ -31,24 +31,31 @@
+  * itself locked.  These unlocked entries need verification under the tree
+  * lock.
+  */
+-static inline void __clear_shadow_entry(struct address_space *mapping,
+-				pgoff_t index, void *entry)
++static bool __must_check __clear_shadow_entry(struct address_space *mapping,
++					      pgoff_t index, void *entry)
+ {
+ 	XA_STATE(xas, &mapping->i_pages, index);
+ 
+ 	xas_set_update(&xas, workingset_update_node);
+ 	if (xas_load(&xas) != entry)
+-		return;
++		return 0;
+ 	xas_store(&xas, NULL);
+ 	mapping->nrexceptional--;
++
++	return mapping_empty(mapping);
+ }
+ 
+ static void clear_shadow_entry(struct address_space *mapping, pgoff_t index,
+ 			       void *entry)
+ {
++	bool empty;
++
+ 	xa_lock_irq(&mapping->i_pages);
+-	__clear_shadow_entry(mapping, index, entry);
++	empty = __clear_shadow_entry(mapping, index, entry);
+ 	xa_unlock_irq(&mapping->i_pages);
++
++	if (empty)
++		inode_pages_clear(mapping->host);
+ }
+ 
+ /*
+@@ -61,7 +68,7 @@ static void truncate_exceptional_pvec_entries(struct address_space *mapping,
+ 				pgoff_t end)
+ {
+ 	int i, j;
+-	bool dax, lock;
++	bool dax, lock, empty = false;
+ 
+ 	/* Handled by shmem itself */
+ 	if (shmem_mapping(mapping))
+@@ -96,11 +103,16 @@ static void truncate_exceptional_pvec_entries(struct address_space *mapping,
+ 			continue;
+ 		}
+ 
+-		__clear_shadow_entry(mapping, index, page);
++		if (__clear_shadow_entry(mapping, index, page))
++			empty = true;
+ 	}
+ 
+ 	if (lock)
+ 		xa_unlock_irq(&mapping->i_pages);
++
++	if (empty)
++		inode_pages_clear(mapping->host);
++
+ 	pvec->nr = j;
+ }
+ 
+@@ -300,7 +312,7 @@ void truncate_inode_pages_range(struct address_space *mapping,
+ 	pgoff_t		index;
+ 	int		i;
+ 
+-	if (mapping->nrpages == 0 && mapping->nrexceptional == 0)
++	if (mapping_empty(mapping))
+ 		goto out;
+ 
+ 	/* Offsets within partial pages */
+@@ -636,6 +648,7 @@ static int
+ invalidate_complete_page2(struct address_space *mapping, struct page *page)
+ {
+ 	unsigned long flags;
++	bool empty;
+ 
+ 	if (page->mapping != mapping)
+ 		return 0;
+@@ -648,9 +661,12 @@ invalidate_complete_page2(struct address_space *mapping, struct page *page)
+ 		goto failed;
+ 
+ 	BUG_ON(page_has_private(page));
+-	__delete_from_page_cache(page, NULL);
++	empty = __delete_from_page_cache(page, NULL);
+ 	xa_unlock_irqrestore(&mapping->i_pages, flags);
+ 
++	if (empty)
++		inode_pages_clear(mapping->host);
++
+ 	if (mapping->a_ops->freepage)
+ 		mapping->a_ops->freepage(page);
+ 
+@@ -692,7 +708,7 @@ int invalidate_inode_pages2_range(struct address_space *mapping,
+ 	int ret2 = 0;
+ 	int did_range_unmap = 0;
+ 
+-	if (mapping->nrpages == 0 && mapping->nrexceptional == 0)
++	if (mapping_empty(mapping))
+ 		goto out;
+ 
+ 	pagevec_init(&pvec);
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 09a710c85..1724c2a25 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -908,6 +908,7 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
+ 	} else {
+ 		void (*freepage)(struct page *);
+ 		void *shadow = NULL;
++		int empty;
+ 
+ 		freepage = mapping->a_ops->freepage;
+ 		/*
+@@ -929,9 +930,12 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
+ 		if (reclaimed && page_is_file_lru(page) &&
+ 		    !mapping_exiting(mapping) && !dax_mapping(mapping))
+ 			shadow = workingset_eviction(page, target_memcg);
+-		__delete_from_page_cache(page, shadow);
++		empty = __delete_from_page_cache(page, shadow);
+ 		xa_unlock_irqrestore(&mapping->i_pages, flags);
+ 
++		if (empty)
++			inode_pages_clear(mapping->host);
++
+ 		if (freepage != NULL)
+ 			freepage(page);
+ 	}
+diff --git a/mm/vmstat.c b/mm/vmstat.c
+index b1de695b8..7ce6cc9f7 100644
+--- a/mm/vmstat.c
++++ b/mm/vmstat.c
+@@ -1229,9 +1229,11 @@ const char * const vmstat_text[] = {
+ #ifdef CONFIG_NUMA
+ 	"zone_reclaim_failed",
+ #endif
+-	"pginodesteal",
+ 	"slabs_scanned",
++	"pginodesteal",
+ 	"kswapd_inodesteal",
++	"pginoderescue",
++	"pginodedelayed",
+ 	"kswapd_low_wmark_hit_quickly",
+ 	"kswapd_high_wmark_hit_quickly",
+ 	"pageoutrun",
+diff --git a/mm/workingset.c b/mm/workingset.c
+index 50b7937ba..88482626f 100644
+--- a/mm/workingset.c
++++ b/mm/workingset.c
+@@ -510,6 +510,7 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
+ 	struct xa_node *node = container_of(item, struct xa_node, private_list);
+ 	XA_STATE(xas, node->array, 0);
+ 	struct address_space *mapping;
++	bool empty = false;
+ 	int ret;
+ 
+ 	/*
+@@ -548,6 +549,7 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
+ 	if (WARN_ON_ONCE(node->count != node->nr_values))
+ 		goto out_invalid;
+ 	mapping->nrexceptional -= node->nr_values;
++	empty = mapping_empty(mapping);
+ 	xas.xa_node = xa_parent_locked(&mapping->i_pages, node);
+ 	xas.xa_offset = node->offset;
+ 	xas.xa_shift = node->shift + XA_CHUNK_SHIFT;
+@@ -561,6 +563,8 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
+ 
+ out_invalid:
+ 	xa_unlock_irq(&mapping->i_pages);
++	if (empty)
++		inode_pages_clear(mapping->host);
+ 	ret = LRU_REMOVED_RETRY;
+ out:
+ 	cond_resched();
 -- 
 2.28.0.rc2.1.g3d20111cbd
 

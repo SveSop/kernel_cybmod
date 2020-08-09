@@ -1,7 +1,7 @@
-From 90f9dee6005c06546673dcc4908b8baffd7b2867 Mon Sep 17 00:00:00 2001
+From 7b1bf86029e0f78bab2ca2e71f7e068c191dd1bc Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 23 Jun 2015 01:26:52 -0500
-Subject: [PATCH 01/30] i8042: decrease debug message level to info
+Subject: [PATCH 01/28] i8042: decrease debug message level to info
 
 Author:    Arjan van de Ven <arjan@linux.intel.com>
 
@@ -12,10 +12,10 @@ Signed-off-by: Jose Carlos Venegas Munoz <jos.c.venegas.munoz@intel.com>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/input/serio/i8042.c b/drivers/input/serio/i8042.c
-index 20ff2bed3..9716c549a 100644
+index 0dddf273a..77ce39f78 100644
 --- a/drivers/input/serio/i8042.c
 +++ b/drivers/input/serio/i8042.c
-@@ -611,7 +611,7 @@ static int i8042_enable_kbd_port(void)
+@@ -613,7 +613,7 @@ static int i8042_enable_kbd_port(void)
  	if (i8042_command(&i8042_ctr, I8042_CMD_CTL_WCTR)) {
  		i8042_ctr &= ~I8042_CTR_KBDINT;
  		i8042_ctr |= I8042_CTR_KBDDIS;
@@ -24,7 +24,7 @@ index 20ff2bed3..9716c549a 100644
  		return -EIO;
  	}
  
-@@ -630,7 +630,7 @@ static int i8042_enable_aux_port(void)
+@@ -632,7 +632,7 @@ static int i8042_enable_aux_port(void)
  	if (i8042_command(&i8042_ctr, I8042_CMD_CTL_WCTR)) {
  		i8042_ctr &= ~I8042_CTR_AUXINT;
  		i8042_ctr |= I8042_CTR_AUXDIS;
@@ -33,7 +33,7 @@ index 20ff2bed3..9716c549a 100644
  		return -EIO;
  	}
  
-@@ -722,7 +722,7 @@ static int __init i8042_check_mux(void)
+@@ -724,7 +724,7 @@ static int __init i8042_check_mux(void)
  	i8042_ctr &= ~I8042_CTR_AUXINT;
  
  	if (i8042_command(&i8042_ctr, I8042_CMD_CTL_WCTR)) {
@@ -42,7 +42,7 @@ index 20ff2bed3..9716c549a 100644
  		return -EIO;
  	}
  
-@@ -945,7 +945,7 @@ static int i8042_controller_selftest(void)
+@@ -947,7 +947,7 @@ static int i8042_controller_selftest(void)
  	do {
  
  		if (i8042_command(&param, I8042_CMD_CTL_TEST)) {
@@ -51,7 +51,7 @@ index 20ff2bed3..9716c549a 100644
  			return -ENODEV;
  		}
  
-@@ -967,7 +967,7 @@ static int i8042_controller_selftest(void)
+@@ -969,7 +969,7 @@ static int i8042_controller_selftest(void)
  	pr_info("giving up on controller selftest, continuing anyway...\n");
  	return 0;
  #else
@@ -61,13 +61,13 @@ index 20ff2bed3..9716c549a 100644
  #endif
  }
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 0c45bdc8700c20f78b44d36b071038368074bad9 Mon Sep 17 00:00:00 2001
+From 536ebed9c58564d3812ab57a99c48e1e520ec0d1 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Jan 2016 10:01:44 -0600
-Subject: [PATCH 02/30] Increase the ext4 default commit age
+Subject: [PATCH 02/28] Increase the ext4 default commit age
 
 Both the VM and EXT4 have a "commit to disk after X seconds" time.
 Currently the EXT4 time is shorter than our VM time, which is a bit
@@ -84,7 +84,7 @@ Signed-off-by: Jose Carlos Venegas Munoz <jose.carlos.venegas.munoz@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
-index f613d8529..90619e937 100644
+index d56128df2..a1859f3df 100644
 --- a/include/linux/jbd2.h
 +++ b/include/linux/jbd2.h
 @@ -44,7 +44,7 @@
@@ -97,23 +97,23 @@ index f613d8529..90619e937 100644
  #ifdef CONFIG_JBD2_DEBUG
  /*
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 888ef0ea6d369b38339838aaf5e3ba14081e0275 Mon Sep 17 00:00:00 2001
+From 94043db07e5fa9c54abc710b493e4334a5436d18 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:22:09 -0600
-Subject: [PATCH 03/30] silence rapl
+Subject: [PATCH 03/28] silence rapl
 
 ---
  drivers/powercap/intel_rapl_common.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index eb328655b..ed39c31cc 100644
+index 61a63a16b..742304a83 100644
 --- a/drivers/powercap/intel_rapl_common.c
 +++ b/drivers/powercap/intel_rapl_common.c
-@@ -1425,7 +1425,7 @@ static int __init rapl_init(void)
+@@ -1423,7 +1423,7 @@ static int __init rapl_init(void)
  
  	id = x86_match_cpu(rapl_ids);
  	if (!id) {
@@ -123,13 +123,13 @@ index eb328655b..ed39c31cc 100644
  
  		return -ENODEV;
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From b9f0edfa852f5cbe41b455d9aebe8548ebafbe7e Mon Sep 17 00:00:00 2001
+From 887fe01d309e244a08f62fbbca1322ed4365459d Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:10:58 -0600
-Subject: [PATCH 04/30] pci pme wakeups
+Subject: [PATCH 04/28] pci pme wakeups
 
 Reduce wakeups for PME checks, which are a workaround for miswired
 boards (sadly, too many of them) in laptops.
@@ -138,7 +138,7 @@ boards (sadly, too many of them) in laptops.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 595fcf598..698d8e136 100644
+index c9338f914..6974fbff7 100644
 --- a/drivers/pci/pci.c
 +++ b/drivers/pci/pci.c
 @@ -62,7 +62,7 @@ struct pci_pme_device {
@@ -151,13 +151,13 @@ index 595fcf598..698d8e136 100644
  static void pci_dev_d3_sleep(struct pci_dev *dev)
  {
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 2fb93adda25af2b4be7db11c10f5125ee03f6e4a Mon Sep 17 00:00:00 2001
+From 7b1796f0d437b34215b53b7086d2c5b800205cb9 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 6 May 2019 12:57:09 -0500
-Subject: [PATCH 05/30] ksm-wakeups
+Subject: [PATCH 05/28] ksm-wakeups
 
 reduce wakeups in ksm by adding rounding (aligning) when
 the sleep times are 1 second or longer
@@ -169,7 +169,7 @@ Signed-off-by: Arjan van de Ven <arjan@linux.intel.com>
  2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index b6b1f54a7..aa06b9312 100644
+index 5abb5b22a..20e29e027 100644
 --- a/kernel/watchdog.c
 +++ b/kernel/watchdog.c
 @@ -41,7 +41,7 @@ unsigned long __read_mostly watchdog_enabled;
@@ -182,7 +182,7 @@ index b6b1f54a7..aa06b9312 100644
  
  static struct cpumask watchdog_allowed_mask __read_mostly;
 diff --git a/mm/ksm.c b/mm/ksm.c
-index 281c00129..45b1546c9 100644
+index 4102034cd..0bc0066cc 100644
 --- a/mm/ksm.c
 +++ b/mm/ksm.c
 @@ -2422,9 +2422,14 @@ static int ksm_scan_thread(void *nothing)
@@ -204,13 +204,13 @@ index 281c00129..45b1546c9 100644
  			wait_event_freezable(ksm_thread_wait,
  				ksmd_should_run() || kthread_should_stop());
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From f913f45986cf594cb62f8c70016c81558dbfb94c Mon Sep 17 00:00:00 2001
+From 43347f4a4df06a29be3deb0d0b3b046a43acd570 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 19 Mar 2016 21:32:19 -0400
-Subject: [PATCH 06/30] intel_idle: tweak cpuidle cstates
+Subject: [PATCH 06/28] intel_idle: tweak cpuidle cstates
 
 Increase target_residency in cpuidle cstate
 
@@ -425,13 +425,13 @@ index f4495841b..c994d2451 100644
  		.enter_s2idle = intel_idle_s2idle, },
  	{
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 5bef2a49989867189fbb78c0239eae59408efd8f Mon Sep 17 00:00:00 2001
+From 4f3eca4dcfec1395021957086813916509500ecd Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 16:05:23 -0600
-Subject: [PATCH 07/30] bootstats: add printk's to measure boot time in more
+Subject: [PATCH 07/28] bootstats: add printk's to measure boot time in more
  detail
 
 Few distro-tweaks to add printk's to visualize boot time better
@@ -444,10 +444,10 @@ Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index 7867dfb39..24d5c3dd6 100644
+index 8fd39ff74..43f0a5241 100644
 --- a/arch/x86/kernel/alternative.c
 +++ b/arch/x86/kernel/alternative.c
-@@ -721,7 +721,9 @@ void __init alternative_instructions(void)
+@@ -720,7 +720,9 @@ void __init alternative_instructions(void)
  	 * patching.
  	 */
  
@@ -458,13 +458,13 @@ index 7867dfb39..24d5c3dd6 100644
  #ifdef CONFIG_SMP
  	/* Patch to UP if other cpus not imminent. */
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From a4ccadca2f8f714469a00068f39110f8e3da144a Mon Sep 17 00:00:00 2001
+From 8d58877a3c2354cf279c48982259bc9f4f15f51c Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 17:28:14 -0600
-Subject: [PATCH 08/30] smpboot: reuse timer calibration
+Subject: [PATCH 08/28] smpboot: reuse timer calibration
 
 NO point recalibrating for known-constant tsc ...
 saves 200ms+ of boot time.
@@ -473,10 +473,10 @@ saves 200ms+ of boot time.
  1 file changed, 3 insertions(+)
 
 diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
-index fdd4c1078..d14691235 100644
+index 49d925043..704733712 100644
 --- a/arch/x86/kernel/tsc.c
 +++ b/arch/x86/kernel/tsc.c
-@@ -1536,6 +1536,9 @@ unsigned long calibrate_delay_is_known(void)
+@@ -1546,6 +1546,9 @@ unsigned long calibrate_delay_is_known(void)
  	if (!constant_tsc || !mask)
  		return 0;
  
@@ -487,13 +487,13 @@ index fdd4c1078..d14691235 100644
  	if (sibling < nr_cpu_ids)
  		return cpu_data(sibling).loops_per_jiffy;
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From b6dae61f3148d9114ac65459986854167b1cc1bb Mon Sep 17 00:00:00 2001
+From a5ef0a69455292cf87ca24e7a9c1119abc82d169 Mon Sep 17 00:00:00 2001
 From: Jim Kukunas <james.t.kukunas@linux.intel.com>
 Date: Fri, 27 May 2016 09:26:51 -0400
-Subject: [PATCH 09/30] raid6: add Kconfig option to skip raid6 benchmarking
+Subject: [PATCH 09/28] raid6: add Kconfig option to skip raid6 benchmarking
 
 Adds CONFIG_RAID6_FORCE_ALGO, which causes the kernel to not benchmark
 each raid recovery and syndrome generation algorithm, and instead use
@@ -510,7 +510,7 @@ Signed-off-by: Jim Kukunas <james.t.kukunas@linux.intel.com>
  create mode 100644 lib/raid6/Kconfig
 
 diff --git a/lib/Kconfig b/lib/Kconfig
-index 5d53f9609..712243942 100644
+index df3f3da95..99115a5ec 100644
 --- a/lib/Kconfig
 +++ b/lib/Kconfig
 @@ -8,8 +8,7 @@ config BINARY_PRINTF
@@ -525,7 +525,7 @@ index 5d53f9609..712243942 100644
  	bool "Automatically choose fastest RAID6 PQ functions"
 diff --git a/lib/raid6/Kconfig b/lib/raid6/Kconfig
 new file mode 100644
-index 000000000..d881d6be8
+index 000000000..b3e80a662
 --- /dev/null
 +++ b/lib/raid6/Kconfig
 @@ -0,0 +1,38 @@
@@ -555,7 +555,7 @@ index 000000000..d881d6be8
 +	prompt "RAID6 Recovery Algorithm"
 +	default RAID6_FORCE_INT
 +	depends on RAID6_FORCE_ALGO
-+	---help---
++	help
 +		Select the RAID6 recovery algorithm to unconditionally use
 +
 +	config RAID6_FORCE_INT
@@ -644,13 +644,13 @@ index 6d5e5000f..4a8f2b74a 100644
  static void raid6_exit(void)
  {
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From e6125c75c3b0442238b401c80bcdeff0181f6029 Mon Sep 17 00:00:00 2001
+From e7331abf73644059c41ffb3802697db63cae0971 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 2 Jun 2016 23:36:32 -0500
-Subject: [PATCH 10/30] Initialize ata before graphics
+Subject: [PATCH 10/28] Initialize ata before graphics
 
 ATA init is the long pole in the boot process, and its asynchronous.
 move the graphics init after it so that ata and graphics initialize
@@ -695,13 +695,13 @@ index c0cd1b907..af1e2fb3a 100644
  obj-$(CONFIG_MTD)		+= mtd/
  obj-$(CONFIG_SPI)		+= spi/
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 6f91a94b83bab2d64b6146693bbc65ad372d1db1 Mon Sep 17 00:00:00 2001
+From 1d7bffb4a8bd75a74a04f2a8aded0cc6470e54b4 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 29 Jul 2016 19:10:52 +0000
-Subject: [PATCH 11/30] give rdrand some credit
+Subject: [PATCH 11/28] give rdrand some credit
 
 try to credit rdrand/rdseed with some entropy
 
@@ -713,10 +713,10 @@ rdrand and rdtsc add zero entropy.
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/char/random.c b/drivers/char/random.c
-index 0d10e31fd..9a47fd5d7 100644
+index d20ba1b10..bcad0c960 100644
 --- a/drivers/char/random.c
 +++ b/drivers/char/random.c
-@@ -1781,6 +1781,8 @@ static void __init init_std_data(struct entropy_store *r)
+@@ -1782,6 +1782,8 @@ static void __init init_std_data(struct entropy_store *r)
  		if (!arch_get_random_seed_long(&rv) &&
  		    !arch_get_random_long(&rv))
  			rv = random_get_entropy();
@@ -726,13 +726,13 @@ index 0d10e31fd..9a47fd5d7 100644
  	}
  	mix_pool_bytes(r, utsname(), sizeof(*(utsname())));
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 7211427733d92ba37380c51ffc3e7a8ad652e60e Mon Sep 17 00:00:00 2001
+From f45ab5a4c51fb523214792adb33c896d7ebdccb7 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 6 Jan 2017 15:34:09 +0000
-Subject: [PATCH 12/30] ipv4/tcp: allow the memory tuning for tcp to go a
+Subject: [PATCH 12/28] ipv4/tcp: allow the memory tuning for tcp to go a
  little bigger than default
 
 ---
@@ -740,10 +740,10 @@ Subject: [PATCH 12/30] ipv4/tcp: allow the memory tuning for tcp to go a
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index dd401757e..d48f6e2b1 100644
+index 6f0caf9a8..20b1e52a9 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -4050,8 +4050,8 @@ void __init tcp_init(void)
+@@ -4209,8 +4209,8 @@ void __init tcp_init(void)
  	tcp_init_mem();
  	/* Set per-socket limits to no more than 1/128 the pressure threshold */
  	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
@@ -755,13 +755,13 @@ index dd401757e..d48f6e2b1 100644
  	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
  	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From deda27b6faa6f2acde809abec49e87e5e888b13c Mon Sep 17 00:00:00 2001
+From 30abbcdc6c66494b073159a52a89da25d9f95df8 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 29 Apr 2017 22:24:34 +0000
-Subject: [PATCH 13/30] kernel: time: reduce ntp wakeups
+Subject: [PATCH 13/28] kernel: time: reduce ntp wakeups
 
 ---
  kernel/time/ntp.c | 2 +-
@@ -781,13 +781,13 @@ index 069ca78fb..22d82f21f 100644
  
  	/* Compute the needed delay that will get to tv_nsec == target_nsec */
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 0e19fdcfc76f93a9d8f4bffae964e722cf971e32 Mon Sep 17 00:00:00 2001
+From bd21aceb2ffd5567ea2296aba03c413cad0950e0 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 17 May 2017 01:52:11 +0000
-Subject: [PATCH 14/30] init: wait for partition and retry scan
+Subject: [PATCH 14/28] init: wait for partition and retry scan
 
 As Clear Linux boots fast the device is not ready when
 the mounting code is reached, so a retry device scan will
@@ -834,13 +834,13 @@ index 29d326b6c..cb6add64f 100644
  	md_run_setup();
  
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From dab4f7faa8effadbcafc44b6c1b2a2435f560ab4 Mon Sep 17 00:00:00 2001
+From 5bf888fd5afb83f4a76a41c65e89043f536255e5 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 20 Jun 2017 20:19:08 +0000
-Subject: [PATCH 15/30] print fsync count for bootchart
+Subject: [PATCH 15/28] print fsync count for bootchart
 
 ---
  block/blk-core.c      | 3 +++
@@ -849,10 +849,10 @@ Subject: [PATCH 15/30] print fsync count for bootchart
  3 files changed, 5 insertions(+)
 
 diff --git a/block/blk-core.c b/block/blk-core.c
-index 9bfaee050..aeaf17696 100644
+index 03252af8c..b30532394 100644
 --- a/block/blk-core.c
 +++ b/block/blk-core.c
-@@ -1175,6 +1175,9 @@ blk_qc_t submit_bio(struct bio *bio)
+@@ -1244,6 +1244,9 @@ blk_qc_t submit_bio(struct bio *bio)
  			count_vm_events(PGPGIN, count);
  		}
  
@@ -863,10 +863,10 @@ index 9bfaee050..aeaf17696 100644
  			char b[BDEVNAME_SIZE];
  			printk(KERN_DEBUG "%s(%d): %s block %Lu on %s (%u sectors)\n",
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 4418f5cb8..804267f25 100644
+index 683372943..2a59b11e3 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
-@@ -892,6 +892,7 @@ struct task_struct {
+@@ -897,6 +897,7 @@ struct task_struct {
  	/* Cached requested key. */
  	struct key			*cached_requested_key;
  #endif
@@ -875,10 +875,10 @@ index 4418f5cb8..804267f25 100644
  	/*
  	 * executable name, excluding path.
 diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
-index 239970b99..90578eefb 100644
+index 36c54265b..acbdf8f3f 100644
 --- a/kernel/sched/debug.c
 +++ b/kernel/sched/debug.c
-@@ -877,6 +877,7 @@ void proc_sched_show_task(struct task_struct *p, struct pid_namespace *ns,
+@@ -876,6 +876,7 @@ void proc_sched_show_task(struct task_struct *p, struct pid_namespace *ns,
  	PN(se.exec_start);
  	PN(se.vruntime);
  	PN(se.sum_exec_runtime);
@@ -887,13 +887,13 @@ index 239970b99..90578eefb 100644
  	nr_switches = p->nvcsw + p->nivcsw;
  
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 536dd976db7869ed7d3f3a9cdb1b1ba2aa5edc41 Mon Sep 17 00:00:00 2001
+From cc1c0bd535f6675346501d0eb0786fe2ba9a84a3 Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 13 Aug 2018 04:01:21 -0500
-Subject: [PATCH 16/30] Add boot option to allow unsigned modules
+Subject: [PATCH 16/28] Add boot option to allow unsigned modules
 
 Add module.sig_unenforce boot parameter to allow loading unsigned kernel
 modules. Parameter is only effective if CONFIG_MODULE_SIG_FORCE is
@@ -906,10 +906,10 @@ Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
  1 file changed, 20 insertions(+)
 
 diff --git a/kernel/module.c b/kernel/module.c
-index 646f1e233..fc67585ab 100644
+index aa183c9ac..09858444c 100644
 --- a/kernel/module.c
 +++ b/kernel/module.c
-@@ -53,6 +53,7 @@
+@@ -56,6 +56,7 @@
  #include <linux/bsearch.h>
  #include <linux/dynamic_debug.h>
  #include <linux/audit.h>
@@ -917,7 +917,7 @@ index 646f1e233..fc67585ab 100644
  #include <uapi/linux/module.h>
  #include "module-internal.h"
  
-@@ -269,6 +270,10 @@ static void module_assert_mutex_or_preempt(void)
+@@ -272,6 +273,10 @@ static void module_assert_mutex_or_preempt(void)
  
  static bool sig_enforce = IS_ENABLED(CONFIG_MODULE_SIG_FORCE);
  module_param(sig_enforce, bool_enable_only, 0644);
@@ -928,7 +928,7 @@ index 646f1e233..fc67585ab 100644
  
  /*
   * Export sig_enforce kernel cmdline parameter to allow other subsystems rely
-@@ -394,6 +399,8 @@ extern const s32 __start___kcrctab_unused[];
+@@ -397,6 +402,8 @@ extern const s32 __start___kcrctab_unused[];
  extern const s32 __start___kcrctab_unused_gpl[];
  #endif
  
@@ -937,7 +937,7 @@ index 646f1e233..fc67585ab 100644
  #ifndef CONFIG_MODVERSIONS
  #define symversion(base, idx) NULL
  #else
-@@ -4365,6 +4372,19 @@ static const struct proc_ops modules_proc_ops = {
+@@ -4399,6 +4406,19 @@ static const struct proc_ops modules_proc_ops = {
  static int __init proc_modules_init(void)
  {
  	proc_create("modules", 0, NULL, &modules_proc_ops);
@@ -958,13 +958,13 @@ index 646f1e233..fc67585ab 100644
  }
  module_init(proc_modules_init);
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From f16788efb55fa85c0024c7cdd77a7668da1fd7c7 Mon Sep 17 00:00:00 2001
+From 4f60a5f3ff12c06fbab82f79d326edfb1aa20f84 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Wed, 20 Jun 2018 17:23:21 +0000
-Subject: [PATCH 17/30] Enable stateless firmware loading
+Subject: [PATCH 17/28] Enable stateless firmware loading
 
 Prefer the order of specific version before generic and /etc before
 /lib to enable the user to give specific overrides for generic
@@ -974,7 +974,7 @@ firmware and distribution firmware.
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 76f799139..ca94e86b8 100644
+index ca871b135..bd0f44161 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -439,6 +439,8 @@ static int fw_decompress_xz(struct device *dev, struct fw_priv *fw_priv,
@@ -987,13 +987,13 @@ index 76f799139..ca94e86b8 100644
  	"/lib/firmware/updates",
  	"/lib/firmware/" UTS_RELEASE,
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 8ea16af289c241e8af611df5c8cd19943ec4b08f Mon Sep 17 00:00:00 2001
+From e0900c9fe5894ede7b24b3c62e74ac3f86cd9096 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Thu, 2 Aug 2018 12:03:22 -0700
-Subject: [PATCH 18/30] Migrate some systemd defaults to the kernel defaults.
+Subject: [PATCH 18/28] Migrate some systemd defaults to the kernel defaults.
 
 These settings are needed to prevent networking issues when
 the networking modules come up by default without explicit
@@ -1033,13 +1033,13 @@ index 45f3750aa..317f8326d 100644
  #define BOND_DEFAULT_TX_QUEUES 16   /* Default number of tx queues per device */
  
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 54ebb484c5838e9ca598659180ba43930c8e3738 Mon Sep 17 00:00:00 2001
+From 3519c86139e0ae906c3600bd064acec5183fdbb9 Mon Sep 17 00:00:00 2001
 From: Alan Cox <alan@linux.intel.com>
 Date: Thu, 10 Mar 2016 15:11:28 +0000
-Subject: [PATCH 19/30] xattr: allow setting user.* attributes on symlinks by
+Subject: [PATCH 19/28] xattr: allow setting user.* attributes on symlinks by
  owner
 
 Kvmtool and clear containers supports using user attributes to label host
@@ -1090,13 +1090,13 @@ index 91608d9bf..46778c61d 100644
  	}
  
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From e1edd7beed551e628b02f6099f2c503de094193e Mon Sep 17 00:00:00 2001
+From 05a32aa3610dfcc98a9581fb1e6bf17ccff06c6f Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 8 Dec 2018 18:21:32 +0000
-Subject: [PATCH 20/30] use lfence instead of rep and nop
+Subject: [PATCH 20/28] use lfence instead of rep and nop
 
 ---
  arch/x86/include/asm/vdso/processor.h | 2 +-
@@ -1116,13 +1116,13 @@ index 57b1a7034..e2c45674f 100644
  
  static __always_inline void cpu_relax(void)
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 7b70fe626e2d65d7360b746597dde9ca5d679696 Mon Sep 17 00:00:00 2001
+From 988d9f4d469f5a05b332d5524df9551d8825da5c Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
-Subject: [PATCH 21/30] do accept() in LIFO order for cache efficiency
+Subject: [PATCH 21/28] do accept() in LIFO order for cache efficiency
 
 ---
  include/linux/wait.h            |  2 ++
@@ -1131,7 +1131,7 @@ Subject: [PATCH 21/30] do accept() in LIFO order for cache efficiency
  3 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/wait.h b/include/linux/wait.h
-index feeb6be5c..cd8f3449e 100644
+index 898c890fc..36fafc86b 100644
 --- a/include/linux/wait.h
 +++ b/include/linux/wait.h
 @@ -163,6 +163,7 @@ static inline bool wq_has_sleeper(struct wait_queue_head *wq_head)
@@ -1193,7 +1193,7 @@ index ba059fbfc..5f26ae964 100644
  {
  	wq_entry->flags = flags;
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 65c29f2bd..026c768fc 100644
+index afaf582a5..96a063f2c 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
 @@ -424,7 +424,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
@@ -1206,13 +1206,13 @@ index 65c29f2bd..026c768fc 100644
  		release_sock(sk);
  		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 041b47856f58717cc435dfcbe1c3fd2eacfe1c10 Mon Sep 17 00:00:00 2001
+From 70730ae66f5092b60e1ea1b770b0f05cd21f6657 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sun, 18 Feb 2018 23:35:41 +0000
-Subject: [PATCH 22/30] locking: rwsem: spin faster
+Subject: [PATCH 22/28] locking: rwsem: spin faster
 
 tweak rwsem owner spinning a bit
 ---
@@ -1242,13 +1242,13 @@ index f11b9bd34..1bbfcc1e0 100644
  	rcu_read_unlock();
  
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 1ccd835a606c15ac67177a8f52cbefc1fdc1f1a6 Mon Sep 17 00:00:00 2001
+From d80977ef970ffadc98a482cd3dccc32e1a3cbb35 Mon Sep 17 00:00:00 2001
 From: Joe Konno <joe.konno@intel.com>
 Date: Tue, 25 Jun 2019 10:35:54 -0700
-Subject: [PATCH 23/30] ata: libahci: ignore staggered spin-up
+Subject: [PATCH 23/28] ata: libahci: ignore staggered spin-up
 
 Change libahci to ignore firmware's staggered spin-up flag. End-users
 who wish to honor firmware's SSS flag can add the following kernel
@@ -1285,13 +1285,13 @@ index ea5bf5f4c..6adee9c99 100644
  static int ahci_set_lpm(struct ata_link *link, enum ata_lpm_policy policy,
  			unsigned hints);
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From d292f3223b552fce6616a0404a3218e8d2e6a0ad Mon Sep 17 00:00:00 2001
+From 547312839ca5322e30025016dc632fa7d78df1e4 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 10 Aug 2019 03:19:04 +0000
-Subject: [PATCH 24/30] print CPU that faults
+Subject: [PATCH 24/28] print CPU that faults
 
 print cpu number when we print a crash
 ---
@@ -1299,10 +1299,10 @@ print cpu number when we print a crash
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
-index a51df516b..452a1a453 100644
+index 1ead568c0..ef9b74188 100644
 --- a/arch/x86/mm/fault.c
 +++ b/arch/x86/mm/fault.c
-@@ -865,9 +865,9 @@ show_signal_msg(struct pt_regs *regs, unsigned long error_code,
+@@ -717,9 +717,9 @@ show_signal_msg(struct pt_regs *regs, unsigned long error_code,
  	if (!printk_ratelimit())
  		return;
  
@@ -1315,35 +1315,161 @@ index a51df516b..452a1a453 100644
  	print_vma_addr(KERN_CONT " in ", regs->ip);
  
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
 
-From 7734e554724bab4d984a9680b5a77b616c6d6ccf Mon Sep 17 00:00:00 2001
-From: Ashok Raj <ashok.raj@intel.com>
-Date: Sat, 20 Jul 2019 14:14:47 +0000
-Subject: [PATCH 25/30] x86/microcode: Force update a uCode even if the rev is
- the same
+From dd1dcaa5aca2f21140d21b6bf79e13ee82e0ee6e Mon Sep 17 00:00:00 2001
+From: Jim Kukunas <james.t.kukunas@linux.intel.com>
+Date: Sat, 2 Nov 2019 00:59:52 +0000
+Subject: [PATCH 25/28] fix bug in ucode force reload revision check
 
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+If force_ucode_load==true, reload ucode even if revision # is identical.
 ---
- arch/x86/kernel/cpu/microcode/core.c  |  1 +
+ arch/x86/kernel/cpu/microcode/intel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
+index 6a99535d7..d7e0e35ab 100644
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -815,7 +815,7 @@ static enum ucode_state apply_microcode_intel(int cpu)
+ 	 * already.
+ 	 */
+ 	rev = intel_get_microcode_revision();
+-	if (rev >= mc->hdr.rev) {
++	if (rev > mc->hdr.rev || (rev == mc->hdr.rev && !force_ucode_load)) {
+ 		ret = UCODE_OK;
+ 		goto out;
+ 	}
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From c7329e83f5d3386273522518e0fe493f5c4cf1a2 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Mon, 11 Nov 2019 23:12:11 +0000
+Subject: [PATCH 26/28] nvme workaround
+
+---
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 4ee2330c6..b089cceff 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -48,7 +48,7 @@ static u8 nvme_max_retries = 5;
+ module_param_named(max_retries, nvme_max_retries, byte, 0644);
+ MODULE_PARM_DESC(max_retries, "max number of retries a command may have");
+ 
+-static unsigned long default_ps_max_latency_us = 100000;
++static unsigned long default_ps_max_latency_us = 200;
+ module_param(default_ps_max_latency_us, ulong, 0644);
+ MODULE_PARM_DESC(default_ps_max_latency_us,
+ 		 "max power saving latency for new devices; use PM QOS to change per device");
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 42cab507d5dd5243723421fa06dcc8a213637728 Mon Sep 17 00:00:00 2001
+From: Alexander Koskovich <zvnexus@outlook.com>
+Date: Wed, 12 Feb 2020 22:47:12 +0000
+Subject: [PATCH 27/28] Don't report an error if PowerClamp run on other CPU
+
+---
+ drivers/thermal/intel/intel_powerclamp.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/thermal/intel/intel_powerclamp.c b/drivers/thermal/intel/intel_powerclamp.c
+index f74b24734..bf60ab105 100644
+--- a/drivers/thermal/intel/intel_powerclamp.c
++++ b/drivers/thermal/intel/intel_powerclamp.c
+@@ -650,6 +650,11 @@ static struct thermal_cooling_device_ops powerclamp_cooling_ops = {
+ 	.set_cur_state = powerclamp_set_cur_state,
+ };
+ 
++static const struct x86_cpu_id amd_cpu[] = {
++	{ X86_VENDOR_AMD },
++	{},
++};
++
+ static const struct x86_cpu_id __initconst intel_powerclamp_ids[] = {
+ 	X86_MATCH_VENDOR_FEATURE(INTEL, X86_FEATURE_MWAIT, NULL),
+ 	{}
+@@ -659,6 +664,11 @@ MODULE_DEVICE_TABLE(x86cpu, intel_powerclamp_ids);
+ static int __init powerclamp_probe(void)
+ {
+ 
++	if (x86_match_cpu(amd_cpu)){
++		pr_info("Intel PowerClamp does not support AMD CPUs\n");
++		return -ENODEV;
++	}
++
+ 	if (!x86_match_cpu(intel_powerclamp_ids)) {
+ 		pr_err("CPU does not support MWAIT\n");
+ 		return -ENODEV;
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 7b6fa650d824d1920a4e5d8230147c345a43f13c Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Thu, 11 Jun 2020 22:30:56 +0200
+Subject: [PATCH 28/28] Port microcode patches
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ arch/x86/kernel/cpu/microcode/core.c  |  9 ++++-
  arch/x86/kernel/cpu/microcode/intel.c | 57 +++++++++++++++++++++++++--
- 2 files changed, 55 insertions(+), 3 deletions(-)
+ 2 files changed, 62 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 7019d4b2d..675f0df97 100644
+index baec68b7e..89b783b81 100644
 --- a/arch/x86/kernel/cpu/microcode/core.c
 +++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -607,6 +607,7 @@ static int microcode_reload_late(void)
+@@ -606,6 +606,7 @@ static int microcode_reload_late(void)
  	atomic_set(&late_cpus_in,  0);
  	atomic_set(&late_cpus_out, 0);
  
 +	printk ("Going to do stop_machine\n");
  	ret = stop_machine_cpuslocked(__reload_late, NULL, cpu_online_mask);
- 	if (ret > 0)
+ 	if (ret == 0)
  		microcode_check();
+@@ -619,18 +620,23 @@ static ssize_t reload_store(struct device *dev,
+ 			    struct device_attribute *attr,
+ 			    const char *buf, size_t size)
+ {
++	extern bool force_ucode_load;
+ 	enum ucode_state tmp_ret = UCODE_OK;
+ 	int bsp = boot_cpu_data.cpu_index;
+ 	unsigned long val;
++	bool orig_cmd_line = force_ucode_load;
+ 	ssize_t ret = 0;
+ 
+ 	ret = kstrtoul(buf, 0, &val);
+ 	if (ret)
+ 		return ret;
+ 
+-	if (val != 1)
++	if (!val || val > 2)
+ 		return size;
+ 
++	if (val == 2)
++		force_ucode_load = true;
++
+ 	tmp_ret = microcode_ops->request_microcode_fw(bsp, &microcode_pdev->dev, true);
+ 	if (tmp_ret != UCODE_NEW)
+ 		return size;
+@@ -646,6 +652,7 @@ static ssize_t reload_store(struct device *dev,
+ 	mutex_unlock(&microcode_mutex);
+ 
+ put:
++	force_ucode_load = orig_cmd_line;
+ 	put_online_cpus();
+ 
+ 	if (ret == 0)
 diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index 6a99535d7..f08b4b59c 100644
+index d7e0e35ab..fa4809786 100644
 --- a/arch/x86/kernel/cpu/microcode/intel.c
 +++ b/arch/x86/kernel/cpu/microcode/intel.c
 @@ -30,6 +30,7 @@
@@ -1358,7 +1484,7 @@ index 6a99535d7..f08b4b59c 100644
  #include <asm/msr.h>
  
  static const char ucode_path[] = "kernel/x86/microcode/GenuineIntel.bin";
-+static bool force_ucode_load = false;
++bool force_ucode_load = false;
  
  /* Current microcode patch used in early patching on the APs. */
  static struct microcode_intel *intel_ucode_patch;
@@ -1369,12 +1495,12 @@ index 6a99535d7..f08b4b59c 100644
 -	if (mc_hdr->rev <= new_rev)
 +	//if (mc_hdr->rev <= new_rev)
 +	if (mc_hdr->rev < new_rev) {
-+		printk ("Returning NO_NEW old = 0x%x new = 0x%x\n", 
++		printk ("Returning NO_NEW old = 0x%x new = 0x%x\n",
 +			mc_hdr->rev, new_rev);
  		return 0;
 +	}
 +	if ((mc_hdr->rev == new_rev) && !force_ucode_load) {
-+		printk ("SAME REV: no_force Returning NO_NEW old = 0x%x new = 0x%x\n", 
++		printk ("SAME REV: no_force Returning NO_NEW old = 0x%x new = 0x%x\n",
 +			mc_hdr->rev, new_rev);
 +		return 0;
 +	}
@@ -1459,168 +1585,5 @@ index 6a99535d7..f08b4b59c 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.27.0.83.g0313f36c6e
+2.28.0.rc2.1.g3d20111cbd
 
-
-From 95c22be22891a66d6819ef91077faa0d9ef67928 Mon Sep 17 00:00:00 2001
-From: Ashok Raj <ashok.raj@intel.com>
-Date: Sat, 20 Jul 2019 14:14:47 +0000
-Subject: [PATCH 26/30] x86/microcode: echo 2 > reload to force load ucode.
-
-If you want to force a ucode load even if the version
-doesn't change try this
-
-To just do a normal upgrade where new rev > current rev
-
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
----
- arch/x86/kernel/cpu/microcode/core.c  | 8 +++++++-
- arch/x86/kernel/cpu/microcode/intel.c | 2 +-
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 675f0df97..595dbfe80 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -621,18 +621,23 @@ static ssize_t reload_store(struct device *dev,
- 			    struct device_attribute *attr,
- 			    const char *buf, size_t size)
- {
-+	extern bool force_ucode_load;
- 	enum ucode_state tmp_ret = UCODE_OK;
- 	int bsp = boot_cpu_data.cpu_index;
- 	unsigned long val;
-+	bool orig_cmd_line = force_ucode_load;
- 	ssize_t ret = 0;
- 
- 	ret = kstrtoul(buf, 0, &val);
- 	if (ret)
- 		return ret;
- 
--	if (val != 1)
-+	if (!val || val > 2)
- 		return size;
- 
-+	if (val == 2)
-+		force_ucode_load = true;
-+
- 	tmp_ret = microcode_ops->request_microcode_fw(bsp, &microcode_pdev->dev, true);
- 	if (tmp_ret != UCODE_NEW)
- 		return size;
-@@ -648,6 +653,7 @@ static ssize_t reload_store(struct device *dev,
- 	mutex_unlock(&microcode_mutex);
- 
- put:
-+	force_ucode_load = orig_cmd_line;
- 	put_online_cpus();
- 
- 	if (ret >= 0)
-diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index f08b4b59c..efa492cd3 100644
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -39,7 +39,7 @@
- #include <asm/msr.h>
- 
- static const char ucode_path[] = "kernel/x86/microcode/GenuineIntel.bin";
--static bool force_ucode_load = false;
-+bool force_ucode_load = false;
- 
- /* Current microcode patch used in early patching on the APs. */
- static struct microcode_intel *intel_ucode_patch;
--- 
-2.27.0.83.g0313f36c6e
-
-
-From 12891d3150a6dafc43f826a8365d065feab1cbec Mon Sep 17 00:00:00 2001
-From: Jim Kukunas <james.t.kukunas@linux.intel.com>
-Date: Sat, 2 Nov 2019 00:59:52 +0000
-Subject: [PATCH 27/30] fix bug in ucode force reload revision check
-
-If force_ucode_load==true, reload ucode even if revision # is identical.
----
- arch/x86/kernel/cpu/microcode/intel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index efa492cd3..e8a4d84a8 100644
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -866,7 +866,7 @@ static enum ucode_state apply_microcode_intel(int cpu)
- 	 * already.
- 	 */
- 	rev = intel_get_microcode_revision();
--	if (rev >= mc->hdr.rev) {
-+	if (rev > mc->hdr.rev || (rev == mc->hdr.rev && !force_ucode_load)) {
- 		ret = UCODE_OK;
- 		goto out;
- 	}
--- 
-2.27.0.83.g0313f36c6e
-
-
-From 50ec060e5a0b8ae7fbd6ce898db4f7af73109bb6 Mon Sep 17 00:00:00 2001
-From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Mon, 11 Nov 2019 23:12:11 +0000
-Subject: [PATCH 28/30] nvme workaround
-
----
- drivers/nvme/host/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index f3c037f5a..c4e2ead25 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -49,7 +49,7 @@ static u8 nvme_max_retries = 5;
- module_param_named(max_retries, nvme_max_retries, byte, 0644);
- MODULE_PARM_DESC(max_retries, "max number of retries a command may have");
- 
--static unsigned long default_ps_max_latency_us = 100000;
-+static unsigned long default_ps_max_latency_us = 200;
- module_param(default_ps_max_latency_us, ulong, 0644);
- MODULE_PARM_DESC(default_ps_max_latency_us,
- 		 "max power saving latency for new devices; use PM QOS to change per device");
--- 
-2.27.0.83.g0313f36c6e
-
-
-From 897c823617ca2700344c47f734a1036f455aebe3 Mon Sep 17 00:00:00 2001
-From: Alexander Koskovich <zvnexus@outlook.com>
-Date: Wed, 12 Feb 2020 22:47:12 +0000
-Subject: [PATCH 29/30] Don't report an error if PowerClamp run on other CPU
-
----
- drivers/thermal/intel/intel_powerclamp.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/drivers/thermal/intel/intel_powerclamp.c b/drivers/thermal/intel/intel_powerclamp.c
-index f74b24734..bf60ab105 100644
---- a/drivers/thermal/intel/intel_powerclamp.c
-+++ b/drivers/thermal/intel/intel_powerclamp.c
-@@ -650,6 +650,11 @@ static struct thermal_cooling_device_ops powerclamp_cooling_ops = {
- 	.set_cur_state = powerclamp_set_cur_state,
- };
- 
-+static const struct x86_cpu_id amd_cpu[] = {
-+	{ X86_VENDOR_AMD },
-+	{},
-+};
-+
- static const struct x86_cpu_id __initconst intel_powerclamp_ids[] = {
- 	X86_MATCH_VENDOR_FEATURE(INTEL, X86_FEATURE_MWAIT, NULL),
- 	{}
-@@ -659,6 +664,11 @@ MODULE_DEVICE_TABLE(x86cpu, intel_powerclamp_ids);
- static int __init powerclamp_probe(void)
- {
- 
-+	if (x86_match_cpu(amd_cpu)){
-+		pr_info("Intel PowerClamp does not support AMD CPUs\n");
-+		return -ENODEV;
-+	}
-+
- 	if (!x86_match_cpu(intel_powerclamp_ids)) {
- 		pr_err("CPU does not support MWAIT\n");
- 		return -ENODEV;
--- 
-2.27.0.83.g0313f36c6e

@@ -1,16 +1,14 @@
-## Cybmod patches for 5.7 kernel  
+## Cybmod patches for 5.8 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.7.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.8.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.8.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.7.13  
-0001 : v5.7 "Undead" PDS patch  
-0002 : AUFS filesystem patch  
-0003 : 5.7 Graysky's CPU patches  
-0004 : Add optional -O3 optimization  
-0005 : MM address space tweak  
-0006 : Various kernel tweaks patch  
+
+0001 : 5.8 Graysky's CPU patches  
+0002 : Add optional -O3 optimization  
+0003 : Sched autogroup patch  
+0004 : Various kernel tweaks patch  
 0010 : swap-tweaks.patch  
 0015 : ZFS fix  
 0020 : Ubuntu based config (See note below!)  
@@ -19,7 +17,6 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0031 : Misc fixes  
 0032 : Fsgsbase patchset  
 0033 : Futex patchset  
-0034 : Padata patchset  
 0035 : Zstd config patchset  
 0036 : Block patchset  
 
@@ -27,13 +24,13 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default PDS scheduler (Thanks to TKGlitch) and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**This config has default CFS scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.7.tar.xz    
-cd linux-5.7  
+tar xf linux-5.8.tar.xz    
+cd linux-5.8  
 /path/to/patches/and/cybmod_patch.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```

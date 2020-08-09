@@ -1,8 +1,8 @@
-From 14f913b0f5dbeb1b3b30804ab5b428c0bef65b8e Mon Sep 17 00:00:00 2001
+From ee8e3ae24cc413a1196e708c6e8538bacb86400e Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
-Subject: [PATCH 1/9] block, Kconfig.iosched: set default value of IOSCHED_BFQ
- to yes
+Subject: [PATCH 01/10] block, Kconfig.iosched: set default value of
+ IOSCHED_BFQ to yes
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -10,7 +10,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index 7df14133a..70a6dd44e 100644
+index 2f2158e05..e58b2953a 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -5,13 +5,11 @@ menu "IO Schedulers"
@@ -18,13 +18,13 @@ index 7df14133a..70a6dd44e 100644
  config MQ_IOSCHED_DEADLINE
  	tristate "MQ deadline I/O scheduler"
 -	default y
- 	---help---
+ 	help
  	  MQ version of the deadline IO scheduler.
  
  config MQ_IOSCHED_KYBER
  	tristate "Kyber I/O scheduler"
 -	default y
- 	---help---
+ 	help
  	  The Kyber I/O scheduler is a low-overhead scheduler suitable for
  	  multiqueue and other fast devices. Given target latencies for reads and
 @@ -20,6 +18,7 @@ config MQ_IOSCHED_KYBER
@@ -32,17 +32,17 @@ index 7df14133a..70a6dd44e 100644
  config IOSCHED_BFQ
  	tristate "BFQ I/O scheduler"
 +	default y
- 	---help---
+ 	help
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 7fd811cc0237dde1d3c4f6f90644052456c776ac Mon Sep 17 00:00:00 2001
+From bab6928b972ca25f519b9e4370b5b7989e5cdc9c Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
-Subject: [PATCH 2/9] block: Fix depends for BLK_DEV_ZONED
+Subject: [PATCH 02/10] block: Fix depends for BLK_DEV_ZONED
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -50,7 +50,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index 3bc76bb11..e870cf904 100644
+index 9357d7302..badb4f0a7 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
 @@ -83,7 +83,7 @@ config BLK_DEV_INTEGRITY_T10
@@ -59,17 +59,17 @@ index 3bc76bb11..e870cf904 100644
  	bool "Zoned block device support"
 -	select MQ_IOSCHED_DEADLINE
 +	select IOSCHED_BFQ
- 	---help---
+ 	help
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC host-managed and host-aware zoned block devices.
 -- 
 2.28.0.rc2.1.g3d20111cbd
 
 
-From dfed29acb73b6fe51e3af8a1eada31c817b1b4d1 Mon Sep 17 00:00:00 2001
+From a4a9d24721ed00039bd5e1d65faec15b33529a00 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 25 Nov 2019 13:45:35 +0100
-Subject: [PATCH 3/9] block: set rq_affinity = 2 for full multithreading I/O
+Subject: [PATCH 03/10] block: set rq_affinity = 2 for full multithreading I/O
  requests
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -77,95 +77,28 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  include/linux/blkdev.h | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-From ca6a5ffa3746210aa5c1d83e5f925f68e6005043 Mon Sep 17 00:00:00 2001
-From: Christoph Hellwig <hch () lst ! de>
-Date: Sat, 16 May 2020 15:40:59 +0000
-Subject: [PATCH 4/9] blk-mq: remove the bio argument to ->prepare_request
-
-None of the I/O schedulers actually needs it.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
----
- block/bfq-iosched.c      | 2 +-
- block/blk-mq.c           | 2 +-
- block/kyber-iosched.c    | 2 +-
- block/mq-deadline.c      | 2 +-
- include/linux/elevator.h | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 3d411716d..50c8f034c 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -6073,7 +6073,7 @@ static struct bfq_queue *bfq_get_bfqq_handle_split(struct bfq_data *bfqd,
-  * comments on bfq_init_rq for the reason behind this delayed
-  * preparation.
-  */
--static void bfq_prepare_request(struct request *rq, struct bio *bio)
-+static void bfq_prepare_request(struct request *rq)
- {
- 	/*
- 	 * Regardless of whether we have an icq attached, we have to
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 0d533d084..9d244497c 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -389,7 +389,7 @@ static struct request *blk_mq_get_request(struct request_queue *q,
- 			if (e->type->icq_cache)
- 				blk_mq_sched_assign_ioc(rq);
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 57241417f..69d21c341 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -620,7 +620,8 @@ struct request_queue {
+ #define QUEUE_FLAG_RQ_ALLOC_TIME 27	/* record rq->alloc_time_ns */
  
--			e->type->ops.prepare_request(rq, bio);
-+			e->type->ops.prepare_request(rq);
- 			rq->rq_flags |= RQF_ELVPRIV;
- 		}
- 	}
-diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
-index 34dcea0ef..a38c5ab10 100644
---- a/block/kyber-iosched.c
-+++ b/block/kyber-iosched.c
-@@ -579,7 +579,7 @@ static bool kyber_bio_merge(struct blk_mq_hw_ctx *hctx, struct bio *bio,
- 	return merged;
- }
+ #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
+-				 (1 << QUEUE_FLAG_SAME_COMP))
++				 (1 << QUEUE_FLAG_SAME_COMP)	|	\
++				 (1 << QUEUE_FLAG_SAME_FORCE))
  
--static void kyber_prepare_request(struct request *rq, struct bio *bio)
-+static void kyber_prepare_request(struct request *rq)
- {
- 	rq_set_domain_token(rq, -1);
- }
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index b490f47fd..b57470e15 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -541,7 +541,7 @@ static void dd_insert_requests(struct blk_mq_hw_ctx *hctx,
-  * Nothing to do here. This is defined only to ensure that .finish_request
-  * method is called upon request completion.
-  */
--static void dd_prepare_request(struct request *rq, struct bio *bio)
-+static void dd_prepare_request(struct request *rq)
- {
- }
- 
-diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index 901bda352..bacc40a0b 100644
---- a/include/linux/elevator.h
-+++ b/include/linux/elevator.h
-@@ -39,7 +39,7 @@ struct elevator_mq_ops {
- 	void (*request_merged)(struct request_queue *, struct request *, enum elv_merge);
- 	void (*requests_merged)(struct request_queue *, struct request *, struct request *);
- 	void (*limit_depth)(unsigned int, struct blk_mq_alloc_data *);
--	void (*prepare_request)(struct request *, struct bio *bio);
-+	void (*prepare_request)(struct request *);
- 	void (*finish_request)(struct request *);
- 	void (*insert_requests)(struct blk_mq_hw_ctx *, struct list_head *, bool);
- 	struct request *(*dispatch_request)(struct blk_mq_hw_ctx *);
+ void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
+ void blk_queue_flag_clear(unsigned int flag, struct request_queue *q);
 -- 
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 43bf6919df7223c88a863ae694deec5bbe8c72a3 Mon Sep 17 00:00:00 2001
+From fab4ff3a062b2162c14b251815c2b4956b0174b3 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 3 Jul 2020 12:58:15 +0200
-Subject: [PATCH 5/9] block: Add CONFIG to rename the mq-deadline scheduler
+Subject: [PATCH 04/10] block: Add CONFIG to rename the mq-deadline scheduler
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -175,25 +108,25 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  3 files changed, 17 insertions(+)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index 70a6dd44e..779c6e0df 100644
+index e58b2953a..9e5a3c5c6 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -8,6 +8,15 @@ config MQ_IOSCHED_DEADLINE
- 	---help---
+ 	help
  	  MQ version of the deadline IO scheduler.
  
 +config MQ_IOSCHED_DEADLINE_NODEFAULT
 +	bool "Rename mq-deadline scheduler to mq-deadline-nodefault"
 +	depends on MQ_IOSCHED_DEADLINE
 +	default n
-+	---help---
++	help
 +	  This renames the mq-deadline scheduler to "mq-deadline-nodefault" and
 +	  also drops its alias of "deadline". This can prevent existing
 +	  userspace from forcing this scheduler over the kernel's choice.
 +
  config MQ_IOSCHED_KYBER
  	tristate "Kyber I/O scheduler"
- 	---help---
+ 	help
 diff --git a/block/elevator.c b/block/elevator.c
 index 4eab3d70e..6dc3ea822 100644
 --- a/block/elevator.c
@@ -231,10 +164,10 @@ index b57470e15..8303fdd12 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From c7f1720400b9ec33efa375201bd70d1dfe684568 Mon Sep 17 00:00:00 2001
+From d25eb65ccb2f4ce77b3a5c720aedfccf92fa28da Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:27 +0000
-Subject: [PATCH 6/9] block: bfq-iosched: fix duplicated word
+Subject: [PATCH 05/10] block: bfq-iosched: fix duplicated word
 
 Change "at at" to "at a".
 
@@ -246,7 +179,7 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 50c8f034c..a4c0bec92 100644
+index 58c040128..9eea05491 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -4714,7 +4714,7 @@ static struct request *__bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
@@ -262,10 +195,10 @@ index 50c8f034c..a4c0bec92 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 20e8c9dc71c7c011c4b327da24a7435f101aa2eb Mon Sep 17 00:00:00 2001
+From 06bd5d790a8e02fc8715c57c91e3c8e5d0850b59 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:28 +0000
-Subject: [PATCH 7/9] block: bio: delete duplicated words
+Subject: [PATCH 06/10] block: bio: delete duplicated words
 
 Drop the repeated words "a" and "the".
 
@@ -277,10 +210,10 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/block/bio.c b/block/bio.c
-index 21cbaa6a1..93b8bccb9 100644
+index a7366c02c..576c34361 100644
 --- a/block/bio.c
 +++ b/block/bio.c
-@@ -840,7 +840,7 @@ EXPORT_SYMBOL(bio_add_pc_page);
+@@ -860,7 +860,7 @@ EXPORT_SYMBOL(bio_add_pc_page);
   * @same_page: return if the segment has been merged inside the same page
   *
   * Try to add the data at @page + @off to the last bvec of @bio.  This is a
@@ -289,7 +222,7 @@ index 21cbaa6a1..93b8bccb9 100644
   * page size.
   *
   * Warn if (@len, @off) crosses pages in case that @same_page is true.
-@@ -965,7 +965,7 @@ static int __bio_iov_bvec_add_pages(struct bio *bio, struct iov_iter *iter)
+@@ -986,7 +986,7 @@ static int __bio_iov_bvec_add_pages(struct bio *bio, struct iov_iter *iter)
   * Pins pages from *iter and appends them to @bio's bvec array. The
   * pages will have to be released using put_page() when done.
   * For multi-segment *iter, this function only adds pages from the
@@ -302,10 +235,10 @@ index 21cbaa6a1..93b8bccb9 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 3836b10823198bc410e722bc35c1907e185322bd Mon Sep 17 00:00:00 2001
+From 042a787813fccfd94a14e5a6922c88082e5bdccb Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:29 +0000
-Subject: [PATCH 8/9] block: elevator: delete duplicated word and fix typos
+Subject: [PATCH 07/10] block: elevator: delete duplicated word and fix typos
 
 Drop the repeated word "the".
 Fix typos of "features" and "specified".
@@ -336,10 +269,72 @@ index 6dc3ea822..0a55c7aa9 100644
 2.28.0.rc2.1.g3d20111cbd
 
 
-From 83de7ae41313bd165756280b3849e2eef7043546 Mon Sep 17 00:00:00 2001
+From 19c9b56decea2f46482a7349ec1d5bb2320e68e9 Mon Sep 17 00:00:00 2001
+From: Randy Dunlap <rdunlap () infradead ! org>
+Date: Fri, 31 Jul 2020 01:42:31 +0000
+Subject: [PATCH 08/10] block: blk-mq: delete duplicated word
+
+Drop the repeated word "the".
+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: linux-block@vger.kernel.org
+---
+ block/blk-mq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 4e0d173be..e15bade3c 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -394,7 +394,7 @@ static struct request *__blk_mq_alloc_request(struct blk_mq_alloc_data *data)
+ 		/*
+ 		 * Give up the CPU and sleep for a random short time to ensure
+ 		 * that thread using a realtime scheduling class are migrated
+-		 * off the the CPU, and thus off the hctx that is going away.
++		 * off the CPU, and thus off the hctx that is going away.
+ 		 */
+ 		msleep(3);
+ 		goto retry;
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From da0c625fb013f572e6c6ad0cd25b7dd788dab3de Mon Sep 17 00:00:00 2001
+From: Randy Dunlap <rdunlap () infradead ! org>
+Date: Fri, 31 Jul 2020 01:42:32 +0000
+Subject: [PATCH 09/10] block: blk-mq-sched: delete duplicated word
+
+Drop the repeated word "to".
+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: linux-block@vger.kernel.org
+---
+ block/blk-mq-sched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
+index fdcc2c1dd..7634413ce 100644
+--- a/block/blk-mq-sched.c
++++ b/block/blk-mq-sched.c
+@@ -153,7 +153,7 @@ static struct blk_mq_ctx *blk_mq_next_ctx(struct blk_mq_hw_ctx *hctx,
+  * restart queue if .get_budget() returns BLK_STS_NO_RESOURCE.
+  *
+  * Returns -EAGAIN if hctx->dispatch was found non-empty and run_work has to
+- * to be run again.  This is necessary to avoid starving flushes.
++ * be run again.  This is necessary to avoid starving flushes.
+  */
+ static int blk_mq_do_dispatch_ctx(struct blk_mq_hw_ctx *hctx)
+ {
+-- 
+2.28.0.rc2.1.g3d20111cbd
+
+
+From 8ea6ec6fc2ff38c608d4a1fe40169a20c042af7a Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:33 +0000
-Subject: [PATCH 9/9] block: blk-timeout: delete duplicated word
+Subject: [PATCH 10/10] block: blk-timeout: delete duplicated word
 
 Drop the repeated word "request".
 Change to the correct kernel-doc notation for function name separtor.

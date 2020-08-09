@@ -1,0 +1,36 @@
+From 62e9de42b0290d8700c705ed3153ac8f0bf57384 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Sun, 9 Aug 2020 02:57:55 +0200
+Subject: [PATCH] Virtualbox patch
+
+Kernelpatch to make virtualbox work
+https://www.virtualbox.org/attachment/ticket/19644/local_patches
+
+Added by: Larry Finger
+---
+ mm/vmalloc.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+index 5a2b55c8d..ea3af8848 100644
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -325,6 +325,7 @@ int map_kernel_range(unsigned long start, unsigned long size, pgprot_t prot,
+ 	flush_cache_vmap(start, start + size);
+ 	return ret;
+ }
++EXPORT_SYMBOL(map_kernel_range);
+ 
+ int is_vmalloc_or_module_addr(const void *x)
+ {
+@@ -2129,6 +2130,7 @@ struct vm_struct *__get_vm_area_caller(unsigned long size, unsigned long flags,
+ 	return __get_vm_area_node(size, 1, flags, start, end, NUMA_NO_NODE,
+ 				  GFP_KERNEL, caller);
+ }
++EXPORT_SYMBOL(__get_vm_area_caller);
+ 
+ /**
+  * get_vm_area - reserve a contiguous kernel virtual area
+-- 
+2.17.1
+
