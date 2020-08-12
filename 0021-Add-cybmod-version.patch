@@ -6,7 +6,7 @@ index 24a4c1b97..dee13f9d3 100644
  PHONY := __all
  __all:
  
-+CYBVERSION = -cybmod1
++CYBVERSION = -cybmod2
 +CYBNAME = CFS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +

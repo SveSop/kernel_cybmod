@@ -1,31 +1,58 @@
-From 6f07a1b99eded66d6fe5e56eed31aa784de399ec Mon Sep 17 00:00:00 2001
+From 1c60c47ed022f6fad4388a945f10d4579aa893a1 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 5 Aug 2020 08:30:47 +0000
+Date: Tue, 11 Aug 2020 14:32:32 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
- debian.master/changelog | 10190 +-------------------------------------
- 1 file changed, 3 insertions(+), 10187 deletions(-)
+ debian.master/changelog | 10217 +-------------------------------------
+ 1 file changed, 3 insertions(+), 10214 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index d88b815807a4..5ce5c7086c21 100644
+index 8394a9088a1b..a1bb7bed9696 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,10190 +1,6 @@
--linux (5.8.0-13.14) groovy; urgency=medium
-+linux (5.7.13-050713.202008050830) groovy; urgency=low
+@@ -1,10217 +1,6 @@
+-linux (5.8.0-14.15) groovy; urgency=medium
++linux (5.8.1-050801.202008111432) groovy; urgency=low
  
+-  * groovy/linux: 5.8.0-14.15 -proposed tracker (LP: #1891085)
++  Mainline build at commit: v5.8.1
+ 
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update helper scripts
++ -- Mainline Build <kernel@sita>  Tue, 11 Aug 2020 14:32:32 +0000
+ 
+-  * msg_zerocopy.sh in net from ubuntu_kernel_selftests failed (LP: #1812620)
+-    - selftests/net: relax cpu affinity requirement in msg_zerocopy test
+-
+-  * Fix missing HDMI/DP Audio on an HP Desktop (LP: #1890441)
+-    - ALSA: hda/hdmi: Add quirk to force connectivity
+-
+-  * Add initial audio support for Lenovo ThinkStation P620 (LP: #1890317)
+-    - ALSA: usb-audio: Add support for Lenovo ThinkStation P620
+-
+-  * Fix IOMMU error on AMD Radeon Pro W5700 (LP: #1890306)
+-    - PCI: Mark AMD Navi10 GPU rev 0x00 ATS as broken
+-
+-  * Enlarge hisi_sec2 capability (LP: #1890222)
+-    - crypto: hisilicon - update SEC driver module parameter
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] Re-enable signing for ppc64el
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Mon, 10 Aug 2020 15:26:46 -0500
+-
+-linux (5.8.0-13.14) groovy; urgency=medium
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Config] Remove i386 configs
 -    - SAUCE: apply a workaround to re-enable CONFIG_CRYPTO_AEGIS128_SIMD
 -    - SAUCE: export __get_vm_area_caller() and map_kernel_range()
 -    - [Config] drop CONFIG_BINFMT_AOUT enforcement
-+  Mainline build at commit: v5.7.13
- 
+-
 -  * Miscellaneous upstream changes
 -    - Revert "UBUNTU: [Config] disable CONFIG_CRYPTO_AEGIS128_SIMD"
-+ -- Mainline Build <kernel@sita>  Wed, 05 Aug 2020 08:30:47 +0000
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v5.8
