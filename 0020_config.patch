@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,10853 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.8.1-cybmod2 Kernel Configuration
++# Linux/x86 5.8.2-cybmod3 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.1.0-2ubuntu1~18.04) 10.1.0"
 +CONFIG_CC_IS_GCC=y
