@@ -1,6 +1,6 @@
-From 9e67f8075bb99de5bb48f2a969a3d91e2e573c3d Mon Sep 17 00:00:00 2001
+From cc59eee613359046ecf72f0973fa4a40eb5fcf23 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 19 Aug 2020 07:32:38 +0000
+Date: Fri, 21 Aug 2020 12:36:22 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 10235 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index e3ea03b10719..760ba9e14170 100644
+index e3ea03b10719..9b037d72e5d5 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,10238 +1,6 @@
 -linux (5.8.0-16.17) groovy; urgency=medium
-+linux (5.8.2-050802.202008190732) groovy; urgency=low
++linux (5.8.3-050803.202008211236) groovy; urgency=low
  
 -  * groovy/linux: 5.8.0-16.17 -proposed tracker (LP: #1891233)
-+  Mainline build at commit: v5.8.2
++  Mainline build at commit: v5.8.3
  
 -  * Miscellaneous Ubuntu changes
 -    - hio -- Update to use bio_{start,end}_io_acct with 5.8+
 -    - Enable hio driver
 -    - [Packaging] Temporarily disable building doc package contents
-+ -- Mainline Build <kernel@sita>  Wed, 19 Aug 2020 07:32:38 +0000
++ -- Mainline Build <kernel@sita>  Fri, 21 Aug 2020 12:36:22 +0000
  
 - -- Seth Forshee <seth.forshee@canonical.com>  Tue, 11 Aug 2020 15:32:58 -0500
 -
