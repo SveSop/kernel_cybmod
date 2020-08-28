@@ -1,19 +1,18 @@
-From 40827af4a71b571f8eff66ad3ac47543574ca886 Mon Sep 17 00:00:00 2001
+From 44e10680a7a7c740e657bc7c6e56218cb5c28d75 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 21 Aug 2020 12:37:00 +0000
-Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-16.17)
+Date: Thu, 27 Aug 2020 08:31:44 +0000
+Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-18.19)
 
 ---
  .../config/amd64/config.common.amd64          |  3 +-
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
- debian.master/config/annotations              |  2 +-
  .../config/arm64/config.common.arm64          |  6 +--
  .../config/armhf/config.common.armhf          |  4 +-
- debian.master/config/config.common.ubuntu     | 41 ++++---------------
+ debian.master/config/config.common.ubuntu     | 39 +++----------------
  .../config/ppc64el/config.common.ppc64el      |  4 +-
  .../config/s390x/config.common.s390x          |  3 +-
- 9 files changed, 14 insertions(+), 51 deletions(-)
+ 8 files changed, 11 insertions(+), 50 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 3990da0272c6..e7be66ef0ae1 100644
@@ -60,19 +59,6 @@ index 814348dc984b..42de09fb0bff 100644
  CONFIG_LATENCYTOP=y
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
-diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 48b8ba742be8..21bb3ee767f2 100644
---- a/debian.master/config/annotations
-+++ b/debian.master/config/annotations
-@@ -13182,7 +13182,7 @@ CONFIG_IMA_READ_POLICY                          mark<ENFORCED> note<LP:1667490>
- # Menu: Security options >> Enable different security models >> Integrity subsystem >> Integrity Measurement Architecture(IMA) >> Appraise integrity measurements
- CONFIG_IMA_APPRAISE                             policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
- CONFIG_IMA_ARCH_POLICY                          policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'y', 's390x': 'n'}>
--CONFIG_IMA_APPRAISE_BOOTPARAM                   policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
-+CONFIG_IMA_APPRAISE_BOOTPARAM                   policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 's390x': 'y'}>
- CONFIG_IMA_APPRAISE_MODSIG                      policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
- CONFIG_IMA_TRUSTED_KEYRING                      policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
- CONFIG_IMA_BLACKLIST_KEYRING                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
 index 99ade5993ff4..2840a5e3a384 100644
 --- a/debian.master/config/arm64/config.common.arm64
@@ -141,7 +127,7 @@ index b1be39663fd8..0708404463a8 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 6c098f3f44e8..68a664ed3049 100644
+index eaa6a0d9a902..653d2265ea39 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -278,10 +278,7 @@ CONFIG_AMD_XGBE_DCB=y
@@ -164,15 +150,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_ARM64_CNP=y
  CONFIG_ARM64_CONT_SHIFT=4
  CONFIG_ARM64_CRYPTO=y
-@@ -649,6 +647,7 @@ CONFIG_ARMADA_37XX_WATCHDOG=m
- CONFIG_ARMADA_38X_CLK=y
- CONFIG_ARMADA_39X_CLK=y
- CONFIG_ARMADA_AP806_SYSCON=y
-+CONFIG_ARMADA_AP_CPU_CLK=y
- CONFIG_ARMADA_AP_CP_HELPER=y
- CONFIG_ARMADA_CP110_SYSCON=y
- CONFIG_ARMADA_THERMAL=y
-@@ -769,7 +768,7 @@ CONFIG_ARM_TI_CPUFREQ=y
+@@ -770,7 +768,7 @@ CONFIG_ARM_TI_CPUFREQ=y
  CONFIG_ARM_VEXPRESS_SPC_CPUFREQ=m
  CONFIG_ARM_VIRT_EXT=y
  CONFIG_AS3935=m
@@ -181,7 +159,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_ASN1=y
  CONFIG_ASPEED_ADC=m
  CONFIG_ASPEED_BT_IPMI_BMC=m
-@@ -907,25 +906,6 @@ CONFIG_AUDIT_ARCH=y
+@@ -908,25 +906,6 @@ CONFIG_AUDIT_ARCH=y
  CONFIG_AUDIT_ARCH_COMPAT_GENERIC=y
  CONFIG_AUDIT_COMPAT_GENERIC=y
  CONFIG_AUDIT_GENERIC=y
@@ -207,15 +185,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_AURORA_NB8800=m
  CONFIG_AUTO_ZRELADDR=y
  CONFIG_AX25=m
-@@ -1597,6 +1577,7 @@ CONFIG_CLK_BCM2835=y
- CONFIG_CLK_BCM_NS2=y
- CONFIG_CLK_BCM_SR=y
- CONFIG_CLK_EMEV2=y
-+# CONFIG_CLK_HSDK is not set
- CONFIG_CLK_IMX8MM=y
- CONFIG_CLK_IMX8MN=y
- CONFIG_CLK_IMX8MP=y
-@@ -2500,7 +2481,6 @@ CONFIG_DELL_SMBIOS=m
+@@ -2502,7 +2481,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
  CONFIG_DELL_SMO8800=m
@@ -223,7 +193,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_DELL_WMI=m
  CONFIG_DELL_WMI_AIO=m
  CONFIG_DELL_WMI_DESCRIPTOR=m
-@@ -3619,7 +3599,7 @@ CONFIG_GAMEPORT_L4=m
+@@ -3621,7 +3599,7 @@ CONFIG_GAMEPORT_L4=m
  CONFIG_GAMEPORT_NS558=m
  CONFIG_GARP=m
  CONFIG_GART_IOMMU=y
@@ -232,7 +202,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  # CONFIG_GCOV_KERNEL is not set
  CONFIG_GDB_SCRIPTS=y
  CONFIG_GEMINI_ETHERNET=m
-@@ -5199,7 +5179,6 @@ CONFIG_KGDB_KDB=y
+@@ -5201,7 +5179,6 @@ CONFIG_KGDB_KDB=y
  CONFIG_KGDB_LOW_LEVEL_TRAP=y
  CONFIG_KGDB_SERIAL_CONSOLE=y
  # CONFIG_KGDB_TESTS is not set
@@ -240,7 +210,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_KMX61=m
  CONFIG_KPC2000=y
  CONFIG_KPC2000_CORE=m
-@@ -5283,7 +5262,7 @@ CONFIG_LDISC_AUTOLOAD=y
+@@ -5285,7 +5262,7 @@ CONFIG_LDISC_AUTOLOAD=y
  # CONFIG_LDM_DEBUG is not set
  # CONFIG_LD_DEAD_CODE_DATA_ELIMINATION is not set
  # CONFIG_LD_HEAD_STUB_CATCH is not set
@@ -249,7 +219,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_LEDS_88PM860X=m
  CONFIG_LEDS_AAT1290=m
  CONFIG_LEDS_ADP5520=m
-@@ -5424,7 +5403,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -5426,7 +5403,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -257,7 +227,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -8754,7 +8732,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+@@ -8756,7 +8732,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
  CONFIG_SECURITY_PATH=y
@@ -265,7 +235,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_SECURITY_SAFESETID=y
  CONFIG_SECURITY_SELINUX=y
  CONFIG_SECURITY_SELINUX_AVC_STATS=y
-@@ -9113,8 +9090,6 @@ CONFIG_SGI_XP=m
+@@ -9115,8 +9090,6 @@ CONFIG_SGI_XP=m
  CONFIG_SGL_ALLOC=y
  CONFIG_SG_POOL=y
  CONFIG_SG_SPLIT=y
@@ -274,7 +244,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -9264,7 +9239,6 @@ CONFIG_SND_HDA_CORE=m
+@@ -9266,7 +9239,6 @@ CONFIG_SND_HDA_CORE=m
  CONFIG_SND_HDA_DSP_LOADER=y
  CONFIG_SND_HDA_EXT_CORE=m
  CONFIG_SND_HDA_GENERIC=m
@@ -282,7 +252,7 @@ index 6c098f3f44e8..68a664ed3049 100644
  CONFIG_SND_HDA_HWDEP=y
  CONFIG_SND_HDA_I915=y
  CONFIG_SND_HDA_INPUT_BEEP=y
-@@ -11200,7 +11174,6 @@ CONFIG_VDPA_SIM=m
+@@ -11203,7 +11175,6 @@ CONFIG_VDPA_SIM=m
  CONFIG_VDSO=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m

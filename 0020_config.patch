@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10853 @@
+@@ -0,0 +1,10854 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.8.3-cybmod4 Kernel Configuration
++# Linux/x86 5.8.5-cybmod5 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.1.0-2ubuntu1~18.04) 10.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -4574,6 +4574,7 @@ new file mode 100644
 +CONFIG_SPI_SLAVE=y
 +CONFIG_SPI_SLAVE_TIME=m
 +CONFIG_SPI_SLAVE_SYSTEM_CONTROL=m
++CONFIG_SPI_DYNAMIC=y
 +CONFIG_SPMI=m
 +CONFIG_HSI=m
 +CONFIG_HSI_BOARDINFO=y
