@@ -1,28 +1,28 @@
-From df81c56ce5491a05f80e6fcd304ba4ad481bee60 Mon Sep 17 00:00:00 2001
+From 3f5f1c4e19b3330577bbd7ff103c0564a807b0e7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Sun, 9 Aug 2020 00:17:08 +0200
+Date: Thu, 6 Aug 2020 15:58:37 +0200
 Subject: [PATCH] Tweaks
 
 ---
  drivers/cpufreq/cpufreq_ondemand.c |  6 +++---
  fs/dcache.c                        |  2 +-
- include/linux/blkdev.h             |  2 +-
+ include/linux/blkdev.h             |  5 +++--
  include/linux/mm.h                 |  2 +-
  kernel/sched/core.c                |  6 +++---
  kernel/sched/fair.c                | 18 +++++++++---------
  mm/page-writeback.c                |  4 ++--
  net/ipv4/Kconfig                   |  4 ++++
- 8 files changed, 24 insertions(+), 20 deletions(-)
+ 8 files changed, 26 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-index 82a4d37dd..f64c3b7ce 100644
+index 1130e0f5d..b86158ca6 100644
 --- a/drivers/cpufreq/cpufreq_ondemand.c
 +++ b/drivers/cpufreq/cpufreq_ondemand.c
 @@ -18,10 +18,10 @@
  #include "cpufreq_ondemand.h"
  
  /* On-demand governor macros */
--#define DEF_FREQUENCY_UP_THRESHOLD		(80)
+-#define DEF_FREQUENCY_UP_THRESHOLD		(63)
 -#define DEF_SAMPLING_DOWN_FACTOR		(1)
 +#define DEF_FREQUENCY_UP_THRESHOLD		(55)
 +#define DEF_SAMPLING_DOWN_FACTOR		(5)
@@ -46,7 +46,7 @@ index 361ea7ab3..0c5cf69b2 100644
  
  __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 57241417f..fa6ab237e 100644
+index 57241417f..56f9551f7 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
 @@ -46,7 +46,7 @@ struct blk_stat_callback;

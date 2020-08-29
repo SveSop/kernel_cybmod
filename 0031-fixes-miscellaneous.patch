@@ -1,7 +1,7 @@
-From 3023ca7464240063aa08f86607c553e2381e7278 Mon Sep 17 00:00:00 2001
+From 7ba6e1f87b59519185dc69164bf13cd99abb4f9e Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <admfrade@gmail.com>
 Date: Wed, 24 Oct 2018 16:58:52 -0300
-Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/17] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Alexandre Frade <admfrade@gmail.com>
 ---
@@ -31,13 +31,13 @@ index 84badf006..6a922bca9 100644
  endif
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From b66d037c8a8f3bb8bd64073707074242f06a246c Mon Sep 17 00:00:00 2001
+From 9a52c5cd7b80f68c02dc5bcd373637dc2ced1f93 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/17] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 3a98439bb..6efc4f907 100644
  	int ret;
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 8f514c6c92e85b70187a7ccddcc05b691312558b Mon Sep 17 00:00:00 2001
+From ad73ca5c28338b3c1faeb2be034ffd19ba8512c1 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/16] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/17] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 24a4c1b97..92492ca6a 100644
+index f47073a3b..5f5a1dfa0 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -679,6 +679,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index 24a4c1b97..92492ca6a 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From c1a47d78f8b8c1a0db2ba1d561fcab57280ae3a9 Mon Sep 17 00:00:00 2001
+From ac51849f47ba5faa15911e7f2f9e4695605fd748 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/16] mm: Disable watermark boosting by default
+Subject: [PATCH 04/17] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -127,7 +127,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index e028b87ce..7e8481455 100644
+index d809242f6..9d90934ec 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -316,20 +316,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
@@ -152,13 +152,13 @@ index e028b87ce..7e8481455 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 4703798ede122e0482f61863c775b83ab801e69e Mon Sep 17 00:00:00 2001
+From cc974c9753bf5197114560fc689a58c2c62e99e0 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/16] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/17] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -187,10 +187,10 @@ index f6f884970..c43fcd738 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 7e8481455..9a2161a0f 100644
+index 9d90934ec..5994f25e4 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4501,6 +4501,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4506,6 +4506,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -199,7 +199,7 @@ index 7e8481455..9a2161a0f 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4534,8 +4536,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4539,8 +4541,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -214,7 +214,7 @@ index 7e8481455..9a2161a0f 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -4740,9 +4747,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4745,9 +4752,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -229,7 +229,7 @@ index 7e8481455..9a2161a0f 100644
  	return page;
  }
  
-@@ -6710,6 +6720,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6715,6 +6725,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -252,13 +252,13 @@ index 749d239c6..2f7ec8221 100644
  
  		/*
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 8e02ce784092cadcb1d45c2ce0d9a104b27e6658 Mon Sep 17 00:00:00 2001
+From e5d3da211383b58ac9d93bda3796df954c0ce92c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/16] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/17] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -270,10 +270,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 9a2161a0f..b1870faf8 100644
+index 5994f25e4..7a663a71c 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -2468,9 +2468,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
+@@ -2473,9 +2473,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
  	 * likelihood of future fallbacks. Wake kswapd now as the node
  	 * may be balanced overall and kswapd will not wake naturally.
  	 */
@@ -289,13 +289,13 @@ index 9a2161a0f..b1870faf8 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 501f329d6dae25a58a0e74d3659826b39b8ceb95 Mon Sep 17 00:00:00 2001
+From eedd00437911c5a1b3ad692c44156ba429fdaab6 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/16] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 07/17] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -336,7 +336,7 @@ index 9886db20d..aecb9df10 100644
  extern void zone_pcp_update(struct zone *zone);
  extern void zone_pcp_reset(struct zone *zone);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index b1870faf8..d2ecce74b 100644
+index 7a663a71c..5212f50b7 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -77,6 +77,8 @@
@@ -348,7 +348,7 @@ index b1870faf8..d2ecce74b 100644
  /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
  static DEFINE_MUTEX(pcp_batch_high_lock);
  #define MIN_PERCPU_PAGELIST_FRACTION	(8)
-@@ -4503,7 +4505,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4508,7 +4510,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -356,7 +356,7 @@ index b1870faf8..d2ecce74b 100644
  	bool woke_kswapd = false;
  
  	/*
-@@ -4540,7 +4541,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4545,7 +4546,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  
  	if (alloc_flags & ALLOC_KSWAPD) {
  		if (!woke_kswapd) {
@@ -365,7 +365,7 @@ index b1870faf8..d2ecce74b 100644
  			woke_kswapd = true;
  		}
  		wake_all_kswapds(order, gfp_mask, ac);
-@@ -4751,7 +4752,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4756,7 +4757,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  fail:
  got_pg:
  	if (woke_kswapd)
@@ -374,7 +374,7 @@ index b1870faf8..d2ecce74b 100644
  	if (!page)
  		warn_alloc(gfp_mask, ac->nodemask,
  				"page allocation failure: order:%u", order);
-@@ -6722,7 +6723,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6727,7 +6728,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -396,13 +396,13 @@ index 2f7ec8221..09a710c85 100644
  
  		/*
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 799f510f3aade50ed8ea19653fa31566aff7a4cf Mon Sep 17 00:00:00 2001
+From 77a3ed970b4b539ce00a4b6098989ed328adbf2a Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/16] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 08/17] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -415,7 +415,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 92492ca6a..0cf3f5317 100644
+index 5f5a1dfa0..ecff757e4 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -931,9 +931,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
@@ -429,13 +429,13 @@ index 92492ca6a..0cf3f5317 100644
  KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 1a3870359bdcb05eea9eb6632b2da9364420103e Mon Sep 17 00:00:00 2001
+From 2f9fa243bb06717a45189da7ab473f5bb97e55df Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/16] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/17] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -507,7 +507,7 @@ index fb95fad81..c49741530 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 2ea61abd5..edcee41a6 100644
+index cc6e1a382..bd71923d3 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -3557,6 +3557,106 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
@@ -617,7 +617,7 @@ index 2ea61abd5..edcee41a6 100644
  /*
   * Some Atheros AR9xxx and QCA988x chips do not behave after a bus reset.
   * The device will throw a Link Down error on AER-capable systems and
-@@ -4824,6 +4924,8 @@ static const struct pci_dev_acs_enabled {
+@@ -4826,6 +4926,8 @@ static const struct pci_dev_acs_enabled {
  	{ PCI_VENDOR_ID_ZHAOXIN, 0x9083, pci_quirk_mf_endpoint_acs },
  	/* Zhaoxin Root/Downstream Ports */
  	{ PCI_VENDOR_ID_ZHAOXIN, PCI_ANY_ID, pci_quirk_zhaoxin_pcie_ports_acs },
@@ -627,13 +627,13 @@ index 2ea61abd5..edcee41a6 100644
  };
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 1a34bdae1eecbf14f03b9f0fb6e3e375b9111163 Mon Sep 17 00:00:00 2001
+From 996302a23b8a75d0d72b98569606e5dba537230e Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Tue, 16 Jun 2020 13:45:27 -0700
-Subject: [PATCH 10/16] mm: Proactive compaction
+Subject: [PATCH 10/17] mm: Proactive compaction
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -1148,7 +1148,7 @@ index aecb9df10..26f39eeaa 100644
  	bool contended;			/* Signal lock or sched contention */
  	bool rescan;			/* Rescanning the same pageblock */
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 3fb23a21f..3e7ba8bce 100644
+index 7fb01d225..2a25aac43 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1074,6 +1074,24 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -1177,13 +1177,13 @@ index 3fb23a21f..3e7ba8bce 100644
  int fragmentation_index(struct zone *zone, unsigned int order)
  {
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From f522ccbd3b9b9845aa727df5fc213b834635b445 Mon Sep 17 00:00:00 2001
+From d984e612d9913e8bc618a33226288dd4258182d5 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Wed, 17 Jun 2020 18:03:17 -0700
-Subject: [PATCH 11/16] mm: Use unsigned types for fragmentation score
+Subject: [PATCH 11/17] mm: Use unsigned types for fragmentation score
 
 Proactive compaction uses per-node/zone "fragmentation score" which
 is always in range [0, 100], so use unsigned type of these scores
@@ -1296,7 +1296,7 @@ index 544a98811..2ca208eb6 100644
  /*
   * This is the entry point for compacting all nodes via
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 3e7ba8bce..b1de695b8 100644
+index 2a25aac43..07bea57b9 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1079,7 +1079,7 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -1309,13 +1309,13 @@ index 3e7ba8bce..b1de695b8 100644
  	struct contig_page_info info;
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From dc214aeaa3a0334aa1453ee52810a734f503a0bd Mon Sep 17 00:00:00 2001
+From 0f3a70454705b22146120527d153593e9e89cd29 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 22 Jun 2020 23:45:44 -0700
-Subject: [PATCH 12/16] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
+Subject: [PATCH 12/17] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
 
 Fix compile error when COMPACTION_HPAGE_ORDER is assigned
 to HUGETLB_PAGE_ORDER. The correct way to check if this
@@ -1343,13 +1343,13 @@ index 2ca208eb6..b7d433f17 100644
  #else
  #define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From ca032616d811ea23f95e524d82ba03040874b532 Mon Sep 17 00:00:00 2001
+From b8d0585fa085bb1e48df22679b72840d891f1f02 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 15 Jul 2020 10:54:43 +0200
-Subject: [PATCH 13/16] net: sched: Allow changing default qdisc to FQ-PIE
+Subject: [PATCH 13/17] net: sched: Allow changing default qdisc to FQ-PIE
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1379,13 +1379,13 @@ index 6a922bca9..1fcfd47d1 100644
  	default "cake" if DEFAULT_CAKE
  	default "pfifo_fast"
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 618375e1e79e7e3bae38ec14be1dee04d53626af Mon Sep 17 00:00:00 2001
+From 17970677601e9ecf6a74aaff9a07f9ea62b02eaa Mon Sep 17 00:00:00 2001
 From: Harsha Priya <harshapriya.n@intel.com>
 Date: Mon, 6 Jul 2020 13:53:17 -0700
-Subject: [PATCH 14/16] ALSA: hda/hdmi: Add Intel silent stream support
+Subject: [PATCH 14/17] ALSA: hda/hdmi: Add Intel silent stream support
 
 External HDMI receivers have analog circuitry that needs to be powered-on
 when exiting standby, and a mechanism to detect PCM v. IEC61937 data.
@@ -1556,13 +1556,13 @@ index cd4624798..cccf6d517 100644
  }
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 3127f8ff2813fa33ec953626ae7d8f7067cc057f Mon Sep 17 00:00:00 2001
+From fe4715683a871441422db2d8f41e3101f6eea908 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 15/16] ZEN: Add OpenRGB patches
+Subject: [PATCH 15/17] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -2305,13 +2305,13 @@ index 69740a4ff..b70738fbe 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 7addb56f4a5e36638a588dcb60060df0eb7d4c46 Mon Sep 17 00:00:00 2001
+From 18cc7435b464f4b9a0f471ccf7b1200ffa606700 Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Thu, 13 Feb 2020 13:34:59 -0500
-Subject: [PATCH 16/16] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 16/17] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 Changes since v1:
@@ -2597,10 +2597,10 @@ index 9b863a7bd..1c8abce4a 100644
  
  /*
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index f5abba861..39e0bf96c 100644
+index 2dab217c6..33c6ce963 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -593,6 +593,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
+@@ -603,6 +603,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
  	atomic_inc(&mapping->i_mmap_writable);
  }
  
@@ -2612,7 +2612,7 @@ index f5abba861..39e0bf96c 100644
  /*
   * Use sequence counter to get consistent i_size on 32-bit processors.
   */
-@@ -2158,6 +2163,9 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+@@ -2168,6 +2173,9 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
   *
   * I_DONTCACHE		Evict inode as soon as it is not used anymore.
   *
@@ -2622,7 +2622,7 @@ index f5abba861..39e0bf96c 100644
   * Q: What is the difference between I_WILL_FREE and I_FREEING?
   */
  #define I_DIRTY_SYNC		(1 << 0)
-@@ -2181,6 +2189,7 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+@@ -2191,6 +2199,7 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
  #define I_OVL_INUSE		(1 << 14)
  #define I_CREATING		(1 << 15)
  #define I_DONTCACHE		(1 << 16)
@@ -2630,7 +2630,7 @@ index f5abba861..39e0bf96c 100644
  
  #define I_DIRTY_INODE (I_DIRTY_SYNC | I_DIRTY_DATASYNC)
  #define I_DIRTY (I_DIRTY_INODE | I_DIRTY_PAGES)
-@@ -3121,6 +3130,14 @@ static inline void remove_inode_hash(struct inode *inode)
+@@ -3131,6 +3140,14 @@ static inline void remove_inode_hash(struct inode *inode)
  		__remove_inode_hash(inode);
  }
  
@@ -2954,7 +2954,7 @@ index 09a710c85..1724c2a25 100644
  			freepage(page);
  	}
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index b1de695b8..7ce6cc9f7 100644
+index 07bea57b9..95e17b9d1 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1229,9 +1229,11 @@ const char * const vmstat_text[] = {
@@ -3000,5 +3000,63 @@ index 50b7937ba..88482626f 100644
  out:
  	cond_resched();
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
+
+
+From 20d441588381def1262238e54262b6735ea75389 Mon Sep 17 00:00:00 2001
+From: Vinod Koul <vkoul@kernel.org>
+Date: Tue, 18 Aug 2020 12:47:39 +0530
+Subject: [PATCH 17/17] usb: renesas-xhci: remove version check
+
+Some devices in wild are reporting bunch of firmware versions, so remove
+the check for versions in driver
+
+Reported by: Anastasios Vacharakis <vacharakis@gmail.com>
+Reported by: Glen Journeay <journeay@gmail.com>
+Fixes: 2478be82de44 ("usb: renesas-xhci: Add ROM loader for uPD720201")
+Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=208911
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+---
+ drivers/usb/host/xhci-pci-renesas.c | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
+
+diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
+index 59b1965ad..f97ac9f52 100644
+--- a/drivers/usb/host/xhci-pci-renesas.c
++++ b/drivers/usb/host/xhci-pci-renesas.c
+@@ -50,20 +50,6 @@
+ #define RENESAS_RETRY	10000
+ #define RENESAS_DELAY	10
+ 
+-#define ROM_VALID_01 0x2013
+-#define ROM_VALID_02 0x2026
+-
+-static int renesas_verify_fw_version(struct pci_dev *pdev, u32 version)
+-{
+-	switch (version) {
+-	case ROM_VALID_01:
+-	case ROM_VALID_02:
+-		return 0;
+-	}
+-	dev_err(&pdev->dev, "FW has invalid version :%d\n", version);
+-	return -EINVAL;
+-}
+-
+ static int renesas_fw_download_image(struct pci_dev *dev,
+ 				     const u32 *fw, size_t step, bool rom)
+ {
+@@ -202,10 +188,7 @@ static int renesas_check_rom_state(struct pci_dev *pdev)
+ 
+ 	version &= RENESAS_FW_VERSION_FIELD;
+ 	version = version >> RENESAS_FW_VERSION_OFFSET;
+-
+-	err = renesas_verify_fw_version(pdev, version);
+-	if (err)
+-		return err;
++	dev_dbg(&pdev->dev, "Found ROM version: %x\n", version);
+ 
+ 	/*
+ 	 * Test if ROM is present and loaded, if so we can skip everything
+-- 
+2.28.0.337.ge9b77c84a0
 
