@@ -1,6 +1,6 @@
-From 44e10680a7a7c740e657bc7c6e56218cb5c28d75 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 27 Aug 2020 08:31:44 +0000
+From ff3d18f1622c68fe16375d1d5a19a560083d0768 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 3 Sep 2020 06:36:44 -0400
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-18.19)
 
 ---
