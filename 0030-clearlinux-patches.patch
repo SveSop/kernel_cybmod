@@ -1,7 +1,7 @@
-From 7b1bf86029e0f78bab2ca2e71f7e068c191dd1bc Mon Sep 17 00:00:00 2001
+From 756076b67572c3eb3198eee6b50443cae64fd67a Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 23 Jun 2015 01:26:52 -0500
-Subject: [PATCH 01/28] i8042: decrease debug message level to info
+Subject: [PATCH 01/29] i8042: decrease debug message level to info
 
 Author:    Arjan van de Ven <arjan@linux.intel.com>
 
@@ -61,13 +61,13 @@ index 0dddf273a..77ce39f78 100644
  #endif
  }
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 536ebed9c58564d3812ab57a99c48e1e520ec0d1 Mon Sep 17 00:00:00 2001
+From 5b17651a34129620a21aec7dbf1fa8ca41ff3322 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Jan 2016 10:01:44 -0600
-Subject: [PATCH 02/28] Increase the ext4 default commit age
+Subject: [PATCH 02/29] Increase the ext4 default commit age
 
 Both the VM and EXT4 have a "commit to disk after X seconds" time.
 Currently the EXT4 time is shorter than our VM time, which is a bit
@@ -97,13 +97,13 @@ index d56128df2..a1859f3df 100644
  #ifdef CONFIG_JBD2_DEBUG
  /*
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 94043db07e5fa9c54abc710b493e4334a5436d18 Mon Sep 17 00:00:00 2001
+From 878459a49d61bbd3c5a76b85ebbcde44f2856574 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:22:09 -0600
-Subject: [PATCH 03/28] silence rapl
+Subject: [PATCH 03/29] silence rapl
 
 ---
  drivers/powercap/intel_rapl_common.c | 2 +-
@@ -123,13 +123,13 @@ index 61a63a16b..742304a83 100644
  
  		return -ENODEV;
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 887fe01d309e244a08f62fbbca1322ed4365459d Mon Sep 17 00:00:00 2001
+From 919b06e5a2b3742a2ea03652b5ddb44848d36e5a Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:10:58 -0600
-Subject: [PATCH 04/28] pci pme wakeups
+Subject: [PATCH 04/29] pci pme wakeups
 
 Reduce wakeups for PME checks, which are a workaround for miswired
 boards (sadly, too many of them) in laptops.
@@ -151,13 +151,13 @@ index c9338f914..6974fbff7 100644
  static void pci_dev_d3_sleep(struct pci_dev *dev)
  {
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 7b1796f0d437b34215b53b7086d2c5b800205cb9 Mon Sep 17 00:00:00 2001
+From 4e1ac8394abb2abc022bc22b8a15f1e9df09faf5 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 6 May 2019 12:57:09 -0500
-Subject: [PATCH 05/28] ksm-wakeups
+Subject: [PATCH 05/29] ksm-wakeups
 
 reduce wakeups in ksm by adding rounding (aligning) when
 the sleep times are 1 second or longer
@@ -204,13 +204,13 @@ index 4102034cd..0bc0066cc 100644
  			wait_event_freezable(ksm_thread_wait,
  				ksmd_should_run() || kthread_should_stop());
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 43347f4a4df06a29be3deb0d0b3b046a43acd570 Mon Sep 17 00:00:00 2001
+From 7a17a46900cd78ca2b3cbbd48cdfc907c2bbf4e6 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 19 Mar 2016 21:32:19 -0400
-Subject: [PATCH 06/28] intel_idle: tweak cpuidle cstates
+Subject: [PATCH 06/29] intel_idle: tweak cpuidle cstates
 
 Increase target_residency in cpuidle cstate
 
@@ -425,13 +425,13 @@ index f4495841b..c994d2451 100644
  		.enter_s2idle = intel_idle_s2idle, },
  	{
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 4f3eca4dcfec1395021957086813916509500ecd Mon Sep 17 00:00:00 2001
+From bda83fd3a3a745aac276bd419dafff294757b2e6 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 16:05:23 -0600
-Subject: [PATCH 07/28] bootstats: add printk's to measure boot time in more
+Subject: [PATCH 07/29] bootstats: add printk's to measure boot time in more
  detail
 
 Few distro-tweaks to add printk's to visualize boot time better
@@ -458,13 +458,13 @@ index 8fd39ff74..43f0a5241 100644
  #ifdef CONFIG_SMP
  	/* Patch to UP if other cpus not imminent. */
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 8d58877a3c2354cf279c48982259bc9f4f15f51c Mon Sep 17 00:00:00 2001
+From c1dfe46c39af4f0b8f2787cd4d37831581e98ec3 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 17:28:14 -0600
-Subject: [PATCH 08/28] smpboot: reuse timer calibration
+Subject: [PATCH 08/29] smpboot: reuse timer calibration
 
 NO point recalibrating for known-constant tsc ...
 saves 200ms+ of boot time.
@@ -487,13 +487,13 @@ index 49d925043..704733712 100644
  	if (sibling < nr_cpu_ids)
  		return cpu_data(sibling).loops_per_jiffy;
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From a5ef0a69455292cf87ca24e7a9c1119abc82d169 Mon Sep 17 00:00:00 2001
+From c9017a6a44303a0340ea604a7f06280fa70c028e Mon Sep 17 00:00:00 2001
 From: Jim Kukunas <james.t.kukunas@linux.intel.com>
 Date: Fri, 27 May 2016 09:26:51 -0400
-Subject: [PATCH 09/28] raid6: add Kconfig option to skip raid6 benchmarking
+Subject: [PATCH 09/29] raid6: add Kconfig option to skip raid6 benchmarking
 
 Adds CONFIG_RAID6_FORCE_ALGO, which causes the kernel to not benchmark
 each raid recovery and syndrome generation algorithm, and instead use
@@ -644,13 +644,13 @@ index 6d5e5000f..4a8f2b74a 100644
  static void raid6_exit(void)
  {
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From e7331abf73644059c41ffb3802697db63cae0971 Mon Sep 17 00:00:00 2001
+From 8614c14460fd2b5b2e92ab8e46d1d4246c6ed055 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 2 Jun 2016 23:36:32 -0500
-Subject: [PATCH 10/28] Initialize ata before graphics
+Subject: [PATCH 10/29] Initialize ata before graphics
 
 ATA init is the long pole in the boot process, and its asynchronous.
 move the graphics init after it so that ata and graphics initialize
@@ -695,13 +695,13 @@ index c0cd1b907..af1e2fb3a 100644
  obj-$(CONFIG_MTD)		+= mtd/
  obj-$(CONFIG_SPI)		+= spi/
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 1d7bffb4a8bd75a74a04f2a8aded0cc6470e54b4 Mon Sep 17 00:00:00 2001
+From 0ac98b3d12e0cdc068238dfd49933342469b8235 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 29 Jul 2016 19:10:52 +0000
-Subject: [PATCH 11/28] give rdrand some credit
+Subject: [PATCH 11/29] give rdrand some credit
 
 try to credit rdrand/rdseed with some entropy
 
@@ -726,13 +726,13 @@ index d20ba1b10..bcad0c960 100644
  	}
  	mix_pool_bytes(r, utsname(), sizeof(*(utsname())));
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From f45ab5a4c51fb523214792adb33c896d7ebdccb7 Mon Sep 17 00:00:00 2001
+From 801781e80edc4c5151b9a722f816e91296814b30 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 6 Jan 2017 15:34:09 +0000
-Subject: [PATCH 12/28] ipv4/tcp: allow the memory tuning for tcp to go a
+Subject: [PATCH 12/29] ipv4/tcp: allow the memory tuning for tcp to go a
  little bigger than default
 
 ---
@@ -740,10 +740,10 @@ Subject: [PATCH 12/28] ipv4/tcp: allow the memory tuning for tcp to go a
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 6f0caf9a8..20b1e52a9 100644
+index 30c114258..4345075c2 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -4209,8 +4209,8 @@ void __init tcp_init(void)
+@@ -4201,8 +4201,8 @@ void __init tcp_init(void)
  	tcp_init_mem();
  	/* Set per-socket limits to no more than 1/128 the pressure threshold */
  	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
@@ -755,13 +755,13 @@ index 6f0caf9a8..20b1e52a9 100644
  	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
  	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 30abbcdc6c66494b073159a52a89da25d9f95df8 Mon Sep 17 00:00:00 2001
+From 186c2b8a06a1bb5ef3742d5f86b1b44028c013c5 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 29 Apr 2017 22:24:34 +0000
-Subject: [PATCH 13/28] kernel: time: reduce ntp wakeups
+Subject: [PATCH 13/29] kernel: time: reduce ntp wakeups
 
 ---
  kernel/time/ntp.c | 2 +-
@@ -781,13 +781,13 @@ index 069ca78fb..22d82f21f 100644
  
  	/* Compute the needed delay that will get to tv_nsec == target_nsec */
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From bd21aceb2ffd5567ea2296aba03c413cad0950e0 Mon Sep 17 00:00:00 2001
+From 7927c677e966f14b0282f3df7d595fc79b9371d1 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 17 May 2017 01:52:11 +0000
-Subject: [PATCH 14/28] init: wait for partition and retry scan
+Subject: [PATCH 14/29] init: wait for partition and retry scan
 
 As Clear Linux boots fast the device is not ready when
 the mounting code is reached, so a retry device scan will
@@ -834,13 +834,13 @@ index 29d326b6c..cb6add64f 100644
  	md_run_setup();
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 5bf888fd5afb83f4a76a41c65e89043f536255e5 Mon Sep 17 00:00:00 2001
+From 8ceb8789bd06f12543893369e9e40df80f66a70b Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Tue, 20 Jun 2017 20:19:08 +0000
-Subject: [PATCH 15/28] print fsync count for bootchart
+Subject: [PATCH 15/29] print fsync count for bootchart
 
 ---
  block/blk-core.c      | 3 +++
@@ -887,13 +887,13 @@ index 36c54265b..acbdf8f3f 100644
  	nr_switches = p->nvcsw + p->nivcsw;
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From cc1c0bd535f6675346501d0eb0786fe2ba9a84a3 Mon Sep 17 00:00:00 2001
+From cc40b5475a5b0f16fc7bc43f2f510eb72c49702a Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 13 Aug 2018 04:01:21 -0500
-Subject: [PATCH 16/28] Add boot option to allow unsigned modules
+Subject: [PATCH 16/29] Add boot option to allow unsigned modules
 
 Add module.sig_unenforce boot parameter to allow loading unsigned kernel
 modules. Parameter is only effective if CONFIG_MODULE_SIG_FORCE is
@@ -906,7 +906,7 @@ Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
  1 file changed, 20 insertions(+)
 
 diff --git a/kernel/module.c b/kernel/module.c
-index aa183c9ac..09858444c 100644
+index 08c46084d..bdbcd8f32 100644
 --- a/kernel/module.c
 +++ b/kernel/module.c
 @@ -56,6 +56,7 @@
@@ -937,7 +937,7 @@ index aa183c9ac..09858444c 100644
  #ifndef CONFIG_MODVERSIONS
  #define symversion(base, idx) NULL
  #else
-@@ -4399,6 +4406,19 @@ static const struct proc_ops modules_proc_ops = {
+@@ -4415,6 +4422,19 @@ static const struct proc_ops modules_proc_ops = {
  static int __init proc_modules_init(void)
  {
  	proc_create("modules", 0, NULL, &modules_proc_ops);
@@ -958,13 +958,13 @@ index aa183c9ac..09858444c 100644
  }
  module_init(proc_modules_init);
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 4f60a5f3ff12c06fbab82f79d326edfb1aa20f84 Mon Sep 17 00:00:00 2001
+From c865a880bfe1f9ff27829447eb68d31f49ec1ffe Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Wed, 20 Jun 2018 17:23:21 +0000
-Subject: [PATCH 17/28] Enable stateless firmware loading
+Subject: [PATCH 17/29] Enable stateless firmware loading
 
 Prefer the order of specific version before generic and /etc before
 /lib to enable the user to give specific overrides for generic
@@ -987,13 +987,13 @@ index ca871b135..bd0f44161 100644
  	"/lib/firmware/updates",
  	"/lib/firmware/" UTS_RELEASE,
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From e0900c9fe5894ede7b24b3c62e74ac3f86cd9096 Mon Sep 17 00:00:00 2001
+From 19800cf3af31e2d082db0fd445768b917071ccf2 Mon Sep 17 00:00:00 2001
 From: Auke Kok <auke-jan.h.kok@intel.com>
 Date: Thu, 2 Aug 2018 12:03:22 -0700
-Subject: [PATCH 18/28] Migrate some systemd defaults to the kernel defaults.
+Subject: [PATCH 18/29] Migrate some systemd defaults to the kernel defaults.
 
 These settings are needed to prevent networking issues when
 the networking modules come up by default without explicit
@@ -1033,13 +1033,13 @@ index 45f3750aa..317f8326d 100644
  #define BOND_DEFAULT_TX_QUEUES 16   /* Default number of tx queues per device */
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 3519c86139e0ae906c3600bd064acec5183fdbb9 Mon Sep 17 00:00:00 2001
+From 2847d567306308121cca84b1e998470d290f494a Mon Sep 17 00:00:00 2001
 From: Alan Cox <alan@linux.intel.com>
 Date: Thu, 10 Mar 2016 15:11:28 +0000
-Subject: [PATCH 19/28] xattr: allow setting user.* attributes on symlinks by
+Subject: [PATCH 19/29] xattr: allow setting user.* attributes on symlinks by
  owner
 
 Kvmtool and clear containers supports using user attributes to label host
@@ -1062,7 +1062,7 @@ Signed-off-by: Alan Cox <alan@linux.intel.com>
  1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/fs/xattr.c b/fs/xattr.c
-index 91608d9bf..46778c61d 100644
+index 95f38f573..d21d945fd 100644
 --- a/fs/xattr.c
 +++ b/fs/xattr.c
 @@ -119,15 +119,17 @@ xattr_permission(struct inode *inode, const char *name, int mask)
@@ -1090,13 +1090,13 @@ index 91608d9bf..46778c61d 100644
  	}
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 05a32aa3610dfcc98a9581fb1e6bf17ccff06c6f Mon Sep 17 00:00:00 2001
+From 72d3deed30e229b52077df911e0ab569852f8e30 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 8 Dec 2018 18:21:32 +0000
-Subject: [PATCH 20/28] use lfence instead of rep and nop
+Subject: [PATCH 20/29] use lfence instead of rep and nop
 
 ---
  arch/x86/include/asm/vdso/processor.h | 2 +-
@@ -1116,13 +1116,13 @@ index 57b1a7034..e2c45674f 100644
  
  static __always_inline void cpu_relax(void)
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 988d9f4d469f5a05b332d5524df9551d8825da5c Mon Sep 17 00:00:00 2001
+From dc10e27c8d32f27101a77f7e5cb642f6ba01d6b0 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
-Subject: [PATCH 21/28] do accept() in LIFO order for cache efficiency
+Subject: [PATCH 21/29] do accept() in LIFO order for cache efficiency
 
 ---
  include/linux/wait.h            |  2 ++
@@ -1193,10 +1193,10 @@ index ba059fbfc..5f26ae964 100644
  {
  	wq_entry->flags = flags;
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index afaf582a5..96a063f2c 100644
+index a1be020bd..b79759ca7 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
-@@ -424,7 +424,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
+@@ -433,7 +433,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
  	 * having to remove and re-insert us on the wait queue.
  	 */
  	for (;;) {
@@ -1206,13 +1206,13 @@ index afaf582a5..96a063f2c 100644
  		release_sock(sk);
  		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 70730ae66f5092b60e1ea1b770b0f05cd21f6657 Mon Sep 17 00:00:00 2001
+From 4b22b75974a27750123e398ff6a89d821325b1db Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sun, 18 Feb 2018 23:35:41 +0000
-Subject: [PATCH 22/28] locking: rwsem: spin faster
+Subject: [PATCH 22/29] locking: rwsem: spin faster
 
 tweak rwsem owner spinning a bit
 ---
@@ -1242,13 +1242,13 @@ index f11b9bd34..1bbfcc1e0 100644
  	rcu_read_unlock();
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From d80977ef970ffadc98a482cd3dccc32e1a3cbb35 Mon Sep 17 00:00:00 2001
+From 1a434a5a2f124f2e86cc4088d1822a38a53771bb Mon Sep 17 00:00:00 2001
 From: Joe Konno <joe.konno@intel.com>
 Date: Tue, 25 Jun 2019 10:35:54 -0700
-Subject: [PATCH 23/28] ata: libahci: ignore staggered spin-up
+Subject: [PATCH 23/29] ata: libahci: ignore staggered spin-up
 
 Change libahci to ignore firmware's staggered spin-up flag. End-users
 who wish to honor firmware's SSS flag can add the following kernel
@@ -1285,13 +1285,13 @@ index ea5bf5f4c..6adee9c99 100644
  static int ahci_set_lpm(struct ata_link *link, enum ata_lpm_policy policy,
  			unsigned hints);
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 547312839ca5322e30025016dc632fa7d78df1e4 Mon Sep 17 00:00:00 2001
+From 498349dd56654e0cdd146772df3f88786b5f70ef Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 10 Aug 2019 03:19:04 +0000
-Subject: [PATCH 24/28] print CPU that faults
+Subject: [PATCH 24/29] print CPU that faults
 
 print cpu number when we print a crash
 ---
@@ -1315,13 +1315,13 @@ index 1ead568c0..ef9b74188 100644
  	print_vma_addr(KERN_CONT " in ", regs->ip);
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From dd1dcaa5aca2f21140d21b6bf79e13ee82e0ee6e Mon Sep 17 00:00:00 2001
+From 11c289efcf58e65d5e248f874984eb0e3f66eff1 Mon Sep 17 00:00:00 2001
 From: Jim Kukunas <james.t.kukunas@linux.intel.com>
 Date: Sat, 2 Nov 2019 00:59:52 +0000
-Subject: [PATCH 25/28] fix bug in ucode force reload revision check
+Subject: [PATCH 25/29] fix bug in ucode force reload revision check
 
 If force_ucode_load==true, reload ucode even if revision # is identical.
 ---
@@ -1342,20 +1342,20 @@ index 6a99535d7..d7e0e35ab 100644
  		goto out;
  	}
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From c7329e83f5d3386273522518e0fe493f5c4cf1a2 Mon Sep 17 00:00:00 2001
+From 585ccb4e9c5eb81219c2ff807d2a620fb319b81d Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Nov 2019 23:12:11 +0000
-Subject: [PATCH 26/28] nvme workaround
+Subject: [PATCH 26/29] nvme workaround
 
 ---
  drivers/nvme/host/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 4ee2330c6..b089cceff 100644
+index f38548e6d..2c8b1e7fd 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
 @@ -48,7 +48,7 @@ static u8 nvme_max_retries = 5;
@@ -1368,13 +1368,13 @@ index 4ee2330c6..b089cceff 100644
  MODULE_PARM_DESC(default_ps_max_latency_us,
  		 "max power saving latency for new devices; use PM QOS to change per device");
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 42cab507d5dd5243723421fa06dcc8a213637728 Mon Sep 17 00:00:00 2001
+From 33b02f0adbae6b477b10480105e41fd00b518a0d Mon Sep 17 00:00:00 2001
 From: Alexander Koskovich <zvnexus@outlook.com>
 Date: Wed, 12 Feb 2020 22:47:12 +0000
-Subject: [PATCH 27/28] Don't report an error if PowerClamp run on other CPU
+Subject: [PATCH 27/29] Don't report an error if PowerClamp run on other CPU
 
 ---
  drivers/thermal/intel/intel_powerclamp.c | 10 ++++++++++
@@ -1409,13 +1409,13 @@ index f74b24734..bf60ab105 100644
  		pr_err("CPU does not support MWAIT\n");
  		return -ENODEV;
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
 
 
-From 7b6fa650d824d1920a4e5d8230147c345a43f13c Mon Sep 17 00:00:00 2001
+From e2fcbaca20ec8dc79a60ee7c00caf2a391873e91 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 11 Jun 2020 22:30:56 +0200
-Subject: [PATCH 28/28] Port microcode patches
+Subject: [PATCH 28/29] Port microcode patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1585,5 +1585,352 @@ index d7e0e35ab..fa4809786 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.337.ge9b77c84a0
+
+
+From cfa83f13282fff0ef813cfda0e8171d2aa59159b Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Thu, 3 Sep 2020 16:38:23 +0200
+Subject: [PATCH 29/29] clearlinux: Add pageflip patches
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ drivers/gpu/drm/i915/display/intel_display.c | 19 +++++
+ drivers/gpu/drm/i915/display/intel_sprite.c  | 33 +++++++-
+ drivers/gpu/drm/i915/i915_irq.c              | 83 ++++++++++++++++++--
+ drivers/gpu/drm/i915/i915_irq.h              |  2 +
+ drivers/gpu/drm/i915/i915_reg.h              |  5 +-
+ 5 files changed, 133 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 26996e183..c9fb00535 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -4764,6 +4764,12 @@ u32 skl_plane_ctl(const struct intel_crtc_state *crtc_state,
+ 	const struct drm_intel_sprite_colorkey *key = &plane_state->ckey;
+ 	u32 plane_ctl;
+ 
++	/* During Async flip, no other updates are allowed */
++	if (crtc_state->uapi.async_flip) {
++		plane_ctl |= PLANE_CTL_ASYNC_FLIP;
++		return plane_ctl;
++	}
++
+ 	plane_ctl = PLANE_CTL_ENABLE;
+ 
+ 	if (INTEL_GEN(dev_priv) < 10 && !IS_GEMINILAKE(dev_priv)) {
+@@ -15483,6 +15489,13 @@ static void intel_atomic_commit_tail(struct intel_atomic_state *state)
+ 	if (state->modeset)
+ 		icl_dbuf_slice_pre_update(state);
+ 
++	for_each_new_intel_crtc_in_state(state, crtc, new_crtc_state, i) {
++		if (new_crtc_state->uapi.async_flip) {
++			skl_enable_flip_done(&crtc->base);
++			break;
++		}
++	}
++
+ 	/* Now enable the clocks, plane, pipe, and connectors that we set up. */
+ 	dev_priv->display.commit_modeset_enables(state);
+ 
+@@ -15504,6 +15517,9 @@ static void intel_atomic_commit_tail(struct intel_atomic_state *state)
+ 	drm_atomic_helper_wait_for_flip_done(dev, &state->base);
+ 
+ 	for_each_new_intel_crtc_in_state(state, crtc, new_crtc_state, i) {
++		if (new_crtc_state->uapi.async_flip)
++			skl_disable_flip_done(&crtc->base);
++
+ 		if (new_crtc_state->hw.active &&
+ 		    !needs_modeset(new_crtc_state) &&
+ 		    !new_crtc_state->preload_luts &&
+@@ -17656,6 +17672,9 @@ static void intel_mode_config_init(struct drm_i915_private *i915)
+ 
+ 	mode_config->funcs = &intel_mode_funcs;
+ 
++	if (INTEL_GEN(i915) >= 9)
++		mode_config->async_page_flip = true;
++
+ 	/*
+ 	 * Maximum framebuffer dimensions, chosen to match
+ 	 * the maximum render engine surface size on gen4+.
+diff --git a/drivers/gpu/drm/i915/display/intel_sprite.c b/drivers/gpu/drm/i915/display/intel_sprite.c
+index 0000ec705..36ac66d9e 100644
+--- a/drivers/gpu/drm/i915/display/intel_sprite.c
++++ b/drivers/gpu/drm/i915/display/intel_sprite.c
+@@ -92,6 +92,9 @@ void intel_pipe_update_start(const struct intel_crtc_state *new_crtc_state)
+ 	DEFINE_WAIT(wait);
+ 	u32 psr_status;
+ 
++	if (new_crtc_state->uapi.async_flip)
++		goto irq_disable;
++
+ 	vblank_start = adjusted_mode->crtc_vblank_start;
+ 	if (adjusted_mode->flags & DRM_MODE_FLAG_INTERLACE)
+ 		vblank_start = DIV_ROUND_UP(vblank_start, 2);
+@@ -205,7 +208,7 @@ void intel_pipe_update_end(struct intel_crtc_state *new_crtc_state)
+ 	 * Would be slightly nice to just grab the vblank count and arm the
+ 	 * event outside of the critical section - the spinlock might spin for a
+ 	 * while ... */
+-	if (new_crtc_state->uapi.event) {
++	if (new_crtc_state->uapi.event && !new_crtc_state->uapi.async_flip) {
+ 		drm_WARN_ON(&dev_priv->drm,
+ 			    drm_crtc_vblank_get(&crtc->base) != 0);
+ 
+@@ -219,6 +222,9 @@ void intel_pipe_update_end(struct intel_crtc_state *new_crtc_state)
+ 
+ 	local_irq_enable();
+ 
++	if (new_crtc_state->uapi.async_flip)
++		return;
++
+ 	if (intel_vgpu_active(dev_priv))
+ 		return;
+ 
+@@ -587,6 +593,24 @@ icl_program_input_csc(struct intel_plane *plane,
+ 			  PLANE_INPUT_CSC_POSTOFF(pipe, plane_id, 2), 0x0);
+ }
+ 
++static void
++skl_program_async_surface_address(struct drm_i915_private *dev_priv,
++				  const struct intel_plane_state *plane_state,
++				  enum pipe pipe, enum plane_id plane_id,
++				  u32 surf_addr)
++{
++	unsigned long irqflags;
++	u32 plane_ctl = plane_state->ctl;
++
++	spin_lock_irqsave(&dev_priv->uncore.lock, irqflags);
++
++	intel_de_write_fw(dev_priv, PLANE_CTL(pipe, plane_id), plane_ctl);
++	intel_de_write_fw(dev_priv, PLANE_SURF(pipe, plane_id),
++			  intel_plane_ggtt_offset(plane_state) + surf_addr);
++
++	spin_unlock_irqrestore(&dev_priv->uncore.lock, irqflags);
++}
++
+ static void
+ skl_program_plane(struct intel_plane *plane,
+ 		  const struct intel_crtc_state *crtc_state,
+@@ -615,6 +639,13 @@ skl_program_plane(struct intel_plane *plane,
+ 	u32 keymsk, keymax;
+ 	u32 plane_ctl = plane_state->ctl;
+ 
++	/* During Async flip, no other updates are allowed */
++	if (crtc_state->uapi.async_flip) {
++		skl_program_async_surface_address(dev_priv, plane_state,
++						  pipe, plane_id, surf_addr);
++		return;
++	}
++
+ 	plane_ctl |= skl_plane_ctl_crtc(crtc_state);
+ 
+ 	if (INTEL_GEN(dev_priv) >= 10 || IS_GEMINILAKE(dev_priv))
+diff --git a/drivers/gpu/drm/i915/i915_irq.c b/drivers/gpu/drm/i915/i915_irq.c
+index 284cf0781..3041395b9 100644
+--- a/drivers/gpu/drm/i915/i915_irq.c
++++ b/drivers/gpu/drm/i915/i915_irq.c
+@@ -697,14 +697,24 @@ u32 i915_get_vblank_counter(struct drm_crtc *crtc)
+ 	return (((high1 << 8) | low) + (pixel >= vbl_start)) & 0xffffff;
+ }
+ 
++u32 g4x_get_flip_counter(struct drm_crtc *crtc)
++{
++	struct drm_i915_private *dev_priv = to_i915(crtc->dev);
++	enum pipe pipe = to_intel_crtc(crtc)->pipe;
++
++	return I915_READ(PIPE_FLIPCOUNT_G4X(pipe));
++}
++
+ u32 g4x_get_vblank_counter(struct drm_crtc *crtc)
+ {
+ 	struct drm_i915_private *dev_priv = to_i915(crtc->dev);
+ 	enum pipe pipe = to_intel_crtc(crtc)->pipe;
+ 
++	if (crtc->state->async_flip)
++		return g4x_get_flip_counter(crtc);
++
+ 	return I915_READ(PIPE_FRMCOUNT_G4X(pipe));
+ }
+-
+ /*
+  * On certain encoders on certain platforms, pipe
+  * scanline register will not work to get the scanline,
+@@ -737,17 +747,24 @@ static u32 __intel_get_crtc_scanline_from_timestamp(struct intel_crtc *crtc)
+ 		 * pipe frame time stamp. The time stamp value
+ 		 * is sampled at every start of vertical blank.
+ 		 */
+-		scan_prev_time = intel_de_read_fw(dev_priv,
+-						  PIPE_FRMTMSTMP(crtc->pipe));
+-
++		if (!crtc->config->uapi.async_flip)
++			scan_prev_time = intel_de_read_fw(dev_priv,
++							  PIPE_FRMTMSTMP(crtc->pipe));
++		else
++			scan_prev_time = intel_de_read_fw(dev_priv,
++							  PIPE_FLIPTMSTMP(crtc->pipe));
+ 		/*
+ 		 * The TIMESTAMP_CTR register has the current
+ 		 * time stamp value.
+ 		 */
+ 		scan_curr_time = intel_de_read_fw(dev_priv, IVB_TIMESTAMP_CTR);
+ 
+-		scan_post_time = intel_de_read_fw(dev_priv,
+-						  PIPE_FRMTMSTMP(crtc->pipe));
++		if (!crtc->config->uapi.async_flip)
++			scan_post_time = intel_de_read_fw(dev_priv,
++							  PIPE_FRMTMSTMP(crtc->pipe));
++		else
++			scan_post_time = intel_de_read_fw(dev_priv,
++							  PIPE_FLIPTMSTMP(crtc->pipe));
+ 	} while (scan_post_time != scan_prev_time);
+ 
+ 	scanline = div_u64(mul_u32_u32(scan_curr_time - scan_prev_time,
+@@ -937,7 +954,6 @@ static bool i915_get_crtc_scanoutpos(struct drm_crtc *_crtc,
+ 		*vpos = position / htotal;
+ 		*hpos = position - (*vpos * htotal);
+ 	}
+-
+ 	return true;
+ }
+ 
+@@ -1295,6 +1311,24 @@ display_pipe_crc_irq_handler(struct drm_i915_private *dev_priv,
+ 			     u32 crc4) {}
+ #endif
+ 
++static void flip_done_handler(struct drm_i915_private *dev_priv,
++			      unsigned int pipe)
++{
++	struct intel_crtc *crtc = intel_get_crtc_for_pipe(dev_priv, pipe);
++	struct drm_crtc_state *crtc_state = crtc->base.state;
++	struct drm_pending_vblank_event *e = crtc_state->event;
++	struct drm_device *dev = &dev_priv->drm;
++	unsigned long irqflags;
++
++	crtc_state->event = NULL;
++
++	drm_crtc_accurate_vblank_count(&crtc->base);
++	spin_lock_irqsave(&dev->event_lock, irqflags);
++
++	drm_crtc_send_vblank_event(&crtc->base, e);
++
++	spin_unlock_irqrestore(&dev->event_lock, irqflags);
++}
+ 
+ static void hsw_pipe_crc_irq_handler(struct drm_i915_private *dev_priv,
+ 				     enum pipe pipe)
+@@ -2386,6 +2420,9 @@ gen8_de_irq_handler(struct drm_i915_private *dev_priv, u32 master_ctl)
+ 		if (iir & GEN8_PIPE_VBLANK)
+ 			intel_handle_vblank(dev_priv, pipe);
+ 
++		if (iir & GEN9_PIPE_PLANE1_FLIP_DONE)
++			flip_done_handler(dev_priv, pipe);
++
+ 		if (iir & GEN8_PIPE_CDCLK_CRC_DONE)
+ 			hsw_pipe_crc_irq_handler(dev_priv, pipe);
+ 
+@@ -2667,6 +2704,19 @@ int bdw_enable_vblank(struct drm_crtc *crtc)
+ 	return 0;
+ }
+ 
++void skl_enable_flip_done(struct drm_crtc *crtc)
++{
++	struct drm_i915_private *dev_priv = to_i915(crtc->dev);
++	enum pipe pipe = to_intel_crtc(crtc)->pipe;
++	unsigned long irqflags;
++
++	spin_lock_irqsave(&dev_priv->irq_lock, irqflags);
++
++	bdw_enable_pipe_irq(dev_priv, pipe, GEN9_PIPE_PLANE1_FLIP_DONE);
++
++	spin_unlock_irqrestore(&dev_priv->irq_lock, irqflags);
++}
++
+ /* Called from drm generic code, passed 'crtc' which
+  * we use as a pipe index
+  */
+@@ -2727,6 +2777,19 @@ void bdw_disable_vblank(struct drm_crtc *crtc)
+ 	spin_unlock_irqrestore(&dev_priv->irq_lock, irqflags);
+ }
+ 
++void skl_disable_flip_done(struct drm_crtc *crtc)
++{
++	struct drm_i915_private *dev_priv = to_i915(crtc->dev);
++	enum pipe pipe = to_intel_crtc(crtc)->pipe;
++	unsigned long irqflags;
++
++	spin_lock_irqsave(&dev_priv->irq_lock, irqflags);
++
++	bdw_disable_pipe_irq(dev_priv, pipe, GEN9_PIPE_PLANE1_FLIP_DONE);
++
++	spin_unlock_irqrestore(&dev_priv->irq_lock, irqflags);
++}
++
+ static void ibx_irq_reset(struct drm_i915_private *dev_priv)
+ {
+ 	struct intel_uncore *uncore = &dev_priv->uncore;
+@@ -2932,6 +2995,9 @@ void gen8_irq_power_well_post_enable(struct drm_i915_private *dev_priv,
+ 	u32 extra_ier = GEN8_PIPE_VBLANK | GEN8_PIPE_FIFO_UNDERRUN;
+ 	enum pipe pipe;
+ 
++	if (INTEL_GEN(dev_priv) >= 9)
++		extra_ier |= GEN9_PIPE_PLANE1_FLIP_DONE;
++
+ 	spin_lock_irq(&dev_priv->irq_lock);
+ 
+ 	if (!intel_irqs_enabled(dev_priv)) {
+@@ -3407,6 +3473,9 @@ static void gen8_de_irq_postinstall(struct drm_i915_private *dev_priv)
+ 	de_pipe_enables = de_pipe_masked | GEN8_PIPE_VBLANK |
+ 					   GEN8_PIPE_FIFO_UNDERRUN;
+ 
++	if (INTEL_GEN(dev_priv) >= 9)
++		de_pipe_enables |= GEN9_PIPE_PLANE1_FLIP_DONE;
++
+ 	de_port_enables = de_port_masked;
+ 	if (IS_GEN9_LP(dev_priv))
+ 		de_port_enables |= BXT_DE_PORT_HOTPLUG_MASK;
+diff --git a/drivers/gpu/drm/i915/i915_irq.h b/drivers/gpu/drm/i915/i915_irq.h
+index 25f25cd95..2f10c8135 100644
+--- a/drivers/gpu/drm/i915/i915_irq.h
++++ b/drivers/gpu/drm/i915/i915_irq.h
+@@ -112,11 +112,13 @@ int i915gm_enable_vblank(struct drm_crtc *crtc);
+ int i965_enable_vblank(struct drm_crtc *crtc);
+ int ilk_enable_vblank(struct drm_crtc *crtc);
+ int bdw_enable_vblank(struct drm_crtc *crtc);
++void skl_enable_flip_done(struct drm_crtc *crtc);
+ void i8xx_disable_vblank(struct drm_crtc *crtc);
+ void i915gm_disable_vblank(struct drm_crtc *crtc);
+ void i965_disable_vblank(struct drm_crtc *crtc);
+ void ilk_disable_vblank(struct drm_crtc *crtc);
+ void bdw_disable_vblank(struct drm_crtc *crtc);
++void skl_disable_flip_done(struct drm_crtc *crtc);
+ 
+ void gen2_irq_reset(struct intel_uncore *uncore);
+ void gen3_irq_reset(struct intel_uncore *uncore, i915_reg_t imr,
+diff --git a/drivers/gpu/drm/i915/i915_reg.h b/drivers/gpu/drm/i915/i915_reg.h
+index 06cd1d28a..4a330efca 100644
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -6874,6 +6874,7 @@ enum {
+ #define   PLANE_CTL_TILED_X			(1 << 10)
+ #define   PLANE_CTL_TILED_Y			(4 << 10)
+ #define   PLANE_CTL_TILED_YF			(5 << 10)
++#define   PLANE_CTL_ASYNC_FLIP			(1 << 9)
+ #define   PLANE_CTL_FLIP_HORIZONTAL		(1 << 8)
+ #define   PLANE_CTL_MEDIA_DECOMPRESSION_ENABLE	(1 << 4) /* TGL+ */
+ #define   PLANE_CTL_ALPHA_MASK			(0x3 << 4) /* Pre-GLK */
+@@ -11005,9 +11006,11 @@ enum skl_power_gate {
+ #define  GEN9_TIMESTAMP_OVERRIDE_US_COUNTER_DENOMINATOR_MASK	(0xf << 12)
+ 
+ #define _PIPE_FRMTMSTMP_A		0x70048
++#define _PIPE_FLIPTMSTMP_A		0x7004C
+ #define PIPE_FRMTMSTMP(pipe)		\
+ 			_MMIO_PIPE2(pipe, _PIPE_FRMTMSTMP_A)
+-
++#define PIPE_FLIPTMSTMP(pipe)		\
++			_MMIO_PIPE2(pipe, _PIPE_FLIPTMSTMP_A)
+ /* BXT MIPI clock controls */
+ #define BXT_MAX_VAR_OUTPUT_KHZ			39500
+ 
+-- 
+2.28.0.337.ge9b77c84a0
 
