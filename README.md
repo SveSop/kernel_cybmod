@@ -4,12 +4,11 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.8.6  
+0000 : Kernel patch 5.8.7  
 0001 : PDS 099o "Undear" patch (Tkg)  
 0002 : PDS-Fixes  
 0003 : 5.8 Graysky's CPU patches  
 0004 : Add optional -O3 optimization  
-0005 : Virtualbox patch  
 0006 : Various kernel tweaks patch  
 0010 : swap-tweaks.patch  
 0015 : ZFS fix  
