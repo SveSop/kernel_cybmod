@@ -1,6 +1,6 @@
-From ea880ff742de1bae424c4936a5077895da8f90bc Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 5 Sep 2020 10:31:10 +0000
+From 146e577e04c5fa595a80a809318ee4287e89e0ea Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 9 Sep 2020 14:35:59 -0400
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 11251 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index de78a05a8487..2b5503dc9d08 100644
+index de78a05a8487..24caf9715efe 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11254 +1,6 @@
 -linux (5.8.0-18.19) groovy; urgency=medium
-+linux (5.8.7-050807.202009051031) groovy; urgency=low
++linux (5.8.8-050808.202009091435) groovy; urgency=low
  
 -  * groovy/linux: 5.8.0-18.19 -proposed tracker (LP: #1893047)
-+  Mainline build at commit: v5.8.7
++  Mainline build at commit: v5.8.8
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@kathleen>  Sat, 05 Sep 2020 10:31:10 +0000
++ -- Mainline Build <kernel@gloin>  Wed, 09 Sep 2020 14:35:59 -0400
  
 -  * Groovy update: v5.8.4 upstream stable release (LP: #1893048)
 -    - drm/vgem: Replace opencoded version of drm_gem_dumb_map_offset()
