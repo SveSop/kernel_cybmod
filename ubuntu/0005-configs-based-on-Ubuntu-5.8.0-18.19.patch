@@ -1,29 +1,29 @@
-From 0238e166ff56ef2bc651877ef15cf8b59f76a1f9 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 5 Sep 2020 10:31:48 +0000
+From 9f4d40038e176e7b0693d9304bf13ddad939f504 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 9 Sep 2020 14:36:55 -0400
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-18.19)
 
 ---
  .../config/amd64/config.common.amd64          |  3 +-
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
- .../config/arm64/config.common.arm64          |  6 +--
- .../config/armhf/config.common.armhf          |  4 +-
- debian.master/config/config.common.ubuntu     | 39 +++----------------
- .../config/ppc64el/config.common.ppc64el      |  4 +-
- .../config/s390x/config.common.s390x          |  3 +-
- 8 files changed, 11 insertions(+), 50 deletions(-)
+ .../config/arm64/config.common.arm64          |  4 +--
+ .../config/armhf/config.common.armhf          |  2 --
+ debian.master/config/config.common.ubuntu     | 34 ++-----------------
+ .../config/ppc64el/config.common.ppc64el      |  2 --
+ .../config/s390x/config.common.s390x          |  1 -
+ 8 files changed, 4 insertions(+), 44 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 3990da0272c6..e7be66ef0ae1 100644
+index 8f0bac3fc251..cbba1b43bdc3 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -60,7 +60,7 @@ CONFIG_CADENCE_WATCHDOG=m
  CONFIG_CAIF=m
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 9.3.0-13ubuntu1) 9.3.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu2) 10.2.0"
+-CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-3ubuntu1) 10.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-6ubuntu1) 10.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CLOCK_THERMAL is not set
  # CONFIG_CMA is not set
@@ -60,18 +60,9 @@ index 814348dc984b..42de09fb0bff 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index 99ade5993ff4..2840a5e3a384 100644
+index c3e0b9a7232f..2840a5e3a384 100644
 --- a/debian.master/config/arm64/config.common.arm64
 +++ b/debian.master/config/arm64/config.common.arm64
-@@ -67,7 +67,7 @@ CONFIG_CADENCE_WATCHDOG=m
- CONFIG_CAIF=m
- CONFIG_CAN=m
- CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 9.3.0-13ubuntu1) 9.3.0"
-+CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 10.2.0-3ubuntu1) 10.2.0"
- CONFIG_CDROM_PKTCDVD=m
- CONFIG_CLOCK_THERMAL=y
- CONFIG_CMA=y
 @@ -167,7 +167,7 @@ CONFIG_FEALNX=m
  CONFIG_FIREWIRE=m
  CONFIG_FIREWIRE_NOSY=m
@@ -98,18 +89,9 @@ index 99ade5993ff4..2840a5e3a384 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index b1be39663fd8..0708404463a8 100644
+index 2bbbc66d8f08..0708404463a8 100644
 --- a/debian.master/config/armhf/config.common.armhf
 +++ b/debian.master/config/armhf/config.common.armhf
-@@ -58,7 +58,7 @@ CONFIG_CADENCE_WATCHDOG=m
- CONFIG_CAIF=m
- CONFIG_CAN=m
- CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 9.3.0-13ubuntu1) 9.3.0"
-+CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 10.2.0-3ubuntu1) 10.2.0"
- CONFIG_CDROM_PKTCDVD=m
- CONFIG_CLOCK_THERMAL=y
- CONFIG_CMA=y
 @@ -188,7 +188,6 @@ CONFIG_HFSPLUS_FS=m
  CONFIG_HFS_FS=m
  CONFIG_HIBERNATION=y
@@ -127,7 +109,7 @@ index b1be39663fd8..0708404463a8 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index eaa6a0d9a902..653d2265ea39 100644
+index 6024f492a03a..653d2265ea39 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -278,10 +278,7 @@ CONFIG_AMD_XGBE_DCB=y
@@ -142,15 +124,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_APDS9300=m
  CONFIG_APDS9960=m
  # CONFIG_APM_EMULATION is not set
-@@ -591,6 +588,7 @@ CONFIG_ARM64_4K_PAGES=y
- CONFIG_ARM64_ACPI_PARKING_PROTOCOL=y
- CONFIG_ARM64_AMU_EXTN=y
- CONFIG_ARM64_BTI=y
-+CONFIG_ARM64_BTI_KERNEL=y
- CONFIG_ARM64_CNP=y
- CONFIG_ARM64_CONT_SHIFT=4
- CONFIG_ARM64_CRYPTO=y
-@@ -770,7 +768,7 @@ CONFIG_ARM_TI_CPUFREQ=y
+@@ -771,7 +768,7 @@ CONFIG_ARM_TI_CPUFREQ=y
  CONFIG_ARM_VEXPRESS_SPC_CPUFREQ=m
  CONFIG_ARM_VIRT_EXT=y
  CONFIG_AS3935=m
@@ -159,7 +133,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_ASN1=y
  CONFIG_ASPEED_ADC=m
  CONFIG_ASPEED_BT_IPMI_BMC=m
-@@ -908,25 +906,6 @@ CONFIG_AUDIT_ARCH=y
+@@ -909,25 +906,6 @@ CONFIG_AUDIT_ARCH=y
  CONFIG_AUDIT_ARCH_COMPAT_GENERIC=y
  CONFIG_AUDIT_COMPAT_GENERIC=y
  CONFIG_AUDIT_GENERIC=y
@@ -185,7 +159,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_AURORA_NB8800=m
  CONFIG_AUTO_ZRELADDR=y
  CONFIG_AX25=m
-@@ -2502,7 +2481,6 @@ CONFIG_DELL_SMBIOS=m
+@@ -2503,7 +2481,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
  CONFIG_DELL_SMO8800=m
@@ -193,16 +167,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_DELL_WMI=m
  CONFIG_DELL_WMI_AIO=m
  CONFIG_DELL_WMI_DESCRIPTOR=m
-@@ -3621,7 +3599,7 @@ CONFIG_GAMEPORT_L4=m
- CONFIG_GAMEPORT_NS558=m
- CONFIG_GARP=m
- CONFIG_GART_IOMMU=y
--CONFIG_GCC_VERSION=90300
-+CONFIG_GCC_VERSION=100200
- # CONFIG_GCOV_KERNEL is not set
- CONFIG_GDB_SCRIPTS=y
- CONFIG_GEMINI_ETHERNET=m
-@@ -5201,7 +5179,6 @@ CONFIG_KGDB_KDB=y
+@@ -5202,7 +5179,6 @@ CONFIG_KGDB_KDB=y
  CONFIG_KGDB_LOW_LEVEL_TRAP=y
  CONFIG_KGDB_SERIAL_CONSOLE=y
  # CONFIG_KGDB_TESTS is not set
@@ -210,16 +175,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_KMX61=m
  CONFIG_KPC2000=y
  CONFIG_KPC2000_CORE=m
-@@ -5285,7 +5262,7 @@ CONFIG_LDISC_AUTOLOAD=y
- # CONFIG_LDM_DEBUG is not set
- # CONFIG_LD_DEAD_CODE_DATA_ELIMINATION is not set
- # CONFIG_LD_HEAD_STUB_CATCH is not set
--CONFIG_LD_VERSION=234900000
-+CONFIG_LD_VERSION=235000000
- CONFIG_LEDS_88PM860X=m
- CONFIG_LEDS_AAT1290=m
- CONFIG_LEDS_ADP5520=m
-@@ -5426,7 +5403,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -5427,7 +5403,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -227,7 +183,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -8756,7 +8732,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+@@ -8757,7 +8732,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
  CONFIG_SECURITY_PATH=y
@@ -235,7 +191,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_SECURITY_SAFESETID=y
  CONFIG_SECURITY_SELINUX=y
  CONFIG_SECURITY_SELINUX_AVC_STATS=y
-@@ -9115,8 +9090,6 @@ CONFIG_SGI_XP=m
+@@ -9116,8 +9090,6 @@ CONFIG_SGI_XP=m
  CONFIG_SGL_ALLOC=y
  CONFIG_SG_POOL=y
  CONFIG_SG_SPLIT=y
@@ -244,7 +200,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -9266,7 +9239,6 @@ CONFIG_SND_HDA_CORE=m
+@@ -9267,7 +9239,6 @@ CONFIG_SND_HDA_CORE=m
  CONFIG_SND_HDA_DSP_LOADER=y
  CONFIG_SND_HDA_EXT_CORE=m
  CONFIG_SND_HDA_GENERIC=m
@@ -252,7 +208,7 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_SND_HDA_HWDEP=y
  CONFIG_SND_HDA_I915=y
  CONFIG_SND_HDA_INPUT_BEEP=y
-@@ -11203,7 +11175,6 @@ CONFIG_VDPA_SIM=m
+@@ -11204,7 +11175,6 @@ CONFIG_VDPA_SIM=m
  CONFIG_VDSO=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m
@@ -261,18 +217,9 @@ index eaa6a0d9a902..653d2265ea39 100644
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index 8c3e85f81701..366817451017 100644
+index 73b1ee3d915d..366817451017 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
 +++ b/debian.master/config/ppc64el/config.common.ppc64el
-@@ -56,7 +56,7 @@ CONFIG_CADENCE_WATCHDOG=m
- CONFIG_CAIF=m
- CONFIG_CAN=m
- CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 9.3.0-13ubuntu1) 9.3.0"
-+CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 10.2.0-3ubuntu1) 10.2.0"
- CONFIG_CDROM_PKTCDVD=m
- CONFIG_CLOCK_THERMAL=y
- CONFIG_CMA=y
 @@ -187,7 +187,6 @@ CONFIG_HFSPLUS_FS=m
  CONFIG_HFS_FS=m
  # CONFIG_HIBERNATION is not set
@@ -290,18 +237,9 @@ index 8c3e85f81701..366817451017 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index 957d69927a89..b08f02d56703 100644
+index 6f3073d07858..b08f02d56703 100644
 --- a/debian.master/config/s390x/config.common.s390x
 +++ b/debian.master/config/s390x/config.common.s390x
-@@ -47,7 +47,7 @@ CONFIG_AUTOFS_FS=y
- # CONFIG_CAIF is not set
- # CONFIG_CAN is not set
- # CONFIG_CB710_CORE is not set
--CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 9.3.0-13ubuntu1) 9.3.0"
-+CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 10.2.0-3ubuntu1) 10.2.0"
- # CONFIG_CDROM_PKTCDVD is not set
- CONFIG_CMA=y
- # CONFIG_CMDLINE_PARTITION is not set
 @@ -172,7 +172,6 @@ CONFIG_GPIO_GENERIC_PLATFORM=m
  # CONFIG_HFSPLUS_FS is not set
  # CONFIG_HFS_FS is not set
