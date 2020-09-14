@@ -1,7 +1,7 @@
-From 9f4d40038e176e7b0693d9304bf13ddad939f504 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 9 Sep 2020 14:36:55 -0400
-Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-18.19)
+From 04ff5c365bef0b896eb9a2b291dab667a33a433e Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 12 Sep 2020 09:37:57 -0400
+Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-19.20)
 
 ---
  .../config/amd64/config.common.amd64          |  3 +-
@@ -109,7 +109,7 @@ index 2bbbc66d8f08..0708404463a8 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 6024f492a03a..653d2265ea39 100644
+index d2715906349a..5ac4fb753df1 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -278,10 +278,7 @@ CONFIG_AMD_XGBE_DCB=y
