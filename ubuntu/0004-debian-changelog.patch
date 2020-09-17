@@ -1,6 +1,6 @@
-From 8be609103582fe177689f24e851999a2e68b5eea Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 12 Sep 2020 09:36:42 -0400
+From c4267f20a554f8ee13a81bf848758d362118abdf Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 17 Sep 2020 12:32:03 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,22 +8,22 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 11789 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 3e2543c378d9..fcfa58037bfe 100644
+index 3e2543c378d9..a9f5fae100bb 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11792 +1,6 @@
 -linux (5.8.0-19.20) groovy; urgency=medium
-+linux (5.8.9-050809.202009120936) groovy; urgency=low
++linux (5.8.10-050810.202009171232) groovy; urgency=low
  
 -  * groovy/linux: 5.8.0-19.20 -proposed tracker (LP: #1895120)
-+  Mainline build at commit: v5.8.9
++  Mainline build at commit: v5.8.10
  
 -  * Please switch default, hwe, oem kernel flavours governor to
 -    CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND=y , such that advanced userspace
 -    utilities such as game-mode can be later used to rev-up to to performance,
 -    or rev-down to powersave. (LP: #1885730)
 -    - [Config] Set the default CPU governor to ONDEMAND
-+ -- Mainline Build <kernel@tangerine>  Sat, 12 Sep 2020 09:36:41 -0400
++ -- Mainline Build <kernel@sita>  Thu, 17 Sep 2020 12:32:03 +0000
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions

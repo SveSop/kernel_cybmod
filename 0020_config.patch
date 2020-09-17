@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10845 @@
+@@ -0,0 +1,10844 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.8.9-cybmod10 Kernel Configuration
++# Linux/x86 5.8.10-cybmod11 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.1.0-2ubuntu1~18.04) 10.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -6603,7 +6603,6 @@ new file mode 100644
 +# Console display driver support
 +#
 +CONFIG_VGA_CONSOLE=y
-+# CONFIG_VGACON_SOFT_SCROLLBACK is not set
 +CONFIG_DUMMY_CONSOLE=y
 +CONFIG_DUMMY_CONSOLE_COLUMNS=80
 +CONFIG_DUMMY_CONSOLE_ROWS=25

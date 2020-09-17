@@ -1,6 +1,6 @@
-From 04ff5c365bef0b896eb9a2b291dab667a33a433e Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 12 Sep 2020 09:37:57 -0400
+From 5501a06a1cb98f8b0cdc19590d4f2131cc2f7996 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 17 Sep 2020 12:32:41 +0000
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-19.20)
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-19.20)
  .../config/amd64/config.flavour.lowlatency    |  1 -
  .../config/arm64/config.common.arm64          |  4 +--
  .../config/armhf/config.common.armhf          |  2 --
- debian.master/config/config.common.ubuntu     | 34 ++-----------------
+ debian.master/config/config.common.ubuntu     | 35 ++-----------------
  .../config/ppc64el/config.common.ppc64el      |  2 --
  .../config/s390x/config.common.s390x          |  1 -
- 8 files changed, 4 insertions(+), 44 deletions(-)
+ 8 files changed, 4 insertions(+), 45 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 8f0bac3fc251..cbba1b43bdc3 100644
@@ -109,7 +109,7 @@ index 2bbbc66d8f08..0708404463a8 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index d2715906349a..5ac4fb753df1 100644
+index d2715906349a..71e273994e06 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -278,10 +278,7 @@ CONFIG_AMD_XGBE_DCB=y
@@ -216,6 +216,14 @@ index d2715906349a..5ac4fb753df1 100644
  CONFIG_VETH=m
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
+@@ -11231,7 +11201,6 @@ CONFIG_VFP=y
+ CONFIG_VFPv3=y
+ CONFIG_VF_USE_ARM_GLOBAL_TIMER=y
+ # CONFIG_VF_USE_PIT_TIMER is not set
+-# CONFIG_VGACON_SOFT_SCROLLBACK is not set
+ CONFIG_VGASTATE=m
+ CONFIG_VGA_ARB=y
+ CONFIG_VGA_ARB_MAX_GPUS=16
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
 index 73b1ee3d915d..366817451017 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
