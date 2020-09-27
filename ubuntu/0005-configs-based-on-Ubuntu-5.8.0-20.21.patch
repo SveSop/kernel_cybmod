@@ -1,6 +1,6 @@
-From 48b2c96f75dfe0cd51c78b21aef34ccd8426bd6a Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 23 Sep 2020 08:59:30 -0400
+From abf4f532d594e8f39ca8440ff1fac8c2bf519dda Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 26 Sep 2020 17:33:38 +0000
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-20.21)
 
 ---
@@ -10,10 +10,10 @@ Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-20.21)
  .../config/arm64/config.common.arm64          |  2 --
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  2 --
- debian.master/config/config.common.ubuntu     | 34 ++-----------------
+ debian.master/config/config.common.ubuntu     | 36 ++-----------------
  .../config/ppc64el/config.common.ppc64el      |  2 --
  .../config/s390x/config.common.s390x          |  1 -
- 9 files changed, 3 insertions(+), 43 deletions(-)
+ 9 files changed, 4 insertions(+), 44 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 2cb5795d06d5..90c825b7329c 100644
@@ -103,7 +103,7 @@ index 6496b78affb9..6f198340b759 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 01fe2129faf3..ecb960a04c08 100644
+index 01fe2129faf3..ba3d2c42275b 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -278,10 +278,7 @@ CONFIG_AMD_XGBE_DCB=y
@@ -169,6 +169,15 @@ index 01fe2129faf3..ecb960a04c08 100644
  CONFIG_KMX61=m
  CONFIG_KPC2000=y
  CONFIG_KPC2000_CORE=m
+@@ -5285,7 +5261,7 @@ CONFIG_LDISC_AUTOLOAD=y
+ # CONFIG_LDM_DEBUG is not set
+ # CONFIG_LD_DEAD_CODE_DATA_ELIMINATION is not set
+ # CONFIG_LD_HEAD_STUB_CATCH is not set
+-CONFIG_LD_VERSION=235000000
++CONFIG_LD_VERSION=235010000
+ CONFIG_LEDS_88PM860X=m
+ CONFIG_LEDS_AAT1290=m
+ CONFIG_LEDS_ADP5520=m
 @@ -5426,7 +5402,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
