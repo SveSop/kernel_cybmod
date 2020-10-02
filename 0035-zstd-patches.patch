@@ -1,4 +1,4 @@
-From a8f7c5dd5fb37f55b1ad9a2b165ce0aeb4ed4bea Mon Sep 17 00:00:00 2001
+From 7c64ecca9a3535fd55d9a697ea68ca0571cc2465 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:34 -0700
 Subject: [PATCH 01/10] lib: prepare zstd for preboot environment
@@ -25,7 +25,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  2 files changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/lib/zstd/fse_decompress.c b/lib/zstd/fse_decompress.c
-index a84300e5a..0b353530f 100644
+index a84300e5a013..0b353530fb3f 100644
 --- a/lib/zstd/fse_decompress.c
 +++ b/lib/zstd/fse_decompress.c
 @@ -47,6 +47,7 @@
@@ -52,7 +52,7 @@ index a84300e5a..0b353530f 100644
  *  Templates
  ****************************************************************/
 diff --git a/lib/zstd/zstd_internal.h b/lib/zstd/zstd_internal.h
-index 1a79fab9e..dac753397 100644
+index 1a79fab9e13a..dac753397f86 100644
 --- a/lib/zstd/zstd_internal.h
 +++ b/lib/zstd/zstd_internal.h
 @@ -127,7 +127,14 @@ static const U32 OF_defaultNormLog = OF_DEFAULTNORMLOG;
@@ -90,10 +90,10 @@ index 1a79fab9e..dac753397 100644
  		ZSTD_copy8(op, ip);
  		op += 8;
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 181c4d559c0f2308f72903691567ea0375e2c471 Mon Sep 17 00:00:00 2001
+From c3f3d9caccb8a220ba7c0efafc478f8575cb0d72 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:35 -0700
 Subject: [PATCH 02/10] lib: add zstd support to decompress
@@ -123,7 +123,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
 
 diff --git a/include/linux/decompress/unzstd.h b/include/linux/decompress/unzstd.h
 new file mode 100644
-index 000000000..56d539ae8
+index 000000000000..56d539ae880f
 --- /dev/null
 +++ b/include/linux/decompress/unzstd.h
 @@ -0,0 +1,11 @@
@@ -139,7 +139,7 @@ index 000000000..56d539ae8
 +	   void (*error_fn)(char *x));
 +#endif
 diff --git a/lib/Kconfig b/lib/Kconfig
-index df3f3da95..a5d6f23c4 100644
+index df3f3da95990..a5d6f23c4cab 100644
 --- a/lib/Kconfig
 +++ b/lib/Kconfig
 @@ -342,6 +342,10 @@ config DECOMPRESS_LZ4
@@ -154,7 +154,7 @@ index df3f3da95..a5d6f23c4 100644
  # Generic allocator support is selected if needed
  #
 diff --git a/lib/Makefile b/lib/Makefile
-index b1c42c100..2ba9642a3 100644
+index b1c42c10073b..2ba9642a3a87 100644
 --- a/lib/Makefile
 +++ b/lib/Makefile
 @@ -170,6 +170,7 @@ lib-$(CONFIG_DECOMPRESS_LZMA) += decompress_unlzma.o
@@ -166,7 +166,7 @@ index b1c42c100..2ba9642a3 100644
  obj-$(CONFIG_TEXTSEARCH) += textsearch.o
  obj-$(CONFIG_TEXTSEARCH_KMP) += ts_kmp.o
 diff --git a/lib/decompress.c b/lib/decompress.c
-index 857ab1af1..ab3fc90ff 100644
+index 857ab1af1ef3..ab3fc90ffc64 100644
 --- a/lib/decompress.c
 +++ b/lib/decompress.c
 @@ -13,6 +13,7 @@
@@ -197,7 +197,7 @@ index 857ab1af1..ab3fc90ff 100644
  
 diff --git a/lib/decompress_unzstd.c b/lib/decompress_unzstd.c
 new file mode 100644
-index 000000000..0ad2c1547
+index 000000000000..0ad2c15479ed
 --- /dev/null
 +++ b/lib/decompress_unzstd.c
 @@ -0,0 +1,345 @@
@@ -547,10 +547,10 @@ index 000000000..0ad2c1547
 +}
 +#endif
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 2d7eab0c59e1d5cf49ad51b44279f0b1de7c9c42 Mon Sep 17 00:00:00 2001
+From db6e2a621e7a8f539da623e361058fedd253b059 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:36 -0700
 Subject: [PATCH 03/10] init: add support for zstd compressed kernel
@@ -570,7 +570,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  3 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0cf3f5317..ea4ced7f4 100644
+index 0016f8888c48..42c91deecf4a 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -464,6 +464,7 @@ KLZOP		= lzop
@@ -591,7 +591,7 @@ index 0cf3f5317..ea4ced7f4 100644
  
  export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
 diff --git a/init/Kconfig b/init/Kconfig
-index 0498af567..2b6409fec 100644
+index 0498af567f70..2b6409fec53f 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -191,13 +191,16 @@ config HAVE_KERNEL_LZO
@@ -630,7 +630,7 @@ index 0498af567..2b6409fec 100644
  	bool "None"
  	depends on HAVE_KERNEL_UNCOMPRESSED
 diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index 916b2f7f7..54f7b7eb5 100644
+index 916b2f7f7098..54f7b7eb580b 100644
 --- a/scripts/Makefile.lib
 +++ b/scripts/Makefile.lib
 @@ -413,6 +413,28 @@ quiet_cmd_xzkern = XZKERN  $@
@@ -663,10 +663,10 @@ index 916b2f7f7..54f7b7eb5 100644
  # ---------------------------------------------------------------------------
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 942a64023155844b1b6861826ec47f03dde11e2e Mon Sep 17 00:00:00 2001
+From 36535a152f75b4ed73b36ad7c3cdbf057700b247 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:37 -0700
 Subject: [PATCH 04/10] usr: add support for zstd compressed initramfs
@@ -697,7 +697,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  2 files changed, 21 insertions(+)
 
 diff --git a/usr/Kconfig b/usr/Kconfig
-index 96afb03b6..2599bc21c 100644
+index 96afb03b65f9..2599bc21c1b2 100644
 --- a/usr/Kconfig
 +++ b/usr/Kconfig
 @@ -100,6 +100,15 @@ config RD_LZ4
@@ -735,7 +735,7 @@ index 96afb03b6..2599bc21c 100644
  	bool "None"
  	help
 diff --git a/usr/Makefile b/usr/Makefile
-index c12e6b15c..b1a81a40e 100644
+index c12e6b15ce72..b1a81a40eab1 100644
 --- a/usr/Makefile
 +++ b/usr/Makefile
 @@ -15,6 +15,7 @@ compress-$(CONFIG_INITRAMFS_COMPRESSION_LZMA)	:= lzma
@@ -747,10 +747,10 @@ index c12e6b15c..b1a81a40e 100644
  obj-$(CONFIG_BLK_DEV_INITRD) := initramfs_data.o
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 45cb284a5748bfc666d14401f7b65001f1932791 Mon Sep 17 00:00:00 2001
+From e2721e62c409d3031be79574336eba36f277fff2 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:38 -0700
 Subject: [PATCH 05/10] x86: bump ZO_z_extra_bytes margin for zstd
@@ -775,7 +775,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/boot/header.S b/arch/x86/boot/header.S
-index 735ad7f21..6dbd7e9f7 100644
+index 735ad7f21ab0..6dbd7e9f74c9 100644
 --- a/arch/x86/boot/header.S
 +++ b/arch/x86/boot/header.S
 @@ -539,8 +539,14 @@ pref_address:		.quad LOAD_PHYSICAL_ADDR	# preferred load addr
@@ -795,10 +795,10 @@ index 735ad7f21..6dbd7e9f7 100644
  # define ZO_z_extract_offset	(ZO_z_output_len + ZO_z_extra_bytes - \
  				 ZO_z_input_len)
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 8e014658de2efea09fcb0bf7e9f880470ba5f700 Mon Sep 17 00:00:00 2001
+From 3838127e85f9c6a0e46e9405477faaeb3a4493f2 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:39 -0700
 Subject: [PATCH 06/10] x86: Add support for ZSTD compressed kernel
@@ -839,7 +839,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  6 files changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/Documentation/x86/boot.rst b/Documentation/x86/boot.rst
-index 5325c71ca..7fafc7ac0 100644
+index 5325c71ca877..7fafc7ac00d7 100644
 --- a/Documentation/x86/boot.rst
 +++ b/Documentation/x86/boot.rst
 @@ -782,9 +782,9 @@ Protocol:	2.08+
@@ -856,7 +856,7 @@ index 5325c71ca..7fafc7ac0 100644
  ============	==============
  Field name:	payload_length
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 883da0abf..4a64395bc 100644
+index 883da0abf779..4a64395bc35d 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
 @@ -188,6 +188,7 @@ config X86
@@ -868,7 +868,7 @@ index 883da0abf..4a64395bc 100644
  	select HAVE_KPROBES_ON_FTRACE
  	select HAVE_FUNCTION_ERROR_INJECTION
 diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 5a828fde7..c08714ae7 100644
+index be38af7bea89..51db73dcdd27 100644
 --- a/arch/x86/boot/compressed/Makefile
 +++ b/arch/x86/boot/compressed/Makefile
 @@ -26,7 +26,7 @@ OBJECT_FILES_NON_STANDARD	:= y
@@ -885,10 +885,10 @@ index 5a828fde7..c08714ae7 100644
  KBUILD_CFLAGS += $(call cc-option,-fmacro-prefix-map=$(srctree)/=)
  KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
 +KBUILD_CFLAGS += -D__DISABLE_EXPORTS
+ # Disable relocation relaxation in case the link is not PIE.
+ KBUILD_CFLAGS += $(call as-option,-Wa$(comma)-mrelax-relocations=no)
  
- KBUILD_AFLAGS  := $(KBUILD_CFLAGS) -D__ASSEMBLY__
- GCOV_PROFILE := n
-@@ -145,6 +146,8 @@ $(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y) FORCE
+@@ -147,6 +148,8 @@ $(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y) FORCE
  	$(call if_changed,lzo)
  $(obj)/vmlinux.bin.lz4: $(vmlinux.bin.all-y) FORCE
  	$(call if_changed,lz4)
@@ -897,7 +897,7 @@ index 5a828fde7..c08714ae7 100644
  
  suffix-$(CONFIG_KERNEL_GZIP)	:= gz
  suffix-$(CONFIG_KERNEL_BZIP2)	:= bz2
-@@ -152,6 +155,7 @@ suffix-$(CONFIG_KERNEL_LZMA)	:= lzma
+@@ -154,6 +157,7 @@ suffix-$(CONFIG_KERNEL_LZMA)	:= lzma
  suffix-$(CONFIG_KERNEL_XZ)	:= xz
  suffix-$(CONFIG_KERNEL_LZO) 	:= lzo
  suffix-$(CONFIG_KERNEL_LZ4) 	:= lz4
@@ -906,7 +906,7 @@ index 5a828fde7..c08714ae7 100644
  quiet_cmd_mkpiggy = MKPIGGY $@
        cmd_mkpiggy = $(obj)/mkpiggy $< > $@
 diff --git a/arch/x86/boot/compressed/kaslr.c b/arch/x86/boot/compressed/kaslr.c
-index d7408af55..004826918 100644
+index d7408af55738..0048269180d5 100644
 --- a/arch/x86/boot/compressed/kaslr.c
 +++ b/arch/x86/boot/compressed/kaslr.c
 @@ -19,13 +19,6 @@
@@ -924,7 +924,7 @@ index d7408af55..004826918 100644
  #include "error.h"
  #include "../string.h"
 diff --git a/arch/x86/boot/compressed/misc.c b/arch/x86/boot/compressed/misc.c
-index 9652d5c2a..39e592d0e 100644
+index 9652d5c2afda..39e592d0e0b4 100644
 --- a/arch/x86/boot/compressed/misc.c
 +++ b/arch/x86/boot/compressed/misc.c
 @@ -77,6 +77,10 @@ static int lines, cols;
@@ -939,7 +939,7 @@ index 9652d5c2a..39e592d0e 100644
   * NOTE: When adding a new decompressor, please update the analysis in
   * ../header.S.
 diff --git a/arch/x86/include/asm/boot.h b/arch/x86/include/asm/boot.h
-index 680c32036..9191280d9 100644
+index 680c320363db..9191280d9ea3 100644
 --- a/arch/x86/include/asm/boot.h
 +++ b/arch/x86/include/asm/boot.h
 @@ -24,9 +24,16 @@
@@ -962,10 +962,10 @@ index 680c32036..9191280d9 100644
  #endif
  
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 25252efde6631c8a0caee55a42e3cb5f3d98023c Mon Sep 17 00:00:00 2001
+From 0986bbe2847662693f13264024d059afee5bcd5b Mon Sep 17 00:00:00 2001
 From: Adam Borowski <kilobyte@angband.pl>
 Date: Thu, 30 Jul 2020 12:08:40 -0700
 Subject: [PATCH 07/10] .gitignore: add ZSTD-compressed files
@@ -982,7 +982,7 @@ Signed-off-by: Adam Borowski <kilobyte@angband.pl>
  1 file changed, 1 insertion(+)
 
 diff --git a/.gitignore b/.gitignore
-index d5f4804ed..162bd2b67 100644
+index d5f4804ed07c..162bd2b67bdf 100644
 --- a/.gitignore
 +++ b/.gitignore
 @@ -44,6 +44,7 @@
@@ -994,10 +994,10 @@ index d5f4804ed..162bd2b67 100644
  modules.builtin
  modules.order
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From e3a2eec01694a5a7cfa8c3fb0a561f9f74f3a21c Mon Sep 17 00:00:00 2001
+From 2b285090fd29e3bd844a042ba545059b4792e51c Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 30 Jul 2020 12:08:41 -0700
 Subject: [PATCH 08/10] Documentation: dontdiff: Add zstd compressed files
@@ -1011,7 +1011,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/Documentation/dontdiff b/Documentation/dontdiff
-index ef9519c32..e361fc95c 100644
+index ef9519c32c55..e361fc95ca29 100644
 --- a/Documentation/dontdiff
 +++ b/Documentation/dontdiff
 @@ -55,6 +55,7 @@
@@ -1023,10 +1023,10 @@ index ef9519c32..e361fc95c 100644
  *_vga16.c
  *~
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 00fb87500ed1919d6180a38b84c7a05c07738136 Mon Sep 17 00:00:00 2001
+From 19a504c2ae7f414a7fc7d1bc601d32cc6828a401 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 5 Aug 2020 16:41:38 -0800
 Subject: [PATCH 09/10] init: add support for zstd compressed modules
@@ -1038,10 +1038,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index ea4ced7f4..ee95c6137 100644
+index 42c91deecf4a..08a5f69b4ca4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1030,8 +1030,8 @@ endif # INSTALL_MOD_STRIP
+@@ -1025,8 +1025,8 @@ endif # INSTALL_MOD_STRIP
  export mod_strip_cmd
  
  # CONFIG_MODULE_COMPRESS, if defined, will cause module to be compressed
@@ -1052,7 +1052,7 @@ index ea4ced7f4..ee95c6137 100644
  
  mod_compress_cmd = true
  ifdef CONFIG_MODULE_COMPRESS
-@@ -1041,6 +1041,9 @@ ifdef CONFIG_MODULE_COMPRESS
+@@ -1036,6 +1036,9 @@ ifdef CONFIG_MODULE_COMPRESS
    ifdef CONFIG_MODULE_COMPRESS_XZ
      mod_compress_cmd = $(XZ) -f
    endif # CONFIG_MODULE_COMPRESS_XZ
@@ -1063,7 +1063,7 @@ index ea4ced7f4..ee95c6137 100644
  export mod_compress_cmd
  
 diff --git a/init/Kconfig b/init/Kconfig
-index 2b6409fec..43ed3fef3 100644
+index 2b6409fec53f..43ed3fef3d03 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -2186,8 +2186,8 @@ config MODULE_COMPRESS
@@ -1097,10 +1097,10 @@ index 2b6409fec..43ed3fef3 100644
  
  config MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
 
-From 0efde356e415597f2ea790859df485bddcc94d7f Mon Sep 17 00:00:00 2001
+From f5c0db4537f4f63ab93d7134759b58f6425a1252 Mon Sep 17 00:00:00 2001
 From: Arvind Sankar <nivedita@alum.mit.edu>
 Date: Tue, 4 Aug 2020 19:48:17 -0400
 Subject: [PATCH 10/10] x86/boot/compressed: Use builtin mem functions for
@@ -1154,7 +1154,7 @@ Tested-by: Nick Terrell <nickrterrell@gmail.com>
  2 files changed, 3 insertions(+), 9 deletions(-)
 
 diff --git a/arch/x86/boot/compressed/misc.c b/arch/x86/boot/compressed/misc.c
-index 39e592d0e..e478e40fb 100644
+index 39e592d0e0b4..e478e40fbe5a 100644
 --- a/arch/x86/boot/compressed/misc.c
 +++ b/arch/x86/boot/compressed/misc.c
 @@ -30,12 +30,9 @@
@@ -1173,7 +1173,7 @@ index 39e592d0e..e478e40fb 100644
  #define memmove		memmove
  
 diff --git a/arch/x86/boot/string.h b/arch/x86/boot/string.h
-index 995f7b7ad..a232da487 100644
+index 995f7b7ad512..a232da487cd2 100644
 --- a/arch/x86/boot/string.h
 +++ b/arch/x86/boot/string.h
 @@ -11,10 +11,7 @@ void *memcpy(void *dst, const void *src, size_t len);
@@ -1189,5 +1189,5 @@ index 995f7b7ad..a232da487 100644
  #define memset(d,c,l) __builtin_memset(d,c,l)
  #define memcmp	__builtin_memcmp
 -- 
-2.28.0.rc2.1.g3d20111cbd
+2.28.0.497.g54e85e7af1
 
