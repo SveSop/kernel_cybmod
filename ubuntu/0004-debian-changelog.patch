@@ -1,6 +1,6 @@
-From ff4f3b00b9bfc98ffdcbd1704e94e66ad90fabfa Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 26 Sep 2020 17:32:58 +0000
+From 2a12524491798bf7016c7a3d74091b58ac4bae3f Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 1 Oct 2020 12:35:41 -0400
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 12044 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index e4b0e69bb4bb..1d02124e18d6 100644
+index e4b0e69bb4bb..1568bc4f9191 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,12047 +1,6 @@
 -linux (5.8.0-20.21) groovy; urgency=medium
-+linux (5.8.12-050812.202009261732) groovy; urgency=low
++linux (5.8.13-050813.202010011235) groovy; urgency=low
  
 -  * groovy/linux: 5.8.0-20.21 -proposed tracker (LP: #1896668)
-+  Mainline build at commit: v5.8.12
++  Mainline build at commit: v5.8.13
  
 -  * Lenovo ThinkBook 14-IML Touchpad not showing up in /proc/bus/input/devices
 -    (LP: #1853277)
 -    - i2c: core: Call i2c_acpi_install_space_handler() before
 -      i2c_acpi_register_devices()
-+ -- Mainline Build <kernel@kathleen>  Sat, 26 Sep 2020 17:32:57 +0000
++ -- Mainline Build <kernel@tangerine>  Thu, 01 Oct 2020 12:35:41 -0400
  
 -  * Enable LTR for endpoints behind VMD (LP: #1896598)
 -    - SAUCE: PCI/ASPM: Enable LTR for endpoints behind VMD

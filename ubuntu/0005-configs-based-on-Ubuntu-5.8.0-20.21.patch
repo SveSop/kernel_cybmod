@@ -1,10 +1,10 @@
-From abf4f532d594e8f39ca8440ff1fac8c2bf519dda Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 26 Sep 2020 17:33:38 +0000
+From d2b72751ca3b1dd71642c2edc212d922af73703a Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (tangerine)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 1 Oct 2020 12:36:34 -0400
 Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-20.21)
 
 ---
- .../config/amd64/config.common.amd64          |  1 -
+ .../config/amd64/config.common.amd64          |  3 +-
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
  .../config/arm64/config.common.arm64          |  2 --
@@ -13,12 +13,21 @@ Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-20.21)
  debian.master/config/config.common.ubuntu     | 36 ++-----------------
  .../config/ppc64el/config.common.ppc64el      |  2 --
  .../config/s390x/config.common.s390x          |  1 -
- 9 files changed, 4 insertions(+), 44 deletions(-)
+ 9 files changed, 5 insertions(+), 45 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 2cb5795d06d5..90c825b7329c 100644
+index 2cb5795d06d5..5b8200df73ae 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
+@@ -60,7 +60,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-9ubuntu2) 10.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-11ubuntu1) 10.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ # CONFIG_CLOCK_THERMAL is not set
+ # CONFIG_CMA is not set
 @@ -186,7 +186,6 @@ CONFIG_HFSPLUS_FS=m
  CONFIG_HFS_FS=m
  CONFIG_HIBERNATION=y
