@@ -6,7 +6,7 @@ index 24a4c1b97..dee13f9d3 100644
  PHONY := __all
  __all:
  
-+CYBVERSION = -cybmod14
++CYBVERSION = -cybmod15
 +CYBNAME = PDS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +

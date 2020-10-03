@@ -20,6 +20,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0033 : Futex patchset  
 0035 : Zstd config patchset  
 0036 : Block patchset  
+0037 : MM patches  
 
 ubuntu : Ubuntu mainline kernel patchset  
 

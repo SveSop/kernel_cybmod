@@ -1,7 +1,7 @@
-From 6b3b2b23ab0c55c974916edfbbe1360e0e28db4d Mon Sep 17 00:00:00 2001
+From 64c27041ca6b7a867a9049d3a49358bdf4a90a13 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <admfrade@gmail.com>
 Date: Wed, 24 Oct 2018 16:58:52 -0300
-Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/18] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Alexandre Frade <admfrade@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index 84badf006..6a922bca9 100644
+index 84badf0..6a922bc 100644
 --- a/net/sched/Kconfig
 +++ b/net/sched/Kconfig
 @@ -471,6 +471,9 @@ choice
@@ -31,13 +31,13 @@ index 84badf006..6a922bca9 100644
  endif
  
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 5d0e0af475d2c46e66c6238ae06de235743b9f7b Mon Sep 17 00:00:00 2001
+From fc3b64040cba03b6dddba21ec503839cced99674 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/18] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -45,7 +45,7 @@ Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
-index 3a98439bb..6efc4f907 100644
+index 3a98439..6efc4f9 100644
 --- a/drivers/infiniband/core/addr.c
 +++ b/drivers/infiniband/core/addr.c
 @@ -820,6 +820,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
@@ -57,13 +57,13 @@ index 3a98439bb..6efc4f907 100644
  	int ret;
  
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 09926e7c01f34496e1f3c5cc16f5ff7aae225710 Mon Sep 17 00:00:00 2001
+From 3015890812edfad960798e43b86be905068e9cc9 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/16] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/18] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 7c7ad5fb8..e4e17ade5 100644
+index 0d81d8c..92d7b60 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -679,6 +679,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index 7c7ad5fb8..e4e17ade5 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 2c5b08c934944bf952789fd93bf16d458ceeb0b9 Mon Sep 17 00:00:00 2001
+From ee5de36773e6ed6aacf1f0feaa8a06047a4d267a Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/16] mm: Disable watermark boosting by default
+Subject: [PATCH 04/18] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -127,7 +127,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index d809242f6..9d90934ec 100644
+index 898ff44..0cadbf8 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -316,20 +316,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
@@ -152,13 +152,13 @@ index d809242f6..9d90934ec 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 4426a405abac805137c2e6f7845064a41c82ea74 Mon Sep 17 00:00:00 2001
+From a3cc496a5f5c590fca9321d319b1c136991fd18e Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/16] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/18] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -175,7 +175,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index f6f884970..c43fcd738 100644
+index 04ff9a0..8e42cc1 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
 @@ -701,6 +701,7 @@ typedef struct pglist_data {
@@ -187,7 +187,7 @@ index f6f884970..c43fcd738 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 9d90934ec..5994f25e4 100644
+index 0cadbf8..657b876 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -4506,6 +4506,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
@@ -238,10 +238,10 @@ index 9d90934ec..5994f25e4 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 749d239c6..2f7ec8221 100644
+index 8b97bc6..229c507 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3688,7 +3688,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3696,7 +3696,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		__fs_reclaim_release();
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
@@ -252,13 +252,13 @@ index 749d239c6..2f7ec8221 100644
  
  		/*
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 1443c6cf3e733cabe9878526eceb7ef78c3f3b92 Mon Sep 17 00:00:00 2001
+From 9d3e51b07f4984b6388cb7d2b633be0a9948aa7c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/16] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/18] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -270,7 +270,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 5994f25e4..7a663a71c 100644
+index 657b876..3e585ef 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -2473,9 +2473,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
@@ -289,13 +289,13 @@ index 5994f25e4..7a663a71c 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 3c5c3c93d84d6e77dc32214ef1a19e759cafc1c0 Mon Sep 17 00:00:00 2001
+From cd6a799ebdca30e5d6daf5b54eaeb5a1932ce6cb Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/16] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 07/18] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -312,7 +312,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  4 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index c43fcd738..f6f884970 100644
+index 8e42cc1..04ff9a0 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
 @@ -701,7 +701,6 @@ typedef struct pglist_data {
@@ -324,7 +324,7 @@ index c43fcd738..f6f884970 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/internal.h b/mm/internal.h
-index 9886db20d..aecb9df10 100644
+index 9886db2..aecb9df 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
 @@ -200,6 +200,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
@@ -336,7 +336,7 @@ index 9886db20d..aecb9df10 100644
  extern void zone_pcp_update(struct zone *zone);
  extern void zone_pcp_reset(struct zone *zone);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 7a663a71c..5212f50b7 100644
+index 3e585ef..5fb6a45 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -77,6 +77,8 @@
@@ -383,10 +383,10 @@ index 7a663a71c..5212f50b7 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 2f7ec8221..09a710c85 100644
+index 229c507..5b68205 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3689,7 +3689,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3697,7 +3697,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
  		if (ret || kthread_should_stop() ||
@@ -396,13 +396,13 @@ index 2f7ec8221..09a710c85 100644
  
  		/*
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 6c32dabd0564132d04e9346ad0b13a4f3e623e5c Mon Sep 17 00:00:00 2001
+From e7edbfa770c9c0e9224d50ef8aaf3ab098b9b43a Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/16] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 08/18] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -415,10 +415,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e4e17ade5..617a9379e 100644
+index 92d7b60..b7107ae 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -931,9 +931,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
+@@ -927,9 +927,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
  # Make sure -fstack-check isn't enabled (like gentoo apparently did)
  KBUILD_CFLAGS  += $(call cc-option,-fno-stack-check,)
  
@@ -429,13 +429,13 @@ index e4e17ade5..617a9379e 100644
  KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
  
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 61b660f1c226264355dac4be151f91d527528f54 Mon Sep 17 00:00:00 2001
+From d0a943e9da9f7dbea78651ff7cb901f7889c227e Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/16] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/18] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -487,7 +487,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index fb95fad81..c49741530 100644
+index fb95fad..c497415 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -3568,6 +3568,15 @@
@@ -507,7 +507,7 @@ index fb95fad81..c49741530 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index cc6e1a382..bd71923d3 100644
+index cc6e1a3..bd71923 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -3557,6 +3557,106 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
@@ -627,13 +627,13 @@ index cc6e1a382..bd71923d3 100644
  };
  
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 518cc0214f1300d1902e950a410e938523d7fadb Mon Sep 17 00:00:00 2001
+From 04f8970f44951ccea6d4a94462574576c803ac2c Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Tue, 16 Jun 2020 13:45:27 -0700
-Subject: [PATCH 10/16] mm: Proactive compaction
+Subject: [PATCH 10/18] mm: Proactive compaction
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -828,7 +828,7 @@ CC: Linux API <linux-api@vger.kernel.org>
  6 files changed, 223 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/admin-guide/sysctl/vm.rst b/Documentation/admin-guide/sysctl/vm.rst
-index d46d5b701..4b7c49619 100644
+index d46d5b7..4b7c496 100644
 --- a/Documentation/admin-guide/sysctl/vm.rst
 +++ b/Documentation/admin-guide/sysctl/vm.rst
 @@ -119,6 +119,21 @@ all zones are compacted such that free memory is available in contiguous
@@ -854,7 +854,7 @@ index d46d5b701..4b7c49619 100644
  compact_unevictable_allowed
  ===========================
 diff --git a/include/linux/compaction.h b/include/linux/compaction.h
-index 6fa0eea3f..7a242d464 100644
+index 6fa0eea..7a242d4 100644
 --- a/include/linux/compaction.h
 +++ b/include/linux/compaction.h
 @@ -85,11 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
@@ -872,7 +872,7 @@ index 6fa0eea3f..7a242d464 100644
  extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
  		unsigned int order, unsigned int alloc_flags,
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index db1ce7af2..58b0a59c9 100644
+index db1ce7a..58b0a59 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
 @@ -2830,6 +2830,15 @@ static struct ctl_table vm_table[] = {
@@ -892,7 +892,7 @@ index db1ce7af2..58b0a59c9 100644
  		.procname	= "extfrag_threshold",
  		.data		= &sysctl_extfrag_threshold,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 86375605f..544a98811 100644
+index 8637560..544a988 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -50,6 +50,24 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -1136,7 +1136,7 @@ index 86375605f..544a98811 100644
  
  	return 0;
 diff --git a/mm/internal.h b/mm/internal.h
-index aecb9df10..26f39eeaa 100644
+index aecb9df..26f39ee 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
 @@ -240,6 +240,7 @@ struct compact_control {
@@ -1148,7 +1148,7 @@ index aecb9df10..26f39eeaa 100644
  	bool contended;			/* Signal lock or sched contention */
  	bool rescan;			/* Rescanning the same pageblock */
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 7fb01d225..2a25aac43 100644
+index 7fb01d2..2a25aac 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1074,6 +1074,24 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -1177,13 +1177,13 @@ index 7fb01d225..2a25aac43 100644
  int fragmentation_index(struct zone *zone, unsigned int order)
  {
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 5ca572c30c809cd8153d838eb43a1cae0b02ff00 Mon Sep 17 00:00:00 2001
+From 9c07fc4a7f20e98a440d7f25f2b88fee84fa0962 Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Wed, 17 Jun 2020 18:03:17 -0700
-Subject: [PATCH 11/16] mm: Use unsigned types for fragmentation score
+Subject: [PATCH 11/18] mm: Use unsigned types for fragmentation score
 
 Proactive compaction uses per-node/zone "fragmentation score" which
 is always in range [0, 100], so use unsigned type of these scores
@@ -1198,7 +1198,7 @@ Signed-off-by: Nitin Gupta <nigupta@nvidia.com>
  4 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/include/linux/compaction.h b/include/linux/compaction.h
-index 7a242d464..25a521d29 100644
+index 7a242d4..25a521d 100644
 --- a/include/linux/compaction.h
 +++ b/include/linux/compaction.h
 @@ -85,13 +85,13 @@ static inline unsigned long compact_gap(unsigned int order)
@@ -1218,7 +1218,7 @@ index 7a242d464..25a521d29 100644
  extern enum compact_result try_to_compact_pages(gfp_t gfp_mask,
  		unsigned int order, unsigned int alloc_flags,
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 58b0a59c9..40180cdde 100644
+index 58b0a59..40180cd 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
 @@ -2833,7 +2833,7 @@ static struct ctl_table vm_table[] = {
@@ -1231,7 +1231,7 @@ index 58b0a59c9..40180cdde 100644
  		.proc_handler	= proc_dointvec_minmax,
  		.extra1		= SYSCTL_ZERO,
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 544a98811..2ca208eb6 100644
+index 544a988..2ca208e 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -53,7 +53,7 @@ static inline void count_compact_events(enum vm_event_item item, long delta)
@@ -1296,7 +1296,7 @@ index 544a98811..2ca208eb6 100644
  /*
   * This is the entry point for compacting all nodes via
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 2a25aac43..07bea57b9 100644
+index 2a25aac..07bea57 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1079,7 +1079,7 @@ static int __fragmentation_index(unsigned int order, struct contig_page_info *in
@@ -1309,13 +1309,13 @@ index 2a25aac43..07bea57b9 100644
  	struct contig_page_info info;
  
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 041d3188cfe60487068e460f25347438518b9037 Mon Sep 17 00:00:00 2001
+From b516776ca44dda0bc151ea5ee53e3e1c52a7fd2a Mon Sep 17 00:00:00 2001
 From: Nitin Gupta <nigupta@nvidia.com>
 Date: Mon, 22 Jun 2020 23:45:44 -0700
-Subject: [PATCH 12/16] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
+Subject: [PATCH 12/18] mm: Fix compile error due to COMPACTION_HPAGE_ORDER
 
 Fix compile error when COMPACTION_HPAGE_ORDER is assigned
 to HUGETLB_PAGE_ORDER. The correct way to check if this
@@ -1330,7 +1330,7 @@ Tested-by: Nathan Chancellor <natechancellor@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/compaction.c b/mm/compaction.c
-index 2ca208eb6..b7d433f17 100644
+index 2ca208e..b7d433f 100644
 --- a/mm/compaction.c
 +++ b/mm/compaction.c
 @@ -62,7 +62,7 @@ static const unsigned int HPAGE_FRAG_CHECK_INTERVAL_MSEC = 500;
@@ -1343,13 +1343,13 @@ index 2ca208eb6..b7d433f17 100644
  #else
  #define COMPACTION_HPAGE_ORDER	(PMD_SHIFT - PAGE_SHIFT)
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From ac93ee67567796860e1c3704cb5ead21d037bd16 Mon Sep 17 00:00:00 2001
+From e91e52bb0ea21ea9f4270bf9f1c27b67384677d1 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 15 Jul 2020 10:54:43 +0200
-Subject: [PATCH 13/16] net: sched: Allow changing default qdisc to FQ-PIE
+Subject: [PATCH 13/18] net: sched: Allow changing default qdisc to FQ-PIE
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1357,7 +1357,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index 6a922bca9..1fcfd47d1 100644
+index 6a922bc..1fcfd47 100644
 --- a/net/sched/Kconfig
 +++ b/net/sched/Kconfig
 @@ -468,6 +468,9 @@ choice
@@ -1379,13 +1379,13 @@ index 6a922bca9..1fcfd47d1 100644
  	default "cake" if DEFAULT_CAKE
  	default "pfifo_fast"
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 92c75ec7a8428f611d560d2bae392b2138d4e414 Mon Sep 17 00:00:00 2001
+From 4387fe2c6f4d9d0baae431d83b10c29b7a9a1b9f Mon Sep 17 00:00:00 2001
 From: Harsha Priya <harshapriya.n@intel.com>
 Date: Mon, 6 Jul 2020 13:53:17 -0700
-Subject: [PATCH 14/16] ALSA: hda/hdmi: Add Intel silent stream support
+Subject: [PATCH 14/18] ALSA: hda/hdmi: Add Intel silent stream support
 
 External HDMI receivers have analog circuitry that needs to be powered-on
 when exiting standby, and a mechanism to detect PCM v. IEC61937 data.
@@ -1420,7 +1420,7 @@ Signed-off-by: Takashi Iwai <tiwai@suse.de>
  2 files changed, 78 insertions(+)
 
 diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
-index 7ba542e45..84aa04ecd 100644
+index 7ba542e..84aa04e 100644
 --- a/sound/pci/hda/Kconfig
 +++ b/sound/pci/hda/Kconfig
 @@ -230,6 +230,20 @@ config SND_HDA_POWER_SAVE_DEFAULT
@@ -1445,7 +1445,7 @@ index 7ba542e45..84aa04ecd 100644
  
  endmenu
 diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
-index f0c6d2907..b8c8490e5 100644
+index 419f012..4020500 100644
 --- a/sound/pci/hda/patch_hdmi.c
 +++ b/sound/pci/hda/patch_hdmi.c
 @@ -42,6 +42,11 @@ static bool enable_acomp = true;
@@ -1541,7 +1541,7 @@ index f0c6d2907..b8c8490e5 100644
  }
  
  static void hdmi_present_sense(struct hdmi_spec_per_pin *per_pin, int repoll)
-@@ -2817,6 +2874,13 @@ static int intel_hsw_common_init(struct hda_codec *codec, hda_nid_t vendor_nid,
+@@ -2818,6 +2875,13 @@ static int intel_hsw_common_init(struct hda_codec *codec, hda_nid_t vendor_nid,
  	spec->ops.setup_stream = i915_hsw_setup_stream;
  	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
  
@@ -1556,13 +1556,13 @@ index f0c6d2907..b8c8490e5 100644
  }
  
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From f28ab3975bf2b272e9927c1818c7efd54951a05a Mon Sep 17 00:00:00 2001
+From d5286ea5ca78b0a7775870f332e18bd430891023 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 15/16] ZEN: Add OpenRGB patches
+Subject: [PATCH 15/18] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1602,7 +1602,7 @@ Date:   Wed Jun 17 14:24:20 2020 -0500
  create mode 100644 drivers/i2c/busses/i2c-nct6775.c
 
 diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 735bf31a3..3bf00363c 100644
+index 735bf31..3bf0036 100644
 --- a/drivers/i2c/busses/Kconfig
 +++ b/drivers/i2c/busses/Kconfig
 @@ -217,6 +217,15 @@ config I2C_CHT_WC
@@ -1622,7 +1622,7 @@ index 735bf31a3..3bf00363c 100644
  	tristate "Nvidia nForce2, nForce3 and nForce4"
  	depends on PCI
 diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-index 306d5dc3f..7e75d45c6 100644
+index 306d5dc..7e75d45 100644
 --- a/drivers/i2c/busses/Makefile
 +++ b/drivers/i2c/busses/Makefile
 @@ -17,6 +17,7 @@ obj-$(CONFIG_I2C_CHT_WC)	+= i2c-cht-wc.o
@@ -1635,7 +1635,7 @@ index 306d5dc3f..7e75d45c6 100644
  obj-$(CONFIG_I2C_NVIDIA_GPU)	+= i2c-nvidia-gpu.o
 diff --git a/drivers/i2c/busses/i2c-nct6775.c b/drivers/i2c/busses/i2c-nct6775.c
 new file mode 100644
-index 000000000..0462f0952
+index 0000000..0462f09
 --- /dev/null
 +++ b/drivers/i2c/busses/i2c-nct6775.c
 @@ -0,0 +1,647 @@
@@ -2287,7 +2287,7 @@ index 000000000..0462f0952
 +module_init(i2c_nct6775_init);
 +module_exit(i2c_nct6775_exit);
 diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
-index 69740a4ff..b70738fbe 100644
+index 69740a4..b70738f 100644
 --- a/drivers/i2c/busses/i2c-piix4.c
 +++ b/drivers/i2c/busses/i2c-piix4.c
 @@ -467,11 +467,11 @@ static int piix4_transaction(struct i2c_adapter *piix4_adapter)
@@ -2305,13 +2305,13 @@ index 69740a4ff..b70738fbe 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From c765b066e7585e569217bf19b11c38578fd17803 Mon Sep 17 00:00:00 2001
+From 477ac8f6d017e14673fd9116d4d0ae4d53e16679 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 31 Aug 2020 14:54:13 +0200
-Subject: [PATCH 16/16] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 16/18] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -2333,7 +2333,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  14 files changed, 209 insertions(+), 35 deletions(-)
 
 diff --git a/fs/block_dev.c b/fs/block_dev.c
-index 0ae656e02..c431dd896 100644
+index 0ae656e..c431dd8 100644
 --- a/fs/block_dev.c
 +++ b/fs/block_dev.c
 @@ -79,7 +79,7 @@ static void kill_bdev(struct block_device *bdev)
@@ -2346,7 +2346,7 @@ index 0ae656e02..c431dd896 100644
  
  	invalidate_bh_lrus();
 diff --git a/fs/dax.c b/fs/dax.c
-index 11b16729b..80f96daab 100644
+index 11b1672..80f96da 100644
 --- a/fs/dax.c
 +++ b/fs/dax.c
 @@ -478,9 +478,11 @@ static void *grab_mapping_entry(struct xa_state *xas,
@@ -2411,7 +2411,7 @@ index 11b16729b..80f96daab 100644
  }
  
 diff --git a/fs/drop_caches.c b/fs/drop_caches.c
-index f00fcc4a4..20e845ff4 100644
+index f00fcc4..20e845f 100644
 --- a/fs/drop_caches.c
 +++ b/fs/drop_caches.c
 @@ -27,7 +27,7 @@ static void drop_pagecache_sb(struct super_block *sb, void *unused)
@@ -2424,7 +2424,7 @@ index f00fcc4a4..20e845ff4 100644
  			continue;
  		}
 diff --git a/fs/inode.c b/fs/inode.c
-index 72c4c347a..edb37276d 100644
+index 72c4c34..edb3727 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
 @@ -431,26 +431,101 @@ static void inode_lru_list_add(struct inode *inode)
@@ -2580,7 +2580,7 @@ index 72c4c347a..edb37276d 100644
  
  	WARN_ON(inode->i_state & I_NEW);
 diff --git a/fs/internal.h b/fs/internal.h
-index 9b863a7bd..1c8abce4a 100644
+index 9b863a7..1c8abce 100644
 --- a/fs/internal.h
 +++ b/fs/internal.h
 @@ -136,7 +136,7 @@ extern int vfs_open(const struct path *, struct file *);
@@ -2593,7 +2593,7 @@ index 9b863a7bd..1c8abce4a 100644
  
  /*
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index ac1e89872..fa8f41c07 100644
+index ac1e898..fa8f41c 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -603,6 +603,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
@@ -2642,7 +2642,7 @@ index ac1e89872..fa8f41c07 100644
  
  #ifdef CONFIG_BLOCK
 diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index cf2468da6..22920afd3 100644
+index cf2468d..22920af 100644
 --- a/include/linux/pagemap.h
 +++ b/include/linux/pagemap.h
 @@ -650,7 +650,7 @@ int add_to_page_cache_locked(struct page *page, struct address_space *mapping,
@@ -2655,7 +2655,7 @@ index cf2468da6..22920afd3 100644
  void delete_from_page_cache_batch(struct address_space *mapping,
  				  struct pagevec *pvec);
 diff --git a/include/linux/vm_event_item.h b/include/linux/vm_event_item.h
-index 24fc7c3ae..5d0cdcaa8 100644
+index 24fc7c3..5d0cdca 100644
 --- a/include/linux/vm_event_item.h
 +++ b/include/linux/vm_event_item.h
 @@ -42,7 +42,8 @@ enum vm_event_item { PGPGIN, PGPGOUT, PSWPIN, PSWPOUT,
@@ -2669,7 +2669,7 @@ index 24fc7c3ae..5d0cdcaa8 100644
  		PAGEOUTRUN, PGROTATED,
  		DROP_PAGECACHE, DROP_SLAB,
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 385759c4c..dedc10f64 100644
+index 385759c..dedc10f 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -116,8 +116,8 @@
@@ -2803,10 +2803,10 @@ index 385759c4c..dedc10f64 100644
  error:
  	page->mapping = NULL;
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 78c84bee7..23a2df809 100644
+index 74300e3..35917f8 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2430,7 +2430,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
+@@ -2434,7 +2434,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
  		/* Some pages can be beyond i_size: drop them from page cache */
  		if (head[i].index >= end) {
  			ClearPageDirty(head + i);
@@ -2817,7 +2817,7 @@ index 78c84bee7..23a2df809 100644
  				shmem_uncharge(head->mapping->host, 1);
  			put_page(head + i);
 diff --git a/mm/truncate.c b/mm/truncate.c
-index dd9ebc1da..8fb6c2f76 100644
+index dd9ebc1..8fb6c2f 100644
 --- a/mm/truncate.c
 +++ b/mm/truncate.c
 @@ -31,24 +31,31 @@
@@ -2924,7 +2924,7 @@ index dd9ebc1da..8fb6c2f76 100644
  
  	pagevec_init(&pvec);
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 09a710c85..1724c2a25 100644
+index 5b68205..9b3d970 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -908,6 +908,7 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
@@ -2950,7 +2950,7 @@ index 09a710c85..1724c2a25 100644
  			freepage(page);
  	}
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 07bea57b9..95e17b9d1 100644
+index 07bea57..95e17b9 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1229,9 +1229,11 @@ const char * const vmstat_text[] = {
@@ -2967,7 +2967,7 @@ index 07bea57b9..95e17b9d1 100644
  	"kswapd_high_wmark_hit_quickly",
  	"pageoutrun",
 diff --git a/mm/workingset.c b/mm/workingset.c
-index 50b7937ba..88482626f 100644
+index 50b7937..8848262 100644
 --- a/mm/workingset.c
 +++ b/mm/workingset.c
 @@ -510,6 +510,7 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
@@ -2996,5 +2996,139 @@ index 50b7937ba..88482626f 100644
  out:
  	cond_resched();
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
+
+
+From 0bdaaa8472ca6b9a5da305733bb045920f7d4d65 Mon Sep 17 00:00:00 2001
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Date: Sun, 22 Mar 2020 16:57:06 -0400
+Subject: [PATCH 18/18] scsi: sd: Optimal I/O size should be a multiple of
+ reported granularity
+
+Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
+physical block size") validated the reported optimal I/O size against the
+physical block size to overcome problems with devices reporting nonsensical
+transfer sizes.
+
+However, some devices claim conformity to older SCSI versions that predate
+the physical block size being reported. Other devices do not report a
+physical block size at all. We need to be able to validate the optimal I/O
+size on those devices as well.
+
+Many devices report an OPTIMAL TRANSFER LENGTH GRANULARITY in the same VPD
+page as the OPTIMAL TRANSFER LENGTH. Use this value to validate the optimal
+I/O size. Also check that the reported granularity is a multiple of the
+physical block size, if supported.
+
+Link: https://lore.kernel.org/r/33fb522e-4f61-1b76-914f-c9e6a3553c9b@gmail.com
+Reported-by: Bernhard Sulzer <micraft.b@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+---
+ drivers/scsi/sd.c | 43 +++++++++++++++++++++++++++++++++++++++----
+ drivers/scsi/sd.h |  1 +
+ 2 files changed, 40 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index d90feff..685bdc1 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -2881,7 +2881,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
+  */
+ static void sd_read_block_limits(struct scsi_disk *sdkp)
+ {
+-	unsigned int sector_sz = sdkp->device->sector_size;
+ 	const int vpd_len = 64;
+ 	unsigned char *buffer = kmalloc(vpd_len, GFP_KERNEL);
+ 
+@@ -2890,9 +2889,7 @@ static void sd_read_block_limits(struct scsi_disk *sdkp)
+ 	    scsi_get_vpd_page(sdkp->device, 0xb0, buffer, vpd_len))
+ 		goto out;
+ 
+-	blk_queue_io_min(sdkp->disk->queue,
+-			 get_unaligned_be16(&buffer[6]) * sector_sz);
+-
++	sdkp->min_xfer_blocks = get_unaligned_be16(&buffer[6]);
+ 	sdkp->max_xfer_blocks = get_unaligned_be32(&buffer[8]);
+ 	sdkp->opt_xfer_blocks = get_unaligned_be32(&buffer[12]);
+ 
+@@ -3062,6 +3059,29 @@ static void sd_read_security(struct scsi_disk *sdkp, unsigned char *buffer)
+ 		sdkp->security = 1;
+ }
+ 
++static bool sd_validate_min_xfer_size(struct scsi_disk *sdkp)
++{
++	struct scsi_device *sdp = sdkp->device;
++	unsigned int min_xfer_bytes =
++		logical_to_bytes(sdp, sdkp->min_xfer_blocks);
++
++	if (sdkp->min_xfer_blocks == 0)
++		return false;
++
++	if (min_xfer_bytes & (sdkp->physical_block_size - 1)) {
++		sd_first_printk(KERN_WARNING, sdkp,
++				"Preferred minimum I/O size %u bytes not a " \
++				"multiple of physical block size (%u bytes)\n",
++				min_xfer_bytes, sdkp->physical_block_size);
++		sdkp->min_xfer_blocks = 0;
++		return false;
++	}
++
++	sd_first_printk(KERN_INFO, sdkp, "Preferred minimum I/O size %u bytes\n",
++			min_xfer_bytes);
++	return true;
++}
++
+ /*
+  * Determine the device's preferred I/O size for reads and writes
+  * unless the reported value is unreasonably small, large, not a
+@@ -3073,6 +3093,8 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+ 	struct scsi_device *sdp = sdkp->device;
+ 	unsigned int opt_xfer_bytes =
+ 		logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
++	unsigned int min_xfer_bytes =
++		logical_to_bytes(sdp, sdkp->min_xfer_blocks);
+ 
+ 	if (sdkp->opt_xfer_blocks == 0)
+ 		return false;
+@@ -3109,6 +3131,15 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+ 		return false;
+ 	}
+ 
++	if (min_xfer_bytes && opt_xfer_bytes & (min_xfer_bytes - 1)) {
++		sd_first_printk(KERN_WARNING, sdkp,
++				"Optimal transfer size %u bytes not a " \
++				"multiple of preferred minimum block " \
++				"size (%u bytes)\n",
++				opt_xfer_bytes, min_xfer_bytes);
++		return false;
++	}
++
+ 	sd_first_printk(KERN_INFO, sdkp, "Optimal transfer size %u bytes\n",
+ 			opt_xfer_bytes);
+ 	return true;
+@@ -3192,6 +3223,10 @@ static int sd_revalidate_disk(struct gendisk *disk)
+ 	dev_max = min_not_zero(dev_max, sdkp->max_xfer_blocks);
+ 	q->limits.max_dev_sectors = logical_to_sectors(sdp, dev_max);
+ 
++	if (sd_validate_min_xfer_size(sdkp))
++		blk_queue_io_min(sdkp->disk->queue,
++				 logical_to_bytes(sdp, sdkp->min_xfer_blocks));
++
+ 	if (sd_validate_opt_xfer_size(sdkp, dev_max)) {
+ 		q->limits.io_opt = logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
+ 		rw_max = logical_to_sectors(sdp, sdkp->opt_xfer_blocks);
+diff --git a/drivers/scsi/sd.h b/drivers/scsi/sd.h
+index 3a74f4b..8eda92f 100644
+--- a/drivers/scsi/sd.h
++++ b/drivers/scsi/sd.h
+@@ -88,6 +88,7 @@ struct scsi_disk {
+ #endif
+ 	atomic_t	openers;
+ 	sector_t	capacity;	/* size in logical blocks */
++	u32		min_xfer_blocks;
+ 	u32		max_xfer_blocks;
+ 	u32		opt_xfer_blocks;
+ 	u32		max_ws_blocks;
+-- 
+2.28.0.585.ge1cfff6765
 

@@ -1,7 +1,7 @@
-From 74a2e36fdbb1a136aad5dc89133feeb425df32a4 Mon Sep 17 00:00:00 2001
+From fff1bfa7d31708dd9d3631aa5c8dd1baf1cacac1 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
-Subject: [PATCH 01/12] block, Kconfig.iosched: set default value of
+Subject: [PATCH 01/13] block, Kconfig.iosched: set default value of
  IOSCHED_BFQ to yes
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -10,7 +10,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index 2f2158e05..e58b2953a 100644
+index 2f2158e..e58b295 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -5,13 +5,11 @@ menu "IO Schedulers"
@@ -36,13 +36,13 @@ index 2f2158e05..e58b2953a 100644
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From f770133396af012a8f6398003f1cdb6123ea173e Mon Sep 17 00:00:00 2001
+From 26e54a7e73878197e0d2a1be093c834f83454961 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
-Subject: [PATCH 02/12] block: Fix depends for BLK_DEV_ZONED
+Subject: [PATCH 02/13] block: Fix depends for BLK_DEV_ZONED
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -50,7 +50,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index 9357d7302..badb4f0a7 100644
+index 9357d73..badb4f0 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
 @@ -83,7 +83,7 @@ config BLK_DEV_INTEGRITY_T10
@@ -63,13 +63,13 @@ index 9357d7302..badb4f0a7 100644
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC host-managed and host-aware zoned block devices.
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From c6e2fbe7d342d27f52ce8874bc572d3ca6716c29 Mon Sep 17 00:00:00 2001
+From c57d427a4a328cfdbb3fb7f45a99d77e68470b3d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 25 Nov 2019 13:45:35 +0100
-Subject: [PATCH 03/12] block: set rq_affinity = 2 for full multithreading I/O
+Subject: [PATCH 03/13] block: set rq_affinity = 2 for full multithreading I/O
  requests
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -78,7 +78,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 57241417f..69d21c341 100644
+index 5724141..69d21c3 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
 @@ -620,7 +620,8 @@ struct request_queue {
@@ -92,13 +92,13 @@ index 57241417f..69d21c341 100644
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
  void blk_queue_flag_clear(unsigned int flag, struct request_queue *q);
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 1727249a9248af19bcb4302bc4d1ebb5022ab077 Mon Sep 17 00:00:00 2001
+From cba4ffa99db7f257ef5ed0422fa82c9d13a15051 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 3 Jul 2020 12:58:15 +0200
-Subject: [PATCH 04/12] block: Add CONFIG to rename the mq-deadline scheduler
+Subject: [PATCH 04/13] block: Add CONFIG to rename the mq-deadline scheduler
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -108,7 +108,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  3 files changed, 17 insertions(+)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index e58b2953a..9e5a3c5c6 100644
+index e58b295..9e5a3c5 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -8,6 +8,15 @@ config MQ_IOSCHED_DEADLINE
@@ -128,7 +128,7 @@ index e58b2953a..9e5a3c5c6 100644
  	tristate "Kyber I/O scheduler"
  	help
 diff --git a/block/elevator.c b/block/elevator.c
-index 4eab3d70e..6dc3ea822 100644
+index 4eab3d7..6dc3ea8 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -631,7 +631,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
@@ -144,7 +144,7 @@ index 4eab3d70e..6dc3ea822 100644
  
  /*
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index b57470e15..8303fdd12 100644
+index b57470e..8303fdd 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
 @@ -792,8 +792,12 @@ static struct elevator_type mq_deadline = {
@@ -161,13 +161,13 @@ index b57470e15..8303fdd12 100644
  	.elevator_owner = THIS_MODULE,
  };
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From e053177ed5124acf9aa12bb1810e9f4ad3623cbe Mon Sep 17 00:00:00 2001
+From d04430b83de2ab111810496eb3ce2664ca30be51 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:27 +0000
-Subject: [PATCH 05/12] block: bfq-iosched: fix duplicated word
+Subject: [PATCH 05/13] block: bfq-iosched: fix duplicated word
 
 Change "at at" to "at a".
 
@@ -179,7 +179,7 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 50c8f034c..a4c0bec92 100644
+index caa4fa7..ee767fa 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -4714,7 +4714,7 @@ static struct request *__bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
@@ -192,13 +192,13 @@ index 50c8f034c..a4c0bec92 100644
  	 */
  	if (bfqd->strict_guarantees && bfqd->rq_in_driver > 0)
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From ce39d4367ae682ee604dbc96d0d4bfe08e90b364 Mon Sep 17 00:00:00 2001
+From 68971cfe88e41d7da4a374a1d72d21b32fb771a9 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:28 +0000
-Subject: [PATCH 06/12] block: bio: delete duplicated words
+Subject: [PATCH 06/13] block: bio: delete duplicated words
 
 Drop the repeated words "a" and "the".
 
@@ -210,7 +210,7 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/block/bio.c b/block/bio.c
-index a7366c02c..576c34361 100644
+index eac129f..a74c2ed 100644
 --- a/block/bio.c
 +++ b/block/bio.c
 @@ -860,7 +860,7 @@ EXPORT_SYMBOL(bio_add_pc_page);
@@ -222,7 +222,7 @@ index a7366c02c..576c34361 100644
   * page size.
   *
   * Warn if (@len, @off) crosses pages in case that @same_page is true.
-@@ -986,7 +986,7 @@ static int __bio_iov_bvec_add_pages(struct bio *bio, struct iov_iter *iter)
+@@ -988,7 +988,7 @@ static int __bio_iov_bvec_add_pages(struct bio *bio, struct iov_iter *iter)
   * Pins pages from *iter and appends them to @bio's bvec array. The
   * pages will have to be released using put_page() when done.
   * For multi-segment *iter, this function only adds pages from the
@@ -232,13 +232,13 @@ index a7366c02c..576c34361 100644
  static int __bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter)
  {
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From e29e4fb05b7bfa33b360b005756efeeebddb20a2 Mon Sep 17 00:00:00 2001
+From a02eecc39b143a91743cde04ca5d24e5c19d58b0 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:29 +0000
-Subject: [PATCH 07/12] block: elevator: delete duplicated word and fix typos
+Subject: [PATCH 07/13] block: elevator: delete duplicated word and fix typos
 
 Drop the repeated word "the".
 Fix typos of "features" and "specified".
@@ -251,7 +251,7 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index 6dc3ea822..0a55c7aa9 100644
+index 6dc3ea8..0a55c7a 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -95,8 +95,8 @@ static inline bool elv_support_features(unsigned int elv_features,
@@ -266,13 +266,13 @@ index 6dc3ea822..0a55c7aa9 100644
  static bool elevator_match(const struct elevator_type *e, const char *name,
  			   unsigned int required_features)
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 8ab147c818298e96aba2c35291a15d113f5a1792 Mon Sep 17 00:00:00 2001
+From d0daae3661d7d0b89eeca09e9c8bf47f527185f1 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:31 +0000
-Subject: [PATCH 08/12] block: blk-mq: delete duplicated word
+Subject: [PATCH 08/13] block: blk-mq: delete duplicated word
 
 Drop the repeated word "the".
 
@@ -284,7 +284,7 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 4e0d173be..e15bade3c 100644
+index a366726..bab5cc3 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
 @@ -394,7 +394,7 @@ static struct request *__blk_mq_alloc_request(struct blk_mq_alloc_data *data)
@@ -297,13 +297,13 @@ index 4e0d173be..e15bade3c 100644
  		msleep(3);
  		goto retry;
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From caff5a66144b17b98332dfe2ccfad893eca697cf Mon Sep 17 00:00:00 2001
+From b84681c98cec91eb27b968889a5f6793210af07e Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:32 +0000
-Subject: [PATCH 09/12] block: blk-mq-sched: delete duplicated word
+Subject: [PATCH 09/13] block: blk-mq-sched: delete duplicated word
 
 Drop the repeated word "to".
 
@@ -315,10 +315,10 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index fdcc2c1dd..7634413ce 100644
+index fd850d9..4ef6470 100644
 --- a/block/blk-mq-sched.c
 +++ b/block/blk-mq-sched.c
-@@ -153,7 +153,7 @@ static struct blk_mq_ctx *blk_mq_next_ctx(struct blk_mq_hw_ctx *hctx,
+@@ -162,7 +162,7 @@ static struct blk_mq_ctx *blk_mq_next_ctx(struct blk_mq_hw_ctx *hctx,
   * restart queue if .get_budget() returns BLK_STS_NO_RESOURCE.
   *
   * Returns -EAGAIN if hctx->dispatch was found non-empty and run_work has to
@@ -328,13 +328,13 @@ index fdcc2c1dd..7634413ce 100644
  static int blk_mq_do_dispatch_ctx(struct blk_mq_hw_ctx *hctx)
  {
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 2b06e8499bd6284c5e763caf278740c9b425dab9 Mon Sep 17 00:00:00 2001
+From 63dbcca4bc25e74c76b071fe2ba9ef5eeb32b309 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap () infradead ! org>
 Date: Fri, 31 Jul 2020 01:42:33 +0000
-Subject: [PATCH 10/12] block: blk-timeout: delete duplicated word
+Subject: [PATCH 10/13] block: blk-timeout: delete duplicated word
 
 Drop the repeated word "request".
 Change to the correct kernel-doc notation for function name separtor.
@@ -347,7 +347,7 @@ Cc: linux-block@vger.kernel.org
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/blk-timeout.c b/block/blk-timeout.c
-index 8aa68fae9..964c6cdfb 100644
+index 8aa68fa..964c6cd 100644
 --- a/block/blk-timeout.c
 +++ b/block/blk-timeout.c
 @@ -70,7 +70,7 @@ ssize_t part_timeout_store(struct device *dev, struct device_attribute *attr,
@@ -360,13 +360,13 @@ index 8aa68fae9..964c6cdfb 100644
   *
   * This function requests that the block layer start recovery for the
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From 603f0e4f92177c7dc352cc4f3aa9b42eedda1adc Mon Sep 17 00:00:00 2001
+From c4ac955bdd7ea4d08aadb98e7d2e160d25f9a207 Mon Sep 17 00:00:00 2001
 From: Miaohe Lin <linmiaohe () huawei ! com>
 Date: Wed, 19 Aug 2020 08:50:44 +0000
-Subject: [PATCH 11/12] block: Convert to use the preferred fallthrough macro
+Subject: [PATCH 11/13] block: Convert to use the preferred fallthrough macro
 
 Convert the uses of fallthrough comments to fallthrough macro.
 
@@ -380,7 +380,7 @@ Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
  4 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/block/badblocks.c b/block/badblocks.c
-index 2e5f5697d..d39056630 100644
+index 2e5f569..d390566 100644
 --- a/block/badblocks.c
 +++ b/block/badblocks.c
 @@ -525,7 +525,7 @@ ssize_t badblocks_store(struct badblocks *bb, const char *page, size_t len,
@@ -393,7 +393,7 @@ index 2e5f5697d..d39056630 100644
  		if (length <= 0)
  			return -EINVAL;
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index a4c0bec92..c34b09017 100644
+index ee767fa..fa98470 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -4980,7 +4980,7 @@ bfq_set_next_ioprio_data(struct bfq_queue *bfqq, struct bfq_io_cq *bic)
@@ -415,7 +415,7 @@ index a4c0bec92..c34b09017 100644
  		return &bfqg->async_bfqq[1][ioprio];
  	case IOPRIO_CLASS_IDLE:
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 0fa615eef..fd410086f 100644
+index 0fa615e..fd41008 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -528,7 +528,7 @@ static inline bool wbt_should_throttle(struct rq_wb *rwb, struct bio *bio)
@@ -428,7 +428,7 @@ index 0fa615eef..fd410086f 100644
  		return true;
  	default:
 diff --git a/block/ioprio.c b/block/ioprio.c
-index 77bcab11d..04ebd3796 100644
+index 77bcab1..04ebd37 100644
 --- a/block/ioprio.c
 +++ b/block/ioprio.c
 @@ -71,7 +71,7 @@ int ioprio_check_cap(int ioprio)
@@ -441,13 +441,13 @@ index 77bcab11d..04ebd3796 100644
  		case IOPRIO_CLASS_BE:
  			if (data >= IOPRIO_BE_NR || data < 0)
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
 
 
-From ba8848b1dbf4c41ead88c15f5a8c7fe2f83750a5 Mon Sep 17 00:00:00 2001
+From 8efe70e2f67baebbd51b52366e368ec0ae578f36 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Sat, 22 Aug 2020 03:15:34 +0000
-Subject: [PATCH 12/12] block, bfq: Disable low_latency when blk_iolatency is
+Subject: [PATCH 12/13] block, bfq: Disable low_latency when blk_iolatency is
  enabled
 
 To prevent system freezing under heavy I/O workload throttling.
@@ -458,10 +458,10 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index c34b09017..dbf46dcd2 100644
+index fa98470..fd9efa1 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -6501,7 +6501,7 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
+@@ -6489,7 +6489,7 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
  	bfqd->bfq_large_burst_thresh = 8;
  	bfqd->bfq_burst_interval = msecs_to_jiffies(180);
  
@@ -471,5 +471,106 @@ index c34b09017..dbf46dcd2 100644
  	/*
  	 * Trade-off between responsiveness and fairness.
 -- 
-2.28.0.337.ge9b77c84a0
+2.28.0.585.ge1cfff6765
+
+
+From e6086180d6c7bbc60eff1ae7cb8f9c72d043e1a8 Mon Sep 17 00:00:00 2001
+From: Pradeep P V K <ppvk () codeaurora ! org>
+Date: Wed, 16 Sep 2020 08:35:31 +0000
+Subject: [PATCH 13/13] block: Fix use-after-free issue while accessing
+ ioscheduler lock
+
+Observes below crash while accessing (use-after-free) lock member
+of bfq data.
+
+context#1			context#2
+				process_one_work()
+kthread()			blk_mq_run_work_fn()
+worker_thread()			 ->__blk_mq_run_hw_queue()
+process_one_work()		  ->blk_mq_sched_dispatch_requests()
+__blk_release_queue()		    ->blk_mq_do_dispatch_sched()
+->__elevator_exit()
+  ->blk_mq_exit_sched()
+    ->exit_sched()
+      ->kfree()
+				       ->bfq_dispatch_request()
+				         ->spin_unlock_irq(&bfqd->lock)
+
+This is because of the kblockd delayed work that might got scheduled
+around blk_release_queue() and accessed use-after-free member of
+bfq_data.
+
+240.212359:   <2> Unable to handle kernel paging request at
+virtual address ffffffee2e33ad70
+...
+240.212637:   <2> Workqueue: kblockd blk_mq_run_work_fn
+240.212649:   <2> pstate: 00c00085 (nzcv daIf +PAN +UAO)
+240.212666:   <2> pc : queued_spin_lock_slowpath+0x10c/0x2e0
+240.212677:   <2> lr : queued_spin_lock_slowpath+0x84/0x2e0
+...
+Call trace:
+240.212865:   <2>  queued_spin_lock_slowpath+0x10c/0x2e0
+240.212876:   <2>  do_raw_spin_lock+0xf0/0xf4
+240.212890:   <2>  _raw_spin_lock_irq+0x74/0x94
+240.212906:   <2>  bfq_dispatch_request+0x4c/0xd60
+240.212918:   <2>  blk_mq_do_dispatch_sched+0xe0/0x1f0
+240.212927:   <2>  blk_mq_sched_dispatch_requests+0x130/0x194
+240.212940:   <2>  __blk_mq_run_hw_queue+0x100/0x158
+240.212950:   <2>  blk_mq_run_work_fn+0x1c/0x28
+240.212963:   <2>  process_one_work+0x280/0x460
+240.212973:   <2>  worker_thread+0x27c/0x4dc
+240.212986:   <2>  kthread+0x160/0x170
+
+Fix this by cancelling the delayed work if any before elevator exits.
+
+Changes since V2:
+- Retained the code logic and Reviewed-by signoff from V1 Patch
+  as per Ming comments.
+- Moved the new local variables into queue_is_mq() branch.
+- Removed 'cancel_delayed_work_sync' from blk_mq_hw_sysfs_release()
+
+Changes since V1:
+- Moved the logic into blk_cleanup_queue() as per Ming comments.
+
+Signed-off-by: Pradeep P V K <ppvk@codeaurora.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+---
+ block/blk-mq-sysfs.c | 1 -
+ block/blk-sysfs.c    | 8 ++++++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/block/blk-mq-sysfs.c b/block/blk-mq-sysfs.c
+index 06222939..24bc9cc 100644
+--- a/block/blk-mq-sysfs.c
++++ b/block/blk-mq-sysfs.c
+@@ -36,7 +36,6 @@ static void blk_mq_hw_sysfs_release(struct kobject *kobj)
+ 	struct blk_mq_hw_ctx *hctx = container_of(kobj, struct blk_mq_hw_ctx,
+ 						  kobj);
+ 
+-	cancel_delayed_work_sync(&hctx->run_work);
+ 
+ 	if (hctx->flags & BLK_MQ_F_BLOCKING)
+ 		cleanup_srcu_struct(hctx->srcu);
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 02643e1..3597ea7 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -896,9 +896,13 @@ static void __blk_release_queue(struct work_struct *work)
+ 
+ 	blk_free_queue_stats(q->stats);
+ 
+-	if (queue_is_mq(q))
++	if (queue_is_mq(q)) {
++		struct blk_mq_hw_ctx *hctx;
++		int i;
+ 		cancel_delayed_work_sync(&q->requeue_work);
+-
++		queue_for_each_hw_ctx(q, hctx, i)
++			cancel_delayed_work_sync(&hctx->run_work);
++	}
+ 	blk_exit_queue(q);
+ 
+ 	blk_queue_free_zone_bitmaps(q);
+-- 
+2.28.0.585.ge1cfff6765
 
