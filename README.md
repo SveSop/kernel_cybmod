@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.8.13  
+0000 : Kernel patch 5.8.14  
 0001 : PDS 099o "Undear" patch (Tkg)  
 0002 : PDS-Fixes  
 0003 : 5.8 Graysky's CPU patches  
@@ -21,6 +21,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0035 : Zstd config patchset  
 0036 : Block patchset  
 0037 : MM patches  
+0038 : IOmap patches  
 
 ubuntu : Ubuntu mainline kernel patchset  
 
