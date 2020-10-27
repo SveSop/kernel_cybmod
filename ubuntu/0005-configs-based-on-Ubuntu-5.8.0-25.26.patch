@@ -1,7 +1,7 @@
-From 94517a4abaad911ee6de4fafc40f525fbd9fca54 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 7 Oct 2020 07:31:29 +0000
-Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-21.22)
+From 9db8ba5a2d389c4bcc20ed27e8916cd6c93d338c Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 17 Oct 2020 07:31:52 +0000
+Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-25.26)
 
 ---
  .../config/amd64/config.common.amd64          |  3 +-
@@ -10,10 +10,10 @@ Subject: [PATCH 5/5] configs (based on Ubuntu-5.8.0-21.22)
  .../config/arm64/config.common.arm64          |  2 --
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  2 --
- debian.master/config/config.common.ubuntu     | 34 ++-----------------
+ debian.master/config/config.common.ubuntu     | 35 ++-----------------
  .../config/ppc64el/config.common.ppc64el      |  2 --
  .../config/s390x/config.common.s390x          |  1 -
- 9 files changed, 4 insertions(+), 44 deletions(-)
+ 9 files changed, 4 insertions(+), 45 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index f6509887333c..40783e9b07d9 100644
@@ -112,7 +112,7 @@ index 6496b78affb9..6f198340b759 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index bad79deae020..ba3d2c42275b 100644
+index c20145760f29..bc3f9cfd528b 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -278,10 +278,7 @@ CONFIG_AMD_XGBE_DCB=y
@@ -211,7 +211,15 @@ index bad79deae020..ba3d2c42275b 100644
  CONFIG_SND_HDA_HWDEP=y
  CONFIG_SND_HDA_I915=y
  CONFIG_SND_HDA_INPUT_BEEP=y
-@@ -11203,7 +11174,6 @@ CONFIG_VDPA_SIM=m
+@@ -10650,7 +10621,6 @@ CONFIG_UBIFS_FS_XATTR=y
+ CONFIG_UBIFS_FS_ZLIB=y
+ CONFIG_UBIFS_FS_ZSTD=y
+ # CONFIG_UBSAN is not set
+-CONFIG_UBUNTU_HOST=m
+ CONFIG_UCB1400_CORE=m
+ CONFIG_UCC=y
+ CONFIG_UCC_FAST=y
+@@ -11204,7 +11174,6 @@ CONFIG_VDPA_SIM=m
  CONFIG_VDSO=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m

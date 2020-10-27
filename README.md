@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.8.13  
+0000 : Kernel patch 5.8.16  
 0001 : 5.8 Graysky's CPU patches  
 0002 : Add optional -O3 optimization  
 0003 : Sched autogroup patch  
