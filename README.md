@@ -26,7 +26,7 @@ ubuntu : Ubuntu mainline kernel patchset
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
 **This config has default MuQSS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
-**Also see [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/) for scheculer info**  
+**Also see [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/) for scheduler info**  
 
 To build on Ubuntu:  
 ```
