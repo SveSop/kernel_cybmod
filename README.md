@@ -1,15 +1,14 @@
-## Cybmod patches for 5.8 kernel  
+## Cybmod patches for 5.9 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.8.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.8.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.9.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.9.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.8.16  
-0001 : 5.8 Graysky's CPU patches  
-0002 : Add optional -O3 optimization  
-0003 : Sched autogroup patch  
-0004 : Various kernel tweaks patch  
-0010 : swap-tweaks.patch  
+0000 : Kernel patch 5.9.1  
+0001 : 5.9 ck1 combined patchset with MuQSS scheduler  
+0003 : 5.9 Graysky's CPU optimization patches  
+0004 : Enable usage of optional -O3 optimization  
+0010 : Corsair PSU HW-monitor patch  
 0015 : ZFS fix  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
@@ -17,20 +16,23 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0031 : Misc fixes  
 0032 : Fsgsbase patchset  
 0033 : Futex patchset  
-0035 : Zstd config patchset  
-0036 : Block patchset  
+0034 : IO map patchset  
+0035 : Block patchset  
+0040 : Various kernel tweaks patch  
+0041 : Override need for kernel module GPL usage! (To enable using current nVidia binary drivers)  
 
 ubuntu : Ubuntu mainline kernel patchset  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default CFS scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
+**This config has default MuQSS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**Also see [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/) for scheculer info**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.8.tar.xz    
-cd linux-5.8  
+tar xf linux-5.9.tar.xz    
+cd linux-5.9  
 /path/to/patches/and/cybmod_patch.sh  
 make -j12 bindeb-pkg # -j depending on your processor cores  
 ```

@@ -6,8 +6,8 @@ index 24a4c1b97..dee13f9d3 100644
  PHONY := __all
  __all:
  
-+CYBVERSION = -cybmod17
-+CYBNAME = PDS Powered
++CYBVERSION = -cybmod1
++CYBNAME = MuQSS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +
  # We are using a recursive build, so we need to do a little thinking
