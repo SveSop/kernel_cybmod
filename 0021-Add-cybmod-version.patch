@@ -1,18 +1,29 @@
+From aec38a9ee5d3e02cf19e8fa5e8bf3eab8c2f9460 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Fri, 30 Oct 2020 16:29:05 +0100
+Subject: [PATCH] Version
+
+---
+ Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
 diff --git a/Makefile b/Makefile
-index 24a4c1b97..dee13f9d3 100644
+index 6ce3264a2..34611110b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -18,6 +18,10 @@ $(if $(filter __%, $(MAKECMDGOALS)), \
+@@ -18,9 +18,9 @@ $(if $(filter __%, $(MAKECMDGOALS)), \
  PHONY := __all
  __all:
  
-+CYBVERSION = -cybmod1
+-CKVERSION = -ck1
+-CKNAME = MuQSS Powered
+-EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)
++CYBVERSION = -cybmod2
 +CYBNAME = MuQSS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
-+
+ 
  # We are using a recursive build, so we need to do a little thinking
  # to get the ordering right.
- #
 -- 
 2.17.1
 
