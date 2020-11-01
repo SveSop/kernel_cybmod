@@ -1,4 +1,4 @@
-From 439ca5ed31daf5792dd27c113e6a9ed6c48d26a5 Mon Sep 17 00:00:00 2001
+From a7a21f536f443f198004d431bbcd0bc0eb3c59d9 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
 Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
@@ -31,10 +31,10 @@ index a3b37d888..1fcfd47d1 100644
  endif
  
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 5b6bff5471278cd0c71e841bef27eb3283c63e70 Mon Sep 17 00:00:00 2001
+From fb640e42d935c1e00ee227f0bdf577c5f696294a Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
 Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
@@ -45,10 +45,10 @@ Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
-index 3a98439bb..6efc4f907 100644
+index 0abce004a..b6eeb2fab 100644
 --- a/drivers/infiniband/core/addr.c
 +++ b/drivers/infiniband/core/addr.c
-@@ -820,6 +820,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
+@@ -819,6 +819,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
  	union {
  		struct sockaddr_in  _sockaddr_in;
  		struct sockaddr_in6 _sockaddr_in6;
@@ -57,10 +57,10 @@ index 3a98439bb..6efc4f907 100644
  	int ret;
  
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From cb70fd0e859b407bd31f86268fdbd480b7ec77dd Mon Sep 17 00:00:00 2001
+From f52e286b2cae655e7709b19f8d6bd1918f25c7e7 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
 Subject: [PATCH 03/16] kbuild: add -fcf-protection=none to retpoline flags
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index d600b3814..6776103a6 100644
+index 6b1463396..e01b077fb 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -679,6 +679,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,10 +91,10 @@ index d600b3814..6776103a6 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From c62de717335501254195ff906a48caea3ac7bc92 Mon Sep 17 00:00:00 2001
+From fc4a8e3d49a909627f730113f8a6739a3816c4ff Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
 Subject: [PATCH 04/16] mm: Disable watermark boosting by default
@@ -127,7 +127,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 780c8f023..ca5bbbde8 100644
+index 3fb35fe6a..a2fdb9f72 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -317,20 +317,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
@@ -152,10 +152,10 @@ index 780c8f023..ca5bbbde8 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From a458b8f09c3481c9e4ecb56deaf2fccaeac35123 Mon Sep 17 00:00:00 2001
+From dafd86df2c3efdbc135f81d0ffe9e90557a77a02 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
 Subject: [PATCH 05/16] mm: Stop kswapd early when nothing's waiting for it to
@@ -187,7 +187,7 @@ index 0f7a4ff4b..cb3617715 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ca5bbbde8..ed8a9cb63 100644
+index a2fdb9f72..c6635a55d 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -4550,6 +4550,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
@@ -229,7 +229,7 @@ index ca5bbbde8..ed8a9cb63 100644
  	return page;
  }
  
-@@ -6736,6 +6746,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6739,6 +6749,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -252,10 +252,10 @@ index 466fc3144..3fa67096c 100644
  
  		/*
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 69d36c436231cec3c7cd8ff19bccc594b1b7810a Mon Sep 17 00:00:00 2001
+From ecf293bc7b54776db4604b9d1ff9914b01397816 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
 Subject: [PATCH 06/16] mm: Fully disable watermark boosting when it isn't used
@@ -270,7 +270,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ed8a9cb63..886d14aeb 100644
+index c6635a55d..b2f63c31a 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -2470,9 +2470,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
@@ -289,10 +289,10 @@ index ed8a9cb63..886d14aeb 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From c482da626b5fa81a4c934a3ea01fecc032d0a660 Mon Sep 17 00:00:00 2001
+From 74c930c62a157986ff253ba511b1faf7cf04195d Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
 Subject: [PATCH 07/16] mm: Don't stop kswapd on a per-node basis when there
@@ -336,7 +336,7 @@ index 10c677655..661306d6e 100644
  extern void zone_pcp_update(struct zone *zone);
  extern void zone_pcp_reset(struct zone *zone);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 886d14aeb..6716d6d64 100644
+index b2f63c31a..13fa14e97 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -78,6 +78,8 @@
@@ -374,7 +374,7 @@ index 886d14aeb..6716d6d64 100644
  	if (!page)
  		warn_alloc(gfp_mask, ac->nodemask,
  				"page allocation failure: order:%u", order);
-@@ -6748,7 +6749,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6751,7 +6752,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -396,10 +396,10 @@ index 3fa67096c..bd0fdf290 100644
  
  		/*
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 905f1d953d02feb4ae7b979a7e2a7c357f14e8f9 Mon Sep 17 00:00:00 2001
+From e257f2d68469bcc56f976851c939ce5a2ff8d4ac Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
 Subject: [PATCH 08/16] kbuild: Disable stack conservation for GCC
@@ -415,7 +415,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6776103a6..04b4c637d 100644
+index e01b077fb..b94cfe120 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -937,9 +937,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
@@ -429,10 +429,10 @@ index 6776103a6..04b4c637d 100644
  KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
  
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 3696066335fb576e1e8b2505229be431de708887 Mon Sep 17 00:00:00 2001
+From 9e2d55fabaeb6b8e775525eae3a920a7c6090b06 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
 Subject: [PATCH 09/16] pci: Enable overrides for missing ACS capabilities
@@ -487,7 +487,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index a1068742a..e853f27e2 100644
+index ffe864390..2ed7df1d0 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -3593,6 +3593,15 @@
@@ -627,10 +627,10 @@ index 2a589b6d6..36827895b 100644
  };
  
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 2c6a0b0f2b6f5852f4c2b0a8efeb7a611103280b Mon Sep 17 00:00:00 2001
+From 04de2c8d235fc1c337ea76296f2d695af1314c9c Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
 Subject: [PATCH 10/16] ZEN: Add OpenRGB patches
@@ -673,7 +673,7 @@ Date:   Wed Jun 17 14:24:20 2020 -0500
  create mode 100644 drivers/i2c/busses/i2c-nct6775.c
 
 diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 293e7a076..cde4e936a 100644
+index 7ccbfbcb0..8cb8e8b9b 100644
 --- a/drivers/i2c/busses/Kconfig
 +++ b/drivers/i2c/busses/Kconfig
 @@ -218,6 +218,15 @@ config I2C_CHT_WC
@@ -1376,10 +1376,10 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From f041d634027acd563d326753630b0065010ffecd Mon Sep 17 00:00:00 2001
+From 9629d8c7f7dfb3e9ab4e9b87271dda66417e4684 Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Tue, 12 May 2020 17:29:36 -0400
 Subject: [PATCH 11/16] vfs: keep inodes with page cache off the inode shrinker
@@ -1773,7 +1773,7 @@ index 10517ece4..c68d30f12 100644
  
  /*
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 7519ae003..c9b3be294 100644
+index 7d4d04c9d..16799481d 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -572,6 +572,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
@@ -1806,7 +1806,7 @@ index 7519ae003..c9b3be294 100644
  
  #define I_DIRTY_INODE (I_DIRTY_SYNC | I_DIRTY_DATASYNC)
  #define I_DIRTY (I_DIRTY_INODE | I_DIRTY_PAGES)
-@@ -3001,6 +3010,14 @@ static inline void remove_inode_hash(struct inode *inode)
+@@ -3000,6 +3009,14 @@ static inline void remove_inode_hash(struct inode *inode)
  		__remove_inode_hash(inode);
  }
  
@@ -1849,7 +1849,7 @@ index 18e75974d..069032531 100644
  		PAGEOUTRUN, PGROTATED,
  		DROP_PAGECACHE, DROP_SLAB,
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 99c49eeae..3dc4f0754 100644
+index 407b94d8c..73598bf7a 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -117,8 +117,8 @@
@@ -1952,7 +1952,7 @@ index 99c49eeae..3dc4f0754 100644
  	for (i = 0; i < pagevec_count(pvec); i++)
  		page_cache_free_page(mapping, pvec->pages[i]);
  }
-@@ -835,6 +850,7 @@ static int __add_to_page_cache_locked(struct page *page,
+@@ -835,6 +850,7 @@ noinline int __add_to_page_cache_locked(struct page *page,
  	XA_STATE(xas, &mapping->i_pages, offset);
  	int huge = PageHuge(page);
  	int error;
@@ -1960,7 +1960,7 @@ index 99c49eeae..3dc4f0754 100644
  	void *old;
  
  	VM_BUG_ON_PAGE(!PageLocked(page), page);
-@@ -860,6 +876,7 @@ static int __add_to_page_cache_locked(struct page *page,
+@@ -860,6 +876,7 @@ noinline int __add_to_page_cache_locked(struct page *page,
  		if (xas_error(&xas))
  			goto unlock;
  
@@ -1968,7 +1968,7 @@ index 99c49eeae..3dc4f0754 100644
  		if (xa_is_value(old)) {
  			mapping->nrexceptional--;
  			if (shadowp)
-@@ -880,6 +897,10 @@ static int __add_to_page_cache_locked(struct page *page,
+@@ -880,6 +897,10 @@ noinline int __add_to_page_cache_locked(struct page *page,
  	}
  
  	trace_mm_filemap_add_to_page_cache(page);
@@ -1980,10 +1980,10 @@ index 99c49eeae..3dc4f0754 100644
  error:
  	page->mapping = NULL;
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index da397779a..26d0a5da6 100644
+index 18a6f8c8b..1fbd80bd8 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2436,7 +2436,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
+@@ -2437,7 +2437,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
  		/* Some pages can be beyond i_size: drop them from page cache */
  		if (head[i].index >= end) {
  			ClearPageDirty(head + i);
@@ -2173,10 +2173,10 @@ index 92e66113a..d0513eb76 100644
  out:
  	cond_resched();
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 2662e615e085f09cc8e3260fbf45039ac51d9db4 Mon Sep 17 00:00:00 2001
+From 35aa49f9bc59e61e4d45cb4cf4b9060f627f8a96 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 25 Sep 2020 13:22:05 +0200
 Subject: [PATCH 12/16] tty: Allow setting the number of available virtual TTYs
@@ -2243,10 +2243,10 @@ index e9d39c485..3bceead8d 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From c9cf40bf6fd1b07a2f8a553cf5ae19f8c8d051e7 Mon Sep 17 00:00:00 2001
+From 63db2992696034a506ef9ad0d80928294c28556d Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
 Subject: [PATCH 13/16] scsi: sd: Optimal I/O size should be a multiple of
@@ -2377,10 +2377,10 @@ index a3aad608b..bc8533de6 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 29bf4d8d42beb15f4a25ad04e23a9b609583c9c4 Mon Sep 17 00:00:00 2001
+From 2364283c9e4ed43bd0379172a2f73e8eabfceeca Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Fri, 9 Oct 2020 20:51:26 +0800
 Subject: [PATCH 14/16] mm: Add become_kswapd and restore_kswapd
@@ -2510,10 +2510,10 @@ index 046381876..bb6e20689 100644
  }
  
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From 6e39fc988384ec5145e15b23504bc57fa6de5b99 Mon Sep 17 00:00:00 2001
+From 0ef036b89e702c26a03a5532e4e15b8b8a6dd004 Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sat, 17 Oct 2020 16:10:54 -0400
 Subject: [PATCH 15/16] fs: Break generic_file_buffered_read up into multiple
@@ -2534,7 +2534,7 @@ Cc: Jens Axboe <axboe@kernel.dk>
  1 file changed, 261 insertions(+), 212 deletions(-)
 
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 3dc4f0754..60052ee08 100644
+index 73598bf7a..5233e2790 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -2159,6 +2159,234 @@ static void shrink_readahead_size_eio(struct file_ra_state *ra)
@@ -2772,7 +2772,7 @@ index 3dc4f0754..60052ee08 100644
  /**
   * generic_file_buffered_read - generic file read routine
   * @iocb:	the iocb to read
-@@ -2182,29 +2410,19 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2182,23 +2410,15 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  	struct address_space *mapping = filp->f_mapping;
  	struct inode *inode = mapping->host;
  	struct file_ra_state *ra = &filp->f_ra;
@@ -2797,6 +2797,11 @@ index 3dc4f0754..60052ee08 100644
 -	offset = *ppos & ~PAGE_MASK;
 +	last_index = (iocb->ki_pos + iter->count + PAGE_SIZE-1) >> PAGE_SHIFT;
  
+ 	/*
+ 	 * If we've already successfully copied some data, then we
+@@ -2209,10 +2429,8 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+ 		iocb->ki_flags |= IOCB_NOWAIT;
+ 
  	for (;;) {
 +		pgoff_t index = iocb->ki_pos >> PAGE_SHIFT;
  		struct page *page;
@@ -2806,7 +2811,7 @@ index 3dc4f0754..60052ee08 100644
  
  		cond_resched();
  find_page:
-@@ -2213,6 +2431,14 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2221,6 +2439,14 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  			goto out;
  		}
  
@@ -2821,7 +2826,7 @@ index 3dc4f0754..60052ee08 100644
  		page = find_get_page(mapping, index);
  		if (!page) {
  			if (iocb->ki_flags & IOCB_NOIO)
-@@ -2221,8 +2447,15 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2229,8 +2455,15 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  					ra, filp,
  					index, last_index - index);
  			page = find_get_page(mapping, index);
@@ -2839,7 +2844,7 @@ index 3dc4f0754..60052ee08 100644
  		}
  		if (PageReadahead(page)) {
  			if (iocb->ki_flags & IOCB_NOIO) {
-@@ -2234,221 +2467,37 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2242,221 +2475,37 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  					index, last_index - index);
  		}
  		if (!PageUptodate(page)) {
@@ -3074,10 +3079,10 @@ index 3dc4f0754..60052ee08 100644
  }
  EXPORT_SYMBOL_GPL(generic_file_buffered_read);
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
 
-From c19e7008d2a3473789f11fbb968928ba77526f69 Mon Sep 17 00:00:00 2001
+From 43b4a4601663553571136a1ea5658697c6ebc1aa Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sat, 17 Oct 2020 16:10:55 -0400
 Subject: [PATCH 16/16] fs: generic_file_buffered_read() now uses
@@ -3101,7 +3106,7 @@ Signed-off-by: Kent Overstreet <kent.overstreet@gmail.com>
  1 file changed, 172 insertions(+), 128 deletions(-)
 
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 60052ee08..c557ffe70 100644
+index 5233e2790..0e320d347 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -2169,67 +2169,6 @@ static int lock_page_for_iocb(struct kiocb *iocb, struct page *page)
@@ -3265,7 +3270,7 @@ index 60052ee08..c557ffe70 100644
  /**
   * generic_file_buffered_read - generic file read routine
   * @iocb:	the iocb to read
-@@ -2407,96 +2432,115 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2407,18 +2432,23 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  		struct iov_iter *iter, ssize_t written)
  {
  	struct file *filp = iocb->ki_filp;
@@ -3291,6 +3296,12 @@ index 60052ee08..c557ffe70 100644
 -	last_index = (iocb->ki_pos + iter->count + PAGE_SIZE-1) >> PAGE_SHIFT;
 +	if (nr_pages > ARRAY_SIZE(pages_onstack))
 +		pages = kmalloc_array(nr_pages, sizeof(void *), GFP_KERNEL);
+ 
+ 	/*
+ 	 * If we've already successfully copied some data, then we
+@@ -2428,83 +2458,97 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+ 	if (written && (iocb->ki_flags & IOCB_WAITQ))
+ 		iocb->ki_flags |= IOCB_NOWAIT;
  
 -	for (;;) {
 -		pgoff_t index = iocb->ki_pos >> PAGE_SHIFT;
@@ -3449,5 +3460,5 @@ index 60052ee08..c557ffe70 100644
  	return written ? written : error;
  }
 -- 
-2.29.0.rc2
+2.29.1.59.gf9b6481aed
 
