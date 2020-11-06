@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10884 @@
+@@ -0,0 +1,10882 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.9.3-cybmod3 Kernel Configuration
++# Linux/x86 5.9.6-cybmod4 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.1.0-2ubuntu1~18.04) 10.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -639,8 +639,6 @@ new file mode 100644
 +CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
 +# CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE is not set
 +# CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE is not set
-+# CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND is not set
-+# CONFIG_CPU_FREQ_DEFAULT_GOV_CONSERVATIVE is not set
 +# CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL is not set
 +CONFIG_CPU_FREQ_GOV_PERFORMANCE=y
 +CONFIG_CPU_FREQ_GOV_POWERSAVE=y
