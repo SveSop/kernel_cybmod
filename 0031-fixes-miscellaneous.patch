@@ -1,7 +1,7 @@
-From a7a21f536f443f198004d431bbcd0bc0eb3c59d9 Mon Sep 17 00:00:00 2001
+From 507057eaf3af3ba9724c391e5be4f6548ae6bea2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/17] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index a3b37d888..1fcfd47d1 100644
  endif
  
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From fb640e42d935c1e00ee227f0bdf577c5f696294a Mon Sep 17 00:00:00 2001
+From d37011520ebfd3907fb247e04be5be1f74b63cc8 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/17] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 0abce004a..b6eeb2fab 100644
  	int ret;
  
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From f52e286b2cae655e7709b19f8d6bd1918f25c7e7 Mon Sep 17 00:00:00 2001
+From 664906b53230db7336ae98ba4ec439251754dc14 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/16] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/17] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 6b1463396..e01b077fb 100644
+index ac292d6dd..855219448 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -679,6 +679,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index 6b1463396..e01b077fb 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From fc4a8e3d49a909627f730113f8a6739a3816c4ff Mon Sep 17 00:00:00 2001
+From c39b30fa88460703077c3af753215a9d42b5fc57 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/16] mm: Disable watermark boosting by default
+Subject: [PATCH 04/17] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -152,13 +152,13 @@ index 3fb35fe6a..a2fdb9f72 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From dafd86df2c3efdbc135f81d0ffe9e90557a77a02 Mon Sep 17 00:00:00 2001
+From c9eacbb3afff7c29aa8512bcd0a3bd9eb58c6182 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/16] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/17] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -252,13 +252,13 @@ index 466fc3144..3fa67096c 100644
  
  		/*
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From ecf293bc7b54776db4604b9d1ff9914b01397816 Mon Sep 17 00:00:00 2001
+From 4b32b3518f5fb3db703fb1e27033425ec244b0d7 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/16] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/17] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -289,13 +289,13 @@ index c6635a55d..b2f63c31a 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 74c930c62a157986ff253ba511b1faf7cf04195d Mon Sep 17 00:00:00 2001
+From 19837bd5c8d3178a3e0cf1f2d86fbf77b145fe55 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/16] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 07/17] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -396,13 +396,13 @@ index 3fa67096c..bd0fdf290 100644
  
  		/*
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From e257f2d68469bcc56f976851c939ce5a2ff8d4ac Mon Sep 17 00:00:00 2001
+From 0161c6d1caeead0881bc2d402b1c563116f62802 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/16] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 08/17] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -415,7 +415,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e01b077fb..b94cfe120 100644
+index 855219448..291e9b1db 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -937,9 +937,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
@@ -429,13 +429,13 @@ index e01b077fb..b94cfe120 100644
  KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
  
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 9e2d55fabaeb6b8e775525eae3a920a7c6090b06 Mon Sep 17 00:00:00 2001
+From d16ed9be9c837bc3b8512e11f4fc2ed0bd41753e Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/16] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/17] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -487,7 +487,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index ffe864390..2ed7df1d0 100644
+index dca917ac2..0ea87dc1d 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -3593,6 +3593,15 @@
@@ -627,13 +627,13 @@ index 2a589b6d6..36827895b 100644
  };
  
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 04de2c8d235fc1c337ea76296f2d695af1314c9c Mon Sep 17 00:00:00 2001
+From cdff078dda70734a15afb93b8a12c49630dc9fca Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 10/16] ZEN: Add OpenRGB patches
+Subject: [PATCH 10/17] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1376,13 +1376,13 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 9629d8c7f7dfb3e9ab4e9b87271dda66417e4684 Mon Sep 17 00:00:00 2001
+From cbae31ff9aa2c9fe06d6fc0132ec66ac4b106694 Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Tue, 12 May 2020 17:29:36 -0400
-Subject: [PATCH 11/16] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 11/17] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 The VFS inode shrinker is currently allowed to reclaim cold inodes
@@ -1773,7 +1773,7 @@ index 10517ece4..c68d30f12 100644
  
  /*
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 7d4d04c9d..16799481d 100644
+index dbbeb52ce..b1df10171 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -572,6 +572,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
@@ -1806,7 +1806,7 @@ index 7d4d04c9d..16799481d 100644
  
  #define I_DIRTY_INODE (I_DIRTY_SYNC | I_DIRTY_DATASYNC)
  #define I_DIRTY (I_DIRTY_INODE | I_DIRTY_PAGES)
-@@ -3000,6 +3009,14 @@ static inline void remove_inode_hash(struct inode *inode)
+@@ -2999,6 +3008,14 @@ static inline void remove_inode_hash(struct inode *inode)
  		__remove_inode_hash(inode);
  }
  
@@ -2173,13 +2173,13 @@ index 92e66113a..d0513eb76 100644
  out:
  	cond_resched();
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 35aa49f9bc59e61e4d45cb4cf4b9060f627f8a96 Mon Sep 17 00:00:00 2001
+From abbcba3ff2a6c51c4c696b735457b7faf44ca9db Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 25 Sep 2020 13:22:05 +0200
-Subject: [PATCH 12/16] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 12/17] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -2243,13 +2243,13 @@ index e9d39c485..3bceead8d 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 63db2992696034a506ef9ad0d80928294c28556d Mon Sep 17 00:00:00 2001
+From fef2d4ce9252151bc4227e97a645524cfda73520 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 13/16] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 13/17] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -2276,10 +2276,10 @@ Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
  2 files changed, 40 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 16503e226..ea4e77e5c 100644
+index e93a9a874..994e82d40 100644
 --- a/drivers/scsi/sd.c
 +++ b/drivers/scsi/sd.c
-@@ -2879,7 +2879,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
+@@ -2882,7 +2882,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
   */
  static void sd_read_block_limits(struct scsi_disk *sdkp)
  {
@@ -2287,7 +2287,7 @@ index 16503e226..ea4e77e5c 100644
  	const int vpd_len = 64;
  	unsigned char *buffer = kmalloc(vpd_len, GFP_KERNEL);
  
-@@ -2888,9 +2887,7 @@ static void sd_read_block_limits(struct scsi_disk *sdkp)
+@@ -2891,9 +2890,7 @@ static void sd_read_block_limits(struct scsi_disk *sdkp)
  	    scsi_get_vpd_page(sdkp->device, 0xb0, buffer, vpd_len))
  		goto out;
  
@@ -2298,7 +2298,7 @@ index 16503e226..ea4e77e5c 100644
  	sdkp->max_xfer_blocks = get_unaligned_be32(&buffer[8]);
  	sdkp->opt_xfer_blocks = get_unaligned_be32(&buffer[12]);
  
-@@ -3066,6 +3063,29 @@ static void sd_read_security(struct scsi_disk *sdkp, unsigned char *buffer)
+@@ -3069,6 +3066,29 @@ static void sd_read_security(struct scsi_disk *sdkp, unsigned char *buffer)
  		sdkp->security = 1;
  }
  
@@ -2328,7 +2328,7 @@ index 16503e226..ea4e77e5c 100644
  /*
   * Determine the device's preferred I/O size for reads and writes
   * unless the reported value is unreasonably small, large, not a
-@@ -3077,6 +3097,8 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+@@ -3080,6 +3100,8 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
  	struct scsi_device *sdp = sdkp->device;
  	unsigned int opt_xfer_bytes =
  		logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
@@ -2337,7 +2337,7 @@ index 16503e226..ea4e77e5c 100644
  
  	if (sdkp->opt_xfer_blocks == 0)
  		return false;
-@@ -3113,6 +3135,15 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+@@ -3116,6 +3138,15 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
  		return false;
  	}
  
@@ -2353,7 +2353,7 @@ index 16503e226..ea4e77e5c 100644
  	sd_first_printk(KERN_INFO, sdkp, "Optimal transfer size %u bytes\n",
  			opt_xfer_bytes);
  	return true;
-@@ -3196,6 +3227,10 @@ static int sd_revalidate_disk(struct gendisk *disk)
+@@ -3199,6 +3230,10 @@ static int sd_revalidate_disk(struct gendisk *disk)
  	dev_max = min_not_zero(dev_max, sdkp->max_xfer_blocks);
  	q->limits.max_dev_sectors = logical_to_sectors(sdp, dev_max);
  
@@ -2377,13 +2377,13 @@ index a3aad608b..bc8533de6 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 2364283c9e4ed43bd0379172a2f73e8eabfceeca Mon Sep 17 00:00:00 2001
+From 53bd9e505c6bc86fdb0c98931aca2cddfa53df15 Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Fri, 9 Oct 2020 20:51:26 +0800
-Subject: [PATCH 14/16] mm: Add become_kswapd and restore_kswapd
+Subject: [PATCH 14/17] mm: Add become_kswapd and restore_kswapd
 
 Since XFS needs to pretend to be kswapd in some of its worker threads,
 create methods to save & restore kswapd state.  Don't bother restoring
@@ -2510,13 +2510,13 @@ index 046381876..bb6e20689 100644
  }
  
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 0ef036b89e702c26a03a5532e4e15b8b8a6dd004 Mon Sep 17 00:00:00 2001
+From 88c4546f4b49f84d1a220150aa4f81b978cdeaf6 Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
-Date: Sat, 17 Oct 2020 16:10:54 -0400
-Subject: [PATCH 15/16] fs: Break generic_file_buffered_read up into multiple
+Date: Sun, 25 Oct 2020 17:29:48 -0400
+Subject: [PATCH 15/17] fs: Break generic_file_buffered_read up into multiple
  functions
 
 This is prep work for changing generic_file_buffered_read() to use
@@ -3079,13 +3079,13 @@ index 73598bf7a..5233e2790 100644
  }
  EXPORT_SYMBOL_GPL(generic_file_buffered_read);
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
 
 
-From 43b4a4601663553571136a1ea5658697c6ebc1aa Mon Sep 17 00:00:00 2001
+From fe11b8673c3a8363eefba0f8bc7c13c2e2c02635 Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
-Date: Sat, 17 Oct 2020 16:10:55 -0400
-Subject: [PATCH 16/16] fs: generic_file_buffered_read() now uses
+Date: Sun, 25 Oct 2020 17:29:49 -0400
+Subject: [PATCH 16/17] fs: generic_file_buffered_read() now uses
  find_get_pages_contig
 
 Convert generic_file_buffered_read() to get pages to read from in
@@ -3102,11 +3102,11 @@ improvement (1%, within the margin of error).
 
 Signed-off-by: Kent Overstreet <kent.overstreet@gmail.com>
 ---
- mm/filemap.c | 300 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 172 insertions(+), 128 deletions(-)
+ mm/filemap.c | 313 ++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 175 insertions(+), 138 deletions(-)
 
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 5233e2790..0e320d347 100644
+index 5233e2790..a3f87b282 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -2169,67 +2169,6 @@ static int lock_page_for_iocb(struct kiocb *iocb, struct page *page)
@@ -3270,7 +3270,7 @@ index 5233e2790..0e320d347 100644
  /**
   * generic_file_buffered_read - generic file read routine
   * @iocb:	the iocb to read
-@@ -2407,18 +2432,23 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2407,104 +2432,116 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  		struct iov_iter *iter, ssize_t written)
  {
  	struct file *filp = iocb->ki_filp;
@@ -3297,12 +3297,14 @@ index 5233e2790..0e320d347 100644
 +	if (nr_pages > ARRAY_SIZE(pages_onstack))
 +		pages = kmalloc_array(nr_pages, sizeof(void *), GFP_KERNEL);
  
- 	/*
- 	 * If we've already successfully copied some data, then we
-@@ -2428,83 +2458,97 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
- 	if (written && (iocb->ki_flags & IOCB_WAITQ))
- 		iocb->ki_flags |= IOCB_NOWAIT;
- 
+-	/*
+-	 * If we've already successfully copied some data, then we
+-	 * can no longer safely return -EIOCBQUEUED. Hence mark
+-	 * an async read NOWAIT at that point.
+-	 */
+-	if (written && (iocb->ki_flags & IOCB_WAITQ))
+-		iocb->ki_flags |= IOCB_NOWAIT;
+-
 -	for (;;) {
 -		pgoff_t index = iocb->ki_pos >> PAGE_SHIFT;
 -		struct page *page;
@@ -3320,8 +3322,11 @@ index 5233e2790..0e320d347 100644
 -		}
  
  		/*
- 		 * We can't return -EIOCBQUEUED once we've done some work, so
- 		 * ensure we don't block:
+-		 * We can't return -EIOCBQUEUED once we've done some work, so
+-		 * ensure we don't block:
++		 * If we've already successfully copied some data, then we
++		 * can no longer safely return -EIOCBQUEUED. Hence mark
++		 * an async read NOWAIT at that point.
  		 */
 -		if ((iocb->ki_flags & IOCB_WAITQ) &&
 -		    (written + orig_count - iov_iter_count(iter)))
@@ -3460,5 +3465,73 @@ index 5233e2790..0e320d347 100644
  	return written ? written : error;
  }
 -- 
-2.29.1.59.gf9b6481aed
+2.29.2.154.g7f7ebe054a
+
+
+From 6ebd3d3b9dd6f5c7c231a5cd411c787760ebc92b Mon Sep 17 00:00:00 2001
+From: Sathish Narasimman <nsathish41@gmail.com>
+Date: Thu, 29 Oct 2020 13:18:21 +0530
+Subject: [PATCH 17/17] Bluetooth: Fix: LL PRivacy BLE device fails to connect
+
+When adding device to white list the device is added to resolving list
+also. It has to be added only when HCI_ENABLE_LL_PRIVACY flag is set.
+HCI_ENABLE_LL_PRIVACY flag has to be tested before adding/deleting devices
+to resolving list. use_ll_privacy macro is used only to check if controller
+supports LL_Privacy.
+
+https://bugzilla.kernel.org/show_bug.cgi?id=209745
+
+Fixes: 0eee35bdfa3b ("Bluetooth: Update resolving list when updating whitelist")
+Signed-off-by: Sathish Narasimman <sathish.narasimman@intel.com>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+---
+ net/bluetooth/hci_request.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/net/bluetooth/hci_request.c b/net/bluetooth/hci_request.c
+index e0269192f..a565c91b8 100644
+--- a/net/bluetooth/hci_request.c
++++ b/net/bluetooth/hci_request.c
+@@ -698,7 +698,8 @@ static void del_from_white_list(struct hci_request *req, bdaddr_t *bdaddr,
+ 		   cp.bdaddr_type);
+ 	hci_req_add(req, HCI_OP_LE_DEL_FROM_WHITE_LIST, sizeof(cp), &cp);
+ 
+-	if (use_ll_privacy(req->hdev)) {
++	if (use_ll_privacy(req->hdev) &&
++	    hci_dev_test_flag(req->hdev, HCI_ENABLE_LL_PRIVACY)) {
+ 		struct smp_irk *irk;
+ 
+ 		irk = hci_find_irk_by_addr(req->hdev, bdaddr, bdaddr_type);
+@@ -732,7 +733,8 @@ static int add_to_white_list(struct hci_request *req,
+ 		return -1;
+ 
+ 	/* White list can not be used with RPAs */
+-	if (!allow_rpa && !use_ll_privacy(hdev) &&
++	if (!allow_rpa &&
++	    !hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
+ 	    hci_find_irk_by_addr(hdev, &params->addr, params->addr_type)) {
+ 		return -1;
+ 	}
+@@ -750,7 +752,8 @@ static int add_to_white_list(struct hci_request *req,
+ 		   cp.bdaddr_type);
+ 	hci_req_add(req, HCI_OP_LE_ADD_TO_WHITE_LIST, sizeof(cp), &cp);
+ 
+-	if (use_ll_privacy(hdev)) {
++	if (use_ll_privacy(hdev) &&
++	    hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY)) {
+ 		struct smp_irk *irk;
+ 
+ 		irk = hci_find_irk_by_addr(hdev, &params->addr,
+@@ -812,7 +815,8 @@ static u8 update_white_list(struct hci_request *req)
+ 		}
+ 
+ 		/* White list can not be used with RPAs */
+-		if (!allow_rpa && !use_ll_privacy(hdev) &&
++		if (!allow_rpa &&
++		    !hci_dev_test_flag(hdev, HCI_ENABLE_LL_PRIVACY) &&
+ 		    hci_find_irk_by_addr(hdev, &b->bdaddr, b->bdaddr_type)) {
+ 			return 0x00;
+ 		}
+-- 
+2.29.2.154.g7f7ebe054a
 
