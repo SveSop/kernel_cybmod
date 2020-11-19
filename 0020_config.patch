@@ -2,15 +2,15 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10877 @@
+@@ -0,0 +1,10871 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.9.8-cybmod6 Kernel Configuration
++# Linux/x86 5.9.9-cybmod7 Kernel Configuration
 +#
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.1.0-2ubuntu1~18.04) 10.1.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
-+CONFIG_GCC_VERSION=100100
-+CONFIG_LD_VERSION=230000000
++CONFIG_GCC_VERSION=100200
++CONFIG_LD_VERSION=234000000
 +CONFIG_CLANG_VERSION=0
 +CONFIG_CC_CAN_LINK=y
 +CONFIG_CC_CAN_LINK_STATIC=y
@@ -775,6 +775,7 @@ new file mode 100644
 +CONFIG_AS_AVX512=y
 +CONFIG_AS_SHA1_NI=y
 +CONFIG_AS_SHA256_NI=y
++CONFIG_AS_TPAUSE=y
 +
 +#
 +# General architecture-dependent options
@@ -10366,14 +10367,7 @@ new file mode 100644
 +#
 +# Library routines
 +#
-+
-+#
-+# RAID 6
-+#
 +CONFIG_RAID6_PQ=m
-+# CONFIG_RAID6_FORCE_ALGO is not set
-+# end of RAID 6
-+
 +CONFIG_RAID6_PQ_BENCHMARK=y
 +CONFIG_LINEAR_RANGES=y
 +CONFIG_PACKING=y
