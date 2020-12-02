@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.9.11  
+0000 : Kernel patch 5.9.12  
 0001 : 5.9 ck1 combined patchset with MuQSS scheduler  
 0003 : 5.9 Graysky's CPU optimization patches  
 0004 : Enable usage of optional -O3 optimization  
@@ -27,6 +27,8 @@ ubuntu : Ubuntu mainline kernel patchset
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
 **This config has default MuQSS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
 **Also see [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/) for scheduler info**  
+
+**OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 
 To build on Ubuntu:  
 ```
