@@ -1,6 +1,6 @@
-From c0ed1774d1b7815ed26f00de61865c6951258a86 Mon Sep 17 00:00:00 2001
+From b24e83869d7ea9f193bea43aa67a89b5db96f4b7 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 8 Dec 2020 10:33:16 +0000
+Date: Fri, 11 Dec 2020 13:35:40 +0000
 Subject: [PATCH 4/5] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 4/5] debian changelog
  1 file changed, 3 insertions(+), 10554 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 0a120b70d258..99b9072f1c9d 100644
+index 0a120b70d258..cde6976c50f5 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,10557 +1,6 @@
 -linux (5.10.0-7.8) hirsute; urgency=medium
-+linux (5.9.13-050913.202012081033) groovy; urgency=low
++linux (5.9.14-050914.202012111335) groovy; urgency=low
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+  Mainline build at commit: v5.9.13
++  Mainline build at commit: v5.9.14
  
 -  * Fix linux-libc-dev build for hirsute forward port kernels (LP: #1904067)
 -    - [Debian] Build linux-libc-dev for debian.master* branches
-+ -- Mainline Build <kernel@sita>  Tue, 08 Dec 2020 10:33:16 +0000
++ -- Mainline Build <kernel@sita>  Fri, 11 Dec 2020 13:35:40 +0000
  
 -  * Update kernel packaging to support forward porting kernels (LP: #1902957)
 -    - [Debian] Update for leader included in BACKPORT_SUFFIX
