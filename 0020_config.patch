@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10871 @@
+@@ -0,0 +1,10870 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.9.15-cybmod14 Kernel Configuration
++# Linux/x86 5.9.16-cybmod15 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
@@ -7602,7 +7602,6 @@ new file mode 100644
 +CONFIG_USB_APPLEDISPLAY=m
 +CONFIG_APPLE_MFI_FASTCHARGE=m
 +CONFIG_USB_SISUSBVGA=m
-+# CONFIG_USB_SISUSBVGA_CON is not set
 +CONFIG_USB_LD=m
 +CONFIG_USB_TRANCEVIBRATOR=m
 +CONFIG_USB_IOWARRIOR=m
