@@ -1,7 +1,7 @@
-From 7fe120536bc8c8d268a51f6741c0fb23b59862d1 Mon Sep 17 00:00:00 2001
+From 4e5c44316fa0706100a3b01924cfcfe1008f02c3 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/21] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index a3b37d888..1fcfd47d1 100644
  endif
  
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 68bfb427f6cfb3f45ac0028ddd26eb8c60fce940 Mon Sep 17 00:00:00 2001
+From 303702863669feee17e6a156366d1fbd432ae64e Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/21] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 0abce004a..b6eeb2fab 100644
  	int ret;
  
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 8485f748fecec888175ccd37db05133b26d9edef Mon Sep 17 00:00:00 2001
+From bcf00c6c8c7a19cf0524cca25ba6dc27afd27fcd Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/16] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/21] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,10 +76,10 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index bacb52fac..5b4b9b9b3 100644
+index a72bc4041..04cbf718b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -679,6 +679,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
+@@ -675,6 +675,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
  RETPOLINE_VDSO_CFLAGS_CLANG := -mretpoline
  RETPOLINE_CFLAGS := $(call cc-option,$(RETPOLINE_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_CFLAGS_CLANG)))
  RETPOLINE_VDSO_CFLAGS := $(call cc-option,$(RETPOLINE_VDSO_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_VDSO_CFLAGS_CLANG)))
@@ -91,13 +91,13 @@ index bacb52fac..5b4b9b9b3 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From c4a72d3401fc4e444315a9d9788a692324347616 Mon Sep 17 00:00:00 2001
+From 9694ee392fbf95b6547abbd3462ae0964571dff6 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/16] mm: Disable watermark boosting by default
+Subject: [PATCH 04/21] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -127,10 +127,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 8a86bb70b..d282e9b97 100644
+index 32f783ddb..5e780133e 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -317,20 +317,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
+@@ -346,20 +346,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
  
  int min_free_kbytes = 1024;
  int user_min_free_kbytes = -1;
@@ -152,13 +152,13 @@ index 8a86bb70b..d282e9b97 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From c1f7db8706cfdcd638e98a56057692e553019128 Mon Sep 17 00:00:00 2001
+From 7a7e15c7b1a8f6ed0e21f56aa8971d72406646b7 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/16] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/21] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -175,10 +175,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 0f7a4ff4b..cb3617715 100644
+index fb3bf696c..247991228 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
-@@ -726,6 +726,7 @@ typedef struct pglist_data {
+@@ -765,6 +765,7 @@ typedef struct pglist_data {
  	unsigned long node_spanned_pages; /* total size of physical page
  					     range, including holes */
  	int node_id;
@@ -187,10 +187,10 @@ index 0f7a4ff4b..cb3617715 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index d282e9b97..c34e5ed8e 100644
+index 5e780133e..cf0180716 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4550,6 +4550,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4607,6 +4607,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -199,7 +199,7 @@ index d282e9b97..c34e5ed8e 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4583,8 +4585,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4640,8 +4642,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -214,7 +214,7 @@ index d282e9b97..c34e5ed8e 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -4789,9 +4796,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4846,9 +4853,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -229,7 +229,7 @@ index d282e9b97..c34e5ed8e 100644
  	return page;
  }
  
-@@ -6744,6 +6754,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6786,6 +6796,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -238,10 +238,10 @@ index d282e9b97..c34e5ed8e 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 8b11736c4..c3dfac7a9 100644
+index 0ec6321e9..12d8b9820 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3683,7 +3683,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3681,7 +3681,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		__fs_reclaim_release();
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
@@ -252,13 +252,13 @@ index 8b11736c4..c3dfac7a9 100644
  
  		/*
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 491bec8d2ef11f0bc7c3526c9b174ab0891f23ed Mon Sep 17 00:00:00 2001
+From d08906326cb3f7208ef80eef00a48a79ec80b56c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/16] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/21] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -266,19 +266,18 @@ actually a watermark boost.
 
 Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
 ---
- mm/page_alloc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ mm/page_alloc.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index c34e5ed8e..40a18977c 100644
+index cf0180716..78024df24 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -2470,9 +2470,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
+@@ -2529,8 +2529,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
  	 * likelihood of future fallbacks. Wake kswapd now as the node
  	 * may be balanced overall and kswapd will not wake naturally.
  	 */
--	boost_watermark(zone);
--	if (alloc_flags & ALLOC_KSWAPD)
+-	if (boost_watermark(zone) && (alloc_flags & ALLOC_KSWAPD))
 -		set_bit(ZONE_BOOSTED_WATERMARK, &zone->flags);
 +	if (alloc_flags & ALLOC_KSWAPD) {
 +		boost_watermark(zone);
@@ -289,13 +288,13 @@ index c34e5ed8e..40a18977c 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 074b7232507aab98d92912fd33a72801ffb9ac7e Mon Sep 17 00:00:00 2001
+From 74667cd044c7d077f7ded35d75034e57338b934a Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/16] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 07/21] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -312,10 +311,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  4 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index cb3617715..0f7a4ff4b 100644
+index 247991228..fb3bf696c 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
-@@ -726,7 +726,6 @@ typedef struct pglist_data {
+@@ -765,7 +765,6 @@ typedef struct pglist_data {
  	unsigned long node_spanned_pages; /* total size of physical page
  					     range, including holes */
  	int node_id;
@@ -324,10 +323,10 @@ index cb3617715..0f7a4ff4b 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/internal.h b/mm/internal.h
-index 10c677655..661306d6e 100644
+index c43ccdddb..27c3587c3 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
-@@ -200,6 +200,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
+@@ -198,6 +198,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
  extern void post_alloc_hook(struct page *page, unsigned int order,
  					gfp_t gfp_flags);
  extern int user_min_free_kbytes;
@@ -336,19 +335,19 @@ index 10c677655..661306d6e 100644
  extern void zone_pcp_update(struct zone *zone);
  extern void zone_pcp_reset(struct zone *zone);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 40a18977c..d423c4ef1 100644
+index 78024df24..f9b0c380c 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -78,6 +78,8 @@
- #include "shuffle.h"
- #include "page_reporting.h"
+@@ -106,6 +106,8 @@ typedef int __bitwise fpi_t;
+  */
+ #define FPI_TO_TAIL		((__force fpi_t)BIT(1))
  
 +atomic_long_t kswapd_waiters = ATOMIC_LONG_INIT(0);
 +
  /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
  static DEFINE_MUTEX(pcp_batch_high_lock);
  #define MIN_PERCPU_PAGELIST_FRACTION	(8)
-@@ -4552,7 +4554,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4610,7 +4612,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -356,7 +355,7 @@ index 40a18977c..d423c4ef1 100644
  	bool woke_kswapd = false;
  
  	/*
-@@ -4589,7 +4590,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4647,7 +4648,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  
  	if (alloc_flags & ALLOC_KSWAPD) {
  		if (!woke_kswapd) {
@@ -365,7 +364,7 @@ index 40a18977c..d423c4ef1 100644
  			woke_kswapd = true;
  		}
  		wake_all_kswapds(order, gfp_mask, ac);
-@@ -4800,7 +4801,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4858,7 +4859,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  fail:
  got_pg:
  	if (woke_kswapd)
@@ -374,7 +373,7 @@ index 40a18977c..d423c4ef1 100644
  	if (!page)
  		warn_alloc(gfp_mask, ac->nodemask,
  				"page allocation failure: order:%u", order);
-@@ -6756,7 +6757,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6799,7 +6800,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  	pgdat_page_ext_init(pgdat);
  	spin_lock_init(&pgdat->lru_lock);
  	lruvec_init(&pgdat->__lruvec);
@@ -383,10 +382,10 @@ index 40a18977c..d423c4ef1 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index c3dfac7a9..dd6f34e0e 100644
+index 12d8b9820..b2032f37c 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3684,7 +3684,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3682,7 +3682,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
  		if (ret || kthread_should_stop() ||
@@ -396,13 +395,13 @@ index c3dfac7a9..dd6f34e0e 100644
  
  		/*
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 2a61431fe547492f3846759ea0435ada5fa348d5 Mon Sep 17 00:00:00 2001
+From a5827cf8d01faea2efc402ec16f7e52c1d6c9e54 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/16] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 08/21] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -415,27 +414,27 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 5b4b9b9b3..f09ebfe55 100644
+index 04cbf718b..67f83c822 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -937,9 +937,6 @@ KBUILD_CFLAGS	+= $(call cc-option,-fmerge-constants)
+@@ -937,9 +937,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
  # Make sure -fstack-check isn't enabled (like gentoo apparently did)
- KBUILD_CFLAGS  += $(call cc-option,-fno-stack-check,)
+ KBUILD_CFLAGS  += -fno-stack-check
  
 -# conserve stack if available
 -KBUILD_CFLAGS   += $(call cc-option,-fconserve-stack)
 -
  # Prohibit date/time macros, which would make the build non-deterministic
- KBUILD_CFLAGS   += $(call cc-option,-Werror=date-time)
+ KBUILD_CFLAGS   += -Werror=date-time
  
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 5d471ab93049f30cef5f31685e6698c0939cfaac Mon Sep 17 00:00:00 2001
+From 5bbfadc324cb1c564690b909a3ba4e706c17cee6 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/16] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/21] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -487,10 +486,10 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 12ff6ac67..ec433684c 100644
+index f6a1513df..08b3d0dcf 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -3600,6 +3600,15 @@
+@@ -3629,6 +3629,15 @@
  		nomsi		[MSI] If the PCI_MSI kernel config parameter is
  				enabled, this kernel boot option can be used to
  				disable the use of MSI interrupts system-wide.
@@ -507,7 +506,7 @@ index 12ff6ac67..ec433684c 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 2a589b6d6..36827895b 100644
+index fb1dc11e7..07393e019 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -3557,6 +3557,106 @@ static void quirk_no_bus_reset(struct pci_dev *dev)
@@ -617,7 +616,7 @@ index 2a589b6d6..36827895b 100644
  /*
   * Some Atheros AR9xxx and QCA988x chips do not behave after a bus reset.
   * The device will throw a Link Down error on AER-capable systems and
-@@ -4826,6 +4926,8 @@ static const struct pci_dev_acs_enabled {
+@@ -4769,6 +4869,8 @@ static const struct pci_dev_acs_enabled {
  	{ PCI_VENDOR_ID_ZHAOXIN, 0x9083, pci_quirk_mf_endpoint_acs },
  	/* Zhaoxin Root/Downstream Ports */
  	{ PCI_VENDOR_ID_ZHAOXIN, PCI_ANY_ID, pci_quirk_zhaoxin_pcie_ports_acs },
@@ -627,13 +626,13 @@ index 2a589b6d6..36827895b 100644
  };
  
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From dd2075d2dd9a32b66c700e522cb912d69d554b50 Mon Sep 17 00:00:00 2001
+From 4843e7f0230e376854a1472c1ab5ee7781fc07c3 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 10/16] ZEN: Add OpenRGB patches
+Subject: [PATCH 10/21] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -673,10 +672,10 @@ Date:   Wed Jun 17 14:24:20 2020 -0500
  create mode 100644 drivers/i2c/busses/i2c-nct6775.c
 
 diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 7ccbfbcb0..8cb8e8b9b 100644
+index a49e0ed4a..2083d50c1 100644
 --- a/drivers/i2c/busses/Kconfig
 +++ b/drivers/i2c/busses/Kconfig
-@@ -218,6 +218,15 @@ config I2C_CHT_WC
+@@ -219,6 +219,15 @@ config I2C_CHT_WC
  	  combined with a FUSB302 Type-C port-controller as such it is advised
  	  to also select CONFIG_TYPEC_FUSB302=m.
  
@@ -693,7 +692,7 @@ index 7ccbfbcb0..8cb8e8b9b 100644
  	tristate "Nvidia nForce2, nForce3 and nForce4"
  	depends on PCI
 diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-index 19aff0e45..2544518ff 100644
+index 683c49fac..5f05ef8e2 100644
 --- a/drivers/i2c/busses/Makefile
 +++ b/drivers/i2c/busses/Makefile
 @@ -17,6 +17,7 @@ obj-$(CONFIG_I2C_CHT_WC)	+= i2c-cht-wc.o
@@ -1376,13 +1375,217 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From bd491a033a6e1ac1b4e60792c3a3aa35686f33d9 Mon Sep 17 00:00:00 2001
+From 937d07b1f6a78b9d9169615ceb7f85d41ad00dc3 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 25 Sep 2020 13:22:05 +0200
+Subject: [PATCH 11/21] tty: Allow setting the number of available virtual TTYs
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ drivers/tty/Kconfig     | 13 +++++++++++++
+ include/uapi/linux/vt.h | 15 ++++++++++++++-
+ 2 files changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
+index 93fd984eb..46ed63435 100644
+--- a/drivers/tty/Kconfig
++++ b/drivers/tty/Kconfig
+@@ -76,6 +76,19 @@ config VT_CONSOLE_SLEEP
+ 	def_bool y
+ 	depends on VT_CONSOLE && PM_SLEEP
+ 
++config NR_TTY_DEVICES
++        int "Maximum tty device number"
++        depends on VT
++        range 12 63
++        default 63
++        help
++          This option is used to change the number of tty devices in /dev.
++          The default value is 63. The lowest number you can set is 12,
++          63 is also the upper limit so we don't overrun the serial
++          consoles.
++
++          If unsure, say 63.
++
+ config HW_CONSOLE
+ 	bool
+ 	depends on VT && !UML
+diff --git a/include/uapi/linux/vt.h b/include/uapi/linux/vt.h
+index e9d39c485..3bceead8d 100644
+--- a/include/uapi/linux/vt.h
++++ b/include/uapi/linux/vt.h
+@@ -3,12 +3,25 @@
+ #define _UAPI_LINUX_VT_H
+ 
+ 
++/*
++ * We will make this definition solely for the purpose of making packages
++ * such as splashutils build, because they can not understand that
++ * NR_TTY_DEVICES is defined in the kernel configuration.
++ */
++#ifndef CONFIG_NR_TTY_DEVICES
++#define CONFIG_NR_TTY_DEVICES 63
++#endif
++
+ /*
+  * These constants are also useful for user-level apps (e.g., VC
+  * resizing).
+  */
+ #define MIN_NR_CONSOLES 1       /* must be at least 1 */
+-#define MAX_NR_CONSOLES	63	/* serial lines start at 64 */
++/*
++ * NR_TTY_DEVICES:
++ * Value MUST be at least 12 and must never be higher then 63
++ */
++#define MAX_NR_CONSOLES CONFIG_NR_TTY_DEVICES	/* serial lines start above this */
+ 		/* Note: the ioctl VT_GETSTATE does not work for
+ 		   consoles 16 and higher (since it returns a short) */
+ 
+-- 
+2.30.0.rc0
+
+
+From f7ddedffaf0bb36941cfc28be0c425bc04cb40b9 Mon Sep 17 00:00:00 2001
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Date: Sun, 22 Mar 2020 16:57:06 -0400
+Subject: [PATCH 12/21] scsi: sd: Optimal I/O size should be a multiple of
+ reported granularity
+
+Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
+physical block size") validated the reported optimal I/O size against the
+physical block size to overcome problems with devices reporting nonsensical
+transfer sizes.
+
+However, some devices claim conformity to older SCSI versions that predate
+the physical block size being reported. Other devices do not report a
+physical block size at all. We need to be able to validate the optimal I/O
+size on those devices as well.
+
+Many devices report an OPTIMAL TRANSFER LENGTH GRANULARITY in the same VPD
+page as the OPTIMAL TRANSFER LENGTH. Use this value to validate the optimal
+I/O size. Also check that the reported granularity is a multiple of the
+physical block size, if supported.
+
+Link: https://lore.kernel.org/r/33fb522e-4f61-1b76-914f-c9e6a3553c9b@gmail.com
+Reported-by: Bernhard Sulzer <micraft.b@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+---
+ drivers/scsi/sd.c | 43 +++++++++++++++++++++++++++++++++++++++----
+ drivers/scsi/sd.h |  1 +
+ 2 files changed, 40 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 656bcf494..2b85da6d7 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -2925,7 +2925,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
+  */
+ static void sd_read_block_limits(struct scsi_disk *sdkp)
+ {
+-	unsigned int sector_sz = sdkp->device->sector_size;
+ 	const int vpd_len = 64;
+ 	unsigned char *buffer = kmalloc(vpd_len, GFP_KERNEL);
+ 
+@@ -2934,9 +2933,7 @@ static void sd_read_block_limits(struct scsi_disk *sdkp)
+ 	    scsi_get_vpd_page(sdkp->device, 0xb0, buffer, vpd_len))
+ 		goto out;
+ 
+-	blk_queue_io_min(sdkp->disk->queue,
+-			 get_unaligned_be16(&buffer[6]) * sector_sz);
+-
++	sdkp->min_xfer_blocks = get_unaligned_be16(&buffer[6]);
+ 	sdkp->max_xfer_blocks = get_unaligned_be32(&buffer[8]);
+ 	sdkp->opt_xfer_blocks = get_unaligned_be32(&buffer[12]);
+ 
+@@ -3112,6 +3109,29 @@ static void sd_read_security(struct scsi_disk *sdkp, unsigned char *buffer)
+ 		sdkp->security = 1;
+ }
+ 
++static bool sd_validate_min_xfer_size(struct scsi_disk *sdkp)
++{
++	struct scsi_device *sdp = sdkp->device;
++	unsigned int min_xfer_bytes =
++		logical_to_bytes(sdp, sdkp->min_xfer_blocks);
++
++	if (sdkp->min_xfer_blocks == 0)
++		return false;
++
++	if (min_xfer_bytes & (sdkp->physical_block_size - 1)) {
++		sd_first_printk(KERN_WARNING, sdkp,
++				"Preferred minimum I/O size %u bytes not a " \
++				"multiple of physical block size (%u bytes)\n",
++				min_xfer_bytes, sdkp->physical_block_size);
++		sdkp->min_xfer_blocks = 0;
++		return false;
++	}
++
++	sd_first_printk(KERN_INFO, sdkp, "Preferred minimum I/O size %u bytes\n",
++			min_xfer_bytes);
++	return true;
++}
++
+ /*
+  * Determine the device's preferred I/O size for reads and writes
+  * unless the reported value is unreasonably small, large, not a
+@@ -3123,6 +3143,8 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+ 	struct scsi_device *sdp = sdkp->device;
+ 	unsigned int opt_xfer_bytes =
+ 		logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
++	unsigned int min_xfer_bytes =
++		logical_to_bytes(sdp, sdkp->min_xfer_blocks);
+ 
+ 	if (sdkp->opt_xfer_blocks == 0)
+ 		return false;
+@@ -3159,6 +3181,15 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+ 		return false;
+ 	}
+ 
++	if (min_xfer_bytes && opt_xfer_bytes & (min_xfer_bytes - 1)) {
++		sd_first_printk(KERN_WARNING, sdkp,
++				"Optimal transfer size %u bytes not a " \
++				"multiple of preferred minimum block " \
++				"size (%u bytes)\n",
++				opt_xfer_bytes, min_xfer_bytes);
++		return false;
++	}
++
+ 	sd_first_printk(KERN_INFO, sdkp, "Optimal transfer size %u bytes\n",
+ 			opt_xfer_bytes);
+ 	return true;
+@@ -3242,6 +3273,10 @@ static int sd_revalidate_disk(struct gendisk *disk)
+ 	dev_max = min_not_zero(dev_max, sdkp->max_xfer_blocks);
+ 	q->limits.max_dev_sectors = logical_to_sectors(sdp, dev_max);
+ 
++	if (sd_validate_min_xfer_size(sdkp))
++		blk_queue_io_min(sdkp->disk->queue,
++				 logical_to_bytes(sdp, sdkp->min_xfer_blocks));
++
+ 	if (sd_validate_opt_xfer_size(sdkp, dev_max)) {
+ 		q->limits.io_opt = logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
+ 		rw_max = logical_to_sectors(sdp, sdkp->opt_xfer_blocks);
+diff --git a/drivers/scsi/sd.h b/drivers/scsi/sd.h
+index b59136c41..4154030c8 100644
+--- a/drivers/scsi/sd.h
++++ b/drivers/scsi/sd.h
+@@ -91,6 +91,7 @@ struct scsi_disk {
+ 	atomic_t	openers;
+ 	sector_t	capacity;	/* size in logical blocks */
+ 	int		max_retries;
++	u32		min_xfer_blocks;
+ 	u32		max_xfer_blocks;
+ 	u32		opt_xfer_blocks;
+ 	u32		max_ws_blocks;
+-- 
+2.30.0.rc0
+
+
+From 36f9c9cc3cdadf2f3456e5ccea8d0fa37162a8b4 Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Tue, 12 May 2020 17:29:36 -0400
-Subject: [PATCH 11/16] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 13/21] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 The VFS inode shrinker is currently allowed to reclaim cold inodes
@@ -1513,7 +1716,7 @@ Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
  14 files changed, 208 insertions(+), 34 deletions(-)
 
 diff --git a/fs/block_dev.c b/fs/block_dev.c
-index 8ae833e00..92079c41e 100644
+index 9e84b1928..34105f66e 100644
 --- a/fs/block_dev.c
 +++ b/fs/block_dev.c
 @@ -79,7 +79,7 @@ static void kill_bdev(struct block_device *bdev)
@@ -1526,7 +1729,7 @@ index 8ae833e00..92079c41e 100644
  
  	invalidate_bh_lrus();
 diff --git a/fs/dax.c b/fs/dax.c
-index 994ab66a9..a7e719707 100644
+index 5b47834f2..0cb7c48b4 100644
 --- a/fs/dax.c
 +++ b/fs/dax.c
 @@ -478,9 +478,11 @@ static void *grab_mapping_entry(struct xa_state *xas,
@@ -1568,7 +1771,7 @@ index 994ab66a9..a7e719707 100644
  	if (xas_nomem(xas, mapping_gfp_mask(mapping) & ~__GFP_HIGHMEM))
  		goto retry;
  	if (xas->xa_node == XA_ERROR(-ENOMEM))
-@@ -631,6 +641,7 @@ static int __dax_invalidate_entry(struct address_space *mapping,
+@@ -648,6 +658,7 @@ static int __dax_invalidate_entry(struct address_space *mapping,
  					  pgoff_t index, bool trunc)
  {
  	XA_STATE(xas, &mapping->i_pages, index);
@@ -1576,7 +1779,7 @@ index 994ab66a9..a7e719707 100644
  	int ret = 0;
  	void *entry;
  
-@@ -645,10 +656,13 @@ static int __dax_invalidate_entry(struct address_space *mapping,
+@@ -662,10 +673,13 @@ static int __dax_invalidate_entry(struct address_space *mapping,
  	dax_disassociate_entry(entry, mapping, trunc);
  	xas_store(&xas, NULL);
  	mapping->nrexceptional--;
@@ -1604,10 +1807,10 @@ index f00fcc4a4..20e845ff4 100644
  			continue;
  		}
 diff --git a/fs/inode.c b/fs/inode.c
-index 72c4c347a..b2aca1084 100644
+index 5eea9912a..2dddef567 100644
 --- a/fs/inode.c
 +++ b/fs/inode.c
-@@ -431,26 +431,101 @@ static void inode_lru_list_add(struct inode *inode)
+@@ -433,26 +433,101 @@ static void inode_lru_list_add(struct inode *inode)
  		inode->i_state |= I_REFERENCED;
  }
  
@@ -1717,7 +1920,7 @@ index 72c4c347a..b2aca1084 100644
  
  /**
   * inode_sb_list_add - add inode to the superblock list of inodes
-@@ -743,6 +818,8 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+@@ -745,6 +820,8 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
  	if (!spin_trylock(&inode->i_lock))
  		return LRU_SKIP;
  
@@ -1726,7 +1929,7 @@ index 72c4c347a..b2aca1084 100644
  	/*
  	 * Referenced or dirty inodes are still in use. Give them another pass
  	 * through the LRU as we canot reclaim them now.
-@@ -762,7 +839,18 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+@@ -764,7 +841,18 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
  		return LRU_ROTATE;
  	}
  
@@ -1746,7 +1949,7 @@ index 72c4c347a..b2aca1084 100644
  		__iget(inode);
  		spin_unlock(&inode->i_lock);
  		spin_unlock(lru_lock);
-@@ -779,6 +867,12 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+@@ -781,6 +869,12 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
  		iput(inode);
  		spin_lock(lru_lock);
  		return LRU_RETRY;
@@ -1760,10 +1963,10 @@ index 72c4c347a..b2aca1084 100644
  
  	WARN_ON(inode->i_state & I_NEW);
 diff --git a/fs/internal.h b/fs/internal.h
-index 10517ece4..c68d30f12 100644
+index a7cd0f64f..869bcca9a 100644
 --- a/fs/internal.h
 +++ b/fs/internal.h
-@@ -148,7 +148,7 @@ extern int vfs_open(const struct path *, struct file *);
+@@ -145,7 +145,7 @@ extern int vfs_open(const struct path *, struct file *);
   * inode.c
   */
  extern long prune_icache_sb(struct super_block *sb, struct shrink_control *sc);
@@ -1773,10 +1976,10 @@ index 10517ece4..c68d30f12 100644
  
  /*
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index dbbeb52ce..b1df10171 100644
+index 8bde32cf9..07bd56cca 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -572,6 +572,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
+@@ -567,6 +567,11 @@ static inline void mapping_allow_writable(struct address_space *mapping)
  	atomic_inc(&mapping->i_mmap_writable);
  }
  
@@ -1788,7 +1991,7 @@ index dbbeb52ce..b1df10171 100644
  /*
   * Use sequence counter to get consistent i_size on 32-bit processors.
   */
-@@ -2136,6 +2141,9 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+@@ -2150,6 +2155,9 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
   *			Used to detect that mark_inode_dirty() should not move
   * 			inode between dirty lists.
   *
@@ -1798,7 +2001,7 @@ index dbbeb52ce..b1df10171 100644
   * Q: What is the difference between I_WILL_FREE and I_FREEING?
   */
  #define I_DIRTY_SYNC		(1 << 0)
-@@ -2158,6 +2166,7 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
+@@ -2172,6 +2180,7 @@ static inline void kiocb_clone(struct kiocb *kiocb, struct kiocb *kiocb_src,
  #define I_CREATING		(1 << 15)
  #define I_DONTCACHE		(1 << 16)
  #define I_SYNC_QUEUED		(1 << 17)
@@ -1806,7 +2009,7 @@ index dbbeb52ce..b1df10171 100644
  
  #define I_DIRTY_INODE (I_DIRTY_SYNC | I_DIRTY_DATASYNC)
  #define I_DIRTY (I_DIRTY_INODE | I_DIRTY_PAGES)
-@@ -2999,6 +3008,14 @@ static inline void remove_inode_hash(struct inode *inode)
+@@ -2953,6 +2962,14 @@ static inline void remove_inode_hash(struct inode *inode)
  		__remove_inode_hash(inode);
  }
  
@@ -1822,10 +2025,10 @@ index dbbeb52ce..b1df10171 100644
  
  extern int sb_set_blocksize(struct super_block *, int);
 diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index f2b142f33..0c28cd981 100644
+index d5570deff..0623e4135 100644
 --- a/include/linux/pagemap.h
 +++ b/include/linux/pagemap.h
-@@ -694,7 +694,7 @@ int add_to_page_cache_locked(struct page *page, struct address_space *mapping,
+@@ -756,7 +756,7 @@ int add_to_page_cache_locked(struct page *page, struct address_space *mapping,
  int add_to_page_cache_lru(struct page *page, struct address_space *mapping,
  				pgoff_t index, gfp_t gfp_mask);
  extern void delete_from_page_cache(struct page *page);
@@ -1849,7 +2052,7 @@ index 18e75974d..069032531 100644
  		PAGEOUTRUN, PGROTATED,
  		DROP_PAGECACHE, DROP_SLAB,
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 6024d1599..3b0b1960c 100644
+index 0b2067b3c..cfe4e743e 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
 @@ -117,8 +117,8 @@
@@ -1957,18 +2160,18 @@ index 6024d1599..3b0b1960c 100644
  	int huge = PageHuge(page);
  	int error;
 +	bool populated = false;
- 	void *old;
  
  	VM_BUG_ON_PAGE(!PageLocked(page), page);
-@@ -860,6 +876,7 @@ noinline int __add_to_page_cache_locked(struct page *page,
- 		if (xas_error(&xas))
- 			goto unlock;
+ 	VM_BUG_ON_PAGE(PageSwapBacked(page), page);
+@@ -868,6 +884,7 @@ noinline int __add_to_page_cache_locked(struct page *page,
+ 			}
+ 		}
  
 +		populated = mapping_empty(mapping);
- 		if (xa_is_value(old)) {
- 			mapping->nrexceptional--;
+ 		if (old) {
  			if (shadowp)
-@@ -880,6 +897,10 @@ noinline int __add_to_page_cache_locked(struct page *page,
+ 				*shadowp = old;
+@@ -900,6 +917,10 @@ noinline int __add_to_page_cache_locked(struct page *page,
  	}
  
  	trace_mm_filemap_add_to_page_cache(page);
@@ -1980,10 +2183,10 @@ index 6024d1599..3b0b1960c 100644
  error:
  	page->mapping = NULL;
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 17fc6829c..9cb7b7778 100644
+index 85eda66eb..1199b71ab 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2436,7 +2436,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
+@@ -2439,7 +2439,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
  		/* Some pages can be beyond i_size: drop them from page cache */
  		if (head[i].index >= end) {
  			ClearPageDirty(head + i);
@@ -1994,7 +2197,7 @@ index 17fc6829c..9cb7b7778 100644
  				shmem_uncharge(head->mapping->host, 1);
  			put_page(head + i);
 diff --git a/mm/truncate.c b/mm/truncate.c
-index dd9ebc1da..8fb6c2f76 100644
+index 960edf580..de7ac6bc2 100644
 --- a/mm/truncate.c
 +++ b/mm/truncate.c
 @@ -31,24 +31,31 @@
@@ -2069,7 +2272,7 @@ index dd9ebc1da..8fb6c2f76 100644
  		goto out;
  
  	/* Offsets within partial pages */
-@@ -636,6 +648,7 @@ static int
+@@ -658,6 +670,7 @@ static int
  invalidate_complete_page2(struct address_space *mapping, struct page *page)
  {
  	unsigned long flags;
@@ -2077,7 +2280,7 @@ index dd9ebc1da..8fb6c2f76 100644
  
  	if (page->mapping != mapping)
  		return 0;
-@@ -648,9 +661,12 @@ invalidate_complete_page2(struct address_space *mapping, struct page *page)
+@@ -670,9 +683,12 @@ invalidate_complete_page2(struct address_space *mapping, struct page *page)
  		goto failed;
  
  	BUG_ON(page_has_private(page));
@@ -2091,7 +2294,7 @@ index dd9ebc1da..8fb6c2f76 100644
  	if (mapping->a_ops->freepage)
  		mapping->a_ops->freepage(page);
  
-@@ -692,7 +708,7 @@ int invalidate_inode_pages2_range(struct address_space *mapping,
+@@ -714,7 +730,7 @@ int invalidate_inode_pages2_range(struct address_space *mapping,
  	int ret2 = 0;
  	int did_range_unmap = 0;
  
@@ -2101,10 +2304,10 @@ index dd9ebc1da..8fb6c2f76 100644
  
  	pagevec_init(&pvec);
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index dd6f34e0e..e530c19b7 100644
+index b2032f37c..402d2b886 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -904,6 +904,7 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
+@@ -906,6 +906,7 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
  		put_swap_page(page, swap);
  	} else {
  		void (*freepage)(struct page *);
@@ -2112,7 +2315,7 @@ index dd6f34e0e..e530c19b7 100644
  
  		freepage = mapping->a_ops->freepage;
  		/*
-@@ -925,9 +926,12 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
+@@ -927,9 +928,12 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
  		if (reclaimed && page_is_file_lru(page) &&
  		    !mapping_exiting(mapping) && !dax_mapping(mapping))
  			shadow = workingset_eviction(page, target_memcg);
@@ -2127,7 +2330,7 @@ index dd6f34e0e..e530c19b7 100644
  			freepage(page);
  	}
 diff --git a/mm/vmstat.c b/mm/vmstat.c
-index 4f7b4ee6a..6d7a432f3 100644
+index 698bc0bc1..c81737a77 100644
 --- a/mm/vmstat.c
 +++ b/mm/vmstat.c
 @@ -1255,9 +1255,11 @@ const char * const vmstat_text[] = {
@@ -2144,26 +2347,24 @@ index 4f7b4ee6a..6d7a432f3 100644
  	"kswapd_high_wmark_hit_quickly",
  	"pageoutrun",
 diff --git a/mm/workingset.c b/mm/workingset.c
-index 92e66113a..d0513eb76 100644
+index 975a4d2dd..5801b7761 100644
 --- a/mm/workingset.c
 +++ b/mm/workingset.c
-@@ -521,6 +521,7 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
+@@ -520,6 +520,7 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
+ {
  	struct xa_node *node = container_of(item, struct xa_node, private_list);
- 	XA_STATE(xas, node->array, 0);
  	struct address_space *mapping;
 +	bool empty = false;
  	int ret;
  
  	/*
-@@ -559,6 +560,7 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
+@@ -558,11 +559,14 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
  	if (WARN_ON_ONCE(node->count != node->nr_values))
  		goto out_invalid;
  	mapping->nrexceptional -= node->nr_values;
 +	empty = mapping_empty(mapping);
- 	xas.xa_node = xa_parent_locked(&mapping->i_pages, node);
- 	xas.xa_offset = node->offset;
- 	xas.xa_shift = node->shift + XA_CHUNK_SHIFT;
-@@ -572,6 +574,8 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
+ 	xa_delete_node(node, workingset_update_node);
+ 	__inc_lruvec_slab_state(node, WORKINGSET_NODERECLAIM);
  
  out_invalid:
  	xa_unlock_irq(&mapping->i_pages);
@@ -2173,350 +2374,13 @@ index 92e66113a..d0513eb76 100644
  out:
  	cond_resched();
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 5a43568ff2eacdddabb078fab663697aed9e944c Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 25 Sep 2020 13:22:05 +0200
-Subject: [PATCH 12/16] tty: Allow setting the number of available virtual TTYs
-
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
----
- drivers/tty/Kconfig     | 13 +++++++++++++
- include/uapi/linux/vt.h | 15 ++++++++++++++-
- 2 files changed, 27 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
-index 93fd984eb..46ed63435 100644
---- a/drivers/tty/Kconfig
-+++ b/drivers/tty/Kconfig
-@@ -76,6 +76,19 @@ config VT_CONSOLE_SLEEP
- 	def_bool y
- 	depends on VT_CONSOLE && PM_SLEEP
- 
-+config NR_TTY_DEVICES
-+        int "Maximum tty device number"
-+        depends on VT
-+        range 12 63
-+        default 63
-+        help
-+          This option is used to change the number of tty devices in /dev.
-+          The default value is 63. The lowest number you can set is 12,
-+          63 is also the upper limit so we don't overrun the serial
-+          consoles.
-+
-+          If unsure, say 63.
-+
- config HW_CONSOLE
- 	bool
- 	depends on VT && !UML
-diff --git a/include/uapi/linux/vt.h b/include/uapi/linux/vt.h
-index e9d39c485..3bceead8d 100644
---- a/include/uapi/linux/vt.h
-+++ b/include/uapi/linux/vt.h
-@@ -3,12 +3,25 @@
- #define _UAPI_LINUX_VT_H
- 
- 
-+/*
-+ * We will make this definition solely for the purpose of making packages
-+ * such as splashutils build, because they can not understand that
-+ * NR_TTY_DEVICES is defined in the kernel configuration.
-+ */
-+#ifndef CONFIG_NR_TTY_DEVICES
-+#define CONFIG_NR_TTY_DEVICES 63
-+#endif
-+
- /*
-  * These constants are also useful for user-level apps (e.g., VC
-  * resizing).
-  */
- #define MIN_NR_CONSOLES 1       /* must be at least 1 */
--#define MAX_NR_CONSOLES	63	/* serial lines start at 64 */
-+/*
-+ * NR_TTY_DEVICES:
-+ * Value MUST be at least 12 and must never be higher then 63
-+ */
-+#define MAX_NR_CONSOLES CONFIG_NR_TTY_DEVICES	/* serial lines start above this */
- 		/* Note: the ioctl VT_GETSTATE does not work for
- 		   consoles 16 and higher (since it returns a short) */
- 
--- 
-2.29.2.260.ge31aba42fb
-
-
-From 90e3545e5c754e6f24cbff7a3b2c0dea6033b7b7 Mon Sep 17 00:00:00 2001
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 13/16] scsi: sd: Optimal I/O size should be a multiple of
- reported granularity
-
-Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
-physical block size") validated the reported optimal I/O size against the
-physical block size to overcome problems with devices reporting nonsensical
-transfer sizes.
-
-However, some devices claim conformity to older SCSI versions that predate
-the physical block size being reported. Other devices do not report a
-physical block size at all. We need to be able to validate the optimal I/O
-size on those devices as well.
-
-Many devices report an OPTIMAL TRANSFER LENGTH GRANULARITY in the same VPD
-page as the OPTIMAL TRANSFER LENGTH. Use this value to validate the optimal
-I/O size. Also check that the reported granularity is a multiple of the
-physical block size, if supported.
-
-Link: https://lore.kernel.org/r/33fb522e-4f61-1b76-914f-c9e6a3553c9b@gmail.com
-Reported-by: Bernhard Sulzer <micraft.b@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
----
- drivers/scsi/sd.c | 43 +++++++++++++++++++++++++++++++++++++++----
- drivers/scsi/sd.h |  1 +
- 2 files changed, 40 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index e93a9a874..994e82d40 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -2882,7 +2882,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
-  */
- static void sd_read_block_limits(struct scsi_disk *sdkp)
- {
--	unsigned int sector_sz = sdkp->device->sector_size;
- 	const int vpd_len = 64;
- 	unsigned char *buffer = kmalloc(vpd_len, GFP_KERNEL);
- 
-@@ -2891,9 +2890,7 @@ static void sd_read_block_limits(struct scsi_disk *sdkp)
- 	    scsi_get_vpd_page(sdkp->device, 0xb0, buffer, vpd_len))
- 		goto out;
- 
--	blk_queue_io_min(sdkp->disk->queue,
--			 get_unaligned_be16(&buffer[6]) * sector_sz);
--
-+	sdkp->min_xfer_blocks = get_unaligned_be16(&buffer[6]);
- 	sdkp->max_xfer_blocks = get_unaligned_be32(&buffer[8]);
- 	sdkp->opt_xfer_blocks = get_unaligned_be32(&buffer[12]);
- 
-@@ -3069,6 +3066,29 @@ static void sd_read_security(struct scsi_disk *sdkp, unsigned char *buffer)
- 		sdkp->security = 1;
- }
- 
-+static bool sd_validate_min_xfer_size(struct scsi_disk *sdkp)
-+{
-+	struct scsi_device *sdp = sdkp->device;
-+	unsigned int min_xfer_bytes =
-+		logical_to_bytes(sdp, sdkp->min_xfer_blocks);
-+
-+	if (sdkp->min_xfer_blocks == 0)
-+		return false;
-+
-+	if (min_xfer_bytes & (sdkp->physical_block_size - 1)) {
-+		sd_first_printk(KERN_WARNING, sdkp,
-+				"Preferred minimum I/O size %u bytes not a " \
-+				"multiple of physical block size (%u bytes)\n",
-+				min_xfer_bytes, sdkp->physical_block_size);
-+		sdkp->min_xfer_blocks = 0;
-+		return false;
-+	}
-+
-+	sd_first_printk(KERN_INFO, sdkp, "Preferred minimum I/O size %u bytes\n",
-+			min_xfer_bytes);
-+	return true;
-+}
-+
- /*
-  * Determine the device's preferred I/O size for reads and writes
-  * unless the reported value is unreasonably small, large, not a
-@@ -3080,6 +3100,8 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
- 	struct scsi_device *sdp = sdkp->device;
- 	unsigned int opt_xfer_bytes =
- 		logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
-+	unsigned int min_xfer_bytes =
-+		logical_to_bytes(sdp, sdkp->min_xfer_blocks);
- 
- 	if (sdkp->opt_xfer_blocks == 0)
- 		return false;
-@@ -3116,6 +3138,15 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
- 		return false;
- 	}
- 
-+	if (min_xfer_bytes && opt_xfer_bytes & (min_xfer_bytes - 1)) {
-+		sd_first_printk(KERN_WARNING, sdkp,
-+				"Optimal transfer size %u bytes not a " \
-+				"multiple of preferred minimum block " \
-+				"size (%u bytes)\n",
-+				opt_xfer_bytes, min_xfer_bytes);
-+		return false;
-+	}
-+
- 	sd_first_printk(KERN_INFO, sdkp, "Optimal transfer size %u bytes\n",
- 			opt_xfer_bytes);
- 	return true;
-@@ -3199,6 +3230,10 @@ static int sd_revalidate_disk(struct gendisk *disk)
- 	dev_max = min_not_zero(dev_max, sdkp->max_xfer_blocks);
- 	q->limits.max_dev_sectors = logical_to_sectors(sdp, dev_max);
- 
-+	if (sd_validate_min_xfer_size(sdkp))
-+		blk_queue_io_min(sdkp->disk->queue,
-+				 logical_to_bytes(sdp, sdkp->min_xfer_blocks));
-+
- 	if (sd_validate_opt_xfer_size(sdkp, dev_max)) {
- 		q->limits.io_opt = logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
- 		rw_max = logical_to_sectors(sdp, sdkp->opt_xfer_blocks);
-diff --git a/drivers/scsi/sd.h b/drivers/scsi/sd.h
-index a3aad608b..bc8533de6 100644
---- a/drivers/scsi/sd.h
-+++ b/drivers/scsi/sd.h
-@@ -90,6 +90,7 @@ struct scsi_disk {
- #endif
- 	atomic_t	openers;
- 	sector_t	capacity;	/* size in logical blocks */
-+	u32		min_xfer_blocks;
- 	u32		max_xfer_blocks;
- 	u32		opt_xfer_blocks;
- 	u32		max_ws_blocks;
--- 
-2.29.2.260.ge31aba42fb
-
-
-From 70e4df02eaf0785cbac60586ac22bfbf7b9161fb Mon Sep 17 00:00:00 2001
-From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Date: Fri, 9 Oct 2020 20:51:26 +0800
-Subject: [PATCH 14/16] mm: Add become_kswapd and restore_kswapd
-
-Since XFS needs to pretend to be kswapd in some of its worker threads,
-create methods to save & restore kswapd state.  Don't bother restoring
-kswapd state in kswapd -- the only time we reach this code is when we're
-exiting and the task_struct is about to be destroyed anyway.
-
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Darrick J. Wong <darrick.wong@oracle.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
----
- fs/xfs/libxfs/xfs_btree.c | 14 ++++++++------
- include/linux/sched/mm.h  | 23 +++++++++++++++++++++++
- mm/vmscan.c               | 16 +---------------
- 3 files changed, 32 insertions(+), 21 deletions(-)
-
-diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
-index 2d25bab68..a04a44238 100644
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -2813,8 +2813,9 @@ xfs_btree_split_worker(
- {
- 	struct xfs_btree_split_args	*args = container_of(work,
- 						struct xfs_btree_split_args, work);
-+	bool			is_kswapd = args->kswapd;
- 	unsigned long		pflags;
--	unsigned long		new_pflags = PF_MEMALLOC_NOFS;
-+	int			memalloc_nofs;
- 
- 	/*
- 	 * we are in a transaction context here, but may also be doing work
-@@ -2822,16 +2823,17 @@ xfs_btree_split_worker(
- 	 * temporarily to ensure that we don't block waiting for memory reclaim
- 	 * in any way.
- 	 */
--	if (args->kswapd)
--		new_pflags |= PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD;
--
--	current_set_flags_nested(&pflags, new_pflags);
-+	if (is_kswapd)
-+		pflags = become_kswapd();
-+	memalloc_nofs = memalloc_nofs_save();
- 
- 	args->result = __xfs_btree_split(args->cur, args->level, args->ptrp,
- 					 args->key, args->curp, args->stat);
- 	complete(args->done);
- 
--	current_restore_flags_nested(&pflags, new_pflags);
-+	memalloc_nofs_restore(memalloc_nofs);
-+	if (is_kswapd)
-+		restore_kswapd(pflags);
- }
- 
- /*
-diff --git a/include/linux/sched/mm.h b/include/linux/sched/mm.h
-index f889e3329..b38fdcb97 100644
---- a/include/linux/sched/mm.h
-+++ b/include/linux/sched/mm.h
-@@ -303,6 +303,29 @@ static inline void memalloc_nocma_restore(unsigned int flags)
- }
- #endif
- 
-+/*
-+ * Tell the memory management code that this thread is working on behalf
-+ * of background memory reclaim (like kswapd).  That means that it will
-+ * get access to memory reserves should it need to allocate memory in
-+ * order to make forward progress.  With this great power comes great
-+ * responsibility to not exhaust those reserves.
-+ */
-+#define KSWAPD_PF_FLAGS		(PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD)
-+
-+static inline unsigned long become_kswapd(void)
-+{
-+	unsigned long flags = current->flags & KSWAPD_PF_FLAGS;
-+
-+	current->flags |= KSWAPD_PF_FLAGS;
-+
-+	return flags;
-+}
-+
-+static inline void restore_kswapd(unsigned long flags)
-+{
-+	current->flags &= ~(flags ^ KSWAPD_PF_FLAGS);
-+}
-+
- #ifdef CONFIG_MEMCG
- /**
-  * memalloc_use_memcg - Starts the remote memcg charging scope.
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index e530c19b7..66861e4db 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3873,19 +3873,7 @@ static int kswapd(void *p)
- 	if (!cpumask_empty(cpumask))
- 		set_cpus_allowed_ptr(tsk, cpumask);
- 
--	/*
--	 * Tell the memory management that we're a "memory allocator",
--	 * and that if we need more memory we should get access to it
--	 * regardless (see "__alloc_pages()"). "kswapd" should
--	 * never get caught in the normal page freeing logic.
--	 *
--	 * (Kswapd normally doesn't need memory anyway, but sometimes
--	 * you need a small amount of memory in order to be able to
--	 * page out something else, and this flag essentially protects
--	 * us from recursively trying to free more memory as we're
--	 * trying to free the first piece of memory in the first place).
--	 */
--	tsk->flags |= PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD;
-+	become_kswapd();
- 	set_freezable();
- 
- 	WRITE_ONCE(pgdat->kswapd_order, 0);
-@@ -3935,8 +3923,6 @@ static int kswapd(void *p)
- 			goto kswapd_try_sleep;
- 	}
- 
--	tsk->flags &= ~(PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD);
--
- 	return 0;
- }
- 
--- 
-2.29.2.260.ge31aba42fb
-
-
-From 93bb9cdb245d41b9c5f21b967045e2993fadd069 Mon Sep 17 00:00:00 2001
+From 90048e10cafa2d1e6881d00c3d4e6e507c0a724f Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sun, 25 Oct 2020 17:29:48 -0400
-Subject: [PATCH 15/16] fs: Break generic_file_buffered_read up into multiple
+Subject: [PATCH 14/21] fs: Break generic_file_buffered_read up into multiple
  functions
 
 This is prep work for changing generic_file_buffered_read() to use
@@ -2534,10 +2398,10 @@ Cc: Jens Axboe <axboe@kernel.dk>
  1 file changed, 261 insertions(+), 222 deletions(-)
 
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 3b0b1960c..5233e2790 100644
+index cfe4e743e..346d64439 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
-@@ -2159,6 +2159,234 @@ static void shrink_readahead_size_eio(struct file_ra_state *ra)
+@@ -2187,6 +2187,234 @@ static void shrink_readahead_size_eio(struct file_ra_state *ra)
  	ra->ra_pages /= 4;
  }
  
@@ -2772,7 +2636,7 @@ index 3b0b1960c..5233e2790 100644
  /**
   * generic_file_buffered_read - generic file read routine
   * @iocb:	the iocb to read
-@@ -2182,23 +2410,15 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2210,23 +2438,15 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  	struct address_space *mapping = filp->f_mapping;
  	struct inode *inode = mapping->host;
  	struct file_ra_state *ra = &filp->f_ra;
@@ -2799,7 +2663,7 @@ index 3b0b1960c..5233e2790 100644
  
  	/*
  	 * If we've already successfully copied some data, then we
-@@ -2209,10 +2429,8 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2237,10 +2457,8 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  		iocb->ki_flags |= IOCB_NOWAIT;
  
  	for (;;) {
@@ -2811,7 +2675,7 @@ index 3b0b1960c..5233e2790 100644
  
  		cond_resched();
  find_page:
-@@ -2221,6 +2439,14 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2249,6 +2467,14 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  			goto out;
  		}
  
@@ -2826,7 +2690,7 @@ index 3b0b1960c..5233e2790 100644
  		page = find_get_page(mapping, index);
  		if (!page) {
  			if (iocb->ki_flags & IOCB_NOIO)
-@@ -2229,8 +2455,15 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2257,8 +2483,15 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  					ra, filp,
  					index, last_index - index);
  			page = find_get_page(mapping, index);
@@ -2844,7 +2708,7 @@ index 3b0b1960c..5233e2790 100644
  		}
  		if (PageReadahead(page)) {
  			if (iocb->ki_flags & IOCB_NOIO) {
-@@ -2242,231 +2475,37 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2270,231 +2503,37 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  					index, last_index - index);
  		}
  		if (!PageUptodate(page)) {
@@ -3089,13 +2953,13 @@ index 3b0b1960c..5233e2790 100644
  }
  EXPORT_SYMBOL_GPL(generic_file_buffered_read);
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
 
 
-From 52aabb21833e86079fa8060df6da5fdc2b7aa29b Mon Sep 17 00:00:00 2001
+From 3636712c8f9a39ff8009d6b7dfd5acdb2e5cf06c Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sun, 25 Oct 2020 17:29:49 -0400
-Subject: [PATCH 16/16] fs: generic_file_buffered_read() now uses
+Subject: [PATCH 15/21] fs: generic_file_buffered_read() now uses
  find_get_pages_contig
 
 Convert generic_file_buffered_read() to get pages to read from in
@@ -3116,10 +2980,10 @@ Signed-off-by: Kent Overstreet <kent.overstreet@gmail.com>
  1 file changed, 175 insertions(+), 138 deletions(-)
 
 diff --git a/mm/filemap.c b/mm/filemap.c
-index 5233e2790..a3f87b282 100644
+index 346d64439..a3cdf9cff 100644
 --- a/mm/filemap.c
 +++ b/mm/filemap.c
-@@ -2169,67 +2169,6 @@ static int lock_page_for_iocb(struct kiocb *iocb, struct page *page)
+@@ -2197,67 +2197,6 @@ static int lock_page_for_iocb(struct kiocb *iocb, struct page *page)
  		return lock_page_killable(page);
  }
  
@@ -3187,7 +3051,7 @@ index 5233e2790..a3f87b282 100644
  static struct page *
  generic_file_buffered_read_readpage(struct kiocb *iocb,
  				    struct file *filp,
-@@ -2387,6 +2326,92 @@ generic_file_buffered_read_no_cached_page(struct kiocb *iocb,
+@@ -2415,6 +2354,92 @@ generic_file_buffered_read_no_cached_page(struct kiocb *iocb,
  	return generic_file_buffered_read_readpage(iocb, filp, mapping, page);
  }
  
@@ -3280,7 +3144,7 @@ index 5233e2790..a3f87b282 100644
  /**
   * generic_file_buffered_read - generic file read routine
   * @iocb:	the iocb to read
-@@ -2407,104 +2432,116 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
+@@ -2435,104 +2460,116 @@ ssize_t generic_file_buffered_read(struct kiocb *iocb,
  		struct iov_iter *iter, ssize_t written)
  {
  	struct file *filp = iocb->ki_filp;
@@ -3475,5 +3339,783 @@ index 5233e2790..a3f87b282 100644
  	return written ? written : error;
  }
 -- 
-2.29.2.260.ge31aba42fb
+2.30.0.rc0
+
+
+From b79e5ae38b62c05c0b765c2cc69c22e310b3e4f8 Mon Sep 17 00:00:00 2001
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Thu, 4 Jun 2020 03:05:47 -0400
+Subject: [PATCH 16/21] iomap: avoid deadlock if memory reclaim is triggered in
+ writepage path
+
+Recently there is a XFS deadlock on our server with an old kernel.
+This deadlock is caused by allocating memory in xfs_map_blocks() while
+doing writeback on behalf of memroy reclaim. Although this deadlock happens
+on an old kernel, I think it could happen on the upstream as well. This
+issue only happens once and can't be reproduced, so I haven't tried to
+reproduce it on upsteam kernel.
+
+Bellow is the call trace of this deadlock.
+[480594.790087] INFO: task redis-server:16212 blocked for more than 120 seconds.
+[480594.790087] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[480594.790088] redis-server    D ffffffff8168bd60     0 16212  14347 0x00000004
+[480594.790090]  ffff880da128f070 0000000000000082 ffff880f94a2eeb0 ffff880da128ffd8
+[480594.790092]  ffff880da128ffd8 ffff880da128ffd8 ffff880f94a2eeb0 ffff88103f9d6c40
+[480594.790094]  0000000000000000 7fffffffffffffff ffff88207ffc0ee8 ffffffff8168bd60
+[480594.790096] Call Trace:
+[480594.790101]  [<ffffffff8168dce9>] schedule+0x29/0x70
+[480594.790103]  [<ffffffff8168b749>] schedule_timeout+0x239/0x2c0
+[480594.790111]  [<ffffffff8168d28e>] io_schedule_timeout+0xae/0x130
+[480594.790114]  [<ffffffff8168d328>] io_schedule+0x18/0x20
+[480594.790116]  [<ffffffff8168bd71>] bit_wait_io+0x11/0x50
+[480594.790118]  [<ffffffff8168b895>] __wait_on_bit+0x65/0x90
+[480594.790121]  [<ffffffff811814e1>] wait_on_page_bit+0x81/0xa0
+[480594.790125]  [<ffffffff81196ad2>] shrink_page_list+0x6d2/0xaf0
+[480594.790130]  [<ffffffff811975a3>] shrink_inactive_list+0x223/0x710
+[480594.790135]  [<ffffffff81198225>] shrink_lruvec+0x3b5/0x810
+[480594.790139]  [<ffffffff8119873a>] shrink_zone+0xba/0x1e0
+[480594.790141]  [<ffffffff81198c20>] do_try_to_free_pages+0x100/0x510
+[480594.790143]  [<ffffffff8119928d>] try_to_free_mem_cgroup_pages+0xdd/0x170
+[480594.790145]  [<ffffffff811f32de>] mem_cgroup_reclaim+0x4e/0x120
+[480594.790147]  [<ffffffff811f37cc>] __mem_cgroup_try_charge+0x41c/0x670
+[480594.790153]  [<ffffffff811f5cb6>] __memcg_kmem_newpage_charge+0xf6/0x180
+[480594.790157]  [<ffffffff8118c72d>] __alloc_pages_nodemask+0x22d/0x420
+[480594.790162]  [<ffffffff811d0c7a>] alloc_pages_current+0xaa/0x170
+[480594.790165]  [<ffffffff811db8fc>] new_slab+0x30c/0x320
+[480594.790168]  [<ffffffff811dd17c>] ___slab_alloc+0x3ac/0x4f0
+[480594.790204]  [<ffffffff81685656>] __slab_alloc+0x40/0x5c
+[480594.790206]  [<ffffffff811dfc43>] kmem_cache_alloc+0x193/0x1e0
+[480594.790233]  [<ffffffffa04fab67>] kmem_zone_alloc+0x97/0x130 [xfs]
+[480594.790247]  [<ffffffffa04f90ba>] _xfs_trans_alloc+0x3a/0xa0 [xfs]
+[480594.790261]  [<ffffffffa04f915c>] xfs_trans_alloc+0x3c/0x50 [xfs]
+[480594.790276]  [<ffffffffa04e958b>] xfs_iomap_write_allocate+0x1cb/0x390 [xfs]
+[480594.790299]  [<ffffffffa04d3616>] xfs_map_blocks+0x1a6/0x210 [xfs]
+[480594.790312]  [<ffffffffa04d416b>] xfs_do_writepage+0x17b/0x550 [xfs]
+[480594.790314]  [<ffffffff8118d881>] write_cache_pages+0x251/0x4d0 [xfs]
+[480594.790338]  [<ffffffffa04d3e05>] xfs_vm_writepages+0xc5/0xe0 [xfs]
+[480594.790341]  [<ffffffff8118ebfe>] do_writepages+0x1e/0x40
+[480594.790343]  [<ffffffff811837b5>] __filemap_fdatawrite_range+0x65/0x80
+[480594.790346]  [<ffffffff81183901>] filemap_write_and_wait_range+0x41/0x90
+[480594.790360]  [<ffffffffa04df2c6>] xfs_file_fsync+0x66/0x1e0 [xfs]
+[480594.790363]  [<ffffffff81231cf5>] do_fsync+0x65/0xa0
+[480594.790365]  [<ffffffff81231fe3>] SyS_fdatasync+0x13/0x20
+[480594.790367]  [<ffffffff81698d09>] system_call_fastpath+0x16/0x1b
+
+Note that xfs_iomap_write_allocate() is replaced by xfs_convert_blocks() in
+commit 4ad765edb02a ("xfs: move xfs_iomap_write_allocate to xfs_aops.c")
+and write_cache_pages() is replaced by iomap_writepages() in
+commit 598ecfbaa742 ("iomap: lift the xfs writeback code to iomap").
+So for upsteam, the call trace should be,
+xfs_vm_writepages
+  -> iomap_writepages
+     -> write_cache_pages
+        -> iomap_do_writepage
+           -> xfs_map_blocks
+              -> xfs_convert_blocks
+                 -> xfs_bmapi_convert_delalloc
+                    -> xfs_trans_alloc //It should alloc page with GFP_NOFS
+
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+---
+ fs/iomap/buffered-io.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 10cc7979c..74321794d 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -17,6 +17,7 @@
+ #include <linux/bio.h>
+ #include <linux/sched/signal.h>
+ #include <linux/migrate.h>
++#include <linux/sched/mm.h>
+ #include "trace.h"
+ 
+ #include "../internal.h"
+@@ -1438,9 +1439,11 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
+ {
+ 	struct iomap_writepage_ctx *wpc = data;
+ 	struct inode *inode = page->mapping->host;
++	unsigned int nofs_flag;
+ 	pgoff_t end_index;
+ 	u64 end_offset;
+ 	loff_t offset;
++	int ret;
+ 
+ 	trace_iomap_writepage(inode, page_offset(page), PAGE_SIZE);
+ 
+@@ -1531,7 +1534,16 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
+ 		end_offset = offset;
+ 	}
+ 
+-	return iomap_writepage_map(wpc, wbc, inode, page, end_offset);
++	/*
++	 * We can allocate memory here while doing writeback on behalf of
++	 * memory reclaim.  To avoid memory allocation deadlocks set the
++	 * task-wide nofs context for the following operations.
++	 */
++	nofs_flag = memalloc_nofs_save();
++	ret = iomap_writepage_map(wpc, wbc, inode, page, end_offset);
++	memalloc_nofs_restore(nofs_flag);
++
++	return ret;
+ 
+ redirty:
+ 	redirty_page_for_writepage(wbc, page);
+-- 
+2.30.0.rc0
+
+
+From 10cc3b66385cec2edc51bf227bd84b4a28cc9473 Mon Sep 17 00:00:00 2001
+From: "Darrick J. Wong" <darrick.wong@oracle.com>
+Date: Thu, 17 Dec 2020 13:11:17 -0800
+Subject: [PATCH 17/21] overlayfs over xfs whiteout operation may cause
+ deadlock
+
+On Tue, Dec 15, 2020 at 08:44:27PM +0800, wenli xie wrote:
+> I tried upstream kernel 5.10 to do the test, and this issue still  can be
+> reproduced.
+
+Thanks for the report, I've condensed this down to the following:
+
+#!/bin/bash
+
+SCRATCH_MNT=/mnt
+LOAD_FACTOR=1
+TIME_FACTOR=1
+
+mkfs.xfs -f /dev/sda
+mount /dev/sda $SCRATCH_MNT
+
+mkdir $SCRATCH_MNT/lowerdir
+mkdir $SCRATCH_MNT/lowerdir1
+mkdir $SCRATCH_MNT/lowerdir/etc
+mkdir $SCRATCH_MNT/workers
+echo salts > $SCRATCH_MNT/lowerdir/etc/access.conf
+touch $SCRATCH_MNT/running
+
+stop_workers() {
+	test -e $SCRATCH_MNT/running || return
+	rm -f $SCRATCH_MNT/running
+
+	while [ "$(ls $SCRATCH_MNT/workers/ | wc -l)" -gt 0 ]; do
+		wait
+	done
+}
+
+worker() {
+	local tag="$1"
+	local mergedir="$SCRATCH_MNT/merged$tag"
+	local l="lowerdir=$SCRATCH_MNT/lowerdir:$SCRATCH_MNT/lowerdir1"
+	local u="upperdir=$SCRATCH_MNT/upperdir$tag"
+	local w="workdir=$SCRATCH_MNT/workdir$tag"
+	local i="index=off"
+
+	touch $SCRATCH_MNT/workers/$tag
+	while test -e $SCRATCH_MNT/running; do
+		rm -rf $SCRATCH_MNT/merged$tag
+		rm -rf $SCRATCH_MNT/upperdir$tag
+		rm -rf $SCRATCH_MNT/workdir$tag
+		mkdir $SCRATCH_MNT/merged$tag
+		mkdir $SCRATCH_MNT/workdir$tag
+		mkdir $SCRATCH_MNT/upperdir$tag
+
+		mount -t overlay overlay -o "$l,$u,$w,$i" $mergedir
+		mv $mergedir/etc/access.conf $mergedir/etc/access.conf.bak
+		touch $mergedir/etc/access.conf
+		mv $mergedir/etc/access.conf $mergedir/etc/access.conf.bak
+		touch $mergedir/etc/access.conf
+		umount $mergedir
+	done
+	rm -f $SCRATCH_MNT/workers/$tag
+}
+
+for i in $(seq 0 $((4 + LOAD_FACTOR)) ); do
+	worker $i &
+done
+
+sleep $((30 * TIME_FACTOR))
+stop_workers
+
+...and I think this is enough to diagnose the deadlock.
+
+This is an ABBA deadlock caused by locking the AGI buffers in the wrong
+order.  Specifically, we seem to be calling xfs_dir_rename with a
+non-null @wip and a non-null @target_ip.  In the deadlock scenario, @wip
+is an inode in AG 2, and @target_ip is an inode in AG 0 with nlink==1.
+
+First we call xfs_iunlink_remove to remove @wip from the unlinked list,
+which causes us to lock AGI 2.  Next we replace the directory entry.
+Finally, we need to droplink @target_ip.  Since @target_ip has nlink==1,
+xfs_droplink will need to put it on AGI 0's unlinked list.
+
+Unfortunately, the locking rules say that you can only lock AGIs in
+increasing order.  This means that we cannot lock AGI 0 after locking
+AGI 2 without risking deadlock.
+
+Does the attached patch fix the deadlock for you?
+
+--D
+
+From: Darrick J. Wong <darrick.wong@oracle.com>
+Subject: [PATCH] xfs: fix an ABBA deadlock in xfs_rename
+
+When overlayfs is running on top of xfs and the user unlinks a file in
+the overlay, overlayfs will create a whiteout inode and ask xfs to
+"rename" the whiteout file atop the one being unlinked.  If the file
+being unlinked loses its one nlink, we then have to put the inode on the
+unlinked list.
+
+This requires us to grab the AGI buffer of the whiteout inode to take it
+off the unlinked list (which is where whiteouts are created) and to grab
+the AGI buffer of the file being deleted.  If the whiteout was created
+in a higher numbered AG than the file being deleted, we'll lock the AGIs
+in the wrong order and deadlock.
+
+Therefore, grab all the AGI locks we think we'll need ahead of time, and
+in the correct order.
+
+Reported-by: wenli xie <wlxie7296@gmail.com>
+Fixes: 93597ae8dac0 ("xfs: Fix deadlock between AGI and AGF when target_ip exists in xfs_rename()")
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+---
+ fs/xfs/xfs_inode.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
+
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index 2bfbcf28b..099d5af6d 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -3135,6 +3135,48 @@ xfs_rename_alloc_whiteout(
+ 	return 0;
+ }
+ 
++/*
++ * For the general case of renaming files, lock all the AGI buffers we need to
++ * handle bumping the nlink of the whiteout inode off the unlinked list and to
++ * handle dropping the nlink of the target inode.  We have to do this in
++ * increasing AG order to avoid deadlocks.
++ */
++static int
++xfs_rename_lock_agis(
++	struct xfs_trans	*tp,
++	struct xfs_inode	*wip,
++	struct xfs_inode	*target_ip)
++{
++	struct xfs_mount	*mp = tp->t_mountp;
++	struct xfs_buf		*bp;
++	xfs_agnumber_t		agi_locks[2] = { NULLAGNUMBER, NULLAGNUMBER };
++	int			error;
++
++	if (wip)
++		agi_locks[0] = XFS_INO_TO_AGNO(mp, wip->i_ino);
++
++	if (target_ip && VFS_I(target_ip)->i_nlink == 1)
++		agi_locks[1] = XFS_INO_TO_AGNO(mp, target_ip->i_ino);
++
++	if (agi_locks[0] != NULLAGNUMBER && agi_locks[1] != NULLAGNUMBER &&
++	    agi_locks[0] > agi_locks[1])
++		swap(agi_locks[0], agi_locks[1]);
++
++	if (agi_locks[0] != NULLAGNUMBER) {
++		error = xfs_read_agi(mp, tp, agi_locks[0], &bp);
++		if (error)
++			return error;
++	}
++
++	if (agi_locks[1] != NULLAGNUMBER) {
++		error = xfs_read_agi(mp, tp, agi_locks[1], &bp);
++		if (error)
++			return error;
++	}
++
++	return 0;
++}
++
+ /*
+  * xfs_rename
+  */
+@@ -3265,6 +3307,10 @@ xfs_rename(
+ 		}
+ 	}
+ 
++	error = xfs_rename_lock_agis(tp, wip, target_ip);
++	if (error)
++		return error;
++
+ 	/*
+ 	 * Directory entry creation below may acquire the AGF. Remove
+ 	 * the whiteout from the unlinked list first to preserve correct
+-- 
+2.30.0.rc0
+
+
+From b344d3922cc1115b4ab6139227cf66389003d108 Mon Sep 17 00:00:00 2001
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Date: Tue, 22 Dec 2020 09:21:28 +0800
+Subject: [PATCH 18/21] mm: Add become_kswapd and restore_kswapd
+
+Since XFS needs to pretend to be kswapd in some of its worker threads,
+create methods to save & restore kswapd state.  Don't bother restoring
+kswapd state in kswapd -- the only time we reach this code is when we're
+exiting and the task_struct is about to be destroyed anyway.
+
+Cc: Dave Chinner <david@fromorbit.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+---
+ fs/xfs/libxfs/xfs_btree.c | 14 ++++++++------
+ include/linux/sched/mm.h  | 22 ++++++++++++++++++++++
+ mm/vmscan.c               | 16 +---------------
+ 3 files changed, 31 insertions(+), 21 deletions(-)
+
+diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
+index 2d25bab68..a04a44238 100644
+--- a/fs/xfs/libxfs/xfs_btree.c
++++ b/fs/xfs/libxfs/xfs_btree.c
+@@ -2813,8 +2813,9 @@ xfs_btree_split_worker(
+ {
+ 	struct xfs_btree_split_args	*args = container_of(work,
+ 						struct xfs_btree_split_args, work);
++	bool			is_kswapd = args->kswapd;
+ 	unsigned long		pflags;
+-	unsigned long		new_pflags = PF_MEMALLOC_NOFS;
++	int			memalloc_nofs;
+ 
+ 	/*
+ 	 * we are in a transaction context here, but may also be doing work
+@@ -2822,16 +2823,17 @@ xfs_btree_split_worker(
+ 	 * temporarily to ensure that we don't block waiting for memory reclaim
+ 	 * in any way.
+ 	 */
+-	if (args->kswapd)
+-		new_pflags |= PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD;
+-
+-	current_set_flags_nested(&pflags, new_pflags);
++	if (is_kswapd)
++		pflags = become_kswapd();
++	memalloc_nofs = memalloc_nofs_save();
+ 
+ 	args->result = __xfs_btree_split(args->cur, args->level, args->ptrp,
+ 					 args->key, args->curp, args->stat);
+ 	complete(args->done);
+ 
+-	current_restore_flags_nested(&pflags, new_pflags);
++	memalloc_nofs_restore(memalloc_nofs);
++	if (is_kswapd)
++		restore_kswapd(pflags);
+ }
+ 
+ /*
+diff --git a/include/linux/sched/mm.h b/include/linux/sched/mm.h
+index d5ece7a9a..7195e542a 100644
+--- a/include/linux/sched/mm.h
++++ b/include/linux/sched/mm.h
+@@ -278,6 +278,28 @@ static inline void memalloc_nocma_restore(unsigned int flags)
+ }
+ #endif
+ 
++/*
++ * Tell the memory management code that this thread is working on behalf
++ * of background memory reclaim (like kswapd).  That means that it will
++ * get access to memory reserves should it need to allocate memory in
++ * order to make forward progress.  With this great power comes great
++ * responsibility to not exhaust those reserves.
++ */
++#define KSWAPD_PF_FLAGS		(PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD)
++
++static inline unsigned long become_kswapd(void)
++{
++	unsigned long flags = current->flags & KSWAPD_PF_FLAGS;
++
++	current->flags |= KSWAPD_PF_FLAGS;
++	return flags;
++}
++
++static inline void restore_kswapd(unsigned long flags)
++{
++	current->flags = (current->flags & ~KSWAPD_PF_FLAGS) | flags;
++}
++
+ #ifdef CONFIG_MEMCG
+ DECLARE_PER_CPU(struct mem_cgroup *, int_active_memcg);
+ /**
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 402d2b886..8fd3d6164 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -3871,19 +3871,7 @@ static int kswapd(void *p)
+ 	if (!cpumask_empty(cpumask))
+ 		set_cpus_allowed_ptr(tsk, cpumask);
+ 
+-	/*
+-	 * Tell the memory management that we're a "memory allocator",
+-	 * and that if we need more memory we should get access to it
+-	 * regardless (see "__alloc_pages()"). "kswapd" should
+-	 * never get caught in the normal page freeing logic.
+-	 *
+-	 * (Kswapd normally doesn't need memory anyway, but sometimes
+-	 * you need a small amount of memory in order to be able to
+-	 * page out something else, and this flag essentially protects
+-	 * us from recursively trying to free more memory as we're
+-	 * trying to free the first piece of memory in the first place).
+-	 */
+-	tsk->flags |= PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD;
++	become_kswapd();
+ 	set_freezable();
+ 
+ 	WRITE_ONCE(pgdat->kswapd_order, 0);
+@@ -3933,8 +3921,6 @@ static int kswapd(void *p)
+ 			goto kswapd_try_sleep;
+ 	}
+ 
+-	tsk->flags &= ~(PF_MEMALLOC | PF_SWAPWRITE | PF_KSWAPD);
+-
+ 	return 0;
+ }
+ 
+-- 
+2.30.0.rc0
+
+
+From af49a2faa7733dcbc2ea65f548e9d2021092c1d3 Mon Sep 17 00:00:00 2001
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Tue, 22 Dec 2020 09:21:29 +0800
+Subject: [PATCH 19/21] xfs: use memalloc_nofs_{save,restore} in xfs
+ transaction
+
+Introduce a new API to mark the start and end of XFS transactions.
+For now, just save and restore the memalloc_nofs flags.
+
+The new helpers as follows,
+- xfs_trans_context_set
+  Mark the start of XFS transactions
+- xfs_trans_context_clear
+  Mark the end of XFS transactions
+
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+---
+ fs/xfs/xfs_aops.c  |  4 ++--
+ fs/xfs/xfs_linux.h |  4 ----
+ fs/xfs/xfs_trans.c | 13 +++++++------
+ fs/xfs/xfs_trans.h | 12 ++++++++++++
+ 4 files changed, 21 insertions(+), 12 deletions(-)
+
+diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
+index 4304c6416..2371187b7 100644
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -62,7 +62,7 @@ xfs_setfilesize_trans_alloc(
+ 	 * We hand off the transaction to the completion thread now, so
+ 	 * clear the flag here.
+ 	 */
+-	current_restore_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++	xfs_trans_context_clear(tp);
+ 	return 0;
+ }
+ 
+@@ -125,7 +125,7 @@ xfs_setfilesize_ioend(
+ 	 * thus we need to mark ourselves as being in a transaction manually.
+ 	 * Similarly for freeze protection.
+ 	 */
+-	current_set_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++	xfs_trans_context_set(tp);
+ 	__sb_writers_acquired(VFS_I(ip)->i_sb, SB_FREEZE_FS);
+ 
+ 	/* we abort the update if there was an IO error */
+diff --git a/fs/xfs/xfs_linux.h b/fs/xfs/xfs_linux.h
+index 5b7a1e201..6ab0f8043 100644
+--- a/fs/xfs/xfs_linux.h
++++ b/fs/xfs/xfs_linux.h
+@@ -102,10 +102,6 @@ typedef __u32			xfs_nlink_t;
+ #define xfs_cowb_secs		xfs_params.cowb_timer.val
+ 
+ #define current_cpu()		(raw_smp_processor_id())
+-#define current_set_flags_nested(sp, f)		\
+-		(*(sp) = current->flags, current->flags |= (f))
+-#define current_restore_flags_nested(sp, f)	\
+-		(current->flags = ((current->flags & ~(f)) | (*(sp) & (f))))
+ 
+ #define NBBY		8		/* number of bits per byte */
+ 
+diff --git a/fs/xfs/xfs_trans.c b/fs/xfs/xfs_trans.c
+index c94e71f74..11d390f0d 100644
+--- a/fs/xfs/xfs_trans.c
++++ b/fs/xfs/xfs_trans.c
+@@ -154,7 +154,7 @@ xfs_trans_reserve(
+ 	bool			rsvd = (tp->t_flags & XFS_TRANS_RESERVE) != 0;
+ 
+ 	/* Mark this thread as being in a transaction */
+-	current_set_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++	xfs_trans_context_set(tp);
+ 
+ 	/*
+ 	 * Attempt to reserve the needed disk blocks by decrementing
+@@ -164,7 +164,7 @@ xfs_trans_reserve(
+ 	if (blocks > 0) {
+ 		error = xfs_mod_fdblocks(mp, -((int64_t)blocks), rsvd);
+ 		if (error != 0) {
+-			current_restore_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++			xfs_trans_context_clear(tp);
+ 			return -ENOSPC;
+ 		}
+ 		tp->t_blk_res += blocks;
+@@ -241,7 +241,7 @@ xfs_trans_reserve(
+ 		tp->t_blk_res = 0;
+ 	}
+ 
+-	current_restore_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++	xfs_trans_context_clear(tp);
+ 
+ 	return error;
+ }
+@@ -878,7 +878,7 @@ __xfs_trans_commit(
+ 
+ 	xfs_log_commit_cil(mp, tp, &commit_lsn, regrant);
+ 
+-	current_restore_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++	xfs_trans_context_clear(tp);
+ 	xfs_trans_free(tp);
+ 
+ 	/*
+@@ -910,7 +910,8 @@ __xfs_trans_commit(
+ 			xfs_log_ticket_ungrant(mp->m_log, tp->t_ticket);
+ 		tp->t_ticket = NULL;
+ 	}
+-	current_restore_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++
++	xfs_trans_context_clear(tp);
+ 	xfs_trans_free_items(tp, !!error);
+ 	xfs_trans_free(tp);
+ 
+@@ -971,7 +972,7 @@ xfs_trans_cancel(
+ 	}
+ 
+ 	/* mark this thread as no longer being in a transaction */
+-	current_restore_flags_nested(&tp->t_pflags, PF_MEMALLOC_NOFS);
++	xfs_trans_context_clear(tp);
+ 
+ 	xfs_trans_free_items(tp, dirty);
+ 	xfs_trans_free(tp);
+diff --git a/fs/xfs/xfs_trans.h b/fs/xfs/xfs_trans.h
+index 084658946..44b11c64a 100644
+--- a/fs/xfs/xfs_trans.h
++++ b/fs/xfs/xfs_trans.h
+@@ -268,4 +268,16 @@ xfs_trans_item_relog(
+ 	return lip->li_ops->iop_relog(lip, tp);
+ }
+ 
++static inline void
++xfs_trans_context_set(struct xfs_trans *tp)
++{
++	tp->t_pflags = memalloc_nofs_save();
++}
++
++static inline void
++xfs_trans_context_clear(struct xfs_trans *tp)
++{
++	memalloc_nofs_restore(tp->t_pflags);
++}
++
+ #endif	/* __XFS_TRANS_H__ */
+-- 
+2.30.0.rc0
+
+
+From f4e70f6b60a51cdb2e9749c4987f30c7b65bb513 Mon Sep 17 00:00:00 2001
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Tue, 22 Dec 2020 09:21:30 +0800
+Subject: [PATCH 20/21] xfs: introduce xfs_trans_context_swap() for rolling
+ transaction
+
+In the rolling transaction, thread's NOFS state is transferred from the
+old transaction to the new transaction, and then the NOFS state stored
+in the old one should be cleared.
+
+Suggested-by: Dave Chinner <david@fromorbit.com>
+Cc: Darrick J. Wong <darrick.wong@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+---
+ fs/xfs/xfs_trans.c |  4 +++-
+ fs/xfs/xfs_trans.h | 10 +++++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/fs/xfs/xfs_trans.c b/fs/xfs/xfs_trans.c
+index 11d390f0d..733e0113a 100644
+--- a/fs/xfs/xfs_trans.c
++++ b/fs/xfs/xfs_trans.c
+@@ -119,7 +119,9 @@ xfs_trans_dup(
+ 
+ 	ntp->t_rtx_res = tp->t_rtx_res - tp->t_rtx_res_used;
+ 	tp->t_rtx_res = tp->t_rtx_res_used;
+-	ntp->t_pflags = tp->t_pflags;
++
++	/* Associate the new transaction with this thread. */
++	xfs_trans_context_swap(tp, ntp);
+ 
+ 	/* move deferred ops over to the new tp */
+ 	xfs_defer_move(ntp, tp);
+diff --git a/fs/xfs/xfs_trans.h b/fs/xfs/xfs_trans.h
+index 44b11c64a..b428704ee 100644
+--- a/fs/xfs/xfs_trans.h
++++ b/fs/xfs/xfs_trans.h
+@@ -277,7 +277,15 @@ xfs_trans_context_set(struct xfs_trans *tp)
+ static inline void
+ xfs_trans_context_clear(struct xfs_trans *tp)
+ {
+-	memalloc_nofs_restore(tp->t_pflags);
++	if (!tp->t_flags)
++		memalloc_nofs_restore(tp->t_pflags);
++}
++
++static inline void
++xfs_trans_context_swap(struct xfs_trans *tp, struct xfs_trans *ntp)
++{
++	ntp->t_pflags = tp->t_pflags;
++	tp->t_flags = -1;
+ }
+ 
+ #endif	/* __XFS_TRANS_H__ */
+-- 
+2.30.0.rc0
+
+
+From 286767fae72e6b53eef04c5a65372539ae39f7db Mon Sep 17 00:00:00 2001
+From: Yafang Shao <laoar.shao@gmail.com>
+Date: Tue, 22 Dec 2020 09:21:31 +0800
+Subject: [PATCH 21/21] xfs: use current->journal_info to avoid transaction
+ reservation recursion
+
+PF_FSTRANS which is used to avoid transaction reservation recursion, is
+dropped since commit 9070733b4efa ("xfs: abstract PF_FSTRANS to
+PF_MEMALLOC_NOFS") and replaced by PF_MEMALLOC_NOFS which means to avoid
+filesystem reclaim recursion.
+
+As these two flags have different meanings, we'd better reintroduce
+PF_FSTRANS back. To avoid wasting the space of PF_* flags in task_struct,
+we can reuse the current->journal_info to do that, per Willy. As the
+check of transaction reservation recursion is used by XFS only, we can
+move the check into xfs_vm_writepage(s), per Dave.
+
+Cc: Darrick J. Wong <darrick.wong@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Jeff Layton <jlayton@redhat.com>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+---
+ fs/iomap/buffered-io.c |  7 -------
+ fs/xfs/xfs_aops.c      | 10 ++++++++++
+ fs/xfs/xfs_trans.h     | 22 +++++++++++++++++++---
+ 3 files changed, 29 insertions(+), 10 deletions(-)
+
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 74321794d..be6b8ed55 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1461,13 +1461,6 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
+ 			PF_MEMALLOC))
+ 		goto redirty;
+ 
+-	/*
+-	 * Given that we do not allow direct reclaim to call us, we should
+-	 * never be called in a recursive filesystem reclaim context.
+-	 */
+-	if (WARN_ON_ONCE(current->flags & PF_MEMALLOC_NOFS))
+-		goto redirty;
+-
+ 	/*
+ 	 * Is this page beyond the end of the file?
+ 	 *
+diff --git a/fs/xfs/xfs_aops.c b/fs/xfs/xfs_aops.c
+index 2371187b7..eed4881d4 100644
+--- a/fs/xfs/xfs_aops.c
++++ b/fs/xfs/xfs_aops.c
+@@ -568,6 +568,12 @@ xfs_vm_writepage(
+ {
+ 	struct xfs_writepage_ctx wpc = { };
+ 
++	if (WARN_ON_ONCE(xfs_trans_context_active())) {
++		redirty_page_for_writepage(wbc, page);
++		unlock_page(page);
++		return 0;
++	}
++
+ 	return iomap_writepage(page, wbc, &wpc.ctx, &xfs_writeback_ops);
+ }
+ 
+@@ -579,6 +585,10 @@ xfs_vm_writepages(
+ 	struct xfs_writepage_ctx wpc = { };
+ 
+ 	xfs_iflags_clear(XFS_I(mapping->host), XFS_ITRUNCATED);
++
++	if (WARN_ON_ONCE(xfs_trans_context_active()))
++		return 0;
++
+ 	return iomap_writepages(mapping, wbc, &wpc.ctx, &xfs_writeback_ops);
+ }
+ 
+diff --git a/fs/xfs/xfs_trans.h b/fs/xfs/xfs_trans.h
+index b428704ee..e2f3251d6 100644
+--- a/fs/xfs/xfs_trans.h
++++ b/fs/xfs/xfs_trans.h
+@@ -268,24 +268,40 @@ xfs_trans_item_relog(
+ 	return lip->li_ops->iop_relog(lip, tp);
+ }
+ 
++static inline bool
++xfs_trans_context_active(void)
++{
++	return current->journal_info != NULL;
++}
++
+ static inline void
+ xfs_trans_context_set(struct xfs_trans *tp)
+ {
++	ASSERT(!current->journal_info);
++	current->journal_info = tp;
+ 	tp->t_pflags = memalloc_nofs_save();
+ }
+ 
+ static inline void
+ xfs_trans_context_clear(struct xfs_trans *tp)
+ {
+-	if (!tp->t_flags)
+-		memalloc_nofs_restore(tp->t_pflags);
++	/*
++	 * If we handed over the context via xfs_trans_context_swap() then
++	 * the context is no longer needed to clear.
++	 */
++	if (current->journal_info != tp)
++		return;
++
++	current->journal_info = NULL;
++	memalloc_nofs_restore(tp->t_pflags);
+ }
+ 
+ static inline void
+ xfs_trans_context_swap(struct xfs_trans *tp, struct xfs_trans *ntp)
+ {
++	ASSERT(current->journal_info == tp);
++	current->journal_info = ntp;
+ 	ntp->t_pflags = tp->t_pflags;
+-	tp->t_flags = -1;
+ }
+ 
+ #endif	/* __XFS_TRANS_H__ */
+-- 
+2.30.0.rc0
 
