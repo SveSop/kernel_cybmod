@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,10956 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.10.4-cybmod1 Kernel Configuration
++# Linux/x86 5.10.5-cybmod2 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
@@ -96,10 +96,9 @@ new file mode 100644
 +#
 +CONFIG_TICK_ONESHOT=y
 +CONFIG_NO_HZ_COMMON=y
-+CONFIG_NO_HZ_FULL=y
 +# CONFIG_HZ_PERIODIC is not set
-+# CONFIG_NO_HZ_IDLE is not set
-+CONFIG_NO_HZ_FULL_NODEF=y
++CONFIG_NO_HZ_IDLE=y
++# CONFIG_NO_HZ_FULL_NODEF is not set
 +CONFIG_CONTEXT_TRACKING=y
 +# CONFIG_NO_HZ is not set
 +CONFIG_HIGH_RES_TIMERS=y
@@ -115,6 +114,7 @@ new file mode 100644
 +# CPU/Task time and stats accounting
 +#
 +CONFIG_VIRT_CPU_ACCOUNTING=y
++# CONFIG_TICK_CPU_ACCOUNTING is not set
 +CONFIG_VIRT_CPU_ACCOUNTING_GEN=y
 +# CONFIG_IRQ_TIME_ACCOUNTING is not set
 +CONFIG_BSD_PROCESS_ACCT=y
@@ -435,12 +435,12 @@ new file mode 100644
 +CONFIG_SCHED_MC=y
 +CONFIG_SCHED_MC_PRIO=y
 +# CONFIG_RQ_NONE is not set
-+# CONFIG_RQ_SMT is not set
-+CONFIG_RQ_MC=y
++CONFIG_RQ_SMT=y
++# CONFIG_RQ_MC is not set
 +# CONFIG_RQ_MC_LLC is not set
 +# CONFIG_RQ_SMP is not set
 +# CONFIG_RQ_ALL is not set
-+CONFIG_SHARERQ=2
++CONFIG_SHARERQ=1
 +CONFIG_X86_LOCAL_APIC=y
 +CONFIG_X86_IO_APIC=y
 +CONFIG_X86_REROUTE_FOR_BROKEN_BOOT_IRQS=y
