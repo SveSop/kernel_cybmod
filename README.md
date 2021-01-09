@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.10.5  
+0000 : Kernel patch 5.10.6  
 0001 : 5.10 ck1 combined patchset with MuQSS scheduler  
 0002 : 5.10 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
@@ -25,7 +25,7 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default MuQSS scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE**  
+**This config has default MuQSS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
 **MuQSS currently running with CONFIG_RQ_SMT=y setting**  
 **Also see [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/) for scheduler info**  
 

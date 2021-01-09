@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10956 @@
+@@ -0,0 +1,10955 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.10.5-cybmod2 Kernel Configuration
++# Linux/x86 5.10.6-cybmod3 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
@@ -96,9 +96,10 @@ new file mode 100644
 +#
 +CONFIG_TICK_ONESHOT=y
 +CONFIG_NO_HZ_COMMON=y
++CONFIG_NO_HZ_FULL=y
 +# CONFIG_HZ_PERIODIC is not set
-+CONFIG_NO_HZ_IDLE=y
-+# CONFIG_NO_HZ_FULL_NODEF is not set
++# CONFIG_NO_HZ_IDLE is not set
++CONFIG_NO_HZ_FULL_NODEF=y
 +CONFIG_CONTEXT_TRACKING=y
 +# CONFIG_NO_HZ is not set
 +CONFIG_HIGH_RES_TIMERS=y
@@ -114,7 +115,6 @@ new file mode 100644
 +# CPU/Task time and stats accounting
 +#
 +CONFIG_VIRT_CPU_ACCOUNTING=y
-+# CONFIG_TICK_CPU_ACCOUNTING is not set
 +CONFIG_VIRT_CPU_ACCOUNTING_GEN=y
 +# CONFIG_IRQ_TIME_ACCOUNTING is not set
 +CONFIG_BSD_PROCESS_ACCT=y
@@ -10529,7 +10529,6 @@ new file mode 100644
 +CONFIG_NEED_SG_DMA_LENGTH=y
 +CONFIG_NEED_DMA_MAP_STATE=y
 +CONFIG_ARCH_DMA_ADDR_T_64BIT=y
-+CONFIG_DMA_VIRT_OPS=y
 +CONFIG_SWIOTLB=y
 +CONFIG_DMA_CMA=y
 +# CONFIG_DMA_PERNUMA_CMA is not set
