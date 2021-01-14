@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.10.6  
+0000 : Kernel patch 5.10.7  
 0001 : 5.10 ck1 combined patchset with MuQSS scheduler  
 0002 : 5.10 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
@@ -19,6 +19,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0033 : Block patchset  
 0034 : mm patchset  
 0035 : BFQ disk patchset  
+0036 : Add support for ZSTD compression  
 0040 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  

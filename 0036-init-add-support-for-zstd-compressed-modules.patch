@@ -1,6 +1,6 @@
-From e3794c5cedf04f7a0dd8e2ceda3aa2e677ffe5f7 Mon Sep 17 00:00:00 2001
+From 4860619260b05c877989bc939d992c9b00780a39 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 8 Jan 2021 18:48:23 -0800
+Date: Wed, 13 Jan 2021 14:01:18 -0800
 Subject: [PATCH] init: add support for zstd compressed modules
 
 kmod 28 supports modules compressed in zstd format so let's add this possibility to kernel.
@@ -12,7 +12,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index bb431fd47..b0404d00b 100644
+index 9b6c90eed..291c56216 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1049,8 +1049,8 @@ endif # INSTALL_MOD_STRIP
@@ -31,7 +31,7 @@ index bb431fd47..b0404d00b 100644
      mod_compress_cmd = $(XZ) -f
    endif # CONFIG_MODULE_COMPRESS_XZ
 +  ifdef CONFIG_MODULE_COMPRESS_ZSTD
-+    mod_compress_cmd = $(ZSTD) -T0 -20 --ultra --rm -f
++    mod_compress_cmd = $(ZSTD) -T0 -9 --rm -f
 +  endif # CONFIG_MODULE_COMPRESS_ZSTD
  endif # CONFIG_MODULE_COMPRESS
  export mod_compress_cmd
