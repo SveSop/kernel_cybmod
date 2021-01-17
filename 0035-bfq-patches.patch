@@ -1,7 +1,7 @@
-From 8afe9a2af25ce4d2851a3b41c008734b0d3a60c8 Mon Sep 17 00:00:00 2001
+From fed978bfc608e6703c3a8a835b2a2ffa1dbd049d Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Thu, 9 Apr 2020 17:09:14 +0000
-Subject: [PATCH 01/15] bfq: Fix check detecting whether waker queue should be
+Subject: [PATCH 01/16] bfq: Fix check detecting whether waker queue should be
  selected
 
 The check in bfq_select_queue() checking whether a waker queue should be
@@ -33,10 +33,10 @@ index 9e81d1052..f0553a275 100644
 2.30.0.81.g72c4083ddf
 
 
-From 68cb45ad70b8652daba056294a06098c7dc539fa Mon Sep 17 00:00:00 2001
+From d67947eb2f63672a5f31ba7b629009018ac4d490 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Thu, 9 Apr 2020 17:09:15 +0000
-Subject: [PATCH 02/15] bfq: Allow short_ttime queues to have waker
+Subject: [PATCH 02/16] bfq: Allow short_ttime queues to have waker
 
 Currently queues that have average think time shorter than slice_idle
 cannot have waker. However this requirement is too strict. E.g. dbench
@@ -70,10 +70,10 @@ index f0553a275..a2ed043db 100644
 2.30.0.81.g72c4083ddf
 
 
-From 78726241ac9aeed8c76d84c406495992dc63491c Mon Sep 17 00:00:00 2001
+From 2ca3dd72e8612d093945690a780bc4592736c3ce Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Fri, 5 Jun 2020 14:16:16 +0000
-Subject: [PATCH 03/15] bfq: Avoid false bfq queue merging
+Subject: [PATCH 03/16] bfq: Avoid false bfq queue merging
 
 bfq_setup_cooperator() uses bfqd->in_serv_last_pos so detect whether it
 makes sense to merge current bfq queue with the in-service queue.
@@ -124,10 +124,10 @@ index a2ed043db..465111b04 100644
 2.30.0.81.g72c4083ddf
 
 
-From e56d7aabd08b95c681cc83f1255f95476386a463 Mon Sep 17 00:00:00 2001
+From 85844a1d16a46844683707387d14ab2dac280f8d Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Fri, 5 Jun 2020 14:16:17 +0000
-Subject: [PATCH 04/15] bfq: Use 'ttime' local variable
+Subject: [PATCH 04/16] bfq: Use 'ttime' local variable
 
 Use local variable 'ttime' instead of dereferencing bfqq.
 
@@ -153,10 +153,10 @@ index 465111b04..07c24ea68 100644
 2.30.0.81.g72c4083ddf
 
 
-From 94adf5e26e8a0fc39d2035ea4908ccf801ca7c98 Mon Sep 17 00:00:00 2001
+From 81a4c538e0dbb406c8c158b70d5f4d6b2ee9c09d Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Fri, 5 Jun 2020 14:16:18 +0000
-Subject: [PATCH 05/15] bfq: Use only idle IO periods for think time
+Subject: [PATCH 05/16] bfq: Use only idle IO periods for think time
  calculations
 
 Currently whenever bfq queue has a request queued we add now -
@@ -200,10 +200,10 @@ index 07c24ea68..6df94cb9a 100644
 2.30.0.81.g72c4083ddf
 
 
-From 149f8049098ac5a78fe4f8122ef4c6e3f357ae24 Mon Sep 17 00:00:00 2001
+From 568828b71588f07ba9afb385cba7338c26043df8 Mon Sep 17 00:00:00 2001
 From: Xiang Chen <chenxiang66@hisilicon.com>
 Date: Tue, 29 Sep 2020 09:05:37 +0000
-Subject: [PATCH 06/15] block:elevator:remove un-used input parameter
+Subject: [PATCH 06/16] block:elevator:remove un-used input parameter
  request_queue in some functions
 
 In elevator.c, the input parameter request_queue is not used in function
@@ -334,10 +334,10 @@ index bacc40a0b..3821cc1de 100644
 2.30.0.81.g72c4083ddf
 
 
-From aa2688f5cfaeadec052f51b297f8c654a9208f5f Mon Sep 17 00:00:00 2001
+From 74e055a2b3387f39b270f19555590e911ad6fadd Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Thu, 10 Dec 2020 09:44:33 +0000
-Subject: [PATCH 07/15] bfq: Fix computation of shallow depth
+Subject: [PATCH 07/16] bfq: Fix computation of shallow depth
 
 BFQ computes number of tags it allows to be allocated for each request type
 based on tag bitmap. However it uses 1 << bitmap.shift as number of
@@ -387,10 +387,10 @@ index 4f7071ced..9c2274d5c 100644
 2.30.0.81.g72c4083ddf
 
 
-From 5d93bb3e884234f9587b50b5c86d50ad0da4f874 Mon Sep 17 00:00:00 2001
+From 29da40b711d6af39b167a9ed5feb9fccbcbb5ee5 Mon Sep 17 00:00:00 2001
 From: huhai <huhai () tj ! kylinos ! cn>
 Date: Fri, 25 Dec 2020 13:00:16 +0000
-Subject: [PATCH 08/15] bfq: don't duplicate code for different paths
+Subject: [PATCH 08/16] bfq: don't duplicate code for different paths
 
 As we can see, returns parent_sched_may_change whether
 sd->next_in_service changes or not, so remove this judgment.
@@ -418,10 +418,10 @@ index 26776bdbd..070e34a7f 100644
 2.30.0.81.g72c4083ddf
 
 
-From a6f44a8c99049201c36622b84ca6134f3a5d85f4 Mon Sep 17 00:00:00 2001
+From 534bd1d782406c13e8449e4fb377fa7e54ecbb52 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 13 Jan 2021 17:54:09 +0100
-Subject: [PATCH 09/15] Revert "bfq: Use only idle IO periods for think time
+Subject: [PATCH 09/16] Revert "bfq: Use only idle IO periods for think time
  calculations"
 
 This reverts commit 94adf5e26e8a0fc39d2035ea4908ccf801ca7c98.
@@ -457,10 +457,10 @@ index 9c2274d5c..4e2eacf1b 100644
 2.30.0.81.g72c4083ddf
 
 
-From 57124e0e3977b34c39f07abbba70fa906d57bc74 Mon Sep 17 00:00:00 2001
+From 5e6f4b672dd3bb1c49289c91b059fbd6f16c2ea1 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 13 Jan 2021 17:54:11 +0100
-Subject: [PATCH 10/15] Revert "bfq: Use 'ttime' local variable"
+Subject: [PATCH 10/16] Revert "bfq: Use 'ttime' local variable"
 
 This reverts commit e56d7aabd08b95c681cc83f1255f95476386a463.
 
@@ -486,10 +486,10 @@ index 4e2eacf1b..d1c190d66 100644
 2.30.0.81.g72c4083ddf
 
 
-From 67eb052cf5bb69612425611e329c45a05a73c8f6 Mon Sep 17 00:00:00 2001
+From c880124a0c9811922c6986d3f4887ba9652de659 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 13 Jan 2021 17:54:12 +0100
-Subject: [PATCH 11/15] Revert "bfq: Avoid false bfq queue merging"
+Subject: [PATCH 11/16] Revert "bfq: Avoid false bfq queue merging"
 
 This reverts commit 78726241ac9aeed8c76d84c406495992dc63491c.
 
@@ -514,10 +514,10 @@ index d1c190d66..2aff875c9 100644
 2.30.0.81.g72c4083ddf
 
 
-From d3c50f47ff27b95a3b01357c47ccab1190b03669 Mon Sep 17 00:00:00 2001
+From ec13d9da1c263cf2f7507a95186fe28b108afce2 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:25 +0000
-Subject: [PATCH 12/15] bfq: Avoid false bfq queue merging
+Subject: [PATCH 12/16] bfq: Avoid false bfq queue merging
 
 bfq_setup_cooperator() uses bfqd->in_serv_last_pos so detect whether it
 makes sense to merge current bfq queue with the in-service queue.
@@ -569,10 +569,10 @@ index 2aff875c9..8fc57491e 100644
 2.30.0.81.g72c4083ddf
 
 
-From 179e3b61cf6dd36320889fb91adcf6df89b42760 Mon Sep 17 00:00:00 2001
+From 72e07bea96d228d58bbb01eada78abb62c7f9f36 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:26 +0000
-Subject: [PATCH 13/15] bfq: Use 'ttime' local variable
+Subject: [PATCH 13/16] bfq: Use 'ttime' local variable
 
 Use local variable 'ttime' instead of dereferencing bfqq.
 
@@ -599,10 +599,10 @@ index 8fc57491e..db32d2ee9 100644
 2.30.0.81.g72c4083ddf
 
 
-From bef7ab1076cc72ddd9af765868f22fa8082b7a93 Mon Sep 17 00:00:00 2001
+From 52cd344f5c02382e3d1e58f9ca6a43369f436823 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:27 +0000
-Subject: [PATCH 14/15] bfq: Use only idle IO periods for think time
+Subject: [PATCH 14/16] bfq: Use only idle IO periods for think time
  calculations
 
 Currently whenever bfq queue has a request queued we add now -
@@ -647,10 +647,10 @@ index db32d2ee9..253c71619 100644
 2.30.0.81.g72c4083ddf
 
 
-From 85a92f48284e929a3b45042a598e4f2f51740a01 Mon Sep 17 00:00:00 2001
+From 3c32c947cff5601c65271d46c351d8acbebb6e1b Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 13:05:15 +0000
-Subject: [PATCH 15/15] bfq: Remove stale comment
+Subject: [PATCH 15/16] bfq: Remove stale comment
 
 Remove comment paragraph that was made stale by a fix of shallow depth
 computation.
@@ -679,6 +679,147 @@ index 253c71619..3194d6cf0 100644
  	 */
  	/* no more than 50% of tags for async I/O */
  	bfqd->word_depths[0][0] = max(bt->sb.depth >> 1, 1U);
+-- 
+2.30.0.81.g72c4083ddf
+
+
+From f079d0a5f6b2918b2c62ff4abd9d814423b28e42 Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3 () huawei ! com>
+Date: Thu, 14 Jan 2021 12:24:26 +0000
+Subject: [PATCH 16/16] bfq: don't check active group if bfq.weight is not
+ changed
+
+Now the group scheduling in BFQ depends on the check of active group,
+but in most cases group scheduling is not used and the checking
+of active group will cause bfq_asymmetric_scenario() and its caller
+bfq_better_to_idle() to always return true, so the throughput
+will be impacted if the workload doesn't need idle (e.g. random rw)
+
+To fix that, adding check in bfq_io_set_weight_legacy() and
+bfq_pd_init() to check whether or not group scheduling is used
+(a non-default weight is used). If not, there is no need
+to check active group.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+---
+ block/bfq-cgroup.c  | 14 ++++++++++++--
+ block/bfq-iosched.c |  8 +++-----
+ block/bfq-iosched.h | 19 +++++++++++++++++++
+ 3 files changed, 34 insertions(+), 7 deletions(-)
+
+diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
+index b791e2041..b4ac42c4b 100644
+--- a/block/bfq-cgroup.c
++++ b/block/bfq-cgroup.c
+@@ -505,12 +505,18 @@ static struct blkcg_policy_data *bfq_cpd_alloc(gfp_t gfp)
+ 	return &bgd->pd;
+ }
+ 
++static inline int bfq_dft_weight(void)
++{
++	return cgroup_subsys_on_dfl(io_cgrp_subsys) ?
++	       CGROUP_WEIGHT_DFL : BFQ_WEIGHT_LEGACY_DFL;
++
++}
++
+ static void bfq_cpd_init(struct blkcg_policy_data *cpd)
+ {
+ 	struct bfq_group_data *d = cpd_to_bfqgd(cpd);
+ 
+-	d->weight = cgroup_subsys_on_dfl(io_cgrp_subsys) ?
+-		CGROUP_WEIGHT_DFL : BFQ_WEIGHT_LEGACY_DFL;
++	d->weight = bfq_dft_weight();
+ }
+ 
+ static void bfq_cpd_free(struct blkcg_policy_data *cpd)
+@@ -554,6 +560,9 @@ static void bfq_pd_init(struct blkg_policy_data *pd)
+ 	bfqg->bfqd = bfqd;
+ 	bfqg->active_entities = 0;
+ 	bfqg->rq_pos_tree = RB_ROOT;
++
++	if (entity->new_weight != bfq_dft_weight())
++		bfqd_enable_active_group_check(bfqd);
+ }
+ 
+ static void bfq_pd_free(struct blkg_policy_data *pd)
+@@ -1013,6 +1022,7 @@ static void bfq_group_set_weight(struct bfq_group *bfqg, u64 weight, u64 dev_wei
+ 		 */
+ 		smp_wmb();
+ 		bfqg->entity.prio_changed = 1;
++		bfqd_enable_active_group_check(bfqg->bfqd);
+ 	}
+ }
+ 
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 3194d6cf0..75f8551e2 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -699,11 +699,8 @@ static bool bfq_asymmetric_scenario(struct bfq_data *bfqd,
+ 		(bfqd->busy_queues[0] && bfqd->busy_queues[2]) ||
+ 		(bfqd->busy_queues[1] && bfqd->busy_queues[2]);
+ 
+-	return varied_queue_weights || multiple_classes_busy
+-#ifdef CONFIG_BFQ_GROUP_IOSCHED
+-	       || bfqd->num_groups_with_pending_reqs > 0
+-#endif
+-		;
++	return varied_queue_weights || multiple_classes_busy ||
++	       bfqd_has_active_group(bfqd);
+ }
+ 
+ /*
+@@ -6474,6 +6471,7 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
+ 
+ 	bfqd->queue_weights_tree = RB_ROOT_CACHED;
+ 	bfqd->num_groups_with_pending_reqs = 0;
++	bfqd->check_active_group = false;
+ 
+ 	INIT_LIST_HEAD(&bfqd->active_list);
+ 	INIT_LIST_HEAD(&bfqd->idle_list);
+diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
+index 703895224..216509013 100644
+--- a/block/bfq-iosched.h
++++ b/block/bfq-iosched.h
+@@ -524,6 +524,8 @@ struct bfq_data {
+ 
+ 	/* true if the device is non rotational and performs queueing */
+ 	bool nonrot_with_queueing;
++	/* true if need to check num_groups_with_pending_reqs */
++	bool check_active_group;
+ 
+ 	/*
+ 	 * Maximum number of requests in driver in the last
+@@ -1066,6 +1068,17 @@ static inline void bfq_pid_to_str(int pid, char *str, int len)
+ }
+ 
+ #ifdef CONFIG_BFQ_GROUP_IOSCHED
++static inline void bfqd_enable_active_group_check(struct bfq_data *bfqd)
++{
++	cmpxchg_relaxed(&bfqd->check_active_group, false, true);
++}
++
++static inline bool bfqd_has_active_group(struct bfq_data *bfqd)
++{
++	return bfqd->check_active_group &&
++	       bfqd->num_groups_with_pending_reqs > 0;
++}
++
+ struct bfq_group *bfqq_group(struct bfq_queue *bfqq);
+ 
+ #define bfq_log_bfqq(bfqd, bfqq, fmt, args...)	do {			\
+@@ -1085,6 +1098,12 @@ struct bfq_group *bfqq_group(struct bfq_queue *bfqq);
+ } while (0)
+ 
+ #else /* CONFIG_BFQ_GROUP_IOSCHED */
++static inline void bfqd_enable_active_group_check(struct bfq_data *bfqd) {}
++
++static inline bool bfqd_has_active_group(struct bfq_data *bfqd)
++{
++	return false;
++}
+ 
+ #define bfq_log_bfqq(bfqd, bfqq, fmt, args...) do {	\
+ 	char pid_str[MAX_PID_STR_LENGTH];	\
 -- 
 2.30.0.81.g72c4083ddf
 
