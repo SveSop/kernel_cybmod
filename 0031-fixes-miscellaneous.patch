@@ -1,4 +1,4 @@
-From 9a16d6a9d7767bf9daf69c8fa341231b03981a7f Mon Sep 17 00:00:00 2001
+From 841c67aa7018854626075f5d3ea315b98af3c47b Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
 Subject: [PATCH 01/21] net/sched: allow configuring cake qdisc as default
@@ -34,7 +34,7 @@ index a3b37d888..1fcfd47d1 100644
 2.30.0.81.g72c4083ddf
 
 
-From b54db8abc02a82330d5d63c1e13717038062c60d Mon Sep 17 00:00:00 2001
+From 91a450068bef94b83029b4c403833f22818214be Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
 Subject: [PATCH 02/21] infiniband: Fix __read_overflow2 error with -O3
@@ -60,7 +60,7 @@ index 0abce004a..b6eeb2fab 100644
 2.30.0.81.g72c4083ddf
 
 
-From 085bdf9f0d2f2ddecdff42d8081aa59657dd9c27 Mon Sep 17 00:00:00 2001
+From 9ba5dfb88131d30b96e4bebe56f95df70711ea5e Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
 Subject: [PATCH 03/21] kbuild: add -fcf-protection=none to retpoline flags
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 9b6c90eed..e50af10d2 100644
+index 4ee137b5d..7cadf3768 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -675,6 +675,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -94,7 +94,7 @@ index 9b6c90eed..e50af10d2 100644
 2.30.0.81.g72c4083ddf
 
 
-From faa4b14f32794e45235ff2eded8070fe029be164 Mon Sep 17 00:00:00 2001
+From d5ba4f7d5542a7108cce5408b93737676fed0243 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
 Subject: [PATCH 04/21] mm: Disable watermark boosting by default
@@ -155,7 +155,7 @@ index 14b9e83ff..bd8545fc7 100644
 2.30.0.81.g72c4083ddf
 
 
-From de5ad46d72c083485fdd8c4687d094a30e22f919 Mon Sep 17 00:00:00 2001
+From 06479bca41da83d6f915b346189acce323370b1f Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
 Subject: [PATCH 05/21] mm: Stop kswapd early when nothing's waiting for it to
@@ -255,7 +255,7 @@ index 0ec6321e9..12d8b9820 100644
 2.30.0.81.g72c4083ddf
 
 
-From fb1a25b2a6a046fa2addab0cd5ead373430be3d7 Mon Sep 17 00:00:00 2001
+From 4818eb12f2395953f0785b464ca4db6d534e4728 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
 Subject: [PATCH 06/21] mm: Fully disable watermark boosting when it isn't used
@@ -291,7 +291,7 @@ index e1b341ab0..4f6ff1884 100644
 2.30.0.81.g72c4083ddf
 
 
-From e445b03cdbec2933a01f2bff897f24eaa4c7bec1 Mon Sep 17 00:00:00 2001
+From b6a498a8bfea746fae3c92fd6ea3a13f2c226389 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
 Subject: [PATCH 07/21] mm: Don't stop kswapd on a per-node basis when there
@@ -398,7 +398,7 @@ index 12d8b9820..b2032f37c 100644
 2.30.0.81.g72c4083ddf
 
 
-From 89c7495a77d1ab77d4b8deaaa2828e48454e4d23 Mon Sep 17 00:00:00 2001
+From 4df15186ddb545700fe26b2a835b5f52d876f213 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
 Subject: [PATCH 08/21] kbuild: Disable stack conservation for GCC
@@ -414,7 +414,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e50af10d2..1f0b8de0e 100644
+index 7cadf3768..3c7428637 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -937,9 +937,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -431,7 +431,7 @@ index e50af10d2..1f0b8de0e 100644
 2.30.0.81.g72c4083ddf
 
 
-From 5b51f8a7c6ed6ef98e37bb59690c1c52a61b0da6 Mon Sep 17 00:00:00 2001
+From 38258a81e34ad1b6f99ff52ffa8511e3403c54a2 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
 Subject: [PATCH 09/21] pci: Enable overrides for missing ACS capabilities
@@ -629,7 +629,7 @@ index fb1dc11e7..07393e019 100644
 2.30.0.81.g72c4083ddf
 
 
-From b248f504ba26cf09a588e8bf7d74e7b7b859abb1 Mon Sep 17 00:00:00 2001
+From 70e4f636e368a63adc0e070285fe7edd0d598b07 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
 Subject: [PATCH 10/21] ZEN: Add OpenRGB patches
@@ -1378,7 +1378,7 @@ index 8c1b31ed0..0b1b36fa0 100644
 2.30.0.81.g72c4083ddf
 
 
-From c9b6509cc557a3ce51c5f05f4d44af9d176c5d59 Mon Sep 17 00:00:00 2001
+From 5a1f5e73b0dd320f1e4f3b07bd62d981d1d1d9b6 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 25 Sep 2020 13:22:05 +0200
 Subject: [PATCH 11/21] tty: Allow setting the number of available virtual TTYs
@@ -1448,7 +1448,7 @@ index e9d39c485..3bceead8d 100644
 2.30.0.81.g72c4083ddf
 
 
-From f5394f977a30977fcfadba4f074f58c78c1128ac Mon Sep 17 00:00:00 2001
+From e153235fcea3c8455ad5270299bc051042104777 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
 Subject: [PATCH 12/21] scsi: sd: Optimal I/O size should be a multiple of
@@ -1582,7 +1582,7 @@ index b59136c41..4154030c8 100644
 2.30.0.81.g72c4083ddf
 
 
-From b2809191eb3b75305e165c6b9a4824c716f95ecd Mon Sep 17 00:00:00 2001
+From ad37bb61f0da68b7dcb8e4e036c8549318d8492c Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Tue, 12 May 2020 17:29:36 -0400
 Subject: [PATCH 13/21] vfs: keep inodes with page cache off the inode shrinker
@@ -2377,7 +2377,7 @@ index 975a4d2dd..5801b7761 100644
 2.30.0.81.g72c4083ddf
 
 
-From d79b7d10291ca93cacc15b2816ce834ef00dce24 Mon Sep 17 00:00:00 2001
+From 82289282c1feda05bb3f8bc55915ad2468f6adb0 Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sun, 25 Oct 2020 17:29:48 -0400
 Subject: [PATCH 14/21] fs: Break generic_file_buffered_read up into multiple
@@ -2956,7 +2956,7 @@ index cfe4e743e..346d64439 100644
 2.30.0.81.g72c4083ddf
 
 
-From 8264e4ff51f4065a8171f3bd86a80acf4b9fc727 Mon Sep 17 00:00:00 2001
+From 002fef8a3bfb8a35fbe83e56bf9b0e194fcebbf3 Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sun, 25 Oct 2020 17:29:49 -0400
 Subject: [PATCH 15/21] fs: generic_file_buffered_read() now uses
@@ -3342,7 +3342,7 @@ index 346d64439..a3cdf9cff 100644
 2.30.0.81.g72c4083ddf
 
 
-From 1a3085d19272e673d2f9e4fe70fe6e2f28ca6cbc Mon Sep 17 00:00:00 2001
+From 14caea001d7f5192634f0fe1175f611c268ea5b3 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
 Subject: [PATCH 16/21] iomap: avoid deadlock if memory reclaim is triggered in
@@ -3466,7 +3466,7 @@ index 10cc7979c..74321794d 100644
 2.30.0.81.g72c4083ddf
 
 
-From d5d6c697ec0d8d4999911aa5f4baa8fbc4225b25 Mon Sep 17 00:00:00 2001
+From 44794ca5a6a77872f24dce2b139ea02216d9a7a5 Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Tue, 22 Dec 2020 09:21:28 +0800
 Subject: [PATCH 17/21] mm: Add become_kswapd and restore_kswapd
@@ -3597,10 +3597,136 @@ index 402d2b886..8fd3d6164 100644
 2.30.0.81.g72c4083ddf
 
 
-From db229c8074979fddc957baa374f399831de5d213 Mon Sep 17 00:00:00 2001
+From ae7543ba648788c106b54c6fc50910d928d0e684 Mon Sep 17 00:00:00 2001
+From: "Darrick J. Wong" <djwong@kernel.org>
+Date: Mon, 11 Jan 2021 14:50:53 -0800
+Subject: [PATCH 18/21] xfs: fix an ABBA deadlock in xfs_rename
+
+When overlayfs is running on top of xfs and the user unlinks a file in
+the overlay, overlayfs will create a whiteout inode and ask xfs to
+"rename" the whiteout file atop the one being unlinked.  If the file
+being unlinked loses its one nlink, we then have to put the inode on the
+unlinked list.
+
+This requires us to grab the AGI buffer of the whiteout inode to take it
+off the unlinked list (which is where whiteouts are created) and to grab
+the AGI buffer of the file being deleted.  If the whiteout was created
+in a higher numbered AG than the file being deleted, we'll lock the AGIs
+in the wrong order and deadlock.
+
+Therefore, grab all the AGI locks we think we'll need ahead of time, and
+in order of increasing AG number per the locking rules.
+
+Reported-by: wenli xie <wlxie7296@gmail.com>
+Fixes: 93597ae8dac0 ("xfs: Fix deadlock between AGI and AGF when target_ip exists in xfs_rename()")
+Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+---
+ fs/xfs/libxfs/xfs_dir2.h    |  2 --
+ fs/xfs/libxfs/xfs_dir2_sf.c |  2 +-
+ fs/xfs/xfs_inode.c          | 42 ++++++++++++++++++++++---------------
+ 3 files changed, 26 insertions(+), 20 deletions(-)
+
+diff --git a/fs/xfs/libxfs/xfs_dir2.h b/fs/xfs/libxfs/xfs_dir2.h
+index e55378640..d03e6098d 100644
+--- a/fs/xfs/libxfs/xfs_dir2.h
++++ b/fs/xfs/libxfs/xfs_dir2.h
+@@ -47,8 +47,6 @@ extern int xfs_dir_lookup(struct xfs_trans *tp, struct xfs_inode *dp,
+ extern int xfs_dir_removename(struct xfs_trans *tp, struct xfs_inode *dp,
+ 				struct xfs_name *name, xfs_ino_t ino,
+ 				xfs_extlen_t tot);
+-extern bool xfs_dir2_sf_replace_needblock(struct xfs_inode *dp,
+-				xfs_ino_t inum);
+ extern int xfs_dir_replace(struct xfs_trans *tp, struct xfs_inode *dp,
+ 				struct xfs_name *name, xfs_ino_t inum,
+ 				xfs_extlen_t tot);
+diff --git a/fs/xfs/libxfs/xfs_dir2_sf.c b/fs/xfs/libxfs/xfs_dir2_sf.c
+index 2463b5d73..8c4f76bba 100644
+--- a/fs/xfs/libxfs/xfs_dir2_sf.c
++++ b/fs/xfs/libxfs/xfs_dir2_sf.c
+@@ -1018,7 +1018,7 @@ xfs_dir2_sf_removename(
+ /*
+  * Check whether the sf dir replace operation need more blocks.
+  */
+-bool
++static bool
+ xfs_dir2_sf_replace_needblock(
+ 	struct xfs_inode	*dp,
+ 	xfs_ino_t		inum)
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index 2bfbcf28b..e958b1c74 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -3152,7 +3152,7 @@ xfs_rename(
+ 	struct xfs_trans	*tp;
+ 	struct xfs_inode	*wip = NULL;		/* whiteout inode */
+ 	struct xfs_inode	*inodes[__XFS_SORT_INODES];
+-	struct xfs_buf		*agibp;
++	int			i;
+ 	int			num_inodes = __XFS_SORT_INODES;
+ 	bool			new_parent = (src_dp != target_dp);
+ 	bool			src_is_directory = S_ISDIR(VFS_I(src_ip)->i_mode);
+@@ -3265,6 +3265,30 @@ xfs_rename(
+ 		}
+ 	}
+ 
++	/*
++	 * Lock the AGI buffers we need to handle bumping the nlink of the
++	 * whiteout inode off the unlinked list and to handle dropping the
++	 * nlink of the target inode.  Per locking order rules, do this in
++	 * increasing AG order and before directory block allocation tries to
++	 * grab AGFs because we grab AGIs before AGFs.
++	 *
++	 * The (vfs) caller must ensure that if src is a directory then
++	 * target_ip is either null or an empty directory.
++	 */
++	for (i = 0; i < num_inodes && inodes[i] != NULL; i++) {
++		if (inodes[i] == wip ||
++		    (inodes[i] == target_ip &&
++		     (VFS_I(target_ip)->i_nlink == 1 || src_is_directory))) {
++			struct xfs_buf	*bp;
++			xfs_agnumber_t	agno;
++
++			agno = XFS_INO_TO_AGNO(mp, inodes[i]->i_ino);
++			error = xfs_read_agi(mp, tp, agno, &bp);
++			if (error)
++				goto out_trans_cancel;
++		}
++	}
++
+ 	/*
+ 	 * Directory entry creation below may acquire the AGF. Remove
+ 	 * the whiteout from the unlinked list first to preserve correct
+@@ -3317,22 +3341,6 @@ xfs_rename(
+ 		 * In case there is already an entry with the same
+ 		 * name at the destination directory, remove it first.
+ 		 */
+-
+-		/*
+-		 * Check whether the replace operation will need to allocate
+-		 * blocks.  This happens when the shortform directory lacks
+-		 * space and we have to convert it to a block format directory.
+-		 * When more blocks are necessary, we must lock the AGI first
+-		 * to preserve locking order (AGI -> AGF).
+-		 */
+-		if (xfs_dir2_sf_replace_needblock(target_dp, src_ip->i_ino)) {
+-			error = xfs_read_agi(mp, tp,
+-					XFS_INO_TO_AGNO(mp, target_ip->i_ino),
+-					&agibp);
+-			if (error)
+-				goto out_trans_cancel;
+-		}
+-
+ 		error = xfs_dir_replace(tp, target_dp, target_name,
+ 					src_ip->i_ino, spaceres);
+ 		if (error)
+-- 
+2.30.0.81.g72c4083ddf
+
+
+From 9138ec5d5bfd4f4f0e723f0ebfa13fd0ba1f0032 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
-Date: Tue, 22 Dec 2020 09:21:29 +0800
-Subject: [PATCH 18/21] xfs: use memalloc_nofs_{save,restore} in xfs
+Date: Wed, 13 Jan 2021 18:22:22 +0800
+Subject: [PATCH 19/21] xfs: use memalloc_nofs_{save,restore} in xfs
  transaction
 
 Introduce a new API to mark the start and end of XFS transactions.
@@ -3746,32 +3872,61 @@ index 084658946..44b11c64a 100644
 2.30.0.81.g72c4083ddf
 
 
-From 6c6d33e8e1427b9b86d6b5cbaf36de211c371258 Mon Sep 17 00:00:00 2001
+From d12eec40d34dee527ab72cda6b8a58b955e9e15e Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
-Date: Tue, 22 Dec 2020 09:21:30 +0800
-Subject: [PATCH 19/21] xfs: introduce xfs_trans_context_swap() for rolling
- transaction
+Date: Wed, 13 Jan 2021 18:22:23 +0800
+Subject: [PATCH 20/21] xfs: refactor the usage around
+ xfs_trans_context_{set,clear}
 
-In the rolling transaction, thread's NOFS state is transferred from the
-old transaction to the new transaction, and then the NOFS state stored
-in the old one should be cleared.
+The xfs_trans context should be active after it is allocated, and
+deactive when it is freed.
+The rolling transaction should be specially considered, because in the
+case when we clear the old transaction the thread's NOFS state shouldn't
+be changed, as a result we have to set NOFS in the old transaction's
+t_pflags in xfs_trans_context_swap().
 
-Suggested-by: Dave Chinner <david@fromorbit.com>
+So these helpers are refactored as,
+- xfs_trans_context_set()
+  Used in xfs_trans_alloc()
+- xfs_trans_context_clear()
+  Used in xfs_trans_free()
+
+And a new helper is instroduced to handle the rolling transaction,
+- xfs_trans_context_swap()
+  Used in rolling transaction
+
+This patch is based on Darrick's work[1] to fix the issue in xfs/141 in the
+earlier version and Dave's suggestion[2].
+
+[1]. https://lore.kernel.org/linux-xfs/20201104001649.GN7123@magnolia
+[2]. https://lore.kernel.org/linux-xfs/20201218000705.GR632069@dread.disaster.area
+
+Cc: Dave Chinner <david@fromorbit.com>
 Cc: Darrick J. Wong <darrick.wong@oracle.com>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
 Cc: Christoph Hellwig <hch@lst.de>
-Cc: Dave Chinner <david@fromorbit.com>
 Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
 ---
- fs/xfs/xfs_trans.c |  4 +++-
+ fs/xfs/xfs_trans.c | 25 +++++++++++--------------
  fs/xfs/xfs_trans.h | 10 +++++++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ 2 files changed, 20 insertions(+), 15 deletions(-)
 
 diff --git a/fs/xfs/xfs_trans.c b/fs/xfs/xfs_trans.c
-index 11d390f0d..733e0113a 100644
+index 11d390f0d..aa213c3e2 100644
 --- a/fs/xfs/xfs_trans.c
 +++ b/fs/xfs/xfs_trans.c
-@@ -119,7 +119,9 @@ xfs_trans_dup(
+@@ -67,6 +67,10 @@ xfs_trans_free(
+ 	xfs_extent_busy_sort(&tp->t_busy);
+ 	xfs_extent_busy_clear(tp->t_mountp, &tp->t_busy, false);
+ 
++
++	/* Detach the transaction from this thread. */
++	xfs_trans_context_clear(tp);
++
+ 	trace_xfs_trans_free(tp, _RET_IP_);
+ 	if (!(tp->t_flags & XFS_TRANS_NO_WRITECOUNT))
+ 		sb_end_intwrite(tp->t_mountp->m_super);
+@@ -119,7 +123,9 @@ xfs_trans_dup(
  
  	ntp->t_rtx_res = tp->t_rtx_res - tp->t_rtx_res_used;
  	tp->t_rtx_res = tp->t_rtx_res_used;
@@ -3782,8 +3937,75 @@ index 11d390f0d..733e0113a 100644
  
  	/* move deferred ops over to the new tp */
  	xfs_defer_move(ntp, tp);
+@@ -153,9 +159,6 @@ xfs_trans_reserve(
+ 	int			error = 0;
+ 	bool			rsvd = (tp->t_flags & XFS_TRANS_RESERVE) != 0;
+ 
+-	/* Mark this thread as being in a transaction */
+-	xfs_trans_context_set(tp);
+-
+ 	/*
+ 	 * Attempt to reserve the needed disk blocks by decrementing
+ 	 * the number needed from the number available.  This will
+@@ -163,10 +166,9 @@ xfs_trans_reserve(
+ 	 */
+ 	if (blocks > 0) {
+ 		error = xfs_mod_fdblocks(mp, -((int64_t)blocks), rsvd);
+-		if (error != 0) {
+-			xfs_trans_context_clear(tp);
++		if (error != 0)
+ 			return -ENOSPC;
+-		}
++
+ 		tp->t_blk_res += blocks;
+ 	}
+ 
+@@ -241,8 +243,6 @@ xfs_trans_reserve(
+ 		tp->t_blk_res = 0;
+ 	}
+ 
+-	xfs_trans_context_clear(tp);
+-
+ 	return error;
+ }
+ 
+@@ -284,6 +284,8 @@ xfs_trans_alloc(
+ 	INIT_LIST_HEAD(&tp->t_dfops);
+ 	tp->t_firstblock = NULLFSBLOCK;
+ 
++	/* Mark this thread as being in a transaction */
++	xfs_trans_context_set(tp);
+ 	error = xfs_trans_reserve(tp, resp, blocks, rtextents);
+ 	if (error) {
+ 		xfs_trans_cancel(tp);
+@@ -878,7 +880,6 @@ __xfs_trans_commit(
+ 
+ 	xfs_log_commit_cil(mp, tp, &commit_lsn, regrant);
+ 
+-	xfs_trans_context_clear(tp);
+ 	xfs_trans_free(tp);
+ 
+ 	/*
+@@ -911,7 +912,6 @@ __xfs_trans_commit(
+ 		tp->t_ticket = NULL;
+ 	}
+ 
+-	xfs_trans_context_clear(tp);
+ 	xfs_trans_free_items(tp, !!error);
+ 	xfs_trans_free(tp);
+ 
+@@ -971,9 +971,6 @@ xfs_trans_cancel(
+ 		tp->t_ticket = NULL;
+ 	}
+ 
+-	/* mark this thread as no longer being in a transaction */
+-	xfs_trans_context_clear(tp);
+-
+ 	xfs_trans_free_items(tp, dirty);
+ 	xfs_trans_free(tp);
+ }
 diff --git a/fs/xfs/xfs_trans.h b/fs/xfs/xfs_trans.h
-index 44b11c64a..b428704ee 100644
+index 44b11c64a..3645fd0d7 100644
 --- a/fs/xfs/xfs_trans.h
 +++ b/fs/xfs/xfs_trans.h
 @@ -277,7 +277,15 @@ xfs_trans_context_set(struct xfs_trans *tp)
@@ -3791,7 +4013,7 @@ index 44b11c64a..b428704ee 100644
  xfs_trans_context_clear(struct xfs_trans *tp)
  {
 -	memalloc_nofs_restore(tp->t_pflags);
-+	if (!tp->t_flags)
++	if (!tp->t_pflags)
 +		memalloc_nofs_restore(tp->t_pflags);
 +}
 +
@@ -3799,7 +4021,7 @@ index 44b11c64a..b428704ee 100644
 +xfs_trans_context_swap(struct xfs_trans *tp, struct xfs_trans *ntp)
 +{
 +	ntp->t_pflags = tp->t_pflags;
-+	tp->t_flags = -1;
++	tp->t_pflags = -1;
  }
  
  #endif	/* __XFS_TRANS_H__ */
@@ -3807,10 +4029,10 @@ index 44b11c64a..b428704ee 100644
 2.30.0.81.g72c4083ddf
 
 
-From f04e7db17beb3408a1bed0ec910c6c42abb38c29 Mon Sep 17 00:00:00 2001
+From 0f59afb330b76ecd1d631434bf1d4dc193cb0931 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
-Date: Tue, 22 Dec 2020 09:21:31 +0800
-Subject: [PATCH 20/21] xfs: use current->journal_info to avoid transaction
+Date: Wed, 13 Jan 2021 18:22:24 +0800
+Subject: [PATCH 21/21] xfs: use current->journal_info to avoid transaction
  reservation recursion
 
 PF_FSTRANS which is used to avoid transaction reservation recursion, is
@@ -3819,10 +4041,13 @@ PF_MEMALLOC_NOFS") and replaced by PF_MEMALLOC_NOFS which means to avoid
 filesystem reclaim recursion.
 
 As these two flags have different meanings, we'd better reintroduce
-PF_FSTRANS back. To avoid wasting the space of PF_* flags in task_struct,
+PF_FSTRANS back. To avoid wasting the space of PF_* flags in
+task_struct,
 we can reuse the current->journal_info to do that, per Willy. As the
 check of transaction reservation recursion is used by XFS only, we can
 move the check into xfs_vm_writepage(s), per Dave.
+
+[oliver.sang@intel.com: reported a Assertion_failed in the prev version]
 
 Cc: Darrick J. Wong <darrick.wong@oracle.com>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
@@ -3831,6 +4056,7 @@ Cc: Dave Chinner <david@fromorbit.com>
 Cc: Michal Hocko <mhocko@kernel.org>
 Cc: David Howells <dhowells@redhat.com>
 Cc: Jeff Layton <jlayton@redhat.com>
+Cc: kernel test robot <oliver.sang@intel.com>
 Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
 ---
  fs/iomap/buffered-io.c |  7 -------
@@ -3885,7 +4111,7 @@ index 2371187b7..eed4881d4 100644
  }
  
 diff --git a/fs/xfs/xfs_trans.h b/fs/xfs/xfs_trans.h
-index b428704ee..e2f3251d6 100644
+index 3645fd0d7..e2f3251d6 100644
 --- a/fs/xfs/xfs_trans.h
 +++ b/fs/xfs/xfs_trans.h
 @@ -268,24 +268,40 @@ xfs_trans_item_relog(
@@ -3909,7 +4135,7 @@ index b428704ee..e2f3251d6 100644
  static inline void
  xfs_trans_context_clear(struct xfs_trans *tp)
  {
--	if (!tp->t_flags)
+-	if (!tp->t_pflags)
 -		memalloc_nofs_restore(tp->t_pflags);
 +	/*
 +	 * If we handed over the context via xfs_trans_context_swap() then
@@ -3928,136 +4154,10 @@ index b428704ee..e2f3251d6 100644
 +	ASSERT(current->journal_info == tp);
 +	current->journal_info = ntp;
  	ntp->t_pflags = tp->t_pflags;
--	tp->t_flags = -1;
+-	tp->t_pflags = -1;
  }
  
  #endif	/* __XFS_TRANS_H__ */
--- 
-2.30.0.81.g72c4083ddf
-
-
-From 06ab7a69afc875ed04e4718f8e67304c24e30fbc Mon Sep 17 00:00:00 2001
-From: "Darrick J. Wong" <djwong@kernel.org>
-Date: Mon, 11 Jan 2021 14:50:53 -0800
-Subject: [PATCH 21/21] xfs: fix an ABBA deadlock in xfs_rename
-
-When overlayfs is running on top of xfs and the user unlinks a file in
-the overlay, overlayfs will create a whiteout inode and ask xfs to
-"rename" the whiteout file atop the one being unlinked.  If the file
-being unlinked loses its one nlink, we then have to put the inode on the
-unlinked list.
-
-This requires us to grab the AGI buffer of the whiteout inode to take it
-off the unlinked list (which is where whiteouts are created) and to grab
-the AGI buffer of the file being deleted.  If the whiteout was created
-in a higher numbered AG than the file being deleted, we'll lock the AGIs
-in the wrong order and deadlock.
-
-Therefore, grab all the AGI locks we think we'll need ahead of time, and
-in order of increasing AG number per the locking rules.
-
-Reported-by: wenli xie <wlxie7296@gmail.com>
-Fixes: 93597ae8dac0 ("xfs: Fix deadlock between AGI and AGF when target_ip exists in xfs_rename()")
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
----
- fs/xfs/libxfs/xfs_dir2.h    |  2 --
- fs/xfs/libxfs/xfs_dir2_sf.c |  2 +-
- fs/xfs/xfs_inode.c          | 42 ++++++++++++++++++++++---------------
- 3 files changed, 26 insertions(+), 20 deletions(-)
-
-diff --git a/fs/xfs/libxfs/xfs_dir2.h b/fs/xfs/libxfs/xfs_dir2.h
-index e55378640..d03e6098d 100644
---- a/fs/xfs/libxfs/xfs_dir2.h
-+++ b/fs/xfs/libxfs/xfs_dir2.h
-@@ -47,8 +47,6 @@ extern int xfs_dir_lookup(struct xfs_trans *tp, struct xfs_inode *dp,
- extern int xfs_dir_removename(struct xfs_trans *tp, struct xfs_inode *dp,
- 				struct xfs_name *name, xfs_ino_t ino,
- 				xfs_extlen_t tot);
--extern bool xfs_dir2_sf_replace_needblock(struct xfs_inode *dp,
--				xfs_ino_t inum);
- extern int xfs_dir_replace(struct xfs_trans *tp, struct xfs_inode *dp,
- 				struct xfs_name *name, xfs_ino_t inum,
- 				xfs_extlen_t tot);
-diff --git a/fs/xfs/libxfs/xfs_dir2_sf.c b/fs/xfs/libxfs/xfs_dir2_sf.c
-index 2463b5d73..8c4f76bba 100644
---- a/fs/xfs/libxfs/xfs_dir2_sf.c
-+++ b/fs/xfs/libxfs/xfs_dir2_sf.c
-@@ -1018,7 +1018,7 @@ xfs_dir2_sf_removename(
- /*
-  * Check whether the sf dir replace operation need more blocks.
-  */
--bool
-+static bool
- xfs_dir2_sf_replace_needblock(
- 	struct xfs_inode	*dp,
- 	xfs_ino_t		inum)
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 2bfbcf28b..e958b1c74 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -3152,7 +3152,7 @@ xfs_rename(
- 	struct xfs_trans	*tp;
- 	struct xfs_inode	*wip = NULL;		/* whiteout inode */
- 	struct xfs_inode	*inodes[__XFS_SORT_INODES];
--	struct xfs_buf		*agibp;
-+	int			i;
- 	int			num_inodes = __XFS_SORT_INODES;
- 	bool			new_parent = (src_dp != target_dp);
- 	bool			src_is_directory = S_ISDIR(VFS_I(src_ip)->i_mode);
-@@ -3265,6 +3265,30 @@ xfs_rename(
- 		}
- 	}
- 
-+	/*
-+	 * Lock the AGI buffers we need to handle bumping the nlink of the
-+	 * whiteout inode off the unlinked list and to handle dropping the
-+	 * nlink of the target inode.  Per locking order rules, do this in
-+	 * increasing AG order and before directory block allocation tries to
-+	 * grab AGFs because we grab AGIs before AGFs.
-+	 *
-+	 * The (vfs) caller must ensure that if src is a directory then
-+	 * target_ip is either null or an empty directory.
-+	 */
-+	for (i = 0; i < num_inodes && inodes[i] != NULL; i++) {
-+		if (inodes[i] == wip ||
-+		    (inodes[i] == target_ip &&
-+		     (VFS_I(target_ip)->i_nlink == 1 || src_is_directory))) {
-+			struct xfs_buf	*bp;
-+			xfs_agnumber_t	agno;
-+
-+			agno = XFS_INO_TO_AGNO(mp, inodes[i]->i_ino);
-+			error = xfs_read_agi(mp, tp, agno, &bp);
-+			if (error)
-+				goto out_trans_cancel;
-+		}
-+	}
-+
- 	/*
- 	 * Directory entry creation below may acquire the AGF. Remove
- 	 * the whiteout from the unlinked list first to preserve correct
-@@ -3317,22 +3341,6 @@ xfs_rename(
- 		 * In case there is already an entry with the same
- 		 * name at the destination directory, remove it first.
- 		 */
--
--		/*
--		 * Check whether the replace operation will need to allocate
--		 * blocks.  This happens when the shortform directory lacks
--		 * space and we have to convert it to a block format directory.
--		 * When more blocks are necessary, we must lock the AGI first
--		 * to preserve locking order (AGI -> AGF).
--		 */
--		if (xfs_dir2_sf_replace_needblock(target_dp, src_ip->i_ino)) {
--			error = xfs_read_agi(mp, tp,
--					XFS_INO_TO_AGNO(mp, target_ip->i_ino),
--					&agibp);
--			if (error)
--				goto out_trans_cancel;
--		}
--
- 		error = xfs_dir_replace(tp, target_dp, target_name,
- 					src_ip->i_ino, spaceres);
- 		if (error)
 -- 
 2.30.0.81.g72c4083ddf
 
