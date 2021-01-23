@@ -1,7 +1,7 @@
-From fed978bfc608e6703c3a8a835b2a2ffa1dbd049d Mon Sep 17 00:00:00 2001
+From 0f509341c309d27c3a029fbccebbfd43b5d4cc43 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Thu, 9 Apr 2020 17:09:14 +0000
-Subject: [PATCH 01/16] bfq: Fix check detecting whether waker queue should be
+Subject: [PATCH 01/15] bfq: Fix check detecting whether waker queue should be
  selected
 
 The check in bfq_select_queue() checking whether a waker queue should be
@@ -17,7 +17,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 9e81d1052..f0553a275 100644
+index 9e4eb0fc1..76b6e73c5 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -4499,7 +4499,7 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
@@ -30,13 +30,12 @@ index 9e81d1052..f0553a275 100644
  					      bfqq->waker_bfqq) <=
  			   bfq_bfqq_budget_left(bfqq->waker_bfqq)
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From d67947eb2f63672a5f31ba7b629009018ac4d490 Mon Sep 17 00:00:00 2001
+From d0c3153e7e687eada1ffcc1a5f4b281ba3298d53 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Thu, 9 Apr 2020 17:09:15 +0000
-Subject: [PATCH 02/16] bfq: Allow short_ttime queues to have waker
+Subject: [PATCH 02/15] bfq: Allow short_ttime queues to have waker
 
 Currently queues that have average think time shorter than slice_idle
 cannot have waker. However this requirement is too strict. E.g. dbench
@@ -55,7 +54,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index f0553a275..a2ed043db 100644
+index 76b6e73c5..a72cac48e 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1929,7 +1929,6 @@ static void bfq_add_request(struct request *rq)
@@ -67,13 +66,12 @@ index f0553a275..a2ed043db 100644
  		    200 * NSEC_PER_USEC) {
  			if (bfqd->last_completed_rq_bfqq != bfqq &&
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 2ca3dd72e8612d093945690a780bc4592736c3ce Mon Sep 17 00:00:00 2001
+From 3317d8f9108b75b6e4ce3c24b0bc623ea33d3ad7 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Fri, 5 Jun 2020 14:16:16 +0000
-Subject: [PATCH 03/16] bfq: Avoid false bfq queue merging
+Subject: [PATCH 03/15] bfq: Avoid false bfq queue merging
 
 bfq_setup_cooperator() uses bfqd->in_serv_last_pos so detect whether it
 makes sense to merge current bfq queue with the in-service queue.
@@ -109,7 +107,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 1 insertion(+)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index a2ed043db..465111b04 100644
+index a72cac48e..3fb9e702f 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2936,6 +2936,7 @@ static void __bfq_set_in_service_queue(struct bfq_data *bfqd,
@@ -121,13 +119,12 @@ index a2ed043db..465111b04 100644
  
  /*
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 85844a1d16a46844683707387d14ab2dac280f8d Mon Sep 17 00:00:00 2001
+From 060211db404878b5130e468870b4884549884999 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Fri, 5 Jun 2020 14:16:17 +0000
-Subject: [PATCH 04/16] bfq: Use 'ttime' local variable
+Subject: [PATCH 04/15] bfq: Use 'ttime' local variable
 
 Use local variable 'ttime' instead of dereferencing bfqq.
 
@@ -137,7 +134,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 465111b04..07c24ea68 100644
+index 3fb9e702f..c3b14c0ee 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5198,7 +5198,7 @@ static void bfq_update_io_thinktime(struct bfq_data *bfqd,
@@ -150,13 +147,12 @@ index 465111b04..07c24ea68 100644
  	ttime->ttime_mean = div64_ul(ttime->ttime_total + 128,
  				     ttime->ttime_samples);
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 81a4c538e0dbb406c8c158b70d5f4d6b2ee9c09d Mon Sep 17 00:00:00 2001
+From 21f4845aa91ca45285b78f07a2ec5efc59af0dfd Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Fri, 5 Jun 2020 14:16:18 +0000
-Subject: [PATCH 05/16] bfq: Use only idle IO periods for think time
+Subject: [PATCH 05/15] bfq: Use only idle IO periods for think time
  calculations
 
 Currently whenever bfq queue has a request queued we add now -
@@ -175,7 +171,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 07c24ea68..6df94cb9a 100644
+index c3b14c0ee..3adec66d8 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5194,8 +5194,16 @@ static void bfq_update_io_thinktime(struct bfq_data *bfqd,
@@ -197,13 +193,12 @@ index 07c24ea68..6df94cb9a 100644
  
  	ttime->ttime_samples = (7*ttime->ttime_samples + 256) / 8;
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 568828b71588f07ba9afb385cba7338c26043df8 Mon Sep 17 00:00:00 2001
+From 5ccb512986136f8fe2e902807ed2ea0a0df2c2db Mon Sep 17 00:00:00 2001
 From: Xiang Chen <chenxiang66@hisilicon.com>
 Date: Tue, 29 Sep 2020 09:05:37 +0000
-Subject: [PATCH 06/16] block:elevator:remove un-used input parameter
+Subject: [PATCH 06/15] block:elevator:remove un-used input parameter
  request_queue in some functions
 
 In elevator.c, the input parameter request_queue is not used in function
@@ -219,7 +214,7 @@ Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
  4 files changed, 12 insertions(+), 14 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 6df94cb9a..4f7071ced 100644
+index 3adec66d8..9c2274d5c 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2166,7 +2166,7 @@ static void bfq_remove_request(struct request_queue *q,
@@ -232,7 +227,7 @@ index 6df94cb9a..4f7071ced 100644
  		q->last_merge = NULL;
  
 diff --git a/block/elevator.c b/block/elevator.c
-index 293c5c813..0c1e9a1b4 100644
+index 90181ad94..632c81def 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -203,7 +203,7 @@ static inline void __elv_rqhash_del(struct request *rq)
@@ -262,7 +257,7 @@ index 293c5c813..0c1e9a1b4 100644
  
  	return NULL;
  }
-@@ -802,8 +802,7 @@ ssize_t elv_iosched_show(struct request_queue *q, char *name)
+@@ -806,8 +806,7 @@ ssize_t elv_iosched_show(struct request_queue *q, char *name)
  	return len;
  }
  
@@ -272,7 +267,7 @@ index 293c5c813..0c1e9a1b4 100644
  {
  	struct rb_node *rbprev = rb_prev(&rq->rb_node);
  
-@@ -814,8 +813,7 @@ struct request *elv_rb_former_request(struct request_queue *q,
+@@ -818,8 +817,7 @@ struct request *elv_rb_former_request(struct request_queue *q,
  }
  EXPORT_SYMBOL(elv_rb_former_request);
  
@@ -283,7 +278,7 @@ index 293c5c813..0c1e9a1b4 100644
  	struct rb_node *rbnext = rb_next(&rq->rb_node);
  
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 800ac9028..a8152187f 100644
+index 89b56d452..e0d89a47f 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
 @@ -118,7 +118,7 @@ static void deadline_remove_request(struct request_queue *q, struct request *rq)
@@ -331,66 +326,12 @@ index bacc40a0b..3821cc1de 100644
  /*
   * rb support functions.
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 74e055a2b3387f39b270f19555590e911ad6fadd Mon Sep 17 00:00:00 2001
-From: Jan Kara <jack () suse ! cz>
-Date: Thu, 10 Dec 2020 09:44:33 +0000
-Subject: [PATCH 07/16] bfq: Fix computation of shallow depth
-
-BFQ computes number of tags it allows to be allocated for each request type
-based on tag bitmap. However it uses 1 << bitmap.shift as number of
-available tags which is wrong. 'shift' is just an internal bitmap value
-containing logarithm of how many bits bitmap uses in each bitmap word.
-Thus number of tags allowed for some request types can be far to low.
-Use proper bitmap.depth which has the number of tags instead.
-
-Signed-off-by: Jan Kara <jack@suse.cz>
----
- block/bfq-iosched.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 4f7071ced..9c2274d5c 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -6340,13 +6340,13 @@ static unsigned int bfq_update_depths(struct bfq_data *bfqd,
- 	 * limit 'something'.
- 	 */
- 	/* no more than 50% of tags for async I/O */
--	bfqd->word_depths[0][0] = max((1U << bt->sb.shift) >> 1, 1U);
-+	bfqd->word_depths[0][0] = max(bt->sb.depth >> 1, 1U);
- 	/*
- 	 * no more than 75% of tags for sync writes (25% extra tags
- 	 * w.r.t. async I/O, to prevent async I/O from starving sync
- 	 * writes)
- 	 */
--	bfqd->word_depths[0][1] = max(((1U << bt->sb.shift) * 3) >> 2, 1U);
-+	bfqd->word_depths[0][1] = max((bt->sb.depth * 3) >> 2, 1U);
- 
- 	/*
- 	 * In-word depths in case some bfq_queue is being weight-
-@@ -6356,9 +6356,9 @@ static unsigned int bfq_update_depths(struct bfq_data *bfqd,
- 	 * shortage.
- 	 */
- 	/* no more than ~18% of tags for async I/O */
--	bfqd->word_depths[1][0] = max(((1U << bt->sb.shift) * 3) >> 4, 1U);
-+	bfqd->word_depths[1][0] = max((bt->sb.depth * 3) >> 4, 1U);
- 	/* no more than ~37% of tags for sync writes (~20% extra tags) */
--	bfqd->word_depths[1][1] = max(((1U << bt->sb.shift) * 6) >> 4, 1U);
-+	bfqd->word_depths[1][1] = max((bt->sb.depth * 6) >> 4, 1U);
- 
- 	for (i = 0; i < 2; i++)
- 		for (j = 0; j < 2; j++)
--- 
-2.30.0.81.g72c4083ddf
-
-
-From 29da40b711d6af39b167a9ed5feb9fccbcbb5ee5 Mon Sep 17 00:00:00 2001
+From 0141e396b218fbd1fe239b846ab41c172f7a4f85 Mon Sep 17 00:00:00 2001
 From: huhai <huhai () tj ! kylinos ! cn>
 Date: Fri, 25 Dec 2020 13:00:16 +0000
-Subject: [PATCH 08/16] bfq: don't duplicate code for different paths
+Subject: [PATCH 07/15] bfq: don't duplicate code for different paths
 
 As we can see, returns parent_sched_may_change whether
 sd->next_in_service changes or not, so remove this judgment.
@@ -415,13 +356,12 @@ index 26776bdbd..070e34a7f 100644
  }
  
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 534bd1d782406c13e8449e4fb377fa7e54ecbb52 Mon Sep 17 00:00:00 2001
+From e9e5ef38dd4c9cf193c94f88ab2693c3f4098f4f Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 13 Jan 2021 17:54:09 +0100
-Subject: [PATCH 09/16] Revert "bfq: Use only idle IO periods for think time
+Subject: [PATCH 08/15] Revert "bfq: Use only idle IO periods for think time
  calculations"
 
 This reverts commit 94adf5e26e8a0fc39d2035ea4908ccf801ca7c98.
@@ -454,13 +394,12 @@ index 9c2274d5c..4e2eacf1b 100644
  
  	ttime->ttime_samples = (7*ttime->ttime_samples + 256) / 8;
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 5e6f4b672dd3bb1c49289c91b059fbd6f16c2ea1 Mon Sep 17 00:00:00 2001
+From b768849efca17059b0daf44ff06fca07bbccfe2e Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 13 Jan 2021 17:54:11 +0100
-Subject: [PATCH 10/16] Revert "bfq: Use 'ttime' local variable"
+Subject: [PATCH 09/15] Revert "bfq: Use 'ttime' local variable"
 
 This reverts commit e56d7aabd08b95c681cc83f1255f95476386a463.
 
@@ -483,13 +422,12 @@ index 4e2eacf1b..d1c190d66 100644
  	ttime->ttime_mean = div64_ul(ttime->ttime_total + 128,
  				     ttime->ttime_samples);
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From c880124a0c9811922c6986d3f4887ba9652de659 Mon Sep 17 00:00:00 2001
+From b1b8980f4b54b8e627ec17ccb95029b4f1186b91 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 13 Jan 2021 17:54:12 +0100
-Subject: [PATCH 11/16] Revert "bfq: Avoid false bfq queue merging"
+Subject: [PATCH 10/15] Revert "bfq: Avoid false bfq queue merging"
 
 This reverts commit 78726241ac9aeed8c76d84c406495992dc63491c.
 
@@ -511,13 +449,12 @@ index d1c190d66..2aff875c9 100644
  
  /*
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From ec13d9da1c263cf2f7507a95186fe28b108afce2 Mon Sep 17 00:00:00 2001
+From 6ef933f702a30d676114e234bd198513539e7106 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:25 +0000
-Subject: [PATCH 12/16] bfq: Avoid false bfq queue merging
+Subject: [PATCH 11/15] bfq: Avoid false bfq queue merging
 
 bfq_setup_cooperator() uses bfqd->in_serv_last_pos so detect whether it
 makes sense to merge current bfq queue with the in-service queue.
@@ -566,13 +503,12 @@ index 2aff875c9..8fc57491e 100644
  
  /*
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 72e07bea96d228d58bbb01eada78abb62c7f9f36 Mon Sep 17 00:00:00 2001
+From 10b1f4d3494102cbb172ad62f680ab4f202107ab Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:26 +0000
-Subject: [PATCH 13/16] bfq: Use 'ttime' local variable
+Subject: [PATCH 12/15] bfq: Use 'ttime' local variable
 
 Use local variable 'ttime' instead of dereferencing bfqq.
 
@@ -596,13 +532,12 @@ index 8fc57491e..db32d2ee9 100644
  	ttime->ttime_mean = div64_ul(ttime->ttime_total + 128,
  				     ttime->ttime_samples);
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 52cd344f5c02382e3d1e58f9ca6a43369f436823 Mon Sep 17 00:00:00 2001
+From 3ed1da8929c30442919e44f31d01fa705d647449 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:27 +0000
-Subject: [PATCH 14/16] bfq: Use only idle IO periods for think time
+Subject: [PATCH 13/15] bfq: Use only idle IO periods for think time
  calculations
 
 Currently whenever bfq queue has a request queued we add now -
@@ -644,13 +579,12 @@ index db32d2ee9..253c71619 100644
  
  	ttime->ttime_samples = (7*ttime->ttime_samples + 256) / 8;
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From 3c32c947cff5601c65271d46c351d8acbebb6e1b Mon Sep 17 00:00:00 2001
+From b6fe06037b26075b1b79064b99f49d04278040ad Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 13:05:15 +0000
-Subject: [PATCH 15/16] bfq: Remove stale comment
+Subject: [PATCH 14/15] bfq: Remove stale comment
 
 Remove comment paragraph that was made stale by a fix of shallow depth
 computation.
@@ -680,13 +614,12 @@ index 253c71619..3194d6cf0 100644
  	/* no more than 50% of tags for async I/O */
  	bfqd->word_depths[0][0] = max(bt->sb.depth >> 1, 1U);
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 
-
-From f079d0a5f6b2918b2c62ff4abd9d814423b28e42 Mon Sep 17 00:00:00 2001
+From 4a8063a8606cbff0b5e7c5aeff6cf4840e842f3b Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3 () huawei ! com>
 Date: Thu, 14 Jan 2021 12:24:26 +0000
-Subject: [PATCH 16/16] bfq: don't check active group if bfq.weight is not
+Subject: [PATCH 15/15] bfq: don't check active group if bfq.weight is not
  changed
 
 Now the group scheduling in BFQ depends on the check of active group,
@@ -821,5 +754,5 @@ index 703895224..216509013 100644
  #define bfq_log_bfqq(bfqd, bfqq, fmt, args...) do {	\
  	char pid_str[MAX_PID_STR_LENGTH];	\
 -- 
-2.30.0.81.g72c4083ddf
+2.25.1
 

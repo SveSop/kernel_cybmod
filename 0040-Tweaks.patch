@@ -1,6 +1,6 @@
-From 667b4bc529e08df0dadf2e8cbd99e93ac473da0f Mon Sep 17 00:00:00 2001
+From 24a264e47a49a18d8a47cd981daaa744d9831234 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Sun, 3 Jan 2021 13:57:43 +0100
+Date: Sat, 23 Jan 2021 14:41:17 +0100
 Subject: [PATCH] Tweaks
 
 ---
@@ -10,30 +10,32 @@ Subject: [PATCH] Tweaks
  include/linux/mm.h                 |  2 +-
  include/linux/pagemap.h            |  2 +-
  include/uapi/linux/vt.h            | 15 +--------------
+ init/Kconfig                       |  2 +-
+ kernel/sched/Makefile              |  2 +-
  kernel/sched/core.c                |  6 +++---
  kernel/sched/fair.c                | 18 +++++++++---------
+ kernel/sched/pds.c                 | 17 ++++++++++++++++-
  mm/huge_memory.c                   |  2 +-
  mm/page-writeback.c                |  4 ++--
  mm/page_alloc.c                    |  2 +-
  net/ipv4/Kconfig                   |  4 ++++
- scripts/headers_install.sh         |  1 +
- 13 files changed, 28 insertions(+), 49 deletions(-)
+ 15 files changed, 45 insertions(+), 52 deletions(-)
 
 diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-index ac361a8b1..476d3a78f 100644
+index cbf7ed716..8d2f6b9b4 100644
 --- a/drivers/cpufreq/cpufreq_ondemand.c
 +++ b/drivers/cpufreq/cpufreq_ondemand.c
 @@ -18,10 +18,10 @@
  #include "cpufreq_ondemand.h"
  
  /* On-demand governor macros */
--#define DEF_FREQUENCY_UP_THRESHOLD		(80)
+-#define DEF_FREQUENCY_UP_THRESHOLD		(63)
 -#define DEF_SAMPLING_DOWN_FACTOR		(1)
-+#define DEF_FREQUENCY_UP_THRESHOLD		(45)
++#define DEF_FREQUENCY_UP_THRESHOLD		(55)
 +#define DEF_SAMPLING_DOWN_FACTOR		(5)
  #define MAX_SAMPLING_DOWN_FACTOR		(100000)
 -#define MICRO_FREQUENCY_UP_THRESHOLD		(95)
-+#define MICRO_FREQUENCY_UP_THRESHOLD		(45)
++#define MICRO_FREQUENCY_UP_THRESHOLD		(63)
  #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(10000)
  #define MIN_FREQUENCY_UP_THRESHOLD		(1)
  #define MAX_FREQUENCY_UP_THRESHOLD		(100)
@@ -75,7 +77,7 @@ index ea0485861..37adf75d0 100644
  
  __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
 diff --git a/include/linux/mm.h b/include/linux/mm.h
-index db6ae4d3f..5f8ff130c 100644
+index cd5c31372..fda935ccc 100644
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
 @@ -198,7 +198,7 @@ static inline void __mm_zero_struct_page(struct page *page)
@@ -131,6 +133,45 @@ index 3bceead8d..cf3d61b0c 100644
  		/* Note: the ioctl VT_GETSTATE does not work for
  		   consoles 16 and higher (since it returns a short) */
  
+diff --git a/init/Kconfig b/init/Kconfig
+index e3a869873..87816e436 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -793,6 +793,7 @@ menu "Scheduler features"
+ config UCLAMP_TASK
+ 	bool "Enable utilization clamping for RT/FAIR tasks"
+ 	depends on CPU_FREQ_GOV_SCHEDUTIL
++	depends on !SCHED_PDS
+ 	help
+ 	  This feature enables the scheduler to track the clamped utilization
+ 	  of each CPU based on RUNNABLE tasks scheduled on that CPU.
+@@ -1094,7 +1095,6 @@ config CGROUP_DEVICE
+ 
+ config CGROUP_CPUACCT
+ 	bool "Simple CPU accounting controller"
+-	depends on !SCHED_PDS
+ 	help
+ 	  Provides a simple controller for monitoring the
+ 	  total CPU consumed by the tasks in a cgroup.
+diff --git a/kernel/sched/Makefile b/kernel/sched/Makefile
+index 1b5bc273e..634295ae2 100644
+--- a/kernel/sched/Makefile
++++ b/kernel/sched/Makefile
+@@ -30,13 +30,13 @@ obj-y += fair.o rt.o deadline.o
+ obj-$(CONFIG_SMP) += cpudeadline.o topology.o stop_task.o
+ obj-$(CONFIG_SCHED_AUTOGROUP) += autogroup.o
+ obj-$(CONFIG_SCHED_DEBUG) += debug.o
+-obj-$(CONFIG_CGROUP_CPUACCT) += cpuacct.o
+ endif
+ obj-y += loadavg.o clock.o cputime.o
+ obj-y += idle.o
+ obj-y += wait.o wait_bit.o swait.o completion.o
+ obj-$(CONFIG_SMP) += cpupri.o pelt.o
+ obj-$(CONFIG_SCHEDSTATS) += stats.o
++obj-$(CONFIG_CGROUP_CPUACCT) += cpuacct.o
+ obj-$(CONFIG_CPU_FREQ) += cpufreq.o
+ obj-$(CONFIG_CPU_FREQ_GOV_SCHEDUTIL) += cpufreq_schedutil.o
+ obj-$(CONFIG_MEMBARRIER) += membarrier.o
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
 index 77aa0e788..b0de07693 100644
 --- a/kernel/sched/core.c
@@ -211,6 +252,41 @@ index ae7ceba8f..3f7b9e80c 100644
  #endif
  
  static inline void update_load_add(struct load_weight *lw, unsigned long inc)
+diff --git a/kernel/sched/pds.c b/kernel/sched/pds.c
+index c708057e1..f649021cf 100644
+--- a/kernel/sched/pds.c
++++ b/kernel/sched/pds.c
+@@ -90,6 +90,18 @@ enum {
+ 	NR_CPU_AFFINITY_CHK_LEVEL
+ };
+ 
++/*
++ * This allows printing both to /proc/sched_debug and
++ * to the console
++ */
++#define SEQ_printf(m, x...)			\
++ do {						\
++	if (m)					\
++		seq_printf(m, x);		\
++	else					\
++		pr_cont(x);			\
++ } while (0)
++
+ static inline void print_scheduler_version(void)
+ {
+ 	printk(KERN_INFO "pds: PDS-mq CPU Scheduler 0.99o by Alfred Chen and kept alive artificially by Tk-Glitch.\n");
+@@ -6673,7 +6685,10 @@ void ia64_set_curr_task(int cpu, struct task_struct *p)
+ #ifdef CONFIG_SCHED_DEBUG
+ void proc_sched_show_task(struct task_struct *p, struct pid_namespace *ns,
+ 			  struct seq_file *m)
+-{}
++{
++	SEQ_printf(m, "%s (%d, #threads: %d)\n", p->comm, task_pid_nr_ns(p, ns),
++						get_nr_threads(p));
++}
+ 
+ void proc_sched_set_task(struct task_struct *p)
+ {}
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
 index 1199b71ab..f848779be 100644
 --- a/mm/huge_memory.c
@@ -225,7 +301,7 @@ index 1199b71ab..f848779be 100644
  	(1<<TRANSPARENT_HUGEPAGE_USE_ZERO_PAGE_FLAG);
  
 diff --git a/mm/page-writeback.c b/mm/page-writeback.c
-index 586042472..500a0372d 100644
+index eb34d204d..794987157 100644
 --- a/mm/page-writeback.c
 +++ b/mm/page-writeback.c
 @@ -71,7 +71,7 @@ static long ratelimit_pages = 32;
@@ -247,7 +323,7 @@ index 586042472..500a0372d 100644
  /*
   * vm_dirty_bytes starts at 0 (disabled) so that it is a function of
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index f9b0c380c..ddc62c48b 100644
+index 6feb59251..07cc8214c 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -349,7 +349,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
@@ -260,10 +336,10 @@ index f9b0c380c..ddc62c48b 100644
  static unsigned long nr_kernel_pages __initdata;
  static unsigned long nr_all_pages __initdata;
 diff --git a/net/ipv4/Kconfig b/net/ipv4/Kconfig
-index 87983e70f..9025ab719 100644
+index a833a7a67..23b226022 100644
 --- a/net/ipv4/Kconfig
 +++ b/net/ipv4/Kconfig
-@@ -694,6 +694,9 @@ choice
+@@ -712,6 +712,9 @@ choice
  	config DEFAULT_VENO
  		bool "Veno" if TCP_CONG_VENO=y
  
@@ -273,7 +349,7 @@ index 87983e70f..9025ab719 100644
  	config DEFAULT_WESTWOOD
  		bool "Westwood" if TCP_CONG_WESTWOOD=y
  
-@@ -724,6 +727,7 @@ config DEFAULT_TCP_CONG
+@@ -745,6 +748,7 @@ config DEFAULT_TCP_CONG
  	default "htcp" if DEFAULT_HTCP
  	default "hybla" if DEFAULT_HYBLA
  	default "vegas" if DEFAULT_VEGAS
@@ -281,18 +357,6 @@ index 87983e70f..9025ab719 100644
  	default "westwood" if DEFAULT_WESTWOOD
  	default "veno" if DEFAULT_VENO
  	default "reno" if DEFAULT_RENO
-diff --git a/scripts/headers_install.sh b/scripts/headers_install.sh
-index dd554bd43..75030ad93 100755
---- a/scripts/headers_install.sh
-+++ b/scripts/headers_install.sh
-@@ -89,6 +89,7 @@ include/uapi/linux/atmdev.h:CONFIG_COMPAT
- include/uapi/linux/eventpoll.h:CONFIG_PM_SLEEP
- include/uapi/linux/hw_breakpoint.h:CONFIG_HAVE_MIXED_BREAKPOINTS_REGS
- include/uapi/linux/pktcdvd.h:CONFIG_CDROM_PKTCDVD_WCACHE
-+include/uapi/linux/sched.h:CONFIG_SCHED_MUQSS
- "
- 
- for c in $configs
 -- 
 2.25.1
 

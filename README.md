@@ -5,7 +5,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 **Custom kernel with the following patches**  
 
 0000 : Kernel patch 5.10.7  
-0001 : 5.10 ck1 combined patchset with MuQSS scheduler  
+0001 : 5.10 (Undead) PDS scheduler  
 0002 : 5.10 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
 0004 : 5.10 support for Zen3 arch with trunk GCC  
@@ -27,9 +27,8 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default MuQSS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
-**MuQSS currently running with CONFIG_RQ_SMT=y setting**  
-**Also see [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/) for scheduler info**  
+**This config has default PDS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**"Undead" PDS scheduler kept alive by Tk-Glitch [https://github.com/Frogging-Family/linux-tkg/tree/master/linux-tkg-patches/5.10](https://github.com/Frogging-Family/linux-tkg/tree/master/linux-tkg-patches/5.10)**  
 
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 
