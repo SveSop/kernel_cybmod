@@ -1,7 +1,7 @@
-From 841c67aa7018854626075f5d3ea315b98af3c47b Mon Sep 17 00:00:00 2001
+From 46b0a9502798f701073117aadb00c65d9e7463c0 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/21] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/22] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index a3b37d888..1fcfd47d1 100644
  endif
  
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 91a450068bef94b83029b4c403833f22818214be Mon Sep 17 00:00:00 2001
+From 4abb682c682be5bc5ac6b4f53b5d799567dacc72 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/21] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/22] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 0abce004a..b6eeb2fab 100644
  	int ret;
  
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 9ba5dfb88131d30b96e4bebe56f95df70711ea5e Mon Sep 17 00:00:00 2001
+From 9f28d2640837073147ceeedc473060a0cf871c32 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/21] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/22] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 4ee137b5d..7cadf3768 100644
+index 7d86ad6ad..02a4c10ab 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -675,6 +675,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index 4ee137b5d..7cadf3768 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From d5ba4f7d5542a7108cce5408b93737676fed0243 Mon Sep 17 00:00:00 2001
+From 49e722adba55d32b5c67a954318efb5f3cb1403d Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/21] mm: Disable watermark boosting by default
+Subject: [PATCH 04/22] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -152,13 +152,13 @@ index 14b9e83ff..bd8545fc7 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 06479bca41da83d6f915b346189acce323370b1f Mon Sep 17 00:00:00 2001
+From f00023a37a295d65087854a60d7d0d1007676592 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/21] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/22] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -238,10 +238,10 @@ index bd8545fc7..e1b341ab0 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 0ec6321e9..12d8b9820 100644
+index 4c5a9b228..15a26744d 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3681,7 +3681,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3683,7 +3683,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		__fs_reclaim_release();
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
@@ -252,13 +252,13 @@ index 0ec6321e9..12d8b9820 100644
  
  		/*
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 4818eb12f2395953f0785b464ca4db6d534e4728 Mon Sep 17 00:00:00 2001
+From f0176b32c29e187e53f44f4204839190a08fcd9a Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/21] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/22] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -288,13 +288,13 @@ index e1b341ab0..4f6ff1884 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From b6a498a8bfea746fae3c92fd6ea3a13f2c226389 Mon Sep 17 00:00:00 2001
+From 4eb06da1e96421ab6cc79d08db37e6ea72123142 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/21] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 07/22] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -382,10 +382,10 @@ index 4f6ff1884..6feb59251 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 12d8b9820..b2032f37c 100644
+index 15a26744d..3b29ade3d 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3682,7 +3682,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3684,7 +3684,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
  		if (ret || kthread_should_stop() ||
@@ -395,13 +395,13 @@ index 12d8b9820..b2032f37c 100644
  
  		/*
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 4df15186ddb545700fe26b2a835b5f52d876f213 Mon Sep 17 00:00:00 2001
+From 360fd2a05ae1ed86d242d50de642a3dc95680cb3 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/21] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 08/22] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -414,7 +414,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 7cadf3768..3c7428637 100644
+index 02a4c10ab..789291a13 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -937,9 +937,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -428,13 +428,13 @@ index 7cadf3768..3c7428637 100644
  KBUILD_CFLAGS   += -Werror=date-time
  
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 38258a81e34ad1b6f99ff52ffa8511e3403c54a2 Mon Sep 17 00:00:00 2001
+From 33777e0509be5cccebe25ac328843bb2b75b1aa9 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/21] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/22] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -626,13 +626,13 @@ index fb1dc11e7..07393e019 100644
  };
  
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 70e4f636e368a63adc0e070285fe7edd0d598b07 Mon Sep 17 00:00:00 2001
+From 72816b3d1c25b02d20052286d45643013b626707 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 10/21] ZEN: Add OpenRGB patches
+Subject: [PATCH 10/22] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1375,13 +1375,13 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 5a1f5e73b0dd320f1e4f3b07bd62d981d1d1d9b6 Mon Sep 17 00:00:00 2001
+From 994e3721e3b8197fd1c1b643ce5841c9a535c1af Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 25 Sep 2020 13:22:05 +0200
-Subject: [PATCH 11/21] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 11/22] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1445,13 +1445,13 @@ index e9d39c485..3bceead8d 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From e153235fcea3c8455ad5270299bc051042104777 Mon Sep 17 00:00:00 2001
+From 1bae5b14bd6fca6222ca7d1341e9abf4f669f096 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 12/21] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 12/22] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -1579,13 +1579,13 @@ index b59136c41..4154030c8 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From ad37bb61f0da68b7dcb8e4e036c8549318d8492c Mon Sep 17 00:00:00 2001
+From ea3f9c00ae83d8d120129786f01c81bb3bd9daff Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Tue, 12 May 2020 17:29:36 -0400
-Subject: [PATCH 13/21] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 13/22] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 The VFS inode shrinker is currently allowed to reclaim cold inodes
@@ -2304,7 +2304,7 @@ index 960edf580..de7ac6bc2 100644
  
  	pagevec_init(&pvec);
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index b2032f37c..402d2b886 100644
+index 3b29ade3d..836724b10 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -906,6 +906,7 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
@@ -2374,13 +2374,13 @@ index 975a4d2dd..5801b7761 100644
  out:
  	cond_resched();
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 82289282c1feda05bb3f8bc55915ad2468f6adb0 Mon Sep 17 00:00:00 2001
+From 0308298e9886882dd8429d6f228e2455c5843fca Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sun, 25 Oct 2020 17:29:48 -0400
-Subject: [PATCH 14/21] fs: Break generic_file_buffered_read up into multiple
+Subject: [PATCH 14/22] fs: Break generic_file_buffered_read up into multiple
  functions
 
 This is prep work for changing generic_file_buffered_read() to use
@@ -2953,13 +2953,13 @@ index cfe4e743e..346d64439 100644
  }
  EXPORT_SYMBOL_GPL(generic_file_buffered_read);
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 002fef8a3bfb8a35fbe83e56bf9b0e194fcebbf3 Mon Sep 17 00:00:00 2001
+From 6ec78c2c6544275214adef84fd7e65368445775f Mon Sep 17 00:00:00 2001
 From: Kent Overstreet <kent.overstreet@gmail.com>
 Date: Sun, 25 Oct 2020 17:29:49 -0400
-Subject: [PATCH 15/21] fs: generic_file_buffered_read() now uses
+Subject: [PATCH 15/22] fs: generic_file_buffered_read() now uses
  find_get_pages_contig
 
 Convert generic_file_buffered_read() to get pages to read from in
@@ -3339,13 +3339,13 @@ index 346d64439..a3cdf9cff 100644
  	return written ? written : error;
  }
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 14caea001d7f5192634f0fe1175f611c268ea5b3 Mon Sep 17 00:00:00 2001
+From ba3ff4701ad77ed4c56dec69a33654533f1ce94a Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 16/21] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 16/22] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -3463,13 +3463,13 @@ index 10cc7979c..74321794d 100644
  redirty:
  	redirty_page_for_writepage(wbc, page);
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 44794ca5a6a77872f24dce2b139ea02216d9a7a5 Mon Sep 17 00:00:00 2001
+From 33e7b048e0a4fcd36ae4926f1d8d3dd167ba90b7 Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Tue, 22 Dec 2020 09:21:28 +0800
-Subject: [PATCH 17/21] mm: Add become_kswapd and restore_kswapd
+Subject: [PATCH 17/22] mm: Add become_kswapd and restore_kswapd
 
 Since XFS needs to pretend to be kswapd in some of its worker threads,
 create methods to save & restore kswapd state.  Don't bother restoring
@@ -3560,10 +3560,10 @@ index d5ece7a9a..7195e542a 100644
  DECLARE_PER_CPU(struct mem_cgroup *, int_active_memcg);
  /**
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 402d2b886..8fd3d6164 100644
+index 836724b10..ba3cf2023 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3871,19 +3871,7 @@ static int kswapd(void *p)
+@@ -3873,19 +3873,7 @@ static int kswapd(void *p)
  	if (!cpumask_empty(cpumask))
  		set_cpus_allowed_ptr(tsk, cpumask);
  
@@ -3584,7 +3584,7 @@ index 402d2b886..8fd3d6164 100644
  	set_freezable();
  
  	WRITE_ONCE(pgdat->kswapd_order, 0);
-@@ -3933,8 +3921,6 @@ static int kswapd(void *p)
+@@ -3935,8 +3923,6 @@ static int kswapd(void *p)
  			goto kswapd_try_sleep;
  	}
  
@@ -3594,13 +3594,13 @@ index 402d2b886..8fd3d6164 100644
  }
  
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From ae7543ba648788c106b54c6fc50910d928d0e684 Mon Sep 17 00:00:00 2001
+From de54f0738b4ee550b48ecdf3ff4bb0e3be719561 Mon Sep 17 00:00:00 2001
 From: "Darrick J. Wong" <djwong@kernel.org>
 Date: Mon, 11 Jan 2021 14:50:53 -0800
-Subject: [PATCH 18/21] xfs: fix an ABBA deadlock in xfs_rename
+Subject: [PATCH 18/22] xfs: fix an ABBA deadlock in xfs_rename
 
 When overlayfs is running on top of xfs and the user unlinks a file in
 the overlay, overlayfs will create a whiteout inode and ask xfs to
@@ -3720,13 +3720,13 @@ index 2bfbcf28b..e958b1c74 100644
  					src_ip->i_ino, spaceres);
  		if (error)
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 9138ec5d5bfd4f4f0e723f0ebfa13fd0ba1f0032 Mon Sep 17 00:00:00 2001
+From 0140d70f2d2081e785b04587ee1f1ca55f222b56 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:22 +0800
-Subject: [PATCH 19/21] xfs: use memalloc_nofs_{save,restore} in xfs
+Subject: [PATCH 19/22] xfs: use memalloc_nofs_{save,restore} in xfs
  transaction
 
 Introduce a new API to mark the start and end of XFS transactions.
@@ -3869,13 +3869,13 @@ index 084658946..44b11c64a 100644
 +
  #endif	/* __XFS_TRANS_H__ */
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From d12eec40d34dee527ab72cda6b8a58b955e9e15e Mon Sep 17 00:00:00 2001
+From c927b1ffaf855a0245b6783774c309f0f2c03e70 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:23 +0800
-Subject: [PATCH 20/21] xfs: refactor the usage around
+Subject: [PATCH 20/22] xfs: refactor the usage around
  xfs_trans_context_{set,clear}
 
 The xfs_trans context should be active after it is allocated, and
@@ -4026,13 +4026,13 @@ index 44b11c64a..3645fd0d7 100644
  
  #endif	/* __XFS_TRANS_H__ */
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
 
 
-From 0f59afb330b76ecd1d631434bf1d4dc193cb0931 Mon Sep 17 00:00:00 2001
+From b5d567101ba728e3f0297caff772258380bd7c37 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:24 +0800
-Subject: [PATCH 21/21] xfs: use current->journal_info to avoid transaction
+Subject: [PATCH 21/22] xfs: use current->journal_info to avoid transaction
  reservation recursion
 
 PF_FSTRANS which is used to avoid transaction reservation recursion, is
@@ -4159,5 +4159,41 @@ index 3645fd0d7..e2f3251d6 100644
  
  #endif	/* __XFS_TRANS_H__ */
 -- 
-2.30.0.81.g72c4083ddf
+2.30.0.155.g66e871b664
+
+
+From beb936f508afee51f491b4f5397da4003869950f Mon Sep 17 00:00:00 2001
+From: Jeffrey Mitchell <jeffrey.mitchell@starlab.io>
+Date: Thu, 21 Jan 2021 09:19:12 -0600
+Subject: [PATCH 22/22] xfs: set inode size after creating symlink
+
+When XFS creates a new symlink, it writes its size to disk but not to the
+VFS inode. This causes i_size_read() to return 0 for that symlink until
+it is re-read from disk, for example when the system is rebooted.
+
+I found this inconsistency while protecting directories with eCryptFS.
+The command "stat path/to/symlink/in/ecryptfs" will report "Size: 0" if
+the symlink was created after the last reboot on an XFS root.
+
+Call i_size_write() in xfs_symlink()
+
+Signed-off-by: Jeffrey Mitchell <jeffrey.mitchell@starlab.io>
+---
+ fs/xfs/xfs_symlink.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/fs/xfs/xfs_symlink.c b/fs/xfs/xfs_symlink.c
+index 8e88a7ca3..8d3abf06c 100644
+--- a/fs/xfs/xfs_symlink.c
++++ b/fs/xfs/xfs_symlink.c
+@@ -300,6 +300,7 @@ xfs_symlink(
+ 		}
+ 		ASSERT(pathlen == 0);
+ 	}
++	i_size_write(VFS_I(ip), ip->i_d.di_size);
+ 
+ 	/*
+ 	 * Create the directory entry for the symlink.
+-- 
+2.30.0.155.g66e871b664
 
