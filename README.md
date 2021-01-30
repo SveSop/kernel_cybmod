@@ -8,6 +8,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0002 : 5.10 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
 0010 : Corsair PSU HW-monitor patch  
+0011 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 0030 : Clearlinux patchset  
