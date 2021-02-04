@@ -1,7 +1,7 @@
-From b5bd1ec67042a885a4e0af8a960d8db37266e296 Mon Sep 17 00:00:00 2001
+From 3a088920acafc92b2343bf39bbd9402ed66d9303 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:43 +0000
-Subject: [PATCH 01/24] block, bfq: use half slice_idle as a threshold to check
+Subject: [PATCH 01/26] block, bfq: use half slice_idle as a threshold to check
  short ttime
 
 The value of the I/O plugging (idling) timeout is used also as the
@@ -40,13 +40,13 @@ index 9e4eb0fc1..eb2ca32d5 100644
  
  	state_changed = has_short_ttime != bfq_bfqq_has_short_ttime(bfqq);
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 08f7fe323ac38033d42cfa56139dced896b17eee Mon Sep 17 00:00:00 2001
+From 0c64ab423ec12d036cc03bdbe4e9b4a38db3d8c8 Mon Sep 17 00:00:00 2001
 From: Jia Cheng Hu <jia.jiachenghu@gmail.com>
 Date: Fri, 22 Jan 2021 18:19:44 +0000
-Subject: [PATCH 02/24] block, bfq: set next_rq to waker_bfqq->next_rq in waker
+Subject: [PATCH 02/26] block, bfq: set next_rq to waker_bfqq->next_rq in waker
  injection
 
 Since commit c5089591c3ba ("block, bfq: detect wakers and
@@ -84,13 +84,13 @@ index eb2ca32d5..fdc5e163b 100644
  					      bfqq->waker_bfqq) <=
  			   bfq_bfqq_budget_left(bfqq->waker_bfqq)
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 42f0a58ea3f5a954ca9af45d88336c6a20903629 Mon Sep 17 00:00:00 2001
+From 1372b41ddc4ba05a86900ec9d2c973f9ce89e72c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:45 +0000
-Subject: [PATCH 03/24] block, bfq: increase time window for waker detection
+Subject: [PATCH 03/26] block, bfq: increase time window for waker detection
 
 Tests on slower machines showed current window to be way too
 small. This commit increases it.
@@ -115,13 +115,13 @@ index fdc5e163b..43e2c39cf 100644
  			    bfqd->last_completed_rq_bfqq !=
  			    bfqq->waker_bfqq) {
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From ea0c6582cfa81f1a59fbbbd138e0f632ee98dce6 Mon Sep 17 00:00:00 2001
+From 88454e9b12c0047b16aadba2b5a500f25a884065 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:46 +0000
-Subject: [PATCH 04/24] block, bfq: do not raise non-default weights
+Subject: [PATCH 04/26] block, bfq: do not raise non-default weights
 
 BFQ heuristics try to detect interactive I/O, and raise the weight of
 the queues containing such an I/O. Yet, if also the user changes the
@@ -163,13 +163,13 @@ index 43e2c39cf..161badb74 100644
  		(bfqq->wr_coeff > 1 ||
  		 (bfq_bfqq_sync(bfqq) &&
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 10def2a3fab8da027edfe49ebf659f6122fcbc36 Mon Sep 17 00:00:00 2001
+From 7ef874a3d8f8051ce6d69a0bb2e7457137367aab Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:47 +0000
-Subject: [PATCH 05/24] block, bfq: avoid spurious switches to soft_rt of
+Subject: [PATCH 05/26] block, bfq: avoid spurious switches to soft_rt of
  interactive queues
 
 BFQ tags some bfq_queues as interactive or soft_rt if it deems that
@@ -334,13 +334,13 @@ index 161badb74..003c96fa0 100644
  }
  
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From ba46374569c4d7af38dad455c7b9369f64a7ae4d Mon Sep 17 00:00:00 2001
+From 297b71e0967c8e70cf5d146eb208bbc76741ea7c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:48 +0000
-Subject: [PATCH 06/24] block, bfq: do not expire a queue when it is the only
+Subject: [PATCH 06/26] block, bfq: do not expire a queue when it is the only
  busy one
 
 This commits preserves I/O-dispatch plugging for a special symmetric
@@ -410,13 +410,13 @@ index 003c96fa0..c045613ce 100644
  
  static bool __bfq_bfqq_expire(struct bfq_data *bfqd, struct bfq_queue *bfqq,
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From b1a75ee871d627d47b2eea216435ac1ee1b900c6 Mon Sep 17 00:00:00 2001
+From 0f684ee98843af71c3f3ec877d4e07ad6c49704e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:43 +0100
-Subject: [PATCH 07/24] block, bfq: replace mechanism for evaluating I/O
+Subject: [PATCH 07/26] block, bfq: replace mechanism for evaluating I/O
  intensity
 
 Some BFQ mechanisms make their decisions on a bfq_queue basing also on
@@ -622,13 +622,13 @@ index 703895224..c913b0601 100644
  	 * Force device idling whenever needed to provide accurate
  	 * service guarantees, without caring about throughput
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From e60d3adf4b8323c5c8b9a890af16239315fc0df4 Mon Sep 17 00:00:00 2001
+From ae98697e7bc1832f444f68423bd3ad175996cf39 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:44 +0100
-Subject: [PATCH 08/24] block, bfq: re-evaluate convenience of I/O plugging on
+Subject: [PATCH 08/26] block, bfq: re-evaluate convenience of I/O plugging on
  rq arrivals
 
 Upon an I/O-dispatch attempt, BFQ may detect that it was better to
@@ -704,13 +704,13 @@ index db393f5d7..6a02a12ff 100644
  		bfq_bfqq_expire(bfqd, bfqd->in_service_queue,
  				false, BFQQE_PREEMPTED);
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 06780051c74b2b7d04eaf3548d4f7b709aba623a Mon Sep 17 00:00:00 2001
+From d9a4a329cec981e3bb4bcd749fe320799b485bc8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:45 +0100
-Subject: [PATCH 09/24] block, bfq: fix switch back from soft-rt weitgh-raising
+Subject: [PATCH 09/26] block, bfq: fix switch back from soft-rt weitgh-raising
 
 A bfq_queue may happen to be deemed as soft real-time while it is
 still enjoying interactive weight-raising. If this happens because of
@@ -761,13 +761,13 @@ index 6a02a12ff..9e5242b27 100644
  
  static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From ff393f58b39a121ffa593f15a71310cb396cff0e Mon Sep 17 00:00:00 2001
+From 217c1a7c88e4a78582f44da95a0e6d6cd223e2cf Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:46 +0100
-Subject: [PATCH 10/24] block, bfq: save also weight-raised service on queue
+Subject: [PATCH 10/26] block, bfq: save also weight-raised service on queue
  merging
 
 To prevent weight-raising information from being lost on bfq_queue merging,
@@ -815,13 +815,13 @@ index c913b0601..d15299d59 100644
  	unsigned int saved_wr_cur_max_time;
  	struct bfq_ttime saved_ttime;
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From c0eafb54bfb3d8e1502314c5bd30021b67b0ea5f Mon Sep 17 00:00:00 2001
+From ad2e09235bfd7750dcb37b03e69cedb2355efd9f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:47 +0100
-Subject: [PATCH 11/24] block, bfq: save also injection state on queue merging
+Subject: [PATCH 11/26] block, bfq: save also injection state on queue merging
 
 To prevent injection information from being lost on bfq_queue merging,
 also the amount of service that a bfq_queue receives must be saved and
@@ -878,13 +878,13 @@ index d15299d59..3f350fa3c 100644
  
  /**
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 2addf6cf811e980e252ac833dbac38e2ef1ff6a6 Mon Sep 17 00:00:00 2001
+From 609ddae43b55cc6362b10214d4c86e6c1e6ddd92 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:48 +0100
-Subject: [PATCH 12/24] block, bfq: make waker-queue detection more robust
+Subject: [PATCH 12/26] block, bfq: make waker-queue detection more robust
 
 In the presence of many parallel I/O flows, the detection of waker
 bfq_queues suffers from false positives. This commits addresses this
@@ -1183,13 +1183,13 @@ index 3f350fa3c..b8e793c34 100644
  
  /* Expiration reasons. */
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 562deffa398abdc9ebce7cb88d26fbb489a78a27 Mon Sep 17 00:00:00 2001
+From 0a8a96d3cd51143616896ddd71913b8e46a56a02 Mon Sep 17 00:00:00 2001
 From: Jens Axboe <axboe@kernel.dk>
 Date: Mon, 25 Jan 2021 21:15:01 -0700
-Subject: [PATCH 13/24] bfq: bfq_check_waker() should be static
+Subject: [PATCH 13/26] bfq: bfq_check_waker() should be static
 
 It's only used in the same file, mark is appropriately static.
 
@@ -1215,13 +1215,13 @@ index 445cef9c0..ca688d747 100644
  	if (!bfqd->last_completed_rq_bfqq ||
  	    bfqd->last_completed_rq_bfqq == bfqq ||
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 2069d9c6d20a3a598b03abd41570b03ce099abe8 Mon Sep 17 00:00:00 2001
+From 530d08db4f6e1d1a2f7d614785e579b93c590169 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:57 +0000
-Subject: [PATCH 14/24] block, bfq: always inject I/O of queues blocked by
+Subject: [PATCH 14/26] block, bfq: always inject I/O of queues blocked by
  wakers
 
 Suppose that I/O dispatch is plugged, to wait for new I/O for the
@@ -1335,13 +1335,13 @@ index 26776bdbd..02e59931d 100644
 +	}
  }
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 095fdbfe0858a0f78c78d70a80a46f78c61456be Mon Sep 17 00:00:00 2001
+From 2843b0c0cdef36d03f9afb05e5d539170503fe5e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:58 +0000
-Subject: [PATCH 15/24] block, bfq: put reqs of waker and woken in dispatch
+Subject: [PATCH 15/26] block, bfq: put reqs of waker and woken in dispatch
  list
 
 Consider a new I/O request that arrives for a bfq_queue bfqq. If, when
@@ -1387,13 +1387,13 @@ index eac2364b2..c830478a5 100644
  			list_add(&rq->queuelist, &bfqd->dispatch);
  		else
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 07d20ec526d6943585ee601aba46fd4eb487128b Mon Sep 17 00:00:00 2001
+From 835bdf7bb66b3c125b0eaaaae5d04bd446e8b875 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:59 +0000
-Subject: [PATCH 16/24] block, bfq: make shared queues inherit wakers
+Subject: [PATCH 16/26] block, bfq: make shared queues inherit wakers
 
 Consider a bfq_queue bfqq that is about to be merged with another
 bfq_queue new_bfqq. The processes associated with bfqq are cooperators
@@ -1480,13 +1480,13 @@ index c830478a5..160732a6d 100644
  		}
  	}
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 370d74f57cd7d53363494170cecf56ec95e32124 Mon Sep 17 00:00:00 2001
+From 276398d12a73af0dce2bf0452e55a44efc6ccc84 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:00 +0000
-Subject: [PATCH 17/24] block, bfq: fix weight-raising resume with !low_latency
+Subject: [PATCH 17/26] block, bfq: fix weight-raising resume with !low_latency
 
 When the io_latency heuristic is off, bfq_queues must not start to be
 weight-raised. Unfortunately, by mistake, this may happen when the
@@ -1528,13 +1528,13 @@ index 160732a6d..a21cc72c6 100644
  	bfqq->wr_start_at_switch_to_srt = bic->saved_wr_start_at_switch_to_srt;
  	bfqq->last_wr_start_finish = bic->saved_last_wr_start_finish;
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 894ebfefdf6b16a3c3e1d77b3c9766e5b215f04f Mon Sep 17 00:00:00 2001
+From 1f9efadafa41741052151b525b21e827450db39f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:01 +0000
-Subject: [PATCH 18/24] block, bfq: keep shared queues out of the waker
+Subject: [PATCH 18/26] block, bfq: keep shared queues out of the waker
  mechanism
 
 Shared queues are likely to receive I/O at a high rate. This may
@@ -1574,13 +1574,13 @@ index a21cc72c6..d4e126210 100644
  	/*
  	 * If we are waiting to discover whether the request pattern
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From d7e7386ec9ba62140a915b21a54be13ebd5018f3 Mon Sep 17 00:00:00 2001
+From 5ed4fe44cdc4dc361ab67592d34a0f381e79ddec Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:02 +0000
-Subject: [PATCH 19/24] block, bfq: merge bursts of newly-created queues
+Subject: [PATCH 19/26] block, bfq: merge bursts of newly-created queues
 
 Many throughput-sensitive workloads are made of several parallel I/O
 flows, with all flows generated by the same application, or more
@@ -2069,13 +2069,13 @@ index b8e793c34..99c2a3cb0 100644
  	u64 last_empty_occupied_ns;
  
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 418c58d72a2cd9e0fc5ea8c7691043e228bc528f Mon Sep 17 00:00:00 2001
+From 6353c687f42830c5b188bb4f7ddd2f60cd0982d8 Mon Sep 17 00:00:00 2001
 From: huhai <huhai () tj ! kylinos ! cn>
 Date: Fri, 25 Dec 2020 13:00:16 +0000
-Subject: [PATCH 20/24] bfq: don't duplicate code for different paths
+Subject: [PATCH 20/26] bfq: don't duplicate code for different paths
 
 As we can see, returns parent_sched_may_change whether
 sd->next_in_service changes or not, so remove this judgment.
@@ -2100,13 +2100,13 @@ index 02e59931d..7a462df71 100644
  }
  
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From b9b4fe3b7134e2c419f11660ff51db21a4489be5 Mon Sep 17 00:00:00 2001
+From 7f44419210765bb26b928bcde122d00822b279b0 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:25 +0000
-Subject: [PATCH 21/24] bfq: Avoid false bfq queue merging
+Subject: [PATCH 21/26] bfq: Avoid false bfq queue merging
 
 bfq_setup_cooperator() uses bfqd->in_serv_last_pos so detect whether it
 makes sense to merge current bfq queue with the in-service queue.
@@ -2155,13 +2155,13 @@ index 13804238f..5a491adb3 100644
  
  /*
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From f9df71423aba50c855eabcb902cf7ba7fb1a777d Mon Sep 17 00:00:00 2001
+From dea67f0f1de04a32f1a1ea08cdaf3ba788c9499b Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:26 +0000
-Subject: [PATCH 22/24] bfq: Use 'ttime' local variable
+Subject: [PATCH 22/26] bfq: Use 'ttime' local variable
 
 Use local variable 'ttime' instead of dereferencing bfqq.
 
@@ -2185,13 +2185,13 @@ index 5a491adb3..7e6648dda 100644
  	ttime->ttime_mean = div64_ul(ttime->ttime_total + 128,
  				     ttime->ttime_samples);
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From 61da3af8c48e759a2c7caf2928a9e191d4f5acc3 Mon Sep 17 00:00:00 2001
+From 4a3aeebb0aadbb835a9eb2be1e0553b1058b8fc7 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:27 +0000
-Subject: [PATCH 23/24] bfq: Use only idle IO periods for think time
+Subject: [PATCH 23/26] bfq: Use only idle IO periods for think time
  calculations
 
 Currently whenever bfq queue has a request queued we add now -
@@ -2233,13 +2233,13 @@ index 7e6648dda..e975dfcfe 100644
  
  	ttime->ttime_samples = (7*ttime->ttime_samples + 256) / 8;
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
 
 
-From a5af7aa307f89b58d93096458557e6ec81dc56b4 Mon Sep 17 00:00:00 2001
+From d3a947f0e5048aa7d00342b5639e411b01e22492 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 13:05:15 +0000
-Subject: [PATCH 24/24] bfq: Remove stale comment
+Subject: [PATCH 24/26] bfq: Remove stale comment
 
 Remove comment paragraph that was made stale by a fix of shallow depth
 computation.
@@ -2269,5 +2269,103 @@ index e975dfcfe..5b9e8bc39 100644
  	/* no more than 50% of tags for async I/O */
  	bfqd->word_depths[0][0] = max(bt->sb.depth >> 1, 1U);
 -- 
-2.30.0.155.g66e871b664
+2.30.0.335.ge6362826a0
+
+
+From e0832b3720b7f872fd39c3a753540f4fb7f01712 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Tue, 2 Feb 2021 17:09:37 +0100
+Subject: [PATCH 25/26] Revert "bfq: Remove stale comment"
+
+This reverts commit 2cef7c7339a5e58812a19764a013e7aa8ccda762.
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ block/bfq-iosched.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 5b9e8bc39..e975dfcfe 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6756,6 +6756,12 @@ static unsigned int bfq_update_depths(struct bfq_data *bfqd,
+ 	/*
+ 	 * In-word depths if no bfq_queue is being weight-raised:
+ 	 * leaving 25% of tags only for sync reads.
++	 *
++	 * In next formulas, right-shift the value
++	 * (1U<<bt->sb.shift), instead of computing directly
++	 * (1U<<(bt->sb.shift - something)), to be robust against
++	 * any possible value of bt->sb.shift, without having to
++	 * limit 'something'.
+ 	 */
+ 	/* no more than 50% of tags for async I/O */
+ 	bfqd->word_depths[0][0] = max(bt->sb.depth >> 1, 1U);
+-- 
+2.30.0.335.ge6362826a0
+
+
+From e9a89dff8c767dc152bb0a4d0f52251b5f3b1f88 Mon Sep 17 00:00:00 2001
+From: Lin Feng <linf@wangsu.com>
+Date: Tue, 2 Feb 2021 07:18:23 -0700
+Subject: [PATCH 26/26] bfq-iosched: Revert "bfq: Fix computation of shallow
+ depth"
+
+This reverts commit 6d4d273588378c65915acaf7b2ee74e9dd9c130a.
+
+bfq.limit_depth passes word_depths[] as shallow_depth down to sbitmap core
+sbitmap_get_shallow, which uses just the number to limit the scan depth of
+each bitmap word, formula:
+scan_percentage_for_each_word = shallow_depth / (1 << sbimap->shift) * 100%
+
+That means the comments's percentiles 50%, 75%, 18%, 37% of bfq are correct.
+But after commit patch 'bfq: Fix computation of shallow depth', we use
+sbitmap.depth instead, as a example in following case:
+
+sbitmap.depth = 256, map_nr = 4, shift = 6; sbitmap_word.depth = 64.
+The resulsts of computed bfqd->word_depths[] are {128, 192, 48, 96}, and
+three of the numbers exceed core dirver's 'sbitmap_word.depth=64' limit
+nothing.
+
+Signed-off-by: Lin Feng <linf@wangsu.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+---
+ block/bfq-iosched.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index e975dfcfe..e592c0c65 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6764,13 +6764,13 @@ static unsigned int bfq_update_depths(struct bfq_data *bfqd,
+ 	 * limit 'something'.
+ 	 */
+ 	/* no more than 50% of tags for async I/O */
+-	bfqd->word_depths[0][0] = max(bt->sb.depth >> 1, 1U);
++	bfqd->word_depths[0][0] = max((1U << bt->sb.shift) >> 1, 1U);
+ 	/*
+ 	 * no more than 75% of tags for sync writes (25% extra tags
+ 	 * w.r.t. async I/O, to prevent async I/O from starving sync
+ 	 * writes)
+ 	 */
+-	bfqd->word_depths[0][1] = max((bt->sb.depth * 3) >> 2, 1U);
++	bfqd->word_depths[0][1] = max(((1U << bt->sb.shift) * 3) >> 2, 1U);
+ 
+ 	/*
+ 	 * In-word depths in case some bfq_queue is being weight-
+@@ -6780,9 +6780,9 @@ static unsigned int bfq_update_depths(struct bfq_data *bfqd,
+ 	 * shortage.
+ 	 */
+ 	/* no more than ~18% of tags for async I/O */
+-	bfqd->word_depths[1][0] = max((bt->sb.depth * 3) >> 4, 1U);
++	bfqd->word_depths[1][0] = max(((1U << bt->sb.shift) * 3) >> 4, 1U);
+ 	/* no more than ~37% of tags for sync writes (~20% extra tags) */
+-	bfqd->word_depths[1][1] = max((bt->sb.depth * 6) >> 4, 1U);
++	bfqd->word_depths[1][1] = max(((1U << bt->sb.shift) * 6) >> 4, 1U);
+ 
+ 	for (i = 0; i < 2; i++)
+ 		for (j = 0; j < 2; j++)
+-- 
+2.30.0.335.ge6362826a0
 
