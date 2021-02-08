@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.10.7  
+0000 : Kernel patch 5.10.14  
 0002 : 5.10 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
 0010 : Corsair PSU HW-monitor patch  

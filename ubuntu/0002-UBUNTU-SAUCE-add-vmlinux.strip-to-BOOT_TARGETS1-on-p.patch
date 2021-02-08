@@ -1,4 +1,4 @@
-From dfc74f45a21fdc1f5b9bf56959abea7cdf27d19b Mon Sep 17 00:00:00 2001
+From c54313b3c02e7da2ab5a6950c5ee17d105147208 Mon Sep 17 00:00:00 2001
 From: Andy Whitcroft <apw@canonical.com>
 Date: Fri, 9 Sep 2016 14:02:29 +0100
 Subject: [PATCH 2/5] UBUNTU: SAUCE: add vmlinux.strip to BOOT_TARGETS1 on
