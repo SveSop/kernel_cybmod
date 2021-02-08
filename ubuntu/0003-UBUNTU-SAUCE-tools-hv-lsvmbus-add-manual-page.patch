@@ -1,4 +1,4 @@
-From 76de434c456748e944d0f4fcf6bf505f4af61dee Mon Sep 17 00:00:00 2001
+From 3345785492c3e44f179e2c3b904e77b857984243 Mon Sep 17 00:00:00 2001
 From: Andy Whitcroft <apw@canonical.com>
 Date: Fri, 27 May 2016 13:52:22 +0100
 Subject: [PATCH 3/5] UBUNTU: SAUCE: tools/hv/lsvmbus -- add manual page
