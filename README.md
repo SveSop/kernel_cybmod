@@ -5,11 +5,12 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 **Custom kernel with the following patches**  
 
 0000 : Kernel patch 5.10.14  
-0001 : 5.10 ck1 combined patchset with MuQSS scheduler  
+0001 : CacULE scheduler (Xanmod)  
 0002 : 5.10 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
 0010 : Corsair PSU HW-monitor patch  
 0011 : Revert ACPI change for NCT6775 chips(Asus MB)  
+0012 : Add option for SCHED_AUTOGROUP (Xanmod)  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 0030 : Clearlinux patchset  
@@ -26,9 +27,8 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default MuQSS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
-**MuQSS currently running with CONFIG_RQ_SMT=y setting**  
-**Also see [http://ck-hack.blogspot.com/](http://ck-hack.blogspot.com/) for scheduler info**  
+**This config has default CacULE scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**Also see [https://github.com/hamadmarri/cacule-cpu-scheduler](https://github.com/hamadmarri/cacule-cpu-scheduler) for scheduler info**  
 
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 

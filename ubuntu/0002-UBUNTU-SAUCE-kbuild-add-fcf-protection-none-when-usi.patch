@@ -1,0 +1,40 @@
+From 8975b4f07e123c1cd264ad31601d68e453161dc7 Mon Sep 17 00:00:00 2001
+From: Seth Forshee <seth.forshee@canonical.com>
+Date: Sun, 7 Jul 2019 21:37:43 -0500
+Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
+ using retpoline flags
+
+BugLink: [Replace -fcf-protection=none patch with new version]
+
+The gcc -fcf-protection=branch option is not compatible with
+-mindirect-branch=thunk-extern. The latter is used when
+CONFIG_RETPOLINE is selected, and this will fail to build with
+a gcc which has -fcf-protection=branch enabled by default. Adding
+-fcf-protection=none when building with retpoline support to
+prevents such build failures.
+
+Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
+---
+ Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index b62d2d4ea7b0..5de99339b7df 100644
+--- a/Makefile
++++ b/Makefile
+@@ -899,6 +899,12 @@ KBUILD_CFLAGS	+= $(CC_FLAGS_SCS)
+ export CC_FLAGS_SCS
+ endif
+ 
++# ensure -fcf-protection is disabled when using retpoline as it is
++# incompatible with -mindirect-branch=thunk-extern
++ifdef CONFIG_RETPOLINE
++KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none,)
++endif
++
+ ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
+ KBUILD_CFLAGS += -falign-functions=32
+ endif
+-- 
+2.25.1
+
