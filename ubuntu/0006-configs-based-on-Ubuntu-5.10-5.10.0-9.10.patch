@@ -1,6 +1,6 @@
-From 99256d20a3e78dc33cb2d3884bb349a8e185a9d8 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 13 Feb 2021 13:34:57 +0000
+From f2c5c3d4380ff9f9c53ab490d4a22d03e445e737 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 17 Feb 2021 06:32:18 -0500
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.10-5.10.0-9.10)
 
 ---

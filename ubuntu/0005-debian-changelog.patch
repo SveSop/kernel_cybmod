@@ -1,6 +1,6 @@
-From 7db66fc1440c2852223bac30f9608cb0a413e65e Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 13 Feb 2021 13:34:05 +0000
+From 3fd703130f0fa977f7bfcbb778aac08e319d9fc6 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 17 Feb 2021 06:31:18 -0500
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 5541 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 9f3c020ebaff..234ba403ff8e 100644
+index 9f3c020ebaff..8ca0e17f0037 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,5544 +1,6 @@
 -linux (4.20.0-1.2) disco; urgency=medium
-+linux (5.10.16-051016.202102131334) groovy; urgency=low
++linux (5.10.17-051017.202102170631) groovy; urgency=low
  
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update helper scripts
-+  Mainline build at commit: v5.10.16
++  Mainline build at commit: v5.10.17
  
 -  * Power leakage at S5 with Qualcomm Atheros QCA9377 802.11ac Wireless Network
 -    Adapter (LP: #1805607)
 -    - SAUCE: ath10k: provide reset function for QCA9377 chip
-+ -- Mainline Build <kernel@kathleen>  Sat, 13 Feb 2021 13:34:05 +0000
++ -- Mainline Build <kernel@gloin>  Wed, 17 Feb 2021 06:31:18 -0500
  
 -  * zfs/spl build in conjunction with the kernel from DKMS source (LP: #1807378)
 -    - [Packaging] dkms -- dkms package build packaging support
