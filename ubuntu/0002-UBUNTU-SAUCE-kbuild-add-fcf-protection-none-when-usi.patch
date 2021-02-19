@@ -1,4 +1,4 @@
-From 25ebee12a61ded65767d0a43fdf6c43c8d65331b Mon Sep 17 00:00:00 2001
+From c59c995ace701cab2f2cce98fce9ec855513f6c3 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Sun, 7 Jul 2019 21:37:43 -0500
 Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
@@ -19,22 +19,22 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index b740f9c933cb..47d2ba8e037a 100644
+index de1acaefe87e..6af66df39917 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -899,6 +899,12 @@ KBUILD_CFLAGS	+= $(CC_FLAGS_SCS)
- export CC_FLAGS_SCS
+@@ -899,6 +899,12 @@ export CC_FLAGS_SCS
  endif
  
+ ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
 +# ensure -fcf-protection is disabled when using retpoline as it is
 +# incompatible with -mindirect-branch=thunk-extern
 +ifdef CONFIG_RETPOLINE
 +KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none,)
 +endif
 +
- ifdef CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_32B
  KBUILD_CFLAGS += -falign-functions=32
  endif
+ 
 -- 
 2.25.1
 

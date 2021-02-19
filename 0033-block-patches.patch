@@ -1,4 +1,4 @@
-From 10c235e2d118be3406c72a27e494e850c57312ee Mon Sep 17 00:00:00 2001
+From 0e3830b447db4e884237a64d0eba4dfb3147a57b Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
 Subject: [PATCH 1/7] block, Kconfig.iosched: set default value of IOSCHED_BFQ
@@ -10,7 +10,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index 2f2158e05..e58b2953a 100644
+index 2f2158e..e58b295 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -5,13 +5,11 @@ menu "IO Schedulers"
@@ -36,10 +36,10 @@ index 2f2158e05..e58b2953a 100644
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
-2.30.0.155.g66e871b664
+2.30.1.457.gf011795891
 
 
-From 208406088dae9989dea51414cf9b11bfa2012d8d Mon Sep 17 00:00:00 2001
+From 6a0e81f6dd5b0c84adb4dfd234e6f8bfc4df6b10 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
 Subject: [PATCH 2/7] block: Fix depends for BLK_DEV_ZONED
@@ -50,7 +50,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index a2297edfd..f688ea5f0 100644
+index a2297ed..f688ea5 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
 @@ -83,7 +83,7 @@ config BLK_DEV_INTEGRITY_T10
@@ -63,10 +63,10 @@ index a2297edfd..f688ea5f0 100644
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC/ZNS host-managed and host-aware zoned block
 -- 
-2.30.0.155.g66e871b664
+2.30.1.457.gf011795891
 
 
-From 2f98861a473b21df809cb2c4cc6d011532a21b64 Mon Sep 17 00:00:00 2001
+From fb39547bb5afa9e118c88e0b0f74de3babdcad31 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
 Subject: [PATCH 3/7] block: set rq_affinity = 2 for full multithreading I/O
@@ -77,7 +77,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 542471b76..665f0e3d9 100644
+index f94ee30..7669306 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
 @@ -624,6 +624,7 @@ struct request_queue {
@@ -89,10 +89,10 @@ index 542471b76..665f0e3d9 100644
  
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
 -- 
-2.30.0.155.g66e871b664
+2.30.1.457.gf011795891
 
 
-From a5f7cac7e1917db6315423c3228b45d3bc6f5a14 Mon Sep 17 00:00:00 2001
+From b2a0b544cae9183a703c5da189c72d5809b7d694 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 3 Jul 2020 12:58:15 +0200
 Subject: [PATCH 4/7] block: Add CONFIG to rename the mq-deadline scheduler
@@ -105,7 +105,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  3 files changed, 17 insertions(+)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index e58b2953a..9e5a3c5c6 100644
+index e58b295..9e5a3c5 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -8,6 +8,15 @@ config MQ_IOSCHED_DEADLINE
@@ -125,7 +125,7 @@ index e58b2953a..9e5a3c5c6 100644
  	tristate "Kyber I/O scheduler"
  	help
 diff --git a/block/elevator.c b/block/elevator.c
-index 293c5c813..90181ad94 100644
+index 293c5c8..90181ad 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -624,7 +624,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
@@ -141,10 +141,10 @@ index 293c5c813..90181ad94 100644
  
  /*
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 800ac9028..89b56d452 100644
+index b57470e..8303fdd 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -798,8 +798,12 @@ static struct elevator_type mq_deadline = {
+@@ -792,8 +792,12 @@ static struct elevator_type mq_deadline = {
  	.queue_debugfs_attrs = deadline_queue_debugfs_attrs,
  #endif
  	.elevator_attrs = deadline_attrs,
@@ -158,10 +158,10 @@ index 800ac9028..89b56d452 100644
  	.elevator_owner = THIS_MODULE,
  };
 -- 
-2.30.0.155.g66e871b664
+2.30.1.457.gf011795891
 
 
-From f0ced64504cc5e84329b745658f2ed71ae6bd792 Mon Sep 17 00:00:00 2001
+From 9950552c1f28dce22022bd320648f94bbe982ad7 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 14:27:35 -0600
 Subject: [PATCH 5/7] ZEN: Fix mq-deadline scheduler renaming
@@ -175,10 +175,10 @@ mq-deadline-nodefault without errors.
  1 file changed, 5 insertions(+)
 
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 89b56d452..2206e1734 100644
+index 8303fdd..9c58cbe 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -800,6 +800,7 @@ static struct elevator_type mq_deadline = {
+@@ -794,6 +794,7 @@ static struct elevator_type mq_deadline = {
  	.elevator_attrs = deadline_attrs,
  #ifdef CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT
  	.elevator_name = "mq-deadline-nodefault",
@@ -186,7 +186,7 @@ index 89b56d452..2206e1734 100644
  #else
  	.elevator_name = "mq-deadline",
  	.elevator_alias = "deadline",
-@@ -807,7 +808,11 @@ static struct elevator_type mq_deadline = {
+@@ -801,7 +802,11 @@ static struct elevator_type mq_deadline = {
  	.elevator_features = ELEVATOR_F_ZBD_SEQ_WRITE,
  	.elevator_owner = THIS_MODULE,
  };
@@ -199,10 +199,10 @@ index 89b56d452..2206e1734 100644
  static int __init deadline_init(void)
  {
 -- 
-2.30.0.155.g66e871b664
+2.30.1.457.gf011795891
 
 
-From 05c836d5b097983059f6196dc60cd724db14bc28 Mon Sep 17 00:00:00 2001
+From bd3b9989eb2fb2a0512d429153de4b2887a764e3 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Mon, 11 Jan 2021 17:47:17 +0100
 Subject: [PATCH 6/7] blk-mq: Improve performance of non-mq IO schedulers with
@@ -250,10 +250,10 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  3 files changed, 63 insertions(+), 6 deletions(-)
 
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 2a1eff60c..a082d3482 100644
+index 57f3482..5806017 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -1663,6 +1663,42 @@ void blk_mq_run_hw_queue(struct blk_mq_hw_ctx *hctx, bool async)
+@@ -1646,6 +1646,42 @@ void blk_mq_run_hw_queue(struct blk_mq_hw_ctx *hctx, bool async)
  }
  EXPORT_SYMBOL(blk_mq_run_hw_queue);
  
@@ -296,7 +296,7 @@ index 2a1eff60c..a082d3482 100644
  /**
   * blk_mq_run_hw_queues - Run all hardware queues in a request queue.
   * @q: Pointer to the request queue to run.
-@@ -1670,14 +1706,23 @@ EXPORT_SYMBOL(blk_mq_run_hw_queue);
+@@ -1653,14 +1689,23 @@ EXPORT_SYMBOL(blk_mq_run_hw_queue);
   */
  void blk_mq_run_hw_queues(struct request_queue *q, bool async)
  {
@@ -323,7 +323,7 @@ index 2a1eff60c..a082d3482 100644
  	}
  }
  EXPORT_SYMBOL(blk_mq_run_hw_queues);
-@@ -1689,14 +1734,23 @@ EXPORT_SYMBOL(blk_mq_run_hw_queues);
+@@ -1672,14 +1717,23 @@ EXPORT_SYMBOL(blk_mq_run_hw_queues);
   */
  void blk_mq_delay_run_hw_queues(struct request_queue *q, unsigned long msecs)
  {
@@ -351,7 +351,7 @@ index 2a1eff60c..a082d3482 100644
  }
  EXPORT_SYMBOL(blk_mq_delay_run_hw_queues);
 diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
-index dc89199bc..c25c41d0d 100644
+index dc89199..c25c41d 100644
 --- a/block/kyber-iosched.c
 +++ b/block/kyber-iosched.c
 @@ -1029,6 +1029,7 @@ static struct elevator_type kyber_sched = {
@@ -363,7 +363,7 @@ index dc89199bc..c25c41d0d 100644
  };
  
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index bacc40a0b..1fe8e105b 100644
+index bacc40a..1fe8e10 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -172,6 +172,8 @@ extern struct request *elv_rb_find(struct rb_root *, sector_t);
@@ -376,10 +376,10 @@ index bacc40a0b..1fe8e105b 100644
  #endif /* CONFIG_BLOCK */
  #endif
 -- 
-2.30.0.155.g66e871b664
+2.30.1.457.gf011795891
 
 
-From 38e3ee869f75aee124e62a564bc12e5da2e4db5d Mon Sep 17 00:00:00 2001
+From 7fe200c2ae34e8dd5586164fb03dd553447131a0 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 17:39:54 -0600
 Subject: [PATCH 7/7] ZEN: Increase max elevator name size
@@ -396,7 +396,7 @@ Increase to 24 so we can support our longer IO scheduler names.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index 1fe8e105b..e7726cf62 100644
+index 1fe8e10..e7726cf 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -52,7 +52,7 @@ struct elevator_mq_ops {
@@ -409,5 +409,5 @@ index 1fe8e105b..e7726cf62 100644
  struct elv_fs_entry {
  	struct attribute attr;
 -- 
-2.30.0.155.g66e871b664
+2.30.1.457.gf011795891
 

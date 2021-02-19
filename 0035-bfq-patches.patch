@@ -1,7 +1,7 @@
-From 3a088920acafc92b2343bf39bbd9402ed66d9303 Mon Sep 17 00:00:00 2001
+From 47bcd8b42cccb56b06fc4f34309e4d8d9bd1aa55 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:43 +0000
-Subject: [PATCH 01/26] block, bfq: use half slice_idle as a threshold to check
+Subject: [PATCH 01/23] block, bfq: use half slice_idle as a threshold to check
  short ttime
 
 The value of the I/O plugging (idling) timeout is used also as the
@@ -19,7 +19,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 9e4eb0fc1..eb2ca32d5 100644
+index 9e81d10..ef10e29 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5238,12 +5238,13 @@ static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
@@ -40,13 +40,13 @@ index 9e4eb0fc1..eb2ca32d5 100644
  
  	state_changed = has_short_ttime != bfq_bfqq_has_short_ttime(bfqq);
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 0c64ab423ec12d036cc03bdbe4e9b4a38db3d8c8 Mon Sep 17 00:00:00 2001
+From 36b221ef42bcc5b28db47421bfc17c8965473795 Mon Sep 17 00:00:00 2001
 From: Jia Cheng Hu <jia.jiachenghu@gmail.com>
 Date: Fri, 22 Jan 2021 18:19:44 +0000
-Subject: [PATCH 02/26] block, bfq: set next_rq to waker_bfqq->next_rq in waker
+Subject: [PATCH 02/23] block, bfq: set next_rq to waker_bfqq->next_rq in waker
  injection
 
 Since commit c5089591c3ba ("block, bfq: detect wakers and
@@ -71,7 +71,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index eb2ca32d5..fdc5e163b 100644
+index ef10e29..9757596 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -4499,7 +4499,7 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
@@ -84,13 +84,13 @@ index eb2ca32d5..fdc5e163b 100644
  					      bfqq->waker_bfqq) <=
  			   bfq_bfqq_budget_left(bfqq->waker_bfqq)
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 1372b41ddc4ba05a86900ec9d2c973f9ce89e72c Mon Sep 17 00:00:00 2001
+From d5c1091884ce2b2f8b1f99bce56795f93733f909 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:45 +0000
-Subject: [PATCH 03/26] block, bfq: increase time window for waker detection
+Subject: [PATCH 03/23] block, bfq: increase time window for waker detection
 
 Tests on slower machines showed current window to be way too
 small. This commit increases it.
@@ -102,7 +102,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index fdc5e163b..43e2c39cf 100644
+index 9757596..b339e08 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1931,7 +1931,7 @@ static void bfq_add_request(struct request *rq)
@@ -115,13 +115,13 @@ index fdc5e163b..43e2c39cf 100644
  			    bfqd->last_completed_rq_bfqq !=
  			    bfqq->waker_bfqq) {
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 88454e9b12c0047b16aadba2b5a500f25a884065 Mon Sep 17 00:00:00 2001
+From 9ed4a9e04c70d23be738831a2e439a667ac25832 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:46 +0000
-Subject: [PATCH 04/26] block, bfq: do not raise non-default weights
+Subject: [PATCH 04/23] block, bfq: do not raise non-default weights
 
 BFQ heuristics try to detect interactive I/O, and raise the weight of
 the queues containing such an I/O. Yet, if also the user changes the
@@ -136,7 +136,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 43e2c39cf..161badb74 100644
+index b339e08..01af05c 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1671,15 +1671,19 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
@@ -163,13 +163,13 @@ index 43e2c39cf..161badb74 100644
  		(bfqq->wr_coeff > 1 ||
  		 (bfq_bfqq_sync(bfqq) &&
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 7ef874a3d8f8051ce6d69a0bb2e7457137367aab Mon Sep 17 00:00:00 2001
+From 8e3d080bc8d903700c42fd9d8cc7dc89d3f337cf Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:47 +0000
-Subject: [PATCH 05/26] block, bfq: avoid spurious switches to soft_rt of
+Subject: [PATCH 05/23] block, bfq: avoid spurious switches to soft_rt of
  interactive queues
 
 BFQ tags some bfq_queues as interactive or soft_rt if it deems that
@@ -238,7 +238,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 37 insertions(+), 20 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 161badb74..003c96fa0 100644
+index 01af05c..d3be3f9 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2356,6 +2356,24 @@ static void bfq_requests_merged(struct request_queue *q, struct request *rq,
@@ -334,13 +334,13 @@ index 161badb74..003c96fa0 100644
  }
  
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 297b71e0967c8e70cf5d146eb208bbc76741ea7c Mon Sep 17 00:00:00 2001
+From ca837e26cc6dcc955b4e23425e0b86aa29a2c374 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:48 +0000
-Subject: [PATCH 06/26] block, bfq: do not expire a queue when it is the only
+Subject: [PATCH 06/23] block, bfq: do not expire a queue when it is the only
  busy one
 
 This commits preserves I/O-dispatch plugging for a special symmetric
@@ -365,7 +365,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 003c96fa0..c045613ce 100644
+index d3be3f9..b95d16a 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -3464,20 +3464,38 @@ static void bfq_dispatch_remove(struct request_queue *q, struct request *rq)
@@ -410,13 +410,13 @@ index 003c96fa0..c045613ce 100644
  
  static bool __bfq_bfqq_expire(struct bfq_data *bfqd, struct bfq_queue *bfqq,
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 0f684ee98843af71c3f3ec877d4e07ad6c49704e Mon Sep 17 00:00:00 2001
+From 6c9271dff06b64710c18996771754d7d26794da4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:43 +0100
-Subject: [PATCH 07/26] block, bfq: replace mechanism for evaluating I/O
+Subject: [PATCH 07/23] block, bfq: replace mechanism for evaluating I/O
  intensity
 
 Some BFQ mechanisms make their decisions on a bfq_queue basing also on
@@ -437,7 +437,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  2 files changed, 52 insertions(+), 27 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index c045613ce..db393f5d7 100644
+index b95d16a..aa40684 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1026,6 +1026,8 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
@@ -581,7 +581,7 @@ index c045613ce..db393f5d7 100644
  	bfqd->bfq_burst_interval = msecs_to_jiffies(180);
  
 diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index 703895224..c913b0601 100644
+index 7038952..c913b06 100644
 --- a/block/bfq-iosched.h
 +++ b/block/bfq-iosched.h
 @@ -291,6 +291,11 @@ struct bfq_queue {
@@ -622,13 +622,13 @@ index 703895224..c913b0601 100644
  	 * Force device idling whenever needed to provide accurate
  	 * service guarantees, without caring about throughput
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From ae98697e7bc1832f444f68423bd3ad175996cf39 Mon Sep 17 00:00:00 2001
+From 7b0fe73e9ccc39eb1520fdab77393f54a99721b8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:44 +0100
-Subject: [PATCH 08/26] block, bfq: re-evaluate convenience of I/O plugging on
+Subject: [PATCH 08/23] block, bfq: re-evaluate convenience of I/O plugging on
  rq arrivals
 
 Upon an I/O-dispatch attempt, BFQ may detect that it was better to
@@ -651,7 +651,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 19 insertions(+), 5 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index db393f5d7..6a02a12ff 100644
+index aa40684..54dea9a 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1649,6 +1649,8 @@ static bool bfq_bfqq_higher_class_or_weight(struct bfq_queue *bfqq,
@@ -704,13 +704,13 @@ index db393f5d7..6a02a12ff 100644
  		bfq_bfqq_expire(bfqd, bfqd->in_service_queue,
  				false, BFQQE_PREEMPTED);
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From d9a4a329cec981e3bb4bcd749fe320799b485bc8 Mon Sep 17 00:00:00 2001
+From b6a7cfb7da25efb871021850011103ede1c545e5 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:45 +0100
-Subject: [PATCH 09/26] block, bfq: fix switch back from soft-rt weitgh-raising
+Subject: [PATCH 09/23] block, bfq: fix switch back from soft-rt weitgh-raising
 
 A bfq_queue may happen to be deemed as soft real-time while it is
 still enjoying interactive weight-raising. If this happens because of
@@ -728,7 +728,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 6a02a12ff..9e5242b27 100644
+index 54dea9a..47c35c0 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5293,8 +5293,26 @@ bfq_update_io_seektime(struct bfq_data *bfqd, struct bfq_queue *bfqq,
@@ -761,13 +761,13 @@ index 6a02a12ff..9e5242b27 100644
  
  static void bfq_update_has_short_ttime(struct bfq_data *bfqd,
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 217c1a7c88e4a78582f44da95a0e6d6cd223e2cf Mon Sep 17 00:00:00 2001
+From f593403a1d8faff6402115a21c7315f11cbdefda Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:46 +0100
-Subject: [PATCH 10/26] block, bfq: save also weight-raised service on queue
+Subject: [PATCH 10/23] block, bfq: save also weight-raised service on queue
  merging
 
 To prevent weight-raising information from being lost on bfq_queue merging,
@@ -783,7 +783,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  2 files changed, 3 insertions(+)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 9e5242b27..56ad6067d 100644
+index 47c35c0..ec0a561 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1029,6 +1029,7 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
@@ -803,7 +803,7 @@ index 9e5242b27..56ad6067d 100644
  		bic->saved_wr_cur_max_time = bfqq->wr_cur_max_time;
  	}
 diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index c913b0601..d15299d59 100644
+index c913b06..d15299d 100644
 --- a/block/bfq-iosched.h
 +++ b/block/bfq-iosched.h
 @@ -440,6 +440,7 @@ struct bfq_io_cq {
@@ -815,13 +815,13 @@ index c913b0601..d15299d59 100644
  	unsigned int saved_wr_cur_max_time;
  	struct bfq_ttime saved_ttime;
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From ad2e09235bfd7750dcb37b03e69cedb2355efd9f Mon Sep 17 00:00:00 2001
+From b5c5a2dc7993fc51f7a7062f60430bef1886e3f7 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:47 +0100
-Subject: [PATCH 11/26] block, bfq: save also injection state on queue merging
+Subject: [PATCH 11/23] block, bfq: save also injection state on queue merging
 
 To prevent injection information from being lost on bfq_queue merging,
 also the amount of service that a bfq_queue receives must be saved and
@@ -836,7 +836,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  2 files changed, 13 insertions(+)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 56ad6067d..e56ee60df 100644
+index ec0a561..1e579c7 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1024,6 +1024,10 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
@@ -862,7 +862,7 @@ index 56ad6067d..e56ee60df 100644
  	bic->saved_ttime = bfqq->ttime;
  	bic->saved_has_short_ttime = bfq_bfqq_has_short_ttime(bfqq);
 diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index d15299d59..3f350fa3c 100644
+index d15299d..3f350fa 100644
 --- a/block/bfq-iosched.h
 +++ b/block/bfq-iosched.h
 @@ -444,6 +444,11 @@ struct bfq_io_cq {
@@ -878,13 +878,13 @@ index d15299d59..3f350fa3c 100644
  
  /**
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 609ddae43b55cc6362b10214d4c86e6c1e6ddd92 Mon Sep 17 00:00:00 2001
+From d25cae34edc364c25344c31b4d20f26c9d7d2afd Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:48 +0100
-Subject: [PATCH 12/26] block, bfq: make waker-queue detection more robust
+Subject: [PATCH 12/23] block, bfq: make waker-queue detection more robust
 
 In the presence of many parallel I/O flows, the detection of waker
 bfq_queues suffers from false positives. This commits addresses this
@@ -901,7 +901,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  2 files changed, 108 insertions(+), 110 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index e56ee60df..445cef9c0 100644
+index 1e579c7..23bc6ef 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -158,7 +158,6 @@ BFQ_BFQQ_FNS(in_large_burst);
@@ -1151,7 +1151,7 @@ index e56ee60df..445cef9c0 100644
  	}
  
 diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index 3f350fa3c..b8e793c34 100644
+index 3f350fa..b8e793c 100644
 --- a/block/bfq-iosched.h
 +++ b/block/bfq-iosched.h
 @@ -376,6 +376,11 @@ struct bfq_queue {
@@ -1183,13 +1183,13 @@ index 3f350fa3c..b8e793c34 100644
  
  /* Expiration reasons. */
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 0a8a96d3cd51143616896ddd71913b8e46a56a02 Mon Sep 17 00:00:00 2001
+From 94f925c248b4d02379bda7f2acacbe341292fdb9 Mon Sep 17 00:00:00 2001
 From: Jens Axboe <axboe@kernel.dk>
 Date: Mon, 25 Jan 2021 21:15:01 -0700
-Subject: [PATCH 13/26] bfq: bfq_check_waker() should be static
+Subject: [PATCH 13/23] bfq: bfq_check_waker() should be static
 
 It's only used in the same file, mark is appropriately static.
 
@@ -1201,7 +1201,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 445cef9c0..ca688d747 100644
+index 23bc6ef..55792d3 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1952,7 +1952,8 @@ static void bfq_update_io_intensity(struct bfq_queue *bfqq, u64 now_ns)
@@ -1215,13 +1215,13 @@ index 445cef9c0..ca688d747 100644
  	if (!bfqd->last_completed_rq_bfqq ||
  	    bfqd->last_completed_rq_bfqq == bfqq ||
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 530d08db4f6e1d1a2f7d614785e579b93c590169 Mon Sep 17 00:00:00 2001
+From 242eebabdd7807a7c16d234765a20016425d16b4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:57 +0000
-Subject: [PATCH 14/26] block, bfq: always inject I/O of queues blocked by
+Subject: [PATCH 14/23] block, bfq: always inject I/O of queues blocked by
  wakers
 
 Suppose that I/O dispatch is plugged, to wait for new I/O for the
@@ -1242,7 +1242,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  2 files changed, 35 insertions(+), 5 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index ca688d747..eac2364b2 100644
+index 55792d3..fca18f3 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -4488,9 +4488,15 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
@@ -1318,7 +1318,7 @@ index ca688d747..eac2364b2 100644
  			 (bfqq->wr_coeff == 1 || bfqd->wr_busy_queues > 1 ||
  			  !bfq_bfqq_has_short_ttime(bfqq)))
 diff --git a/block/bfq-wf2q.c b/block/bfq-wf2q.c
-index 26776bdbd..02e59931d 100644
+index 26776bd..02e5993 100644
 --- a/block/bfq-wf2q.c
 +++ b/block/bfq-wf2q.c
 @@ -1709,4 +1709,12 @@ void bfq_add_bfqq_busy(struct bfq_data *bfqd, struct bfq_queue *bfqq)
@@ -1335,13 +1335,13 @@ index 26776bdbd..02e59931d 100644
 +	}
  }
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 2843b0c0cdef36d03f9afb05e5d539170503fe5e Mon Sep 17 00:00:00 2001
+From 7bf982578e592faa05647221c092771247d9e614 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:58 +0000
-Subject: [PATCH 15/26] block, bfq: put reqs of waker and woken in dispatch
+Subject: [PATCH 15/23] block, bfq: put reqs of waker and woken in dispatch
  list
 
 Consider a new I/O request that arrives for a bfq_queue bfqq. If, when
@@ -1359,7 +1359,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index eac2364b2..c830478a5 100644
+index fca18f3..2d785eb 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5641,7 +5641,22 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
@@ -1387,13 +1387,13 @@ index eac2364b2..c830478a5 100644
  			list_add(&rq->queuelist, &bfqd->dispatch);
  		else
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 835bdf7bb66b3c125b0eaaaae5d04bd446e8b875 Mon Sep 17 00:00:00 2001
+From f78fe551044197ce52127c523acd61ac5103ba6c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:59 +0000
-Subject: [PATCH 16/26] block, bfq: make shared queues inherit wakers
+Subject: [PATCH 16/23] block, bfq: make shared queues inherit wakers
 
 Consider a bfq_queue bfqq that is about to be merged with another
 bfq_queue new_bfqq. The processes associated with bfqq are cooperators
@@ -1410,7 +1410,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 39 insertions(+), 3 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index c830478a5..160732a6d 100644
+index 2d785eb..6eb234d 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2820,6 +2820,29 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
@@ -1480,13 +1480,13 @@ index c830478a5..160732a6d 100644
  		}
  	}
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 276398d12a73af0dce2bf0452e55a44efc6ccc84 Mon Sep 17 00:00:00 2001
+From 66d883dce7ebdcb76d1ee45fb902b241e494ae3b Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:00 +0000
-Subject: [PATCH 17/26] block, bfq: fix weight-raising resume with !low_latency
+Subject: [PATCH 17/23] block, bfq: fix weight-raising resume with !low_latency
 
 When the io_latency heuristic is off, bfq_queues must not start to be
 weight-raised. Unfortunately, by mistake, this may happen when the
@@ -1500,7 +1500,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 160732a6d..a21cc72c6 100644
+index 6eb234d..2a6eb91 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1010,7 +1010,7 @@ static void
@@ -1528,13 +1528,13 @@ index 160732a6d..a21cc72c6 100644
  	bfqq->wr_start_at_switch_to_srt = bic->saved_wr_start_at_switch_to_srt;
  	bfqq->last_wr_start_finish = bic->saved_last_wr_start_finish;
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 1f9efadafa41741052151b525b21e827450db39f Mon Sep 17 00:00:00 2001
+From caf712470a69e485c0f633047cfa612870c6ebe1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:01 +0000
-Subject: [PATCH 18/26] block, bfq: keep shared queues out of the waker
+Subject: [PATCH 18/23] block, bfq: keep shared queues out of the waker
  mechanism
 
 Shared queues are likely to receive I/O at a high rate. This may
@@ -1551,7 +1551,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index a21cc72c6..d4e126210 100644
+index 2a6eb91..ec443b3 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5826,7 +5826,17 @@ static void bfq_completed_request(struct bfq_queue *bfqq, struct bfq_data *bfqd)
@@ -1574,13 +1574,13 @@ index a21cc72c6..d4e126210 100644
  	/*
  	 * If we are waiting to discover whether the request pattern
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 5ed4fe44cdc4dc361ab67592d34a0f381e79ddec Mon Sep 17 00:00:00 2001
+From a42e3448e65dc993f9ffb934e58a33ff5ce6ca10 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:02 +0000
-Subject: [PATCH 19/26] block, bfq: merge bursts of newly-created queues
+Subject: [PATCH 19/23] block, bfq: merge bursts of newly-created queues
 
 Many throughput-sensitive workloads are made of several parallel I/O
 flows, with all flows generated by the same application, or more
@@ -1632,7 +1632,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  3 files changed, 256 insertions(+), 10 deletions(-)
 
 diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
-index b791e2041..e2f14508f 100644
+index b791e20..e2f1450 100644
 --- a/block/bfq-cgroup.c
 +++ b/block/bfq-cgroup.c
 @@ -547,6 +547,8 @@ static void bfq_pd_init(struct blkg_policy_data *pd)
@@ -1645,7 +1645,7 @@ index b791e2041..e2f14508f 100644
  				   * the root_group's will be set to NULL
  				   * in bfq_init_queue()
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index d4e126210..13804238f 100644
+index ec443b3..ea20d2e 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1073,7 +1073,7 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
@@ -2015,7 +2015,7 @@ index d4e126210..13804238f 100644
  
  			/* Update bic before losing reference to bfqq */
 diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index b8e793c34..99c2a3cb0 100644
+index b8e793c..99c2a3c 100644
 --- a/block/bfq-iosched.h
 +++ b/block/bfq-iosched.h
 @@ -197,6 +197,9 @@ struct bfq_entity {
@@ -2069,13 +2069,13 @@ index b8e793c34..99c2a3cb0 100644
  	u64 last_empty_occupied_ns;
  
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 6353c687f42830c5b188bb4f7ddd2f60cd0982d8 Mon Sep 17 00:00:00 2001
+From 0c274bb47d1471270f3a3a7b575e2d5b5b465a8f Mon Sep 17 00:00:00 2001
 From: huhai <huhai () tj ! kylinos ! cn>
 Date: Fri, 25 Dec 2020 13:00:16 +0000
-Subject: [PATCH 20/26] bfq: don't duplicate code for different paths
+Subject: [PATCH 20/23] bfq: don't duplicate code for different paths
 
 As we can see, returns parent_sched_may_change whether
 sd->next_in_service changes or not, so remove this judgment.
@@ -2086,7 +2086,7 @@ Signed-off-by: huhai <huhai@tj.kylinos.cn>
  1 file changed, 3 deletions(-)
 
 diff --git a/block/bfq-wf2q.c b/block/bfq-wf2q.c
-index 02e59931d..7a462df71 100644
+index 02e5993..7a462df 100644
 --- a/block/bfq-wf2q.c
 +++ b/block/bfq-wf2q.c
 @@ -137,9 +137,6 @@ static bool bfq_update_next_in_service(struct bfq_sched_data *sd,
@@ -2100,13 +2100,13 @@ index 02e59931d..7a462df71 100644
  }
  
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 7f44419210765bb26b928bcde122d00822b279b0 Mon Sep 17 00:00:00 2001
+From 6c5e78c1e3a543850de16d93ee251bd24b5cda9e Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:25 +0000
-Subject: [PATCH 21/26] bfq: Avoid false bfq queue merging
+Subject: [PATCH 21/23] bfq: Avoid false bfq queue merging
 
 bfq_setup_cooperator() uses bfqd->in_serv_last_pos so detect whether it
 makes sense to merge current bfq queue with the in-service queue.
@@ -2143,7 +2143,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 1 insertion(+)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 13804238f..5a491adb3 100644
+index ea20d2e..5ea3afe 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -3093,6 +3093,7 @@ static void __bfq_set_in_service_queue(struct bfq_data *bfqd,
@@ -2155,13 +2155,13 @@ index 13804238f..5a491adb3 100644
  
  /*
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From dea67f0f1de04a32f1a1ea08cdaf3ba788c9499b Mon Sep 17 00:00:00 2001
+From 452871892ac88f92cc88420ce8685386666a69fa Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:26 +0000
-Subject: [PATCH 22/26] bfq: Use 'ttime' local variable
+Subject: [PATCH 22/23] bfq: Use 'ttime' local variable
 
 Use local variable 'ttime' instead of dereferencing bfqq.
 
@@ -2172,7 +2172,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 5a491adb3..7e6648dda 100644
+index 5ea3afe..0d8af6a 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5563,7 +5563,7 @@ static void bfq_update_io_thinktime(struct bfq_data *bfqd,
@@ -2185,13 +2185,13 @@ index 5a491adb3..7e6648dda 100644
  	ttime->ttime_mean = div64_ul(ttime->ttime_total + 128,
  				     ttime->ttime_samples);
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
 
 
-From 4a3aeebb0aadbb835a9eb2be1e0553b1058b8fc7 Mon Sep 17 00:00:00 2001
+From 6d67516517b8ef25e701f11d932313ea69c1300d Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:27 +0000
-Subject: [PATCH 23/26] bfq: Use only idle IO periods for think time
+Subject: [PATCH 23/23] bfq: Use only idle IO periods for think time
  calculations
 
 Currently whenever bfq queue has a request queued we add now -
@@ -2211,7 +2211,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 7e6648dda..e975dfcfe 100644
+index 0d8af6a..e592c0c 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -5559,8 +5559,16 @@ static void bfq_update_io_thinktime(struct bfq_data *bfqd,
@@ -2233,4 +2233,5 @@ index 7e6648dda..e975dfcfe 100644
  
  	ttime->ttime_samples = (7*ttime->ttime_samples + 256) / 8;
 -- 
-2.30.0.335.ge6362826a0
+2.30.1.457.gf011795891
+

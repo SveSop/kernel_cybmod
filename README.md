@@ -1,26 +1,25 @@
-## Cybmod patches for 5.10 kernel  
+## Cybmod patches for 5.11 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.11.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.11.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Kernel patch 5.10.17  
-0001 : CacULE scheduler (Xanmod)  
-0002 : 5.10 Graysky's CPU optimization patches  
+0001 : CacULE scheduler (Rebased for 5.11)  
+0002 : 5.11 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
-0010 : Corsair PSU HW-monitor patch  
 0011 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0012 : Add option for SCHED_AUTOGROUP (Xanmod)  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
-0030 : Clearlinux patchset  
+0030 : Clearlinux patches  
 0031 : Misc fixes  
 0032 : Futex patchset  
 0033 : Block patchset  
 0034 : mm patchset  
 0035 : BFQ disk patchset  
 0036 : Add support for ZSTD compression  
-0037 : BBR2 TCP congestion control patchset  
+0037 : -ck picked patches (Xanmod)  
+0038 : BBR2 + various TCP patches  
 0040 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
@@ -35,10 +34,10 @@ ubuntu : Ubuntu mainline kernel patchset
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.10.tar.xz    
-cd linux-5.10  
+tar xf linux-5.11.tar.xz    
+cd linux-5.11  
 /path/to/patches/and/cybmod_patch.sh  
-make -j12 bindeb-pkg # -j depending on your processor cores  
+make -j12 deb-pkg # -j depending on your processor cores  
 ```
 When build is done, the .deb files is in the ../ folder relative to the source.  
 

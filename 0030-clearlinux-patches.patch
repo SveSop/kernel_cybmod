@@ -1,7 +1,7 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 57f2beeae1a36ed01356132f9c8ae954d576948b Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:10:58 -0600
-Subject: [PATCH] pci pme wakeups
+Subject: [PATCH 04/25] pci pme wakeups
 
 Reduce wakeups for PME checks, which are a workaround for miswired
 boards (sadly, too many of them) in laptops.
@@ -10,10 +10,10 @@ boards (sadly, too many of them) in laptops.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index c9338f9..6974fbf 100644
+index 790393d1e..1cc50b612 100644
 --- a/drivers/pci/pci.c
 +++ b/drivers/pci/pci.c
-@@ -62,7 +62,7 @@ struct pci_pme_device {
+@@ -59,7 +59,7 @@ struct pci_pme_device {
  	struct pci_dev *dev;
  };
  
@@ -23,12 +23,64 @@ index c9338f9..6974fbf 100644
  static void pci_dev_d3_sleep(struct pci_dev *dev)
  {
 -- 
-https://clearlinux.org
+2.30.1.457.gf011795891
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From df937df17b209379ace1b424f28ae9aa5c23da34 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Mon, 6 May 2019 12:57:09 -0500
+Subject: [PATCH 05/25] ksm-wakeups
+
+reduce wakeups in ksm by adding rounding (aligning) when
+the sleep times are 1 second or longer
+
+Signed-off-by: Arjan van de Ven <arjan@linux.intel.com>
+---
+ kernel/watchdog.c |  2 +-
+ mm/ksm.c          | 11 ++++++++---
+ 2 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/kernel/watchdog.c b/kernel/watchdog.c
+index 71109065b..44ae1e267 100644
+--- a/kernel/watchdog.c
++++ b/kernel/watchdog.c
+@@ -41,7 +41,7 @@ unsigned long __read_mostly watchdog_enabled;
+ int __read_mostly watchdog_user_enabled = 1;
+ int __read_mostly nmi_watchdog_user_enabled = NMI_WATCHDOG_DEFAULT;
+ int __read_mostly soft_watchdog_user_enabled = 1;
+-int __read_mostly watchdog_thresh = 10;
++int __read_mostly watchdog_thresh = 40;
+ static int __read_mostly nmi_watchdog_available;
+ 
+ struct cpumask watchdog_cpumask __read_mostly;
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 9694ee2c7..50d1d6dd1 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -2423,9 +2423,14 @@ static int ksm_scan_thread(void *nothing)
+ 
+ 		if (ksmd_should_run()) {
+ 			sleep_ms = READ_ONCE(ksm_thread_sleep_millisecs);
+-			wait_event_interruptible_timeout(ksm_iter_wait,
+-				sleep_ms != READ_ONCE(ksm_thread_sleep_millisecs),
+-				msecs_to_jiffies(sleep_ms));
++			if (sleep_ms >= 1000)
++				wait_event_interruptible_timeout(ksm_iter_wait,
++					sleep_ms != READ_ONCE(ksm_thread_sleep_millisecs),
++					msecs_to_jiffies(round_jiffies_relative(sleep_ms)));
++			else
++				wait_event_interruptible_timeout(ksm_iter_wait,
++					sleep_ms != READ_ONCE(ksm_thread_sleep_millisecs),
++					msecs_to_jiffies(sleep_ms));
+ 		} else {
+ 			wait_event_freezable(ksm_thread_wait,
+ 				ksmd_should_run() || kthread_should_stop());
+-- 
+2.30.1.457.gf011795891
+
+From 88a78c601be777f3852295c742943d3dfcb6339a Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 19 Mar 2016 21:32:19 -0400
-Subject: [PATCH] intel_idle: tweak cpuidle cstates
+Subject: [PATCH 06/25] intel_idle: tweak cpuidle cstates
 
 Increase target_residency in cpuidle cstate
 
@@ -41,10 +93,10 @@ performance while keeping power efficiency
  1 file changed, 22 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index f449584..c994d24 100644
+index 28f93b9aa..d44796680 100644
 --- a/drivers/idle/intel_idle.c
 +++ b/drivers/idle/intel_idle.c
-@@ -531,7 +531,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
+@@ -502,7 +502,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
  		.desc = "MWAIT 0x01",
  		.flags = MWAIT2flg(0x01) | CPUIDLE_FLAG_ALWAYS_ENABLE,
  		.exit_latency = 10,
@@ -53,7 +105,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -539,7 +539,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
+@@ -510,7 +510,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
  		.desc = "MWAIT 0x10",
  		.flags = MWAIT2flg(0x10) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 33,
@@ -62,7 +114,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -547,7 +547,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
+@@ -518,7 +518,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
  		.desc = "MWAIT 0x20",
  		.flags = MWAIT2flg(0x20) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 133,
@@ -71,7 +123,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -555,7 +555,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
+@@ -526,7 +526,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
  		.desc = "MWAIT 0x32",
  		.flags = MWAIT2flg(0x32) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 166,
@@ -80,7 +132,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -563,7 +563,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
+@@ -534,7 +534,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
  		.desc = "MWAIT 0x40",
  		.flags = MWAIT2flg(0x40) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 300,
@@ -89,7 +141,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -571,7 +571,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
+@@ -542,7 +542,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
  		.desc = "MWAIT 0x50",
  		.flags = MWAIT2flg(0x50) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 600,
@@ -98,7 +150,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -579,7 +579,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
+@@ -550,7 +550,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
  		.desc = "MWAIT 0x60",
  		.flags = MWAIT2flg(0x60) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 2600,
@@ -107,7 +159,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -599,7 +599,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
+@@ -570,7 +570,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
  		.desc = "MWAIT 0x01",
  		.flags = MWAIT2flg(0x01) | CPUIDLE_FLAG_ALWAYS_ENABLE,
  		.exit_latency = 10,
@@ -116,7 +168,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -607,7 +607,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
+@@ -578,7 +578,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
  		.desc = "MWAIT 0x10",
  		.flags = MWAIT2flg(0x10) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 40,
@@ -125,7 +177,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -615,7 +615,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
+@@ -586,7 +586,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
  		.desc = "MWAIT 0x20",
  		.flags = MWAIT2flg(0x20) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 133,
@@ -134,7 +186,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -623,7 +623,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
+@@ -594,7 +594,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
  		.desc = "MWAIT 0x32",
  		.flags = MWAIT2flg(0x32) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 166,
@@ -143,7 +195,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -631,7 +631,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
+@@ -602,7 +602,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
  		.desc = "MWAIT 0x40",
  		.flags = MWAIT2flg(0x40) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 300,
@@ -152,7 +204,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -639,7 +639,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
+@@ -610,7 +610,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
  		.desc = "MWAIT 0x50",
  		.flags = MWAIT2flg(0x50) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 600,
@@ -161,7 +213,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -647,7 +647,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
+@@ -618,7 +618,7 @@ static struct cpuidle_state bdw_cstates[] __initdata = {
  		.desc = "MWAIT 0x60",
  		.flags = MWAIT2flg(0x60) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 2600,
@@ -170,7 +222,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -668,7 +668,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
+@@ -639,7 +639,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
  		.desc = "MWAIT 0x01",
  		.flags = MWAIT2flg(0x01) | CPUIDLE_FLAG_ALWAYS_ENABLE,
  		.exit_latency = 10,
@@ -179,7 +231,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -676,7 +676,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
+@@ -647,7 +647,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
  		.desc = "MWAIT 0x10",
  		.flags = MWAIT2flg(0x10) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 70,
@@ -188,7 +240,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -684,7 +684,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
+@@ -655,7 +655,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
  		.desc = "MWAIT 0x20",
  		.flags = MWAIT2flg(0x20) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 85,
@@ -197,7 +249,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -692,7 +692,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
+@@ -663,7 +663,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
  		.desc = "MWAIT 0x33",
  		.flags = MWAIT2flg(0x33) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 124,
@@ -206,7 +258,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -700,7 +700,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
+@@ -671,7 +671,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
  		.desc = "MWAIT 0x40",
  		.flags = MWAIT2flg(0x40) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 200,
@@ -215,7 +267,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -708,7 +708,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
+@@ -679,7 +679,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
  		.desc = "MWAIT 0x50",
  		.flags = MWAIT2flg(0x50) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 480,
@@ -224,7 +276,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -716,7 +716,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
+@@ -687,7 +687,7 @@ static struct cpuidle_state skl_cstates[] __initdata = {
  		.desc = "MWAIT 0x60",
  		.flags = MWAIT2flg(0x60) | CPUIDLE_FLAG_TLB_FLUSHED,
  		.exit_latency = 890,
@@ -233,7 +285,7 @@ index f449584..c994d24 100644
  		.enter = &intel_idle,
  		.enter_s2idle = intel_idle_s2idle, },
  	{
-@@ -737,7 +737,7 @@ static struct cpuidle_state skx_cstates[] __initdata = {
+@@ -708,7 +708,7 @@ static struct cpuidle_state skx_cstates[] __initdata = {
  		.desc = "MWAIT 0x01",
  		.flags = MWAIT2flg(0x01) | CPUIDLE_FLAG_ALWAYS_ENABLE,
  		.exit_latency = 10,
@@ -243,75 +295,40 @@ index f449584..c994d24 100644
  		.enter_s2idle = intel_idle_s2idle, },
  	{
 -- 
-https://clearlinux.org
+2.30.1.457.gf011795891
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 0f17545b1f968871a07eeb68f62c32208f71f2ab Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Fri, 6 Jan 2017 15:34:09 +0000
-Subject: [PATCH] ipv4/tcp: allow the memory tuning for tcp to go a little
- bigger than default
+Date: Wed, 11 Feb 2015 17:28:14 -0600
+Subject: [PATCH 08/25] smpboot: reuse timer calibration
 
+NO point recalibrating for known-constant tsc ...
+saves 200ms+ of boot time.
 ---
- net/ipv4/tcp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/tsc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 30c1142..4345075 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4201,8 +4201,8 @@ void __init tcp_init(void)
- 	tcp_init_mem();
- 	/* Set per-socket limits to no more than 1/128 the pressure threshold */
- 	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
--	max_wshare = min(4UL*1024*1024, limit);
--	max_rshare = min(6UL*1024*1024, limit);
-+	max_wshare = min(16UL*1024*1024, limit);
-+	max_rshare = min(16UL*1024*1024, limit);
+diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
+index f70dffc27..dfb9f6055 100644
+--- a/arch/x86/kernel/tsc.c
++++ b/arch/x86/kernel/tsc.c
+@@ -1546,6 +1546,9 @@ unsigned long calibrate_delay_is_known(void)
+ 	if (!constant_tsc || !mask)
+ 		return 0;
  
- 	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
- 	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
++	if (cpu != 0)
++		return cpu_data(0).loops_per_jiffy;
++
+ 	sibling = cpumask_any_but(mask, cpu);
+ 	if (sibling < nr_cpu_ids)
+ 		return cpu_data(sibling).loops_per_jiffy;
 -- 
-https://clearlinux.org
+2.30.1.457.gf011795891
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Sun, 18 Feb 2018 23:35:41 +0000
-Subject: [PATCH] locking: rwsem: spin faster
-
-tweak rwsem owner spinning a bit
----
- kernel/locking/rwsem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index f11b9bd..1bbfcc1 100644
---- a/kernel/locking/rwsem.c
-+++ b/kernel/locking/rwsem.c
-@@ -717,6 +717,7 @@ rwsem_spin_on_owner(struct rw_semaphore *sem, unsigned long nonspinnable)
- 	struct task_struct *new, *owner;
- 	unsigned long flags, new_flags;
- 	enum owner_state state;
-+	int i = 0;
- 
- 	owner = rwsem_owner_flags(sem, &flags);
- 	state = rwsem_owner_state(owner, flags, nonspinnable);
-@@ -750,7 +751,8 @@ rwsem_spin_on_owner(struct rw_semaphore *sem, unsigned long nonspinnable)
- 			break;
- 		}
- 
--		cpu_relax();
-+		if (i++ > 1000)
-+			cpu_relax();
- 	}
- 	rcu_read_unlock();
- 
--- 
-https://clearlinux.org
-
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 200074f22d44d3ba2ea724ba000782cf15c8450c Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 2 Jun 2016 23:36:32 -0500
-Subject: [PATCH] initialize ata before graphics
+Subject: [PATCH 09/25] Initialize ata before graphics
 
 ATA init is the long pole in the boot process, and its asynchronous.
 move the graphics init after it so that ata and graphics initialize
@@ -321,7 +338,7 @@ in parallel
  1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/Makefile b/drivers/Makefile
-index c0cd1b9..af1e2fb 100644
+index fd11b9ac4..41fce30cb 100644
 --- a/drivers/Makefile
 +++ b/drivers/Makefile
 @@ -59,15 +59,8 @@ obj-y				+= char/
@@ -356,105 +373,40 @@ index c0cd1b9..af1e2fb 100644
  obj-$(CONFIG_MTD)		+= mtd/
  obj-$(CONFIG_SPI)		+= spi/
 -- 
-https://clearlinux.org
+2.30.1.457.gf011795891
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 582c9910cf2c59bf30a3a08a2ac16b9672b398c5 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Tue, 23 Jun 2015 01:26:52 -0500
-Subject: [PATCH] i8042: decrease debug message level to info
+Date: Fri, 6 Jan 2017 15:34:09 +0000
+Subject: [PATCH 11/25] ipv4/tcp: allow the memory tuning for tcp to go a
+ little bigger than default
 
-Author:    Arjan van de Ven <arjan@linux.intel.com>
-
-Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
-Signed-off-by: Jose Carlos Venegas Munoz <jos.c.venegas.munoz@intel.com>
 ---
- drivers/input/serio/i8042.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/ipv4/tcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/input/serio/i8042.c b/drivers/input/serio/i8042.c
-index abae23af0791..f8617c1b242e 100644
---- a/drivers/input/serio/i8042.c
-+++ b/drivers/input/serio/i8042.c
-@@ -617,7 +617,7 @@ static int i8042_enable_kbd_port(void)
- 	if (i8042_command(&i8042_ctr, I8042_CMD_CTL_WCTR)) {
- 		i8042_ctr &= ~I8042_CTR_KBDINT;
- 		i8042_ctr |= I8042_CTR_KBDDIS;
--		pr_err("Failed to enable KBD port\n");
-+		pr_info("Failed to enable KBD port\n");
- 		return -EIO;
- 	}
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 32545ecf2..37843b080 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -4446,8 +4446,8 @@ void __init tcp_init(void)
+ 	tcp_init_mem();
+ 	/* Set per-socket limits to no more than 1/128 the pressure threshold */
+ 	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
+-	max_wshare = min(4UL*1024*1024, limit);
+-	max_rshare = min(6UL*1024*1024, limit);
++	max_wshare = min(16UL*1024*1024, limit);
++	max_rshare = min(16UL*1024*1024, limit);
  
-@@ -636,7 +636,7 @@ static int i8042_enable_aux_port(void)
- 	if (i8042_command(&i8042_ctr, I8042_CMD_CTL_WCTR)) {
- 		i8042_ctr &= ~I8042_CTR_AUXINT;
- 		i8042_ctr |= I8042_CTR_AUXDIS;
--		pr_err("Failed to enable AUX port\n");
-+		pr_info("Failed to enable AUX port\n");
- 		return -EIO;
- 	}
- 
-@@ -728,7 +728,7 @@ static int __init i8042_check_mux(void)
- 	i8042_ctr &= ~I8042_CTR_AUXINT;
- 
- 	if (i8042_command(&i8042_ctr, I8042_CMD_CTL_WCTR)) {
--		pr_err("Failed to disable AUX port, can't use MUX\n");
-+		pr_info("Failed to disable AUX port, can't use MUX\n");
- 		return -EIO;
- 	}
- 
-@@ -951,7 +951,7 @@ static int i8042_controller_selftest(void)
- 	do {
- 
- 		if (i8042_command(&param, I8042_CMD_CTL_TEST)) {
--			pr_err("i8042 controller selftest timeout\n");
-+			pr_info("i8042 controller selftest timeout\n");
- 			return -ENODEV;
- 		}
- 
-@@ -973,7 +973,7 @@ static int i8042_controller_selftest(void)
- 	pr_info("giving up on controller selftest, continuing anyway...\n");
- 	return 0;
- #else
--	pr_err("i8042 controller selftest failed\n");
-+	pr_info("i8042 controller selftest failed\n");
- 	return -EIO;
- #endif
- }
+ 	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
+ 	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-https://clearlinux.org
+2.30.1.457.gf011795891
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Wed, 11 Feb 2015 17:28:14 -0600
-Subject: [PATCH] smpboot: reuse timer calibration
-
-NO point recalibrating for known-constant tsc ...
-saves 200ms+ of boot time.
----
- arch/x86/kernel/tsc.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
-index f70dffc2771f..dfb9f60554af 100644
---- a/arch/x86/kernel/tsc.c
-+++ b/arch/x86/kernel/tsc.c
-@@ -1546,6 +1546,9 @@ unsigned long calibrate_delay_is_known(void)
- 	if (!constant_tsc || !mask)
- 		return 0;
- 
-+	if (cpu != 0)
-+		return cpu_data(0).loops_per_jiffy;
-+
- 	sibling = cpumask_any_but(mask, cpu);
- 	if (sibling < nr_cpu_ids)
- 		return cpu_data(sibling).loops_per_jiffy;
--- 
-https://clearlinux.org
-
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 3c0804ff9c0b4f80d139bb9cd6811849101ceaa6 Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Mon, 13 Aug 2018 04:01:21 -0500
-Subject: [PATCH] add boot option to allow unsigned modules
+Subject: [PATCH 13/25] Add boot option to allow unsigned modules
 
 Add module.sig_unenforce boot parameter to allow loading unsigned kernel
 modules. Parameter is only effective if CONFIG_MODULE_SIG_FORCE is
@@ -467,10 +419,10 @@ Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
  1 file changed, 20 insertions(+)
 
 diff --git a/kernel/module.c b/kernel/module.c
-index e20499309b2a..b4fa958ed098 100644
+index 4bf30e4b3..eff4caaf4 100644
 --- a/kernel/module.c
 +++ b/kernel/module.c
-@@ -57,6 +57,7 @@
+@@ -56,6 +56,7 @@
  #include <linux/bsearch.h>
  #include <linux/dynamic_debug.h>
  #include <linux/audit.h>
@@ -489,7 +441,7 @@ index e20499309b2a..b4fa958ed098 100644
  
  /*
   * Export sig_enforce kernel cmdline parameter to allow other subsystems rely
-@@ -399,6 +404,8 @@ extern const s32 __start___kcrctab_unused[];
+@@ -428,6 +433,8 @@ extern const s32 __start___kcrctab_unused[];
  extern const s32 __start___kcrctab_unused_gpl[];
  #endif
  
@@ -498,7 +450,7 @@ index e20499309b2a..b4fa958ed098 100644
  #ifndef CONFIG_MODVERSIONS
  #define symversion(base, idx) NULL
  #else
-@@ -4459,6 +4466,19 @@ static const struct proc_ops modules_proc_ops = {
+@@ -4525,6 +4532,19 @@ static const struct proc_ops modules_proc_ops = {
  static int __init proc_modules_init(void)
  {
  	proc_create("modules", 0, NULL, &modules_proc_ops);
@@ -519,12 +471,12 @@ index e20499309b2a..b4fa958ed098 100644
  }
  module_init(proc_modules_init);
 -- 
-https://clearlinux.org
+2.30.1.457.gf011795891
 
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From 13ee4d7d4a06ccd99f7c5be5581a65aae95ba5fb Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
-Subject: [PATCH] do accept() in LIFO order for cache efficiency
+Subject: [PATCH 18/25] do accept() in LIFO order for cache efficiency
 
 ---
  include/linux/wait.h            |  2 ++
@@ -533,18 +485,18 @@ Subject: [PATCH] do accept() in LIFO order for cache efficiency
  3 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/wait.h b/include/linux/wait.h
-index 27fb99cfeb02..9a2c36d081bf 100644
+index fe10e8570..e689260e1 100644
 --- a/include/linux/wait.h
 +++ b/include/linux/wait.h
-@@ -164,6 +164,7 @@ static inline bool wq_has_sleeper(struct wait_queue_head *wq_head)
+@@ -165,6 +165,7 @@ static inline bool wq_has_sleeper(struct wait_queue_head *wq_head)
  
  extern void add_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
  extern void add_wait_queue_exclusive(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
 +extern void add_wait_queue_exclusive_lifo(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
+ extern void add_wait_queue_priority(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
  extern void remove_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
  
- static inline void __add_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry)
-@@ -1127,6 +1128,7 @@ do {										\
+@@ -1137,6 +1138,7 @@ do {										\
   */
  void prepare_to_wait(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
  void prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
@@ -553,12 +505,12 @@ index 27fb99cfeb02..9a2c36d081bf 100644
  void finish_wait(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
  long wait_woken(struct wait_queue_entry *wq_entry, unsigned mode, long timeout);
 diff --git a/kernel/sched/wait.c b/kernel/sched/wait.c
-index 01f5d3020589..6fb633f219c4 100644
+index 183cc6ae6..ed87f43de 100644
 --- a/kernel/sched/wait.c
 +++ b/kernel/sched/wait.c
-@@ -37,6 +37,17 @@ void add_wait_queue_exclusive(struct wait_queue_head *wq_head, struct wait_queue
+@@ -48,6 +48,17 @@ void add_wait_queue_priority(struct wait_queue_head *wq_head, struct wait_queue_
  }
- EXPORT_SYMBOL(add_wait_queue_exclusive);
+ EXPORT_SYMBOL_GPL(add_wait_queue_priority);
  
 +void add_wait_queue_exclusive_lifo(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry)
 +{
@@ -574,7 +526,7 @@ index 01f5d3020589..6fb633f219c4 100644
  void remove_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry)
  {
  	unsigned long flags;
-@@ -263,6 +274,19 @@ prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_ent
+@@ -278,6 +289,19 @@ prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_ent
  }
  EXPORT_SYMBOL(prepare_to_wait_exclusive);
  
@@ -595,7 +547,7 @@ index 01f5d3020589..6fb633f219c4 100644
  {
  	wq_entry->flags = flags;
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index f60869acbef0..26587640d06e 100644
+index 6bd7ca09a..19f26390e 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
 @@ -433,7 +433,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
@@ -608,5 +560,215 @@ index f60869acbef0..26587640d06e 100644
  		release_sock(sk);
  		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
 -- 
-https://clearlinux.org
+2.30.1.457.gf011795891
+
+From f3440dc3117c7865999c8124b2a4636be48b4195 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Sun, 18 Feb 2018 23:35:41 +0000
+Subject: [PATCH 19/25] locking: rwsem: spin faster
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ kernel/locking/rwsem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
+index ba67600c7..0c39e6eb5 100644
+--- a/kernel/locking/rwsem.c
++++ b/kernel/locking/rwsem.c
+@@ -668,6 +668,7 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+ 	struct task_struct *new, *owner;
+ 	unsigned long flags, new_flags;
+ 	enum owner_state state;
++	int i = 0;
+ 
+ 	owner = rwsem_owner_flags(sem, &flags);
+ 	state = rwsem_owner_state(owner, flags);
+@@ -701,7 +702,8 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+ 			break;
+ 		}
+ 
+-		cpu_relax();
++		if (i++ > 1000)
++			cpu_relax();
+ 	}
+ 	rcu_read_unlock();
+ 
+-- 
+2.30.1.457.gf011795891
+
+From 6da2085a5ba161d915e46f4c0c5bbfa75590328f Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Thu, 11 Jun 2020 22:30:56 +0200
+Subject: [PATCH 25/25] Port microcode patches
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ arch/x86/kernel/cpu/microcode/core.c  |  9 ++++-
+ arch/x86/kernel/cpu/microcode/intel.c | 57 +++++++++++++++++++++++++--
+ 2 files changed, 62 insertions(+), 4 deletions(-)
+
+diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
+index ec6f0415b..264c33b1d 100644
+--- a/arch/x86/kernel/cpu/microcode/core.c
++++ b/arch/x86/kernel/cpu/microcode/core.c
+@@ -604,6 +604,7 @@ static int microcode_reload_late(void)
+ 	atomic_set(&late_cpus_in,  0);
+ 	atomic_set(&late_cpus_out, 0);
+ 
++	printk ("Going to do stop_machine\n");
+ 	ret = stop_machine_cpuslocked(__reload_late, NULL, cpu_online_mask);
+ 	if (ret == 0)
+ 		microcode_check();
+@@ -617,18 +618,23 @@ static ssize_t reload_store(struct device *dev,
+ 			    struct device_attribute *attr,
+ 			    const char *buf, size_t size)
+ {
++	extern bool force_ucode_load;
+ 	enum ucode_state tmp_ret = UCODE_OK;
+ 	int bsp = boot_cpu_data.cpu_index;
+ 	unsigned long val;
++	bool orig_cmd_line = force_ucode_load;
+ 	ssize_t ret = 0;
+ 
+ 	ret = kstrtoul(buf, 0, &val);
+ 	if (ret)
+ 		return ret;
+ 
+-	if (val != 1)
++	if (!val || val > 2)
+ 		return size;
+ 
++	if (val == 2)
++		force_ucode_load = true;
++
+ 	tmp_ret = microcode_ops->request_microcode_fw(bsp, &microcode_pdev->dev, true);
+ 	if (tmp_ret != UCODE_NEW)
+ 		return size;
+@@ -644,6 +650,7 @@ static ssize_t reload_store(struct device *dev,
+ 	mutex_unlock(&microcode_mutex);
+ 
+ put:
++	force_ucode_load = orig_cmd_line;
+ 	put_online_cpus();
+ 
+ 	if (ret == 0)
+diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
+index 1ef03ab31..92af2b9f1 100644
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -30,6 +30,7 @@
+ #include <linux/uio.h>
+ #include <linux/mm.h>
+ 
++#include <asm/cmdline.h>
+ #include <asm/microcode_intel.h>
+ #include <asm/intel-family.h>
+ #include <asm/processor.h>
+@@ -38,6 +39,7 @@
+ #include <asm/msr.h>
+ 
+ static const char ucode_path[] = "kernel/x86/microcode/GenuineIntel.bin";
++bool force_ucode_load = false;
+ 
+ /* Current microcode patch used in early patching on the APs. */
+ static struct microcode_intel *intel_ucode_patch;
+@@ -94,8 +96,18 @@ static int has_newer_microcode(void *mc, unsigned int csig, int cpf, int new_rev
+ {
+ 	struct microcode_header_intel *mc_hdr = mc;
+ 
+-	if (mc_hdr->rev <= new_rev)
++	//if (mc_hdr->rev <= new_rev)
++	if (mc_hdr->rev < new_rev) {
++		printk ("Returning NO_NEW old = 0x%x new = 0x%x\n",
++			mc_hdr->rev, new_rev);
+ 		return 0;
++	}
++	if ((mc_hdr->rev == new_rev) && !force_ucode_load) {
++		printk ("SAME REV: no_force Returning NO_NEW old = 0x%x new = 0x%x\n",
++			mc_hdr->rev, new_rev);
++		return 0;
++	}
++	printk ("ucode: force loading same rev\n");
+ 
+ 	return find_matching_signature(mc, csig, cpf);
+ }
+@@ -550,11 +562,20 @@ static int apply_microcode_early(struct ucode_cpu_info *uci, bool early)
+ 	 * already.
+ 	 */
+ 	rev = intel_get_microcode_revision();
+-	if (rev >= mc->hdr.rev) {
++	if (rev > mc->hdr.rev) {
+ 		uci->cpu_sig.rev = rev;
+ 		return UCODE_OK;
+ 	}
+ 
++	if (rev == mc->hdr.rev) {
++		if (!force_ucode_load) {
++			printk ("Matching ucode rev, no update\n");
++			return UCODE_OK;
++		} else {
++			printk ("Matching ucode rev.. force updating\n");
++		}
++	}
++
+ 	/*
+ 	 * Writeback and invalidate caches before updating microcode to avoid
+ 	 * internal issues depending on what the microcode is updating.
+@@ -606,6 +627,29 @@ int __init save_microcode_in_initrd_intel(void)
+ 	return 0;
+ }
+ 
++static bool check_force_ucode_bsp(void)
++{
++	static const char *__force_ucode_str = "force_ucode_load";
++
++#ifdef CONFIG_X86_32
++	const char *cmdline = (const char *)__pa_nodebug(boot_command_line);
++	const char *option  = (const char *)__pa_nodebug(__force_ucode_str);
++	bool *res = (bool *)__pa_nodebug(&force_ucode_load);
++
++#else /* CONFIG_X86_64 */
++	const char *cmdline = boot_command_line;
++	const char *option  = __force_ucode_str;
++	bool *res = &force_ucode_load;
++#endif
++
++	if (cmdline_find_option_bool(cmdline, option)) {
++		printk("cmdline forcing ucode update for same rev\n");
++		*res = true;
++	}
++
++	return *res;
++}
++
+ /*
+  * @res_patch, output: a pointer to the patch we found.
+  */
+@@ -639,6 +683,9 @@ void __init load_ucode_intel_bsp(void)
+ {
+ 	struct microcode_intel *patch;
+ 	struct ucode_cpu_info uci;
++	bool force_bsp;
++
++	force_bsp = check_force_ucode_bsp();
+ 
+ 	patch = __load_ucode_intel(&uci);
+ 	if (!patch)
+@@ -687,8 +734,12 @@ static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
+ 
+ 		phdr = (struct microcode_header_intel *)iter->data;
+ 
+-		if (phdr->rev <= uci->cpu_sig.rev)
++		if (phdr->rev < uci->cpu_sig.rev)
+ 			continue;
++		if (phdr->rev == uci->cpu_sig.rev && !force_ucode_load)
++			continue;
++		else
++			printk ("same rev forcing ucode\n");
+ 
+ 		if (!find_matching_signature(phdr,
+ 					     uci->cpu_sig.sig,
+-- 
+2.30.1.457.gf011795891
 
