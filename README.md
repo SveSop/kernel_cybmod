@@ -21,14 +21,16 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0037 : -ck picked patches (Xanmod)  
 0038 : BBR2 + various TCP patches  
 0040 : Various kernel tweaks patch  
+1000 : "Old" fsync patch for backwards compatibility  
 
 ubuntu : Ubuntu mainline kernel patchset  
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default CacULE scheduler and CONFIG_HZ=1000 + NO_HZ_FULL**  
+**This config has default CacULE scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Futex2**  
 **Also see [https://github.com/hamadmarri/cacule-cpu-scheduler](https://github.com/hamadmarri/cacule-cpu-scheduler) for scheduler info**  
 
+**Futex2 requires a patched wine/proton version! If you do not use that, answer Y on the question for compatibility**  
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 
 To build on Ubuntu:  

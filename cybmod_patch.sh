@@ -29,7 +29,12 @@ done
 echo -e " "
 echo Done patching
 echo --
-echo Cleaning possible patch-crud!
-find . -name \*.orig -type f -delete
-find . -name \*.rej -type f -delete
-echo --
+while true; do
+    read -p "Do you need backwards compatibility with older Proton/wine? (Fsync patch)" yn
+    case $yn in
+        [Yy]* ) patch -p1 < $DIR/1000-v5.11-fsync.patch; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+echo -e " "
