@@ -1,7 +1,7 @@
-From ad178207cd5ee39a56ea3a496885934a30647036 Mon Sep 17 00:00:00 2001
+From b2526cc91e8c3414196dc92e981454161d0a5623 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 11:17:31 +0100
-Subject: [PATCH 1/3] mm-5.11: protect file mappings under memory pressure
+Subject: [PATCH 1/4] mm-5.11: protect file mappings under memory pressure
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -232,10 +232,10 @@ index b1b574ad1..d763f5fd0 100644
 2.30.1.457.gf011795891
 
 
-From 45664da1d78da10d13f264c4ce939bf80aaef60e Mon Sep 17 00:00:00 2001
+From 7f55c388c3b6ccf480ebbdc58b1a8889901fa793 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 11:44:39 +0100
-Subject: [PATCH 2/3] mm-5.11: inequality should not exclude lower threshold
+Subject: [PATCH 2/4] mm-5.11: inequality should not exclude lower threshold
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -259,10 +259,10 @@ index d763f5fd0..14e1dd828 100644
 2.30.1.457.gf011795891
 
 
-From 7cc2522b455adb46315be2e663c7baf29f9b5636 Mon Sep 17 00:00:00 2001
+From b41509f3b21e38a24fdbbb8b3a1fbdfdcac41beb Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 12:49:51 +0100
-Subject: [PATCH 3/3] mm-5.11: throttle file pages scan regardless of scan
+Subject: [PATCH 3/4] mm-5.11: throttle file pages scan regardless of scan
  balance
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
@@ -305,6 +305,36 @@ index 14e1dd828..151a9b347 100644
  		nr[lru] = scan;
  	}
  }
+-- 
+2.30.1.457.gf011795891
+
+
+From 0f5262f2d2da12b8ab7fdc028e3f5ebf2c0ca2be Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Sat, 20 Feb 2021 08:37:18 +0100
+Subject: [PATCH 4/4] mm-5.11: simplify file_is_low
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 151a9b347..9abb2605e 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2442,9 +2442,8 @@ static void get_scan_count(struct lruvec *lruvec, struct scan_control *sc,
+ 
+ #if defined(CONFIG_UNEVICTABLE_FILE)
+ 		if (file && scan) {
+-			unsigned long low_scan_granularity = SWAP_CLUSTER_MAX >> sc->priority;
+-			if (sc->file_is_low && scan > low_scan_granularity)
+-				scan = low_scan_granularity;
++			if (sc->file_is_low)
++				scan = min(scan, SWAP_CLUSTER_MAX >> sc->priority);
+ 			else if (sc->file_is_min)
+ 				scan = 0;
+ 		}
 -- 
 2.30.1.457.gf011795891
 
