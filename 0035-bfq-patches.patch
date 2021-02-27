@@ -1,7 +1,7 @@
-From 47bcd8b42cccb56b06fc4f34309e4d8d9bd1aa55 Mon Sep 17 00:00:00 2001
+From 97bb8430fc49724a9d394328d07e12c7874eabaf Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:43 +0000
-Subject: [PATCH 01/23] block, bfq: use half slice_idle as a threshold to check
+Subject: [PATCH 01/24] block, bfq: use half slice_idle as a threshold to check
  short ttime
 
 The value of the I/O plugging (idling) timeout is used also as the
@@ -43,10 +43,10 @@ index 9e81d10..ef10e29 100644
 2.30.1.457.gf011795891
 
 
-From 36b221ef42bcc5b28db47421bfc17c8965473795 Mon Sep 17 00:00:00 2001
+From d6c31960056579b61b03ce4c1525e7620591b245 Mon Sep 17 00:00:00 2001
 From: Jia Cheng Hu <jia.jiachenghu@gmail.com>
 Date: Fri, 22 Jan 2021 18:19:44 +0000
-Subject: [PATCH 02/23] block, bfq: set next_rq to waker_bfqq->next_rq in waker
+Subject: [PATCH 02/24] block, bfq: set next_rq to waker_bfqq->next_rq in waker
  injection
 
 Since commit c5089591c3ba ("block, bfq: detect wakers and
@@ -87,10 +87,10 @@ index ef10e29..9757596 100644
 2.30.1.457.gf011795891
 
 
-From d5c1091884ce2b2f8b1f99bce56795f93733f909 Mon Sep 17 00:00:00 2001
+From 4b30a5b1ad900b14cc3de96257dcaf46c8e7a1a1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:45 +0000
-Subject: [PATCH 03/23] block, bfq: increase time window for waker detection
+Subject: [PATCH 03/24] block, bfq: increase time window for waker detection
 
 Tests on slower machines showed current window to be way too
 small. This commit increases it.
@@ -118,10 +118,10 @@ index 9757596..b339e08 100644
 2.30.1.457.gf011795891
 
 
-From 9ed4a9e04c70d23be738831a2e439a667ac25832 Mon Sep 17 00:00:00 2001
+From e800e089f17b27e27e8c501fc1dc690f5321ee11 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:46 +0000
-Subject: [PATCH 04/23] block, bfq: do not raise non-default weights
+Subject: [PATCH 04/24] block, bfq: do not raise non-default weights
 
 BFQ heuristics try to detect interactive I/O, and raise the weight of
 the queues containing such an I/O. Yet, if also the user changes the
@@ -166,10 +166,10 @@ index b339e08..01af05c 100644
 2.30.1.457.gf011795891
 
 
-From 8e3d080bc8d903700c42fd9d8cc7dc89d3f337cf Mon Sep 17 00:00:00 2001
+From f0176981426762ca1a4c09f7f07f7f069a8c218f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:47 +0000
-Subject: [PATCH 05/23] block, bfq: avoid spurious switches to soft_rt of
+Subject: [PATCH 05/24] block, bfq: avoid spurious switches to soft_rt of
  interactive queues
 
 BFQ tags some bfq_queues as interactive or soft_rt if it deems that
@@ -337,10 +337,10 @@ index 01af05c..d3be3f9 100644
 2.30.1.457.gf011795891
 
 
-From ca837e26cc6dcc955b4e23425e0b86aa29a2c374 Mon Sep 17 00:00:00 2001
+From 80b0fe8436e0edab4c769bba6da465b83b5df5e9 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Fri, 22 Jan 2021 18:19:48 +0000
-Subject: [PATCH 06/23] block, bfq: do not expire a queue when it is the only
+Subject: [PATCH 06/24] block, bfq: do not expire a queue when it is the only
  busy one
 
 This commits preserves I/O-dispatch plugging for a special symmetric
@@ -413,10 +413,10 @@ index d3be3f9..b95d16a 100644
 2.30.1.457.gf011795891
 
 
-From 6c9271dff06b64710c18996771754d7d26794da4 Mon Sep 17 00:00:00 2001
+From e06de1e8f94cc6c9c1ea1a96b3c4b8e03e5ced06 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:43 +0100
-Subject: [PATCH 07/23] block, bfq: replace mechanism for evaluating I/O
+Subject: [PATCH 07/24] block, bfq: replace mechanism for evaluating I/O
  intensity
 
 Some BFQ mechanisms make their decisions on a bfq_queue basing also on
@@ -625,10 +625,10 @@ index 7038952..c913b06 100644
 2.30.1.457.gf011795891
 
 
-From 7b0fe73e9ccc39eb1520fdab77393f54a99721b8 Mon Sep 17 00:00:00 2001
+From c805dc661cc9cc1b81a2bb7e9e45a068a3a52e67 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:44 +0100
-Subject: [PATCH 08/23] block, bfq: re-evaluate convenience of I/O plugging on
+Subject: [PATCH 08/24] block, bfq: re-evaluate convenience of I/O plugging on
  rq arrivals
 
 Upon an I/O-dispatch attempt, BFQ may detect that it was better to
@@ -707,10 +707,10 @@ index aa40684..54dea9a 100644
 2.30.1.457.gf011795891
 
 
-From b6a7cfb7da25efb871021850011103ede1c545e5 Mon Sep 17 00:00:00 2001
+From 437ab8f1f710afe1d49df25f4c5cfe07b2e470a9 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:45 +0100
-Subject: [PATCH 09/23] block, bfq: fix switch back from soft-rt weitgh-raising
+Subject: [PATCH 09/24] block, bfq: fix switch back from soft-rt weitgh-raising
 
 A bfq_queue may happen to be deemed as soft real-time while it is
 still enjoying interactive weight-raising. If this happens because of
@@ -764,10 +764,10 @@ index 54dea9a..47c35c0 100644
 2.30.1.457.gf011795891
 
 
-From f593403a1d8faff6402115a21c7315f11cbdefda Mon Sep 17 00:00:00 2001
+From 98b37f6271df6676551315f57907af52a139caa8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:46 +0100
-Subject: [PATCH 10/23] block, bfq: save also weight-raised service on queue
+Subject: [PATCH 10/24] block, bfq: save also weight-raised service on queue
  merging
 
 To prevent weight-raising information from being lost on bfq_queue merging,
@@ -818,10 +818,10 @@ index c913b06..d15299d 100644
 2.30.1.457.gf011795891
 
 
-From b5c5a2dc7993fc51f7a7062f60430bef1886e3f7 Mon Sep 17 00:00:00 2001
+From fcb1437e16573277f296c18a44f45061c283fb96 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:47 +0100
-Subject: [PATCH 11/23] block, bfq: save also injection state on queue merging
+Subject: [PATCH 11/24] block, bfq: save also injection state on queue merging
 
 To prevent injection information from being lost on bfq_queue merging,
 also the amount of service that a bfq_queue receives must be saved and
@@ -881,10 +881,10 @@ index d15299d..3f350fa 100644
 2.30.1.457.gf011795891
 
 
-From d25cae34edc364c25344c31b4d20f26c9d7d2afd Mon Sep 17 00:00:00 2001
+From be2ba7150d742aa0bd039d29aeda2c3dbd28ec81 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 25 Jan 2021 20:02:48 +0100
-Subject: [PATCH 12/23] block, bfq: make waker-queue detection more robust
+Subject: [PATCH 12/24] block, bfq: make waker-queue detection more robust
 
 In the presence of many parallel I/O flows, the detection of waker
 bfq_queues suffers from false positives. This commits addresses this
@@ -1186,10 +1186,10 @@ index 3f350fa..b8e793c 100644
 2.30.1.457.gf011795891
 
 
-From 94f925c248b4d02379bda7f2acacbe341292fdb9 Mon Sep 17 00:00:00 2001
+From 768d33e14d2ce73d2a8d70038c262ec49ce6814d Mon Sep 17 00:00:00 2001
 From: Jens Axboe <axboe@kernel.dk>
 Date: Mon, 25 Jan 2021 21:15:01 -0700
-Subject: [PATCH 13/23] bfq: bfq_check_waker() should be static
+Subject: [PATCH 13/24] bfq: bfq_check_waker() should be static
 
 It's only used in the same file, mark is appropriately static.
 
@@ -1218,10 +1218,10 @@ index 23bc6ef..55792d3 100644
 2.30.1.457.gf011795891
 
 
-From 242eebabdd7807a7c16d234765a20016425d16b4 Mon Sep 17 00:00:00 2001
+From 81f398efd69b0bed2c56d9c83313fa4b45afc7d0 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:57 +0000
-Subject: [PATCH 14/23] block, bfq: always inject I/O of queues blocked by
+Subject: [PATCH 14/24] block, bfq: always inject I/O of queues blocked by
  wakers
 
 Suppose that I/O dispatch is plugged, to wait for new I/O for the
@@ -1338,10 +1338,10 @@ index 26776bd..02e5993 100644
 2.30.1.457.gf011795891
 
 
-From 7bf982578e592faa05647221c092771247d9e614 Mon Sep 17 00:00:00 2001
+From b928afab871ac5454aae06c5551b64f5aade9610 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:58 +0000
-Subject: [PATCH 15/23] block, bfq: put reqs of waker and woken in dispatch
+Subject: [PATCH 15/24] block, bfq: put reqs of waker and woken in dispatch
  list
 
 Consider a new I/O request that arrives for a bfq_queue bfqq. If, when
@@ -1390,10 +1390,10 @@ index fca18f3..2d785eb 100644
 2.30.1.457.gf011795891
 
 
-From f78fe551044197ce52127c523acd61ac5103ba6c Mon Sep 17 00:00:00 2001
+From cb26ebef3e44e479d10330a5a623e1c7af9b2989 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:50:59 +0000
-Subject: [PATCH 16/23] block, bfq: make shared queues inherit wakers
+Subject: [PATCH 16/24] block, bfq: make shared queues inherit wakers
 
 Consider a bfq_queue bfqq that is about to be merged with another
 bfq_queue new_bfqq. The processes associated with bfqq are cooperators
@@ -1483,10 +1483,10 @@ index 2d785eb..6eb234d 100644
 2.30.1.457.gf011795891
 
 
-From 66d883dce7ebdcb76d1ee45fb902b241e494ae3b Mon Sep 17 00:00:00 2001
+From fa526203ca1e92fd2576de4f54a967cff42d46a1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:00 +0000
-Subject: [PATCH 17/23] block, bfq: fix weight-raising resume with !low_latency
+Subject: [PATCH 17/24] block, bfq: fix weight-raising resume with !low_latency
 
 When the io_latency heuristic is off, bfq_queues must not start to be
 weight-raised. Unfortunately, by mistake, this may happen when the
@@ -1531,10 +1531,10 @@ index 6eb234d..2a6eb91 100644
 2.30.1.457.gf011795891
 
 
-From caf712470a69e485c0f633047cfa612870c6ebe1 Mon Sep 17 00:00:00 2001
+From c0c03ab303e1609cf23f81c82c3dfbca61081bd1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:01 +0000
-Subject: [PATCH 18/23] block, bfq: keep shared queues out of the waker
+Subject: [PATCH 18/24] block, bfq: keep shared queues out of the waker
  mechanism
 
 Shared queues are likely to receive I/O at a high rate. This may
@@ -1577,10 +1577,10 @@ index 2a6eb91..ec443b3 100644
 2.30.1.457.gf011795891
 
 
-From a42e3448e65dc993f9ffb934e58a33ff5ce6ca10 Mon Sep 17 00:00:00 2001
+From cd9e11993028ef755e5f1f741e94e1f62e96b34f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Tue, 26 Jan 2021 10:51:02 +0000
-Subject: [PATCH 19/23] block, bfq: merge bursts of newly-created queues
+Subject: [PATCH 19/24] block, bfq: merge bursts of newly-created queues
 
 Many throughput-sensitive workloads are made of several parallel I/O
 flows, with all flows generated by the same application, or more
@@ -2072,10 +2072,10 @@ index b8e793c..99c2a3c 100644
 2.30.1.457.gf011795891
 
 
-From 0c274bb47d1471270f3a3a7b575e2d5b5b465a8f Mon Sep 17 00:00:00 2001
+From d148bd2d4697d5087cc3c51fc411f8d9e177d2df Mon Sep 17 00:00:00 2001
 From: huhai <huhai () tj ! kylinos ! cn>
 Date: Fri, 25 Dec 2020 13:00:16 +0000
-Subject: [PATCH 20/23] bfq: don't duplicate code for different paths
+Subject: [PATCH 20/24] bfq: don't duplicate code for different paths
 
 As we can see, returns parent_sched_may_change whether
 sd->next_in_service changes or not, so remove this judgment.
@@ -2103,10 +2103,10 @@ index 02e5993..7a462df 100644
 2.30.1.457.gf011795891
 
 
-From 6c5e78c1e3a543850de16d93ee251bd24b5cda9e Mon Sep 17 00:00:00 2001
+From 1f2b7624dde18825159373f58da4a2ce7282cc81 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:25 +0000
-Subject: [PATCH 21/23] bfq: Avoid false bfq queue merging
+Subject: [PATCH 21/24] bfq: Avoid false bfq queue merging
 
 bfq_setup_cooperator() uses bfqd->in_serv_last_pos so detect whether it
 makes sense to merge current bfq queue with the in-service queue.
@@ -2158,10 +2158,10 @@ index ea20d2e..5ea3afe 100644
 2.30.1.457.gf011795891
 
 
-From 452871892ac88f92cc88420ce8685386666a69fa Mon Sep 17 00:00:00 2001
+From e379f4edd4e2fb17056cfc25f04adf2168a5d2ab Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:26 +0000
-Subject: [PATCH 22/23] bfq: Use 'ttime' local variable
+Subject: [PATCH 22/24] bfq: Use 'ttime' local variable
 
 Use local variable 'ttime' instead of dereferencing bfqq.
 
@@ -2188,10 +2188,10 @@ index 5ea3afe..0d8af6a 100644
 2.30.1.457.gf011795891
 
 
-From 6d67516517b8ef25e701f11d932313ea69c1300d Mon Sep 17 00:00:00 2001
+From b8d353b509cd5f978cae78037b03a7bfc73fadc7 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack () suse ! cz>
 Date: Wed, 13 Jan 2021 10:09:27 +0000
-Subject: [PATCH 23/23] bfq: Use only idle IO periods for think time
+Subject: [PATCH 23/24] bfq: Use only idle IO periods for think time
  calculations
 
 Currently whenever bfq queue has a request queued we add now -
@@ -2232,6 +2232,60 @@ index 0d8af6a..e592c0c 100644
  	elapsed = min_t(u64, elapsed, 2ULL * bfqd->bfq_slice_idle);
  
  	ttime->ttime_samples = (7*ttime->ttime_samples + 256) / 8;
+-- 
+2.30.1.457.gf011795891
+
+
+From 6ce3e4d04c6c586273e376d56f9db9c355411498 Mon Sep 17 00:00:00 2001
+From: Joseph Qi <joseph.qi () linux ! alibaba ! com>
+Date: Tue, 23 Feb 2021 01:55:28 +0000
+Subject: [PATCH 24/24] block/bfq: update comments and default value in docs
+ for fifo_expire
+
+Correct the comments since bfq_fifo_expire[0] is for async request,
+while bfq_fifo_expire[1] is for sync request.
+Also update docs, according the source code, the default
+fifo_expire_async is 250ms, and fifo_expire_sync is 125ms.
+
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+---
+ Documentation/block/bfq-iosched.rst | 4 ++--
+ block/bfq-iosched.c                 | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/block/bfq-iosched.rst b/Documentation/block/bfq-iosched.rst
+index 19d4d15..66c5a4e 100644
+--- a/Documentation/block/bfq-iosched.rst
++++ b/Documentation/block/bfq-iosched.rst
+@@ -430,13 +430,13 @@ fifo_expire_async
+ -----------------
+ 
+ This parameter is used to set the timeout of asynchronous requests. Default
+-value of this is 248ms.
++value of this is 250ms.
+ 
+ fifo_expire_sync
+ ----------------
+ 
+ This parameter is used to set the timeout of synchronous requests. Default
+-value of this is 124ms. In case to favor synchronous requests over asynchronous
++value of this is 125ms. In case to favor synchronous requests over asynchronous
+ one, this value should be decreased relative to fifo_expire_async.
+ 
+ low_latency
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index e592c0c..1ab5763 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -160,7 +160,7 @@ BFQ_BFQQ_FNS(split_coop);
+ BFQ_BFQQ_FNS(softrt_update);
+ #undef BFQ_BFQQ_FNS						\
+ 
+-/* Expiration time of sync (0) and async (1) requests, in ns. */
++/* Expiration time of async (0) and sync (1) requests, in ns. */
+ static const u64 bfq_fifo_expire[2] = { NSEC_PER_SEC / 4, NSEC_PER_SEC / 8 };
+ 
+ /* Maximum backwards seek (magic number lifted from CFQ), in KiB. */
 -- 
 2.30.1.457.gf011795891
 

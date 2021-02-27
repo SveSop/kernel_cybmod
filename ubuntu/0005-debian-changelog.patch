@@ -1,6 +1,6 @@
-From 58e77b210cf2f73ae74a10cf697aeef1e5c05f90 Mon Sep 17 00:00:00 2001
+From 374051aaa4a2e9f9088335e96e572fc25a947b14 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 23 Feb 2021 13:33:46 +0000
+Date: Fri, 26 Feb 2021 10:55:15 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 10678 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index c683c3a4c314..0be30cdb8b46 100644
+index c683c3a4c314..a2e8266fd7ea 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,10681 +1,6 @@
 -linux (5.11.0-2.3) hirsute; urgency=medium
-+linux (5.11.1-051101.202102231333) groovy; urgency=low
++linux (5.11.2-051102.202102261055) groovy; urgency=low
  
 -  * DMI entry syntax fix for Pegatron / ByteSpeed C15B (LP: #1910639)
 -    - Input: i8042 - unbreak Pegatron C15B
-+  Mainline build at commit: v5.11.1
++  Mainline build at commit: v5.11.2
  
 -  * SYNA30B4:00 06CB:CE09 Mouse  on HP EliteBook 850 G7 not working at all
 -    (LP: #1908992)
 -    - HID: multitouch: Enable multi-input for Synaptics pointstick/touchpad device
-+ -- Mainline Build <kernel@sita>  Tue, 23 Feb 2021 13:33:45 +0000
++ -- Mainline Build <kernel@sita>  Fri, 26 Feb 2021 10:55:15 +0000
  
 -  * debian/scripts/file-downloader does not handle positive failures correctly
 -    (LP: #1878897)

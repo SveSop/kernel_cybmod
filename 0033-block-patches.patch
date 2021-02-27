@@ -1,8 +1,8 @@
-From 0e3830b447db4e884237a64d0eba4dfb3147a57b Mon Sep 17 00:00:00 2001
+From 68e355589db0c5c5d041d3adc3d3b332aa1f28d2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
-Subject: [PATCH 1/7] block, Kconfig.iosched: set default value of IOSCHED_BFQ
- to yes
+Subject: [PATCH 01/10] block, Kconfig.iosched: set default value of
+ IOSCHED_BFQ to yes
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -10,7 +10,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index 2f2158e..e58b295 100644
+index 2f2158e05..e58b2953a 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -5,13 +5,11 @@ menu "IO Schedulers"
@@ -36,13 +36,13 @@ index 2f2158e..e58b295 100644
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
-2.30.1.457.gf011795891
+2.30.1.489.g328c109303
 
 
-From 6a0e81f6dd5b0c84adb4dfd234e6f8bfc4df6b10 Mon Sep 17 00:00:00 2001
+From 9c32ae9dde00142b2942ed3f3d91e08b7b935f77 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
-Subject: [PATCH 2/7] block: Fix depends for BLK_DEV_ZONED
+Subject: [PATCH 02/10] block: Fix depends for BLK_DEV_ZONED
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -50,7 +50,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index a2297ed..f688ea5 100644
+index a2297edfd..f688ea5f0 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
 @@ -83,7 +83,7 @@ config BLK_DEV_INTEGRITY_T10
@@ -63,13 +63,13 @@ index a2297ed..f688ea5 100644
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC/ZNS host-managed and host-aware zoned block
 -- 
-2.30.1.457.gf011795891
+2.30.1.489.g328c109303
 
 
-From fb39547bb5afa9e118c88e0b0f74de3babdcad31 Mon Sep 17 00:00:00 2001
+From e2442ae8d42328f8e0091a474e17e4b8c477b490 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
-Subject: [PATCH 3/7] block: set rq_affinity = 2 for full multithreading I/O
+Subject: [PATCH 03/10] block: set rq_affinity = 2 for full multithreading I/O
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -77,7 +77,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index f94ee30..7669306 100644
+index f94ee3089..7669306e4 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
 @@ -624,6 +624,7 @@ struct request_queue {
@@ -89,13 +89,13 @@ index f94ee30..7669306 100644
  
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
 -- 
-2.30.1.457.gf011795891
+2.30.1.489.g328c109303
 
 
-From b2a0b544cae9183a703c5da189c72d5809b7d694 Mon Sep 17 00:00:00 2001
+From de426eb4d4d8cbeaf23b3cc54301931fdcfc8e16 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 3 Jul 2020 12:58:15 +0200
-Subject: [PATCH 4/7] block: Add CONFIG to rename the mq-deadline scheduler
+Subject: [PATCH 04/10] block: Add CONFIG to rename the mq-deadline scheduler
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -105,7 +105,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  3 files changed, 17 insertions(+)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index e58b295..9e5a3c5 100644
+index e58b2953a..9e5a3c5c6 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
 @@ -8,6 +8,15 @@ config MQ_IOSCHED_DEADLINE
@@ -125,7 +125,7 @@ index e58b295..9e5a3c5 100644
  	tristate "Kyber I/O scheduler"
  	help
 diff --git a/block/elevator.c b/block/elevator.c
-index 293c5c8..90181ad 100644
+index 293c5c813..90181ad94 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -624,7 +624,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
@@ -141,10 +141,10 @@ index 293c5c8..90181ad 100644
  
  /*
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index b57470e..8303fdd 100644
+index 800ac9028..89b56d452 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -792,8 +792,12 @@ static struct elevator_type mq_deadline = {
+@@ -798,8 +798,12 @@ static struct elevator_type mq_deadline = {
  	.queue_debugfs_attrs = deadline_queue_debugfs_attrs,
  #endif
  	.elevator_attrs = deadline_attrs,
@@ -158,13 +158,13 @@ index b57470e..8303fdd 100644
  	.elevator_owner = THIS_MODULE,
  };
 -- 
-2.30.1.457.gf011795891
+2.30.1.489.g328c109303
 
 
-From 9950552c1f28dce22022bd320648f94bbe982ad7 Mon Sep 17 00:00:00 2001
+From 0e7addaa810aa8ed0ed8f98f4470b2f1be29c127 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 14:27:35 -0600
-Subject: [PATCH 5/7] ZEN: Fix mq-deadline scheduler renaming
+Subject: [PATCH 05/10] ZEN: Fix mq-deadline scheduler renaming
 
 In recent ZEN commit ("ZEN: Add CONFIG to rename the mq-deadline
 scheduler"), we only handled the elevator name if mq-deadline, but not
@@ -175,10 +175,10 @@ mq-deadline-nodefault without errors.
  1 file changed, 5 insertions(+)
 
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 8303fdd..9c58cbe 100644
+index 89b56d452..2206e1734 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -794,6 +794,7 @@ static struct elevator_type mq_deadline = {
+@@ -800,6 +800,7 @@ static struct elevator_type mq_deadline = {
  	.elevator_attrs = deadline_attrs,
  #ifdef CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT
  	.elevator_name = "mq-deadline-nodefault",
@@ -186,7 +186,7 @@ index 8303fdd..9c58cbe 100644
  #else
  	.elevator_name = "mq-deadline",
  	.elevator_alias = "deadline",
-@@ -801,7 +802,11 @@ static struct elevator_type mq_deadline = {
+@@ -807,7 +808,11 @@ static struct elevator_type mq_deadline = {
  	.elevator_features = ELEVATOR_F_ZBD_SEQ_WRITE,
  	.elevator_owner = THIS_MODULE,
  };
@@ -199,14 +199,14 @@ index 8303fdd..9c58cbe 100644
  static int __init deadline_init(void)
  {
 -- 
-2.30.1.457.gf011795891
+2.30.1.489.g328c109303
 
 
-From bd3b9989eb2fb2a0512d429153de4b2887a764e3 Mon Sep 17 00:00:00 2001
+From 14bf864795d4469c8667100d8538e0dfa19aed23 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Mon, 11 Jan 2021 17:47:17 +0100
-Subject: [PATCH 6/7] blk-mq: Improve performance of non-mq IO schedulers with
- multiple HW queues
+Subject: [PATCH 06/10] blk-mq: Improve performance of non-mq IO schedulers
+ with multiple HW queues
 
 Currently when non-mq aware IO scheduler (BFQ, mq-deadline) is used for
 a queue with multiple HW queues, the performance it rather bad. The
@@ -250,7 +250,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  3 files changed, 63 insertions(+), 6 deletions(-)
 
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 57f3482..5806017 100644
+index f285a9123..782a064ba 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
 @@ -1646,6 +1646,42 @@ void blk_mq_run_hw_queue(struct blk_mq_hw_ctx *hctx, bool async)
@@ -351,7 +351,7 @@ index 57f3482..5806017 100644
  }
  EXPORT_SYMBOL(blk_mq_delay_run_hw_queues);
 diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
-index dc89199..c25c41d 100644
+index dc89199bc..c25c41d0d 100644
 --- a/block/kyber-iosched.c
 +++ b/block/kyber-iosched.c
 @@ -1029,6 +1029,7 @@ static struct elevator_type kyber_sched = {
@@ -363,7 +363,7 @@ index dc89199..c25c41d 100644
  };
  
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index bacc40a..1fe8e10 100644
+index bacc40a0b..1fe8e105b 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -172,6 +172,8 @@ extern struct request *elv_rb_find(struct rb_root *, sector_t);
@@ -376,13 +376,13 @@ index bacc40a..1fe8e10 100644
  #endif /* CONFIG_BLOCK */
  #endif
 -- 
-2.30.1.457.gf011795891
+2.30.1.489.g328c109303
 
 
-From 7fe200c2ae34e8dd5586164fb03dd553447131a0 Mon Sep 17 00:00:00 2001
+From 5a097beed3648079f29bcbd35d39befba4f0440a Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 17:39:54 -0600
-Subject: [PATCH 7/7] ZEN: Increase max elevator name size
+Subject: [PATCH 07/10] ZEN: Increase max elevator name size
 
 After renaming mq-deadline to mq-deadline-nodefault, setting the new
 scheduler name would always fail.  Part of that reason was the module
@@ -396,7 +396,7 @@ Increase to 24 so we can support our longer IO scheduler names.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index 1fe8e10..e7726cf 100644
+index 1fe8e105b..e7726cf62 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -52,7 +52,7 @@ struct elevator_mq_ops {
@@ -409,5 +409,291 @@ index 1fe8e10..e7726cf 100644
  struct elv_fs_entry {
  	struct attribute attr;
 -- 
-2.30.1.457.gf011795891
+2.30.1.489.g328c109303
+
+
+From 765525c43334da2bbf2a39767c0712735f31d84d Mon Sep 17 00:00:00 2001
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Date: Sat, 23 Jan 2021 21:10:26 +0100
+Subject: [PATCH 08/10] blk-mq: Always complete remote completions requests in
+ softirq
+
+Controllers with multiple queues have their IRQ-handelers pinned to a
+CPU. The core shouldn't need to complete the request on a remote CPU.
+
+Remove this case and always raise the softirq to complete the request.
+
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+---
+ block/blk-mq.c | 14 +-------------
+ 1 file changed, 1 insertion(+), 13 deletions(-)
+
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 782a064ba..05ff6d6db 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -628,19 +628,7 @@ static void __blk_mq_complete_request_remote(void *data)
+ {
+ 	struct request *rq = data;
+ 
+-	/*
+-	 * For most of single queue controllers, there is only one irq vector
+-	 * for handling I/O completion, and the only irq's affinity is set
+-	 * to all possible CPUs.  On most of ARCHs, this affinity means the irq
+-	 * is handled on one specific CPU.
+-	 *
+-	 * So complete I/O requests in softirq context in case of single queue
+-	 * devices to avoid degrading I/O performance due to irqsoff latency.
+-	 */
+-	if (rq->q->nr_hw_queues == 1)
+-		blk_mq_trigger_softirq(rq);
+-	else
+-		rq->q->mq_ops->complete(rq);
++	blk_mq_trigger_softirq(rq);
+ }
+ 
+ static inline bool blk_mq_complete_need_ipi(struct request *rq)
+-- 
+2.30.1.489.g328c109303
+
+
+From 898278fee35c57f93ca68aef7745783b2dde5d70 Mon Sep 17 00:00:00 2001
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Date: Sat, 23 Jan 2021 21:10:27 +0100
+Subject: [PATCH 09/10] blk-mq: Use llist_head for blk_cpu_done
+
+With llist_head it is possible to avoid the locking (the irq-off region)
+when items are added. This makes it possible to add items on a remote
+CPU without additional locking.
+llist_add() returns true if the list was previously empty. This can be
+used to invoke the SMP function call / raise sofirq only if the first
+item was added (otherwise it is already pending).
+This simplifies the code a little and reduces the IRQ-off regions.
+
+blk_mq_raise_softirq() needs a preempt-disable section to ensure the
+request is enqueued on the same CPU as the softirq is raised.
+Some callers (USB-storage) invoke this path in preemptible context.
+
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+---
+ block/blk-mq.c         | 97 ++++++++++++++++++------------------------
+ include/linux/blkdev.h |  2 +-
+ 2 files changed, 42 insertions(+), 57 deletions(-)
+
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 05ff6d6db..4127f9820 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -41,7 +41,7 @@
+ #include "blk-mq-sched.h"
+ #include "blk-rq-qos.h"
+ 
+-static DEFINE_PER_CPU(struct list_head, blk_cpu_done);
++static DEFINE_PER_CPU(struct llist_head, blk_cpu_done);
+ 
+ static void blk_mq_poll_stats_start(struct request_queue *q);
+ static void blk_mq_poll_stats_fn(struct blk_stat_callback *cb);
+@@ -567,68 +567,29 @@ void blk_mq_end_request(struct request *rq, blk_status_t error)
+ }
+ EXPORT_SYMBOL(blk_mq_end_request);
+ 
+-/*
+- * Softirq action handler - move entries to local list and loop over them
+- * while passing them to the queue registered handler.
+- */
+-static __latent_entropy void blk_done_softirq(struct softirq_action *h)
++static void blk_complete_reqs(struct llist_head *list)
+ {
+-	struct list_head *cpu_list, local_list;
+-
+-	local_irq_disable();
+-	cpu_list = this_cpu_ptr(&blk_cpu_done);
+-	list_replace_init(cpu_list, &local_list);
+-	local_irq_enable();
+-
+-	while (!list_empty(&local_list)) {
+-		struct request *rq;
++	struct llist_node *entry = llist_reverse_order(llist_del_all(list));
++	struct request *rq, *next;
+ 
+-		rq = list_entry(local_list.next, struct request, ipi_list);
+-		list_del_init(&rq->ipi_list);
++	llist_for_each_entry_safe(rq, next, entry, ipi_list)
+ 		rq->q->mq_ops->complete(rq);
+-	}
+ }
+ 
+-static void blk_mq_trigger_softirq(struct request *rq)
++static __latent_entropy void blk_done_softirq(struct softirq_action *h)
+ {
+-	struct list_head *list;
+-	unsigned long flags;
+-
+-	local_irq_save(flags);
+-	list = this_cpu_ptr(&blk_cpu_done);
+-	list_add_tail(&rq->ipi_list, list);
+-
+-	/*
+-	 * If the list only contains our just added request, signal a raise of
+-	 * the softirq.  If there are already entries there, someone already
+-	 * raised the irq but it hasn't run yet.
+-	 */
+-	if (list->next == &rq->ipi_list)
+-		raise_softirq_irqoff(BLOCK_SOFTIRQ);
+-	local_irq_restore(flags);
++	blk_complete_reqs(this_cpu_ptr(&blk_cpu_done));
+ }
+ 
+ static int blk_softirq_cpu_dead(unsigned int cpu)
+ {
+-	/*
+-	 * If a CPU goes away, splice its entries to the current CPU
+-	 * and trigger a run of the softirq
+-	 */
+-	local_irq_disable();
+-	list_splice_init(&per_cpu(blk_cpu_done, cpu),
+-			 this_cpu_ptr(&blk_cpu_done));
+-	raise_softirq_irqoff(BLOCK_SOFTIRQ);
+-	local_irq_enable();
+-
++	blk_complete_reqs(&per_cpu(blk_cpu_done, cpu));
+ 	return 0;
+ }
+ 
+-
+ static void __blk_mq_complete_request_remote(void *data)
+ {
+-	struct request *rq = data;
+-
+-	blk_mq_trigger_softirq(rq);
++	__raise_softirq_irqoff(BLOCK_SOFTIRQ);
+ }
+ 
+ static inline bool blk_mq_complete_need_ipi(struct request *rq)
+@@ -657,6 +618,30 @@ static inline bool blk_mq_complete_need_ipi(struct request *rq)
+ 	return cpu_online(rq->mq_ctx->cpu);
+ }
+ 
++static void blk_mq_complete_send_ipi(struct request *rq)
++{
++	struct llist_head *list;
++	unsigned int cpu;
++
++	cpu = rq->mq_ctx->cpu;
++	list = &per_cpu(blk_cpu_done, cpu);
++	if (llist_add(&rq->ipi_list, list)) {
++		INIT_CSD(&rq->csd, __blk_mq_complete_request_remote, rq);
++		smp_call_function_single_async(cpu, &rq->csd);
++	}
++}
++
++static void blk_mq_raise_softirq(struct request *rq)
++{
++	struct llist_head *list;
++
++	preempt_disable();
++	list = this_cpu_ptr(&blk_cpu_done);
++	if (llist_add(&rq->ipi_list, list))
++		raise_softirq(BLOCK_SOFTIRQ);
++	preempt_enable();
++}
++
+ bool blk_mq_complete_request_remote(struct request *rq)
+ {
+ 	WRITE_ONCE(rq->state, MQ_RQ_COMPLETE);
+@@ -669,15 +654,15 @@ bool blk_mq_complete_request_remote(struct request *rq)
+ 		return false;
+ 
+ 	if (blk_mq_complete_need_ipi(rq)) {
+-		INIT_CSD(&rq->csd, __blk_mq_complete_request_remote, rq);
+-		smp_call_function_single_async(rq->mq_ctx->cpu, &rq->csd);
+-	} else {
+-		if (rq->q->nr_hw_queues > 1)
+-			return false;
+-		blk_mq_trigger_softirq(rq);
++		blk_mq_complete_send_ipi(rq);
++		return true;
+ 	}
+ 
+-	return true;
++	if (rq->q->nr_hw_queues == 1) {
++		blk_mq_raise_softirq(rq);
++		return true;
++	}
++	return false;
+ }
+ EXPORT_SYMBOL_GPL(blk_mq_complete_request_remote);
+ 
+@@ -3946,7 +3931,7 @@ static int __init blk_mq_init(void)
+ 	int i;
+ 
+ 	for_each_possible_cpu(i)
+-		INIT_LIST_HEAD(&per_cpu(blk_cpu_done, i));
++		init_llist_head(&per_cpu(blk_cpu_done, i));
+ 	open_softirq(BLOCK_SOFTIRQ, blk_done_softirq);
+ 
+ 	cpuhp_setup_state_nocalls(CPUHP_BLOCK_SOFTIRQ_DEAD,
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 7669306e4..af2666fee 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -153,7 +153,7 @@ struct request {
+ 	 */
+ 	union {
+ 		struct hlist_node hash;	/* merge hash */
+-		struct list_head ipi_list;
++		struct llist_node ipi_list;
+ 	};
+ 
+ 	/*
+-- 
+2.30.1.489.g328c109303
+
+
+From d10573d38d6dfe692c568a0d14b72882130299e9 Mon Sep 17 00:00:00 2001
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Date: Sat, 23 Jan 2021 21:10:25 +0100
+Subject: [PATCH 10/10] smp: Process pending softirqs in
+ flush_smp_call_function_from_idle()
+
+send_call_function_single_ipi() may wake an idle CPU without sending an
+IPI. The woken up CPU will process the SMP-functions in
+flush_smp_call_function_from_idle(). Any raised softirq from within the
+SMP-function call will not be processed.
+Should the CPU have no tasks assigned, then it will go back to idle with
+pending softirqs and the NOHZ will rightfully complain.
+
+Process pending softirqs on return from flush_smp_call_function_queue().
+
+Fixes: b2a02fc43a1f4 ("smp: Optimize send_call_function_single_ipi()")
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+---
+ kernel/smp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/kernel/smp.c b/kernel/smp.c
+index 1b6070bf9..aeb0adfa0 100644
+--- a/kernel/smp.c
++++ b/kernel/smp.c
+@@ -14,6 +14,7 @@
+ #include <linux/export.h>
+ #include <linux/percpu.h>
+ #include <linux/init.h>
++#include <linux/interrupt.h>
+ #include <linux/gfp.h>
+ #include <linux/smp.h>
+ #include <linux/cpu.h>
+@@ -449,6 +450,9 @@ void flush_smp_call_function_from_idle(void)
+ 
+ 	local_irq_save(flags);
+ 	flush_smp_call_function_queue(true);
++	if (local_softirq_pending())
++		do_softirq();
++
+ 	local_irq_restore(flags);
+ }
+ 
+-- 
+2.30.1.489.g328c109303
 
