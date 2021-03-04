@@ -1,8 +1,8 @@
-From 68e355589db0c5c5d041d3adc3d3b332aa1f28d2 Mon Sep 17 00:00:00 2001
+From c32591664ec0b99fa1a82ed0ebde9127646e1dfe Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
-Subject: [PATCH 01/10] block, Kconfig.iosched: set default value of
- IOSCHED_BFQ to yes
+Subject: [PATCH 1/9] block, Kconfig.iosched: set default value of IOSCHED_BFQ
+ to yes
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -39,10 +39,10 @@ index 2f2158e05..e58b2953a 100644
 2.30.1.489.g328c109303
 
 
-From 9c32ae9dde00142b2942ed3f3d91e08b7b935f77 Mon Sep 17 00:00:00 2001
+From 59699a1e8aaf04b8e376fc48271d25b8630154b6 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
-Subject: [PATCH 02/10] block: Fix depends for BLK_DEV_ZONED
+Subject: [PATCH 2/9] block: Fix depends for BLK_DEV_ZONED
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -66,10 +66,10 @@ index a2297edfd..f688ea5f0 100644
 2.30.1.489.g328c109303
 
 
-From e2442ae8d42328f8e0091a474e17e4b8c477b490 Mon Sep 17 00:00:00 2001
+From f28595d3ce61302b7c51a98c47c9f8a1eb242a96 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
-Subject: [PATCH 03/10] block: set rq_affinity = 2 for full multithreading I/O
+Subject: [PATCH 3/9] block: set rq_affinity = 2 for full multithreading I/O
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -92,10 +92,10 @@ index f94ee3089..7669306e4 100644
 2.30.1.489.g328c109303
 
 
-From de426eb4d4d8cbeaf23b3cc54301931fdcfc8e16 Mon Sep 17 00:00:00 2001
+From 672aa172ae0f552997f4423af76ddf85d97faa2c Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 3 Jul 2020 12:58:15 +0200
-Subject: [PATCH 04/10] block: Add CONFIG to rename the mq-deadline scheduler
+Subject: [PATCH 4/9] block: Add CONFIG to rename the mq-deadline scheduler
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -161,10 +161,10 @@ index 800ac9028..89b56d452 100644
 2.30.1.489.g328c109303
 
 
-From 0e7addaa810aa8ed0ed8f98f4470b2f1be29c127 Mon Sep 17 00:00:00 2001
+From 0df4396d46697974f9f51f1451c5aa8a8b464e80 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 14:27:35 -0600
-Subject: [PATCH 05/10] ZEN: Fix mq-deadline scheduler renaming
+Subject: [PATCH 5/9] ZEN: Fix mq-deadline scheduler renaming
 
 In recent ZEN commit ("ZEN: Add CONFIG to rename the mq-deadline
 scheduler"), we only handled the elevator name if mq-deadline, but not
@@ -202,11 +202,11 @@ index 89b56d452..2206e1734 100644
 2.30.1.489.g328c109303
 
 
-From 14bf864795d4469c8667100d8538e0dfa19aed23 Mon Sep 17 00:00:00 2001
+From 6e183907e56fec22053e2b6efa73af04219d37de Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Mon, 11 Jan 2021 17:47:17 +0100
-Subject: [PATCH 06/10] blk-mq: Improve performance of non-mq IO schedulers
- with multiple HW queues
+Subject: [PATCH 6/9] blk-mq: Improve performance of non-mq IO schedulers with
+ multiple HW queues
 
 Currently when non-mq aware IO scheduler (BFQ, mq-deadline) is used for
 a queue with multiple HW queues, the performance it rather bad. The
@@ -379,10 +379,10 @@ index bacc40a0b..1fe8e105b 100644
 2.30.1.489.g328c109303
 
 
-From 5a097beed3648079f29bcbd35d39befba4f0440a Mon Sep 17 00:00:00 2001
+From 6bd01cb992c10ab0f93c5b1347f792e9e4318fbe Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 17:39:54 -0600
-Subject: [PATCH 07/10] ZEN: Increase max elevator name size
+Subject: [PATCH 7/9] ZEN: Increase max elevator name size
 
 After renaming mq-deadline to mq-deadline-nodefault, setting the new
 scheduler name would always fail.  Part of that reason was the module
@@ -412,10 +412,10 @@ index 1fe8e105b..e7726cf62 100644
 2.30.1.489.g328c109303
 
 
-From 765525c43334da2bbf2a39767c0712735f31d84d Mon Sep 17 00:00:00 2001
+From f5e54a75d945068af2c2bc69020bf1b369fcb8da Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Sat, 23 Jan 2021 21:10:26 +0100
-Subject: [PATCH 08/10] blk-mq: Always complete remote completions requests in
+Subject: [PATCH 8/9] blk-mq: Always complete remote completions requests in
  softirq
 
 Controllers with multiple queues have their IRQ-handelers pinned to a
@@ -457,10 +457,10 @@ index 782a064ba..05ff6d6db 100644
 2.30.1.489.g328c109303
 
 
-From 898278fee35c57f93ca68aef7745783b2dde5d70 Mon Sep 17 00:00:00 2001
+From fc5144996e77baf8521b4032addbdb125833fceb Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Sat, 23 Jan 2021 21:10:27 +0100
-Subject: [PATCH 09/10] blk-mq: Use llist_head for blk_cpu_done
+Subject: [PATCH 9/9] blk-mq: Use llist_head for blk_cpu_done
 
 With llist_head it is possible to avoid the locking (the irq-off region)
 when items are added. This makes it possible to add items on a remote
@@ -646,54 +646,6 @@ index 7669306e4..af2666fee 100644
  	};
  
  	/*
--- 
-2.30.1.489.g328c109303
-
-
-From d10573d38d6dfe692c568a0d14b72882130299e9 Mon Sep 17 00:00:00 2001
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Date: Sat, 23 Jan 2021 21:10:25 +0100
-Subject: [PATCH 10/10] smp: Process pending softirqs in
- flush_smp_call_function_from_idle()
-
-send_call_function_single_ipi() may wake an idle CPU without sending an
-IPI. The woken up CPU will process the SMP-functions in
-flush_smp_call_function_from_idle(). Any raised softirq from within the
-SMP-function call will not be processed.
-Should the CPU have no tasks assigned, then it will go back to idle with
-pending softirqs and the NOHZ will rightfully complain.
-
-Process pending softirqs on return from flush_smp_call_function_queue().
-
-Fixes: b2a02fc43a1f4 ("smp: Optimize send_call_function_single_ipi()")
-Reported-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
----
- kernel/smp.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/kernel/smp.c b/kernel/smp.c
-index 1b6070bf9..aeb0adfa0 100644
---- a/kernel/smp.c
-+++ b/kernel/smp.c
-@@ -14,6 +14,7 @@
- #include <linux/export.h>
- #include <linux/percpu.h>
- #include <linux/init.h>
-+#include <linux/interrupt.h>
- #include <linux/gfp.h>
- #include <linux/smp.h>
- #include <linux/cpu.h>
-@@ -449,6 +450,9 @@ void flush_smp_call_function_from_idle(void)
- 
- 	local_irq_save(flags);
- 	flush_smp_call_function_queue(true);
-+	if (local_softirq_pending())
-+		do_softirq();
-+
- 	local_irq_restore(flags);
- }
- 
 -- 
 2.30.1.489.g328c109303
 

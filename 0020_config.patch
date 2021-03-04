@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10938 @@
+@@ -0,0 +1,10940 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.11.2-cybmod4 Kernel Configuration
++# Linux/x86 5.11.3-cybmod5 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
@@ -166,6 +166,7 @@ new file mode 100644
 +# end of Scheduler features
 +
 +CONFIG_CACULE_SCHED=y
++# CONFIG_CACULE_RDB is not set
 +CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
 +CONFIG_ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH=y
 +CONFIG_CC_HAS_INT128=y
@@ -265,6 +266,7 @@ new file mode 100644
 +# CONFIG_BPF_PRELOAD is not set
 +CONFIG_USERFAULTFD=y
 +CONFIG_ARCH_HAS_MEMBARRIER_SYNC_CORE=y
++CONFIG_KCMP=y
 +CONFIG_RSEQ=y
 +# CONFIG_DEBUG_RSEQ is not set
 +# CONFIG_EMBEDDED is not set
