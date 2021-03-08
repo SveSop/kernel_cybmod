@@ -418,8 +418,8 @@ diff --git a/include/uapi/linux/futex.h b/include/uapi/linux/futex.h
 index a89eb0accd5e..9fbdaaf4f254 100644
 --- a/include/uapi/linux/futex.h
 +++ b/include/uapi/linux/futex.h
-@@ -41,6 +41,62 @@
- #define FUTEX_CMP_REQUEUE_PI_PRIVATE	(FUTEX_CMP_REQUEUE_PI | \
+@@ -44,6 +44,62 @@
+ #define FUTEX_WAIT_MULTIPLE_PRIVATE	(FUTEX_WAIT_MULTIPLE | \
  					 FUTEX_PRIVATE_FLAG)
  
 +/* Size argument to futex2 syscall */
@@ -485,7 +485,7 @@ diff --git a/init/Kconfig b/init/Kconfig
 index 29ad68325028..c3e62e1b11cc 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -1531,6 +1531,13 @@ config FUTEX
+@@ -1566,6 +1566,13 @@ config FUTEX
  	  support for "fast userspace mutexes".  The resulting kernel may not
  	  run glibc-based applications correctly.
  

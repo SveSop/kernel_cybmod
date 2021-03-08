@@ -1,6 +1,6 @@
-From 482b6b8f5a65ba4c3dcc5bb36bb49c893ca68a20 Mon Sep 17 00:00:00 2001
+From 9d39dba6788f41cc7517389e57653a565a60e4f8 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 4 Mar 2021 12:31:57 +0000
+Date: Sun, 7 Mar 2021 12:31:38 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 10873 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index f733c128b1da..b6a790675368 100644
+index f733c128b1da..499981b8890c 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,10876 +1,6 @@
 -linux-unstable (5.11.0-10.11) hirsute; urgency=medium
-+linux (5.11.3-051103.202103041231) groovy; urgency=low
++linux (5.11.4-051104.202103071231) groovy; urgency=low
  
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update variants
-+  Mainline build at commit: v5.11.3
++  Mainline build at commit: v5.11.4
  
 -  * Support CML-S CPU + TGP PCH (LP: #1909457)
 -    - drm/i915/rkl: new rkl ddc map for different PCH
 -    - SAUCE: drm/i915/gen9_bc : Add TGP PCH support
-+ -- Mainline Build <kernel@sita>  Thu, 04 Mar 2021 12:31:56 +0000
++ -- Mainline Build <kernel@sita>  Sun, 07 Mar 2021 12:31:38 +0000
  
 -  * Use DCPD to control HP DreamColor panel (LP: #1911001)
 -    - SAUCE: drm/dp: Another HP DreamColor panel brigntness fix
