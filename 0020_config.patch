@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,10940 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.11.4-cybmod6 Kernel Configuration
++# Linux/x86 5.11.5-cybmod7 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
@@ -392,8 +392,8 @@ new file mode 100644
 +# CONFIG_MZEN2 is not set
 +# CONFIG_MZEN3 is not set
 +# CONFIG_MPSC is not set
-+# CONFIG_MATOM is not set
 +# CONFIG_MCORE2 is not set
++# CONFIG_MATOM is not set
 +# CONFIG_MNEHALEM is not set
 +# CONFIG_MWESTMERE is not set
 +# CONFIG_MSILVERMONT is not set
