@@ -1,29 +1,79 @@
-From 5c9b47ab1b1a5db7ffc101ec9f4d37f544d45671 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 9 Mar 2021 11:30:59 +0000
+From efb15e2fd1e2a386aa137c88b01ab946645393a3 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 11 Mar 2021 14:35:18 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 10876 +-------------------------------------
- 1 file changed, 3 insertions(+), 10873 deletions(-)
+ debian.master/changelog | 10926 +-------------------------------------
+ 1 file changed, 3 insertions(+), 10923 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index f733c128b1da..11e1910f1cd3 100644
+index 050beab833ba..ad9cf361af92 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,10876 +1,6 @@
--linux-unstable (5.11.0-10.11) hirsute; urgency=medium
-+linux (5.11.5-051105.202103091130) groovy; urgency=low
+@@ -1,10926 +1,6 @@
+-linux-unstable (5.12.0-2.2) hirsute; urgency=medium
++linux (5.11.6-051106.202103111435) groovy; urgency=low
  
+-  * Miscellaneous Ubuntu changes
+-    - Rebase to v5.12-rc2
+-    - [Config] updateconfigs following v5.12-rc2 rebase
++  Mainline build at commit: v5.11.6
+ 
+-  [ Upstream Kernel Changes ]
++ -- Mainline Build <kernel@kathleen>  Thu, 11 Mar 2021 14:35:18 +0000
+ 
+-  * Rebase to v5.12-rc2
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 08 Mar 2021 11:22:04 +0100
+-
+-linux-unstable (5.12.0-1.1) hirsute; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * Support no udeb profile (LP: #1916095)
+-    - [Packaging] replace custom filter script with dctrl-tools
+-    - [Packaging] correctly implement noudeb build profiles.
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] dkms-versions -- remove nvidia-graphics-drivers-440-server
+-    - [Debian] run ubuntu-regression-suite for linux-unstable
+-    - [Packaging] remove Provides: aufs-dkms
+-    - [Config] update config and annotations following v5.12-rc1 rebase
+-    - [Config] disable nvidia and nvidia_server builds
+-    - [Config] temporarily disable ZFS
+-    - temporarily disable modules check
+-    - annotations: s390: temporarily remove CONFIG_KMSG_IDS
+-    - [Config] amd64: FTBFS: disable HIO
+-    - [Config] FTBFS: disable SHIFT_FS
+-    - [Config] s390: temporarily remove CONFIG_KMSG_IDS
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Config] disable nvidia and nvidia_server builds"
+-    - Revert "UBUNTU: SAUCE: s390: kernel message catalog"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.12-rc1
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Thu, 04 Mar 2021 18:26:12 +0100
+-
+-linux-unstable (5.12.0-0.0) hirsute; urgency=medium
+-
+-  * Empty entry
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Thu, 04 Mar 2021 18:17:32 +0100
+-
+-linux-unstable (5.11.0-10.11) hirsute; urgency=medium
+-
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update variants
-+  Mainline build at commit: v5.11.5
- 
+-
 -  * Support CML-S CPU + TGP PCH (LP: #1909457)
 -    - drm/i915/rkl: new rkl ddc map for different PCH
 -    - SAUCE: drm/i915/gen9_bc : Add TGP PCH support
-+ -- Mainline Build <kernel@sita>  Tue, 09 Mar 2021 11:30:59 +0000
- 
+-
 -  * Use DCPD to control HP DreamColor panel (LP: #1911001)
 -    - SAUCE: drm/dp: Another HP DreamColor panel brigntness fix
 -
