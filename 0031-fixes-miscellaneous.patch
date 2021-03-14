@@ -1,7 +1,7 @@
-From 50a4af1aef6bfbb45db3ac58f348426dafc2f976 Mon Sep 17 00:00:00 2001
+From e871534c2186673184e866bd684277d50ffa9013 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/36] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/33] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index 1e8ab4749..75122fd65 100644
  endif
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 1383400a6adc5d301fb23af78b9c4426a965a0d0 Mon Sep 17 00:00:00 2001
+From a63a7d25a0937829e6e33fc7c19009ffc3f3a923 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/36] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/33] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 0abce004a..b6eeb2fab 100644
  	int ret;
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 5cbb97389eb5b44c98751bcdfcda93651aad0e3a Mon Sep 17 00:00:00 2001
+From 37c8e8ca903d27b673fb081dd8d684732a580e8b Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/36] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/33] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 617be9fd5..fa6d4ae4b 100644
+index 472136a78..f19a384d8 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -674,6 +674,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index 617be9fd5..fa6d4ae4b 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 0381a068a7045e7a16ea16570bad0c67f30cab83 Mon Sep 17 00:00:00 2001
+From 568fb549ec17888a53b88de92417fe2796d4921c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/36] mm: Disable watermark boosting by default
+Subject: [PATCH 04/33] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -152,13 +152,13 @@ index 519a60d5b..c846052bc 100644
  
  static unsigned long nr_kernel_pages __initdata;
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 6f0c2f5df57aaca464739b8f4925e7334b0de604 Mon Sep 17 00:00:00 2001
+From 9df2d685582074f14a67c019695194e0e5a988a8 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/36] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/33] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -252,13 +252,13 @@ index ad9f2adaf..907fc13c7 100644
  
  		/*
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From bf6022bcef17b4a6ca04283c4d20123c33436ac5 Mon Sep 17 00:00:00 2001
+From 949c632f656b7fcd5691b4b5439af9407a3a56fb Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/36] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/33] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -288,13 +288,13 @@ index d2f45e2c6..1d01b5244 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From d3239f4576d9a749dba80f06b1b6213df3da9a11 Mon Sep 17 00:00:00 2001
+From 72df8cf287340ea5b615ae05d0b4b6f1cfbb3b41 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/36] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 07/33] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -395,13 +395,13 @@ index 907fc13c7..d2ebe8fc5 100644
  
  		/*
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From a26c5f38ea85927e309d057c16993d66667e1620 Mon Sep 17 00:00:00 2001
+From 909b312297f9597984cefa61775d052dcf51fb23 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/36] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 08/33] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -414,7 +414,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index fa6d4ae4b..e8b1ae5ba 100644
+index f19a384d8..4145497cb 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -938,9 +938,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -428,13 +428,13 @@ index fa6d4ae4b..e8b1ae5ba 100644
  KBUILD_CFLAGS   += -Werror=date-time
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From c954ce4cb4517864dc48d7b4f700bacad512f8dd Mon Sep 17 00:00:00 2001
+From e0890b4f0b4c069392662e7d629e23f27a229427 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/36] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/33] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -626,13 +626,13 @@ index 653660e3b..af8534a51 100644
  };
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From f251b811fd2d9ddddf43a370dfad648805d8b897 Mon Sep 17 00:00:00 2001
+From 4ada5d9c668387650c79cc32a7251c8eb50cebc9 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 10/36] ZEN: Add OpenRGB patches
+Subject: [PATCH 10/33] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1375,13 +1375,13 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From a27e047833fabf02dfb6a90e89dc5e777c1386ca Mon Sep 17 00:00:00 2001
+From edae9f0e8f07eaa7a11c7f48a89723dbbe7db6c4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 25 Sep 2020 13:22:05 +0200
-Subject: [PATCH 11/36] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 11/33] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1445,13 +1445,13 @@ index e9d39c485..3bceead8d 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From b939b746b1f621d8c7b7140df89f5473ae084127 Mon Sep 17 00:00:00 2001
+From 03702d919968495c203a734570e45215cc7f499a Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 12/36] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 12/33] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -1579,13 +1579,13 @@ index b59136c41..4154030c8 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From f195f07007188102256a73c395479b712f2a85a7 Mon Sep 17 00:00:00 2001
+From 2b9cea3b5f152b77aff115505f98da1ead522bba Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 13/36] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 13/33] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -1703,13 +1703,13 @@ index 16a1e82e3..93460d808 100644
  redirty:
  	redirty_page_for_writepage(wbc, page);
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From daded6c54d7baa7f6b01a42cbec0cd8211bd0b1a Mon Sep 17 00:00:00 2001
+From 3293ad00b64f2260c3adaf49003f606c94878c40 Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Tue, 22 Dec 2020 09:21:28 +0800
-Subject: [PATCH 14/36] mm: Add become_kswapd and restore_kswapd
+Subject: [PATCH 14/33] mm: Add become_kswapd and restore_kswapd
 
 Since XFS needs to pretend to be kswapd in some of its worker threads,
 create methods to save & restore kswapd state.  Don't bother restoring
@@ -1834,13 +1834,13 @@ index d2ebe8fc5..aedd86e3e 100644
  }
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 3845e8897e9546317662a9680a619c81af0a7a98 Mon Sep 17 00:00:00 2001
+From 5e118a33a1287ff218cf676a37ef470a26ddb1db Mon Sep 17 00:00:00 2001
 From: "Darrick J. Wong" <djwong@kernel.org>
 Date: Mon, 11 Jan 2021 14:50:53 -0800
-Subject: [PATCH 15/36] xfs: fix an ABBA deadlock in xfs_rename
+Subject: [PATCH 15/33] xfs: fix an ABBA deadlock in xfs_rename
 
 When overlayfs is running on top of xfs and the user unlinks a file in
 the overlay, overlayfs will create a whiteout inode and ask xfs to
@@ -1960,13 +1960,13 @@ index b7352bc4c..e5dc41b10 100644
  					src_ip->i_ino, spaceres);
  		if (error)
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From a91e111426e9d4d3be275d262598cc0770613899 Mon Sep 17 00:00:00 2001
+From 183c6a38a188959f9045ec907ea4c41eeb219b1a Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:22 +0800
-Subject: [PATCH 16/36] xfs: use memalloc_nofs_{save,restore} in xfs
+Subject: [PATCH 16/33] xfs: use memalloc_nofs_{save,restore} in xfs
  transaction
 
 Introduce a new API to mark the start and end of XFS transactions.
@@ -2109,13 +2109,13 @@ index 084658946..44b11c64a 100644
 +
  #endif	/* __XFS_TRANS_H__ */
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 133b25a3b3acbe84728bf634903de6dea5bb74af Mon Sep 17 00:00:00 2001
+From 148a00b2e78b1dfef8752c864f9b145468ad3ef6 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:23 +0800
-Subject: [PATCH 17/36] xfs: refactor the usage around
+Subject: [PATCH 17/33] xfs: refactor the usage around
  xfs_trans_context_{set,clear}
 
 The xfs_trans context should be active after it is allocated, and
@@ -2266,13 +2266,13 @@ index 44b11c64a..3645fd0d7 100644
  
  #endif	/* __XFS_TRANS_H__ */
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 518e80e0290678cf46dae459a29dfa271d8903b4 Mon Sep 17 00:00:00 2001
+From 764ac7b9be9f05afc21249afa44be40144544795 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:24 +0800
-Subject: [PATCH 18/36] xfs: use current->journal_info to avoid transaction
+Subject: [PATCH 18/33] xfs: use current->journal_info to avoid transaction
  reservation recursion
 
 PF_FSTRANS which is used to avoid transaction reservation recursion, is
@@ -2399,13 +2399,13 @@ index 3645fd0d7..e2f3251d6 100644
  
  #endif	/* __XFS_TRANS_H__ */
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 44d36c445aa24e0dc82b43e29d2f062127772ab3 Mon Sep 17 00:00:00 2001
+From 2e0c195148c81632b98f4ff08b9c93d9eaf4f61b Mon Sep 17 00:00:00 2001
 From: Jeffrey Mitchell <jeffrey.mitchell@starlab.io>
 Date: Thu, 21 Jan 2021 09:19:12 -0600
-Subject: [PATCH 19/36] xfs: set inode size after creating symlink
+Subject: [PATCH 19/33] xfs: set inode size after creating symlink
 
 When XFS creates a new symlink, it writes its size to disk but not to the
 VFS inode. This causes i_size_read() to return 0 for that symlink until
@@ -2435,13 +2435,13 @@ index 1f43fd7f3..c835827ae 100644
  	/*
  	 * Create the directory entry for the symlink.
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 2f5c1bfbeaf5aa412122267a859858aaf4e34492 Mon Sep 17 00:00:00 2001
+From 14f97daa2f27328e385d2a42286fc74b134622ca Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Tue, 12 May 2020 17:29:36 -0400
-Subject: [PATCH 20/36] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 20/33] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 The VFS inode shrinker is currently allowed to reclaim cold inodes
@@ -2818,10 +2818,10 @@ index 6442d97d9..6a930aeae 100644
  
  	WARN_ON(inode->i_state & I_NEW);
 diff --git a/fs/internal.h b/fs/internal.h
-index 77c50befb..6bf2ac6d5 100644
+index c6c85f6ad..1a8f6e155 100644
 --- a/fs/internal.h
 +++ b/fs/internal.h
-@@ -144,7 +144,7 @@ extern int vfs_open(const struct path *, struct file *);
+@@ -145,7 +145,7 @@ extern int vfs_open(const struct path *, struct file *);
   * inode.c
   */
  extern long prune_icache_sb(struct super_block *sb, struct shrink_control *sc);
@@ -3229,13 +3229,13 @@ index 10e96de94..9b5202dd5 100644
  out:
  	cond_resched();
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 1708d0dc630b774cf20a7b69c7346231a07954fd Mon Sep 17 00:00:00 2001
+From 4c19b1779f0860a069d3ee6a587ee18963b436a4 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Wed, 10 Feb 2021 12:01:12 -0500
-Subject: [PATCH 21/36] xfs: restore shutdown check in mapped write fault path
+Subject: [PATCH 21/33] xfs: restore shutdown check in mapped write fault path
 
 XFS triggers an iomap warning in the write fault path due to a
 !PageUptodate() page if a write fault happens to occur on a page
@@ -3276,13 +3276,13 @@ index 7b9ff824e..74bc2bead 100644
  	if (xfs_get_extsz_hint(ip))
  		return xfs_direct_write_iomap_begin(inode, offset, count,
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 273bd07d5ca1d03a272fbdf3fdb983ed28c5ff7f Mon Sep 17 00:00:00 2001
+From 1e196cf6403ce4a3f05308f5614ebf005d862f6a Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Mon, 15 Feb 2021 10:37:46 -0500
-Subject: [PATCH 22/36] SUNRPC: Set TCP_CORK until the transmit queue is empty
+Subject: [PATCH 22/33] SUNRPC: Set TCP_CORK until the transmit queue is empty
 
 When we have multiple RPC requests queued up, it makes sense to set the
 TCP_CORK option while the transmit queue is non-empty.
@@ -3364,13 +3364,13 @@ index c56a66cdf..1e0a20c64 100644
  		xprt_clear_connected(xprt);
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 81b462240954c1e9265268c1e45116c7abb665b9 Mon Sep 17 00:00:00 2001
+From b7d57b7ac4bf4b95cdc8dd74dadde1f831ef62c3 Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 16 Feb 2021 12:17:22 -0500
-Subject: [PATCH 23/36] SUNRPC: Use TCP_CORK to optimise send performance on
+Subject: [PATCH 23/33] SUNRPC: Use TCP_CORK to optimise send performance on
  the server
 
 Use a counter to keep track of how many requests are queued behind the
@@ -3441,13 +3441,13 @@ index 5a809c64d..231f510a4 100644
  		set_bit(XPT_DATA, &svsk->sk_xprt.xpt_flags);
  		switch (sk->sk_state) {
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 1db9dac023ddb345694b8fdfaa4ef76853ff1d60 Mon Sep 17 00:00:00 2001
+From 3d16ca888e8fa63370e5c10b87908ba7da4fd75b Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 16 Feb 2021 12:17:23 -0500
-Subject: [PATCH 24/36] SUNRPC: Remove redundant socket flags from
+Subject: [PATCH 24/33] SUNRPC: Remove redundant socket flags from
  svc_tcp_sendmsg()
 
 Now that the caller controls the TCP_CORK socket option, it is redundant
@@ -3505,13 +3505,13 @@ index 231f510a4..8c19732e4 100644
  				return ret;
  			*sentp += ret;
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From b90f5725b9d45606b8bcc46f7e0a485272abe7ce Mon Sep 17 00:00:00 2001
+From 907e6750c560183d92c97160728e62855111c731 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:50 +1100
-Subject: [PATCH 25/36] xfs: log stripe roundoff is a property of the log
+Subject: [PATCH 25/33] xfs: log stripe roundoff is a property of the log
 
 We don't need to look at the xfs_mount and superblock every time we
 need to do an iclog roundoff calculation. The property is fixed for
@@ -3679,13 +3679,13 @@ index 1c6fdbf3d..037950cf1 100644
  
  #define XLOG_BUF_CANCEL_BUCKET(log, blkno) \
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From c818f352edfe5af5a45758b18a02fbb7e427d367 Mon Sep 17 00:00:00 2001
+From bcd87c747980c025c906393d8ee7c7dfef774cf8 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:51 +1100
-Subject: [PATCH 26/36] xfs: separate CIL commit record IO
+Subject: [PATCH 26/33] xfs: separate CIL commit record IO
 
 To allow for iclog IO device cache flush behaviour to be optimised,
 we first need to separate out the commit record iclog IO from the
@@ -3807,13 +3807,13 @@ index 037950cf1..a7ac85aaf 100644
   * The LSN is valid so long as it is behind the current LSN. If it isn't, this
   * means that the next log record that includes this metadata could have a
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 6586c89dd7de38f69c9e94864595bb6f47707f55 Mon Sep 17 00:00:00 2001
+From ebc26de841076622f6310062c2ba6f2584010fb2 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:52 +1100
-Subject: [PATCH 27/36] xfs: journal IO cache flush reductions
+Subject: [PATCH 27/33] xfs: journal IO cache flush reductions
 
 Currently every journal IO is issued as REQ_PREFLUSH | REQ_FUA to
 guarantee the ordering requirements the journal has w.r.t. metadata
@@ -4049,13 +4049,13 @@ index a7ac85aaf..9f1e627cc 100644
  
  	/* Callback structures need their own cacheline */
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From b08e65b7789a00f125ace651861c2de4d4a5d96c Mon Sep 17 00:00:00 2001
+From 1fa96c74ad7e4c071bc5e4d41b8bb00689f1f991 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:53 +1100
-Subject: [PATCH 28/36] xfs: Fix CIL throttle hang when CIL space used going
+Subject: [PATCH 28/33] xfs: Fix CIL throttle hang when CIL space used going
  backwards
 
 A hang with tasks stuck on the CIL hard throttle was reported and
@@ -4307,13 +4307,13 @@ index c5cc1b7ad..daf1f3eb2 100644
  		ASSERT(cil->xc_ctx->space_used < log->l_logsize);
  		xlog_wait(&cil->xc_push_wait, &cil->xc_push_lock);
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 6870738020b0fa728e4ff536baa4009b62292c73 Mon Sep 17 00:00:00 2001
+From a71a6b07779a9fb289ef4a5b19c7331e2625a963 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:54 +1100
-Subject: [PATCH 29/36] xfs: reduce buffer log item shadow allocations
+Subject: [PATCH 29/33] xfs: reduce buffer log item shadow allocations
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -4407,13 +4407,13 @@ index 17960b1ce..0628a65d9 100644
  }
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 1ada6c3e08af5e369cb9be033e51e69e7ae5b268 Mon Sep 17 00:00:00 2001
+From 67b0376b3c78401c17f05892203e373f511c16b1 Mon Sep 17 00:00:00 2001
 From: Pavel Reichl <preichl@redhat.com>
 Date: Sat, 20 Feb 2021 23:15:49 +0100
-Subject: [PATCH 30/36] xfs: Skip repetitive warnings about mount options
+Subject: [PATCH 30/33] xfs: Skip repetitive warnings about mount options
 
 Skip the warnings about mount option being deprecated if we are
 remounting and deprecated option state is not changing.
@@ -4476,149 +4476,13 @@ index 813be879a..6724a7018 100644
  		mp->m_flags |= XFS_MOUNT_NOATTR2;
  		return 0;
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From d389922c39ab8e7680fbb3f0713a226068cd619f Mon Sep 17 00:00:00 2001
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Mon, 15 Feb 2021 13:32:28 -0500
-Subject: [PATCH 31/36] drm/amdgpu/display: simplify backlight setting
-
-Avoid the extra wrapper function.
-
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
----
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 20 ++++---------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 947cd923f..e47db5583 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3127,19 +3127,6 @@ static void amdgpu_dm_update_backlight_caps(struct amdgpu_display_manager *dm)
- #endif
- }
- 
--static int set_backlight_via_aux(struct dc_link *link, uint32_t brightness)
--{
--	bool rc;
--
--	if (!link)
--		return 1;
--
--	rc = dc_link_set_backlight_level_nits(link, true, brightness,
--					      AUX_BL_DEFAULT_TRANSITION_TIME_MS);
--
--	return rc ? 0 : 1;
--}
--
- static int get_brightness_range(const struct amdgpu_dm_backlight_caps *caps,
- 				unsigned *min, unsigned *max)
- {
-@@ -3202,9 +3189,10 @@ static int amdgpu_dm_backlight_update_status(struct backlight_device *bd)
- 	brightness = convert_brightness_from_user(&caps, bd->props.brightness);
- 	// Change brightness based on AUX property
- 	if (caps.aux_support)
--		return set_backlight_via_aux(link, brightness);
--
--	rc = dc_link_set_backlight_level(dm->backlight_link, brightness, 0);
-+		rc = dc_link_set_backlight_level_nits(link, true, brightness,
-+						      AUX_BL_DEFAULT_TRANSITION_TIME_MS);
-+	else
-+		rc = dc_link_set_backlight_level(dm->backlight_link, brightness, 0);
- 
- 	return rc ? 0 : 1;
- }
--- 
-2.30.1.489.g328c109303
-
-
-From 26db031288d213837e1dd4d05dbe75bae7d65d78 Mon Sep 17 00:00:00 2001
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Mon, 15 Feb 2021 13:32:29 -0500
-Subject: [PATCH 32/36] drm/amdgpu/display: don't assert in set backlight
- function
-
-It just spams the logs.
-
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
----
- drivers/gpu/drm/amd/display/dc/core/dc_link.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-index f4a2088ab..aa17876e0 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-@@ -2566,7 +2566,6 @@ bool dc_link_set_backlight_level(const struct dc_link *link,
- 			if (pipe_ctx->plane_state == NULL)
- 				frame_ramp = 0;
- 		} else {
--			ASSERT(false);
- 			return false;
- 		}
- 
--- 
-2.30.1.489.g328c109303
-
-
-From 3122517b04891cdcfd3bfc379cbb6c729bb0c382 Mon Sep 17 00:00:00 2001
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Mon, 15 Feb 2021 13:32:30 -0500
-Subject: [PATCH 33/36] drm/amdgpu/display: handle aux backlight in
- backlight_get_brightness
-
-Need to fetch it via aux.
-
-Signed-off-by: Alex Deucher <alexander.deucheramd.com>
----
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 24 +++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index e47db5583..e31c6044f 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3200,11 +3200,27 @@ static int amdgpu_dm_backlight_update_status(struct backlight_device *bd)
- static int amdgpu_dm_backlight_get_brightness(struct backlight_device *bd)
- {
- 	struct amdgpu_display_manager *dm = bl_get_data(bd);
--	int ret = dc_link_get_backlight_level(dm->backlight_link);
-+	struct amdgpu_dm_backlight_caps caps;
-+
-+	amdgpu_dm_update_backlight_caps(dm);
-+	caps = dm->backlight_caps;
- 
--	if (ret == DC_ERROR_UNEXPECTED)
--		return bd->props.brightness;
--	return convert_brightness_to_user(&dm->backlight_caps, ret);
-+	if (caps.aux_support) {
-+		struct dc_link *link = (struct dc_link *)dm->backlight_link;
-+		u32 avg, peak;
-+		bool rc;
-+
-+		rc = dc_link_get_backlight_level_nits(link, &avg, &peak);
-+		if (!rc)
-+			return bd->props.brightness;
-+		return convert_brightness_to_user(&caps, avg);
-+	} else {
-+		int ret = dc_link_get_backlight_level(dm->backlight_link);
-+
-+		if (ret == DC_ERROR_UNEXPECTED)
-+			return bd->props.brightness;
-+		return convert_brightness_to_user(&caps, ret);
-+	}
- }
- 
- static const struct backlight_ops amdgpu_dm_backlight_ops = {
--- 
-2.30.1.489.g328c109303
-
-
-From 7e3c612191ede29d5c43b6a7bc7f3d96832b4900 Mon Sep 17 00:00:00 2001
+From 6f3a581c47586d1f9f53295d4122aa0c8ebd404c Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Mon, 22 Feb 2021 10:34:42 -0500
-Subject: [PATCH 34/36] xfs: don't reuse busy extents on extent trim
+Subject: [PATCH 31/33] xfs: don't reuse busy extents on extent trim
 
 Freed extents are marked busy from the point the freeing transaction
 commits until the associated CIL context is checkpointed to the log.
@@ -4699,13 +4563,13 @@ index 3991e59cf..ef17c1f6d 100644
  			/* start overlap */
  
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
 
 
-From 05670960293de597e44b80e2856a5c9f18ac0d53 Mon Sep 17 00:00:00 2001
+From aec5c67fa1f7e1cc95b3b178cfd4a381f8af6f95 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Fri, 7 Aug 2020 10:42:55 -0700
-Subject: [PATCH 35/36] locking/mutex: Don't hog RCU read lock while
+Subject: [PATCH 32/33] locking/mutex: Don't hog RCU read lock while
  optimistically spinning
 
 There's no reason to hold an RCU read lock the entire time while
@@ -4770,4 +4634,84 @@ index 5352ce50a..cc5676712 100644
  	return ret;
  }
 -- 
-2.30.1.489.g328c109303
+2.31.0.rc1
+
+
+From 8d03c7fbd08eff2200b67e5e8f611935972536f6 Mon Sep 17 00:00:00 2001
+From: Sultan Alsawaf <sultan@kerneltoast.com>
+Date: Mon, 15 Feb 2021 13:30:49 -0800
+Subject: [PATCH 33/33] locking/rwsem: Don't hog RCU read lock while
+ optimistically spinning
+
+There's no reason to hold an RCU read lock the entire time while
+optimistically spinning for a rwsem. This can needlessly lengthen RCU
+grace periods and slow down synchronize_rcu() when it doesn't brute
+force the RCU grace period via rcupdate.rcu_expedited=1.
+
+Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
+---
+ kernel/locking/rwsem.c | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
+
+diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
+index ba67600c7..462d2dc67 100644
+--- a/kernel/locking/rwsem.c
++++ b/kernel/locking/rwsem.c
+@@ -675,8 +675,10 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+ 	if (state != OWNER_WRITER)
+ 		return state;
+ 
+-	rcu_read_lock();
+ 	for (;;) {
++		bool same_owner;
++
++		rcu_read_lock();
+ 		/*
+ 		 * When a waiting writer set the handoff flag, it may spin
+ 		 * on the owner as well. Once that writer acquires the lock,
+@@ -684,20 +686,26 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+ 		 * handoff bit is set.
+ 		 */
+ 		new = rwsem_owner_flags(sem, &new_flags);
+-		if ((new != owner) || (new_flags != flags)) {
+-			state = rwsem_owner_state(new, new_flags);
+-			break;
+-		}
+ 
+ 		/*
+-		 * Ensure we emit the owner->on_cpu, dereference _after_
+-		 * checking sem->owner still matches owner, if that fails,
++		 * Ensure sem->owner still matches owner. If that fails,
+ 		 * owner might point to free()d memory, if it still matches,
+ 		 * the rcu_read_lock() ensures the memory stays valid.
+ 		 */
+-		barrier();
++		same_owner = new == owner && new_flags == flags;
++		if (same_owner && !owner_on_cpu(owner))
++			state = OWNER_NONSPINNABLE;
++		rcu_read_unlock();
+ 
+-		if (need_resched() || !owner_on_cpu(owner)) {
++		if (!same_owner) {
++			state = rwsem_owner_state(new, new_flags);
++			break;
++		}
++
++		if (state == OWNER_NONSPINNABLE)
++			break;
++
++		if (need_resched()) {
+ 			state = OWNER_NONSPINNABLE;
+ 			break;
+ 		}
+@@ -705,7 +713,6 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+ 		if (i++ > 1000)
+ 			cpu_relax();
+ 	}
+-	rcu_read_unlock();
+ 
+ 	return state;
+ }
+-- 
+2.31.0.rc1
+
