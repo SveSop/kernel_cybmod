@@ -16,7 +16,7 @@ index e99310c2b..92c0f623e 100644
  __all:
  
 +CYBVERSION = -cybmod10
-+CYBNAME = CacULE Powered
++CYBNAME = (Undead) PDS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +
  # We are using a recursive build, so we need to do a little thinking

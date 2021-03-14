@@ -4,10 +4,12 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : CacULE scheduler (Rebased for 5.11)  
+0000 : Linux 5.11.6  
+0001 : "Undead" PDS patchset (TkG)    
 0002 : 5.11 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
 0004 : "Old" fsync patch for backwards compatibility  
+0005 : PDS Update patch  
 0011 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0012 : Add option for SCHED_AUTOGROUP (Xanmod)  
 0020 : Ubuntu based config (See note below!)  
@@ -27,8 +29,7 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default CacULE scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Futex2**  
-**Also see [https://github.com/hamadmarri/cacule-cpu-scheduler](https://github.com/hamadmarri/cacule-cpu-scheduler) for scheduler info**  
+**This config has default PDS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Futex2**  
 
 **Futex2 usage requires a patched wine/proton version! Default proton will use fsync**  
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  

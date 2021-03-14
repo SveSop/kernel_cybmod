@@ -1303,6 +1303,8 @@ Subject: [PATCH] clockevents, hrtimer: Make hrtimer granularity and minimum
  hrtimeout configurable in sysctl. Set default granularity to 100us and min
  timeout to 500us
 
+Modded to adopt to "Undead" PDS scheduler
+
 Co-developed-by: Alexandre Frade <kernel@xanmod.org>
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
 ---
@@ -1315,10 +1317,10 @@ diff --git a/kernel/sysctl.c b/kernel/sysctl.c
 index d9d0f1589283..f44a7941f233 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -120,9 +120,9 @@ static unsigned long long_max = LONG_MAX;
- static int one_hundred = 100;
- static int two_hundred = 200;
- static int one_thousand = 1000;
+@@ -140,9 +140,9 @@ static int __read_mostly one_thousand = 1000;
+ extern int rr_interval;
+ extern int sched_yield_type;
+ #endif
 -#ifdef CONFIG_PRINTK
  static int ten_thousand = 10000;
 -#endif
@@ -1327,7 +1329,7 @@ index d9d0f1589283..f44a7941f233 100644
  #ifdef CONFIG_PERF_EVENTS
  static int six_hundred_forty_kb = 640 * 1024;
  #endif
-@@ -1656,6 +1656,24 @@ int proc_do_static_key(struct ctl_table *table, int write,
+@@ -1672,6 +1672,24 @@ int proc_do_static_key(struct ctl_table *table, int write,
  }
  
  static struct ctl_table kern_table[] = {
@@ -1349,9 +1351,9 @@ index d9d0f1589283..f44a7941f233 100644
 +		.extra1		= SYSCTL_ONE,
 +		.extra2		= &ten_thousand,
 +	},
+ #ifndef CONFIG_SCHED_PDS
  	{
  		.procname	= "sched_child_runs_first",
- 		.data		= &sysctl_sched_child_runs_first,
 diff --git a/kernel/time/clockevents.c b/kernel/time/clockevents.c
 index f5490222e134..23db3c39e07a 100644
 --- a/kernel/time/clockevents.c
@@ -1444,3 +1446,4 @@ index 0f24153c51a1..30d4e9713e2d 100644
  }
  
  EXPORT_SYMBOL(schedule_min_hrtimeout);
+
