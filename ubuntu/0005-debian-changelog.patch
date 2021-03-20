@@ -1,6 +1,6 @@
-From 15bf799197158827e30f8981a36835f0defee295 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 17 Mar 2021 17:46:27 +0000
+From 82c0e18eed9c64b4f519871d05ead966af99fda9 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 20 Mar 2021 06:36:12 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 10977 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 67c931ff5365..478900ea9ce8 100644
+index 67c931ff5365..44960c0ae96e 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,10980 +1,6 @@
 -linux-unstable (5.12.0-3.3) hirsute; urgency=medium
-+linux (5.11.7-051107.202103171746) groovy; urgency=low
++linux (5.11.8-051108.202103200636) groovy; urgency=low
  
 -  *  riscv: revert SiFive Unleashed CPUFreq (LP: #1917433)
 -    - SAUCE: Revert "SiFive Unleashed CPUFreq"
-+  Mainline build at commit: v5.11.7
++  Mainline build at commit: v5.11.8
  
 -  * Dell Precision 5550 takes up to 10 seconds to respond when coming out of
 -    sleep (LP: #1919123)
 -    - SAUCE: Input: i8042 - add dmi quirk
-+ -- Mainline Build <kernel@kathleen>  Wed, 17 Mar 2021 17:46:27 +0000
++ -- Mainline Build <kernel@gloin>  Sat, 20 Mar 2021 06:36:11 -0400
  
 -  * LRMv4: switch to signing nvidia modules via the Ubuntu Modules signing key
 -    (LP: #1918134)
