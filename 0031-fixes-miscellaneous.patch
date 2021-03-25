@@ -1,7 +1,7 @@
-From e871534c2186673184e866bd684277d50ffa9013 Mon Sep 17 00:00:00 2001
+From 8e286a5e63a570008469b0bae6c332ff9a9266c7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/33] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/36] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.31.0.rc1
 
 
-From a63a7d25a0937829e6e33fc7c19009ffc3f3a923 Mon Sep 17 00:00:00 2001
+From 91e2b8557b29448e60256a3fe14fe896b24e0bf5 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/33] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/36] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index 0abce004a..b6eeb2fab 100644
 2.31.0.rc1
 
 
-From 37c8e8ca903d27b673fb081dd8d684732a580e8b Mon Sep 17 00:00:00 2001
+From 5641b1dc95a8241822103f9c48aab45efecc7d01 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/33] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/36] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 472136a78..f19a384d8 100644
+index 6ba32b82c..33e6ea116 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -674,6 +674,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -94,10 +94,10 @@ index 472136a78..f19a384d8 100644
 2.31.0.rc1
 
 
-From 568fb549ec17888a53b88de92417fe2796d4921c Mon Sep 17 00:00:00 2001
+From 6eb0336fc1e406c5ed87f94e4ed37a945c2d5d21 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/33] mm: Disable watermark boosting by default
+Subject: [PATCH 04/36] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -127,7 +127,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 13 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 519a60d5b..c846052bc 100644
+index a723e81a5..8ad18bdb8 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -321,20 +321,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
@@ -155,10 +155,10 @@ index 519a60d5b..c846052bc 100644
 2.31.0.rc1
 
 
-From 9df2d685582074f14a67c019695194e0e5a988a8 Mon Sep 17 00:00:00 2001
+From 8376a1cb2228f4723b6a5584bae6d4ffaad99de0 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/33] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 05/36] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -187,10 +187,10 @@ index b593316bf..0f860b62b 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index c846052bc..d2f45e2c6 100644
+index 8ad18bdb8..443cb1efe 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4655,6 +4655,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4660,6 +4660,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -199,7 +199,7 @@ index c846052bc..d2f45e2c6 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4688,8 +4690,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4693,8 +4695,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -214,7 +214,7 @@ index c846052bc..d2f45e2c6 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -4894,9 +4901,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4899,9 +4906,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -229,7 +229,7 @@ index c846052bc..d2f45e2c6 100644
  	return page;
  }
  
-@@ -6865,6 +6875,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6945,6 +6955,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  
  	pgdat_page_ext_init(pgdat);
  	lruvec_init(&pgdat->__lruvec);
@@ -255,10 +255,10 @@ index ad9f2adaf..907fc13c7 100644
 2.31.0.rc1
 
 
-From 949c632f656b7fcd5691b4b5439af9407a3a56fb Mon Sep 17 00:00:00 2001
+From bfa2243cbfcc0a747141cd8102535d20d697bcbc Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/33] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 06/36] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -270,10 +270,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index d2f45e2c6..1d01b5244 100644
+index 443cb1efe..44d94cd14 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -2549,8 +2549,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
+@@ -2553,8 +2553,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
  	 * likelihood of future fallbacks. Wake kswapd now as the node
  	 * may be balanced overall and kswapd will not wake naturally.
  	 */
@@ -291,10 +291,10 @@ index d2f45e2c6..1d01b5244 100644
 2.31.0.rc1
 
 
-From 72df8cf287340ea5b615ae05d0b4b6f1cfbb3b41 Mon Sep 17 00:00:00 2001
+From 9a631ff493d419fad9a2e35b065ed5ffdf90c158 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/33] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 07/36] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -335,7 +335,7 @@ index 25d2b2439..d2b3ea798 100644
  extern void free_unref_page(struct page *page);
  extern void free_unref_page_list(struct list_head *list);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 1d01b5244..b785a5f9c 100644
+index 44d94cd14..78b31f2ab 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -108,6 +108,8 @@ typedef int __bitwise fpi_t;
@@ -347,7 +347,7 @@ index 1d01b5244..b785a5f9c 100644
  /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
  static DEFINE_MUTEX(pcp_batch_high_lock);
  #define MIN_PERCPU_PAGELIST_FRACTION	(8)
-@@ -4658,7 +4660,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4663,7 +4665,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -355,7 +355,7 @@ index 1d01b5244..b785a5f9c 100644
  	bool woke_kswapd = false;
  
  	/*
-@@ -4695,7 +4696,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4700,7 +4701,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  
  	if (alloc_flags & ALLOC_KSWAPD) {
  		if (!woke_kswapd) {
@@ -364,7 +364,7 @@ index 1d01b5244..b785a5f9c 100644
  			woke_kswapd = true;
  		}
  		wake_all_kswapds(order, gfp_mask, ac);
-@@ -4906,7 +4907,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4911,7 +4912,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  fail:
  got_pg:
  	if (woke_kswapd)
@@ -373,7 +373,7 @@ index 1d01b5244..b785a5f9c 100644
  	if (!page)
  		warn_alloc(gfp_mask, ac->nodemask,
  				"page allocation failure: order:%u", order);
-@@ -6878,7 +6879,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -6958,7 +6959,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  
  	pgdat_page_ext_init(pgdat);
  	lruvec_init(&pgdat->__lruvec);
@@ -398,10 +398,10 @@ index 907fc13c7..d2ebe8fc5 100644
 2.31.0.rc1
 
 
-From 909b312297f9597984cefa61775d052dcf51fb23 Mon Sep 17 00:00:00 2001
+From c05f08599d90215e0561f59e41bd1ba56f4d6bfd Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/33] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 08/36] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -414,7 +414,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index f19a384d8..4145497cb 100644
+index 33e6ea116..182744bbb 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -938,9 +938,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -431,10 +431,10 @@ index f19a384d8..4145497cb 100644
 2.31.0.rc1
 
 
-From e0890b4f0b4c069392662e7d629e23f27a229427 Mon Sep 17 00:00:00 2001
+From 5eb2793936965a286c4af609156b5a36cfb6953e Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/33] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 09/36] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -629,10 +629,10 @@ index 653660e3b..af8534a51 100644
 2.31.0.rc1
 
 
-From 4ada5d9c668387650c79cc32a7251c8eb50cebc9 Mon Sep 17 00:00:00 2001
+From 66516e22dccaf156bc4ccfe2beb0c031462a179a Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 10/33] ZEN: Add OpenRGB patches
+Subject: [PATCH 10/36] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1378,10 +1378,10 @@ index 8c1b31ed0..0b1b36fa0 100644
 2.31.0.rc1
 
 
-From edae9f0e8f07eaa7a11c7f48a89723dbbe7db6c4 Mon Sep 17 00:00:00 2001
+From 5864af1277940a6ddd44ec3113525a68360259f7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 25 Sep 2020 13:22:05 +0200
-Subject: [PATCH 11/33] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 11/36] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1448,10 +1448,10 @@ index e9d39c485..3bceead8d 100644
 2.31.0.rc1
 
 
-From 03702d919968495c203a734570e45215cc7f499a Mon Sep 17 00:00:00 2001
+From 7989c1c42b0206c8b4a91b232418e12113d45850 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 12/33] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 12/36] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -1582,10 +1582,10 @@ index b59136c41..4154030c8 100644
 2.31.0.rc1
 
 
-From 2b9cea3b5f152b77aff115505f98da1ead522bba Mon Sep 17 00:00:00 2001
+From ef7f72d65b872177b2740612906c5b134ba07364 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 13/33] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 13/36] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -1706,10 +1706,10 @@ index 16a1e82e3..93460d808 100644
 2.31.0.rc1
 
 
-From 3293ad00b64f2260c3adaf49003f606c94878c40 Mon Sep 17 00:00:00 2001
+From 6301d225f1de77d55bbfe15cce9031536576f3b2 Mon Sep 17 00:00:00 2001
 From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 Date: Tue, 22 Dec 2020 09:21:28 +0800
-Subject: [PATCH 14/33] mm: Add become_kswapd and restore_kswapd
+Subject: [PATCH 14/36] mm: Add become_kswapd and restore_kswapd
 
 Since XFS needs to pretend to be kswapd in some of its worker threads,
 create methods to save & restore kswapd state.  Don't bother restoring
@@ -1767,10 +1767,10 @@ index c4d7a9241..c43f2ad85 100644
  
  /*
 diff --git a/include/linux/sched/mm.h b/include/linux/sched/mm.h
-index 1ae08b846..0d18c9236 100644
+index 90b2a0bce..809487ae0 100644
 --- a/include/linux/sched/mm.h
 +++ b/include/linux/sched/mm.h
-@@ -294,6 +294,28 @@ static inline void memalloc_nocma_restore(unsigned int flags)
+@@ -295,6 +295,28 @@ static inline void memalloc_nocma_restore(unsigned int flags)
  }
  #endif
  
@@ -1837,10 +1837,10 @@ index d2ebe8fc5..aedd86e3e 100644
 2.31.0.rc1
 
 
-From 5e118a33a1287ff218cf676a37ef470a26ddb1db Mon Sep 17 00:00:00 2001
+From e8e661afaa414319bdbf912ae38ac7bd7f16e679 Mon Sep 17 00:00:00 2001
 From: "Darrick J. Wong" <djwong@kernel.org>
 Date: Mon, 11 Jan 2021 14:50:53 -0800
-Subject: [PATCH 15/33] xfs: fix an ABBA deadlock in xfs_rename
+Subject: [PATCH 15/36] xfs: fix an ABBA deadlock in xfs_rename
 
 When overlayfs is running on top of xfs and the user unlinks a file in
 the overlay, overlayfs will create a whiteout inode and ask xfs to
@@ -1963,10 +1963,10 @@ index b7352bc4c..e5dc41b10 100644
 2.31.0.rc1
 
 
-From 183c6a38a188959f9045ec907ea4c41eeb219b1a Mon Sep 17 00:00:00 2001
+From a0edfcf25b717e19219a07d35cc5954aab56f61b Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:22 +0800
-Subject: [PATCH 16/33] xfs: use memalloc_nofs_{save,restore} in xfs
+Subject: [PATCH 16/36] xfs: use memalloc_nofs_{save,restore} in xfs
  transaction
 
 Introduce a new API to mark the start and end of XFS transactions.
@@ -2112,10 +2112,10 @@ index 084658946..44b11c64a 100644
 2.31.0.rc1
 
 
-From 148a00b2e78b1dfef8752c864f9b145468ad3ef6 Mon Sep 17 00:00:00 2001
+From c90df094f01a86018d4a716ad3380b75dc69ad63 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:23 +0800
-Subject: [PATCH 17/33] xfs: refactor the usage around
+Subject: [PATCH 17/36] xfs: refactor the usage around
  xfs_trans_context_{set,clear}
 
 The xfs_trans context should be active after it is allocated, and
@@ -2269,10 +2269,10 @@ index 44b11c64a..3645fd0d7 100644
 2.31.0.rc1
 
 
-From 764ac7b9be9f05afc21249afa44be40144544795 Mon Sep 17 00:00:00 2001
+From f382b085804a6ac048b3278700b37c6b82e6f075 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Wed, 13 Jan 2021 18:22:24 +0800
-Subject: [PATCH 18/33] xfs: use current->journal_info to avoid transaction
+Subject: [PATCH 18/36] xfs: use current->journal_info to avoid transaction
  reservation recursion
 
 PF_FSTRANS which is used to avoid transaction reservation recursion, is
@@ -2402,10 +2402,10 @@ index 3645fd0d7..e2f3251d6 100644
 2.31.0.rc1
 
 
-From 2e0c195148c81632b98f4ff08b9c93d9eaf4f61b Mon Sep 17 00:00:00 2001
+From d53be02e96963974bf0a592e45cef5dc90181e75 Mon Sep 17 00:00:00 2001
 From: Jeffrey Mitchell <jeffrey.mitchell@starlab.io>
 Date: Thu, 21 Jan 2021 09:19:12 -0600
-Subject: [PATCH 19/33] xfs: set inode size after creating symlink
+Subject: [PATCH 19/36] xfs: set inode size after creating symlink
 
 When XFS creates a new symlink, it writes its size to disk but not to the
 VFS inode. This causes i_size_read() to return 0 for that symlink until
@@ -2438,10 +2438,10 @@ index 1f43fd7f3..c835827ae 100644
 2.31.0.rc1
 
 
-From 14f97daa2f27328e385d2a42286fc74b134622ca Mon Sep 17 00:00:00 2001
+From 5556c9677e486773d9aa46cb6f0bfb670ef2cf19 Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Tue, 12 May 2020 17:29:36 -0400
-Subject: [PATCH 20/33] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 20/36] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 The VFS inode shrinker is currently allowed to reclaim cold inodes
@@ -2571,7 +2571,7 @@ Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
  14 files changed, 208 insertions(+), 34 deletions(-)
 
 diff --git a/fs/block_dev.c b/fs/block_dev.c
-index 235b50426..a6c124af0 100644
+index c33151020..4c8a56386 100644
 --- a/fs/block_dev.c
 +++ b/fs/block_dev.c
 @@ -79,7 +79,7 @@ static void kill_bdev(struct block_device *bdev)
@@ -3038,7 +3038,7 @@ index aa0e0fb04..064243e02 100644
  error:
  	page->mapping = NULL;
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 91ca9b103..c28662ed4 100644
+index f3affe860..6a53ebc1e 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
 @@ -2483,7 +2483,8 @@ static void __split_huge_page(struct page *page, struct list_head *list,
@@ -3232,10 +3232,10 @@ index 10e96de94..9b5202dd5 100644
 2.31.0.rc1
 
 
-From 4c19b1779f0860a069d3ee6a587ee18963b436a4 Mon Sep 17 00:00:00 2001
+From 0bbc76e2be5db573d271def689ef19d35882ca01 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Wed, 10 Feb 2021 12:01:12 -0500
-Subject: [PATCH 21/33] xfs: restore shutdown check in mapped write fault path
+Subject: [PATCH 21/36] xfs: restore shutdown check in mapped write fault path
 
 XFS triggers an iomap warning in the write fault path due to a
 !PageUptodate() page if a write fault happens to occur on a page
@@ -3279,10 +3279,10 @@ index 7b9ff824e..74bc2bead 100644
 2.31.0.rc1
 
 
-From 1e196cf6403ce4a3f05308f5614ebf005d862f6a Mon Sep 17 00:00:00 2001
+From 5279fb26b32b29ee739e8f63ba036d79dab700db Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Mon, 15 Feb 2021 10:37:46 -0500
-Subject: [PATCH 22/33] SUNRPC: Set TCP_CORK until the transmit queue is empty
+Subject: [PATCH 22/36] SUNRPC: Set TCP_CORK until the transmit queue is empty
 
 When we have multiple RPC requests queued up, it makes sense to set the
 TCP_CORK option while the transmit queue is non-empty.
@@ -3367,10 +3367,10 @@ index c56a66cdf..1e0a20c64 100644
 2.31.0.rc1
 
 
-From b7d57b7ac4bf4b95cdc8dd74dadde1f831ef62c3 Mon Sep 17 00:00:00 2001
+From e5d78c0d06b86619a4bdb28fda120493a86cea10 Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 16 Feb 2021 12:17:22 -0500
-Subject: [PATCH 23/33] SUNRPC: Use TCP_CORK to optimise send performance on
+Subject: [PATCH 23/36] SUNRPC: Use TCP_CORK to optimise send performance on
  the server
 
 Use a counter to keep track of how many requests are queued behind the
@@ -3444,10 +3444,10 @@ index 5a809c64d..231f510a4 100644
 2.31.0.rc1
 
 
-From 3d16ca888e8fa63370e5c10b87908ba7da4fd75b Mon Sep 17 00:00:00 2001
+From 89f4cf0d377d130c9755e8e4681b866224d4e786 Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 16 Feb 2021 12:17:23 -0500
-Subject: [PATCH 24/33] SUNRPC: Remove redundant socket flags from
+Subject: [PATCH 24/36] SUNRPC: Remove redundant socket flags from
  svc_tcp_sendmsg()
 
 Now that the caller controls the TCP_CORK socket option, it is redundant
@@ -3508,10 +3508,10 @@ index 231f510a4..8c19732e4 100644
 2.31.0.rc1
 
 
-From 907e6750c560183d92c97160728e62855111c731 Mon Sep 17 00:00:00 2001
+From e66083f47413f811e7ccc6a38116adca38035b6c Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:50 +1100
-Subject: [PATCH 25/33] xfs: log stripe roundoff is a property of the log
+Subject: [PATCH 25/36] xfs: log stripe roundoff is a property of the log
 
 We don't need to look at the xfs_mount and superblock every time we
 need to do an iclog roundoff calculation. The property is fixed for
@@ -3682,10 +3682,10 @@ index 1c6fdbf3d..037950cf1 100644
 2.31.0.rc1
 
 
-From bcd87c747980c025c906393d8ee7c7dfef774cf8 Mon Sep 17 00:00:00 2001
+From 4cd0ec03e3b4f199bdf7563dc86c166934b472ec Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:51 +1100
-Subject: [PATCH 26/33] xfs: separate CIL commit record IO
+Subject: [PATCH 26/36] xfs: separate CIL commit record IO
 
 To allow for iclog IO device cache flush behaviour to be optimised,
 we first need to separate out the commit record iclog IO from the
@@ -3810,10 +3810,10 @@ index 037950cf1..a7ac85aaf 100644
 2.31.0.rc1
 
 
-From ebc26de841076622f6310062c2ba6f2584010fb2 Mon Sep 17 00:00:00 2001
+From 22bdb2c4218bf23c8df111c4dc0768fc7260af4f Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:52 +1100
-Subject: [PATCH 27/33] xfs: journal IO cache flush reductions
+Subject: [PATCH 27/36] xfs: journal IO cache flush reductions
 
 Currently every journal IO is issued as REQ_PREFLUSH | REQ_FUA to
 guarantee the ordering requirements the journal has w.r.t. metadata
@@ -4052,10 +4052,10 @@ index a7ac85aaf..9f1e627cc 100644
 2.31.0.rc1
 
 
-From 1fa96c74ad7e4c071bc5e4d41b8bb00689f1f991 Mon Sep 17 00:00:00 2001
+From 49bdd8486a374b02ba44467cbd0739ceb69307e8 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:53 +1100
-Subject: [PATCH 28/33] xfs: Fix CIL throttle hang when CIL space used going
+Subject: [PATCH 28/36] xfs: Fix CIL throttle hang when CIL space used going
  backwards
 
 A hang with tasks stuck on the CIL hard throttle was reported and
@@ -4310,10 +4310,10 @@ index c5cc1b7ad..daf1f3eb2 100644
 2.31.0.rc1
 
 
-From a71a6b07779a9fb289ef4a5b19c7331e2625a963 Mon Sep 17 00:00:00 2001
+From 3c904987ed4956f9b6eeac51296ef677b1a83a27 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 28 Jan 2021 15:41:54 +1100
-Subject: [PATCH 29/33] xfs: reduce buffer log item shadow allocations
+Subject: [PATCH 29/36] xfs: reduce buffer log item shadow allocations
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -4410,10 +4410,10 @@ index 17960b1ce..0628a65d9 100644
 2.31.0.rc1
 
 
-From 67b0376b3c78401c17f05892203e373f511c16b1 Mon Sep 17 00:00:00 2001
+From 48846cd562be2e8a98ea7184e7fc2469ae5bb8f7 Mon Sep 17 00:00:00 2001
 From: Pavel Reichl <preichl@redhat.com>
 Date: Sat, 20 Feb 2021 23:15:49 +0100
-Subject: [PATCH 30/33] xfs: Skip repetitive warnings about mount options
+Subject: [PATCH 30/36] xfs: Skip repetitive warnings about mount options
 
 Skip the warnings about mount option being deprecated if we are
 remounting and deprecated option state is not changing.
@@ -4479,10 +4479,10 @@ index 813be879a..6724a7018 100644
 2.31.0.rc1
 
 
-From 6f3a581c47586d1f9f53295d4122aa0c8ebd404c Mon Sep 17 00:00:00 2001
+From d49a991d8aa84d852cc6c9d2e46636155edc5022 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Mon, 22 Feb 2021 10:34:42 -0500
-Subject: [PATCH 31/33] xfs: don't reuse busy extents on extent trim
+Subject: [PATCH 31/36] xfs: don't reuse busy extents on extent trim
 
 Freed extents are marked busy from the point the freeing transaction
 commits until the associated CIL context is checkpointed to the log.
@@ -4566,10 +4566,10 @@ index 3991e59cf..ef17c1f6d 100644
 2.31.0.rc1
 
 
-From aec5c67fa1f7e1cc95b3b178cfd4a381f8af6f95 Mon Sep 17 00:00:00 2001
+From b7269884e393a7b10f9989becc2766cd4512022c Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Fri, 7 Aug 2020 10:42:55 -0700
-Subject: [PATCH 32/33] locking/mutex: Don't hog RCU read lock while
+Subject: [PATCH 32/36] locking/mutex: Don't hog RCU read lock while
  optimistically spinning
 
 There's no reason to hold an RCU read lock the entire time while
@@ -4637,10 +4637,10 @@ index 5352ce50a..cc5676712 100644
 2.31.0.rc1
 
 
-From 8d03c7fbd08eff2200b67e5e8f611935972536f6 Mon Sep 17 00:00:00 2001
+From 03816f1a9c9d4dd9ce447dcc69f74aa8251dd063 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Mon, 15 Feb 2021 13:30:49 -0800
-Subject: [PATCH 33/33] locking/rwsem: Don't hog RCU read lock while
+Subject: [PATCH 33/36] locking/rwsem: Don't hog RCU read lock while
  optimistically spinning
 
 There's no reason to hold an RCU read lock the entire time while
@@ -4657,7 +4657,7 @@ diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
 index ba67600c7..462d2dc67 100644
 --- a/kernel/locking/rwsem.c
 +++ b/kernel/locking/rwsem.c
-@@ -675,8 +675,10 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+@@ -674,8 +674,10 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
  	if (state != OWNER_WRITER)
  		return state;
  
@@ -4669,7 +4669,7 @@ index ba67600c7..462d2dc67 100644
  		/*
  		 * When a waiting writer set the handoff flag, it may spin
  		 * on the owner as well. Once that writer acquires the lock,
-@@ -684,20 +686,26 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+@@ -683,20 +685,26 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
  		 * handoff bit is set.
  		 */
  		new = rwsem_owner_flags(sem, &new_flags);
@@ -4712,6 +4712,411 @@ index ba67600c7..462d2dc67 100644
  
  	return state;
  }
+-- 
+2.31.0.rc1
+
+
+From 66f0ad7939ae0f30b81faf6fb55a683c06145638 Mon Sep 17 00:00:00 2001
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
+Date: Sat, 13 Mar 2021 16:08:47 -0500
+Subject: [PATCH 34/36] nfsd: Ensure knfsd shuts down when the "nfsd" pseudofs
+ is unmounted
+
+In order to ensure that knfsd threads don't linger once the nfsd
+pseudofs is unmounted (e.g. when the container is killed) we let
+nfsd_umount() shut down those threads and wait for them to exit.
+
+This also should ensure that we don't need to do a kernel mount of
+the pseudofs, since the thread lifetime is now limited by the
+lifetime of the filesystem.
+
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+---
+ fs/nfsd/netns.h     |  6 +++---
+ fs/nfsd/nfs4state.c |  8 +-------
+ fs/nfsd/nfsctl.c    | 14 ++------------
+ fs/nfsd/nfsd.h      |  3 +--
+ fs/nfsd/nfssvc.c    | 35 ++++++++++++++++++++++++++++++++++-
+ 5 files changed, 41 insertions(+), 25 deletions(-)
+
+diff --git a/fs/nfsd/netns.h b/fs/nfsd/netns.h
+index 7346acda9..02d3d2f0e 100644
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -42,9 +42,6 @@ struct nfsd_net {
+ 	bool grace_ended;
+ 	time64_t boot_time;
+ 
+-	/* internal mount of the "nfsd" pseudofilesystem: */
+-	struct vfsmount *nfsd_mnt;
+-
+ 	struct dentry *nfsd_client_dir;
+ 
+ 	/*
+@@ -121,6 +118,9 @@ struct nfsd_net {
+ 	wait_queue_head_t ntf_wq;
+ 	atomic_t ntf_refcnt;
+ 
++	/* Allow umount to wait for nfsd state cleanup */
++	struct completion nfsd_shutdown_complete;
++
+ 	/*
+ 	 * clientid and stateid data for construction of net unique COPY
+ 	 * stateids.
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 1d2cd6a88..6cff10c8f 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7366,14 +7366,9 @@ nfs4_state_start_net(struct net *net)
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	int ret;
+ 
+-	ret = get_nfsdfs(net);
+-	if (ret)
+-		return ret;
+ 	ret = nfs4_state_create_net(net);
+-	if (ret) {
+-		mntput(nn->nfsd_mnt);
++	if (ret)
+ 		return ret;
+-	}
+ 	locks_start_grace(net, &nn->nfsd4_manager);
+ 	nfsd4_client_tracking_init(net);
+ 	if (nn->track_reclaim_completes && nn->reclaim_str_hashtbl_size == 0)
+@@ -7443,7 +7438,6 @@ nfs4_state_shutdown_net(struct net *net)
+ 
+ 	nfsd4_client_tracking_exit(net);
+ 	nfs4_state_destroy_net(net);
+-	mntput(nn->nfsd_mnt);
+ }
+ 
+ void
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 0759e589a..857e5c2bd 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1413,6 +1413,8 @@ static void nfsd_umount(struct super_block *sb)
+ {
+ 	struct net *net = sb->s_fs_info;
+ 
++	nfsd_shutdown_threads(net);
++
+ 	kill_litter_super(sb);
+ 	put_net(net);
+ }
+@@ -1425,18 +1427,6 @@ static struct file_system_type nfsd_fs_type = {
+ };
+ MODULE_ALIAS_FS("nfsd");
+ 
+-int get_nfsdfs(struct net *net)
+-{
+-	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+-	struct vfsmount *mnt;
+-
+-	mnt =  vfs_kern_mount(&nfsd_fs_type, SB_KERNMOUNT, "nfsd", NULL);
+-	if (IS_ERR(mnt))
+-		return PTR_ERR(mnt);
+-	nn->nfsd_mnt = mnt;
+-	return 0;
+-}
+-
+ #ifdef CONFIG_PROC_FS
+ static int create_proc_exports_entry(void)
+ {
+diff --git a/fs/nfsd/nfsd.h b/fs/nfsd/nfsd.h
+index d63cf8196..2326428e2 100644
+--- a/fs/nfsd/nfsd.h
++++ b/fs/nfsd/nfsd.h
+@@ -93,13 +93,12 @@ int		nfsd_get_nrthreads(int n, int *, struct net *);
+ int		nfsd_set_nrthreads(int n, int *, struct net *);
+ int		nfsd_pool_stats_open(struct inode *, struct file *);
+ int		nfsd_pool_stats_release(struct inode *, struct file *);
++void		nfsd_shutdown_threads(struct net *net);
+ 
+ void		nfsd_destroy(struct net *net);
+ 
+ bool		i_am_nfsd(void);
+ 
+-int get_nfsdfs(struct net *);
+-
+ struct nfsdfs_client {
+ 	struct kref cl_ref;
+ 	void (*cl_release)(struct kref *kref);
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index f9c9f4c63..fcc57f5a1 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -596,6 +596,37 @@ static const struct svc_serv_ops nfsd_thread_sv_ops = {
+ 	.svo_module		= THIS_MODULE,
+ };
+ 
++static void nfsd_complete_shutdown(struct net *net)
++{
++	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
++
++	WARN_ON(!mutex_is_locked(&nfsd_mutex));
++
++	nn->nfsd_serv = NULL;
++	complete(&nn->nfsd_shutdown_complete);
++}
++
++void nfsd_shutdown_threads(struct net *net)
++{
++	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
++	struct svc_serv *serv;
++
++	mutex_lock(&nfsd_mutex);
++	serv = nn->nfsd_serv;
++	if (serv == NULL) {
++		mutex_unlock(&nfsd_mutex);
++		return;
++	}
++
++	svc_get(serv);
++	/* Kill outstanding nfsd threads */
++	serv->sv_ops->svo_setup(serv, NULL, 0);
++	nfsd_destroy(net);
++	mutex_unlock(&nfsd_mutex);
++	/* Wait for shutdown of nfsd_serv to complete */
++	wait_for_completion(&nn->nfsd_shutdown_complete);
++}
++
+ bool i_am_nfsd(void)
+ {
+ 	return kthread_func(current) == nfsd;
+@@ -618,11 +649,13 @@ int nfsd_create_serv(struct net *net)
+ 						&nfsd_thread_sv_ops);
+ 	if (nn->nfsd_serv == NULL)
+ 		return -ENOMEM;
++	init_completion(&nn->nfsd_shutdown_complete);
+ 
+ 	nn->nfsd_serv->sv_maxconn = nn->max_connections;
+ 	error = svc_bind(nn->nfsd_serv, net);
+ 	if (error < 0) {
+ 		svc_destroy(nn->nfsd_serv);
++		nfsd_complete_shutdown(net);
+ 		return error;
+ 	}
+ 
+@@ -671,7 +704,7 @@ void nfsd_destroy(struct net *net)
+ 		svc_shutdown_net(nn->nfsd_serv, net);
+ 	svc_destroy(nn->nfsd_serv);
+ 	if (destroy)
+-		nn->nfsd_serv = NULL;
++		nfsd_complete_shutdown(net);
+ }
+ 
+ int nfsd_set_nrthreads(int n, int *nthreads, struct net *net)
+-- 
+2.31.0.rc1
+
+
+From e59e9ab98bbc93c1209d3668b2f0f43b7bed1b75 Mon Sep 17 00:00:00 2001
+From: Dave Chinner <dchinner@redhat.com>
+Date: Wed, 17 Mar 2021 15:57:04 +1100
+Subject: [PATCH 35/36] xfs: No need for inode number error injection in
+ __xfs_dir3_data_check
+
+We call xfs_dir_ino_validate() for every dir entry in a directory
+when doing validity checking of the directory. It calls
+xfs_verify_dir_ino() then emits a corruption report if bad or does
+error injection if good. It is extremely costly:
+
+  43.27%  [kernel]  [k] xfs_dir3_leaf_check_int
+  10.28%  [kernel]  [k] __xfs_dir3_data_check
+   6.61%  [kernel]  [k] xfs_verify_dir_ino
+   4.16%  [kernel]  [k] xfs_errortag_test
+   4.00%  [kernel]  [k] memcpy
+   3.48%  [kernel]  [k] xfs_dir_ino_validate
+
+7% of the cpu usage in this directory traversal workload is
+xfs_dir_ino_validate() doing absolutely nothing.
+
+We don't need error injection to simulate a bad inode numbers in the
+directory structure because we can do that by fuzzing the structure
+on disk.
+
+And we don't need a corruption report, because the
+__xfs_dir3_data_check() will emit one if the inode number is bad.
+
+So just call xfs_verify_dir_ino() directly here, and get rid of all
+this unnecessary overhead:
+
+  40.30%  [kernel]  [k] xfs_dir3_leaf_check_int
+  10.98%  [kernel]  [k] __xfs_dir3_data_check
+   8.10%  [kernel]  [k] xfs_verify_dir_ino
+   4.42%  [kernel]  [k] memcpy
+   2.22%  [kernel]  [k] xfs_dir2_data_get_ftype
+   1.52%  [kernel]  [k] do_raw_spin_lock
+
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+---
+ fs/xfs/libxfs/xfs_dir2_data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/xfs/libxfs/xfs_dir2_data.c b/fs/xfs/libxfs/xfs_dir2_data.c
+index 375b3edb2..e67fa086f 100644
+--- a/fs/xfs/libxfs/xfs_dir2_data.c
++++ b/fs/xfs/libxfs/xfs_dir2_data.c
+@@ -218,7 +218,7 @@ __xfs_dir3_data_check(
+ 		 */
+ 		if (dep->namelen == 0)
+ 			return __this_address;
+-		if (xfs_dir_ino_validate(mp, be64_to_cpu(dep->inumber)))
++		if (!xfs_verify_dir_ino(mp, be64_to_cpu(dep->inumber)))
+ 			return __this_address;
+ 		if (offset + xfs_dir2_data_entsize(mp, dep->namelen) > end)
+ 			return __this_address;
+-- 
+2.31.0.rc1
+
+
+From ff2c9c3a3238826712feb0db09e2bf888be52135 Mon Sep 17 00:00:00 2001
+From: Dave Chinner <dchinner@redhat.com>
+Date: Wed, 17 Mar 2021 15:57:03 +1100
+Subject: [PATCH 36/36] xfs: type verification is expensive
+
+From a concurrent rm -rf workload:
+
+  41.04%  [kernel]  [k] xfs_dir3_leaf_check_int
+   9.85%  [kernel]  [k] __xfs_dir3_data_check
+   5.60%  [kernel]  [k] xfs_verify_ino
+   5.32%  [kernel]  [k] xfs_agino_range
+   4.21%  [kernel]  [k] memcpy
+   3.06%  [kernel]  [k] xfs_errortag_test
+   2.57%  [kernel]  [k] xfs_dir_ino_validate
+   1.66%  [kernel]  [k] xfs_dir2_data_get_ftype
+   1.17%  [kernel]  [k] do_raw_spin_lock
+   1.11%  [kernel]  [k] xfs_verify_dir_ino
+   0.84%  [kernel]  [k] __raw_callee_save___pv_queued_spin_unlock
+   0.83%  [kernel]  [k] xfs_buf_find
+   0.64%  [kernel]  [k] xfs_log_commit_cil
+
+THere's an awful lot of overhead in just range checking inode
+numbers in that, but each inode number check is not a lot of code.
+The total is a bit over 14.5% of the CPU time is spent validating
+inode numbers.
+
+The problem is that they deeply nested global scope functions so the
+overhead here is all in function call marshalling.
+
+   text	   data	    bss	    dec	    hex	filename
+   2077	      0	      0	   2077	    81d fs/xfs/libxfs/xfs_types.o.orig
+   2197	      0	      0	   2197	    895	fs/xfs/libxfs/xfs_types.o
+
+There's a small increase in binary size by inlining all the local
+nested calls in the verifier functions, but the same workload now
+profiles as:
+
+  40.69%  [kernel]  [k] xfs_dir3_leaf_check_int
+  10.52%  [kernel]  [k] __xfs_dir3_data_check
+   6.68%  [kernel]  [k] xfs_verify_dir_ino
+   4.22%  [kernel]  [k] xfs_errortag_test
+   4.15%  [kernel]  [k] memcpy
+   3.53%  [kernel]  [k] xfs_dir_ino_validate
+   1.87%  [kernel]  [k] xfs_dir2_data_get_ftype
+   1.37%  [kernel]  [k] do_raw_spin_lock
+   0.98%  [kernel]  [k] xfs_buf_find
+   0.94%  [kernel]  [k] __raw_callee_save___pv_queued_spin_unlock
+   0.73%  [kernel]  [k] xfs_log_commit_cil
+
+Now we only spend just over 10% of the time validing inode numbers
+for the same workload. Hence a few "inline" keyworks is good enough
+to reduce the validation overhead by 30%...
+
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+---
+ fs/xfs/libxfs/xfs_types.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/fs/xfs/libxfs/xfs_types.c b/fs/xfs/libxfs/xfs_types.c
+index b254fbeaa..04801362e 100644
+--- a/fs/xfs/libxfs/xfs_types.c
++++ b/fs/xfs/libxfs/xfs_types.c
+@@ -13,7 +13,7 @@
+ #include "xfs_mount.h"
+ 
+ /* Find the size of the AG, in blocks. */
+-xfs_agblock_t
++inline xfs_agblock_t
+ xfs_ag_block_count(
+ 	struct xfs_mount	*mp,
+ 	xfs_agnumber_t		agno)
+@@ -29,7 +29,7 @@ xfs_ag_block_count(
+  * Verify that an AG block number pointer neither points outside the AG
+  * nor points at static metadata.
+  */
+-bool
++inline bool
+ xfs_verify_agbno(
+ 	struct xfs_mount	*mp,
+ 	xfs_agnumber_t		agno,
+@@ -49,7 +49,7 @@ xfs_verify_agbno(
+  * Verify that an FS block number pointer neither points outside the
+  * filesystem nor points at static AG metadata.
+  */
+-bool
++inline bool
+ xfs_verify_fsbno(
+ 	struct xfs_mount	*mp,
+ 	xfs_fsblock_t		fsbno)
+@@ -85,7 +85,7 @@ xfs_verify_fsbext(
+ }
+ 
+ /* Calculate the first and last possible inode number in an AG. */
+-void
++inline void
+ xfs_agino_range(
+ 	struct xfs_mount	*mp,
+ 	xfs_agnumber_t		agno,
+@@ -116,7 +116,7 @@ xfs_agino_range(
+  * Verify that an AG inode number pointer neither points outside the AG
+  * nor points at static metadata.
+  */
+-bool
++inline bool
+ xfs_verify_agino(
+ 	struct xfs_mount	*mp,
+ 	xfs_agnumber_t		agno,
+@@ -146,7 +146,7 @@ xfs_verify_agino_or_null(
+  * Verify that an FS inode number pointer neither points outside the
+  * filesystem nor points at static AG metadata.
+  */
+-bool
++inline bool
+ xfs_verify_ino(
+ 	struct xfs_mount	*mp,
+ 	xfs_ino_t		ino)
+@@ -162,7 +162,7 @@ xfs_verify_ino(
+ }
+ 
+ /* Is this an internal inode number? */
+-bool
++inline bool
+ xfs_internal_inum(
+ 	struct xfs_mount	*mp,
+ 	xfs_ino_t		ino)
+@@ -190,7 +190,7 @@ xfs_verify_dir_ino(
+  * Verify that an realtime block number pointer doesn't point off the
+  * end of the realtime device.
+  */
+-bool
++inline bool
+ xfs_verify_rtbno(
+ 	struct xfs_mount	*mp,
+ 	xfs_rtblock_t		rtbno)
+@@ -215,7 +215,7 @@ xfs_verify_rtext(
+ }
+ 
+ /* Calculate the range of valid icount values. */
+-void
++inline void
+ xfs_icount_range(
+ 	struct xfs_mount	*mp,
+ 	unsigned long long	*min,
 -- 
 2.31.0.rc1
 

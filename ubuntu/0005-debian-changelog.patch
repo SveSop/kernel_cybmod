@@ -1,28 +1,118 @@
-From efb15e2fd1e2a386aa137c88b01ab946645393a3 Mon Sep 17 00:00:00 2001
+From 867696114ae7b0d8bd160a19aeee10d32938fdb9 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 11 Mar 2021 14:35:18 +0000
+Date: Thu, 25 Mar 2021 10:32:15 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 10926 +-------------------------------------
- 1 file changed, 3 insertions(+), 10923 deletions(-)
+ debian.master/changelog | 11016 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11013 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 050beab833ba..ad9cf361af92 100644
+index b66550969292..dba66d9549ef 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,10926 +1,6 @@
--linux-unstable (5.12.0-2.2) hirsute; urgency=medium
-+linux (5.11.6-051106.202103111435) groovy; urgency=low
+@@ -1,11016 +1,6 @@
+-linux-unstable (5.12.0-4.4) hirsute; urgency=medium
++linux (5.11.10-051110.202103251032) groovy; urgency=low
  
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
++  Mainline build at commit: v5.11.10
+ 
+-  * Fix broken efifb on graphics device without driver (LP: #1914411)
+-    - SAUCE: efifb: Ensure graphics device for efifb stays at PCI D0
++ -- Mainline Build <kernel@kathleen>  Thu, 25 Mar 2021 10:32:15 +0000
+ 
+-  * Fix system sleep on TGL systems with Intel ME (LP: #1919321)
+-    - SAUCE: PCI: Serialize TGL e1000e PM ops
+-
+-  * Miscellaneous Ubuntu changes
+-    - Rebase to v5.12-rc4
+-    - [Config] updateconfigs following v5.12-rc4 rebase
+-
+-  * Miscellaneous upstream changes
+-    - riscv: dts: fu740: fix cache-controller interrupts
+-    - riscv: sifive: fu740: cpu{1, 2, 3, 4} set compatible to sifive, u74-mc
+-    - riscv: sifive: unmatched: update for 16GB rev3
+-    - riscv: Add 3 SBI wrapper functions to get cpu manufacturer information
+-    - riscv: Get CPU manufacturer information
+-    - riscv: Introduce alternative mechanism to apply errata solution
+-    - riscv: sifive: apply errata "cip-453" patch
+-    - clk: sifive: Add pcie_aux clock in prci driver for PCIe driver
+-    - clk: sifive: Use reset-simple in prci driver for PCIe driver
+-    - MAINTAINERS: Add maintainers for SiFive FU740 PCIe driver
+-    - dt-bindings: PCI: Add SiFive FU740 PCIe host controller
+-    - PCI: designware: Add SiFive FU740 PCIe host controller driver
+-    - riscv: dts: Add PCIe support for the SiFive FU740-C000 SoC
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.12-rc4
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 22 Mar 2021 12:43:14 +0100
+-
+-linux-unstable (5.12.0-3.3) hirsute; urgency=medium
+-
+-  *  riscv: revert SiFive Unleashed CPUFreq (LP: #1917433)
+-    - SAUCE: Revert "SiFive Unleashed CPUFreq"
+-
+-  * Dell Precision 5550 takes up to 10 seconds to respond when coming out of
+-    sleep (LP: #1919123)
+-    - SAUCE: Input: i8042 - add dmi quirk
+-
+-  * LRMv4: switch to signing nvidia modules via the Ubuntu Modules signing key
+-    (LP: #1918134)
+-    - [Packaging] sync dkms-build et al from LRMv4
+-
+-  * curtin: install flash-kernel in arm64 UEFI unexpected (LP: #1918427)
+-    - [Packaging] Allow grub-efi-arm* to satisfy recommends on ARM
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * Enable Tegra support in arm64 for NVIDIA Jetson (LP: #1918471)
+-    - [Config] enable ARCH_TEGRA and all Tegra SOC's
+-    - [Packaging] include modern Tegra modules
+-
+-  * Cirrus Audio Codec CS8409/CS42L42: Input Device does not switch to headset
+-    Mic when a headset is inserted (LP: #1918378)
+-    - SAUCE: ALSA: hda/cirrus: Fix Headset Mic volume control name
+-
+-  * Cirrus Audio Codec CS8409/CS42L42 support (LP: #1916554)
+-    - ALSA: hda/cirrus: Increase AUTO_CFG_MAX_INS from 8 to 18
+-    - ALSA: hda/cirrus: Add support for CS8409 HDA bridge and CS42L42 companion
+-      codec.
+-    - ALSA: hda/cirrus: Add jack detect interrupt support from CS42L42 companion
+-      codec.
+-    - ALSA: hda/cirrus: Add Headphone and Headset MIC Volume Control
+-
+-  * drm/i915: Drop force_probe requirement for JSL (LP: #1917843)
+-    - SAUCE: drm/i915: Drop require_force_probe from JSL
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Skip d-i code if udebs are disabled
+-    - [Packaging] Disable udebs if $DEBIAN/d-i doesn't exist
+-    - [Packaging] remove dh-systemd build dependency
+-    - [Config] fix several annotaions with enforcement typos
+-    - [Config] refresh annotations
+-    - [Config] updateconfigs following v5.12-rc3 rebase
+-    - annotations: fixup after v5.12-rc3 rebase
+-    - Rebase to v5.12-rc3
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.12-rc3
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 16 Mar 2021 18:43:03 +0100
+-
+-linux-unstable (5.12.0-2.2) hirsute; urgency=medium
+-
 -  * Miscellaneous Ubuntu changes
 -    - Rebase to v5.12-rc2
 -    - [Config] updateconfigs following v5.12-rc2 rebase
-+  Mainline build at commit: v5.11.6
- 
+-
 -  [ Upstream Kernel Changes ]
-+ -- Mainline Build <kernel@kathleen>  Thu, 11 Mar 2021 14:35:18 +0000
- 
+-
 -  * Rebase to v5.12-rc2
 -
 - -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 08 Mar 2021 11:22:04 +0100
