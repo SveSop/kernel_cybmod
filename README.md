@@ -4,13 +4,14 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Linux 5.11.10  
+0000 : Linux 5.11.11  
 0001 : "Undead" PDS patchset (TkG)    
 0002 : 5.11 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
 0004 : "Old" fsync patch for backwards compatibility  
 0005 : PDS Update patch  
 0006 : ZSTD update patch  
+0007 : WineSync patch for Wine  
 0011 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0012 : Add option for SCHED_AUTOGROUP (Xanmod)  
 0020 : Ubuntu based config (See note below!)  

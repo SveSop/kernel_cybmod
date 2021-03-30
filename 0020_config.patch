@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10931 @@
+@@ -0,0 +1,10926 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.11.10-cybmod13 Kernel Configuration
++# Linux/x86 5.11.11-cybmod15 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
@@ -379,7 +379,6 @@ new file mode 100644
 +# CONFIG_MEXCAVATOR is not set
 +# CONFIG_MZEN is not set
 +# CONFIG_MZEN2 is not set
-+# CONFIG_MZEN3 is not set
 +# CONFIG_MPSC is not set
 +# CONFIG_MCORE2 is not set
 +# CONFIG_MATOM is not set
@@ -399,12 +398,7 @@ new file mode 100644
 +# CONFIG_MCASCADELAKE is not set
 +# CONFIG_MCOOPERLAKE is not set
 +# CONFIG_MTIGERLAKE is not set
-+# CONFIG_MSAPPHIRERAPIDS is not set
-+# CONFIG_MALDERLAKE is not set
 +# CONFIG_GENERIC_CPU is not set
-+# CONFIG_GENERIC_CPU2 is not set
-+# CONFIG_GENERIC_CPU3 is not set
-+# CONFIG_GENERIC_CPU4 is not set
 +CONFIG_MNATIVE=y
 +CONFIG_X86_INTERNODE_CACHE_SHIFT=6
 +CONFIG_X86_L1_CACHE_SHIFT=6
@@ -495,8 +489,8 @@ new file mode 100644
 +CONFIG_X86_UMIP=y
 +CONFIG_X86_INTEL_MEMORY_PROTECTION_KEYS=y
 +# CONFIG_X86_INTEL_TSX_MODE_OFF is not set
-+CONFIG_X86_INTEL_TSX_MODE_ON=y
-+# CONFIG_X86_INTEL_TSX_MODE_AUTO is not set
++# CONFIG_X86_INTEL_TSX_MODE_ON is not set
++CONFIG_X86_INTEL_TSX_MODE_AUTO=y
 +# CONFIG_X86_SGX is not set
 +CONFIG_EFI=y
 +CONFIG_EFI_STUB=y
@@ -2613,6 +2607,7 @@ new file mode 100644
 +CONFIG_XILINX_SDFEC=m
 +CONFIG_MISC_RTSX=m
 +CONFIG_PVPANIC=m
++CONFIG_WINESYNC=m
 +CONFIG_C2PORT=m
 +CONFIG_C2PORT_DURAMAR_2150=m
 +
@@ -8323,7 +8318,7 @@ new file mode 100644
 +#
 +CONFIG_XEN_BALLOON=y
 +CONFIG_XEN_BALLOON_MEMORY_HOTPLUG=y
-+CONFIG_XEN_BALLOON_MEMORY_HOTPLUG_LIMIT=512
++CONFIG_XEN_MEMORY_HOTPLUG_LIMIT=512
 +CONFIG_XEN_SCRUB_PAGES_DEFAULT=y
 +CONFIG_XEN_DEV_EVTCHN=m
 +CONFIG_XEN_BACKEND=y
