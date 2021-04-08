@@ -1,28 +1,133 @@
-From 867696114ae7b0d8bd160a19aeee10d32938fdb9 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 25 Mar 2021 10:32:15 +0000
+From a7641bd07cd8d6212421fe71b83d2fd828b594de Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 7 Apr 2021 14:32:31 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11016 +-------------------------------------
- 1 file changed, 3 insertions(+), 11013 deletions(-)
+ debian.master/changelog | 11121 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11118 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index b66550969292..dba66d9549ef 100644
+index ab7db7caa791..65b3c0f11d37 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11016 +1,6 @@
--linux-unstable (5.12.0-4.4) hirsute; urgency=medium
-+linux (5.11.10-051110.202103251032) groovy; urgency=low
+@@ -1,11121 +1,6 @@
+-linux-unstable (5.12.0-6.6) hirsute; urgency=medium
++linux (5.11.12-051112.202104071432) groovy; urgency=low
  
 -  * Packaging resync (LP: #1786013)
--    - update dkms package versions
-+  Mainline build at commit: v5.11.10
+-    - [Packaging] update variants
++  Mainline build at commit: v5.11.12
  
+-  * i915 doesn't support some high pixel clock 4k * 60Hz monitors (LP: #1922372)
+-    - drm/i915/vbt: update DP max link rate table
++ -- Mainline Build <kernel@sita>  Wed, 07 Apr 2021 14:32:31 +0000
+ 
+-  * Tegra "mmc0: Timeout waiting for hardware interrupt" (LP: #1921140)
+-    - SAUCE: mmc: host: Add required callbacks to set/clear CQE_EN bit
+-
+-  * Enable ath11k debugfs/tracing (LP: #1922033)
+-    - [Config] enable ath11k debugfs/tracing
+-
+-  * Fix mic on P620 after S3 resume (LP: #1921757)
+-    - ALSA: usb-audio: Carve out connector value checking into a helper
+-    - ALSA: usb-audio: Check connector value on resume
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] amd64,arm64: build KFENCE support but disable it by default
+-      (KFENCE_SAMPLE_INTERVAL=0)
+-    - Rebase to v5.12-rc6
+-
+-  * Miscellaneous upstream changes
+-    - drm/dp: add MSO related DPCD registers
+-    - drm/i915/edp: reject modes with dimensions other than fixed mode
+-    - drm/i915/edp: always add fixed mode to probed modes in ->get_modes()
+-    - drm/i915/edp: read sink MSO configuration for eDP 1.4+
+-    - drm/i915/reg: add stream splitter configuration definitions
+-    - drm/i915/mso: add splitter state readout for platforms that support it
+-    - drm/i915/mso: add splitter state check
+-    - drm/i915/edp: modify fixed and downclock modes for MSO
+-    - drm/i915/edp: enable eDP MSO during link training
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.12-rc6
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Wed, 07 Apr 2021 11:42:55 +0200
+-
+-linux-unstable (5.12.0-5.5) hirsute; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * alsa/realtek: extend the delay time in the  determine_headset_type for a
+-    Dell AIO (LP: #1920747)
+-    - SAUCE: ALSA: hda/realtek: fix a determine_headset_type issue for a Dell AIO
+-
+-  * power off stress test will hang on the TGL machines (LP: #1919930)
+-    - SAUCE: ASoC: SOF: Intel: TGL: set shutdown callback to hda_dsp_shutdown
+-    - [Config] set SND_SOC_SOF_HDA_ALWAYS_ENABLE_DMI_L1 to n
+-
+-  * lockdown on power (LP: #1855668)
+-    - SAUCE: (lockdown) powerpc: lock down kernel in secure boot mode
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] arm64 -- unify build_image and kernel_file values
+-    - SAUCE: (lockdown) Add efi_status_to_str() and rework efi_status_to_err().
+-    - SAUCE: (lockdown) Make get_cert_list() use efi_status_to_str() to print
+-      error messages.
+-    - SAUCE: (lockdown) security: lockdown: expose a hook to lock the kernel down
+-    - SAUCE: (lockdown) efi: Add an EFI_SECURE_BOOT flag to indicate secure boot
+-      mode
+-    - SAUCE: (lockdown) efi: Lock down the kernel if booted in secure boot mode
+-    - SAUCE: (lockdown) s390: Lock down the kernel when the IPL secure flag is set
+-    - SAUCE: (lockdown) KEYS: Make use of platform keyring for module signature
+-      verify
+-    - SAUCE: (lockdown) arm64: Allow locking down the kernel under EFI secure boot
+-    - SAUCE: (lockdown) security: lockdown: Make
+-      CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT more generic
+-    - SAUCE: xr-usb-serial: clean up indentation
+-    - SAUCE: xr-usb-serial: clean up build warnings
+-    - SAUCE: apparmor: Fix build error, make sk parameter const
+-    - Rebase to v5.12-rc5
+-    - [Config] updateconfigs following v5.12-rc5 rebase
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: SAUCE: (lockdown) s390: Lock down the kernel when the IPL
+-      secure flag is set"
+-    - Revert "UBUNTU: SAUCE: (lockdown) efi: Add an EFI_SECURE_BOOT flag to
+-      indicate secure boot mode"
+-    - Revert "UBUNTU: SAUCE: (lockdown) powerpc: lock down kernel in secure boot
+-      mode"
+-    - Revert "UBUNTU: SAUCE: (lockdown) security: lockdown: Make
+-      CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT more generic"
+-    - Revert "UBUNTU: SAUCE: (lockdown) arm64: Allow locking down the kernel under
+-      EFI secure boot"
+-    - Revert "UBUNTU: SAUCE: (lockdown) KEYS: Make use of platform keyring for
+-      module signature verify"
+-    - Revert "UBUNTU: SAUCE: (lockdown) efi: Lock down the kernel if booted in
+-      secure boot mode"
+-    - Revert "UBUNTU: SAUCE: (lockdown) security: lockdown: expose a hook to lock
+-      the kernel down"
+-    - Revert "UBUNTU: SAUCE: (lockdown) Make get_cert_list() use
+-      efi_status_to_str() to print error messages."
+-    - Revert "UBUNTU: SAUCE: (lockdown) Add efi_status_to_str() and rework
+-      efi_status_to_err()."
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.12-rc5
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 29 Mar 2021 12:59:38 +0200
+-
+-linux-unstable (5.12.0-4.4) hirsute; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
 -  * Fix broken efifb on graphics device without driver (LP: #1914411)
 -    - SAUCE: efifb: Ensure graphics device for efifb stays at PCI D0
-+ -- Mainline Build <kernel@kathleen>  Thu, 25 Mar 2021 10:32:15 +0000
- 
+-
 -  * Fix system sleep on TGL systems with Intel ME (LP: #1919321)
 -    - SAUCE: PCI: Serialize TGL e1000e PM ops
 -

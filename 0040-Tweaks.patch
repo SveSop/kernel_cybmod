@@ -10,7 +10,6 @@ Subject: [PATCH] Tweaks
  include/linux/mm.h                 |  2 +-
  include/linux/pagemap.h            |  2 +-
  include/uapi/linux/vt.h            | 15 +--------------
- kernel/sched/core.c                |  6 +++---
  kernel/sched/fair.c                | 18 +++++++++---------
  mm/huge_memory.c                   |  2 +-
  mm/page-writeback.c                |  4 ++--
@@ -130,31 +129,6 @@ index 3bceead8d..7911fadb8 100644
  		/* Note: the ioctl VT_GETSTATE does not work for
  		   consoles 16 and higher (since it returns a short) */
  
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index fa1f83083..48dbf7452 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -64,7 +64,7 @@ const_debug unsigned int sysctl_sched_features =
-  * Number of tasks to iterate in a single balance run.
-  * Limited because this is done with IRQs disabled.
-  */
--const_debug unsigned int sysctl_sched_nr_migrate = 32;
-+const_debug unsigned int sysctl_sched_nr_migrate = 256;
- 
- /*
-  * period over which we measure -rt task CPU usage in us.
-@@ -76,9 +76,9 @@ __read_mostly int scheduler_running;
- 
- /*
-  * part of the period that we allow rt tasks to run in us.
-- * default: 0.95s
-+ * Tweaked: 0.98s
-  */
--int sysctl_sched_rt_runtime = 950000;
-+int sysctl_sched_rt_runtime = 980000;
- 
- 
- /*
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
 index bbc787942..aef9396e9 100644
 --- a/kernel/sched/fair.c

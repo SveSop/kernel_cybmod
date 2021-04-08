@@ -1,10 +1,11 @@
-From 28e32d808c94eb7e8f5e097a0f75a32ffd565602 Mon Sep 17 00:00:00 2001
+From 12eb1bd6d8eba74623bf111f6c1989f1e128752e Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Fri, 26 Mar 2021 12:18:57 -0700
-Subject: [PATCH 1/4] lib: zstd: Add kernel-specific API
+Date: Fri, 11 Sep 2020 16:49:00 -0700
+Subject: [PATCH 1/3] lib: zstd: Add kernel-specific API
 
 This patch:
 - Moves `include/linux/zstd.h` -> `include/linux/zstd_lib.h`
+- Updates modified zstd headers to yearless copyright
 - Adds a new API in `include/linux/zstd.h` that is functionally
   equivalent to the in-use subset of the current API. Functions are
   renamed to avoid symbol collisions with zstd, to make it clear it is
@@ -27,12 +28,12 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  fs/f2fs/compress.c         |   56 +-
  fs/pstore/platform.c       |    2 +-
  fs/squashfs/zstd_wrapper.c |   16 +-
- include/linux/zstd.h       | 1218 ++++++++----------------------------
- include/linux/zstd_lib.h   | 1157 ++++++++++++++++++++++++++++++++++
+ include/linux/zstd.h       | 1243 ++++++++----------------------------
+ include/linux/zstd_lib.h   | 1157 +++++++++++++++++++++++++++++++++
  lib/decompress_unzstd.c    |   42 +-
- lib/zstd/compress.c        |  107 ++--
+ lib/zstd/compress.c        |  123 ++--
  lib/zstd/decompress.c      |  112 ++--
- 10 files changed, 1657 insertions(+), 1149 deletions(-)
+ 10 files changed, 1690 insertions(+), 1157 deletions(-)
  create mode 100644 include/linux/zstd_lib.h
 
 diff --git a/crypto/zstd.c b/crypto/zstd.c
@@ -500,16 +501,31 @@ index b7cb1faa6..6967c0aae 100644
  			break;
  		}
 diff --git a/include/linux/zstd.h b/include/linux/zstd.h
-index 249575e24..a17161692 100644
+index 249575e24..9fbc7729b 100644
 --- a/include/linux/zstd.h
 +++ b/include/linux/zstd.h
-@@ -1,3 +1,4 @@
+@@ -1,138 +1,96 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
  /*
-  * Copyright (c) 2016-present, Yann Collet, Facebook, Inc.
+- * Copyright (c) 2016-present, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
   * All rights reserved.
-@@ -14,125 +15,73 @@
-  * ("BSD").
+  *
+- * This source code is licensed under the BSD-style license found in the
+- * LICENSE file in the root directory of https://github.com/facebook/zstd.
+- * An additional grant of patent rights can be found in the PATENTS file in the
+- * same directory.
+- *
+- * This program is free software; you can redistribute it and/or modify it under
+- * the terms of the GNU General Public License version 2 as published by the
+- * Free Software Foundation. This program is dual-licensed; you may select
+- * either version 2 of the GNU General Public License ("GPL") or BSD license
+- * ("BSD").
++ * This source code is licensed under both the BSD-style license (found in the
++ * LICENSE file in the root directory of https://github.com/facebook/zstd) and
++ * the GPLv2 (found in the COPYING file in the root directory of
++ * https://github.com/facebook/zstd). You may select, at your option, one of the
++ * above-listed licenses.
   */
  
 -#ifndef ZSTD_H
@@ -519,11 +535,24 @@ index 249575e24..a17161692 100644
  
 -/* ======   Dependency   ======*/
 -#include <linux/types.h>   /* size_t */
--
--
++/**
++ * This is a kernel-style API that wraps the upstream zstd API, which cannot be
++ * used directly because the symbols aren't exported. It exposes the minimal
++ * functionality which is currently required by users of zstd in the kernel.
++ * Expose extra functions from lib/zstd/zstd.h as needed.
++ */
+ 
++/* ======   Dependency   ====== */
++#include <linux/types.h>
++#include <linux/zstd_lib.h>
+ 
 -/*-*****************************************************************************
 - * Introduction
-- *
++/* ======   Helper Functions   ====== */
++/**
++ * zstd_compress_bound() - maximum compressed size in worst case scenario
++ * @src_size: The size of the data to compress.
+  *
 - * zstd, short for Zstandard, is a fast lossless compression algorithm,
 - * targeting real-time compression scenarios at zlib-level and better
 - * compression ratios. The zstd compression library provides in-memory
@@ -538,27 +567,25 @@ index 249575e24..a17161692 100644
 - *  - a single step (described as Simple dictionary API)
 - *  - a single step, reusing a dictionary (described as Fast dictionary API)
 - ******************************************************************************/
-+/**
-+ * This is a kernel-style API that wraps the upstream zstd API, which cannot be
-+ * used directly because the symbols aren't exported. It exposes the minimal
-+ * functionality which is currently required by users of zstd in the kernel.
-+ * Expose extra functions from lib/zstd/zstd.h as needed.
-+ */
- 
+-
 -/*======  Helper functions  ======*/
-+/* ======   Dependency   ====== */
-+#include <linux/types.h>
-+#include <linux/zstd_lib.h>
++ * Return:    The maximum compressed size in the worst case scenario.
++ */
++size_t zstd_compress_bound(size_t src_size);
  
-+/* ======   Helper Functions   ====== */
  /**
 - * enum ZSTD_ErrorCode - zstd error codes
-+ * zstd_compress_bound() - maximum compressed size in worst case scenario
-+ * @src_size: The size of the data to compress.
++ * zstd_is_error() - tells if a size_t function result is an error code
++ * @code:  The function result to check for error.
   *
 - * Functions that return size_t can be checked for errors using ZSTD_isError()
 - * and the ZSTD_ErrorCode can be extracted using ZSTD_getErrorCode().
-+ * Return:    The maximum compressed size in the worst case scenario.
++ * Return: Non-zero iff the code is an error.
++ */
++unsigned int zstd_is_error(size_t code);
++
++/**
++ * enum zstd_error_code - zstd error codes
   */
 -typedef enum {
 -	ZSTD_error_no_error,
@@ -585,53 +612,53 @@ index 249575e24..a17161692 100644
 -	ZSTD_error_dictionaryCreation_failed,
 -	ZSTD_error_maxCode
 -} ZSTD_ErrorCode;
-+size_t zstd_compress_bound(size_t src_size);
++typedef ZSTD_ErrorCode zstd_error_code;
  
  /**
 - * ZSTD_maxCLevel() - maximum compression level available
-+ * zstd_is_error() - tells if a size_t function result is an error code
-+ * @code:  The function result to check for error.
++ * zstd_get_error_code() - translates an error function result to an error code
++ * @code:  The function result for which zstd_is_error(code) is true.
   *
 - * Return: Maximum compression level available.
-+ * Return: Non-zero iff the code is an error.
++ * Return: A unique error code for this error.
   */
 -int ZSTD_maxCLevel(void);
-+unsigned int zstd_is_error(size_t code);
++zstd_error_code zstd_get_error_code(size_t code);
 +
  /**
 - * ZSTD_compressBound() - maximum compressed size in worst case scenario
 - * @srcSize: The size of the data to compress.
-- *
++ * zstd_get_error_name() - translates an error function result to a string
++ * @code:  The function result for which zstd_is_error(code) is true.
+  *
 - * Return:   The maximum compressed size in the worst case scenario.
-+ * enum zstd_error_code - zstd error codes
++ * Return: An error string corresponding to the error code.
   */
 -size_t ZSTD_compressBound(size_t srcSize);
-+typedef ZSTD_ErrorCode zstd_error_code;
++const char *zstd_get_error_name(size_t code);
 +
  /**
 - * ZSTD_isError() - tells if a size_t function result is an error code
 - * @code:  The function result to check for error.
-+ * zstd_get_error_code() - translates an error function result to an error code
-+ * @code:  The function result for which zstd_is_error(code) is true.
++ * zstd_min_clevel() - minimum allowed compression level
   *
 - * Return: Non-zero iff the code is an error.
-+ * Return: A unique error code for this error.
++ * Return: The minimum allowed compression level.
   */
 -static __attribute__((unused)) unsigned int ZSTD_isError(size_t code)
 -{
 -	return code > (size_t)-ZSTD_error_maxCode;
 -}
-+zstd_error_code zstd_get_error_code(size_t code);
++int zstd_min_clevel(void);
 +
  /**
 - * ZSTD_getErrorCode() - translates an error function result to a ZSTD_ErrorCode
 - * @functionResult: The result of a function for which ZSTD_isError() is true.
-+ * zstd_get_error_name() - translates an error function result to a string
-+ * @code:  The function result for which zstd_is_error(code) is true.
++ * zstd_max_clevel() - maximum allowed compression level
   *
 - * Return:          The ZSTD_ErrorCode corresponding to the functionResult or 0
 - *                  if the functionResult isn't an error.
-+ * Return: An error string corresponding to the error code.
++ * Return: The maximum allowed compression level.
   */
 -static __attribute__((unused)) ZSTD_ErrorCode ZSTD_getErrorCode(
 -	size_t functionResult)
@@ -640,7 +667,7 @@ index 249575e24..a17161692 100644
 -		return (ZSTD_ErrorCode)0;
 -	return (ZSTD_ErrorCode)(0 - functionResult);
 -}
-+const char *zstd_get_error_name(size_t code);
++int zstd_max_clevel(void);
 +
 +/* ======   Parameter Selection   ====== */
  
@@ -675,7 +702,7 @@ index 249575e24..a17161692 100644
   * @hashLog:      Dispatch table. Larger means more compression,
   *                slower, and more memory.
   * @searchLog:    Number of searches. Larger means more compression and slower.
-@@ -141,1017 +90,342 @@ typedef enum {
+@@ -141,1017 +99,342 @@ typedef enum {
   * @targetLength: Acceptable match size for optimal parser (only). Larger means
   *                more compression, and slower.
   * @strategy:     The zstd compression strategy.
@@ -782,17 +809,18 @@ index 249575e24..a17161692 100644
   *
 - * Return:   A lower bound on the size of the workspace that is passed to
 - *           ZSTD_initCCtx().
-- */
++ * Return:      A lower bound on the size of the workspace that is passed to
++ *              zstd_init_cctx().
+  */
 -size_t ZSTD_CCtxWorkspaceBound(ZSTD_compressionParameters cParams);
--
--/**
++size_t zstd_cctx_workspace_bound(const zstd_compression_parameters *parameters);
+ 
+ /**
 - * struct ZSTD_CCtx - the zstd compression context
 - *
 - * When compressing many times it is recommended to allocate a context just once
 - * and reuse it for each successive compression operation.
-+ * Return:      A lower bound on the size of the workspace that is passed to
-+ *              zstd_init_cctx().
-  */
+- */
 -typedef struct ZSTD_CCtx_s ZSTD_CCtx;
 -/**
 - * ZSTD_initCCtx() - initialize a zstd compression context
@@ -868,9 +896,8 @@ index 249575e24..a17161692 100644
 -/*-************************
 - * Simple dictionary API
 - **************************/
-+size_t zstd_cctx_workspace_bound(const zstd_compression_parameters *parameters);
- 
- /**
+-
+-/**
 - * ZSTD_compress_usingDict() - compress src into dst using a dictionary
 - * @ctx:         The context. Must have been initialized with a workspace at
 - *               least as large as ZSTD_CCtxWorkspaceBound(params.cParams).
@@ -947,10 +974,6 @@ index 249575e24..a17161692 100644
 - * @workspace:     The workspace. It must outlive the returned ZSTD_CDict.
 - * @workspaceSize: The workspace size. Must be at least
 - *                 ZSTD_CDictWorkspaceBound(params.cParams).
-- *
-- * When compressing multiple messages / blocks with the same dictionary it is
-- * recommended to load it just once. The ZSTD_CDict merely references the
-- * dictBuffer, so it must outlive the returned ZSTD_CDict.
 + * zstd_compress_cctx() - compress src into dst with the initialized parameters
 + * @cctx:         The context. Must have been initialized with zstd_init_cctx().
 + * @dst:          The buffer to compress src into.
@@ -960,6 +983,10 @@ index 249575e24..a17161692 100644
 + * @src_size:     The size of the data to compress.
 + * @parameters:   The compression parameters to be used.
   *
+- * When compressing multiple messages / blocks with the same dictionary it is
+- * recommended to load it just once. The ZSTD_CDict merely references the
+- * dictBuffer, so it must outlive the returned ZSTD_CDict.
+- *
 - * Return:         The digested dictionary emplaced into workspace.
 + * Return:        The compressed size or an error, which can be checked using
 + *                zstd_is_error().
@@ -1067,10 +1094,10 @@ index 249575e24..a17161692 100644
 -size_t ZSTD_decompress_usingDDict(ZSTD_DCtx *dctx, void *dst,
 -	size_t dstCapacity, const void *src, size_t srcSize,
 -	const ZSTD_DDict *ddict);
--
 +size_t zstd_decompress_dctx(zstd_dctx *dctx, void *dst, size_t dst_capacity,
 +	const void *src, size_t src_size);
  
+-
 -/*-**************************
 - * Streaming
 - ***************************/
@@ -1108,11 +1135,11 @@ index 249575e24..a17161692 100644
 -	size_t size;
 -	size_t pos;
 -} ZSTD_outBuffer;
--
 +typedef ZSTD_outBuffer zstd_out_buffer;
  
 +/* ======   Streaming Compression   ====== */
  
+-
 -/*-*****************************************************************************
 - * Streaming compression - HowTo
 - *
@@ -1153,18 +1180,18 @@ index 249575e24..a17161692 100644
   *
   * Return:   A lower bound on the size of the workspace that is passed to
 - *           ZSTD_initCStream() and ZSTD_initCStream_usingCDict().
+- */
+-size_t ZSTD_CStreamWorkspaceBound(ZSTD_compressionParameters cParams);
+-
+-/**
+- * struct ZSTD_CStream - the zstd streaming compression context
 + *           zstd_init_cstream().
   */
--size_t ZSTD_CStreamWorkspaceBound(ZSTD_compressionParameters cParams);
+-typedef struct ZSTD_CStream_s ZSTD_CStream;
 +size_t zstd_cstream_workspace_bound(const zstd_compression_parameters *cparams);
  
- /**
-- * struct ZSTD_CStream - the zstd streaming compression context
-- */
--typedef struct ZSTD_CStream_s ZSTD_CStream;
--
 -/*===== ZSTD_CStream management functions =====*/
--/**
+ /**
 - * ZSTD_initCStream() - initialize a zstd streaming compression context
 - * @params:         The zstd compression parameters.
 - * @pledgedSrcSize: If params.fParams.contentSizeFlag == 1 then the caller must
@@ -1175,22 +1202,6 @@ index 249575e24..a17161692 100644
 - *                  the returned context.
 - * @workspaceSize:  The size of workspace.
 - *                  Use ZSTD_CStreamWorkspaceBound(params.cParams) to determine
-- *                  how large the workspace must be.
-- *
-- * Return:          The zstd streaming compression context.
-- */
--ZSTD_CStream *ZSTD_initCStream(ZSTD_parameters params,
--	unsigned long long pledgedSrcSize, void *workspace,
--	size_t workspaceSize);
--
--/**
-- * ZSTD_initCStream_usingCDict() - initialize a streaming compression context
-- * @cdict:          The digested dictionary to use for compression.
-- * @pledgedSrcSize: Optionally the source size, or zero if unknown.
-- * @workspace:      The workspace to emplace the context into. It must outlive
-- *                  the returned context.
-- * @workspaceSize:  The size of workspace. Call ZSTD_CStreamWorkspaceBound()
-- *                  with the cParams used to initialize the cdict to determine
 - *                  how large the workspace must be.
 + * zstd_init_cstream() - initialize a zstd streaming compression context
 + * @parameters        The zstd parameters to use for compression.
@@ -1207,14 +1218,30 @@ index 249575e24..a17161692 100644
 - * Return:          The zstd streaming compression context.
 + * Return:            The zstd streaming compression context or NULL on error.
   */
--ZSTD_CStream *ZSTD_initCStream_usingCDict(const ZSTD_CDict *cdict,
+-ZSTD_CStream *ZSTD_initCStream(ZSTD_parameters params,
 -	unsigned long long pledgedSrcSize, void *workspace,
 -	size_t workspaceSize);
 +zstd_cstream *zstd_init_cstream(const zstd_parameters *parameters,
 +	unsigned long long pledged_src_size, void *workspace, size_t workspace_size);
  
--/*===== Streaming compression functions =====*/
  /**
+- * ZSTD_initCStream_usingCDict() - initialize a streaming compression context
+- * @cdict:          The digested dictionary to use for compression.
+- * @pledgedSrcSize: Optionally the source size, or zero if unknown.
+- * @workspace:      The workspace to emplace the context into. It must outlive
+- *                  the returned context.
+- * @workspaceSize:  The size of workspace. Call ZSTD_CStreamWorkspaceBound()
+- *                  with the cParams used to initialize the cdict to determine
+- *                  how large the workspace must be.
+- *
+- * Return:          The zstd streaming compression context.
+- */
+-ZSTD_CStream *ZSTD_initCStream_usingCDict(const ZSTD_CDict *cdict,
+-	unsigned long long pledgedSrcSize, void *workspace,
+-	size_t workspaceSize);
+-
+-/*===== Streaming compression functions =====*/
+-/**
 - * ZSTD_resetCStream() - reset the context using parameters from creation
 - * @zcs:            The zstd streaming compression context to reset.
 - * @pledgedSrcSize: Optionally the source size, or zero if unknown.
@@ -1328,11 +1355,11 @@ index 249575e24..a17161692 100644
 + *           error, which can be checked using zstd_is_error().
   */
 -size_t ZSTD_CStreamOutSize(void);
--
 +size_t zstd_end_stream(zstd_cstream *cstream, zstd_out_buffer *output);
  
 +/* ======   Streaming Decompression   ====== */
  
+-
 -/*-*****************************************************************************
 - * Streaming decompression - HowTo
 - *
@@ -1460,12 +1487,7 @@ index 249575e24..a17161692 100644
 - * ZSTD_DStreamInSize() - recommended size for the input buffer
 - *
 - * Return: The recommended size for the input buffer.
-+ * Return:   Returns 0 iff a frame is completely decoded and fully flushed.
-+ *           Otherwise returns a hint for the number of bytes to use as the
-+ *           input for the next function call or an error, which can be checked
-+ *           using zstd_is_error(). The size hint will never load more than the
-+ *           frame.
-  */
+- */
 -size_t ZSTD_DStreamInSize(void);
 -/**
 - * ZSTD_DStreamOutSize() - recommended size for the output buffer
@@ -1547,9 +1569,7 @@ index 249575e24..a17161692 100644
 - *           frame header. `ZSTD_CONTENTSIZE_ERROR` on invalid input.
 - */
 -unsigned long long ZSTD_getFrameContentSize(const void *src, size_t srcSize);
-+size_t zstd_decompress_stream(zstd_dstream *dstream, zstd_out_buffer *output,
-+	zstd_in_buffer *input);
- 
+-
 -/**
 - * ZSTD_findDecompressedSize() - returns decompressed size of a series of frames
 - * @src:     It should point to the start of a series of zstd encoded and/or
@@ -1571,29 +1591,19 @@ index 249575e24..a17161692 100644
 - *           `ZSTD_CONTENTSIZE_ERROR` if an error occurred.
 - */
 -unsigned long long ZSTD_findDecompressedSize(const void *src, size_t srcSize);
-+/* ======   Frame Inspection Functions ====== */
- 
+-
 -/*-*************************************
 - * Advanced compression functions
 - **************************************/
- /**
+-/**
 - * ZSTD_checkCParams() - ensure parameter values remain within authorized range
 - * @cParams: The zstd compression parameters.
-+ * zstd_find_frame_compressed_size() - returns the size of a compressed frame
-+ * @src:      Source buffer. It should point to the start of a zstd encoded
-+ *            frame or a skippable frame.
-+ * @src_size: The size of the source buffer. It must be at least as large as the
-+ *            size of the frame.
-  *
+- *
 - * Return:   Zero or an error, which can be checked using ZSTD_isError().
-+ * Return:    The compressed size of the frame pointed to by `src` or an error,
-+ *            which can be check with zstd_is_error().
-+ *            Suitable to pass to ZSTD_decompress() or similar functions.
-  */
+- */
 -size_t ZSTD_checkCParams(ZSTD_compressionParameters cParams);
-+size_t zstd_find_frame_compressed_size(const void *src, size_t src_size);
- 
- /**
+-
+-/**
 - * ZSTD_adjustCParams() - optimize parameters for a given srcSize and dictSize
 - * @srcSize:  Optionally the estimated source size, or zero if unknown.
 - * @dictSize: Optionally the estimated dictionary size, or zero if unknown.
@@ -1623,9 +1633,16 @@ index 249575e24..a17161692 100644
 - * Return:    The dictionary id stored within the dictionary or 0 if the
 - *            dictionary is not a zstd dictionary. If it returns 0 the
 - *            dictionary can still be loaded as a content-only dictionary.
-- */
++ * Return:   Returns 0 iff a frame is completely decoded and fully flushed.
++ *           Otherwise returns a hint for the number of bytes to use as the
++ *           input for the next function call or an error, which can be checked
++ *           using zstd_is_error(). The size hint will never load more than the
++ *           frame.
+  */
 -unsigned int ZSTD_getDictID_fromDict(const void *dict, size_t dictSize);
--
++size_t zstd_decompress_stream(zstd_dstream *dstream, zstd_out_buffer *output,
++	zstd_in_buffer *input);
+ 
 -/**
 - * ZSTD_getDictID_fromDDict() - returns the dictionary id stored in a ZSTD_DDict
 - * @ddict: The ddict to find the id of.
@@ -1635,22 +1652,32 @@ index 249575e24..a17161692 100644
 - *         content-only dictionary.
 - */
 -unsigned int ZSTD_getDictID_fromDDict(const ZSTD_DDict *ddict);
--
--/**
++/* ======   Frame Inspection Functions ====== */
+ 
+ /**
 - * ZSTD_getDictID_fromFrame() - returns the dictionary id stored in a zstd frame
 - * @src:     Source buffer. It must be a zstd encoded frame.
 - * @srcSize: The size of the source buffer. It must be at least as large as the
 - *           frame header. `ZSTD_frameHeaderSize_max` is always large enough.
-- *
++ * zstd_find_frame_compressed_size() - returns the size of a compressed frame
++ * @src:      Source buffer. It should point to the start of a zstd encoded
++ *            frame or a skippable frame.
++ * @src_size: The size of the source buffer. It must be at least as large as the
++ *            size of the frame.
+  *
 - * Return:   The dictionary id required to decompress the frame stored within
 - *           `src` or 0 if the dictionary id could not be decoded. It can return
 - *           0 if the frame does not require a dictionary, the dictionary id
 - *           wasn't stored in the frame, `src` is not a zstd frame, or `srcSize`
 - *           is too small.
-- */
++ * Return:    The compressed size of the frame pointed to by `src` or an error,
++ *            which can be check with zstd_is_error().
++ *            Suitable to pass to ZSTD_decompress() or similar functions.
+  */
 -unsigned int ZSTD_getDictID_fromFrame(const void *src, size_t srcSize);
--
--/**
++size_t zstd_find_frame_compressed_size(const void *src, size_t src_size);
+ 
+ /**
 - * struct ZSTD_frameParams - zstd frame parameters stored in the frame header
 + * struct zstd_frame_params - zstd frame parameters stored in the frame header
   * @frameContentSize: The frame content size, or 0 if not present.
@@ -1899,12 +1926,12 @@ index 249575e24..a17161692 100644
 +#endif  /* LINUX_ZSTD_H */
 diff --git a/include/linux/zstd_lib.h b/include/linux/zstd_lib.h
 new file mode 100644
-index 000000000..249575e24
+index 000000000..13151c34f
 --- /dev/null
 +++ b/include/linux/zstd_lib.h
 @@ -0,0 +1,1157 @@
 +/*
-+ * Copyright (c) 2016-present, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under the BSD-style license found in the
@@ -2696,11 +2723,11 @@ index 000000000..249575e24
 +/* for static allocation */
 +#define ZSTD_FRAMEHEADERSIZE_MAX 18
 +#define ZSTD_FRAMEHEADERSIZE_MIN  6
-+static const size_t ZSTD_frameHeaderSize_prefix = 5;
-+static const size_t ZSTD_frameHeaderSize_min = ZSTD_FRAMEHEADERSIZE_MIN;
-+static const size_t ZSTD_frameHeaderSize_max = ZSTD_FRAMEHEADERSIZE_MAX;
++#define ZSTD_frameHeaderSize_prefix 5
++#define ZSTD_frameHeaderSize_min ZSTD_FRAMEHEADERSIZE_MIN
++#define ZSTD_frameHeaderSize_max ZSTD_FRAMEHEADERSIZE_MAX
 +/* magic number + skippable frame length */
-+static const size_t ZSTD_skippableHeaderSize = 8;
++#define ZSTD_skippableHeaderSize 8
 +
 +
 +/*-*************************************
@@ -3061,7 +3088,7 @@ index 000000000..249575e24
 +
 +#endif  /* ZSTD_H */
 diff --git a/lib/decompress_unzstd.c b/lib/decompress_unzstd.c
-index 790abc472..dab2d55cf 100644
+index 790abc472..c88aad49e 100644
 --- a/lib/decompress_unzstd.c
 +++ b/lib/decompress_unzstd.c
 @@ -91,11 +91,15 @@
@@ -3069,7 +3096,7 @@ index 790abc472..dab2d55cf 100644
  static int INIT handle_zstd_error(size_t ret, void (*error)(char *x))
  {
 -	const int err = ZSTD_getErrorCode(ret);
-+	const zstd_error_code err = ZSTD_getErrorCode(ret);
++	const zstd_error_code err = zstd_get_error_code(ret);
  
 -	if (!ZSTD_isError(ret))
 +	if (!zstd_is_error(ret))
@@ -3186,10 +3213,10 @@ index 790abc472..dab2d55cf 100644
  		if (err)
  			goto out;
 diff --git a/lib/zstd/compress.c b/lib/zstd/compress.c
-index b080264ed..02667fed9 100644
+index b080264ed..57aaa6430 100644
 --- a/lib/zstd/compress.c
 +++ b/lib/zstd/compress.c
-@@ -3443,43 +3443,76 @@ ZSTD_parameters ZSTD_getParams(int compressionLevel, unsigned long long srcSize,
+@@ -3443,43 +3443,92 @@ ZSTD_parameters ZSTD_getParams(int compressionLevel, unsigned long long srcSize,
  	return params;
  }
  
@@ -3235,6 +3262,22 @@ index b080264ed..02667fed9 100644
 +	return ZSTD_compressBound(src_size);
 +}
 +EXPORT_SYMBOL(zstd_compress_bound);
++
++int zstd_min_clevel(void)
++{
++	/*
++	 * zstd-1.3.1 doesn't implement ZSTD_minCLevel().
++	 * Return 0 (default level).
++	 */
++	return 0;
++}
++EXPORT_SYMBOL(zstd_min_clevel);
++
++int zstd_max_clevel(void)
++{
++	return ZSTD_maxCLevel();
++}
++EXPORT_SYMBOL(zstd_max_clevel);
 +
 +zstd_parameters zstd_get_params(int level,
 +	unsigned long long estimated_src_size)
@@ -3430,10 +3473,10 @@ index 66cd487a3..02e92c2cb 100644
 2.31.0.97.g1424303384
 
 
-From 4a605059db409334d3bcce54b6c651b200019a54 Mon Sep 17 00:00:00 2001
+From 73957c89f48c6bcc8311d4f6e5e3b729a05239e7 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Fri, 26 Mar 2021 12:18:58 -0700
-Subject: [PATCH 2/4] lib: zstd: Add decompress_sources.h for decompress_unzstd
+Date: Mon, 14 Sep 2020 12:54:12 -0700
+Subject: [PATCH 2/3] lib: zstd: Add decompress_sources.h for decompress_unzstd
 
 Adds decompress_sources.h which includes every .c file necessary for
 zstd decompression. This is used in decompress_unzstd.c so the internal
@@ -3445,12 +3488,12 @@ callers. Instead we just need to update decompress_sources.h.
 Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
  lib/decompress_unzstd.c       |  6 +-----
- lib/zstd/decompress_sources.h | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ lib/zstd/decompress_sources.h | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 5 deletions(-)
  create mode 100644 lib/zstd/decompress_sources.h
 
 diff --git a/lib/decompress_unzstd.c b/lib/decompress_unzstd.c
-index dab2d55cf..e6897a506 100644
+index c88aad49e..6e5ecfba0 100644
 --- a/lib/decompress_unzstd.c
 +++ b/lib/decompress_unzstd.c
 @@ -68,11 +68,7 @@
@@ -3468,11 +3511,20 @@ index dab2d55cf..e6897a506 100644
  #include <linux/decompress/mm.h>
 diff --git a/lib/zstd/decompress_sources.h b/lib/zstd/decompress_sources.h
 new file mode 100644
-index 000000000..d2fe10af0
+index 000000000..d82cea431
 --- /dev/null
 +++ b/lib/zstd/decompress_sources.h
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,23 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) Facebook, Inc.
++ * All rights reserved.
++ *
++ * This source code is licensed under both the BSD-style license (found in the
++ * LICENSE file in the root directory of this source tree) and the GPLv2 (found
++ * in the COPYING file in the root directory of this source tree).
++ * You may select, at your option, one of the above-listed licenses.
++ */
 +
 +/*
 + * This file includes every .c file needed for decompression.
@@ -3490,14 +3542,14 @@ index 000000000..d2fe10af0
 2.31.0.97.g1424303384
 
 
-From 2c823d19bca1359d1b64259dbf3797128cf3650b Mon Sep 17 00:00:00 2001
+From 462c17505de77773154f997a7cc6f4016189769a Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Fri, 26 Mar 2021 12:18:59 -0700
-Subject: [PATCH 3/4] lib: zstd: Upgrade to latest upstream zstd version 1.4.10
+Date: Fri, 11 Sep 2020 16:37:08 -0700
+Subject: [PATCH 3/3] lib: zstd: Upgrade to latest upstream zstd version 1.4.10
 
 Upgrade to the latest upstream zstd version 1.4.10.
 
-This patch is 100% generated from upstream zstd commit c1a244d534bc [0].
+This patch is 100% generated from upstream zstd commit 4432dac93bea [0].
 
 This patch is very large because it is transitioning from the custom
 kernel zstd to using upstream directly. The new zstd follows upstreams
@@ -3549,7 +3601,7 @@ the update can be reverted, and we can work with upstream to find and
 fix the bug.
 
 Note that upstream zstd release 1.4.10 doesn't exist yet. I have cut a
-staging branch at c1a244d534bc [0] and will apply any changes requested
+staging branch at 4432dac93bea [0] and will apply any changes requested
 to the staging branch. Once we're ready to merge this update I will cut
 a zstd release at the commit we merge, so we have a known zstd release
 in the kernel.
@@ -3557,15 +3609,15 @@ in the kernel.
 The implementation of the kernel API is contained in
 zstd_compress_module.c and zstd_decompress_module.c.
 
-[0] https://github.com/facebook/zstd/commit/c1a244d534bcdfcf1bbba89f980dd21972ea4aa5
-[1] https://github.com/terrelln/linux/commit/e01587379243583a0545568c6568ef0921956c3a
+[0] https://github.com/facebook/zstd/commit/4432dac93bea0ae7cb48c7f010caee7a103382d3
+[1] https://github.com/terrelln/linux/commit/292e2183aeab24b016c8f66ec6ded6006e4298f1
 
 Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
  include/linux/zstd.h                          |   11 +-
  include/linux/zstd_errors.h                   |   77 +
- include/linux/zstd_lib.h                      | 3327 +++++++----
- lib/zstd/Makefile                             |   35 +-
+ include/linux/zstd_lib.h                      | 3325 +++++++----
+ lib/zstd/Makefile                             |   44 +-
  lib/zstd/bitstream.h                          |  380 --
  lib/zstd/common/bitstream.h                   |  437 ++
  lib/zstd/common/compiler.h                    |  151 +
@@ -3578,11 +3630,11 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  lib/zstd/common/fse.h                         |  710 +++
  lib/zstd/common/fse_decompress.c              |  390 ++
  lib/zstd/common/huf.h                         |  356 ++
- lib/zstd/common/mem.h                         |  258 +
+ lib/zstd/common/mem.h                         |  259 +
  lib/zstd/common/zstd_common.c                 |   83 +
- lib/zstd/common/zstd_deps.h                   |  124 +
+ lib/zstd/common/zstd_deps.h                   |  125 +
  lib/zstd/common/zstd_internal.h               |  450 ++
- lib/zstd/compress.c                           | 3518 ------------
+ lib/zstd/compress.c                           | 3534 ------------
  lib/zstd/compress/fse_compress.c              |  625 ++
  lib/zstd/compress/hist.c                      |  165 +
  lib/zstd/compress/hist.h                      |   75 +
@@ -3626,11 +3678,11 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  lib/zstd/huf_decompress.c                     |  960 ----
  lib/zstd/mem.h                                |  151 -
  lib/zstd/zstd_common.c                        |   75 -
- lib/zstd/zstd_compress_module.c               |  103 +
- lib/zstd/zstd_decompress_module.c             |   96 +
+ lib/zstd/zstd_compress_module.c               |  124 +
+ lib/zstd/zstd_decompress_module.c             |  105 +
  lib/zstd/zstd_internal.h                      |  273 -
  lib/zstd/zstd_opt.h                           | 1014 ----
- 68 files changed, 26725 insertions(+), 12955 deletions(-)
+ 68 files changed, 26765 insertions(+), 12970 deletions(-)
  create mode 100644 include/linux/zstd_errors.h
  delete mode 100644 lib/zstd/bitstream.h
  create mode 100644 lib/zstd/common/bitstream.h
@@ -3697,10 +3749,10 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  delete mode 100644 lib/zstd/zstd_opt.h
 
 diff --git a/include/linux/zstd.h b/include/linux/zstd.h
-index a17161692..fe6455870 100644
+index 9fbc7729b..446ecabcd 100644
 --- a/include/linux/zstd.h
 +++ b/include/linux/zstd.h
-@@ -27,6 +27,7 @@
+@@ -22,6 +22,7 @@
  
  /* ======   Dependency   ====== */
  #include <linux/types.h>
@@ -3708,7 +3760,7 @@ index a17161692..fe6455870 100644
  #include <linux/zstd_lib.h>
  
  /* ======   Helper Functions   ====== */
-@@ -408,12 +409,18 @@ size_t zstd_find_frame_compressed_size(const void *src, size_t src_size);
+@@ -417,12 +418,18 @@ size_t zstd_find_frame_compressed_size(const void *src, size_t src_size);
  
  /**
   * struct zstd_frame_params - zstd frame parameters stored in the frame header
@@ -3731,12 +3783,12 @@ index a17161692..fe6455870 100644
   * zstd_get_frame_header() - extracts parameters from a zstd or skippable frame
 diff --git a/include/linux/zstd_errors.h b/include/linux/zstd_errors.h
 new file mode 100644
-index 000000000..1a148a8bf
+index 000000000..da9fea781
 --- /dev/null
 +++ b/include/linux/zstd_errors.h
 @@ -0,0 +1,77 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -3813,13 +3865,11 @@ index 000000000..1a148a8bf
 +
 +#endif /* ZSTD_ERRORS_H_398273423 */
 diff --git a/include/linux/zstd_lib.h b/include/linux/zstd_lib.h
-index 249575e24..647f40da9 100644
+index 13151c34f..2e6d0fb5d 100644
 --- a/include/linux/zstd_lib.h
 +++ b/include/linux/zstd_lib.h
-@@ -1,1157 +1,2432 @@
- /*
-- * Copyright (c) 2016-present, Yann Collet, Facebook, Inc.
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
+@@ -2,1156 +2,2431 @@
+  * Copyright (c) Yann Collet, Facebook, Inc.
   * All rights reserved.
   *
 - * This source code is licensed under the BSD-style license found in the
@@ -6384,11 +6434,11 @@ index 249575e24..647f40da9 100644
 -/* for static allocation */
 -#define ZSTD_FRAMEHEADERSIZE_MAX 18
 -#define ZSTD_FRAMEHEADERSIZE_MIN  6
--static const size_t ZSTD_frameHeaderSize_prefix = 5;
--static const size_t ZSTD_frameHeaderSize_min = ZSTD_FRAMEHEADERSIZE_MIN;
--static const size_t ZSTD_frameHeaderSize_max = ZSTD_FRAMEHEADERSIZE_MAX;
+-#define ZSTD_frameHeaderSize_prefix 5
+-#define ZSTD_frameHeaderSize_min ZSTD_FRAMEHEADERSIZE_MIN
+-#define ZSTD_frameHeaderSize_max ZSTD_FRAMEHEADERSIZE_MAX
 -/* magic number + skippable frame length */
--static const size_t ZSTD_skippableHeaderSize = 8;
+-#define ZSTD_skippableHeaderSize 8
 -
 -
 -/*-*************************************
@@ -7276,10 +7326,22 @@ index 249575e24..647f40da9 100644
 +#endif   /* ZSTD_H_ZSTD_STATIC_LINKING_ONLY */
 +
 diff --git a/lib/zstd/Makefile b/lib/zstd/Makefile
-index f5d778e7e..06bf0790b 100644
+index f5d778e7e..19485e3cc 100644
 --- a/lib/zstd/Makefile
 +++ b/lib/zstd/Makefile
-@@ -4,7 +4,34 @@ obj-$(CONFIG_ZSTD_DECOMPRESS) += zstd_decompress.o
+@@ -1,10 +1,46 @@
+ # SPDX-License-Identifier: GPL-2.0-only
++# ################################################################
++# Copyright (c) Facebook, Inc.
++# All rights reserved.
++#
++# This source code is licensed under both the BSD-style license (found in the
++# LICENSE file in the root directory of this source tree) and the GPLv2 (found
++# in the COPYING file in the root directory of this source tree).
++# You may select, at your option, one of the above-listed licenses.
++# ################################################################
+ obj-$(CONFIG_ZSTD_COMPRESS) += zstd_compress.o
+ obj-$(CONFIG_ZSTD_DECOMPRESS) += zstd_decompress.o
  
  ccflags-y += -O3
  
@@ -7706,14 +7768,14 @@ index 5d6343c1a..000000000
 -#endif /* BITSTREAM_H_MODULE */
 diff --git a/lib/zstd/common/bitstream.h b/lib/zstd/common/bitstream.h
 new file mode 100644
-index 000000000..32ae52a9a
+index 000000000..2d6c95b4f
 --- /dev/null
 +++ b/lib/zstd/common/bitstream.h
 @@ -0,0 +1,437 @@
 +/* ******************************************************************
 + * bitstream
 + * Part of FSE library
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + * You can contact the author at :
 + * - Source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -8149,12 +8211,12 @@ index 000000000..32ae52a9a
 +#endif /* BITSTREAM_H_MODULE */
 diff --git a/lib/zstd/common/compiler.h b/lib/zstd/common/compiler.h
 new file mode 100644
-index 000000000..eb0ce9a5c
+index 000000000..9269b58a9
 --- /dev/null
 +++ b/lib/zstd/common/compiler.h
 @@ -0,0 +1,151 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -8306,12 +8368,12 @@ index 000000000..eb0ce9a5c
 +#endif /* ZSTD_COMPILER_H */
 diff --git a/lib/zstd/common/cpu.h b/lib/zstd/common/cpu.h
 new file mode 100644
-index 000000000..e8513d11e
+index 000000000..0202d9407
 --- /dev/null
 +++ b/lib/zstd/common/cpu.h
 @@ -0,0 +1,194 @@
 +/*
-+ * Copyright (c) 2018-2021, Facebook, Inc.
++ * Copyright (c) Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -8506,14 +8568,14 @@ index 000000000..e8513d11e
 +#endif /* ZSTD_COMMON_CPU_H */
 diff --git a/lib/zstd/common/debug.c b/lib/zstd/common/debug.c
 new file mode 100644
-index 000000000..cd1742c74
+index 000000000..bb863c9ea
 --- /dev/null
 +++ b/lib/zstd/common/debug.c
 @@ -0,0 +1,24 @@
 +/* ******************************************************************
 + * debug
 + * Part of FSE library
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + * You can contact the author at :
 + * - Source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -8536,14 +8598,14 @@ index 000000000..cd1742c74
 +int g_debuglevel = DEBUGLEVEL;
 diff --git a/lib/zstd/common/debug.h b/lib/zstd/common/debug.h
 new file mode 100644
-index 000000000..738444b73
+index 000000000..6dd88d1fb
 --- /dev/null
 +++ b/lib/zstd/common/debug.h
 @@ -0,0 +1,101 @@
 +/* ******************************************************************
 + * debug
 + * Part of FSE library
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + * You can contact the author at :
 + * - Source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -8643,13 +8705,13 @@ index 000000000..738444b73
 +#endif /* DEBUG_H_12987983217 */
 diff --git a/lib/zstd/common/entropy_common.c b/lib/zstd/common/entropy_common.c
 new file mode 100644
-index 000000000..765697484
+index 000000000..53b47a2b5
 --- /dev/null
 +++ b/lib/zstd/common/entropy_common.c
 @@ -0,0 +1,357 @@
 +/* ******************************************************************
 + * Common functions of New Generation Entropy library
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + *  You can contact the author at :
 + *  - FSE+HUF source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -9006,12 +9068,12 @@ index 000000000..765697484
 +}
 diff --git a/lib/zstd/common/error_private.c b/lib/zstd/common/error_private.c
 new file mode 100644
-index 000000000..b6db38018
+index 000000000..6d1135f8c
 --- /dev/null
 +++ b/lib/zstd/common/error_private.c
 @@ -0,0 +1,56 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -9068,12 +9130,12 @@ index 000000000..b6db38018
 +}
 diff --git a/lib/zstd/common/error_private.h b/lib/zstd/common/error_private.h
 new file mode 100644
-index 000000000..7f7d19b0b
+index 000000000..d14e686ad
 --- /dev/null
 +++ b/lib/zstd/common/error_private.h
 @@ -0,0 +1,66 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -9140,14 +9202,14 @@ index 000000000..7f7d19b0b
 +#endif /* ERROR_H_MODULE */
 diff --git a/lib/zstd/common/fse.h b/lib/zstd/common/fse.h
 new file mode 100644
-index 000000000..a1dbc1514
+index 000000000..9e3f09ed1
 --- /dev/null
 +++ b/lib/zstd/common/fse.h
 @@ -0,0 +1,710 @@
 +/* ******************************************************************
 + * FSE : Finite State Entropy codec
 + * Public Prototypes declaration
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + * You can contact the author at :
 + * - Source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -9856,13 +9918,13 @@ index 000000000..a1dbc1514
 +
 diff --git a/lib/zstd/common/fse_decompress.c b/lib/zstd/common/fse_decompress.c
 new file mode 100644
-index 000000000..26b72049a
+index 000000000..2c8bbe3e4
 --- /dev/null
 +++ b/lib/zstd/common/fse_decompress.c
 @@ -0,0 +1,390 @@
 +/* ******************************************************************
 + * FSE : Finite State Entropy decoder
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + *  You can contact the author at :
 + *  - FSE source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -10252,14 +10314,14 @@ index 000000000..26b72049a
 +#endif   /* FSE_COMMONDEFS_ONLY */
 diff --git a/lib/zstd/common/huf.h b/lib/zstd/common/huf.h
 new file mode 100644
-index 000000000..4d9a3dfa6
+index 000000000..49939016c
 --- /dev/null
 +++ b/lib/zstd/common/huf.h
 @@ -0,0 +1,356 @@
 +/* ******************************************************************
 + * huff0 huffman codec,
 + * part of Finite State Entropy library
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + * You can contact the author at :
 + * - Source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -10614,12 +10676,13 @@ index 000000000..4d9a3dfa6
 +
 diff --git a/lib/zstd/common/mem.h b/lib/zstd/common/mem.h
 new file mode 100644
-index 000000000..63f1a68f2
+index 000000000..4b5db5756
 --- /dev/null
 +++ b/lib/zstd/common/mem.h
-@@ -0,0 +1,258 @@
+@@ -0,0 +1,259 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -10878,12 +10941,12 @@ index 000000000..63f1a68f2
 +#endif /* MEM_H_MODULE */
 diff --git a/lib/zstd/common/zstd_common.c b/lib/zstd/common/zstd_common.c
 new file mode 100644
-index 000000000..009b46600
+index 000000000..3d7e35b30
 --- /dev/null
 +++ b/lib/zstd/common/zstd_common.c
 @@ -0,0 +1,83 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -10967,12 +11030,13 @@ index 000000000..009b46600
 +}
 diff --git a/lib/zstd/common/zstd_deps.h b/lib/zstd/common/zstd_deps.h
 new file mode 100644
-index 000000000..f9fd4c0f9
+index 000000000..853b72426
 --- /dev/null
 +++ b/lib/zstd/common/zstd_deps.h
-@@ -0,0 +1,124 @@
+@@ -0,0 +1,125 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
 +/*
-+ * Copyright (c) 2016-2021, Facebook, Inc.
++ * Copyright (c) Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -11044,7 +11108,7 @@ index 000000000..f9fd4c0f9
 +#endif /* ZSTD_DEPS_MATH64 */
 +#endif /* ZSTD_DEPS_NEED_MATH64 */
 +
-+/* 
++/*
 + * This is only requested when DEBUGLEVEL >= 1, meaning
 + * it is disabled in production.
 + * Need:
@@ -11061,7 +11125,7 @@ index 000000000..f9fd4c0f9
 +#endif /* ZSTD_DEPS_ASSERT */
 +#endif /* ZSTD_DEPS_NEED_ASSERT */
 +
-+/* 
++/*
 + * This is only requested when DEBUGLEVEL >= 2, meaning
 + * it is disabled in production.
 + * Need:
@@ -11078,7 +11142,7 @@ index 000000000..f9fd4c0f9
 +#endif /* ZSTD_DEPS_IO */
 +#endif /* ZSTD_DEPS_NEED_IO */
 +
-+/* 
++/*
 + * Only requested when MSAN is enabled.
 + * Need:
 + * intptr_t
@@ -11097,12 +11161,12 @@ index 000000000..f9fd4c0f9
 +#endif /* ZSTD_DEPS_NEED_STDINT */
 diff --git a/lib/zstd/common/zstd_internal.h b/lib/zstd/common/zstd_internal.h
 new file mode 100644
-index 000000000..08fac3e63
+index 000000000..1f939cbe0
 --- /dev/null
 +++ b/lib/zstd/common/zstd_internal.h
 @@ -0,0 +1,450 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -11553,10 +11617,10 @@ index 000000000..08fac3e63
 +#endif   /* ZSTD_CCOMMON_H_MODULE */
 diff --git a/lib/zstd/compress.c b/lib/zstd/compress.c
 deleted file mode 100644
-index 02667fed9..000000000
+index 57aaa6430..000000000
 --- a/lib/zstd/compress.c
 +++ /dev/null
-@@ -1,3518 +0,0 @@
+@@ -1,3534 +0,0 @@
 -/**
 - * Copyright (c) 2016-present, Yann Collet, Facebook, Inc.
 - * All rights reserved.
@@ -15008,6 +15072,22 @@ index 02667fed9..000000000
 -}
 -EXPORT_SYMBOL(zstd_compress_bound);
 -
+-int zstd_min_clevel(void)
+-{
+-	/*
+-	 * zstd-1.3.1 doesn't implement ZSTD_minCLevel().
+-	 * Return 0 (default level).
+-	 */
+-	return 0;
+-}
+-EXPORT_SYMBOL(zstd_min_clevel);
+-
+-int zstd_max_clevel(void)
+-{
+-	return ZSTD_maxCLevel();
+-}
+-EXPORT_SYMBOL(zstd_max_clevel);
+-
 -zstd_parameters zstd_get_params(int level,
 -	unsigned long long estimated_src_size)
 -{
@@ -15077,13 +15157,13 @@ index 02667fed9..000000000
 -MODULE_DESCRIPTION("Zstd Compressor");
 diff --git a/lib/zstd/compress/fse_compress.c b/lib/zstd/compress/fse_compress.c
 new file mode 100644
-index 000000000..3e54325ed
+index 000000000..436985b62
 --- /dev/null
 +++ b/lib/zstd/compress/fse_compress.c
 @@ -0,0 +1,625 @@
 +/* ******************************************************************
 + * FSE : Finite State Entropy encoder
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + *  You can contact the author at :
 + *  - FSE source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -15708,14 +15788,14 @@ index 000000000..3e54325ed
 +#endif   /* FSE_COMMONDEFS_ONLY */
 diff --git a/lib/zstd/compress/hist.c b/lib/zstd/compress/hist.c
 new file mode 100644
-index 000000000..99dd7caa1
+index 000000000..3ddc6dfb6
 --- /dev/null
 +++ b/lib/zstd/compress/hist.c
 @@ -0,0 +1,165 @@
 +/* ******************************************************************
 + * hist : Histogram functions
 + * part of Finite State Entropy project
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + *  You can contact the author at :
 + *  - FSE source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -15879,14 +15959,14 @@ index 000000000..99dd7caa1
 +
 diff --git a/lib/zstd/compress/hist.h b/lib/zstd/compress/hist.h
 new file mode 100644
-index 000000000..43c578799
+index 000000000..228ed48a7
 --- /dev/null
 +++ b/lib/zstd/compress/hist.h
 @@ -0,0 +1,75 @@
 +/* ******************************************************************
 + * hist : Histogram functions
 + * part of Finite State Entropy project
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + *  You can contact the author at :
 + *  - FSE source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -15960,13 +16040,13 @@ index 000000000..43c578799
 +                           const void* src, size_t srcSize);
 diff --git a/lib/zstd/compress/huf_compress.c b/lib/zstd/compress/huf_compress.c
 new file mode 100644
-index 000000000..ff17123a0
+index 000000000..4acae45a4
 --- /dev/null
 +++ b/lib/zstd/compress/huf_compress.c
 @@ -0,0 +1,902 @@
 +/* ******************************************************************
 + * Huffman encoder, part of New Generation Entropy library
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + *  You can contact the author at :
 + *  - FSE+HUF source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -16868,12 +16948,12 @@ index 000000000..ff17123a0
 +
 diff --git a/lib/zstd/compress/zstd_compress.c b/lib/zstd/compress/zstd_compress.c
 new file mode 100644
-index 000000000..9c998052a
+index 000000000..78aa14c50
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress.c
 @@ -0,0 +1,5105 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -21979,12 +22059,12 @@ index 000000000..9c998052a
 +}
 diff --git a/lib/zstd/compress/zstd_compress_internal.h b/lib/zstd/compress/zstd_compress_internal.h
 new file mode 100644
-index 000000000..30df15903
+index 000000000..b56c48232
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress_internal.h
 @@ -0,0 +1,1188 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -23173,12 +23253,12 @@ index 000000000..30df15903
 +#endif /* ZSTD_COMPRESS_H */
 diff --git a/lib/zstd/compress/zstd_compress_literals.c b/lib/zstd/compress/zstd_compress_literals.c
 new file mode 100644
-index 000000000..1d9188d33
+index 000000000..655bcda4d
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress_literals.c
 @@ -0,0 +1,158 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -23337,12 +23417,12 @@ index 000000000..1d9188d33
 +}
 diff --git a/lib/zstd/compress/zstd_compress_literals.h b/lib/zstd/compress/zstd_compress_literals.h
 new file mode 100644
-index 000000000..c8ebe2fc4
+index 000000000..9904c0cd3
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress_literals.h
 @@ -0,0 +1,29 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -23372,12 +23452,12 @@ index 000000000..c8ebe2fc4
 +#endif /* ZSTD_COMPRESS_LITERALS_H */
 diff --git a/lib/zstd/compress/zstd_compress_sequences.c b/lib/zstd/compress/zstd_compress_sequences.c
 new file mode 100644
-index 000000000..77c6da643
+index 000000000..08a5b8901
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress_sequences.c
 @@ -0,0 +1,439 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -23817,12 +23897,12 @@ index 000000000..77c6da643
 +}
 diff --git a/lib/zstd/compress/zstd_compress_sequences.h b/lib/zstd/compress/zstd_compress_sequences.h
 new file mode 100644
-index 000000000..3629b3f31
+index 000000000..7991364c2
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress_sequences.h
 @@ -0,0 +1,54 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -23877,12 +23957,12 @@ index 000000000..3629b3f31
 +#endif /* ZSTD_COMPRESS_SEQUENCES_H */
 diff --git a/lib/zstd/compress/zstd_compress_superblock.c b/lib/zstd/compress/zstd_compress_superblock.c
 new file mode 100644
-index 000000000..4147fe388
+index 000000000..767f73f5b
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress_superblock.c
 @@ -0,0 +1,850 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -24733,12 +24813,12 @@ index 000000000..4147fe388
 +}
 diff --git a/lib/zstd/compress/zstd_compress_superblock.h b/lib/zstd/compress/zstd_compress_superblock.h
 new file mode 100644
-index 000000000..fe79cba48
+index 000000000..224ece795
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_compress_superblock.h
 @@ -0,0 +1,32 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -24771,12 +24851,12 @@ index 000000000..fe79cba48
 +#endif /* ZSTD_COMPRESS_ADVANCED_H */
 diff --git a/lib/zstd/compress/zstd_cwksp.h b/lib/zstd/compress/zstd_cwksp.h
 new file mode 100644
-index 000000000..32045f18a
+index 000000000..c231cc500
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_cwksp.h
 @@ -0,0 +1,482 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -25259,12 +25339,12 @@ index 000000000..32045f18a
 +#endif /* ZSTD_CWKSP_H */
 diff --git a/lib/zstd/compress/zstd_double_fast.c b/lib/zstd/compress/zstd_double_fast.c
 new file mode 100644
-index 000000000..9ed8fa6ef
+index 000000000..b99172e9d
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_double_fast.c
 @@ -0,0 +1,521 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -25786,12 +25866,12 @@ index 000000000..9ed8fa6ef
 +}
 diff --git a/lib/zstd/compress/zstd_double_fast.h b/lib/zstd/compress/zstd_double_fast.h
 new file mode 100644
-index 000000000..0aa00b7e1
+index 000000000..6822bde65
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_double_fast.h
 @@ -0,0 +1,32 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -25824,12 +25904,12 @@ index 000000000..0aa00b7e1
 +#endif /* ZSTD_DOUBLE_FAST_H */
 diff --git a/lib/zstd/compress/zstd_fast.c b/lib/zstd/compress/zstd_fast.c
 new file mode 100644
-index 000000000..8f8dfcd7a
+index 000000000..96b7d48e2
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_fast.c
 @@ -0,0 +1,496 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -26326,12 +26406,12 @@ index 000000000..8f8dfcd7a
 +}
 diff --git a/lib/zstd/compress/zstd_fast.h b/lib/zstd/compress/zstd_fast.h
 new file mode 100644
-index 000000000..47810d28d
+index 000000000..fddc2f532
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_fast.h
 @@ -0,0 +1,31 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -26363,12 +26443,12 @@ index 000000000..47810d28d
 +#endif /* ZSTD_FAST_H */
 diff --git a/lib/zstd/compress/zstd_lazy.c b/lib/zstd/compress/zstd_lazy.c
 new file mode 100644
-index 000000000..109c63916
+index 000000000..39aa2569a
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_lazy.c
 @@ -0,0 +1,1412 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -27781,12 +27861,12 @@ index 000000000..109c63916
 +}
 diff --git a/lib/zstd/compress/zstd_lazy.h b/lib/zstd/compress/zstd_lazy.h
 new file mode 100644
-index 000000000..c69929478
+index 000000000..1fb7621e6
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_lazy.h
 @@ -0,0 +1,81 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -27868,12 +27948,12 @@ index 000000000..c69929478
 +#endif /* ZSTD_LAZY_H */
 diff --git a/lib/zstd/compress/zstd_ldm.c b/lib/zstd/compress/zstd_ldm.c
 new file mode 100644
-index 000000000..860933b6b
+index 000000000..4b786fe1c
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_ldm.c
 @@ -0,0 +1,686 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -28560,12 +28640,12 @@ index 000000000..860933b6b
 +}
 diff --git a/lib/zstd/compress/zstd_ldm.h b/lib/zstd/compress/zstd_ldm.h
 new file mode 100644
-index 000000000..36428939e
+index 000000000..5ee467eac
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_ldm.h
 @@ -0,0 +1,110 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -28676,12 +28756,12 @@ index 000000000..36428939e
 +#endif /* ZSTD_FAST_H */
 diff --git a/lib/zstd/compress/zstd_ldm_geartab.h b/lib/zstd/compress/zstd_ldm_geartab.h
 new file mode 100644
-index 000000000..d24c1f6d3
+index 000000000..e5c24d856
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_ldm_geartab.h
 @@ -0,0 +1,103 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -28785,12 +28865,12 @@ index 000000000..d24c1f6d3
 +#endif /* ZSTD_LDM_GEARTAB_H */
 diff --git a/lib/zstd/compress/zstd_opt.c b/lib/zstd/compress/zstd_opt.c
 new file mode 100644
-index 000000000..6ec368b85
+index 000000000..402a7e5c7
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_opt.c
 @@ -0,0 +1,1345 @@
 +/*
-+ * Copyright (c) 2016-2021, Przemyslaw Skibinski, Yann Collet, Facebook, Inc.
++ * Copyright (c) Przemyslaw Skibinski, Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -30136,12 +30216,12 @@ index 000000000..6ec368b85
 + * and is only specific for the first block (no prefix) */
 diff --git a/lib/zstd/compress/zstd_opt.h b/lib/zstd/compress/zstd_opt.h
 new file mode 100644
-index 000000000..8f58aba2f
+index 000000000..22b862858
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_opt.h
 @@ -0,0 +1,50 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -32769,14 +32849,14 @@ index 02e92c2cb..000000000
 -MODULE_DESCRIPTION("Zstd Decompressor");
 diff --git a/lib/zstd/decompress/huf_decompress.c b/lib/zstd/decompress/huf_decompress.c
 new file mode 100644
-index 000000000..8e9c02d41
+index 000000000..c48d57e3f
 --- /dev/null
 +++ b/lib/zstd/decompress/huf_decompress.c
 @@ -0,0 +1,1206 @@
 +/* ******************************************************************
 + * huff0 huffman decoder,
 + * part of Finite State Entropy library
-+ * Copyright (c) 2013-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + *
 + *  You can contact the author at :
 + *  - FSE+HUF source repository : https://github.com/Cyan4973/FiniteStateEntropy
@@ -33981,12 +34061,12 @@ index 000000000..8e9c02d41
 +
 diff --git a/lib/zstd/decompress/zstd_ddict.c b/lib/zstd/decompress/zstd_ddict.c
 new file mode 100644
-index 000000000..34f2a3132
+index 000000000..dbbc7919d
 --- /dev/null
 +++ b/lib/zstd/decompress/zstd_ddict.c
 @@ -0,0 +1,241 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -34228,12 +34308,12 @@ index 000000000..34f2a3132
 +}
 diff --git a/lib/zstd/decompress/zstd_ddict.h b/lib/zstd/decompress/zstd_ddict.h
 new file mode 100644
-index 000000000..679e53828
+index 000000000..8c1a79d66
 --- /dev/null
 +++ b/lib/zstd/decompress/zstd_ddict.h
 @@ -0,0 +1,44 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -34278,12 +34358,12 @@ index 000000000..679e53828
 +#endif /* ZSTD_DDICT_H */
 diff --git a/lib/zstd/decompress/zstd_decompress.c b/lib/zstd/decompress/zstd_decompress.c
 new file mode 100644
-index 000000000..8092a8ef2
+index 000000000..16b4ea795
 --- /dev/null
 +++ b/lib/zstd/decompress/zstd_decompress.c
 @@ -0,0 +1,2075 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -36359,12 +36439,12 @@ index 000000000..8092a8ef2
 +}
 diff --git a/lib/zstd/decompress/zstd_decompress_block.c b/lib/zstd/decompress/zstd_decompress_block.c
 new file mode 100644
-index 000000000..c1ba6e577
+index 000000000..cd6eba55a
 --- /dev/null
 +++ b/lib/zstd/decompress/zstd_decompress_block.c
 @@ -0,0 +1,1540 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -37905,12 +37985,12 @@ index 000000000..c1ba6e577
 +}
 diff --git a/lib/zstd/decompress/zstd_decompress_block.h b/lib/zstd/decompress/zstd_decompress_block.h
 new file mode 100644
-index 000000000..18c1e4fb8
+index 000000000..e7f5f6689
 --- /dev/null
 +++ b/lib/zstd/decompress/zstd_decompress_block.h
 @@ -0,0 +1,62 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -37973,12 +38053,12 @@ index 000000000..18c1e4fb8
 +#endif /* ZSTD_DEC_BLOCK_H */
 diff --git a/lib/zstd/decompress/zstd_decompress_internal.h b/lib/zstd/decompress/zstd_decompress_internal.h
 new file mode 100644
-index 000000000..fd488b932
+index 000000000..4b9052f68
 --- /dev/null
 +++ b/lib/zstd/decompress/zstd_decompress_internal.h
 @@ -0,0 +1,202 @@
 +/*
-+ * Copyright (c) 2016-2021, Yann Collet, Facebook, Inc.
++ * Copyright (c) Yann Collet, Facebook, Inc.
 + * All rights reserved.
 + *
 + * This source code is licensed under both the BSD-style license (found in the
@@ -38180,10 +38260,10 @@ index 000000000..fd488b932
 +
 +#endif /* ZSTD_DECOMPRESS_INTERNAL_H */
 diff --git a/lib/zstd/decompress_sources.h b/lib/zstd/decompress_sources.h
-index d2fe10af0..907753e1b 100644
+index d82cea431..f35bef03e 100644
 --- a/lib/zstd/decompress_sources.h
 +++ b/lib/zstd/decompress_sources.h
-@@ -7,8 +7,13 @@
+@@ -16,8 +16,13 @@
   * decompression.
   */
  
@@ -42426,11 +42506,20 @@ index a282624ee..000000000
 -}
 diff --git a/lib/zstd/zstd_compress_module.c b/lib/zstd/zstd_compress_module.c
 new file mode 100644
-index 000000000..0a29abb53
+index 000000000..37d08ff43
 --- /dev/null
 +++ b/lib/zstd/zstd_compress_module.c
-@@ -0,0 +1,103 @@
-+// SPDX-License-Identifier: GPL-2.0
+@@ -0,0 +1,124 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) Facebook, Inc.
++ * All rights reserved.
++ *
++ * This source code is licensed under both the BSD-style license (found in the
++ * LICENSE file in the root directory of this source tree) and the GPLv2 (found
++ * in the COPYING file in the root directory of this source tree).
++ * You may select, at your option, one of the above-listed licenses.
++ */
 +
 +#include <linux/kernel.h>
 +#include <linux/module.h>
@@ -42439,6 +42528,18 @@ index 000000000..0a29abb53
 +
 +#include "common/zstd_deps.h"
 +#include "common/zstd_internal.h"
++
++int zstd_min_clevel(void)
++{
++	return ZSTD_minCLevel();
++}
++EXPORT_SYMBOL(zstd_min_clevel);
++
++int zstd_max_clevel(void)
++{
++	return ZSTD_maxCLevel();
++}
++EXPORT_SYMBOL(zstd_max_clevel);
 +
 +size_t zstd_compress_bound(size_t src_size)
 +{
@@ -42535,11 +42636,20 @@ index 000000000..0a29abb53
 +MODULE_DESCRIPTION("Zstd Compressor");
 diff --git a/lib/zstd/zstd_decompress_module.c b/lib/zstd/zstd_decompress_module.c
 new file mode 100644
-index 000000000..bac348daa
+index 000000000..15005cdb9
 --- /dev/null
 +++ b/lib/zstd/zstd_decompress_module.c
-@@ -0,0 +1,96 @@
-+// SPDX-License-Identifier: GPL-2.0
+@@ -0,0 +1,105 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) Facebook, Inc.
++ * All rights reserved.
++ *
++ * This source code is licensed under both the BSD-style license (found in the
++ * LICENSE file in the root directory of this source tree) and the GPLv2 (found
++ * in the COPYING file in the root directory of this source tree).
++ * You may select, at your option, one of the above-listed licenses.
++ */
 +
 +#include <linux/kernel.h>
 +#include <linux/module.h>
@@ -43934,32 +44044,6 @@ index 55e1b4cba..000000000
 -}
 -
 -#endif /* ZSTD_OPT_H_91842398743 */
--- 
-2.31.0.97.g1424303384
-
-
-From 26d571d2cf50dfe0629246cc5640885d5238ab46 Mon Sep 17 00:00:00 2001
-From: Oleksandr Natalenko <oleksandr@natalenko.name>
-Date: Sat, 27 Mar 2021 22:48:38 +0100
-Subject: [PATCH 4/4] zstd-5.11: export ZSTD_maxCLevel
-
-Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
----
- lib/zstd/compress/zstd_compress.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/lib/zstd/compress/zstd_compress.c b/lib/zstd/compress/zstd_compress.c
-index 9c998052a..584c92c51 100644
---- a/lib/zstd/compress/zstd_compress.c
-+++ b/lib/zstd/compress/zstd_compress.c
-@@ -4860,6 +4860,7 @@ size_t ZSTD_endStream(ZSTD_CStream* zcs, ZSTD_outBuffer* output)
- 
- #define ZSTD_MAX_CLEVEL     22
- int ZSTD_maxCLevel(void) { return ZSTD_MAX_CLEVEL; }
-+EXPORT_SYMBOL(ZSTD_maxCLevel);
- int ZSTD_minCLevel(void) { return (int)-ZSTD_TARGETLENGTH_MAX; }
- 
- static const ZSTD_compressionParameters ZSTD_defaultCParameters[4][ZSTD_MAX_CLEVEL+1] = {
 -- 
 2.31.0.97.g1424303384
 

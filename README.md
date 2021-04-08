@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Linux 5.11.11  
+0000 : Linux 5.11.12  
 0001 : "Undead" PDS patchset (TkG)    
 0002 : 5.11 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
