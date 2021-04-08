@@ -1,17 +1,17 @@
-From 2ae9fecd6aa64929c1856156fca9ef230adfd087 Mon Sep 17 00:00:00 2001
+From 2bebf08caaf4eaeefb33f216e85f5a4b8ac028c3 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Sat, 13 Mar 2021 20:00:12 +0100
-Subject: [PATCH 1/2] cpu-5.11: merge graysky's patchset
+Date: Fri, 26 Mar 2021 16:53:16 +0100
+Subject: [PATCH] cpu-5.11: merge graysky's patchset
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
- arch/x86/Kconfig.cpu            | 304 ++++++++++++++++++++++++++++++--
+ arch/x86/Kconfig.cpu            | 312 ++++++++++++++++++++++++++++++--
  arch/x86/Makefile               |  45 ++++-
  arch/x86/include/asm/vermagic.h |  62 +++++++
- 3 files changed, 394 insertions(+), 17 deletions(-)
+ 3 files changed, 402 insertions(+), 17 deletions(-)
 
 diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
-index 814fe0d34..9b9fcf2af 100644
+index 814fe0d34..ec3b8ec06 100644
 --- a/arch/x86/Kconfig.cpu
 +++ b/arch/x86/Kconfig.cpu
 @@ -157,7 +157,7 @@ config MPENTIUM4
@@ -32,7 +32,7 @@ index 814fe0d34..9b9fcf2af 100644
  	depends on X86_32
  	help
  	  Select this for an AMD Athlon K7-family processor.  Enables use of
-@@ -173,12 +173,97 @@ config MK7
+@@ -173,12 +173,98 @@ config MK7
  	  flags to GCC.
  
  config MK8
@@ -123,6 +123,7 @@ index 814fe0d34..9b9fcf2af 100644
 +
 +config MZEN3
 +	bool "AMD Zen 3"
++	depends on GCC_VERSION > 110000
 +	help
 +	  Select this for AMD Family 19h Zen 3 processors.
 +
@@ -131,7 +132,7 @@ index 814fe0d34..9b9fcf2af 100644
  config MCRUSOE
  	bool "Crusoe"
  	depends on X86_32
-@@ -270,7 +355,7 @@ config MPSC
+@@ -270,7 +356,7 @@ config MPSC
  	  in /proc/cpuinfo. Family 15 is an older Xeon, Family 6 a newer one.
  
  config MCORE2
@@ -140,7 +141,7 @@ index 814fe0d34..9b9fcf2af 100644
  	help
  
  	  Select this for Intel Core 2 and newer Core 2 Xeons (Xeon 51xx and
-@@ -278,6 +363,8 @@ config MCORE2
+@@ -278,6 +364,8 @@ config MCORE2
  	  family in /proc/cpuinfo. Newer ones have 6 and older ones 15
  	  (not a typo)
  
@@ -149,7 +150,7 @@ index 814fe0d34..9b9fcf2af 100644
  config MATOM
  	bool "Intel Atom"
  	help
-@@ -287,6 +374,168 @@ config MATOM
+@@ -287,6 +375,172 @@ config MATOM
  	  accordingly optimized code. Use a recent GCC with specific Atom
  	  support in order to fully benefit from selecting this option.
  
@@ -281,6 +282,7 @@ index 814fe0d34..9b9fcf2af 100644
 +
 +config MCOOPERLAKE
 +	bool "Intel Cooper Lake"
++	depends on GCC_VERSION > 100100
 +	select X86_P6_NOP
 +	help
 +
@@ -290,6 +292,7 @@ index 814fe0d34..9b9fcf2af 100644
 +
 +config MTIGERLAKE
 +	bool "Intel Tiger Lake"
++	depends on GCC_VERSION > 100100
 +	select X86_P6_NOP
 +	help
 +
@@ -299,6 +302,7 @@ index 814fe0d34..9b9fcf2af 100644
 +
 +config MSAPPHIRERAPIDS
 +	bool "Intel Sapphire Rapids"
++	depends on GCC_VERSION > 110000
 +	select X86_P6_NOP
 +	help
 +
@@ -308,6 +312,7 @@ index 814fe0d34..9b9fcf2af 100644
 +
 +config MALDERLAKE
 +	bool "Intel Alder Lake"
++	depends on GCC_VERSION > 110000
 +	select X86_P6_NOP
 +	help
 +
@@ -318,12 +323,13 @@ index 814fe0d34..9b9fcf2af 100644
  config GENERIC_CPU
  	bool "Generic-x86-64"
  	depends on X86_64
-@@ -294,6 +543,37 @@ config GENERIC_CPU
+@@ -294,6 +548,40 @@ config GENERIC_CPU
  	  Generic x86-64 CPU.
  	  Run equally well on all x86-64 CPUs.
  
 +config GENERIC_CPU2
 +	bool "Generic-x86-64-v2"
++	depends on GCC_VERSION > 110000
 +	depends on X86_64
 +	help
 +	  Generic x86-64 CPU.
@@ -331,6 +337,7 @@ index 814fe0d34..9b9fcf2af 100644
 +
 +config GENERIC_CPU3
 +	bool "Generic-x86-64-v3"
++	depends on GCC_VERSION > 110000
 +	depends on X86_64
 +	help
 +	  Generic x86-64-v3 CPU with v3 instructions.
@@ -338,6 +345,7 @@ index 814fe0d34..9b9fcf2af 100644
 +
 +config GENERIC_CPU4
 +	bool "Generic-x86-64-v4"
++	depends on GCC_VERSION > 110000
 +	depends on X86_64
 +	help
 +	  Generic x86-64 CPU with v4 instructions.
@@ -356,7 +364,7 @@ index 814fe0d34..9b9fcf2af 100644
  endchoice
  
  config X86_GENERIC
-@@ -318,7 +598,7 @@ config X86_INTERNODE_CACHE_SHIFT
+@@ -318,7 +606,7 @@ config X86_INTERNODE_CACHE_SHIFT
  config X86_L1_CACHE_SHIFT
  	int
  	default "7" if MPENTIUM4 || MPSC
@@ -365,7 +373,7 @@ index 814fe0d34..9b9fcf2af 100644
  	default "4" if MELAN || M486SX || M486 || MGEODEGX1
  	default "5" if MWINCHIP3D || MWINCHIPC6 || MCRUSOE || MEFFICEON || MCYRIXIII || MK6 || MPENTIUMIII || MPENTIUMII || M686 || M586MMX || M586TSC || M586 || MVIAC3_2 || MGEODE_LX
  
-@@ -336,11 +616,11 @@ config X86_ALIGNMENT_16
+@@ -336,11 +624,11 @@ config X86_ALIGNMENT_16
  
  config X86_INTEL_USERCOPY
  	def_bool y
@@ -379,7 +387,7 @@ index 814fe0d34..9b9fcf2af 100644
  
  config X86_USE_3DNOW
  	def_bool y
-@@ -360,26 +640,26 @@ config X86_USE_3DNOW
+@@ -360,26 +648,26 @@ config X86_USE_3DNOW
  config X86_P6_NOP
  	def_bool y
  	depends on X86_64

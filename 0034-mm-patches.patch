@@ -1,7 +1,7 @@
-From b2526cc91e8c3414196dc92e981454161d0a5623 Mon Sep 17 00:00:00 2001
+From a1161124868e7056c9748463bfb6449c7a5d5245 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 11:17:31 +0100
-Subject: [PATCH 1/4] mm-5.11: protect file mappings under memory pressure
+Subject: [PATCH 01/10] mm-5.11: protect file mappings under memory pressure
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -12,7 +12,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
  4 files changed, 131 insertions(+)
 
 diff --git a/Documentation/admin-guide/sysctl/vm.rst b/Documentation/admin-guide/sysctl/vm.rst
-index e35a3f2fb..19f57c438 100644
+index 586cd4b86..16826b31d 100644
 --- a/Documentation/admin-guide/sysctl/vm.rst
 +++ b/Documentation/admin-guide/sysctl/vm.rst
 @@ -69,6 +69,8 @@ Currently, these files are in /proc/sys/vm:
@@ -57,7 +57,7 @@ index e35a3f2fb..19f57c438 100644
  ===================
  
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index c9fbdd848..09cbc3cb3 100644
+index 62fbd09b5..b2b92bb22 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
 @@ -111,6 +111,22 @@
@@ -158,7 +158,7 @@ index f730605b8..b5e0e9195 100644
  	def_bool y
  	depends on (!SELECT_MEMORY_MODEL && ARCH_DISCONTIGMEM_ENABLE) || DISCONTIGMEM_MANUAL
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index b1b574ad1..d763f5fd0 100644
+index ad9f2adaf..3eed6f58b 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -115,6 +115,14 @@ struct scan_control {
@@ -229,13 +229,13 @@ index b1b574ad1..d763f5fd0 100644
  
  	shrink_node_memcgs(pgdat, sc);
 -- 
-2.30.1.457.gf011795891
+2.31.0.97.g1424303384
 
 
-From 7f55c388c3b6ccf480ebbdc58b1a8889901fa793 Mon Sep 17 00:00:00 2001
+From aafd906f5cf1bdfc1af15c2aa2959a7ab9ca1854 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 11:44:39 +0100
-Subject: [PATCH 2/4] mm-5.11: inequality should not exclude lower threshold
+Subject: [PATCH 02/10] mm-5.11: inequality should not exclude lower threshold
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -243,7 +243,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index d763f5fd0..14e1dd828 100644
+index 3eed6f58b..f88931dcf 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -2805,7 +2805,7 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
@@ -256,13 +256,13 @@ index d763f5fd0..14e1dd828 100644
  	}
  
 -- 
-2.30.1.457.gf011795891
+2.31.0.97.g1424303384
 
 
-From b41509f3b21e38a24fdbbb8b3a1fbdfdcac41beb Mon Sep 17 00:00:00 2001
+From 989d1ed0775e70dd4ef8862fee41c6ff0bc9ccef Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 12:49:51 +0100
-Subject: [PATCH 3/4] mm-5.11: throttle file pages scan regardless of scan
+Subject: [PATCH 03/10] mm-5.11: throttle file pages scan regardless of scan
  balance
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
@@ -271,7 +271,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
  1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 14e1dd828..151a9b347 100644
+index f88931dcf..2032af8d8 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -2434,20 +2434,22 @@ static void get_scan_count(struct lruvec *lruvec, struct scan_control *sc,
@@ -306,13 +306,13 @@ index 14e1dd828..151a9b347 100644
  	}
  }
 -- 
-2.30.1.457.gf011795891
+2.31.0.97.g1424303384
 
 
-From 0f5262f2d2da12b8ab7fdc028e3f5ebf2c0ca2be Mon Sep 17 00:00:00 2001
+From 3db249e95a76726a9bfdfbd930b4ab47f6fe40ca Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Sat, 20 Feb 2021 08:37:18 +0100
-Subject: [PATCH 4/4] mm-5.11: simplify file_is_low
+Subject: [PATCH 04/10] mm-5.11: simplify file_is_low
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -320,7 +320,7 @@ Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 151a9b347..9abb2605e 100644
+index 2032af8d8..f9fcde30d 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -2442,9 +2442,8 @@ static void get_scan_count(struct lruvec *lruvec, struct scan_control *sc,
@@ -336,5 +336,238 @@ index 151a9b347..9abb2605e 100644
  				scan = 0;
  		}
 -- 
-2.30.1.457.gf011795891
+2.31.0.97.g1424303384
+
+
+From 1f23a60df36e6ed3fcedf7456be8e8d07b3acb06 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 8 Apr 2021 00:30:06 +0200
+Subject: [PATCH 05/10] mm-5.11: do not protect dirty pages
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index f9fcde30d..6623af0d1 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2776,6 +2776,9 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 	if (!cgroup_reclaim(sc)) {
+ 		unsigned long total_high_wmark = 0;
+ 		unsigned long free, anon;
++#if defined(CONFIG_UNEVICTABLE_FILE)
++		unsigned long reclaimable_file, clean_file, dirty_file;
++#endif
+ 		int z;
+ 
+ 		free = sum_zone_node_page_state(pgdat->node_id, NR_FREE_PAGES);
+@@ -2803,10 +2806,24 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 			anon >> sc->priority;
+ 
+ #if defined(CONFIG_UNEVICTABLE_FILE)
+-		sc->file_is_low = K(file) < sysctl_unevictable_file_kbytes_low &&
+-				  K(file) > sysctl_unevictable_file_kbytes_min;
++		reclaimable_file = file + node_page_state(pgdat, NR_ISOLATED_FILE);
++		dirty_file = node_page_state(pgdat, NR_FILE_DIRTY);
++
++		if (reclaimable_file < dirty_file) {
++			/*
++			 * post-factum: so, nr_file_dirty can never exceed
++			 *              (nr_inactive_file+nr_active_file+nr_isolated_file)?
++			 * vbabka: ugh, never say never
++			 */
++			VM_WARN_ON_ONCE(1);
++		} else {
++			clean_file = reclaimable_file - dirty_file;
+ 
+-		sc->file_is_min = K(file) <= sysctl_unevictable_file_kbytes_min;
++			sc->file_is_low = K(clean_file) < sysctl_unevictable_file_kbytes_low &&
++				          K(clean_file) > sysctl_unevictable_file_kbytes_min;
++
++			sc->file_is_min = K(clean_file) <= sysctl_unevictable_file_kbytes_min;
++		}
+ #endif
+ 	}
+ 
+-- 
+2.31.0.97.g1424303384
+
+
+From cdab87d89cee920fe8ea8c5fdb93ce65370691dd Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 8 Apr 2021 00:39:08 +0200
+Subject: [PATCH 06/10] mm-5.11: be more concise about clean pages
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 6623af0d1..5e50353ff 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2816,14 +2816,14 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 			 * vbabka: ugh, never say never
+ 			 */
+ 			VM_WARN_ON_ONCE(1);
+-		} else {
++			clean_file = ULONG_MAX;
++		} else
+ 			clean_file = reclaimable_file - dirty_file;
+ 
+-			sc->file_is_low = K(clean_file) < sysctl_unevictable_file_kbytes_low &&
+-				          K(clean_file) > sysctl_unevictable_file_kbytes_min;
++		sc->file_is_low = K(clean_file) < sysctl_unevictable_file_kbytes_low &&
++			          K(clean_file) > sysctl_unevictable_file_kbytes_min;
+ 
+-			sc->file_is_min = K(clean_file) <= sysctl_unevictable_file_kbytes_min;
+-		}
++		sc->file_is_min = K(clean_file) <= sysctl_unevictable_file_kbytes_min;
+ #endif
+ 	}
+ 
+-- 
+2.31.0.97.g1424303384
+
+
+From 3302d87f632c921be5af9d2f9a48803c5e58e57c Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 8 Apr 2021 08:08:50 +0200
+Subject: [PATCH 07/10] mm-5.11: nits on branching
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 5e50353ff..267763fe2 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2809,13 +2809,13 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 		reclaimable_file = file + node_page_state(pgdat, NR_ISOLATED_FILE);
+ 		dirty_file = node_page_state(pgdat, NR_FILE_DIRTY);
+ 
+-		if (reclaimable_file < dirty_file) {
++		if (unlikely(reclaimable_file < dirty_file)) {
+ 			/*
+ 			 * post-factum: so, nr_file_dirty can never exceed
+ 			 *              (nr_inactive_file+nr_active_file+nr_isolated_file)?
+ 			 * vbabka: ugh, never say never
+ 			 */
+-			VM_WARN_ON_ONCE(1);
++			WARN_ON_ONCE(1);
+ 			clean_file = ULONG_MAX;
+ 		} else
+ 			clean_file = reclaimable_file - dirty_file;
+-- 
+2.31.0.97.g1424303384
+
+
+From 090d2842b640586b7b1b9fb005f104e8f2433cc5 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 8 Apr 2021 08:11:45 +0200
+Subject: [PATCH 08/10] mm-5.11: remove WARN_ON since it really can happen due
+ to non-atomicity
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 267763fe2..6cd69d856 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2809,15 +2809,9 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 		reclaimable_file = file + node_page_state(pgdat, NR_ISOLATED_FILE);
+ 		dirty_file = node_page_state(pgdat, NR_FILE_DIRTY);
+ 
+-		if (unlikely(reclaimable_file < dirty_file)) {
+-			/*
+-			 * post-factum: so, nr_file_dirty can never exceed
+-			 *              (nr_inactive_file+nr_active_file+nr_isolated_file)?
+-			 * vbabka: ugh, never say never
+-			 */
+-			WARN_ON_ONCE(1);
++		if (unlikely(reclaimable_file < dirty_file))
+ 			clean_file = ULONG_MAX;
+-		} else
++		else
+ 			clean_file = reclaimable_file - dirty_file;
+ 
+ 		sc->file_is_low = K(clean_file) < sysctl_unevictable_file_kbytes_low &&
+-- 
+2.31.0.97.g1424303384
+
+
+From 67065da5a58827d997e4592d4e30275e080c05a6 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 8 Apr 2021 08:12:41 +0200
+Subject: [PATCH 09/10] mm-5.11: call node_page_state() closer to each other
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 6cd69d856..d7a4d80ff 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2784,6 +2784,10 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 		free = sum_zone_node_page_state(pgdat->node_id, NR_FREE_PAGES);
+ 		file = node_page_state(pgdat, NR_ACTIVE_FILE) +
+ 			   node_page_state(pgdat, NR_INACTIVE_FILE);
++#if defined(CONFIG_UNEVICTABLE_FILE)
++		reclaimable_file = file + node_page_state(pgdat, NR_ISOLATED_FILE);
++		dirty_file = node_page_state(pgdat, NR_FILE_DIRTY);
++#endif
+ 
+ 		for (z = 0; z < MAX_NR_ZONES; z++) {
+ 			struct zone *zone = &pgdat->node_zones[z];
+@@ -2806,9 +2810,6 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 			anon >> sc->priority;
+ 
+ #if defined(CONFIG_UNEVICTABLE_FILE)
+-		reclaimable_file = file + node_page_state(pgdat, NR_ISOLATED_FILE);
+-		dirty_file = node_page_state(pgdat, NR_FILE_DIRTY);
+-
+ 		if (unlikely(reclaimable_file < dirty_file))
+ 			clean_file = ULONG_MAX;
+ 		else
+-- 
+2.31.0.97.g1424303384
+
+
+From d0197793e9758fe4a92dbeaee0d9e602d8c1b5b2 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 8 Apr 2021 08:14:26 +0200
+Subject: [PATCH 10/10] mm-5.11: explain non-atomicity
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index d7a4d80ff..3ac537721 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2810,6 +2810,10 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 			anon >> sc->priority;
+ 
+ #if defined(CONFIG_UNEVICTABLE_FILE)
++		/*
++		 * node_page_state() sum can go out of sync since
++		 * all the values are not read at once
++		 */
+ 		if (unlikely(reclaimable_file < dirty_file))
+ 			clean_file = ULONG_MAX;
+ 		else
+-- 
+2.31.0.97.g1424303384
 
