@@ -1,7 +1,7 @@
-From a1161124868e7056c9748463bfb6449c7a5d5245 Mon Sep 17 00:00:00 2001
+From d69f8af1e8154cda947a2736f2775829eb227798 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 11:17:31 +0100
-Subject: [PATCH 01/10] mm-5.11: protect file mappings under memory pressure
+Subject: [PATCH 01/11] mm-5.11: protect file mappings under memory pressure
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -232,10 +232,10 @@ index ad9f2adaf..3eed6f58b 100644
 2.31.0.97.g1424303384
 
 
-From aafd906f5cf1bdfc1af15c2aa2959a7ab9ca1854 Mon Sep 17 00:00:00 2001
+From 5db8a8b793659bcc5e159695d124d041c7311533 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 11:44:39 +0100
-Subject: [PATCH 02/10] mm-5.11: inequality should not exclude lower threshold
+Subject: [PATCH 02/11] mm-5.11: inequality should not exclude lower threshold
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -259,10 +259,10 @@ index 3eed6f58b..f88931dcf 100644
 2.31.0.97.g1424303384
 
 
-From 989d1ed0775e70dd4ef8862fee41c6ff0bc9ccef Mon Sep 17 00:00:00 2001
+From f525bc00335331f725d40eaf21a6a2be597b652d Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 15 Feb 2021 12:49:51 +0100
-Subject: [PATCH 03/10] mm-5.11: throttle file pages scan regardless of scan
+Subject: [PATCH 03/11] mm-5.11: throttle file pages scan regardless of scan
  balance
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
@@ -309,10 +309,10 @@ index f88931dcf..2032af8d8 100644
 2.31.0.97.g1424303384
 
 
-From 3db249e95a76726a9bfdfbd930b4ab47f6fe40ca Mon Sep 17 00:00:00 2001
+From dd227e981dd3499deeb884129de1a92be0b02934 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Sat, 20 Feb 2021 08:37:18 +0100
-Subject: [PATCH 04/10] mm-5.11: simplify file_is_low
+Subject: [PATCH 04/11] mm-5.11: simplify file_is_low
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -339,10 +339,10 @@ index 2032af8d8..f9fcde30d 100644
 2.31.0.97.g1424303384
 
 
-From 1f23a60df36e6ed3fcedf7456be8e8d07b3acb06 Mon Sep 17 00:00:00 2001
+From 357a41d2744cd1277f2e1d080227fe9066e60e81 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Thu, 8 Apr 2021 00:30:06 +0200
-Subject: [PATCH 05/10] mm-5.11: do not protect dirty pages
+Subject: [PATCH 05/11] mm-5.11: do not protect dirty pages
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -395,10 +395,10 @@ index f9fcde30d..6623af0d1 100644
 2.31.0.97.g1424303384
 
 
-From cdab87d89cee920fe8ea8c5fdb93ce65370691dd Mon Sep 17 00:00:00 2001
+From 838b3cede8df6d9c9c5c5dc71067cfa8c9e320a8 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Thu, 8 Apr 2021 00:39:08 +0200
-Subject: [PATCH 06/10] mm-5.11: be more concise about clean pages
+Subject: [PATCH 06/11] mm-5.11: be more concise about clean pages
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -433,10 +433,10 @@ index 6623af0d1..5e50353ff 100644
 2.31.0.97.g1424303384
 
 
-From 3302d87f632c921be5af9d2f9a48803c5e58e57c Mon Sep 17 00:00:00 2001
+From 90dce1bdfdc91f11253febce25c7afde8e95fc6d Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Thu, 8 Apr 2021 08:08:50 +0200
-Subject: [PATCH 07/10] mm-5.11: nits on branching
+Subject: [PATCH 07/11] mm-5.11: nits on branching
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -467,10 +467,10 @@ index 5e50353ff..267763fe2 100644
 2.31.0.97.g1424303384
 
 
-From 090d2842b640586b7b1b9fb005f104e8f2433cc5 Mon Sep 17 00:00:00 2001
+From d2447ad19e7a9c0f391d9eb43a04b26ca9e26e7e Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Thu, 8 Apr 2021 08:11:45 +0200
-Subject: [PATCH 08/10] mm-5.11: remove WARN_ON since it really can happen due
+Subject: [PATCH 08/11] mm-5.11: remove WARN_ON since it really can happen due
  to non-atomicity
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
@@ -504,10 +504,10 @@ index 267763fe2..6cd69d856 100644
 2.31.0.97.g1424303384
 
 
-From 67065da5a58827d997e4592d4e30275e080c05a6 Mon Sep 17 00:00:00 2001
+From 04107c4bb42a16fa0715b6213814fd586b26ff2a Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Thu, 8 Apr 2021 08:12:41 +0200
-Subject: [PATCH 09/10] mm-5.11: call node_page_state() closer to each other
+Subject: [PATCH 09/11] mm-5.11: call node_page_state() closer to each other
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -543,10 +543,10 @@ index 6cd69d856..d7a4d80ff 100644
 2.31.0.97.g1424303384
 
 
-From d0197793e9758fe4a92dbeaee0d9e602d8c1b5b2 Mon Sep 17 00:00:00 2001
+From 9aaa7d4fa23db7a886362f245336cdc7529e7a0c Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Thu, 8 Apr 2021 08:14:26 +0200
-Subject: [PATCH 10/10] mm-5.11: explain non-atomicity
+Subject: [PATCH 10/11] mm-5.11: explain non-atomicity
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -568,6 +568,38 @@ index d7a4d80ff..3ac537721 100644
  		if (unlikely(reclaimable_file < dirty_file))
  			clean_file = ULONG_MAX;
  		else
+-- 
+2.31.0.97.g1424303384
+
+
+From 26f289a07902d8805f4ee0a7226c2d08691a18c2 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 8 Apr 2021 16:40:18 +0200
+Subject: [PATCH 11/11] mm-5.11: do not disable file pages protection under
+ dirty pressure
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ mm/vmscan.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 3ac537721..c8ebf5266 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2815,7 +2815,11 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 		 * all the values are not read at once
+ 		 */
+ 		if (unlikely(reclaimable_file < dirty_file))
+-			clean_file = ULONG_MAX;
++			/*
++			 * in this case assume the system does not have
++			 * clean file pages anymore
++			 */
++			clean_file = 0;
+ 		else
+ 			clean_file = reclaimable_file - dirty_file;
+ 
 -- 
 2.31.0.97.g1424303384
 

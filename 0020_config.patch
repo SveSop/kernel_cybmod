@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,10939 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.11.12-cybmod16 Kernel Configuration
++# Linux/x86 5.11.13-cybmod17 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.2.0-5ubuntu1~20.04) 10.2.0"
 +CONFIG_CC_IS_GCC=y
@@ -500,8 +500,8 @@ new file mode 100644
 +CONFIG_X86_UMIP=y
 +CONFIG_X86_INTEL_MEMORY_PROTECTION_KEYS=y
 +# CONFIG_X86_INTEL_TSX_MODE_OFF is not set
-+CONFIG_X86_INTEL_TSX_MODE_ON=y
-+# CONFIG_X86_INTEL_TSX_MODE_AUTO is not set
++# CONFIG_X86_INTEL_TSX_MODE_ON is not set
++CONFIG_X86_INTEL_TSX_MODE_AUTO=y
 +# CONFIG_X86_SGX is not set
 +CONFIG_EFI=y
 +CONFIG_EFI_STUB=y
@@ -509,10 +509,10 @@ new file mode 100644
 +# CONFIG_HZ_100 is not set
 +# CONFIG_HZ_250 is not set
 +# CONFIG_HZ_300 is not set
-+CONFIG_HZ_500=y
++# CONFIG_HZ_500 is not set
 +# CONFIG_HZ_750 is not set
-+# CONFIG_HZ_1000 is not set
-+CONFIG_HZ=500
++CONFIG_HZ_1000=y
++CONFIG_HZ=1000
 +CONFIG_SCHED_HRTICK=y
 +CONFIG_KEXEC=y
 +CONFIG_KEXEC_FILE=y
