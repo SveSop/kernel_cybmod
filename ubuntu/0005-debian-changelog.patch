@@ -1,6 +1,6 @@
-From a0104a66d4cd1146e16ee23284bd6afcfd30bb5a Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 14 Apr 2021 07:32:29 +0000
+From 9305a96df262722a63a5964185405fb0e9cdd451 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Fri, 16 Apr 2021 10:35:03 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11118 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index ab7db7caa791..e658b84bfd7b 100644
+index ab7db7caa791..33f1986cc08c 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11121 +1,6 @@
 -linux-unstable (5.12.0-6.6) hirsute; urgency=medium
-+linux (5.11.14-051114.202104140732) groovy; urgency=low
++linux (5.11.15-051115.202104161034) groovy; urgency=low
  
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update variants
-+  Mainline build at commit: v5.11.14
++  Mainline build at commit: v5.11.15
  
 -  * i915 doesn't support some high pixel clock 4k * 60Hz monitors (LP: #1922372)
 -    - drm/i915/vbt: update DP max link rate table
-+ -- Mainline Build <kernel@kathleen>  Wed, 14 Apr 2021 07:32:28 +0000
++ -- Mainline Build <kernel@sita>  Fri, 16 Apr 2021 10:35:03 +0000
  
 -  * Tegra "mmc0: Timeout waiting for hardware interrupt" (LP: #1921140)
 -    - SAUCE: mmc: host: Add required callbacks to set/clear CQE_EN bit
