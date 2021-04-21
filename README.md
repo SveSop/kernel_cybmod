@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Linux 5.11.15  
+0000 : Linux 5.11.16  
 0001 : CacULE scheduler  
 0002 : 5.11 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
@@ -24,6 +24,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0036 : Add support for ZSTD compression  
 0037 : -ck picked patches (Xanmod)  
 0038 : BBR2 + various TCP patches  
+0039 : mm LRU patchset  
 0040 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
