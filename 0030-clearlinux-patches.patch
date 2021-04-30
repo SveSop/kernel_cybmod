@@ -1,7 +1,7 @@
-From 57f2beeae1a36ed01356132f9c8ae954d576948b Mon Sep 17 00:00:00 2001
+From c420dbfa92ace5bfbdcd2c1d0cb4b593c5c38c2c Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:10:58 -0600
-Subject: [PATCH 04/25] pci pme wakeups
+Subject: [PATCH 04/24] pci pme wakeups
 
 Reduce wakeups for PME checks, which are a workaround for miswired
 boards (sadly, too many of them) in laptops.
@@ -10,7 +10,7 @@ boards (sadly, too many of them) in laptops.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 790393d1e..1cc50b612 100644
+index 16a17215f..9a77b4917 100644
 --- a/drivers/pci/pci.c
 +++ b/drivers/pci/pci.c
 @@ -59,7 +59,7 @@ struct pci_pme_device {
@@ -23,12 +23,12 @@ index 790393d1e..1cc50b612 100644
  static void pci_dev_d3_sleep(struct pci_dev *dev)
  {
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From df937df17b209379ace1b424f28ae9aa5c23da34 Mon Sep 17 00:00:00 2001
+From 43529b16ae2e72fe63c4020b832379540a570183 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 6 May 2019 12:57:09 -0500
-Subject: [PATCH 05/25] ksm-wakeups
+Subject: [PATCH 05/24] ksm-wakeups
 
 reduce wakeups in ksm by adding rounding (aligning) when
 the sleep times are 1 second or longer
@@ -40,7 +40,7 @@ Signed-off-by: Arjan van de Ven <arjan@linux.intel.com>
  2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 71109065b..44ae1e267 100644
+index 107bc38b1..c79f45508 100644
 --- a/kernel/watchdog.c
 +++ b/kernel/watchdog.c
 @@ -41,7 +41,7 @@ unsigned long __read_mostly watchdog_enabled;
@@ -75,12 +75,12 @@ index 9694ee2c7..50d1d6dd1 100644
  			wait_event_freezable(ksm_thread_wait,
  				ksmd_should_run() || kthread_should_stop());
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From 88a78c601be777f3852295c742943d3dfcb6339a Mon Sep 17 00:00:00 2001
+From 6c1053a4a2081011c5ed1f04cd9ef7cf3b6080d8 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 19 Mar 2016 21:32:19 -0400
-Subject: [PATCH 06/25] intel_idle: tweak cpuidle cstates
+Subject: [PATCH 06/24] intel_idle: tweak cpuidle cstates
 
 Increase target_residency in cpuidle cstate
 
@@ -93,7 +93,7 @@ performance while keeping power efficiency
  1 file changed, 22 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index 28f93b9aa..d44796680 100644
+index 3273360f3..257daaf1a 100644
 --- a/drivers/idle/intel_idle.c
 +++ b/drivers/idle/intel_idle.c
 @@ -502,7 +502,7 @@ static struct cpuidle_state hsw_cstates[] __initdata = {
@@ -295,12 +295,12 @@ index 28f93b9aa..d44796680 100644
  		.enter_s2idle = intel_idle_s2idle, },
  	{
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From 0f17545b1f968871a07eeb68f62c32208f71f2ab Mon Sep 17 00:00:00 2001
+From a343e1a24fb00fc0553f1562c288c562aa239feb Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 17:28:14 -0600
-Subject: [PATCH 08/25] smpboot: reuse timer calibration
+Subject: [PATCH 08/24] smpboot: reuse timer calibration
 
 NO point recalibrating for known-constant tsc ...
 saves 200ms+ of boot time.
@@ -323,12 +323,12 @@ index f70dffc27..dfb9f6055 100644
  	if (sibling < nr_cpu_ids)
  		return cpu_data(sibling).loops_per_jiffy;
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From 200074f22d44d3ba2ea724ba000782cf15c8450c Mon Sep 17 00:00:00 2001
+From 96772aa8d5be341777dcb8e6d21ac1e119994c3a Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 2 Jun 2016 23:36:32 -0500
-Subject: [PATCH 09/25] Initialize ata before graphics
+Subject: [PATCH 09/24] Initialize ata before graphics
 
 ATA init is the long pole in the boot process, and its asynchronous.
 move the graphics init after it so that ata and graphics initialize
@@ -338,7 +338,7 @@ in parallel
  1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/Makefile b/drivers/Makefile
-index fd11b9ac4..41fce30cb 100644
+index 6fba7daba..25bebfeac 100644
 --- a/drivers/Makefile
 +++ b/drivers/Makefile
 @@ -59,15 +59,8 @@ obj-y				+= char/
@@ -357,7 +357,7 @@ index fd11b9ac4..41fce30cb 100644
  obj-$(CONFIG_PARPORT)		+= parport/
  obj-$(CONFIG_NVM)		+= lightnvm/
  obj-y				+= base/ block/ misc/ mfd/ nfc/
-@@ -80,6 +73,14 @@ obj-$(CONFIG_IDE)		+= ide/
+@@ -81,6 +74,14 @@ obj-$(CONFIG_IDE)		+= ide/
  obj-y				+= scsi/
  obj-y				+= nvme/
  obj-$(CONFIG_ATA)		+= ata/
@@ -373,12 +373,12 @@ index fd11b9ac4..41fce30cb 100644
  obj-$(CONFIG_MTD)		+= mtd/
  obj-$(CONFIG_SPI)		+= spi/
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From 582c9910cf2c59bf30a3a08a2ac16b9672b398c5 Mon Sep 17 00:00:00 2001
+From 2956c4043d8a4eb54de34445d5bf82c26c48b531 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 6 Jan 2017 15:34:09 +0000
-Subject: [PATCH 11/25] ipv4/tcp: allow the memory tuning for tcp to go a
+Subject: [PATCH 11/24] ipv4/tcp: allow the memory tuning for tcp to go a
  little bigger than default
 
 ---
@@ -386,10 +386,10 @@ Subject: [PATCH 11/25] ipv4/tcp: allow the memory tuning for tcp to go a
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 32545ecf2..37843b080 100644
+index de7cc8445..940fa1e11 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -4446,8 +4446,8 @@ void __init tcp_init(void)
+@@ -4543,8 +4543,8 @@ void __init tcp_init(void)
  	tcp_init_mem();
  	/* Set per-socket limits to no more than 1/128 the pressure threshold */
  	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
@@ -401,25 +401,21 @@ index 32545ecf2..37843b080 100644
  	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
  	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From 3c0804ff9c0b4f80d139bb9cd6811849101ceaa6 Mon Sep 17 00:00:00 2001
-From: "Brett T. Warden" <brett.t.warden@intel.com>
-Date: Mon, 13 Aug 2018 04:01:21 -0500
-Subject: [PATCH 13/25] Add boot option to allow unsigned modules
+From 807c5fcfa398d57402b89a715e11cb18a237fe64 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Tue, 13 Apr 2021 16:55:35 +0200
+Subject: [PATCH 13/24] clearlinux-5.12: port: Add boot option to allow
+ unsigned modules
 
-Add module.sig_unenforce boot parameter to allow loading unsigned kernel
-modules. Parameter is only effective if CONFIG_MODULE_SIG_FORCE is
-enabled and system is *not* SecureBooted.
-
-Signed-off-by: Brett T. Warden <brett.t.warden@intel.com>
-Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  kernel/module.c | 20 ++++++++++++++++++++
  1 file changed, 20 insertions(+)
 
 diff --git a/kernel/module.c b/kernel/module.c
-index 4bf30e4b3..eff4caaf4 100644
+index 30479355a..4f659af23 100644
 --- a/kernel/module.c
 +++ b/kernel/module.c
 @@ -56,6 +56,7 @@
@@ -430,7 +426,7 @@ index 4bf30e4b3..eff4caaf4 100644
  #include <uapi/linux/module.h>
  #include "module-internal.h"
  
-@@ -274,6 +275,10 @@ static void module_assert_mutex_or_preempt(void)
+@@ -268,6 +269,10 @@ static void module_assert_mutex_or_preempt(void)
  
  static bool sig_enforce = IS_ENABLED(CONFIG_MODULE_SIG_FORCE);
  module_param(sig_enforce, bool_enable_only, 0644);
@@ -441,16 +437,16 @@ index 4bf30e4b3..eff4caaf4 100644
  
  /*
   * Export sig_enforce kernel cmdline parameter to allow other subsystems rely
-@@ -428,6 +433,8 @@ extern const s32 __start___kcrctab_unused[];
- extern const s32 __start___kcrctab_unused_gpl[];
- #endif
+@@ -411,6 +416,8 @@ extern const struct kernel_symbol __stop___ksymtab_gpl[];
+ extern const s32 __start___kcrctab[];
+ extern const s32 __start___kcrctab_gpl[];
  
 +extern struct boot_params boot_params;
 +
  #ifndef CONFIG_MODVERSIONS
  #define symversion(base, idx) NULL
  #else
-@@ -4525,6 +4532,19 @@ static const struct proc_ops modules_proc_ops = {
+@@ -4534,6 +4541,19 @@ static const struct proc_ops modules_proc_ops = {
  static int __init proc_modules_init(void)
  {
  	proc_create("modules", 0, NULL, &modules_proc_ops);
@@ -471,12 +467,12 @@ index 4bf30e4b3..eff4caaf4 100644
  }
  module_init(proc_modules_init);
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From 13ee4d7d4a06ccd99f7c5be5581a65aae95ba5fb Mon Sep 17 00:00:00 2001
+From f775884ea4ba70064b3986ca387cfa8615b95931 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
-Subject: [PATCH 18/25] do accept() in LIFO order for cache efficiency
+Subject: [PATCH 17/24] do accept() in LIFO order for cache efficiency
 
 ---
  include/linux/wait.h            |  2 ++
@@ -547,7 +543,7 @@ index 183cc6ae6..ed87f43de 100644
  {
  	wq_entry->flags = flags;
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 6bd7ca09a..19f26390e 100644
+index fd472eae4..d85f68c9f 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
 @@ -433,7 +433,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
@@ -560,12 +556,12 @@ index 6bd7ca09a..19f26390e 100644
  		release_sock(sk);
  		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From f3440dc3117c7865999c8124b2a4636be48b4195 Mon Sep 17 00:00:00 2001
+From c1375575adfb1155df40ea47a3380b504747befb Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sun, 18 Feb 2018 23:35:41 +0000
-Subject: [PATCH 19/25] locking: rwsem: spin faster
+Subject: [PATCH 18/24] locking: rwsem: spin faster
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -573,7 +569,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index ba67600c7..0c39e6eb5 100644
+index abba5df50..b9fab2d55 100644
 --- a/kernel/locking/rwsem.c
 +++ b/kernel/locking/rwsem.c
 @@ -668,6 +668,7 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
@@ -595,12 +591,37 @@ index ba67600c7..0c39e6eb5 100644
  	rcu_read_unlock();
  
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 
-From 6da2085a5ba161d915e46f4c0c5bbfa75590328f Mon Sep 17 00:00:00 2001
+From e7426317bca1fdfa7682363f88509d7891debb5b Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Mon, 11 Nov 2019 23:12:11 +0000
+Subject: [PATCH 22/24] nvme workaround
+
+---
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 0896e2164..685f223ab 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -48,7 +48,7 @@ static u8 nvme_max_retries = 5;
+ module_param_named(max_retries, nvme_max_retries, byte, 0644);
+ MODULE_PARM_DESC(max_retries, "max number of retries a command may have");
+ 
+-static unsigned long default_ps_max_latency_us = 100000;
++static unsigned long default_ps_max_latency_us = 200;
+ module_param(default_ps_max_latency_us, ulong, 0644);
+ MODULE_PARM_DESC(default_ps_max_latency_us,
+ 		 "max power saving latency for new devices; use PM QOS to change per device");
+-- 
+2.31.1.305.gd1b10fc6d8
+
+From a2e73cd4df428683aa3d72d6c6ed6370ff426d45 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 11 Jun 2020 22:30:56 +0200
-Subject: [PATCH 25/25] Port microcode patches
+Subject: [PATCH 24/24] Port microcode patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -609,7 +630,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 62 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index ec6f0415b..264c33b1d 100644
+index b935e1b5f..d0bfe8321 100644
 --- a/arch/x86/kernel/cpu/microcode/core.c
 +++ b/arch/x86/kernel/cpu/microcode/core.c
 @@ -604,6 +604,7 @@ static int microcode_reload_late(void)
@@ -770,5 +791,5 @@ index 1ef03ab31..92af2b9f1 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.30.1.457.gf011795891
+2.31.1.305.gd1b10fc6d8
 

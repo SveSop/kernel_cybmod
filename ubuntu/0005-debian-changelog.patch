@@ -1,6 +1,6 @@
-From 6cf356012380f712c9b3509c2adfb28a5052be22 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 21 Apr 2021 12:35:33 +0000
+From 045c3bc8df846938ccf0f6de4ba2ddd27aec456b Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 25 Apr 2021 21:30:42 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,22 +8,22 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11163 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 7bf549a009ab..27b10aa1c9fc 100644
+index 7bf549a009ab..097042a1d6ca 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11166 +1,6 @@
 -linux-unstable (5.12.0-8.8) hirsute; urgency=medium
-+linux (5.11.16-051116.202104211235) groovy; urgency=low
++linux (5.12.0-051200.202104252130) hirsute; urgency=low
  
 -  * CVE-2021-3492
 -    - SAUCE: shiftfs: free allocated memory in shiftfs_btrfs_ioctl_fd_replace()
 -      error paths
 -    - SAUCE: shiftfs: handle copy_to_user() return values correctly
-+  Mainline build at commit: v5.11.16
++  Mainline build at commit: v5.12
  
 -  * Fix no picture from HDMI when it's plugged after boot (LP: #1924238)
 -    - drm/i915/display: Handle lane polarity for DDI port
-+ -- Mainline Build <kernel@kathleen>  Wed, 21 Apr 2021 12:35:32 +0000
++ -- Mainline Build <kernel@sita>  Sun, 25 Apr 2021 21:30:42 +0000
  
 -  * hirsute beta desktop AMD64 ISO kernel panic on boot when booting using UEFI
 -    (LP: #1922403)
