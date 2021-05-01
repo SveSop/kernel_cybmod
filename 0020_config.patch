@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,10998 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.12.0-cybmod1 Kernel Configuration
++# Linux/x86 5.12.0-cybmod2 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.3.0-1ubuntu1~20.04~2) 10.3.0"
 +CONFIG_CC_IS_GCC=y
@@ -699,7 +699,7 @@ new file mode 100644
 +CONFIG_PCI_XEN=y
 +CONFIG_MMCONF_FAM10H=y
 +# CONFIG_PCI_CNB20LE_QUIRK is not set
-+CONFIG_ISA_BUS=y
++# CONFIG_ISA_BUS is not set
 +CONFIG_ISA_DMA_API=y
 +# CONFIG_X86_SYSFB is not set
 +# end of Bus options (PCI etc.)
@@ -3311,7 +3311,7 @@ new file mode 100644
 +CONFIG_MLX4_EN=m
 +CONFIG_MLX4_EN_DCB=y
 +CONFIG_MLX4_CORE=m
-+CONFIG_MLX4_DEBUG=y
++# CONFIG_MLX4_DEBUG is not set
 +CONFIG_MLX4_CORE_GEN2=y
 +CONFIG_MLX5_CORE=m
 +CONFIG_MLX5_ACCEL=y
@@ -7702,7 +7702,7 @@ new file mode 100644
 +CONFIG_USB_SERIAL_QT2=m
 +CONFIG_USB_SERIAL_UPD78F0730=m
 +CONFIG_USB_SERIAL_XR=m
-+CONFIG_USB_SERIAL_DEBUG=m
++# CONFIG_USB_SERIAL_DEBUG is not set
 +
 +#
 +# USB Miscellaneous drivers
