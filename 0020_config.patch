@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10998 @@
+@@ -0,0 +1,10999 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.12.0-cybmod2 Kernel Configuration
++# Linux/x86 5.12.1-cybmod3 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.3.0-1ubuntu1~20.04~2) 10.3.0"
 +CONFIG_CC_IS_GCC=y
@@ -207,7 +207,8 @@ new file mode 100644
 +CONFIG_PID_NS=y
 +CONFIG_NET_NS=y
 +CONFIG_CHECKPOINT_RESTORE=y
-+# CONFIG_SCHED_AUTOGROUP is not set
++CONFIG_SCHED_AUTOGROUP=y
++CONFIG_SCHED_AUTOGROUP_DEFAULT_ENABLED=y
 +# CONFIG_SYSFS_DEPRECATED is not set
 +CONFIG_RELAY=y
 +CONFIG_BLK_DEV_INITRD=y
