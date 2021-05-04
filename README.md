@@ -14,6 +14,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0007 : Add option for SCHED_AUTOGROUP (Xanmod)  
 0008 : zstd kernel settings  
 0009 : mm: Support soft/dirty flag (for vkd3d)  
+0010 : Initramfs Async unpack  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 0030 : Clearlinux patches  
@@ -24,6 +25,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0035 : zstd upstream patches  
 0036 : -ck picked patches (Xanmod)  
 0037 : BBR2 + various net/TCP patches  
+0038 : ntf3 patches  
 0040 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  

@@ -1,7 +1,7 @@
-From 433632e30a58926c40b0a99d4f9213ce4e35b43c Mon Sep 17 00:00:00 2001
+From 6277cd8d289523eaf027867cfbc926b78ea8b139 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:18 -0600
-Subject: [PATCH 01/16] include/linux/memcontrol.h: do not warn in
+Subject: [PATCH 01/17] include/linux/memcontrol.h: do not warn in
  page_memcg_rcu() if !CONFIG_MEMCG
 
 page_memcg_rcu() warns on !rcu_read_lock_held() regardless of
@@ -50,10 +50,10 @@ index 0c04d39a7..f13dc02cf 100644
 2.31.1.362.g311531c9de
 
 
-From 9fe039dbe6b4acf185f7e523c86343b83ce5e899 Mon Sep 17 00:00:00 2001
+From 88fb9b165efca2ba5a0ecb70db0e5dd9162e7daf Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:19 -0600
-Subject: [PATCH 02/16] include/linux/nodemask.h: define next_memory_node() if
+Subject: [PATCH 02/17] include/linux/nodemask.h: define next_memory_node() if
  !CONFIG_NUMA
 
 Currently next_memory_node only exists when CONFIG_NUMA=y. This patch
@@ -80,10 +80,10 @@ index ac398e143..89fe4e359 100644
 2.31.1.362.g311531c9de
 
 
-From b2afba2cbcd6d5c065c803b0092fbb724e22d380 Mon Sep 17 00:00:00 2001
+From 34cf4c94c89bdabf5bcdd3e3481168dc7822d203 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:20 -0600
-Subject: [PATCH 03/16] include/linux/huge_mm.h: define is_huge_zero_pmd() if
+Subject: [PATCH 03/17] include/linux/huge_mm.h: define is_huge_zero_pmd() if
  !CONFIG_TRANSPARENT_HUGEPAGE
 
 Currently is_huge_zero_pmd() only exists when
@@ -115,10 +115,10 @@ index ba973efcd..0ba7b3f90 100644
 2.31.1.362.g311531c9de
 
 
-From 17bf94db0ca9bdbd5a7aafdfb700276af41ee5e2 Mon Sep 17 00:00:00 2001
+From 52ba37022711f7a5aa27f91cfc2343974cb4a37f Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:21 -0600
-Subject: [PATCH 04/16] include/linux/cgroup.h: export cgroup_mutex
+Subject: [PATCH 04/17] include/linux/cgroup.h: export cgroup_mutex
 
 cgroup_mutex is needed to synchronize with memcg creations.
 
@@ -171,10 +171,10 @@ index 4f2f79de0..bd5744360 100644
 2.31.1.362.g311531c9de
 
 
-From 1608f199f0f2d4274ac30dc86a7cf50c62f3389c Mon Sep 17 00:00:00 2001
+From 7588e65a5d4ca6760bd4373831260ef09b45af2d Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:22 -0600
-Subject: [PATCH 05/16] mm/swap.c: export activate_page()
+Subject: [PATCH 05/17] mm/swap.c: export activate_page()
 
 activate_page() is needed to activate pages that are already on lru or
 queued in lru_pvecs.lru_add. The exported function is a merger between
@@ -266,10 +266,10 @@ index 31b844d4e..f20ed56eb 100644
 2.31.1.362.g311531c9de
 
 
-From 9d0ccfea2ca6eb1a4d12bdf73ebbbe83994e7026 Mon Sep 17 00:00:00 2001
+From 88a62da59e8cba3af3fe3e4134106c8be027cf1d Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:23 -0600
-Subject: [PATCH 06/16] mm, x86: support the access bit on non-leaf PMD entries
+Subject: [PATCH 06/17] mm, x86: support the access bit on non-leaf PMD entries
 
 Some architectures support the accessed bit on non-leaf PMD entries
 (parents) in addition to leaf PTE entries (children) where pages are
@@ -386,10 +386,10 @@ index 5e772392a..08dd9b8c0 100644
 2.31.1.362.g311531c9de
 
 
-From a014bef333ad96afde3f59e4ac730cc2b40d7822 Mon Sep 17 00:00:00 2001
+From f5af728b1a127f473fc362c73880844f5c8e93d2 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:24 -0600
-Subject: [PATCH 07/16] mm/vmscan.c: refactor shrink_node()
+Subject: [PATCH 07/17] mm/vmscan.c: refactor shrink_node()
 
 Heuristics that determine scan balance between anon and file LRUs are
 rather independent. Move them into a separate function to improve
@@ -615,10 +615,10 @@ index 562e87cbd..1a24d2e0a 100644
 2.31.1.362.g311531c9de
 
 
-From 202754466967f2ec34bb2a672bc7ad6a29a63870 Mon Sep 17 00:00:00 2001
+From e1d0e82eaae369c0bc235f0cb315f469cc0b4158 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:25 -0600
-Subject: [PATCH 08/16] mm: multigenerational lru: groundwork
+Subject: [PATCH 08/17] mm: multigenerational lru: groundwork
 
 For each lruvec, evictable pages are divided into multiple
 generations. The youngest generation number is stored in max_seq for
@@ -1550,10 +1550,10 @@ index 1a24d2e0a..8559bb94d 100644
 2.31.1.362.g311531c9de
 
 
-From 45b408ff7496797a43d7ffccf38cd21b22ad7831 Mon Sep 17 00:00:00 2001
+From 51a4ae24de57b5efc4378ebe19d85215c9f8a2cd Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:26 -0600
-Subject: [PATCH 09/16] mm: multigenerational lru: activation
+Subject: [PATCH 09/17] mm: multigenerational lru: activation
 
 For pages accessed multiple times via file descriptors, instead of
 activating them upon the second accesses, we activate them based on
@@ -2394,10 +2394,10 @@ index cd39902c1..df363f941 100644
 2.31.1.362.g311531c9de
 
 
-From 6d159ad43f44f5d852209d43cb344efe2a1b4eb7 Mon Sep 17 00:00:00 2001
+From 2b77bbcaf3f60f85e56064b49410f9dcda6a3a6e Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:27 -0600
-Subject: [PATCH 10/16] mm: multigenerational lru: mm_struct list
+Subject: [PATCH 10/17] mm: multigenerational lru: mm_struct list
 
 In order to scan page tables, we add an infrastructure to maintain
 either a system-wide mm_struct list or per-memcg mm_struct lists.
@@ -3113,10 +3113,10 @@ index c74ebe203..d67dfd1e3 100644
 2.31.1.362.g311531c9de
 
 
-From c0b7092e4ff363225ac0e99a5a197d2d490f07ac Mon Sep 17 00:00:00 2001
+From 993a9164fbd491d1e21c9f5b21adce5f7e2aacfa Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:28 -0600
-Subject: [PATCH 11/16] mm: multigenerational lru: aging
+Subject: [PATCH 11/17] mm: multigenerational lru: aging
 
 The aging produces young generations. Given an lruvec, the aging walks
 the mm_struct list associated with this lruvec to scan page tables for
@@ -3871,10 +3871,10 @@ index d67dfd1e3..31e1b4155 100644
 2.31.1.362.g311531c9de
 
 
-From a178d95d65df60462345ec5f7dc3eb3b7a67e1a7 Mon Sep 17 00:00:00 2001
+From adab5f74a806b2928a634494850e9de1a54ac69c Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:29 -0600
-Subject: [PATCH 12/16] mm: multigenerational lru: eviction
+Subject: [PATCH 12/17] mm: multigenerational lru: eviction
 
 The eviction consumes old generations. Given an lruvec, the eviction
 scans the pages on the per-zone lists indexed by either of min_seq[2].
@@ -4250,10 +4250,10 @@ index 31e1b4155..6239b1acd 100644
 2.31.1.362.g311531c9de
 
 
-From 775a9fe65117889133f9af8ec6a2b91fb002546d Mon Sep 17 00:00:00 2001
+From 48fdc13a61d8106121e2ea88f7d4702fa3dbf778 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:30 -0600
-Subject: [PATCH 13/16] mm: multigenerational lru: page reclaim
+Subject: [PATCH 13/17] mm: multigenerational lru: page reclaim
 
 With the aging and the eviction in place, we can build the page
 reclaim in a straightforward manner:
@@ -4635,10 +4635,10 @@ index 6239b1acd..01c475386 100644
 2.31.1.362.g311531c9de
 
 
-From de827ae7478727eaf610e1e79cf9fb8ea148837a Mon Sep 17 00:00:00 2001
+From 63af5ff88ca2b78844f7f1ee8018e94ab5f0f706 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:31 -0600
-Subject: [PATCH 14/16] mm: multigenerational lru: user interface
+Subject: [PATCH 14/17] mm: multigenerational lru: user interface
 
 Add a sysfs file /sys/kernel/mm/lru_gen/enabled so users can enable
 and disable the multigenerational lru at runtime.
@@ -5115,10 +5115,10 @@ index 01c475386..284e32d89 100644
 2.31.1.362.g311531c9de
 
 
-From c1112bf9c524f7c9e6af9c795253b114196bc099 Mon Sep 17 00:00:00 2001
+From bea830a13e5f17b02562d0bf2f1f465f78b47c7a Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:32 -0600
-Subject: [PATCH 15/16] mm: multigenerational lru: Kconfig
+Subject: [PATCH 15/17] mm: multigenerational lru: Kconfig
 
 Add configuration options for the multigenerational lru.
 
@@ -5195,10 +5195,10 @@ index 24c045b24..0be1c6c90 100644
 2.31.1.362.g311531c9de
 
 
-From ed3c8d8b146f9ea8e43d3ca78b1515a2316bc2da Mon Sep 17 00:00:00 2001
+From cd1278636fefb877d99d10da918124f399a83ceb Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:33 -0600
-Subject: [PATCH 16/16] mm: multigenerational lru: documentation
+Subject: [PATCH 16/17] mm: multigenerational lru: documentation
 
 Add Documentation/vm/multigen_lru.rst.
 
@@ -5419,6 +5419,273 @@ index 000000000..cf772aeca
 +NUMA Optimization
 +-----------------
 +Support NUMA policies and per-node RSS counters.
+-- 
+2.31.1.362.g311531c9de
+
+
+From 03ab1f676aab2947470fdac0bcfcaa3cb47f4125 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Sat, 1 May 2021 23:52:56 +0200
+Subject: [PATCH 17/17] mm-5.12: protect file mappings under memory pressure
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ Documentation/admin-guide/sysctl/vm.rst | 27 +++++++++++++
+ kernel/sysctl.c                         | 35 ++++++++++++++++
+ mm/Kconfig                              | 37 +++++++++++++++++
+ mm/vmscan.c                             | 53 +++++++++++++++++++++++++
+ 4 files changed, 152 insertions(+)
+
+diff --git a/Documentation/admin-guide/sysctl/vm.rst b/Documentation/admin-guide/sysctl/vm.rst
+index 586cd4b86..16826b31d 100644
+--- a/Documentation/admin-guide/sysctl/vm.rst
++++ b/Documentation/admin-guide/sysctl/vm.rst
+@@ -69,6 +69,8 @@ Currently, these files are in /proc/sys/vm:
+ - stat_refresh
+ - numa_stat
+ - swappiness
++- unevictable_file_kbytes_low
++- unevictable_file_kbytes_min
+ - unprivileged_userfaultfd
+ - user_reserve_kbytes
+ - vfs_cache_pressure
+@@ -886,6 +888,31 @@ calls without any restrictions.
+ The default value is 0.
+ 
+ 
++unevictable_file_kbytes_low
++===========================
++
++Keep some file pages still mapped under memory pressure to avoid potential
++disk thrashing that may occur due to evicting running executables code.
++This implements soft eviction throttling, and some file pages can still
++be discarded.
++
++Setting it to 0 effectively disables this feature.
++
++The default value is 256 MiB.
++
++
++unevictable_file_kbytes_min
++===========================
++
++Keep all file pages still mapped under memory pressure to avoid potential
++disk thrashing that may occur due to evicting running executables code.
++This is the hard limit.
++
++Setting it to 0 effectively disables this feature.
++
++The default value is 128 MiB.
++
++
+ user_reserve_kbytes
+ ===================
+ 
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index 62fbd09b5..b2b92bb22 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -111,6 +111,22 @@
+ static int sixty = 60;
+ #endif
+ 
++#if defined(CONFIG_UNEVICTABLE_FILE)
++#if CONFIG_UNEVICTABLE_FILE_KBYTES_LOW < 0
++#error "CONFIG_UNEVICTABLE_FILE_KBYTES_LOW should be >= 0"
++#endif
++#if CONFIG_UNEVICTABLE_FILE_KBYTES_MIN < 0
++#error "CONFIG_UNEVICTABLE_FILE_KBYTES_MIN should be >= 0"
++#endif
++#if CONFIG_UNEVICTABLE_FILE_KBYTES_LOW < CONFIG_UNEVICTABLE_FILE_KBYTES_MIN
++#error "CONFIG_UNEVICTABLE_FILE_KBYTES_LOW should be >= CONFIG_UNEVICTABLE_FILE_KBYTES_MIN"
++#endif
++unsigned long sysctl_unevictable_file_kbytes_low __read_mostly =
++	CONFIG_UNEVICTABLE_FILE_KBYTES_LOW;
++unsigned long sysctl_unevictable_file_kbytes_min __read_mostly =
++	CONFIG_UNEVICTABLE_FILE_KBYTES_MIN;
++#endif
++
+ static int __maybe_unused neg_one = -1;
+ static int __maybe_unused two = 2;
+ static int __maybe_unused four = 4;
+@@ -3092,6 +3108,25 @@ static struct ctl_table vm_table[] = {
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= SYSCTL_ONE,
+ 	},
++#endif
++#if defined(CONFIG_UNEVICTABLE_FILE)
++	{
++		.procname	= "unevictable_file_kbytes_low",
++		.data		= &sysctl_unevictable_file_kbytes_low,
++		.maxlen		= sizeof(sysctl_unevictable_file_kbytes_low),
++		.mode		= 0644,
++		.proc_handler	= proc_doulongvec_minmax,
++		.extra1		= &sysctl_unevictable_file_kbytes_min,
++	},
++	{
++		.procname	= "unevictable_file_kbytes_min",
++		.data		= &sysctl_unevictable_file_kbytes_min,
++		.maxlen		= sizeof(sysctl_unevictable_file_kbytes_min),
++		.mode		= 0644,
++		.proc_handler	= proc_doulongvec_minmax,
++		.extra1		= &zero_ul,
++		.extra2		= &sysctl_unevictable_file_kbytes_low,
++	},
+ #endif
+ 	{
+ 		.procname	= "user_reserve_kbytes",
+diff --git a/mm/Kconfig b/mm/Kconfig
+index 0be1c6c90..d9da4da0a 100644
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -63,6 +63,43 @@ config SPARSEMEM_MANUAL
+ 
+ endchoice
+ 
++config UNEVICTABLE_FILE
++	bool "Keep some file pages under memory pressure"
++	depends on SYSCTL
++	def_bool y
++	help
++	  Keep some file pages still mapped under memory pressure
++	  to avoid potential disk thrashing that may occur due to
++	  evicting running executables code.
++
++	  The UNEVICTABLE_FILE_KBYTES_LOW value defines a threshold
++	  to activate file pages eviction throttling.
++	  The vm.unevictable_file_kbytes_low sysctl knob is used to
++	  change the amount in the runtime (setting it to 0
++	  effectively disables this feature).
++
++	  Recommended value: 262144 for a typical desktop workload.
++
++	  The UNEVICTABLE_FILE_KBYTES_MIN value sets the amount of
++	  pages to keep as a hard limit.
++	  The vm.unevictable_file_kbytes_min sysctl knob is used to
++	  change the amount in the runtime (setting it to 0
++	  effectively disables this feature).
++
++	  Recommended value: 131072 for a typical desktop workload.
++
++	  See also: Documentation/admin-guide/sysctl/vm.rst
++
++config UNEVICTABLE_FILE_KBYTES_LOW
++	int "Default value for vm.unevictable_file_kbytes_low"
++	depends on UNEVICTABLE_FILE
++	default "262144"
++
++config UNEVICTABLE_FILE_KBYTES_MIN
++	int "Default value for vm.unevictable_file_kbytes_min"
++	depends on UNEVICTABLE_FILE
++	default "131072"
++
+ config DISCONTIGMEM
+ 	def_bool y
+ 	depends on (!SELECT_MEMORY_MODEL && ARCH_DISCONTIGMEM_ENABLE) || DISCONTIGMEM_MANUAL
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 284e32d89..f625b6264 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -119,6 +119,14 @@ struct scan_control {
+ 	/* There is easily reclaimable cold cache in the current node */
+ 	unsigned int cache_trim_mode:1;
+ 
++#if defined(CONFIG_UNEVICTABLE_FILE)
++	/* The file pages on the current node are low */
++	unsigned int file_is_low:1;
++
++	/* The file pages on the current node are minimal */
++	unsigned int file_is_min:1;
++#endif
++
+ 	/* The file pages on the current node are dangerously low */
+ 	unsigned int file_is_tiny:1;
+ 
+@@ -168,6 +176,11 @@ struct scan_control {
+ #define prefetchw_prev_lru_page(_page, _base, _field) do { } while (0)
+ #endif
+ 
++#if defined(CONFIG_UNEVICTABLE_FILE)
++extern unsigned long sysctl_unevictable_file_kbytes_low;
++extern unsigned long sysctl_unevictable_file_kbytes_min;
++#endif
++
+ /*
+  * From 0 .. 200.  Higher means more swappy.
+  */
+@@ -2234,6 +2247,10 @@ enum scan_balance {
+ 	SCAN_FILE,
+ };
+ 
++#if defined(CONFIG_UNEVICTABLE_FILE)
++#define K(x) ((x) << (PAGE_SHIFT - 10))
++#endif
++
+ static void prepare_scan_count(pg_data_t *pgdat, struct scan_control *sc)
+ {
+ 	unsigned long file;
+@@ -2306,11 +2323,18 @@ static void prepare_scan_count(pg_data_t *pgdat, struct scan_control *sc)
+ 	if (!cgroup_reclaim(sc)) {
+ 		unsigned long total_high_wmark = 0;
+ 		unsigned long free, anon;
++#if defined(CONFIG_UNEVICTABLE_FILE)
++		unsigned long reclaimable_file, clean_file, dirty_file;
++#endif
+ 		int z;
+ 
+ 		free = sum_zone_node_page_state(pgdat->node_id, NR_FREE_PAGES);
+ 		file = node_page_state(pgdat, NR_ACTIVE_FILE) +
+ 			   node_page_state(pgdat, NR_INACTIVE_FILE);
++#if defined(CONFIG_UNEVICTABLE_FILE)
++		reclaimable_file = file + node_page_state(pgdat, NR_ISOLATED_FILE);
++		dirty_file = node_page_state(pgdat, NR_FILE_DIRTY);
++#endif
+ 
+ 		for (z = 0; z < MAX_NR_ZONES; z++) {
+ 			struct zone *zone = &pgdat->node_zones[z];
+@@ -2332,6 +2356,26 @@ static void prepare_scan_count(pg_data_t *pgdat, struct scan_control *sc)
+ 			file + free <= total_high_wmark &&
+ 			!(sc->may_deactivate & DEACTIVATE_ANON) &&
+ 			anon >> sc->priority;
++
++#if defined(CONFIG_UNEVICTABLE_FILE)
++		/*
++		 * node_page_state() sum can go out of sync since
++		 * all the values are not read at once
++		 */
++		if (unlikely(reclaimable_file < dirty_file))
++			/*
++			 * in this case assume the system does not have
++			 * clean file pages anymore
++			 */
++			clean_file = 0;
++		else
++			clean_file = reclaimable_file - dirty_file;
++
++		sc->file_is_low = K(clean_file) < sysctl_unevictable_file_kbytes_low &&
++			          K(clean_file) > sysctl_unevictable_file_kbytes_min;
++
++		sc->file_is_min = K(clean_file) <= sysctl_unevictable_file_kbytes_min;
++#endif
+ 	}
+ }
+ 
+@@ -2528,6 +2572,15 @@ static void get_scan_count(struct lruvec *lruvec, struct scan_control *sc,
+ 			BUG();
+ 		}
+ 
++#if defined(CONFIG_UNEVICTABLE_FILE)
++		if (file && scan) {
++			if (sc->file_is_low)
++				scan = min(scan, SWAP_CLUSTER_MAX >> sc->priority);
++			else if (sc->file_is_min)
++				scan = 0;
++		}
++#endif
++
+ 		nr[lru] = scan;
+ 	}
+ }
 -- 
 2.31.1.362.g311531c9de
 

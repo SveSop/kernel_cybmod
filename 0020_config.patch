@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10999 @@
+@@ -0,0 +1,11007 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.12.1-cybmod3 Kernel Configuration
++# Linux/x86 5.12.1-cybmod4 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.3.0-1ubuntu1~20.04~2) 10.3.0"
 +CONFIG_CC_IS_GCC=y
@@ -933,6 +933,7 @@ new file mode 100644
 +CONFIG_MODULE_SIG_HASH="sha512"
 +# CONFIG_MODULE_COMPRESS is not set
 +# CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS is not set
++CONFIG_MODPROBE_PATH="/sbin/modprobe"
 +# CONFIG_TRIM_UNUSED_KSYMS is not set
 +CONFIG_MODULES_TREE_LOOKUP=y
 +CONFIG_BLOCK=y
@@ -1033,6 +1034,9 @@ new file mode 100644
 +#
 +CONFIG_SELECT_MEMORY_MODEL=y
 +CONFIG_SPARSEMEM_MANUAL=y
++CONFIG_UNEVICTABLE_FILE=y
++CONFIG_UNEVICTABLE_FILE_KBYTES_LOW=262144
++CONFIG_UNEVICTABLE_FILE_KBYTES_MIN=131072
 +CONFIG_SPARSEMEM=y
 +CONFIG_NEED_MULTIPLE_NODES=y
 +CONFIG_SPARSEMEM_EXTREME=y
@@ -9924,6 +9928,10 @@ new file mode 100644
 +CONFIG_NTFS_FS=m
 +# CONFIG_NTFS_DEBUG is not set
 +# CONFIG_NTFS_RW is not set
++CONFIG_NTFS3_FS=m
++# CONFIG_NTFS3_64BIT_CLUSTER is not set
++CONFIG_NTFS3_LZX_XPRESS=y
++# CONFIG_NTFS3_FS_POSIX_ACL is not set
 +# end of DOS/FAT/EXFAT/NT Filesystems
 +
 +#
