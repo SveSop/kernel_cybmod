@@ -1,30 +1,98 @@
-From 045c3bc8df846938ccf0f6de4ba2ddd27aec456b Mon Sep 17 00:00:00 2001
+From 48d0e72bf4c361c53d01d134c6e9209bbb0fa2c6 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 25 Apr 2021 21:30:42 +0000
+Date: Fri, 7 May 2021 11:30:55 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11166 +-------------------------------------
- 1 file changed, 3 insertions(+), 11163 deletions(-)
+ debian.master/changelog | 11234 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11231 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 7bf549a009ab..097042a1d6ca 100644
+index f47c0bb38e28..6d91465cb15f 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11166 +1,6 @@
--linux-unstable (5.12.0-8.8) hirsute; urgency=medium
-+linux (5.12.0-051200.202104252130) hirsute; urgency=low
+@@ -1,11234 +1,6 @@
+-linux-unstable (5.12.0-11.11) impish; urgency=medium
++linux (5.12.2-051202.202105071130) hirsute; urgency=low
  
+-  * Impish update: v5.12.1 upstream stable release (LP: #1927094)
+-    - net: hso: fix NULL-deref on disconnect regression
+-    - USB: CDC-ACM: fix poison/unpoison imbalance
+-    - iwlwifi: Fix softirq/hardirq disabling in iwl_pcie_gen2_enqueue_hcmd()
+-    - cfg80211: fix locking in netlink owner interface destruction
+-    - mei: me: add Alder Lake P device id.
+-    - Linux 5.12.1
++  Mainline build at commit: v5.12.2
+ 
+-  * Packaging resync (LP: #1786013) // Impish update: v5.12.1 upstream stable
+-    release (LP: #1927094)
+-    - update dkms package versions
++ -- Mainline Build <kernel@sita>  Fri, 07 May 2021 11:30:55 +0000
+ 
+-  * Gigabyte R120-T33 (ARM ThunderX SoC) fails to boot in ACPI mode
+-    (LP: #1925075) // Impish update: v5.12.1 upstream stable release
+-    (LP: #1927094)
+-    - ACPI: GTDT: Don't corrupt interrupt mappings on watchdow probe failure
+-
+-  * Fix kernel panic at boot on dual GFX systems (LP: #1926792) // Impish
+-    update: v5.12.1 upstream stable release (LP: #1927094)
+-    - drm/amdgpu: Register VGA clients after init can no longer fail
+-
+-  * On TGL platforms screen shows garbage when browsing website by scrolling
+-    mouse (LP: #1926579) // Impish update: v5.12.1 upstream stable release
+-    (LP: #1927094)
+-    - SAUCE: drm/i915/display: Disable PSR2 if TGL Display stepping is B1 from A0
+-
+-  * CirrusLogic: Cracking noises appears in built-in speaker when output volume
+-    is set >80% (LP: #1924997) // Impish update: v5.12.1 upstream stable release
+-    (LP: #1927094)
+-    - SAUCE: ALSA: hda/cirrus: Use CS8409 Equalizer to fix abnormal sounds on
+-      Bullseye
+-
+-  * Enable mute/micmute LEDs and limit mic boost on EliteBook 845 G8
+-    (LP: #1925415) // Impish update: v5.12.1 upstream stable release
+-    (LP: #1927094)
+-    - ALSA: hda/realtek: Enable mute/micmute LEDs and limit mic boost on EliteBook
+-      845 G8
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: SAUCE: PCI: Disable broken RTIT_BAR of Intel TH"
+-    - Revert "UBUNTU: [Config] temporarily disable ZFS"
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 04 May 2021 18:35:54 +0200
+-
+-linux-unstable (5.12.0-10.10) impish; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Drop versioned ABI directory names
+-    - [Packaging] getabis: Download ABIs into an unversioned directory
+-    - [Packaging] final-checks: Handle unversioned ABI directories
+-    - bump to impish
+-    - [Config] GCC version update
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Thu, 29 Apr 2021 12:27:20 +0200
+-
+-linux-unstable (5.12.0-9.9) impish; urgency=medium
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.12-rc8
+-
+- -- Seth Forshee <seth.forshee@canonical.com>  Mon, 26 Apr 2021 11:14:16 -0500
+-
+-linux-unstable (5.12.0-8.8) hirsute; urgency=medium
+-
 -  * CVE-2021-3492
 -    - SAUCE: shiftfs: free allocated memory in shiftfs_btrfs_ioctl_fd_replace()
 -      error paths
 -    - SAUCE: shiftfs: handle copy_to_user() return values correctly
-+  Mainline build at commit: v5.12
- 
+-
 -  * Fix no picture from HDMI when it's plugged after boot (LP: #1924238)
 -    - drm/i915/display: Handle lane polarity for DDI port
-+ -- Mainline Build <kernel@sita>  Sun, 25 Apr 2021 21:30:42 +0000
- 
+-
 -  * hirsute beta desktop AMD64 ISO kernel panic on boot when booting using UEFI
 -    (LP: #1922403)
 -    - SAUCE: efifb: Check efifb_pci_dev before using it
