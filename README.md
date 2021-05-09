@@ -15,6 +15,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0008 : zstd kernel settings  
 0009 : mm: Support soft/dirty flag (for vkd3d)  
 0010 : Initramfs Async unpack  
+0011 : Winesync/Fastsync patchset for Wine (See note)  
 0020 : Ubuntu based config (See note below!)  
 0021 : Add-cybmod-version.patch  
 0030 : Clearlinux patches  
@@ -35,6 +36,7 @@ ubuntu : Ubuntu mainline kernel patchset
 **This config has default CacULE scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE + Futex2**  
 **Also see [https://github.com/hamadmarri/cacule-cpu-scheduler](https://github.com/hamadmarri/cacule-cpu-scheduler) for scheduler info**  
 
+**Winesync is a custom "Fast Synchronization" patchset for wine replacing Esync(staging) and Fsync. Requires patched wine!**  
 **Futex2 usage requires a patched wine/proton version! Default proton will use fsync**  
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 
