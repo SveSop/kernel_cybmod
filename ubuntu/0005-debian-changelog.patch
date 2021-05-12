@@ -1,6 +1,6 @@
-From 48d0e72bf4c361c53d01d134c6e9209bbb0fa2c6 Mon Sep 17 00:00:00 2001
+From 473d221cfb059b4129a82ee8a07c14a6cf3a8214 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 7 May 2021 11:30:55 +0000
+Date: Wed, 12 May 2021 07:33:35 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,12 +8,12 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11231 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index f47c0bb38e28..6d91465cb15f 100644
+index f47c0bb38e28..c58f4deed4dc 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11234 +1,6 @@
 -linux-unstable (5.12.0-11.11) impish; urgency=medium
-+linux (5.12.2-051202.202105071130) hirsute; urgency=low
++linux (5.12.3-051203.202105120733) impish; urgency=low
  
 -  * Impish update: v5.12.1 upstream stable release (LP: #1927094)
 -    - net: hso: fix NULL-deref on disconnect regression
@@ -22,12 +22,12 @@ index f47c0bb38e28..6d91465cb15f 100644
 -    - cfg80211: fix locking in netlink owner interface destruction
 -    - mei: me: add Alder Lake P device id.
 -    - Linux 5.12.1
-+  Mainline build at commit: v5.12.2
++  Mainline build at commit: v5.12.3
  
 -  * Packaging resync (LP: #1786013) // Impish update: v5.12.1 upstream stable
 -    release (LP: #1927094)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@sita>  Fri, 07 May 2021 11:30:55 +0000
++ -- Mainline Build <kernel@sita>  Wed, 12 May 2021 07:33:35 +0000
  
 -  * Gigabyte R120-T33 (ARM ThunderX SoC) fails to boot in ACPI mode
 -    (LP: #1925075) // Impish update: v5.12.1 upstream stable release

@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.12.2  
+0000 : Patch 5.12.3  
 0001 : CacULE scheduler  
 0002 : 5.12 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
@@ -33,7 +33,7 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default CacULE scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE + Futex2**  
+**This config has default CacULE scheduler and CONFIG_HZ=1000 + NO_FULL + Futex2 & Winesync/Fastsync**  
 **Also see [https://github.com/hamadmarri/cacule-cpu-scheduler](https://github.com/hamadmarri/cacule-cpu-scheduler) for scheduler info**  
 
 **Winesync is a custom "Fast Synchronization" patchset for wine replacing Esync(staging) and Fsync. Requires patched wine!**  

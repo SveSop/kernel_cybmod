@@ -1,7 +1,7 @@
-From f53e3d5419c0f612bd099983a8216540ac582873 Mon Sep 17 00:00:00 2001
+From 3db29fffb02f25c6a70e25b246ef048571b0fa94 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:18 -0600
-Subject: [PATCH 01/18] include/linux/memcontrol.h: do not warn in
+Subject: [PATCH 01/19] include/linux/memcontrol.h: do not warn in
  page_memcg_rcu() if !CONFIG_MEMCG
 
 page_memcg_rcu() warns on !rcu_read_lock_held() regardless of
@@ -47,13 +47,13 @@ index 0c04d39a7..f13dc02cf 100644
  }
  
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 9a35c5d8bbdcab651db678c839dc0bec89165d12 Mon Sep 17 00:00:00 2001
+From 47ca96c3e729590d22803b1dba3123ed57f70ac2 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:19 -0600
-Subject: [PATCH 02/18] include/linux/nodemask.h: define next_memory_node() if
+Subject: [PATCH 02/19] include/linux/nodemask.h: define next_memory_node() if
  !CONFIG_NUMA
 
 Currently next_memory_node only exists when CONFIG_NUMA=y. This patch
@@ -77,13 +77,13 @@ index ac398e143..89fe4e359 100644
  #define nr_online_nodes		1U
  
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 72fb496e8ad8c3591afa9e5083e4392a79bf7963 Mon Sep 17 00:00:00 2001
+From 9c7cd3089adaa93e2ff5560f294589a8f7a3b03b Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:20 -0600
-Subject: [PATCH 03/18] include/linux/huge_mm.h: define is_huge_zero_pmd() if
+Subject: [PATCH 03/19] include/linux/huge_mm.h: define is_huge_zero_pmd() if
  !CONFIG_TRANSPARENT_HUGEPAGE
 
 Currently is_huge_zero_pmd() only exists when
@@ -112,13 +112,13 @@ index ba973efcd..0ba7b3f90 100644
  {
  	return false;
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From a8fecf60c537e20f6772776fbe4f0b1a8558db26 Mon Sep 17 00:00:00 2001
+From 489fbebf2dea06f170a748cb28165c7b83b500fd Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:21 -0600
-Subject: [PATCH 04/18] include/linux/cgroup.h: export cgroup_mutex
+Subject: [PATCH 04/19] include/linux/cgroup.h: export cgroup_mutex
 
 cgroup_mutex is needed to synchronize with memcg creations.
 
@@ -168,13 +168,13 @@ index 4f2f79de0..bd5744360 100644
  					 struct task_struct *t) { return 0; }
  static inline int cgroupstats_build(struct cgroupstats *stats,
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 130c26501be315222b735942e5b16434d01b353f Mon Sep 17 00:00:00 2001
+From 1eba455f8a61ab603c571f16ed658d6d08f20f21 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:22 -0600
-Subject: [PATCH 05/18] mm/swap.c: export activate_page()
+Subject: [PATCH 05/19] mm/swap.c: export activate_page()
 
 activate_page() is needed to activate pages that are already on lru or
 queued in lru_pvecs.lru_add. The exported function is a merger between
@@ -263,13 +263,13 @@ index 31b844d4e..f20ed56eb 100644
  		workingset_activation(page);
  	}
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 65add60521bb49c1c78a1a8fe4d8a3abfb666cae Mon Sep 17 00:00:00 2001
+From 820d807acdd0f91ef440aea04ae825464d8ec917 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:23 -0600
-Subject: [PATCH 06/18] mm, x86: support the access bit on non-leaf PMD entries
+Subject: [PATCH 06/19] mm, x86: support the access bit on non-leaf PMD entries
 
 Some architectures support the accessed bit on non-leaf PMD entries
 (parents) in addition to leaf PTE entries (children) where pages are
@@ -383,13 +383,13 @@ index 5e772392a..08dd9b8c0 100644
  
  #ifndef __HAVE_ARCH_PTEP_CLEAR_YOUNG_FLUSH
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From e81568db2a5f24734113cf598f821e0edfacc1a0 Mon Sep 17 00:00:00 2001
+From b6cd3d4add3808e89ee26bd70bd1a61be5ded929 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:24 -0600
-Subject: [PATCH 07/18] mm/vmscan.c: refactor shrink_node()
+Subject: [PATCH 07/19] mm/vmscan.c: refactor shrink_node()
 
 Heuristics that determine scan balance between anon and file LRUs are
 rather independent. Move them into a separate function to improve
@@ -612,13 +612,13 @@ index 562e87cbd..1a24d2e0a 100644
  	shrink_node_memcgs(pgdat, sc);
  
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From b0268cbf209e681227e4a052f92f5b38499025e1 Mon Sep 17 00:00:00 2001
+From d4d5f611dfbae4db33a450b9a533a14ba664c219 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:25 -0600
-Subject: [PATCH 08/18] mm: multigenerational lru: groundwork
+Subject: [PATCH 08/19] mm: multigenerational lru: groundwork
 
 For each lruvec, evictable pages are divided into multiple
 generations. The youngest generation number is stored in max_seq for
@@ -1547,13 +1547,13 @@ index 1a24d2e0a..8559bb94d 100644
 +
 +#endif /* CONFIG_LRU_GEN */
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From bf1f1a93f24dfddcb8d5fe5dc8aeaaaaddb71e57 Mon Sep 17 00:00:00 2001
+From 94a5713cb8dd85358dc88235b9d1aa93df73b324 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:26 -0600
-Subject: [PATCH 09/18] mm: multigenerational lru: activation
+Subject: [PATCH 09/19] mm: multigenerational lru: activation
 
 For pages accessed multiple times via file descriptors, instead of
 activating them upon the second accesses, we activate them based on
@@ -2391,13 +2391,13 @@ index cd39902c1..df363f941 100644
  	if (max_order > timestamp_bits)
  		bucket_order = max_order - timestamp_bits;
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From f610e327d1b39928a1bc5a60c6946b1d4b77ff28 Mon Sep 17 00:00:00 2001
+From 6e2ab667123bb9babdc32a41e0741f156cbc75bd Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:27 -0600
-Subject: [PATCH 10/18] mm: multigenerational lru: mm_struct list
+Subject: [PATCH 10/19] mm: multigenerational lru: mm_struct list
 
 In order to scan page tables, we add an infrastructure to maintain
 either a system-wide mm_struct list or per-memcg mm_struct lists.
@@ -3110,13 +3110,13 @@ index c74ebe203..d67dfd1e3 100644
  	if (hotplug_memory_notifier(lru_gen_online_mem, 0))
  		pr_err("lru_gen: failed to subscribe hotplug notifications\n");
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From f0ae527a29414918b0efd072319baa1508abe3cd Mon Sep 17 00:00:00 2001
+From d86b5b69e8ec93de5cbe0a23f91160f393153ea2 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:28 -0600
-Subject: [PATCH 11/18] mm: multigenerational lru: aging
+Subject: [PATCH 11/19] mm: multigenerational lru: aging
 
 The aging produces young generations. Given an lruvec, the aging walks
 the mm_struct list associated with this lruvec to scan page tables for
@@ -3868,13 +3868,13 @@ index d67dfd1e3..31e1b4155 100644
  	if (mem_cgroup_disabled()) {
  		global_mm_list = alloc_mm_list();
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 4c58661da5bf28500f4a85abdb76355a0142cd74 Mon Sep 17 00:00:00 2001
+From 79dbce3e0461eff6adc7288651bd9e72f9e714ac Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:29 -0600
-Subject: [PATCH 12/18] mm: multigenerational lru: eviction
+Subject: [PATCH 12/19] mm: multigenerational lru: eviction
 
 The eviction consumes old generations. Given an lruvec, the eviction
 scans the pages on the per-zone lists indexed by either of min_seq[2].
@@ -4247,13 +4247,13 @@ index 31e1b4155..6239b1acd 100644
   *                          state change
   ******************************************************************************/
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 57d2f528f07aaeffd0e6a3a2ddf8784da56698ab Mon Sep 17 00:00:00 2001
+From 71f3cbb13698608e22e4289f3d94e0133242f841 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:30 -0600
-Subject: [PATCH 13/18] mm: multigenerational lru: page reclaim
+Subject: [PATCH 13/19] mm: multigenerational lru: page reclaim
 
 With the aging and the eviction in place, we can build the page
 reclaim in a straightforward manner:
@@ -4632,13 +4632,13 @@ index 6239b1acd..01c475386 100644
   *                          state change
   ******************************************************************************/
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 6cd53b41bf533462cada1823043a8bb3f8635220 Mon Sep 17 00:00:00 2001
+From feb52ffa2f40eaa193b63828ab0c8c2e7bbe595f Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:31 -0600
-Subject: [PATCH 14/18] mm: multigenerational lru: user interface
+Subject: [PATCH 14/19] mm: multigenerational lru: user interface
 
 Add a sysfs file /sys/kernel/mm/lru_gen/enabled so users can enable
 and disable the multigenerational lru at runtime.
@@ -5112,13 +5112,13 @@ index 01c475386..284e32d89 100644
  };
  /*
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 8a59d23fff3e858ba89051094356ad97d793ebff Mon Sep 17 00:00:00 2001
+From e3bf1996637f9d573d2af5acb1ee0148f9aa6189 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:32 -0600
-Subject: [PATCH 15/18] mm: multigenerational lru: Kconfig
+Subject: [PATCH 15/19] mm: multigenerational lru: Kconfig
 
 Add configuration options for the multigenerational lru.
 
@@ -5192,13 +5192,13 @@ index 24c045b24..0be1c6c90 100644
 +
  endmenu
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 9b5190c32b4911e5ebe275fa79afd9a946a1d68f Mon Sep 17 00:00:00 2001
+From f498f33dde7b80dbfbded291c19ada0db81d0947 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 13 Apr 2021 00:56:33 -0600
-Subject: [PATCH 16/18] mm: multigenerational lru: documentation
+Subject: [PATCH 16/19] mm: multigenerational lru: documentation
 
 Add Documentation/vm/multigen_lru.rst.
 
@@ -5420,13 +5420,13 @@ index 000000000..cf772aeca
 +-----------------
 +Support NUMA policies and per-node RSS counters.
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 15ae75c79e69c3a0ff30b457122e67af5064bd91 Mon Sep 17 00:00:00 2001
+From 7e7f4b1ddeca6cc351ba5b26b9831a74e099df9c Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Sat, 1 May 2021 23:52:56 +0200
-Subject: [PATCH 17/18] mm-5.12: protect file mappings under memory pressure
+Subject: [PATCH 17/19] mm-5.12: protect file mappings under memory pressure
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -5687,13 +5687,13 @@ index 284e32d89..f625b6264 100644
  	}
  }
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
 
 
-From 43cf31ce6b58821694ea80491f89b6be59aee173 Mon Sep 17 00:00:00 2001
+From 335f063151500d3e0487683fe01acc773cd635e9 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Mon, 3 May 2021 20:18:10 -0600
-Subject: [PATCH 18/18] Update vmscan.c
+Subject: [PATCH 18/19] Update vmscan.c
 
 ---
  mm/vmscan.c | 21 +++++++++++++++++----
@@ -5763,5 +5763,35 @@ index f625b6264..7e10e8bb6 100644
  			args->mm_stats[MM_LEAF_OLD]++;
  			continue;
 -- 
-2.31.1.362.g311531c9de
+2.31.1.527.g2d677e5b15
+
+
+From 4b5657317e4f26a386531917b2d981207534f0cb Mon Sep 17 00:00:00 2001
+From: Yu Zhao <yuzhao@google.com>
+Date: Mon, 10 May 2021 13:09:21 -0600
+Subject: [PATCH 19/19] mm/vmscan.c: fix warnings from walk_pud_range()
+
+Correctly skip unevictable VMAs that contain special PFNs. Otherwise
+those PFNs trigger a warning in walk_pud_range(), which is harmless
+but noisy, when using multigenerational LRU.
+---
+ mm/vmscan.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 7e10e8bb6..cd4f1c6ad 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4997,8 +4997,7 @@ static bool get_next_interval(struct mm_walk *walk, unsigned long mask, unsigned
+ 		if ((next & mask) != (walk->vma->vm_start & mask))
+ 			return false;
+ 
+-		if (next <= walk->vma->vm_start &&
+-		    should_skip_vma(walk->vma->vm_start, walk->vma->vm_end, walk)) {
++		if (should_skip_vma(walk->vma->vm_start, walk->vma->vm_end, walk)) {
+ 			walk->vma = walk->vma->vm_next;
+ 			continue;
+ 		}
+-- 
+2.31.1.527.g2d677e5b15
 

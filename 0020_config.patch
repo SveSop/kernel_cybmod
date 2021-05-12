@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,11008 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.12.2-cybmod6 Kernel Configuration
++# Linux/x86 5.12.3-cybmod7 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.3.0-1ubuntu1~20.04~2) 10.3.0"
 +CONFIG_CC_IS_GCC=y
@@ -97,8 +97,8 @@ new file mode 100644
 +CONFIG_TICK_ONESHOT=y
 +CONFIG_NO_HZ_COMMON=y
 +# CONFIG_HZ_PERIODIC is not set
-+CONFIG_NO_HZ_IDLE=y
-+# CONFIG_NO_HZ_FULL is not set
++# CONFIG_NO_HZ_IDLE is not set
++CONFIG_NO_HZ_FULL=y
 +CONFIG_CONTEXT_TRACKING=y
 +# CONFIG_CONTEXT_TRACKING_FORCE is not set
 +# CONFIG_NO_HZ is not set
@@ -116,7 +116,6 @@ new file mode 100644
 +# CPU/Task time and stats accounting
 +#
 +CONFIG_VIRT_CPU_ACCOUNTING=y
-+# CONFIG_TICK_CPU_ACCOUNTING is not set
 +CONFIG_VIRT_CPU_ACCOUNTING_GEN=y
 +# CONFIG_IRQ_TIME_ACCOUNTING is not set
 +CONFIG_BSD_PROCESS_ACCT=y
@@ -512,6 +511,7 @@ new file mode 100644
 +# CONFIG_HZ_500 is not set
 +# CONFIG_HZ_750 is not set
 +CONFIG_HZ_1000=y
++# CONFIG_HZ_2000 is not set
 +CONFIG_HZ=1000
 +CONFIG_SCHED_HRTICK=y
 +CONFIG_KEXEC=y
