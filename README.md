@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.12.3  
+0000 : Patch 5.12.4  
 0001 : Project-C v5.12-r1  
 0002 : 5.12 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
@@ -12,7 +12,6 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0005 : Futex2 interface  
 0006 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0008 : zstd kernel settings  
-0009 : mm: Support soft/dirty flag (for vkd3d)  
 0010 : Initramfs Async unpack  
 0011 : Winesync/Fastsync patchset for Wine (See note)  
 0020 : Ubuntu based config (See note below!)  
