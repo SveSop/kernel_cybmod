@@ -1,20 +1,36 @@
-From 473d221cfb059b4129a82ee8a07c14a6cf3a8214 Mon Sep 17 00:00:00 2001
+From 94a5ac83ddac958933e18d2edfc448c5dd147540 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 12 May 2021 07:33:35 +0000
+Date: Fri, 14 May 2021 09:31:47 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11234 +-------------------------------------
- 1 file changed, 3 insertions(+), 11231 deletions(-)
+ debian.master/changelog | 11248 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11245 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index f47c0bb38e28..c58f4deed4dc 100644
+index 2b0ef24dd5a0..a0b28cff3518 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11234 +1,6 @@
--linux-unstable (5.12.0-11.11) impish; urgency=medium
-+linux (5.12.3-051203.202105120733) impish; urgency=low
+@@ -1,11248 +1,6 @@
+-linux-unstable (5.13.0-1.1) impish; urgency=medium
++linux (5.12.4-051204.202105140931) impish; urgency=low
  
+-  [ Upstream Kernel Changes ]
++  Mainline build at commit: v5.12.4
+ 
+-  * Rebase to v5.13-rc1
++ -- Mainline Build <kernel@sita>  Fri, 14 May 2021 09:31:46 +0000
+ 
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 12 May 2021 11:35:23 +0200
+-
+-linux-unstable (5.13.0-0.0) impish; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 11 May 2021 08:40:09 +0200
+-
+-linux-unstable (5.12.0-11.11) impish; urgency=medium
+-
 -  * Impish update: v5.12.1 upstream stable release (LP: #1927094)
 -    - net: hso: fix NULL-deref on disconnect regression
 -    - USB: CDC-ACM: fix poison/unpoison imbalance
@@ -22,13 +38,11 @@ index f47c0bb38e28..c58f4deed4dc 100644
 -    - cfg80211: fix locking in netlink owner interface destruction
 -    - mei: me: add Alder Lake P device id.
 -    - Linux 5.12.1
-+  Mainline build at commit: v5.12.3
- 
+-
 -  * Packaging resync (LP: #1786013) // Impish update: v5.12.1 upstream stable
 -    release (LP: #1927094)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@sita>  Wed, 12 May 2021 07:33:35 +0000
- 
+-
 -  * Gigabyte R120-T33 (ARM ThunderX SoC) fails to boot in ACPI mode
 -    (LP: #1925075) // Impish update: v5.12.1 upstream stable release
 -    (LP: #1927094)

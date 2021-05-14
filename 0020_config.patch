@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11008 @@
+@@ -0,0 +1,11006 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.12.3-cybmod7 Kernel Configuration
++# Linux/x86 5.12.4-cybmod8 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.3.0-1ubuntu1~20.04~2) 10.3.0"
 +CONFIG_CC_IS_GCC=y
@@ -9140,8 +9140,6 @@ new file mode 100644
 +CONFIG_AD7923=m
 +CONFIG_AD7949=m
 +CONFIG_AD799X=m
-+CONFIG_AD9467=m
-+CONFIG_ADI_AXI_ADC=m
 +CONFIG_AXP20X_ADC=m
 +CONFIG_AXP288_ADC=m
 +CONFIG_CC10001_ADC=m
