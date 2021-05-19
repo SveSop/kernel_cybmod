@@ -1,9 +1,10 @@
-From 2ed3b8c48edb7bbce0b65382d1c7e8babd44576e Mon Sep 17 00:00:00 2001
+From 4caba9a77ec6a661ce3bc106410c7f36af2531db Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Fri, 30 Apr 2021 23:07:36 +0200
+Date: Sun, 16 May 2021 14:16:10 +0200
 Subject: [PATCH] Tweaks
 
 ---
+ drivers/cpufreq/Kconfig                |  2 --
  drivers/cpufreq/cpufreq_conservative.c |  8 ++++----
  drivers/cpufreq/cpufreq_ondemand.c     |  8 ++++----
  drivers/tty/Kconfig                    | 13 -------------
@@ -17,8 +18,28 @@ Subject: [PATCH] Tweaks
  mm/page_alloc.c                        |  2 +-
  mm/vmscan.c                            |  2 +-
  net/ipv4/Kconfig                       |  4 ++++
- 13 files changed, 39 insertions(+), 46 deletions(-)
+ 14 files changed, 39 insertions(+), 48 deletions(-)
 
+diff --git a/drivers/cpufreq/Kconfig b/drivers/cpufreq/Kconfig
+index 85de313dd..2c7171e0b 100644
+--- a/drivers/cpufreq/Kconfig
++++ b/drivers/cpufreq/Kconfig
+@@ -71,7 +71,6 @@ config CPU_FREQ_DEFAULT_GOV_USERSPACE
+ 
+ config CPU_FREQ_DEFAULT_GOV_ONDEMAND
+ 	bool "ondemand"
+-	depends on !(X86_INTEL_PSTATE && SMP)
+ 	select CPU_FREQ_GOV_ONDEMAND
+ 	select CPU_FREQ_GOV_PERFORMANCE
+ 	help
+@@ -84,7 +83,6 @@ config CPU_FREQ_DEFAULT_GOV_ONDEMAND
+ 
+ config CPU_FREQ_DEFAULT_GOV_CONSERVATIVE
+ 	bool "conservative"
+-	depends on !(X86_INTEL_PSTATE && SMP)
+ 	select CPU_FREQ_GOV_CONSERVATIVE
+ 	select CPU_FREQ_GOV_PERFORMANCE
+ 	help
 diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
 index aa39ff31e..b3eae5ec1 100644
 --- a/drivers/cpufreq/cpufreq_conservative.c
@@ -47,7 +68,7 @@ index aa39ff31e..b3eae5ec1 100644
   *
   * Frequency updates happen at minimum steps of 5% (default) of maximum
 diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-index ac361a8b1..611d80122 100644
+index ac361a8b1..8d2f6b9b4 100644
 --- a/drivers/cpufreq/cpufreq_ondemand.c
 +++ b/drivers/cpufreq/cpufreq_ondemand.c
 @@ -18,10 +18,10 @@
@@ -56,11 +77,11 @@ index ac361a8b1..611d80122 100644
  /* On-demand governor macros */
 -#define DEF_FREQUENCY_UP_THRESHOLD		(80)
 -#define DEF_SAMPLING_DOWN_FACTOR		(1)
-+#define DEF_FREQUENCY_UP_THRESHOLD		(63)
-+#define DEF_SAMPLING_DOWN_FACTOR		(100)
++#define DEF_FREQUENCY_UP_THRESHOLD		(55)
++#define DEF_SAMPLING_DOWN_FACTOR		(5)
  #define MAX_SAMPLING_DOWN_FACTOR		(100000)
 -#define MICRO_FREQUENCY_UP_THRESHOLD		(95)
-+#define MICRO_FREQUENCY_UP_THRESHOLD		(70)
++#define MICRO_FREQUENCY_UP_THRESHOLD		(63)
  #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(10000)
  #define MIN_FREQUENCY_UP_THRESHOLD		(1)
  #define MAX_FREQUENCY_UP_THRESHOLD		(100)
@@ -249,7 +270,7 @@ index 3128b7cf8..abfae9afb 100644
  	  This option specifies the time to wait after the beginning of
  	  a given grace period before priority-boosting preempted RCU
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 71337ba06..021b33a26 100644
+index 80667b4bf..fa5950f6e 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -324,7 +324,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
@@ -262,10 +283,10 @@ index 71337ba06..021b33a26 100644
  static unsigned long nr_kernel_pages __initdata;
  static unsigned long nr_all_pages __initdata;
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 66cd919bc..b4305233c 100644
+index c05af7ac3..5f0622ae7 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -171,7 +171,7 @@ struct scan_control {
+@@ -185,7 +185,7 @@ extern unsigned long sysctl_unevictable_file_kbytes_min;
  /*
   * From 0 .. 200.  Higher means more swappy.
   */

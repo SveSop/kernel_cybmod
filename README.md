@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.12.4  
+0000 : Patch 5.12.5  
 0001 : Project-C v5.12-r1  
 0002 : 5.12 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
@@ -31,10 +31,10 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0020), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default BMQ (PrjC) scheduler and CONFIG_HZ=500 + NO_FULL + Futex2 & Winesync/Fastsync**  
+**This config has default BMQ (PrjC) scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Futex2 & Winesync/Fastsync**  
 
 **Winesync is a custom "Fast Synchronization" patchset for wine replacing Esync(staging) and Fsync. Requires patched wine!**  
-**Futex2 usage requires a patched wine/proton version! Default proton will use fsync**  
+**Futex2 usage requires a patched wine version! Default proton will use futex2**  
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 
 To build on Ubuntu:  

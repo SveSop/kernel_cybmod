@@ -1,4 +1,4 @@
-From e3752950496902e3d17fb5b6ced61f52f91614a8 Mon Sep 17 00:00:00 2001
+From b90a4297d9ca361b13533ac3162570e0d57f54c6 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
 Subject: [PATCH 1/7] block, Kconfig.iosched: set default value of IOSCHED_BFQ
@@ -36,10 +36,10 @@ index 2f2158e05..e58b2953a 100644
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
-2.31.1.305.gd1b10fc6d8
+2.31.1.527.g2d677e5b15
 
 
-From acf6d12960d701459db5707d2fe8c1ee5eb775a0 Mon Sep 17 00:00:00 2001
+From 42225a8967b12d451c01e41f2afa3f1942064c25 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
 Subject: [PATCH 2/7] block: Fix depends for BLK_DEV_ZONED
@@ -63,10 +63,10 @@ index a2297edfd..f688ea5f0 100644
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC/ZNS host-managed and host-aware zoned block
 -- 
-2.31.1.305.gd1b10fc6d8
+2.31.1.527.g2d677e5b15
 
 
-From 12ed334a85212b43c7180d617945475ae50e952a Mon Sep 17 00:00:00 2001
+From 43f1b62ea67f3f05e9c88a7d262caaa32c59b6a5 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
 Subject: [PATCH 3/7] block: set rq_affinity = 2 for full multithreading I/O
@@ -77,10 +77,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 158aefae1..e4ab20964 100644
+index 0d81eed39..9db58a821 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
-@@ -620,6 +620,7 @@ struct request_queue {
+@@ -626,6 +626,7 @@ struct request_queue {
  
  #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
  				 (1 << QUEUE_FLAG_SAME_COMP) |		\
@@ -89,10 +89,10 @@ index 158aefae1..e4ab20964 100644
  
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
 -- 
-2.31.1.305.gd1b10fc6d8
+2.31.1.527.g2d677e5b15
 
 
-From 5fa6066466c61fa84a59642f0b90134844231988 Mon Sep 17 00:00:00 2001
+From b6153dda10a75314a903073e985cc865a99078f7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 3 Jul 2020 12:58:15 +0200
 Subject: [PATCH 4/7] block: Add CONFIG to rename the mq-deadline scheduler
@@ -125,7 +125,7 @@ index e58b2953a..9e5a3c5c6 100644
  	tristate "Kyber I/O scheduler"
  	help
 diff --git a/block/elevator.c b/block/elevator.c
-index 293c5c813..90181ad94 100644
+index 0c1e9a1b4..632c81def 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -624,7 +624,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
@@ -141,10 +141,10 @@ index 293c5c813..90181ad94 100644
  
  /*
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index f3631a287..bf0b7d9fc 100644
+index df34f773e..25fec9494 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -794,8 +794,12 @@ static struct elevator_type mq_deadline = {
+@@ -790,8 +790,12 @@ static struct elevator_type mq_deadline = {
  	.queue_debugfs_attrs = deadline_queue_debugfs_attrs,
  #endif
  	.elevator_attrs = deadline_attrs,
@@ -158,10 +158,10 @@ index f3631a287..bf0b7d9fc 100644
  	.elevator_owner = THIS_MODULE,
  };
 -- 
-2.31.1.305.gd1b10fc6d8
+2.31.1.527.g2d677e5b15
 
 
-From 7d47f7527e9be4459e229251f081caaab9821f8c Mon Sep 17 00:00:00 2001
+From c2afd500c526c5651f83e1b74e18249b641f3796 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 14:27:35 -0600
 Subject: [PATCH 5/7] ZEN: Fix mq-deadline scheduler renaming
@@ -175,10 +175,10 @@ mq-deadline-nodefault without errors.
  1 file changed, 5 insertions(+)
 
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index bf0b7d9fc..b0f90e849 100644
+index 25fec9494..b2b2f7a15 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -796,6 +796,7 @@ static struct elevator_type mq_deadline = {
+@@ -792,6 +792,7 @@ static struct elevator_type mq_deadline = {
  	.elevator_attrs = deadline_attrs,
  #ifdef CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT
  	.elevator_name = "mq-deadline-nodefault",
@@ -186,7 +186,7 @@ index bf0b7d9fc..b0f90e849 100644
  #else
  	.elevator_name = "mq-deadline",
  	.elevator_alias = "deadline",
-@@ -803,7 +804,11 @@ static struct elevator_type mq_deadline = {
+@@ -799,7 +800,11 @@ static struct elevator_type mq_deadline = {
  	.elevator_features = ELEVATOR_F_ZBD_SEQ_WRITE,
  	.elevator_owner = THIS_MODULE,
  };
@@ -199,10 +199,10 @@ index bf0b7d9fc..b0f90e849 100644
  static int __init deadline_init(void)
  {
 -- 
-2.31.1.305.gd1b10fc6d8
+2.31.1.527.g2d677e5b15
 
 
-From aa088bd0bee8e665c49e37bde0a29fbf57b050c2 Mon Sep 17 00:00:00 2001
+From 69242617b194f4f2d603905c502b408f12351aef Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Wed, 27 Jan 2021 17:39:54 -0600
 Subject: [PATCH 6/7] ZEN: Increase max elevator name size
@@ -219,7 +219,7 @@ Increase to 24 so we can support our longer IO scheduler names.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index 1fe8e105b..e7726cf62 100644
+index b5abf740a..4bff11535 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -52,7 +52,7 @@ struct elevator_mq_ops {
@@ -232,10 +232,10 @@ index 1fe8e105b..e7726cf62 100644
  struct elv_fs_entry {
  	struct attribute attr;
 -- 
-2.31.1.305.gd1b10fc6d8
+2.31.1.527.g2d677e5b15
 
 
-From 2d1ba16d88e7e66fa08308d75ce41c3147b416b1 Mon Sep 17 00:00:00 2001
+From d047e77bb684c113ef412be79edb98e88cc2083b Mon Sep 17 00:00:00 2001
 From: Tom Saeger <tom.saeger () oracle ! com>
 Date: Fri, 26 Mar 2021 03:04:57 +0000
 Subject: [PATCH 7/7] block: fix trivial typos in comments
@@ -263,7 +263,7 @@ Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
  block/blk-cgroup-rwstat.c |  2 +-
  block/blk-cgroup.c        |  6 +++---
  block/blk-core.c          |  2 +-
- block/blk-iocost.c        | 12 ++++++------
+ block/blk-iocost.c        | 10 +++++-----
  block/blk-iolatency.c     |  4 ++--
  block/blk-merge.c         |  6 +++---
  block/blk-mq.c            |  4 ++--
@@ -275,13 +275,13 @@ Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
  block/partitions/ibm.c    |  2 +-
  block/partitions/sun.c    |  2 +-
  block/scsi_ioctl.c        |  2 +-
- 16 files changed, 29 insertions(+), 29 deletions(-)
+ 16 files changed, 28 insertions(+), 28 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 955861371..8f4b474d0 100644
+index 893b76f98..8b42131e7 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -1792,7 +1792,7 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
+@@ -1827,7 +1827,7 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
  	 * As for throughput, we ask bfq_better_to_idle() whether we
  	 * still need to plug I/O dispatching. If bfq_better_to_idle()
  	 * says no, then plugging is not needed any longer, either to
@@ -290,7 +290,7 @@ index 955861371..8f4b474d0 100644
  	 * the best option is to stop plugging I/O, as not doing so
  	 * would certainly lower throughput. We may end up in this
  	 * case if: (1) upon a dispatch attempt, we detected that it
-@@ -4939,7 +4939,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+@@ -5087,7 +5087,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
  		 * by the fact that bfqq has just been merged.
  		 * 2) burst_size is greater than 0, to handle
  		 * unbalanced decrements. Unbalanced decrements may
@@ -357,7 +357,7 @@ index fc60ff208..e866e5821 100644
  	 */
  	if (current->bio_list) {
 diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 98d656bdb..282903250 100644
+index 4fbc875f7..0ce109160 100644
 --- a/block/blk-iocost.c
 +++ b/block/blk-iocost.c
 @@ -111,7 +111,7 @@
@@ -378,16 +378,7 @@ index 98d656bdb..282903250 100644
   *
   *  @bps	maximum sequential throughput
   *  @seqiops	maximum sequential 4k iops
-@@ -1090,7 +1090,7 @@ static void __propagate_weights(struct ioc_gq *iocg, u32 active, u32 inuse,
- 		/* update the level sums */
- 		parent->child_active_sum += (s32)(active - child->active);
- 		parent->child_inuse_sum += (s32)(inuse - child->inuse);
--		/* apply the udpates */
-+		/* apply the updates */
- 		child->active = active;
- 		child->inuse = inuse;
- 
-@@ -1144,7 +1144,7 @@ static void current_hweight(struct ioc_gq *iocg, u32 *hw_activep, u32 *hw_inusep
+@@ -1154,7 +1154,7 @@ static void current_hweight(struct ioc_gq *iocg, u32 *hw_activep, u32 *hw_inusep
  	u32 hwa, hwi;
  	int ioc_gen;
  
@@ -396,7 +387,7 @@ index 98d656bdb..282903250 100644
  	ioc_gen = atomic_read(&ioc->hweight_gen);
  	if (ioc_gen == iocg->hweight_gen)
  		goto out;
-@@ -1241,7 +1241,7 @@ static bool iocg_activate(struct ioc_gq *iocg, struct ioc_now *now)
+@@ -1251,7 +1251,7 @@ static bool iocg_activate(struct ioc_gq *iocg, struct ioc_now *now)
  
  	/*
  	 * If seem to be already active, just update the stamp to tell the
@@ -405,7 +396,7 @@ index 98d656bdb..282903250 100644
  	 */
  	if (!list_empty(&iocg->active_list)) {
  		ioc_now(ioc, now);
-@@ -2122,7 +2122,7 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
+@@ -2132,7 +2132,7 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
  }
  
  /*
@@ -468,10 +459,10 @@ index 4d97fb6dd..7a3cf790d 100644
  	for (bio = rq->bio; bio; bio = bio->bi_next) {
  		WARN_ON_ONCE((bio->bi_opf & REQ_FAILFAST_MASK) &&
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index d4d7c1caa..5d5689ae4 100644
+index 9b439175f..bae47c4ef 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -915,7 +915,7 @@ static bool blk_mq_check_expired(struct blk_mq_hw_ctx *hctx,
+@@ -916,7 +916,7 @@ static bool blk_mq_check_expired(struct blk_mq_hw_ctx *hctx,
  
  	/*
  	 * Just do a quick check if it is expired before locking the request in
@@ -480,7 +471,7 @@ index d4d7c1caa..5d5689ae4 100644
  	 */
  	if (!blk_mq_req_expired(rq, next))
  		return true;
-@@ -1634,7 +1634,7 @@ static bool blk_mq_has_sqsched(struct request_queue *q)
+@@ -1635,7 +1635,7 @@ static bool blk_mq_has_sqsched(struct request_queue *q)
  }
  
  /*
@@ -529,7 +520,7 @@ index 3b53e44b9..84f52f113 100644
   * block size which is the minimum accepted unit by hardware.
   */
 diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
-index 33d34d69c..f7b23bdf4 100644
+index 79b69d704..64890f0b8 100644
 --- a/block/kyber-iosched.c
 +++ b/block/kyber-iosched.c
 @@ -142,7 +142,7 @@ struct kyber_cpu_latency {
@@ -603,5 +594,5 @@ index 6599bac0a..384aa4837 100644
  
  	switch (opcode) {
 -- 
-2.31.1.305.gd1b10fc6d8
+2.31.1.527.g2d677e5b15
 
