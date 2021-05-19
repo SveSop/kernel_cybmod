@@ -1,7 +1,7 @@
-From 24bc84e0d2e231e80d13c423a777441e9d83fb5e Mon Sep 17 00:00:00 2001
+From 41773919912f438d5dc6cfd3682e8af5986d933d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Thu, 4 Mar 2021 17:46:22 +0000
-Subject: [PATCH 01/12] block, bfq: always inject I/O of queues blocked by
+Subject: [PATCH 01/13] block, bfq: always inject I/O of queues blocked by
  wakers
 
 Suppose that I/O dispatch is plugged, to wait for new I/O for the
@@ -22,10 +22,10 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  2 files changed, 35 insertions(+), 5 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 20ba5db0f..206d2bb76 100644
+index bc319931d..5a9afdf57 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -4497,9 +4497,15 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -4496,9 +4496,15 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
  			bfq_bfqq_busy(bfqq->bic->bfqq[0]) &&
  			bfqq->bic->bfqq[0]->next_rq ?
  			bfqq->bic->bfqq[0] : NULL;
@@ -42,7 +42,7 @@ index 20ba5db0f..206d2bb76 100644
  		 * whether to try injection, and choose the queue to
  		 * pick an I/O request from.
  		 *
-@@ -4532,7 +4538,15 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -4531,7 +4537,15 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
  		 * next bfqq's I/O is brought forward dramatically,
  		 * for it is not blocked for milliseconds.
  		 *
@@ -59,7 +59,7 @@ index 20ba5db0f..206d2bb76 100644
  		 * which it is better to avoid injection. It is so if
  		 * bfqq delivers more throughput when served without
  		 * any further I/O from other queues in the middle, or
-@@ -4552,11 +4566,11 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -4551,11 +4565,11 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
  		 * bfq_update_has_short_ttime(), it is rather likely
  		 * that, if I/O is being plugged for bfqq and the
  		 * waker queue has pending I/O requests that are
@@ -73,7 +73,7 @@ index 20ba5db0f..206d2bb76 100644
  		 * case of a synchronization. For two main
  		 * reasons. First, throughput may be low because the
  		 * inject limit may be too low to guarantee the same
-@@ -4565,7 +4579,7 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -4564,7 +4578,7 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
  		 * guarantees (the second alternative unconditionally
  		 * injects a pending I/O request of the waker queue
  		 * for each bfq_dispatch_request()). Second, with the
@@ -82,7 +82,7 @@ index 20ba5db0f..206d2bb76 100644
  		 * i.e., the time before bfqq finally receives new I/O,
  		 * may not be minimized, because the waker queue may
  		 * happen to be served only after other queues.
-@@ -4583,6 +4597,14 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -4582,6 +4596,14 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
  			   bfq_bfqq_budget_left(bfqq->waker_bfqq)
  			)
  			bfqq = bfqq->waker_bfqq;
@@ -115,13 +115,13 @@ index 070e34a7f..7a462df71 100644
 +	}
  }
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From fa39a9d707a665f41530ad0d0f6f568f4bdb915b Mon Sep 17 00:00:00 2001
+From 66fd80847f33788a14ad36346ad3ce7ef6afdb1b Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Thu, 4 Mar 2021 17:46:23 +0000
-Subject: [PATCH 02/12] block, bfq: put reqs of waker and woken in dispatch
+Subject: [PATCH 02/13] block, bfq: put reqs of waker and woken in dispatch
  list
 
 Consider a new I/O request that arrives for a bfq_queue bfqq. If, when
@@ -140,10 +140,10 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 43 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 206d2bb76..a0f290286 100644
+index 5a9afdf57..db4fbd25e 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -5655,7 +5655,49 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
+@@ -5654,7 +5654,49 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
  
  	spin_lock_irq(&bfqd->lock);
  	bfqq = bfq_init_rq(rq);
@@ -195,13 +195,13 @@ index 206d2bb76..a0f290286 100644
  			list_add(&rq->queuelist, &bfqd->dispatch);
  		else
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From 5d9b258f05c75f210989c552bbdce47f0fd3a227 Mon Sep 17 00:00:00 2001
+From 2f9dfef7946b9e8466adde3c400d3a7db9c6f9a6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Thu, 4 Mar 2021 17:46:24 +0000
-Subject: [PATCH 03/12] block, bfq: make shared queues inherit wakers
+Subject: [PATCH 03/13] block, bfq: make shared queues inherit wakers
 
 Consider a bfq_queue bfqq that is about to be merged with another
 bfq_queue new_bfqq. The processes associated with bfqq are cooperators
@@ -218,10 +218,10 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 39 insertions(+), 3 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index a0f290286..2a84294b0 100644
+index db4fbd25e..2ccb1534a 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -2828,6 +2828,29 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+@@ -2827,6 +2827,29 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
  		bfq_mark_bfqq_IO_bound(new_bfqq);
  	bfq_clear_bfqq_IO_bound(bfqq);
  
@@ -251,7 +251,7 @@ index a0f290286..2a84294b0 100644
  	/*
  	 * If bfqq is weight-raised, then let new_bfqq inherit
  	 * weight-raising. To reduce false positives, neglect the case
-@@ -6316,7 +6339,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+@@ -6315,7 +6338,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
  	if (likely(!new_queue)) {
  		/* If the queue was seeky for too long, break it apart. */
  		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq)) {
@@ -260,7 +260,7 @@ index a0f290286..2a84294b0 100644
  
  			/* Update bic before losing reference to bfqq */
  			if (bfq_bfqq_in_large_burst(bfqq))
-@@ -6325,11 +6348,24 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+@@ -6324,11 +6347,24 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
  			bfqq = bfq_split_bfqq(bic, bfqq);
  			split = true;
  
@@ -288,13 +288,13 @@ index a0f290286..2a84294b0 100644
  		}
  	}
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From c8a30f20b7828a278fc9119929ad68cb8512299c Mon Sep 17 00:00:00 2001
+From 6f5163021cde56f077f142f7003c1bd370bb3a8f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Thu, 4 Mar 2021 17:46:26 +0000
-Subject: [PATCH 04/12] block, bfq: keep shared queues out of the waker
+Subject: [PATCH 04/13] block, bfq: keep shared queues out of the waker
  mechanism
 
 Shared queues are likely to receive I/O at a high rate. This may
@@ -311,10 +311,10 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 2a84294b0..a3f59d306 100644
+index 2ccb1534a..ab5603aeb 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -5860,7 +5860,17 @@ static void bfq_completed_request(struct bfq_queue *bfqq, struct bfq_data *bfqd)
+@@ -5859,7 +5859,17 @@ static void bfq_completed_request(struct bfq_queue *bfqq, struct bfq_data *bfqd)
  			1UL<<(BFQ_RATE_SHIFT - 10))
  		bfq_update_rate_reset(bfqd, NULL);
  	bfqd->last_completion = now_ns;
@@ -334,13 +334,13 @@ index 2a84294b0..a3f59d306 100644
  	/*
  	 * If we are waiting to discover whether the request pattern
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From 590c0027b2f0232243b12c7e39b9bd1295b3c949 Mon Sep 17 00:00:00 2001
+From 514e3ed6a0102e4e13b0784e9f487a43c3cb79c1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Thu, 4 Mar 2021 17:46:27 +0000
-Subject: [PATCH 05/12] block, bfq: merge bursts of newly-created queues
+Subject: [PATCH 05/13] block, bfq: merge bursts of newly-created queues
 
 Many throughput-sensitive workloads are made of several parallel I/O
 flows, with all flows generated by the same application, or more
@@ -405,7 +405,7 @@ index b791e2041..e2f14508f 100644
  				   * the root_group's will be set to NULL
  				   * in bfq_init_queue()
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index a3f59d306..9b7678ad5 100644
+index ab5603aeb..5212efae4 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1075,7 +1075,7 @@ bfq_bfqq_resume_state(struct bfq_queue *bfqq, struct bfq_data *bfqd,
@@ -417,7 +417,7 @@ index a3f59d306..9b7678ad5 100644
  }
  
  /* Empty burst list and add just bfqq (see comments on bfq_handle_burst) */
-@@ -2628,6 +2628,11 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
+@@ -2627,6 +2627,11 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
  	return true;
  }
  
@@ -429,7 +429,7 @@ index a3f59d306..9b7678ad5 100644
  /*
   * Attempt to schedule a merge of bfqq with the currently in-service
   * queue or with a close queue among the scheduled queues.  Return
-@@ -2650,10 +2655,49 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
+@@ -2649,10 +2654,49 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
   */
  static struct bfq_queue *
  bfq_setup_cooperator(struct bfq_data *bfqd, struct bfq_queue *bfqq,
@@ -480,7 +480,7 @@ index a3f59d306..9b7678ad5 100644
  	/*
  	 * Do not perform queue merging if the device is non
  	 * rotational and performs internal queueing. In fact, such a
-@@ -2795,6 +2839,17 @@ static void bfq_bfqq_save_state(struct bfq_queue *bfqq)
+@@ -2794,6 +2838,17 @@ static void bfq_bfqq_save_state(struct bfq_queue *bfqq)
  	}
  }
  
@@ -498,7 +498,7 @@ index a3f59d306..9b7678ad5 100644
  void bfq_release_process_ref(struct bfq_data *bfqd, struct bfq_queue *bfqq)
  {
  	/*
-@@ -2812,6 +2867,8 @@ void bfq_release_process_ref(struct bfq_data *bfqd, struct bfq_queue *bfqq)
+@@ -2811,6 +2866,8 @@ void bfq_release_process_ref(struct bfq_data *bfqd, struct bfq_queue *bfqq)
  	    bfqq != bfqd->in_service_queue)
  		bfq_del_bfqq_busy(bfqd, bfqq, false);
  
@@ -507,7 +507,7 @@ index a3f59d306..9b7678ad5 100644
  	bfq_put_queue(bfqq);
  }
  
-@@ -2908,6 +2965,9 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+@@ -2907,6 +2964,9 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
  	 */
  	new_bfqq->pid = -1;
  	bfqq->bic = NULL;
@@ -517,7 +517,7 @@ index a3f59d306..9b7678ad5 100644
  	bfq_release_process_ref(bfqd, bfqq);
  }
  
-@@ -2935,7 +2995,7 @@ static bool bfq_allow_bio_merge(struct request_queue *q, struct request *rq,
+@@ -2934,7 +2994,7 @@ static bool bfq_allow_bio_merge(struct request_queue *q, struct request *rq,
  	 * We take advantage of this function to perform an early merge
  	 * of the queues of possible cooperating processes.
  	 */
@@ -526,7 +526,7 @@ index a3f59d306..9b7678ad5 100644
  	if (new_bfqq) {
  		/*
  		 * bic still points to bfqq, then it has not yet been
-@@ -5034,6 +5094,12 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+@@ -5033,6 +5093,12 @@ void bfq_put_queue(struct bfq_queue *bfqq)
  	bfqg_and_blkg_put(bfqg);
  }
  
@@ -539,7 +539,7 @@ index a3f59d306..9b7678ad5 100644
  static void bfq_put_cooperator(struct bfq_queue *bfqq)
  {
  	struct bfq_queue *__bfqq, *next;
-@@ -5090,6 +5156,24 @@ static void bfq_exit_icq(struct io_cq *icq)
+@@ -5089,6 +5155,24 @@ static void bfq_exit_icq(struct io_cq *icq)
  {
  	struct bfq_io_cq *bic = icq_to_bic(icq);
  
@@ -564,7 +564,7 @@ index a3f59d306..9b7678ad5 100644
  	bfq_exit_icq_bfqq(bic, true);
  	bfq_exit_icq_bfqq(bic, false);
  }
-@@ -5150,7 +5234,8 @@ bfq_set_next_ioprio_data(struct bfq_queue *bfqq, struct bfq_io_cq *bic)
+@@ -5149,7 +5233,8 @@ bfq_set_next_ioprio_data(struct bfq_queue *bfqq, struct bfq_io_cq *bic)
  
  static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
  				       struct bio *bio, bool is_sync,
@@ -574,7 +574,7 @@ index a3f59d306..9b7678ad5 100644
  
  static void bfq_check_ioprio_change(struct bfq_io_cq *bic, struct bio *bio)
  {
-@@ -5170,7 +5255,7 @@ static void bfq_check_ioprio_change(struct bfq_io_cq *bic, struct bio *bio)
+@@ -5169,7 +5254,7 @@ static void bfq_check_ioprio_change(struct bfq_io_cq *bic, struct bio *bio)
  	bfqq = bic_to_bfqq(bic, false);
  	if (bfqq) {
  		bfq_release_process_ref(bfqd, bfqq);
@@ -583,7 +583,7 @@ index a3f59d306..9b7678ad5 100644
  		bic_set_bfqq(bic, bfqq, false);
  	}
  
-@@ -5213,6 +5298,8 @@ static void bfq_init_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -5212,6 +5297,8 @@ static void bfq_init_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq,
  	/* set end request to minus infinity from now */
  	bfqq->ttime.last_end_request = now_ns + 1;
  
@@ -592,7 +592,7 @@ index a3f59d306..9b7678ad5 100644
  	bfqq->io_start_time = now_ns;
  
  	bfq_mark_bfqq_IO_bound(bfqq);
-@@ -5262,9 +5349,156 @@ static struct bfq_queue **bfq_async_queue_prio(struct bfq_data *bfqd,
+@@ -5261,9 +5348,156 @@ static struct bfq_queue **bfq_async_queue_prio(struct bfq_data *bfqd,
  	}
  }
  
@@ -750,7 +750,7 @@ index a3f59d306..9b7678ad5 100644
  {
  	const int ioprio = IOPRIO_PRIO_DATA(bic->ioprio);
  	const int ioprio_class = IOPRIO_PRIO_CLASS(bic->ioprio);
-@@ -5322,7 +5556,10 @@ static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
+@@ -5321,7 +5555,10 @@ static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
  
  out:
  	bfqq->ref++; /* get a process reference to this queue */
@@ -762,7 +762,7 @@ index a3f59d306..9b7678ad5 100644
  	rcu_read_unlock();
  	return bfqq;
  }
-@@ -5572,7 +5809,8 @@ static void bfq_rq_enqueued(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -5571,7 +5808,8 @@ static void bfq_rq_enqueued(struct bfq_data *bfqd, struct bfq_queue *bfqq,
  static bool __bfq_insert_request(struct bfq_data *bfqd, struct request *rq)
  {
  	struct bfq_queue *bfqq = RQ_BFQQ(rq),
@@ -772,7 +772,7 @@ index a3f59d306..9b7678ad5 100644
  	bool waiting, idle_timer_disabled = false;
  
  	if (new_bfqq) {
-@@ -6227,7 +6465,7 @@ static struct bfq_queue *bfq_get_bfqq_handle_split(struct bfq_data *bfqd,
+@@ -6226,7 +6464,7 @@ static struct bfq_queue *bfq_get_bfqq_handle_split(struct bfq_data *bfqd,
  
  	if (bfqq)
  		bfq_put_queue(bfqq);
@@ -781,7 +781,7 @@ index a3f59d306..9b7678ad5 100644
  
  	bic_set_bfqq(bic, bfqq, is_sync);
  	if (split && is_sync) {
-@@ -6348,7 +6586,8 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+@@ -6347,7 +6585,8 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
  
  	if (likely(!new_queue)) {
  		/* If the queue was seeky for too long, break it apart. */
@@ -846,13 +846,13 @@ index b8e793c34..99c2a3cb0 100644
  	u64 last_empty_occupied_ns;
  
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From 9f0949fd66ef338f765910bb23589a0ec98ba671 Mon Sep 17 00:00:00 2001
+From 7af4da280dfe98dd99c8a01af6c4bd3b015094c9 Mon Sep 17 00:00:00 2001
 From: Khazhismel Kumykov <khazhy@google.com>
 Date: Thu, 18 Mar 2021 23:00:15 -0700
-Subject: [PATCH 06/12] bfq: silence lockdep for bfqd/ioc lock inversion
+Subject: [PATCH 06/13] bfq: silence lockdep for bfqd/ioc lock inversion
 
 lockdep warns of circular locking due to inversion between
 bfq_insert_requests and bfq_exit_icq. If we end freeing a request when
@@ -875,10 +875,10 @@ Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 9b7678ad5..5bfe5c129 100644
+index 5212efae4..7e3c3d0b8 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -5144,7 +5144,14 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
+@@ -5143,7 +5143,14 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
  	if (bfqq && bfqd) {
  		unsigned long flags;
  
@@ -895,13 +895,13 @@ index 9b7678ad5..5bfe5c129 100644
  		bfq_exit_bfqq(bfqd, bfqq);
  		bic_set_bfqq(bic, NULL, is_sync);
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From 43befe7aae5a8b62fdde2b3fa650a4586c357bee Mon Sep 17 00:00:00 2001
+From 0246dc5e61195567b11b1f2223548a46f636eb0a Mon Sep 17 00:00:00 2001
 From: Rokudo Yan <wu-yan () tcl ! com>
 Date: Wed, 24 Mar 2021 02:33:41 +0000
-Subject: [PATCH 07/12] block,bfq: fix the timeout calculation in
+Subject: [PATCH 07/13] block,bfq: fix the timeout calculation in
  bfq_bfqq_charge_time
 
 in bfq_bfqq_charge_time, timeout_ms is calculated with global
@@ -928,13 +928,13 @@ index 7a462df71..f2e1522ee 100644
  	int serv_to_charge_for_time =
  		(bfqd->bfq_max_budget * bounded_time_ms) / timeout_ms;
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From 5ff9d48288d649ed1435e57b088a169c4e06b99c Mon Sep 17 00:00:00 2001
+From c03984e86baacd566ed16396e1af9db6c0a3d5f0 Mon Sep 17 00:00:00 2001
 From: Lin Feng <linf@wangsu.com>
 Date: Thu, 15 Apr 2021 11:39:20 +0800
-Subject: [PATCH 08/12] blk-mq: bypass IO scheduler's limit_depth for
+Subject: [PATCH 08/13] blk-mq: bypass IO scheduler's limit_depth for
  passthrough request
 
 Commit 01e99aeca39796003 ("blk-mq: insert passthrough request into
@@ -963,7 +963,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  2 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index d4d7c1caa..927189a55 100644
+index 0e120547c..9b439175f 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
 @@ -361,11 +361,12 @@ static struct request *__blk_mq_alloc_request(struct blk_mq_alloc_data *data)
@@ -998,13 +998,13 @@ index 158aefae1..0d81eed39 100644
  {
  	return req->ioprio;
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From 4ffa8f46dde3e4e7e24430ed829f80a4aa659c3f Mon Sep 17 00:00:00 2001
+From 08d64cc085690eb772722491f5bc069ccee79cf7 Mon Sep 17 00:00:00 2001
 From: Lin Feng <linf@wangsu.com>
 Date: Thu, 15 Apr 2021 11:43:26 +0800
-Subject: [PATCH 09/12] bfq/mq-deadline: remove redundant check for passthrough
+Subject: [PATCH 09/13] bfq/mq-deadline: remove redundant check for passthrough
  request
 
 Since commit 01e99aeca39796003 'blk-mq: insert passthrough request into
@@ -1027,10 +1027,10 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  2 files changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 5bfe5c129..0eba4bf79 100644
+index 7e3c3d0b8..6b6fa9b53 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -5964,8 +5964,7 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
+@@ -5963,8 +5963,7 @@ static void bfq_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
  	     bfqd->in_service_queue != NULL &&
  	     bfq_tot_busy_queues(bfqd) == 1 + bfq_bfqq_busy(bfqq) &&
  	     (bfqq->waker_bfqq == bfqd->in_service_queue ||
@@ -1041,10 +1041,10 @@ index 5bfe5c129..0eba4bf79 100644
  			list_add(&rq->queuelist, &bfqd->dispatch);
  		else
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index f3631a287..04aded71e 100644
+index 3aabcd2a7..8eea2cbf2 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -500,11 +500,8 @@ static void dd_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
+@@ -499,11 +499,8 @@ static void dd_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
  
  	trace_block_rq_insert(rq);
  
@@ -1059,13 +1059,13 @@ index f3631a287..04aded71e 100644
  		deadline_add_rq_rb(dd, rq);
  
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From d19de3d08e77c821f3762661da98bbbb44cae3fa Mon Sep 17 00:00:00 2001
+From 44cbfda925f8fba6c87ef8a69f25999a5c9f683f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 1 May 2021 12:21:07 +0200
-Subject: [PATCH 10/12] block, bfq: avoid circular stable merges
+Subject: [PATCH 10/13] block, bfq: avoid circular stable merges
 
 BFQ may merge a new bfq_queue, stably, with the last bfq_queue
 created. In particular, BFQ first waits a little bit for some I/O to
@@ -1093,7 +1093,7 @@ Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
  1 file changed, 30 insertions(+), 2 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 0eba4bf79..c5764f095 100644
+index 6b6fa9b53..2a9a06af7 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -372,9 +372,39 @@ struct bfq_queue *bic_to_bfqq(struct bfq_io_cq *bic, bool is_sync)
@@ -1136,7 +1136,7 @@ index 0eba4bf79..c5764f095 100644
  }
  
  struct bfq_data *bic_to_bfqd(struct bfq_io_cq *bic)
-@@ -2631,8 +2661,6 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
+@@ -2630,8 +2660,6 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
  static bool idling_boosts_thr_without_issues(struct bfq_data *bfqd,
  					     struct bfq_queue *bfqq);
  
@@ -1146,13 +1146,13 @@ index 0eba4bf79..c5764f095 100644
   * Attempt to schedule a merge of bfqq with the currently in-service
   * queue or with a close queue among the scheduled queues.  Return
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From c09186d41f54805e11d356be6055824d70c4754e Mon Sep 17 00:00:00 2001
+From f1f8e955c9521c8b3e1b30d44eb781a6e6e02715 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Thu, 13 May 2021 09:18:30 +0200
-Subject: [PATCH 11/12] Revert "block, bfq: avoid circular stable merges"
+Subject: [PATCH 11/13] Revert "block, bfq: avoid circular stable merges"
 
 This reverts commit ed016d3a73fc9fd00428fd7e1359c9194bfa3de1.
 ---
@@ -1160,7 +1160,7 @@ This reverts commit ed016d3a73fc9fd00428fd7e1359c9194bfa3de1.
  1 file changed, 2 insertions(+), 30 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index c5764f095..0eba4bf79 100644
+index 2a9a06af7..6b6fa9b53 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -372,39 +372,9 @@ struct bfq_queue *bic_to_bfqq(struct bfq_io_cq *bic, bool is_sync)
@@ -1203,7 +1203,7 @@ index c5764f095..0eba4bf79 100644
  }
  
  struct bfq_data *bic_to_bfqd(struct bfq_io_cq *bic)
-@@ -2661,6 +2631,8 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
+@@ -2660,6 +2630,8 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
  static bool idling_boosts_thr_without_issues(struct bfq_data *bfqd,
  					     struct bfq_queue *bfqq);
  
@@ -1213,13 +1213,13 @@ index c5764f095..0eba4bf79 100644
   * Attempt to schedule a merge of bfqq with the currently in-service
   * queue or with a close queue among the scheduled queues.  Return
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
 
 
-From 4e50062b2b7aafccc2b5d47d9d8b4c340b8772b5 Mon Sep 17 00:00:00 2001
+From 3e40b02f6fb35d3ecb81d5a84fbc616a7c30d418 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 12 May 2021 11:43:52 +0200
-Subject: [PATCH 12/12] block, bfq: avoid circular stable merges
+Subject: [PATCH 12/13] block, bfq: avoid circular stable merges
 
 BFQ may merge a new bfq_queue, stably, with the last bfq_queue
 created. In particular, BFQ first waits a little bit for some I/O to
@@ -1250,7 +1250,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 29 insertions(+), 2 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 0eba4bf79..dde2378d1 100644
+index 6b6fa9b53..309e7fea9 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -372,9 +372,38 @@ struct bfq_queue *bic_to_bfqq(struct bfq_io_cq *bic, bool is_sync)
@@ -1292,7 +1292,7 @@ index 0eba4bf79..dde2378d1 100644
  }
  
  struct bfq_data *bic_to_bfqd(struct bfq_io_cq *bic)
-@@ -2631,8 +2660,6 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
+@@ -2630,8 +2659,6 @@ static bool bfq_may_be_close_cooperator(struct bfq_queue *bfqq,
  static bool idling_boosts_thr_without_issues(struct bfq_data *bfqd,
  					     struct bfq_queue *bfqq);
  
@@ -1302,5 +1302,50 @@ index 0eba4bf79..dde2378d1 100644
   * Attempt to schedule a merge of bfqq with the currently in-service
   * queue or with a close queue among the scheduled queues.  Return
 -- 
-2.31.1.527.g2d677e5b15
+2.31.1.621.g97eea85a0a
+
+
+From adb12d6b949dba993b208ced490a96fc61c84fd8 Mon Sep 17 00:00:00 2001
+From: Luca Mariotti <mariottiluca1@hotmail.it>
+Date: Tue, 18 May 2021 12:43:34 +0200
+Subject: [PATCH 13/13] block, bfq: fix delayed stable merge check
+
+When attempting to schedule a merge of a given bfq_queue with the currently
+in-service bfq_queue or with a cooperating bfq_queue among the scheduled
+bfq_queues, delayed stable merge is checked for rotational or non-queueing
+devs. For this stable merge to be performed, some conditions must be met.
+If the current bfq_queue underwent some split from some merged bfq_queue,
+one of these conditions is that two hundred milliseconds must elapse from
+split, otherwise this condition is always met.
+
+Unfortunately, by mistake, time_is_after_jiffies() was written instead of
+time_is_before_jiffies() for this check, verifying that less than two
+hundred milliseconds have elapsed instead of verifying that at least two
+hundred milliseconds have elapsed.
+
+Fix this issue by replacing time_is_after_jiffies() with
+time_is_before_jiffies().
+
+Signed-off-by: Luca Mariotti <mariottiluca1@hotmail.it>
+Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
+Signed-off-by: Pietro Pedroni <pedroni.pietro.96@gmail.com>
+---
+ block/bfq-iosched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 309e7fea9..08f057e53 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -2697,7 +2697,7 @@ bfq_setup_cooperator(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+ 	if (unlikely(!bfqd->nonrot_with_queueing)) {
+ 		if (bic->stable_merge_bfqq &&
+ 		    !bfq_bfqq_just_created(bfqq) &&
+-		    time_is_after_jiffies(bfqq->split_time +
++		    time_is_before_jiffies(bfqq->split_time +
+ 					  msecs_to_jiffies(200))) {
+ 			struct bfq_queue *stable_merge_bfqq =
+ 				bic->stable_merge_bfqq;
+-- 
+2.31.1.621.g97eea85a0a
 

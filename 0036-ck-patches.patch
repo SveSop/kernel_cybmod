@@ -147,6 +147,7 @@ index 5c9d968187ae8..7936f63df717b 100644
 +	return schedule_msec_hrtimeout(timeout);
 +}
 +EXPORT_SYMBOL(schedule_msec_hrtimeout_uninterruptible);
+
 From 5f97a164368b5a37d7a47f38b02f87674b1f3908 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 5 Nov 2016 09:27:36 +1100
@@ -194,6 +195,7 @@ index f475f1a027c8..168ae6e4939b 100644
  	return timeout < 0 ? 0 : timeout;
  }
  EXPORT_SYMBOL(schedule_timeout);
+
 From e45b16b57f21526565ab015268ede50269bccfbe Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Fri, 4 Nov 2016 09:25:54 +1100
@@ -246,6 +248,7 @@ index 168ae6e4939b..3c1c3e43d29d 100644
  
  	while (timeout && !signal_pending(current))
  		timeout = schedule_timeout_interruptible(timeout);
+
 From 659b093c3e6f2e85fcfbeaa16f78ee7379f734e0 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 15 Feb 2021 21:56:16 +0000
@@ -753,6 +756,7 @@ index fdbdfb7bce92b..fa8e8faf3eb34 100644
  	} while (--timeout > 0);
  	if (alive)
  		dev_err(line6pcm->line6->ifcdev,
+
 From 677095c12af4e6b5262981f25f699637bb6dd75d Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:07 +1100
@@ -1062,6 +1066,7 @@ index e0ce32dd4a811..eb91c0282aad4 100644
  	return 0;
  }
  
+
 From 7e6da4f601f11604b6a0f4836dd3ae27a0b2e285 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:32 +1100
@@ -1221,6 +1226,7 @@ index b005f9eadd719..2f75a449c45c0 100644
  }
  
  __printf(3, 4)
+
 From 3171d4c85e07207a489d126ae1817d08396468a1 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:32:58 +1100
@@ -1288,6 +1294,7 @@ index 3c1c3e43d29d..8d82fe9f6fbb 100644
  
  	while (timeout && !signal_pending(current))
  		timeout = schedule_timeout_interruptible(timeout);
+
 From 6cb1628344e53c1e4241ddf61c6477a64f43bc90 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 14 Dec 2020 19:09:01 +0000
@@ -1303,13 +1310,13 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  3 files changed, 67 insertions(+), 7 deletions(-)
 
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 5b1f81ab4f49c..9d278c96bc1b3 100644
+index 19f9a6185..ec24e744b 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -120,9 +120,9 @@ static unsigned long long_max = LONG_MAX;
- static int one_hundred = 100;
- static int two_hundred = 200;
- static int one_thousand = 1000;
+@@ -124,9 +124,9 @@ static int one_thousand = 1000;
+ static int __maybe_unused zero = 0;
+ extern int sched_yield_type;
+ #endif
 -#ifdef CONFIG_PRINTK
  static int ten_thousand = 10000;
 -#endif
@@ -1340,11 +1347,11 @@ index 5b1f81ab4f49c..9d278c96bc1b3 100644
 +		.extra1		= SYSCTL_ONE,
 +		.extra2		= &ten_thousand,
 +	},
- 	{
- 		.procname	= "sched_child_runs_first",
- 		.data		= &sysctl_sched_child_runs_first,
+ #ifdef CONFIG_SCHED_ALT
+ /* In ALT, only supported "sched_schedstats" */
+ #ifdef CONFIG_SCHED_DEBUG
 diff --git a/kernel/time/clockevents.c b/kernel/time/clockevents.c
-index f5490222e134a..23db3c39e07ae 100644
+index f5490222e..23db3c39e 100644
 --- a/kernel/time/clockevents.c
 +++ b/kernel/time/clockevents.c
 @@ -190,8 +190,9 @@ int clockevents_tick_resume(struct clock_event_device *dev)
@@ -1359,10 +1366,10 @@ index f5490222e134a..23db3c39e07ae 100644
  /**
   * clockevents_increase_min_delta - raise minimum delta of a clock event device
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index a91d70d621ab4..7a3d640dc13a3 100644
+index e4353dee7..d9784844c 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
-@@ -2244,7 +2244,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout);
+@@ -2246,7 +2246,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout);
  long __sched schedule_msec_hrtimeout(long timeout)
  {
  	struct hrtimer_sleeper t;
@@ -1371,7 +1378,7 @@ index a91d70d621ab4..7a3d640dc13a3 100644
  	ktime_t expires;
  
  	if (!timeout) {
-@@ -2261,9 +2261,8 @@ long __sched schedule_msec_hrtimeout(long timeout)
+@@ -2263,9 +2263,8 @@ long __sched schedule_msec_hrtimeout(long timeout)
  	if (jiffs > 4 || hrtimer_resolution >= NSEC_PER_SEC / HZ || pm_freezing)
  		return schedule_timeout(jiffs);
  
@@ -1382,7 +1389,7 @@ index a91d70d621ab4..7a3d640dc13a3 100644
  
  	hrtimer_init_sleeper_on_stack(&t, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
  	hrtimer_set_expires_range_ns(&t.timer, expires, delta);
-@@ -2285,9 +2284,51 @@ long __sched schedule_msec_hrtimeout(long timeout)
+@@ -2287,9 +2286,51 @@ long __sched schedule_msec_hrtimeout(long timeout)
  
  EXPORT_SYMBOL(schedule_msec_hrtimeout);
  
@@ -1435,3 +1442,6 @@ index a91d70d621ab4..7a3d640dc13a3 100644
  }
  
  EXPORT_SYMBOL(schedule_min_hrtimeout);
+-- 
+2.25.1
+
