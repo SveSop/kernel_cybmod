@@ -8,20 +8,22 @@ Subject: [PATCH] Version
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index e99310c2b..92c0f623e 100644
+index 07c990038..d6c914582 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -18,6 +18,10 @@ $(if $(filter __%, $(MAKECMDGOALS)), \
+@@ -18,9 +18,9 @@ $(if $(filter __%, $(MAKECMDGOALS)), \
  PHONY := __all
  __all:
  
-+CYBVERSION = -cybmod14
+-CKVERSION = -ck1
+-CKNAME = MuQSS Powered
+-EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)
++CYBVERSION = -cybmod15
 +CYBNAME = MuQSS (ck) Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
-+
+ 
  # We are using a recursive build, so we need to do a little thinking
  # to get the ordering right.
- #
 -- 
 2.25.1
 

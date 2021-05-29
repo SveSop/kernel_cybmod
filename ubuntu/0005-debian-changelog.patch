@@ -1,6 +1,6 @@
-From 3b819f1c9a80d3f76583e0914d5be1d0fc09c509 Mon Sep 17 00:00:00 2001
+From b07ad8d80a1f155dec818389738d7a84d6dbc8aa Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 26 May 2021 12:34:17 +0000
+Date: Fri, 28 May 2021 12:32:31 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11298 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 41b3dcb02bab..fcc5c0692fd3 100644
+index 41b3dcb02bab..f7bb6737ff03 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11301 +1,6 @@
 -linux-unstable (5.13.0-4.4) impish; urgency=medium
-+linux (5.12.7-051207.202105261234) impish; urgency=low
++linux (5.12.8-051208.202105281232) impish; urgency=low
  
 -  * impish/linux-unstable: 5.13.0-4.4 -proposed tracker (LP: #1929404)
-+  Mainline build at commit: v5.12.7
++  Mainline build at commit: v5.12.8
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@kathleen>  Wed, 26 May 2021 12:34:16 +0000
++ -- Mainline Build <kernel@kathleen>  Fri, 28 May 2021 12:32:31 +0000
  
 -  * Support importing mokx keys into revocation list from the mok table
 -    (LP: #1928679)
