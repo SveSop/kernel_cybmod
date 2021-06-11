@@ -1,27 +1,79 @@
-From b07ad8d80a1f155dec818389738d7a84d6dbc8aa Mon Sep 17 00:00:00 2001
+From cf26ed844a1fa2b52a49be25cec78be72ae2676c Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 28 May 2021 12:32:31 +0000
+Date: Thu, 10 Jun 2021 12:59:39 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11301 +-------------------------------------
- 1 file changed, 3 insertions(+), 11298 deletions(-)
+ debian.master/changelog | 11353 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11350 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 41b3dcb02bab..f7bb6737ff03 100644
+index 8bc517fe3a0d..d8de9b0e6a77 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11301 +1,6 @@
--linux-unstable (5.13.0-4.4) impish; urgency=medium
-+linux (5.12.8-051208.202105281232) impish; urgency=low
+@@ -1,11353 +1,6 @@
+-linux-unstable (5.13.0-6.6) impish; urgency=medium
++linux (5.12.10-051210.202106101259) impish; urgency=low
  
--  * impish/linux-unstable: 5.13.0-4.4 -proposed tracker (LP: #1929404)
-+  Mainline build at commit: v5.12.8
+-  * impish/linux-unstable: 5.13.0-6.6 -proposed tracker (LP: #1931071)
++  Mainline build at commit: v5.12.10
  
+-  * Kernel package builds running out of space on builders (LP: #1930713)
+-    - [Debian] use stamps for flavour install targets
+-    - [Debian] run install-$(flavour) targets during build phase
+-    - [Debian] remove dh_testroot from install targets
+-    - [Debian] dkms-build -- use fakeroot if not running as root
+-    - [Debian] exclude $(DEBIAN)/__abi.current from linux-source
++ -- Mainline Build <kernel@kathleen>  Thu, 10 Jun 2021 12:59:39 +0000
+ 
+-  * [UBUNTU 21.04] tools/kvm_stat: Add restart delay (LP: #1921870)
+-    - [Debian] install kvm_stat systemd service
+-
+-  * Debugging symbols (dbgsym) packages are missing GDB kernel scripts
+-    (LP: #1928715)
+-    - [Packaging] Build and include GDB Python scripts into debug packages
+-
+-  * Can't detect intel wifi 6235 (LP: #1920180)
+-    - SAUCE: iwlwifi: add new pci id for 6235
+-
+-  * Select correct boot VGA when BIOS doesn't do it properly (LP: #1929217)
+-    - vgaarb: Use ACPI HID name to find integrated GPU
+-
+-  * Fix kernel panic on Intel Bluetooth (LP: #1928838)
+-    - Bluetooth: Shutdown controller after workqueues are flushed or cancelled
+-
+-  * build module CONFIG_SND_SOC_INTEL_SOUNDWIRE_SOF_MACH=m for 5.11,  5.13-rc2
+-    and later (LP: #1921632)
+-    - [Config] enable soundwire audio mach driver
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] CONFIG_SND_SOC_RT1308 can only be enabled on amd64
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13-rc5
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 07 Jun 2021 10:45:13 +0200
+-
+-linux-unstable (5.13.0-5.5) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-5.5 -proposed tracker (LP: #1930205)
+-
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@kathleen>  Fri, 28 May 2021 12:32:31 +0000
- 
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] set CONFIG_BPF_UNPRIV_DEFAULT_OFF=y
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 31 May 2021 12:32:38 +0200
+-
+-linux-unstable (5.13.0-4.4) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-4.4 -proposed tracker (LP: #1929404)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
 -  * Support importing mokx keys into revocation list from the mok table
 -    (LP: #1928679)
 -    - SAUCE: integrity: add informational messages when revoking certs
