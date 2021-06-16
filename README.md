@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.12.10  
+0000 : Patch 5.12.11  
 0001 : MuQSS (ck) scheduler  
 0002 : 5.12 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  
@@ -22,6 +22,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0033 : mm: LRU patchset  
 0034 : BFQ disk patchset  
 0035 : zstd upstream patches  
+0036 : Setup patches - early memory reservations  
 0037 : BBR2 + various net/TCP patches  
 0038 : ntf3 patches  
 0040 : Various kernel tweaks patch  

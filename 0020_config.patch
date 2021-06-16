@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,10999 @@
+@@ -0,0 +1,10998 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.12.10-cybmod17 Kernel Configuration
++# Linux/x86 5.12.11-cybmod18 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -493,7 +493,6 @@ new file mode 100644
 +CONFIG_X86_PMEM_LEGACY=y
 +CONFIG_X86_CHECK_BIOS_CORRUPTION=y
 +CONFIG_X86_BOOTPARAM_MEMORY_CORRUPTION_CHECK=y
-+CONFIG_X86_RESERVE_LOW=64
 +CONFIG_MTRR=y
 +CONFIG_MTRR_SANITIZER=y
 +CONFIG_MTRR_SANITIZER_ENABLE_DEFAULT=1

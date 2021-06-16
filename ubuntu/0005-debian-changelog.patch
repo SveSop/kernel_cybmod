@@ -1,31 +1,77 @@
-From cf26ed844a1fa2b52a49be25cec78be72ae2676c Mon Sep 17 00:00:00 2001
+From 927125c119305358ce8fa15528d0fde24fc69110 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 10 Jun 2021 12:59:39 +0000
+Date: Wed, 16 Jun 2021 12:01:27 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11353 +-------------------------------------
- 1 file changed, 3 insertions(+), 11350 deletions(-)
+ debian.master/changelog | 11399 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11396 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 8bc517fe3a0d..d8de9b0e6a77 100644
+index 182d93405bed..57c297a6ed7e 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11353 +1,6 @@
+@@ -1,11399 +1,6 @@
+-linux-unstable (5.13.0-8.8) impish; urgency=medium
++linux (5.12.11-051211.202106161201) impish; urgency=low
+ 
+-  * impish/linux-unstable: 5.13.0-8.8 -proposed tracker (LP: #1932018)
++  Mainline build at commit: v5.12.11
+ 
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
++ -- Mainline Build <kernel@kathleen>  Wed, 16 Jun 2021 12:01:27 +0000
+ 
+-  * initramfs-tools & kernel: use zstd as the default compression method
+-    (LP: #1931725)
+-    - [Config] use ZSTD to compress amd64 kernels
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] enable signing for ppc64el
+-    - SAUCE: powerpc: Fix initrd corruption with relative jump labels
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 15 Jun 2021 15:07:34 +0200
+-
+-linux-unstable (5.13.0-7.7) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-7.7 -proposed tracker (LP: #1931840)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-    - [Packaging] resync getabis
+-    - [Packaging] update helper scripts
+-    - update dkms package versions
+-
+-  * Intel ADL-S graphics feature enabling (LP: #1931240)
+-    - SAUCE: drm/i915/adl_s: ADL-S platform Update PCI ids for Mobile BGA
+-
+-  * Kernel package builds running out of space on builders (LP: #1930713)
+-    - [Config] CONFIG_DEBUG_INFO_COMPRESSED=n
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] remove nvidia dkms build support
+-    - [Config] remove now unsued do_dkms_nvidia* build variables
+-    - [Config] enable signing for s390x
+-    - [Config] update annotations after configs review
+-    - [Config] update toolchain versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13-rc6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 14 Jun 2021 11:53:08 +0200
+-
 -linux-unstable (5.13.0-6.6) impish; urgency=medium
-+linux (5.12.10-051210.202106101259) impish; urgency=low
- 
+-
 -  * impish/linux-unstable: 5.13.0-6.6 -proposed tracker (LP: #1931071)
-+  Mainline build at commit: v5.12.10
- 
+-
 -  * Kernel package builds running out of space on builders (LP: #1930713)
 -    - [Debian] use stamps for flavour install targets
 -    - [Debian] run install-$(flavour) targets during build phase
 -    - [Debian] remove dh_testroot from install targets
 -    - [Debian] dkms-build -- use fakeroot if not running as root
 -    - [Debian] exclude $(DEBIAN)/__abi.current from linux-source
-+ -- Mainline Build <kernel@kathleen>  Thu, 10 Jun 2021 12:59:39 +0000
- 
+-
 -  * [UBUNTU 21.04] tools/kvm_stat: Add restart delay (LP: #1921870)
 -    - [Debian] install kvm_stat systemd service
 -
