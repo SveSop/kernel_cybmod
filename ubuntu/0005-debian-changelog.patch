@@ -1,6 +1,6 @@
-From 927125c119305358ce8fa15528d0fde24fc69110 Mon Sep 17 00:00:00 2001
+From 92ec13c44e96d5ba38aa4799e2f8ca29b47ecf92 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 16 Jun 2021 12:01:27 +0000
+Date: Fri, 18 Jun 2021 09:31:05 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11396 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 182d93405bed..57c297a6ed7e 100644
+index 182d93405bed..c23f2d069115 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11399 +1,6 @@
 -linux-unstable (5.13.0-8.8) impish; urgency=medium
-+linux (5.12.11-051211.202106161201) impish; urgency=low
++linux (5.12.12-051212.202106180931) impish; urgency=low
  
 -  * impish/linux-unstable: 5.13.0-8.8 -proposed tracker (LP: #1932018)
-+  Mainline build at commit: v5.12.11
++  Mainline build at commit: v5.12.12
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@kathleen>  Wed, 16 Jun 2021 12:01:27 +0000
++ -- Mainline Build <kernel@kathleen>  Fri, 18 Jun 2021 09:31:05 +0000
  
 -  * initramfs-tools & kernel: use zstd as the default compression method
 -    (LP: #1931725)
