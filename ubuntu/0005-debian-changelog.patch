@@ -1,27 +1,116 @@
-From 92ec13c44e96d5ba38aa4799e2f8ca29b47ecf92 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 18 Jun 2021 09:31:05 +0000
+From d136bf257935fa769ea99f3fdccf20b6f382cfe0 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 30 Jun 2021 14:39:07 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11399 +-------------------------------------
- 1 file changed, 3 insertions(+), 11396 deletions(-)
+ debian.master/changelog | 11488 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11485 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 182d93405bed..c23f2d069115 100644
+index cf77054e07d1..47c72461a30c 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11399 +1,6 @@
--linux-unstable (5.13.0-8.8) impish; urgency=medium
-+linux (5.12.12-051212.202106180931) impish; urgency=low
+@@ -1,11488 +1,6 @@
+-linux (5.13.0-11.11) impish; urgency=medium
++linux (5.12.14-051214.202106301439) impish; urgency=low
  
--  * impish/linux-unstable: 5.13.0-8.8 -proposed tracker (LP: #1932018)
-+  Mainline build at commit: v5.12.12
+-  * impish/linux: 5.13.0-11.11 -proposed tracker (LP: #1933854)
++  Mainline build at commit: v5.12.14
  
 -  * Packaging resync (LP: #1786013)
--    - update dkms package versions
-+ -- Mainline Build <kernel@kathleen>  Fri, 18 Jun 2021 09:31:05 +0000
+-    - [Packaging] update variants
++ -- Mainline Build <kernel@sita>  Wed, 30 Jun 2021 14:39:06 +0000
  
+-  * Support builtin revoked certificates (LP: #1932029)
+-    - [Packaging] build canonical-revoked-certs.pem from branch/arch certs
+-    - [Packaging] Revoke 2012 UEFI signing certificate as built-in
+-    - [Config] Configure CONFIG_SYSTEM_REVOCATION_KEYS with revoked keys
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Change source package name to linux
+-
+-  * Miscellaneous upstream changes
+-    - mm/page_alloc: Correct return value of populated elements if bulk array is
+-      populated
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 29 Jun 2021 07:50:25 +0200
+-
+-linux (5.13.0-10.10) impish; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 28 Jun 2021 08:40:05 +0200
+-
+-linux-unstable (5.13.0-10.10) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-10.10 -proposed tracker (LP: #1933795)
+-
+-  * Pixel format change broken for Elgato Cam Link 4K (LP: #1932367)
+-    - media: uvcvideo: Fix pixel format change for Elgato Cam Link 4K
+-
+-  * initramfs-tools & kernel: use zstd as the default compression method
+-    (LP: #1931725)
+-    - s390/decompressor: correct BOOT_HEAP_SIZE condition
+-    - s390/boot: add zstd support
+-    - [Packaging] use ZSTD to compress s390 kernels
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: selftests: tls: fix chacha+bidir tests
+-    - SAUCE: selftests: icmp_redirect: support expected failures
+-    - [Config] update configs and annotations after rebase to 5.13
+-
+-  * Miscellaneous upstream changes
+-    - tls: prevent oversized sendfile() hangs by ignoring MSG_MORE
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 28 Jun 2021 08:40:05 +0200
+-
+-linux-unstable (5.13.0-9.9) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-9.9 -proposed tracker (LP: #1933070)
+-
+-  * Add support for selective build of special drivers (LP: #1912789)
+-    - [Packaging] Add support for ODM drivers
+-    - [Packaging] Turn on ODM support for amd64
+-    - [Packaging] Fix ODM support in actual build
+-    - [Packaging] Fix ODM DRIVERS Kconfig
+-
+-  * Add support for IO functions of AAEON devices (LP: #1929504)
+-    - ODM: [Config] update config for AAEON devices
+-    - ODM: hwmon: add driver for AAEON devices
+-    - ODM: leds: add driver for AAEON devices
+-    - ODM: watchdog: add driver for AAEON devices
+-    - ODM: gpio: add driver for AAEON devices
+-    - ODM: mfd: Add support for IO functions of AAEON devices
+-
+-  * Disable hv-kvp-daemon.service on certain instance types (LP: #1932081)
+-    - [Packaging]: Add kernel command line condition to hv-kvp-daemon service
+-
+-  * Fix non-working GPU on Some HP desktops (LP: #1931147)
+-    - PCI: Coalesce host bridge contiguous apertures
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: selftests: seccomp: bump up timeout to 5min
+-    - SAUCE: Revert "net/tls(TLS_SW): Add selftest for 'chunked' sendfile test"
+-    - [Config] update annotations after rebase to 5.13-rc7
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 21 Jun 2021 10:55:36 +0200
+-
+-linux-unstable (5.13.0-8.8) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-8.8 -proposed tracker (LP: #1932018)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
 -  * initramfs-tools & kernel: use zstd as the default compression method
 -    (LP: #1931725)
 -    - [Config] use ZSTD to compress amd64 kernels

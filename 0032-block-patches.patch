@@ -1,25 +1,19 @@
-From 6364a047c4e87ce495e6322d014416e6b3dae037 Mon Sep 17 00:00:00 2001
+From 35bfc16706a00920e9f2fe2e319995aac69fe1ca Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Thu, 2 Jul 2020 19:16:43 +0200
-Subject: [PATCH 1/9] block, Kconfig.iosched: set default value of IOSCHED_BFQ
+Date: Tue, 22 Jun 2021 22:11:17 +0200
+Subject: [PATCH 1/6] block, Kconfig.iosched: set default value of IOSCHED_BFQ
  to yes
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
- block/Kconfig.iosched | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ block/Kconfig.iosched | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index 2f2158e05..e58b2953a 100644
+index 64053d67a..e3f67378f 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
-@@ -5,13 +5,11 @@ menu "IO Schedulers"
- 
- config MQ_IOSCHED_DEADLINE
- 	tristate "MQ deadline I/O scheduler"
--	default y
- 	help
- 	  MQ version of the deadline IO scheduler.
+@@ -17,7 +17,6 @@ config MQ_IOSCHED_DEADLINE_CGROUP
  
  config MQ_IOSCHED_KYBER
  	tristate "Kyber I/O scheduler"
@@ -27,7 +21,7 @@ index 2f2158e05..e58b2953a 100644
  	help
  	  The Kyber I/O scheduler is a low-overhead scheduler suitable for
  	  multiqueue and other fast devices. Given target latencies for reads and
-@@ -20,6 +18,7 @@ config MQ_IOSCHED_KYBER
+@@ -26,6 +25,7 @@ config MQ_IOSCHED_KYBER
  
  config IOSCHED_BFQ
  	tristate "BFQ I/O scheduler"
@@ -39,10 +33,10 @@ index 2f2158e05..e58b2953a 100644
 2.32.0
 
 
-From ff1fc50f99dfeab6a76ffb8ba74d6049a89544bb Mon Sep 17 00:00:00 2001
+From 9f1207d0d3cbf4655160a6d4109d810d6598a9b2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
-Subject: [PATCH 2/9] block: Fix depends for BLK_DEV_ZONED
+Subject: [PATCH 2/6] block: Fix depends for BLK_DEV_ZONED
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -50,7 +44,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index a2297edfd..f688ea5f0 100644
+index e71c63eaa..c05ca0c05 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
 @@ -83,7 +83,7 @@ config BLK_DEV_INTEGRITY_T10
@@ -66,10 +60,10 @@ index a2297edfd..f688ea5f0 100644
 2.32.0
 
 
-From cb053abf1f2755f45e71d09d6bc1152ac6d77b2f Mon Sep 17 00:00:00 2001
+From 57ac1e39acbf0f85ccb3b80680c51a8767f33933 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
-Subject: [PATCH 3/9] block: set rq_affinity = 2 for full multithreading I/O
+Subject: [PATCH 3/6] block: set rq_affinity = 2 for full multithreading I/O
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -77,10 +71,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 158aefae1..e4ab20964 100644
+index 0d81eed39..9db58a821 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
-@@ -620,6 +620,7 @@ struct request_queue {
+@@ -626,6 +626,7 @@ struct request_queue {
  
  #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
  				 (1 << QUEUE_FLAG_SAME_COMP) |		\
@@ -92,153 +86,10 @@ index 158aefae1..e4ab20964 100644
 2.32.0
 
 
-From 7576e3ecaae7028235799c3fc425821763ad47a7 Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 3 Jul 2020 12:58:15 +0200
-Subject: [PATCH 4/9] block: Add CONFIG to rename the mq-deadline scheduler
-
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
----
- block/Kconfig.iosched | 9 +++++++++
- block/elevator.c      | 4 ++++
- block/mq-deadline.c   | 4 ++++
- 3 files changed, 17 insertions(+)
-
-diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index e58b2953a..9e5a3c5c6 100644
---- a/block/Kconfig.iosched
-+++ b/block/Kconfig.iosched
-@@ -8,6 +8,15 @@ config MQ_IOSCHED_DEADLINE
- 	help
- 	  MQ version of the deadline IO scheduler.
- 
-+config MQ_IOSCHED_DEADLINE_NODEFAULT
-+	bool "Rename mq-deadline scheduler to mq-deadline-nodefault"
-+	depends on MQ_IOSCHED_DEADLINE
-+	default n
-+	help
-+	  This renames the mq-deadline scheduler to "mq-deadline-nodefault" and
-+	  also drops its alias of "deadline". This can prevent existing
-+	  userspace from forcing this scheduler over the kernel's choice.
-+
- config MQ_IOSCHED_KYBER
- 	tristate "Kyber I/O scheduler"
- 	help
-diff --git a/block/elevator.c b/block/elevator.c
-index 293c5c813..90181ad94 100644
---- a/block/elevator.c
-+++ b/block/elevator.c
-@@ -624,7 +624,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
- 	if (q->nr_hw_queues != 1)
- 		return NULL;
- 
-+#if defined(CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT)
-+	return elevator_get(q, "mq-deadline-nodefault", false);
-+#else
- 	return elevator_get(q, "mq-deadline", false);
-+#endif
- }
- 
- /*
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 3aabcd2a7..780f4422d 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -793,8 +793,12 @@ static struct elevator_type mq_deadline = {
- 	.queue_debugfs_attrs = deadline_queue_debugfs_attrs,
- #endif
- 	.elevator_attrs = deadline_attrs,
-+#ifdef CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT
-+	.elevator_name = "mq-deadline-nodefault",
-+#else
- 	.elevator_name = "mq-deadline",
- 	.elevator_alias = "deadline",
-+#endif
- 	.elevator_features = ELEVATOR_F_ZBD_SEQ_WRITE,
- 	.elevator_owner = THIS_MODULE,
- };
--- 
-2.32.0
-
-
-From 21356b45939e2da1aaf52ef5ccd96f091ef3ec26 Mon Sep 17 00:00:00 2001
-From: Steven Barrett <steven@liquorix.net>
-Date: Wed, 27 Jan 2021 14:27:35 -0600
-Subject: [PATCH 5/9] ZEN: Fix mq-deadline scheduler renaming
-
-In recent ZEN commit ("ZEN: Add CONFIG to rename the mq-deadline
-scheduler"), we only handled the elevator name if mq-deadline, but not
-its elevator or module alias.  Fix these two so that we can pick
-mq-deadline-nodefault without errors.
----
- block/mq-deadline.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 780f4422d..175436687 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -795,6 +795,7 @@ static struct elevator_type mq_deadline = {
- 	.elevator_attrs = deadline_attrs,
- #ifdef CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT
- 	.elevator_name = "mq-deadline-nodefault",
-+	.elevator_alias = "deadline-nodefault",
- #else
- 	.elevator_name = "mq-deadline",
- 	.elevator_alias = "deadline",
-@@ -802,7 +803,11 @@ static struct elevator_type mq_deadline = {
- 	.elevator_features = ELEVATOR_F_ZBD_SEQ_WRITE,
- 	.elevator_owner = THIS_MODULE,
- };
-+#ifdef CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT
-+MODULE_ALIAS("mq-deadline-nodefault-iosched");
-+#else
- MODULE_ALIAS("mq-deadline-iosched");
-+#endif
- 
- static int __init deadline_init(void)
- {
--- 
-2.32.0
-
-
-From df9ee6469ac5398f51e03db206919e7ee34e9c47 Mon Sep 17 00:00:00 2001
-From: Steven Barrett <steven@liquorix.net>
-Date: Wed, 27 Jan 2021 17:39:54 -0600
-Subject: [PATCH 6/9] ZEN: Increase max elevator name size
-
-After renaming mq-deadline to mq-deadline-nodefault, setting the new
-scheduler name would always fail.  Part of that reason was the module
-alias that was fixed in "ZEN: Fix mq-deadline scheduler renaming", but
-also the scheduler name was longer than ELV_NAME_MAX (by default, 15
-usable characters).
-
-Increase to 24 so we can support our longer IO scheduler names.
----
- include/linux/elevator.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index dcb2f9022..0b3c67155 100644
---- a/include/linux/elevator.h
-+++ b/include/linux/elevator.h
-@@ -52,7 +52,7 @@ struct elevator_mq_ops {
- 	void (*exit_icq)(struct io_cq *);
- };
- 
--#define ELV_NAME_MAX	(16)
-+#define ELV_NAME_MAX	(24)
- 
- struct elv_fs_entry {
- 	struct attribute attr;
--- 
-2.32.0
-
-
-From f32ecb2c0070669738bf452339f8f028c62c2c74 Mon Sep 17 00:00:00 2001
+From b979c2f4931cad6e12bacb87ff4c774fb288701e Mon Sep 17 00:00:00 2001
 From: Tom Saeger <tom.saeger () oracle ! com>
 Date: Fri, 26 Mar 2021 03:04:57 +0000
-Subject: [PATCH 7/9] block: fix trivial typos in comments
+Subject: [PATCH 4/6] block: fix trivial typos in comments
 
 s/Additonal/Additional/
 s/assocaited/associated/
@@ -278,10 +129,10 @@ Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
  16 files changed, 28 insertions(+), 28 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index bc319931d..23212167c 100644
+index 3584bcb36..5758afbb1 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -1798,7 +1798,7 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
+@@ -1850,7 +1850,7 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
  	 * As for throughput, we ask bfq_better_to_idle() whether we
  	 * still need to plug I/O dispatching. If bfq_better_to_idle()
  	 * says no, then plugging is not needed any longer, either to
@@ -290,7 +141,7 @@ index bc319931d..23212167c 100644
  	 * the best option is to stop plugging I/O, as not doing so
  	 * would certainly lower throughput. We may end up in this
  	 * case if: (1) upon a dispatch attempt, we detected that it
-@@ -4944,7 +4944,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+@@ -5131,7 +5131,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
  		 * by the fact that bfqq has just been merged.
  		 * 2) burst_size is greater than 0, to handle
  		 * unbalanced decrements. Unbalanced decrements may
@@ -313,10 +164,10 @@ index 3304e841d..0039e4756 100644
  u64 __blkg_prfill_rwstat(struct seq_file *sf, struct blkg_policy_data *pd,
  			 const struct blkg_rwstat_sample *rwstat)
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index a317c03d4..e5dc2e134 100644
+index b0f7e17ae..cb8d5452c 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -143,7 +143,7 @@ static void blkg_async_bio_workfn(struct work_struct *work)
+@@ -144,7 +144,7 @@ static void blkg_async_bio_workfn(struct work_struct *work)
   * @q: request_queue the new blkg is associated with
   * @gfp_mask: allocation mask to use
   *
@@ -325,7 +176,7 @@ index a317c03d4..e5dc2e134 100644
   */
  static struct blkcg_gq *blkg_alloc(struct blkcg *blkcg, struct request_queue *q,
  				   gfp_t gfp_mask)
-@@ -526,7 +526,7 @@ EXPORT_SYMBOL_GPL(blkcg_print_blkgs);
+@@ -527,7 +527,7 @@ EXPORT_SYMBOL_GPL(blkcg_print_blkgs);
   * @pd: policy private data of interest
   * @v: value to print
   *
@@ -334,7 +185,7 @@ index a317c03d4..e5dc2e134 100644
   */
  u64 __blkg_prfill_u64(struct seq_file *sf, struct blkg_policy_data *pd, u64 v)
  {
-@@ -715,7 +715,7 @@ EXPORT_SYMBOL_GPL(blkg_conf_prep);
+@@ -716,7 +716,7 @@ EXPORT_SYMBOL_GPL(blkg_conf_prep);
  
  /**
   * blkg_conf_finish - finish up per-blkg config update
@@ -428,7 +279,7 @@ index 81be00964..1b2a537ed 100644
   * adjust the queue depth of ourselves if needed.
   *
 diff --git a/block/blk-merge.c b/block/blk-merge.c
-index 4d97fb6dd..7a3cf790d 100644
+index 1398b52a2..6b5964da7 100644
 --- a/block/blk-merge.c
 +++ b/block/blk-merge.c
 @@ -283,7 +283,7 @@ static struct bio *blk_bio_segment_split(struct request_queue *q,
@@ -459,10 +310,10 @@ index 4d97fb6dd..7a3cf790d 100644
  	for (bio = rq->bio; bio; bio = bio->bi_next) {
  		WARN_ON_ONCE((bio->bi_opf & REQ_FAILFAST_MASK) &&
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 0e120547c..26aa57ae7 100644
+index cadd12d68..5e720ed8e 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -915,7 +915,7 @@ static bool blk_mq_check_expired(struct blk_mq_hw_ctx *hctx,
+@@ -916,7 +916,7 @@ static bool blk_mq_check_expired(struct blk_mq_hw_ctx *hctx,
  
  	/*
  	 * Just do a quick check if it is expired before locking the request in
@@ -471,7 +322,7 @@ index 0e120547c..26aa57ae7 100644
  	 */
  	if (!blk_mq_req_expired(rq, next))
  		return true;
-@@ -1634,7 +1634,7 @@ static bool blk_mq_has_sqsched(struct request_queue *q)
+@@ -1635,7 +1635,7 @@ static bool blk_mq_has_sqsched(struct request_queue *q)
  }
  
  /*
@@ -507,7 +358,7 @@ index 17b47a86e..0541f7228 100644
  void blk_stat_remove_callback(struct request_queue *q,
  			      struct blk_stat_callback *cb);
 diff --git a/block/blk.h b/block/blk.h
-index 3b53e44b9..84f52f113 100644
+index 52ff5d4a3..dd33e4d4f 100644
 --- a/block/blk.h
 +++ b/block/blk.h
 @@ -252,7 +252,7 @@ static inline void req_set_nomerge(struct request_queue *q, struct request *req)
@@ -597,10 +448,10 @@ index 6599bac0a..384aa4837 100644
 2.32.0
 
 
-From 93493ce9435a234a349fe21990255454ab9aa353 Mon Sep 17 00:00:00 2001
+From a3a94c9c0ddbc6e77a7b265bb40c6fe3d00fc8df Mon Sep 17 00:00:00 2001
 From: Ming Lei <ming.lei@redhat.com>
 Date: Fri, 28 May 2021 11:20:55 +0800
-Subject: [PATCH 8/9] blk-mq: update hctx->dispatch_busy in case of real
+Subject: [PATCH 5/6] blk-mq: update hctx->dispatch_busy in case of real
  scheduler
 
 Commit 6e6fcbc27e77 ("blk-mq: support batching dispatch in case of io")
@@ -618,10 +469,10 @@ Signed-off-by: Ming Lei <ming.lei@redhat.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 26aa57ae7..8e5bf35ea 100644
+index 5e720ed8e..08911d14c 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -1219,9 +1219,6 @@ static void blk_mq_update_dispatch_busy(struct blk_mq_hw_ctx *hctx, bool busy)
+@@ -1220,9 +1220,6 @@ static void blk_mq_update_dispatch_busy(struct blk_mq_hw_ctx *hctx, bool busy)
  {
  	unsigned int ewma;
  
@@ -635,10 +486,10 @@ index 26aa57ae7..8e5bf35ea 100644
 2.32.0
 
 
-From 540b8daa668c4915b61a7dbfebe7ce11a91deced Mon Sep 17 00:00:00 2001
+From 7b0240e0ff862ad440df289c042b4e4c5fa30a5a Mon Sep 17 00:00:00 2001
 From: Damien Le Moal <damien.lemoal () wdc ! com>
 Date: Fri, 18 Jun 2021 01:59:22 +0000
-Subject: [PATCH 9/9] block: Remove unnecessary elevator operation checks
+Subject: [PATCH 6/6] block: Remove unnecessary elevator operation checks
 
 The insert_requests and dispatch_request elevator operations are
 mandatory for the correct execution of an elevator, and all implemented
@@ -662,10 +513,10 @@ Signed-off-by: Damien Le Moal <damien.lemoal@wdc.com>
  2 files changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index fdeb9773b..772270de6 100644
+index fcc9b5728..40095caaf 100644
 --- a/block/blk-mq-sched.c
 +++ b/block/blk-mq-sched.c
-@@ -274,8 +274,7 @@ static int blk_mq_do_dispatch_ctx(struct blk_mq_hw_ctx *hctx)
+@@ -284,8 +284,7 @@ static int blk_mq_do_dispatch_ctx(struct blk_mq_hw_ctx *hctx)
  static int __blk_mq_sched_dispatch_requests(struct blk_mq_hw_ctx *hctx)
  {
  	struct request_queue *q = hctx->queue;
@@ -675,7 +526,7 @@ index fdeb9773b..772270de6 100644
  	int ret = 0;
  	LIST_HEAD(rq_list);
  
-@@ -306,12 +305,12 @@ static int __blk_mq_sched_dispatch_requests(struct blk_mq_hw_ctx *hctx)
+@@ -316,12 +315,12 @@ static int __blk_mq_sched_dispatch_requests(struct blk_mq_hw_ctx *hctx)
  	if (!list_empty(&rq_list)) {
  		blk_mq_sched_mark_restart_hctx(hctx);
  		if (blk_mq_dispatch_rq_list(hctx, &rq_list, 0)) {
@@ -690,7 +541,7 @@ index fdeb9773b..772270de6 100644
  		ret = blk_mq_do_dispatch_sched(hctx);
  	} else if (hctx->dispatch_busy) {
  		/* dequeue request one by one from sw queue if queue is busy */
-@@ -443,7 +442,7 @@ void blk_mq_sched_insert_request(struct request *rq, bool at_head,
+@@ -454,7 +453,7 @@ void blk_mq_sched_insert_request(struct request *rq, bool at_head,
  		goto run;
  	}
  
@@ -699,7 +550,7 @@ index fdeb9773b..772270de6 100644
  		LIST_HEAD(list);
  
  		list_add(&rq->queuelist, &list);
-@@ -474,9 +473,9 @@ void blk_mq_sched_insert_requests(struct blk_mq_hw_ctx *hctx,
+@@ -485,9 +484,9 @@ void blk_mq_sched_insert_requests(struct blk_mq_hw_ctx *hctx,
  	percpu_ref_get(&q->q_usage_counter);
  
  	e = hctx->queue->elevator;
@@ -712,10 +563,10 @@ index fdeb9773b..772270de6 100644
  		 * try to issue requests directly if the hw queue isn't
  		 * busy in case of 'none' scheduler, and this way may save
 diff --git a/block/elevator.c b/block/elevator.c
-index 90181ad94..9f3e50a5d 100644
+index 151b30911..f16bd3c45 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
-@@ -522,6 +522,10 @@ void elv_unregister_queue(struct request_queue *q)
+@@ -527,6 +527,10 @@ void elv_unregister_queue(struct request_queue *q)
  
  int elv_register(struct elevator_type *e)
  {
