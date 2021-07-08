@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.12.14  
+0000 : Patch 5.12.15  
 0001 : MuQSS (ck) scheduler  
 0002 : 5.12 Graysky's CPU optimization patches  
 0003 : Enable usage of optional -O3 optimization  

@@ -1,6 +1,6 @@
-From 262410337c252dbe9c7fb96feae14bc2da2333c1 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 30 Jun 2021 14:39:46 +0000
+From c515489163a5e8e9cf106279ded97725cc597bec Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 7 Jul 2021 09:36:42 -0400
 Subject: [PATCH 6/6] configs (based on refs/remotes/impish/master-next)
 
 ---
@@ -12,10 +12,10 @@ Subject: [PATCH 6/6] configs (based on refs/remotes/impish/master-next)
  .../config/armhf/config.common.armhf          |  17 +-
  .../config/armhf/config.flavour.generic       |   1 -
  .../config/armhf/config.flavour.generic-lpae  |   1 -
- debian.master/config/config.common.ubuntu     | 247 ++++--------------
+ debian.master/config/config.common.ubuntu     | 249 ++++--------------
  .../config/ppc64el/config.common.ppc64el      |  18 +-
  .../config/s390x/config.common.s390x          |  16 +-
- 11 files changed, 74 insertions(+), 267 deletions(-)
+ 11 files changed, 75 insertions(+), 268 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 9bf64a7b37b6..548476a9574f 100644
@@ -393,7 +393,7 @@ index a49ee9685645..44d3eb282f83 100644
  # CONFIG_USB_OHCI_HCD_PLATFORM is not set
 -CONFIG_VIDEO_TI_CAL_MC=y
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 5425b8032fb8..4503400b47e7 100644
+index 5425b8032fb8..af692e04e077 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,8 +33,8 @@ CONFIG_9P_FS=m
@@ -1056,9 +1056,12 @@ index 5425b8032fb8..4503400b47e7 100644
  CONFIG_ISL29125=m
  CONFIG_ISL29501=m
  CONFIG_ISM=m
-@@ -5530,7 +5468,6 @@ CONFIG_LD_IS_BFD=y
+@@ -5528,9 +5466,8 @@ CONFIG_LDISC_AUTOLOAD=y
+ # CONFIG_LD_HEAD_STUB_CATCH is not set
+ CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
- CONFIG_LD_VERSION=23650
+-CONFIG_LD_VERSION=23650
++CONFIG_LD_VERSION=23690
  CONFIG_LEDS_88PM860X=m
 -CONFIG_LEDS_AAEON=m
  CONFIG_LEDS_AAT1290=m
