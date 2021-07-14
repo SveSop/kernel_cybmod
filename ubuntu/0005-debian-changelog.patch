@@ -1,6 +1,6 @@
-From c460ca310d26a58a1a207c778f9ed47727ce338a Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 7 Jul 2021 09:35:55 -0400
+From 7aded0235b692bad097f6da8e1a5642f256af404 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 11 Jul 2021 11:35:28 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11485 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index cf77054e07d1..0cdbbd04d73f 100644
+index cf77054e07d1..ace12b253c5c 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11488 +1,6 @@
 -linux (5.13.0-11.11) impish; urgency=medium
-+linux (5.12.15-051215.202107070935) impish; urgency=low
++linux (5.12.16-051216.202107111135) impish; urgency=low
  
 -  * impish/linux: 5.13.0-11.11 -proposed tracker (LP: #1933854)
-+  Mainline build at commit: v5.12.15
++  Mainline build at commit: v5.12.16
  
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update variants
-+ -- Mainline Build <kernel@gloin>  Wed, 07 Jul 2021 09:35:55 -0400
++ -- Mainline Build <kernel@sita>  Sun, 11 Jul 2021 11:35:27 +0000
  
 -  * Support builtin revoked certificates (LP: #1932029)
 -    - [Packaging] build canonical-revoked-certs.pem from branch/arch certs
