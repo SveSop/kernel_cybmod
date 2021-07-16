@@ -1,27 +1,51 @@
-From 7aded0235b692bad097f6da8e1a5642f256af404 Mon Sep 17 00:00:00 2001
+From 266b1a16e0315111b5ce4b53042f833497f6f220 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 11 Jul 2021 11:35:28 +0000
+Date: Wed, 14 Jul 2021 18:36:49 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11488 +-------------------------------------
- 1 file changed, 3 insertions(+), 11485 deletions(-)
+ debian.master/changelog | 11512 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11509 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index cf77054e07d1..ace12b253c5c 100644
+index fae581b9eb41..98e04450d836 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11488 +1,6 @@
--linux (5.13.0-11.11) impish; urgency=medium
-+linux (5.12.16-051216.202107111135) impish; urgency=low
- 
--  * impish/linux: 5.13.0-11.11 -proposed tracker (LP: #1933854)
-+  Mainline build at commit: v5.12.16
+@@ -1,11512 +1,6 @@
+-linux (5.13.0-12.12) impish; urgency=medium
++linux (5.12.17-051217.202107141836) impish; urgency=low
  
 -  * Packaging resync (LP: #1786013)
--    - [Packaging] update variants
-+ -- Mainline Build <kernel@sita>  Sun, 11 Jul 2021 11:35:27 +0000
+-    - update dkms package versions
++  Mainline build at commit: v5.12.17
  
+-  * Impish update: v5.13.1 upstream stable release (LP: #1935807)
+-    - Revert "KVM: x86/mmu: Drop kvm_mmu_extended_role.cr4_la57 hack"
+-    - Linux 5.13.1
++ -- Mainline Build <kernel@sita>  Wed, 14 Jul 2021 18:36:49 +0000
+ 
+-  * ubuntu_kernel_selftests ftrace fails on arm64 F / aws-5.8 / amd64 F
+-    azure-5.8 (LP: #1927749) // Impish update: v5.13.1 upstream stable release
+-    (LP: #1935807)
+-    - selftests/ftrace: fix event-no-pid on 1-core machine
+-
+-  * ubuntu-host driver lacks lseek ops (LP: #1934110) // Impish update: v5.13.1
+-    upstream stable release (LP: #1935807)
+-    - ubuntu-host: add generic lseek op
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] Enable CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT
+-    - [Packaging] rename linux-unstable to linux in getabis
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 12 Jul 2021 14:09:16 +0200
+-
+-linux (5.13.0-11.11) impish; urgency=medium
+-
+-  * impish/linux: 5.13.0-11.11 -proposed tracker (LP: #1933854)
+-
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update variants
+-
 -  * Support builtin revoked certificates (LP: #1932029)
 -    - [Packaging] build canonical-revoked-certs.pem from branch/arch certs
 -    - [Packaging] Revoke 2012 UEFI signing certificate as built-in
