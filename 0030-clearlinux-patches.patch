@@ -1,7 +1,7 @@
-From aecfa022aa783d6f33516499c1283599de88d7a8 Mon Sep 17 00:00:00 2001
+From dad862386edd8bca8968f5409edad37ae010ed5d Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:10:58 -0600
-Subject: [PATCH 04/24] pci pme wakeups
+Subject: [PATCH 04/26] pci pme wakeups
 
 Reduce wakeups for PME checks, which are a workaround for miswired
 boards (sadly, too many of them) in laptops.
@@ -10,7 +10,7 @@ boards (sadly, too many of them) in laptops.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index e4d4e3990..1b62e1fe2 100644
+index 16a17215f..9a77b4917 100644
 --- a/drivers/pci/pci.c
 +++ b/drivers/pci/pci.c
 @@ -59,7 +59,7 @@ struct pci_pme_device {
@@ -23,12 +23,12 @@ index e4d4e3990..1b62e1fe2 100644
  static void pci_dev_d3_sleep(struct pci_dev *dev)
  {
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From 9bfba9ccb4036e22644f2a45fe1df7ab28a9d6e0 Mon Sep 17 00:00:00 2001
+From 4286d12cf562dfb711d9bef46523ca8493ea9519 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 6 May 2019 12:57:09 -0500
-Subject: [PATCH 05/24] ksm-wakeups
+Subject: [PATCH 05/26] ksm-wakeups
 
 reduce wakeups in ksm by adding rounding (aligning) when
 the sleep times are 1 second or longer
@@ -40,7 +40,7 @@ Signed-off-by: Arjan van de Ven <arjan@linux.intel.com>
  2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 107bc38b1..c79f45508 100644
+index 8cf067837..aa3f5025c 100644
 --- a/kernel/watchdog.c
 +++ b/kernel/watchdog.c
 @@ -41,7 +41,7 @@ unsigned long __read_mostly watchdog_enabled;
@@ -53,10 +53,10 @@ index 107bc38b1..c79f45508 100644
  
  struct cpumask watchdog_cpumask __read_mostly;
 diff --git a/mm/ksm.c b/mm/ksm.c
-index 9694ee2c7..50d1d6dd1 100644
+index b32391ccf..ca106c4a5 100644
 --- a/mm/ksm.c
 +++ b/mm/ksm.c
-@@ -2423,9 +2423,14 @@ static int ksm_scan_thread(void *nothing)
+@@ -2424,9 +2424,14 @@ static int ksm_scan_thread(void *nothing)
  
  		if (ksmd_should_run()) {
  			sleep_ms = READ_ONCE(ksm_thread_sleep_millisecs);
@@ -75,12 +75,12 @@ index 9694ee2c7..50d1d6dd1 100644
  			wait_event_freezable(ksm_thread_wait,
  				ksmd_should_run() || kthread_should_stop());
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From ba5b9fff3f873a6ea8dbe6b07d499190c806b69e Mon Sep 17 00:00:00 2001
+From 7c72eced3ea14b7a404e9b20cd6ea620f5c34844 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 19 Mar 2016 21:32:19 -0400
-Subject: [PATCH 06/24] intel_idle: tweak cpuidle cstates
+Subject: [PATCH 06/26] intel_idle: tweak cpuidle cstates
 
 Increase target_residency in cpuidle cstate
 
@@ -295,12 +295,12 @@ index 3273360f3..257daaf1a 100644
  		.enter_s2idle = intel_idle_s2idle, },
  	{
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From eed74af7f7bca2d16be5571ae1c9d6a40e9d870d Mon Sep 17 00:00:00 2001
+From 27489d58d1c6e0dabb8c95b52b91e0518c62cd5c Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 17:28:14 -0600
-Subject: [PATCH 08/24] smpboot: reuse timer calibration
+Subject: [PATCH 08/26] smpboot: reuse timer calibration
 
 NO point recalibrating for known-constant tsc ...
 saves 200ms+ of boot time.
@@ -309,10 +309,10 @@ saves 200ms+ of boot time.
  1 file changed, 3 insertions(+)
 
 diff --git a/arch/x86/kernel/tsc.c b/arch/x86/kernel/tsc.c
-index f70dffc27..dfb9f6055 100644
+index 562891707..9c1d1825e 100644
 --- a/arch/x86/kernel/tsc.c
 +++ b/arch/x86/kernel/tsc.c
-@@ -1546,6 +1546,9 @@ unsigned long calibrate_delay_is_known(void)
+@@ -1547,6 +1547,9 @@ unsigned long calibrate_delay_is_known(void)
  	if (!constant_tsc || !mask)
  		return 0;
  
@@ -323,12 +323,12 @@ index f70dffc27..dfb9f6055 100644
  	if (sibling < nr_cpu_ids)
  		return cpu_data(sibling).loops_per_jiffy;
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From 96a2c76863bf05af9854c24ccfa2ced037f2fbc7 Mon Sep 17 00:00:00 2001
+From 32766b8975d2a60b7a0f90dbc4fdc4509d965c2a Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 2 Jun 2016 23:36:32 -0500
-Subject: [PATCH 09/24] Initialize ata before graphics
+Subject: [PATCH 09/26] initialize ata before graphics
 
 ATA init is the long pole in the boot process, and its asynchronous.
 move the graphics init after it so that ata and graphics initialize
@@ -373,12 +373,12 @@ index 6fba7daba..25bebfeac 100644
  obj-$(CONFIG_MTD)		+= mtd/
  obj-$(CONFIG_SPI)		+= spi/
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From 1d108e49b01f54b545e19be87738c29c241dc651 Mon Sep 17 00:00:00 2001
+From 0266ca0c160eb4395913f9d483886a3a98e9f1ff Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 6 Jan 2017 15:34:09 +0000
-Subject: [PATCH 11/24] ipv4/tcp: allow the memory tuning for tcp to go a
+Subject: [PATCH 11/26] ipv4/tcp: allow the memory tuning for tcp to go a
  little bigger than default
 
 ---
@@ -401,78 +401,37 @@ index de7cc8445..940fa1e11 100644
  	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
  	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From cd594e2642383aa3fe195b7a9d14dcd40418177b Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Tue, 13 Apr 2021 16:55:35 +0200
-Subject: [PATCH 13/24] clearlinux-5.12: port: Add boot option to allow
- unsigned modules
+From 111b8867c28df7fe694198d60932759bea588ef6 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Sat, 8 Dec 2018 18:21:32 +0000
+Subject: [PATCH 18/26] use lfence instead of rep and nop
 
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
- kernel/module.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ arch/x86/include/asm/vdso/processor.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/module.c b/kernel/module.c
-index 30479355a..4f659af23 100644
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -56,6 +56,7 @@
- #include <linux/bsearch.h>
- #include <linux/dynamic_debug.h>
- #include <linux/audit.h>
-+#include <linux/efi.h>
- #include <uapi/linux/module.h>
- #include "module-internal.h"
- 
-@@ -268,6 +269,10 @@ static void module_assert_mutex_or_preempt(void)
- 
- static bool sig_enforce = IS_ENABLED(CONFIG_MODULE_SIG_FORCE);
- module_param(sig_enforce, bool_enable_only, 0644);
-+/* Allow disabling module signature requirement by adding boot param */
-+static bool sig_unenforce = false;
-+module_param(sig_unenforce, bool_enable_only, 0644);
-+
- 
- /*
-  * Export sig_enforce kernel cmdline parameter to allow other subsystems rely
-@@ -411,6 +416,8 @@ extern const struct kernel_symbol __stop___ksymtab_gpl[];
- extern const s32 __start___kcrctab[];
- extern const s32 __start___kcrctab_gpl[];
- 
-+extern struct boot_params boot_params;
-+
- #ifndef CONFIG_MODVERSIONS
- #define symversion(base, idx) NULL
- #else
-@@ -4534,6 +4541,19 @@ static const struct proc_ops modules_proc_ops = {
- static int __init proc_modules_init(void)
+diff --git a/arch/x86/include/asm/vdso/processor.h b/arch/x86/include/asm/vdso/processor.h
+index 57b1a7034..e2c45674f 100644
+--- a/arch/x86/include/asm/vdso/processor.h
++++ b/arch/x86/include/asm/vdso/processor.h
+@@ -10,7 +10,7 @@
+ /* REP NOP (PAUSE) is a good thing to insert into busy-wait loops. */
+ static __always_inline void rep_nop(void)
  {
- 	proc_create("modules", 0, NULL, &modules_proc_ops);
-+
-+#ifdef CONFIG_MODULE_SIG_FORCE
-+	switch (boot_params.secure_boot) {
-+	case efi_secureboot_mode_unset:
-+	case efi_secureboot_mode_unknown:
-+	case efi_secureboot_mode_disabled:
-+		/*
-+		 * sig_unenforce is only applied if SecureBoot is not
-+		 * enabled.
-+		 */
-+		sig_enforce = !sig_unenforce;
-+	}
-+#endif
- 	return 0;
+-	asm volatile("rep; nop" ::: "memory");
++	asm volatile("lfence" ::: "memory");
  }
- module_init(proc_modules_init);
+ 
+ static __always_inline void cpu_relax(void)
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From 6378d2152e024d31ee603c96f13e0a107bdeb95e Mon Sep 17 00:00:00 2001
+From c303d3a170b8e1449c1f85e7619b0a17661eda20 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
-Subject: [PATCH 17/24] do accept() in LIFO order for cache efficiency
+Subject: [PATCH 19/26] do accept() in LIFO order for cache efficiency
 
 ---
  include/linux/wait.h            |  2 ++
@@ -481,7 +440,7 @@ Subject: [PATCH 17/24] do accept() in LIFO order for cache efficiency
  3 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/wait.h b/include/linux/wait.h
-index fe10e8570..e689260e1 100644
+index 6598ae35e..100dbbcd0 100644
 --- a/include/linux/wait.h
 +++ b/include/linux/wait.h
 @@ -165,6 +165,7 @@ static inline bool wq_has_sleeper(struct wait_queue_head *wq_head)
@@ -495,13 +454,13 @@ index fe10e8570..e689260e1 100644
 @@ -1137,6 +1138,7 @@ do {										\
   */
  void prepare_to_wait(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
- void prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
+ bool prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
 +void prepare_to_wait_exclusive_lifo(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
  long prepare_to_wait_event(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
  void finish_wait(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
  long wait_woken(struct wait_queue_entry *wq_entry, unsigned mode, long timeout);
 diff --git a/kernel/sched/wait.c b/kernel/sched/wait.c
-index 183cc6ae6..ed87f43de 100644
+index 76577d164..c33f48ed2 100644
 --- a/kernel/sched/wait.c
 +++ b/kernel/sched/wait.c
 @@ -48,6 +48,17 @@ void add_wait_queue_priority(struct wait_queue_head *wq_head, struct wait_queue_
@@ -522,7 +481,7 @@ index 183cc6ae6..ed87f43de 100644
  void remove_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry)
  {
  	unsigned long flags;
-@@ -278,6 +289,19 @@ prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_ent
+@@ -283,6 +294,19 @@ prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_ent
  }
  EXPORT_SYMBOL(prepare_to_wait_exclusive);
  
@@ -556,14 +515,14 @@ index fd472eae4..d85f68c9f 100644
  		release_sock(sk);
  		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
 -- 
-2.31.1.527.g2d677e5b15
+2.25.1
 
-From af15938f9f740ca46498e4b2d6d2a27d284f2717 Mon Sep 17 00:00:00 2001
+From 183920aa3af6287c04ca63b016a7bb786cf42611 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sun, 18 Feb 2018 23:35:41 +0000
-Subject: [PATCH 18/24] locking: rwsem: spin faster
+Subject: [PATCH 20/26] locking: rwsem: spin faster
 
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+tweak rwsem owner spinning a bit
 ---
  kernel/locking/rwsem.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
@@ -591,19 +550,19 @@ index abba5df50..b9fab2d55 100644
  	rcu_read_unlock();
  
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From 2dae654b4be8f33fb80c53d6dfafa01fe7a6fa03 Mon Sep 17 00:00:00 2001
+From b67235824e2afa328f27c607d9c078196df68020 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Nov 2019 23:12:11 +0000
-Subject: [PATCH 22/24] nvme workaround
+Subject: [PATCH 24/26] nvme workaround
 
 ---
  drivers/nvme/host/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 0896e2164..685f223ab 100644
+index 091b2e77d..9c189fddd 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
 @@ -48,7 +48,7 @@ static u8 nvme_max_retries = 5;
@@ -616,12 +575,12 @@ index 0896e2164..685f223ab 100644
  MODULE_PARM_DESC(default_ps_max_latency_us,
  		 "max power saving latency for new devices; use PM QOS to change per device");
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 
-From e1811ce470526f6ded537d6aaf814efdf197657e Mon Sep 17 00:00:00 2001
+From 6cabca2b16196a0e827e9270be523deed7d3f764 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 11 Jun 2020 22:30:56 +0200
-Subject: [PATCH 24/24] Port microcode patches
+Subject: [PATCH 26/26] Port microcode patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -791,5 +750,5 @@ index 1ef03ab31..92af2b9f1 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.31.1.527.g2d677e5b15
+2.32.0.93.g670b81a890
 

@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,10990 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.12.17-cybmod25 Kernel Configuration
++# Linux/x86 5.12.19-cybmod26 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -8094,6 +8094,7 @@ new file mode 100644
 +CONFIG_EDAC_SKX=m
 +CONFIG_EDAC_I10NM=m
 +CONFIG_EDAC_PND2=m
++CONFIG_EDAC_IGEN6=m
 +CONFIG_RTC_LIB=y
 +CONFIG_RTC_MC146818_LIB=y
 +CONFIG_RTC_CLASS=y
@@ -9642,7 +9643,6 @@ new file mode 100644
 +CONFIG_BOARD_TPCI200=m
 +CONFIG_SERIAL_IPOCTAL=m
 +CONFIG_RESET_CONTROLLER=y
-+CONFIG_RESET_BRCMSTB_RESCAL=y
 +CONFIG_RESET_TI_SYSCON=m
 +
 +#
