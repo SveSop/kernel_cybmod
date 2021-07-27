@@ -1,0 +1,292 @@
+From cdfa8742831622e984a16c993a74ca74f803b01b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Tue, 27 Jul 2021 14:46:40 +0200
+Subject: [PATCH] Tweaks
+
+---
+ drivers/cpufreq/Kconfig                |  2 --
+ drivers/cpufreq/cpufreq_conservative.c |  8 ++++----
+ drivers/cpufreq/cpufreq_ondemand.c     |  8 ++++----
+ drivers/tty/Kconfig                    | 13 -------------
+ fs/dcache.c                            |  2 +-
+ include/linux/mm.h                     |  3 +--
+ include/linux/pagemap.h                |  2 +-
+ include/uapi/linux/vt.h                | 15 +--------------
+ kernel/Kconfig.hz                      |  2 +-
+ kernel/Kconfig.preempt                 |  2 +-
+ kernel/rcu/Kconfig                     |  6 +++---
+ mm/page_alloc.c                        |  2 +-
+ mm/vmscan.c                            |  2 +-
+ net/ipv4/Kconfig                       |  4 ++++
+ 14 files changed, 23 insertions(+), 48 deletions(-)
+
+diff --git a/drivers/cpufreq/Kconfig b/drivers/cpufreq/Kconfig
+index c3038cdc6..ac0db6b81 100644
+--- a/drivers/cpufreq/Kconfig
++++ b/drivers/cpufreq/Kconfig
+@@ -72,7 +72,6 @@ config CPU_FREQ_DEFAULT_GOV_USERSPACE
+ 
+ config CPU_FREQ_DEFAULT_GOV_ONDEMAND
+ 	bool "ondemand"
+-	depends on !(X86_INTEL_PSTATE && SMP)
+ 	select CPU_FREQ_GOV_ONDEMAND
+ 	select CPU_FREQ_GOV_PERFORMANCE
+ 	help
+@@ -85,7 +84,6 @@ config CPU_FREQ_DEFAULT_GOV_ONDEMAND
+ 
+ config CPU_FREQ_DEFAULT_GOV_CONSERVATIVE
+ 	bool "conservative"
+-	depends on !(X86_INTEL_PSTATE && SMP)
+ 	select CPU_FREQ_GOV_CONSERVATIVE
+ 	select CPU_FREQ_GOV_PERFORMANCE
+ 	help
+diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
+index aa39ff31e..b3eae5ec1 100644
+--- a/drivers/cpufreq/cpufreq_conservative.c
++++ b/drivers/cpufreq/cpufreq_conservative.c
+@@ -28,8 +28,8 @@ struct cs_dbs_tuners {
+ };
+ 
+ /* Conservative governor macros */
+-#define DEF_FREQUENCY_UP_THRESHOLD		(80)
+-#define DEF_FREQUENCY_DOWN_THRESHOLD		(20)
++#define DEF_FREQUENCY_UP_THRESHOLD		(63)
++#define DEF_FREQUENCY_DOWN_THRESHOLD		(26)
+ #define DEF_FREQUENCY_STEP			(5)
+ #define DEF_SAMPLING_DOWN_FACTOR		(1)
+ #define MAX_SAMPLING_DOWN_FACTOR		(10)
+@@ -47,9 +47,9 @@ static inline unsigned int get_freq_step(struct cs_dbs_tuners *cs_tuners,
+ }
+ 
+ /*
+- * Every sampling_rate, we check, if current idle time is less than 20%
++ * Every sampling_rate, we check, if current idle time is less than 37%
+  * (default), then we try to increase frequency. Every sampling_rate *
+- * sampling_down_factor, we check, if current idle time is more than 80%
++ * sampling_down_factor, we check, if current idle time is more than 74%
+  * (default), then we try to decrease frequency
+  *
+  * Frequency updates happen at minimum steps of 5% (default) of maximum
+diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
+index ac361a8b1..a815acc4e 100644
+--- a/drivers/cpufreq/cpufreq_ondemand.c
++++ b/drivers/cpufreq/cpufreq_ondemand.c
+@@ -18,10 +18,10 @@
+ #include "cpufreq_ondemand.h"
+ 
+ /* On-demand governor macros */
+-#define DEF_FREQUENCY_UP_THRESHOLD		(80)
+-#define DEF_SAMPLING_DOWN_FACTOR		(1)
++#define DEF_FREQUENCY_UP_THRESHOLD		(55)
++#define DEF_SAMPLING_DOWN_FACTOR		(5)
+ #define MAX_SAMPLING_DOWN_FACTOR		(100000)
+-#define MICRO_FREQUENCY_UP_THRESHOLD		(95)
++#define MICRO_FREQUENCY_UP_THRESHOLD		(63)
+ #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(10000)
+ #define MIN_FREQUENCY_UP_THRESHOLD		(1)
+ #define MAX_FREQUENCY_UP_THRESHOLD		(100)
+@@ -127,7 +127,7 @@ static void dbs_freq_increase(struct cpufreq_policy *policy, unsigned int freq)
+ }
+ 
+ /*
+- * Every sampling_rate, we check, if current idle time is less than 20%
++ * Every sampling_rate, we check, if current idle time is less than 45%
+  * (default), then we try to increase frequency. Else, we adjust the frequency
+  * proportional to load.
+  */
+diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
+index 6d8d69ba2..f6a7fd6d3 100644
+--- a/drivers/tty/Kconfig
++++ b/drivers/tty/Kconfig
+@@ -76,19 +76,6 @@ config VT_CONSOLE_SLEEP
+ 	def_bool y
+ 	depends on VT_CONSOLE && PM_SLEEP
+ 
+-config NR_TTY_DEVICES
+-        int "Maximum tty device number"
+-        depends on VT
+-        range 12 63
+-        default 63
+-        help
+-          This option is used to change the number of tty devices in /dev.
+-          The default value is 63. The lowest number you can set is 12,
+-          63 is also the upper limit so we don't overrun the serial
+-          consoles.
+-
+-          If unsure, say 63.
+-
+ config HW_CONSOLE
+ 	bool
+ 	depends on VT && !UML
+diff --git a/fs/dcache.c b/fs/dcache.c
+index cf871a81f..38ec53b50 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -71,7 +71,7 @@
+  * If no ancestor relationship:
+  * arbitrary, since it's serialized on rename_lock
+  */
+-int sysctl_vfs_cache_pressure __read_mostly = 100;
++int sysctl_vfs_cache_pressure __read_mostly = 50;
+ EXPORT_SYMBOL_GPL(sysctl_vfs_cache_pressure);
+ 
+ __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 122ffc83f..cf5cda3c3 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -208,8 +208,7 @@ static inline void __mm_zero_struct_page(struct page *page)
+  * not a hard limit any more. Although some userspace tools can be surprised by
+  * that.
+  */
+-#define MAPCOUNT_ELF_CORE_MARGIN	(5)
+-#define DEFAULT_MAX_MAP_COUNT	(USHRT_MAX - MAPCOUNT_ELF_CORE_MARGIN)
++#define DEFAULT_MAX_MAP_COUNT	(524288)
+ 
+ extern int sysctl_max_map_count;
+ 
+diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
+index 0f1b34dbf..9be6002e3 100644
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -848,7 +848,7 @@ struct readahead_control {
+ 		._index = i,						\
+ 	}
+ 
+-#define VM_READAHEAD_PAGES	(SZ_128K / PAGE_SIZE)
++#define VM_READAHEAD_PAGES	(SZ_2M / PAGE_SIZE)
+ 
+ void page_cache_ra_unbounded(struct readahead_control *,
+ 		unsigned long nr_to_read, unsigned long lookahead_count);
+diff --git a/include/uapi/linux/vt.h b/include/uapi/linux/vt.h
+index 3bceead8d..9a9a1adfd 100644
+--- a/include/uapi/linux/vt.h
++++ b/include/uapi/linux/vt.h
+@@ -3,25 +3,12 @@
+ #define _UAPI_LINUX_VT_H
+ 
+ 
+-/*
+- * We will make this definition solely for the purpose of making packages
+- * such as splashutils build, because they can not understand that
+- * NR_TTY_DEVICES is defined in the kernel configuration.
+- */
+-#ifndef CONFIG_NR_TTY_DEVICES
+-#define CONFIG_NR_TTY_DEVICES 63
+-#endif
+-
+ /*
+  * These constants are also useful for user-level apps (e.g., VC
+  * resizing).
+  */
+ #define MIN_NR_CONSOLES 1       /* must be at least 1 */
+-/*
+- * NR_TTY_DEVICES:
+- * Value MUST be at least 12 and must never be higher then 63
+- */
+-#define MAX_NR_CONSOLES CONFIG_NR_TTY_DEVICES	/* serial lines start above this */
++#define MAX_NR_CONSOLES	63
+ 		/* Note: the ioctl VT_GETSTATE does not work for
+ 		   consoles 16 and higher (since it returns a short) */
+ 
+diff --git a/kernel/Kconfig.hz b/kernel/Kconfig.hz
+index 865f8dbdd..20b92b0a3 100644
+--- a/kernel/Kconfig.hz
++++ b/kernel/Kconfig.hz
+@@ -5,7 +5,7 @@
+ 
+ choice
+ 	prompt "Timer frequency"
+-	default HZ_250
++	default HZ_1000
+ 	help
+ 	 Allows the configuration of the timer frequency. It is customary
+ 	 to have the timer interrupt run at 1000 Hz but 100 Hz may be more
+diff --git a/kernel/Kconfig.preempt b/kernel/Kconfig.preempt
+index 416017301..293725c44 100644
+--- a/kernel/Kconfig.preempt
++++ b/kernel/Kconfig.preempt
+@@ -2,7 +2,7 @@
+ 
+ choice
+ 	prompt "Preemption Model"
+-	default PREEMPT_NONE
++	default PREEMPT
+ 
+ config PREEMPT_NONE
+ 	bool "No Forced Preemption (Server)"
+diff --git a/kernel/rcu/Kconfig b/kernel/rcu/Kconfig
+index 3128b7cf8..abfae9afb 100644
+--- a/kernel/rcu/Kconfig
++++ b/kernel/rcu/Kconfig
+@@ -189,8 +189,8 @@ config RCU_FAST_NO_HZ
+ 
+ config RCU_BOOST
+ 	bool "Enable RCU priority boosting"
+-	depends on (RT_MUTEXES && PREEMPT_RCU && RCU_EXPERT) || PREEMPT_RT
+-	default y if PREEMPT_RT
++	depends on (RT_MUTEXES && PREEMPT_RCU) || PREEMPT_RT
++	default y
+ 	help
+ 	  This option boosts the priority of preempted RCU readers that
+ 	  block the current preemptible RCU grace period for too long.
+@@ -204,7 +204,7 @@ config RCU_BOOST_DELAY
+ 	int "Milliseconds to delay boosting after RCU grace-period start"
+ 	range 0 3000
+ 	depends on RCU_BOOST
+-	default 500
++	default 0
+ 	help
+ 	  This option specifies the time to wait after the beginning of
+ 	  a given grace period before priority-boosting preempted RCU
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 22fcadd27..81140491b 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -334,7 +334,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
+ int min_free_kbytes = 1024;
+ int user_min_free_kbytes = -1;
+ int watermark_boost_factor __read_mostly;
+-int watermark_scale_factor = 10;
++int watermark_scale_factor = 200;
+ 
+ static unsigned long nr_kernel_pages __initdata;
+ static unsigned long nr_all_pages __initdata;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 941a2e129..16d3c7730 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -198,7 +198,7 @@ extern unsigned long sysctl_unevictable_anon_kbytes_min;
+ /*
+  * From 0 .. 200.  Higher means more swappy.
+  */
+-int vm_swappiness = 60;
++int vm_swappiness = 20;
+ 
+ static void set_task_reclaim_state(struct task_struct *task,
+ 				   struct reclaim_state *rs)
+diff --git a/net/ipv4/Kconfig b/net/ipv4/Kconfig
+index a833a7a67..e1ee7668d 100644
+--- a/net/ipv4/Kconfig
++++ b/net/ipv4/Kconfig
+@@ -709,6 +709,9 @@ choice
+ 	config DEFAULT_VEGAS
+ 		bool "Vegas" if TCP_CONG_VEGAS=y
+ 
++	config DEFAULT_YEAH
++		bool "YeAH" if TCP_CONG_YEAH=y
++
+ 	config DEFAULT_VENO
+ 		bool "Veno" if TCP_CONG_VENO=y
+ 
+@@ -745,6 +748,7 @@ config DEFAULT_TCP_CONG
+ 	default "htcp" if DEFAULT_HTCP
+ 	default "hybla" if DEFAULT_HYBLA
+ 	default "vegas" if DEFAULT_VEGAS
++	default "yeah" if DEFAULT_YEAH
+ 	default "westwood" if DEFAULT_WESTWOOD
+ 	default "veno" if DEFAULT_VENO
+ 	default "reno" if DEFAULT_RENO
+-- 
+2.25.1
+

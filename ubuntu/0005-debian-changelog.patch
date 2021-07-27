@@ -1,27 +1,240 @@
-From 7327683d8b24b1a35e5f744d66ebd6562a4d4f21 Mon Sep 17 00:00:00 2001
+From 6354d4b025cd051faa0b4d9068d00acab9e17d45 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 3 Jun 2021 08:50:55 +0000
+Date: Sun, 25 Jul 2021 13:35:18 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11313 +-------------------------------------
- 1 file changed, 3 insertions(+), 11310 deletions(-)
+ debian.master/changelog | 11526 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11523 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index f096128f9a2a..fa2b8193951b 100644
+index e2a1be7cbca7..09fb3922d9a7 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11313 +1,6 @@
--linux-unstable (5.13.0-5.5) impish; urgency=medium
-+linux (5.12.9-051209.202106030850) impish; urgency=low
+@@ -1,11526 +1,6 @@
+-linux (5.13.0-13.13) impish; urgency=medium
++linux (5.13.5-051305.202107251335) impish; urgency=low
  
--  * impish/linux-unstable: 5.13.0-5.5 -proposed tracker (LP: #1930205)
-+  Mainline build at commit: v5.12.9
+-  * impish/linux: 5.13.0-13.13 -proposed tracker (LP: #1937577)
++  Mainline build at commit: v5.13.5
  
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@kathleen>  Thu, 03 Jun 2021 08:50:55 +0000
++ -- Mainline Build <kernel@kathleen>  Sun, 25 Jul 2021 13:35:18 +0000
  
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: shifts: update shiftfs for idmapped mounts
+-    - [Config] re-enable shiftfs
+-    - [Config] update toolchain in configs
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Fri, 23 Jul 2021 16:12:58 +0200
+-
+-linux (5.13.0-12.12) impish; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * Impish update: v5.13.1 upstream stable release (LP: #1935807)
+-    - Revert "KVM: x86/mmu: Drop kvm_mmu_extended_role.cr4_la57 hack"
+-    - Linux 5.13.1
+-
+-  * ubuntu_kernel_selftests ftrace fails on arm64 F / aws-5.8 / amd64 F
+-    azure-5.8 (LP: #1927749) // Impish update: v5.13.1 upstream stable release
+-    (LP: #1935807)
+-    - selftests/ftrace: fix event-no-pid on 1-core machine
+-
+-  * ubuntu-host driver lacks lseek ops (LP: #1934110) // Impish update: v5.13.1
+-    upstream stable release (LP: #1935807)
+-    - ubuntu-host: add generic lseek op
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] Enable CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT
+-    - [Packaging] rename linux-unstable to linux in getabis
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 12 Jul 2021 14:09:16 +0200
+-
+-linux (5.13.0-11.11) impish; urgency=medium
+-
+-  * impish/linux: 5.13.0-11.11 -proposed tracker (LP: #1933854)
+-
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update variants
+-
+-  * Support builtin revoked certificates (LP: #1932029)
+-    - [Packaging] build canonical-revoked-certs.pem from branch/arch certs
+-    - [Packaging] Revoke 2012 UEFI signing certificate as built-in
+-    - [Config] Configure CONFIG_SYSTEM_REVOCATION_KEYS with revoked keys
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Change source package name to linux
+-
+-  * Miscellaneous upstream changes
+-    - mm/page_alloc: Correct return value of populated elements if bulk array is
+-      populated
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 29 Jun 2021 07:50:25 +0200
+-
+-linux (5.13.0-10.10) impish; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 28 Jun 2021 08:40:05 +0200
+-
+-linux-unstable (5.13.0-10.10) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-10.10 -proposed tracker (LP: #1933795)
+-
+-  * Pixel format change broken for Elgato Cam Link 4K (LP: #1932367)
+-    - media: uvcvideo: Fix pixel format change for Elgato Cam Link 4K
+-
+-  * initramfs-tools & kernel: use zstd as the default compression method
+-    (LP: #1931725)
+-    - s390/decompressor: correct BOOT_HEAP_SIZE condition
+-    - s390/boot: add zstd support
+-    - [Packaging] use ZSTD to compress s390 kernels
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: selftests: tls: fix chacha+bidir tests
+-    - SAUCE: selftests: icmp_redirect: support expected failures
+-    - [Config] update configs and annotations after rebase to 5.13
+-
+-  * Miscellaneous upstream changes
+-    - tls: prevent oversized sendfile() hangs by ignoring MSG_MORE
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 28 Jun 2021 08:40:05 +0200
+-
+-linux-unstable (5.13.0-9.9) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-9.9 -proposed tracker (LP: #1933070)
+-
+-  * Add support for selective build of special drivers (LP: #1912789)
+-    - [Packaging] Add support for ODM drivers
+-    - [Packaging] Turn on ODM support for amd64
+-    - [Packaging] Fix ODM support in actual build
+-    - [Packaging] Fix ODM DRIVERS Kconfig
+-
+-  * Add support for IO functions of AAEON devices (LP: #1929504)
+-    - ODM: [Config] update config for AAEON devices
+-    - ODM: hwmon: add driver for AAEON devices
+-    - ODM: leds: add driver for AAEON devices
+-    - ODM: watchdog: add driver for AAEON devices
+-    - ODM: gpio: add driver for AAEON devices
+-    - ODM: mfd: Add support for IO functions of AAEON devices
+-
+-  * Disable hv-kvp-daemon.service on certain instance types (LP: #1932081)
+-    - [Packaging]: Add kernel command line condition to hv-kvp-daemon service
+-
+-  * Fix non-working GPU on Some HP desktops (LP: #1931147)
+-    - PCI: Coalesce host bridge contiguous apertures
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: selftests: seccomp: bump up timeout to 5min
+-    - SAUCE: Revert "net/tls(TLS_SW): Add selftest for 'chunked' sendfile test"
+-    - [Config] update annotations after rebase to 5.13-rc7
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 21 Jun 2021 10:55:36 +0200
+-
+-linux-unstable (5.13.0-8.8) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-8.8 -proposed tracker (LP: #1932018)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * initramfs-tools & kernel: use zstd as the default compression method
+-    (LP: #1931725)
+-    - [Config] use ZSTD to compress amd64 kernels
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] enable signing for ppc64el
+-    - SAUCE: powerpc: Fix initrd corruption with relative jump labels
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 15 Jun 2021 15:07:34 +0200
+-
+-linux-unstable (5.13.0-7.7) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-7.7 -proposed tracker (LP: #1931840)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-    - [Packaging] resync getabis
+-    - [Packaging] update helper scripts
+-    - update dkms package versions
+-
+-  * Intel ADL-S graphics feature enabling (LP: #1931240)
+-    - SAUCE: drm/i915/adl_s: ADL-S platform Update PCI ids for Mobile BGA
+-
+-  * Kernel package builds running out of space on builders (LP: #1930713)
+-    - [Config] CONFIG_DEBUG_INFO_COMPRESSED=n
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] remove nvidia dkms build support
+-    - [Config] remove now unsued do_dkms_nvidia* build variables
+-    - [Config] enable signing for s390x
+-    - [Config] update annotations after configs review
+-    - [Config] update toolchain versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13-rc6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 14 Jun 2021 11:53:08 +0200
+-
+-linux-unstable (5.13.0-6.6) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-6.6 -proposed tracker (LP: #1931071)
+-
+-  * Kernel package builds running out of space on builders (LP: #1930713)
+-    - [Debian] use stamps for flavour install targets
+-    - [Debian] run install-$(flavour) targets during build phase
+-    - [Debian] remove dh_testroot from install targets
+-    - [Debian] dkms-build -- use fakeroot if not running as root
+-    - [Debian] exclude $(DEBIAN)/__abi.current from linux-source
+-
+-  * [UBUNTU 21.04] tools/kvm_stat: Add restart delay (LP: #1921870)
+-    - [Debian] install kvm_stat systemd service
+-
+-  * Debugging symbols (dbgsym) packages are missing GDB kernel scripts
+-    (LP: #1928715)
+-    - [Packaging] Build and include GDB Python scripts into debug packages
+-
+-  * Can't detect intel wifi 6235 (LP: #1920180)
+-    - SAUCE: iwlwifi: add new pci id for 6235
+-
+-  * Select correct boot VGA when BIOS doesn't do it properly (LP: #1929217)
+-    - vgaarb: Use ACPI HID name to find integrated GPU
+-
+-  * Fix kernel panic on Intel Bluetooth (LP: #1928838)
+-    - Bluetooth: Shutdown controller after workqueues are flushed or cancelled
+-
+-  * build module CONFIG_SND_SOC_INTEL_SOUNDWIRE_SOF_MACH=m for 5.11,  5.13-rc2
+-    and later (LP: #1921632)
+-    - [Config] enable soundwire audio mach driver
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] CONFIG_SND_SOC_RT1308 can only be enabled on amd64
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.13-rc5
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 07 Jun 2021 10:45:13 +0200
+-
+-linux-unstable (5.13.0-5.5) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.13.0-5.5 -proposed tracker (LP: #1930205)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Config] set CONFIG_BPF_UNPRIV_DEFAULT_OFF=y
 -
