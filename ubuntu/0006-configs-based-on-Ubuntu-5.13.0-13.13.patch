@@ -1,19 +1,19 @@
-From 3c54540c885e6fabac66ead76d7e2b68921fd523 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 25 Jul 2021 13:35:57 +0000
+From 4bf807b9bf37100efb03740da59a6ed539ef8212 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 28 Jul 2021 13:42:28 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.13.0-13.13)
 
 ---
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
- debian.master/config/annotations              |  9 +++++--
+ debian.master/config/annotations              | 11 ++++++--
  .../config/arm64/config.common.arm64          |  1 -
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  1 -
- debian.master/config/config.common.ubuntu     | 27 ++++---------------
+ debian.master/config/config.common.ubuntu     | 25 +++----------------
  .../config/ppc64el/config.common.ppc64el      |  1 -
  .../config/s390x/config.common.s390x          |  2 +-
- 9 files changed, 14 insertions(+), 31 deletions(-)
+ 9 files changed, 15 insertions(+), 30 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.flavour.generic b/debian.master/config/amd64/config.flavour.generic
 index ed147346517c..2004bc9317f9 100644
@@ -40,7 +40,7 @@ index cd2da6dec1c2..437e8ea6c9a1 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 2c4136229a53..7d58abaef6a0 100644
+index 2c5f756c9d56..7d58abaef6a0 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
 @@ -1647,6 +1647,7 @@ CONFIG_EDAC_SBRIDGE                             policy<{'amd64': 'm'}>
@@ -60,7 +60,17 @@ index 2c4136229a53..7d58abaef6a0 100644
  CONFIG_MTD_SWAP                                 policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
  CONFIG_MTD_PARTITIONED_MASTER                   policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n'}>
  #
-@@ -10626,7 +10627,11 @@ CONFIG_PSTORE_FTRACE                            policy<{'amd64': 'n', 'arm64': '
+@@ -7793,7 +7794,9 @@ CONFIG_TI_K3_R5_REMOTEPROC                      policy<{'arm64': 'm'}>
+ CONFIG_RESET_CONTROLLER                         policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'n'}>
+ CONFIG_RESET_BERLIN                             policy<{'arm64': 'y', 'armhf': 'y'}>
+ CONFIG_RESET_BRCMSTB                            policy<{'arm64': 'm'}>
++CONFIG_RESET_BRCMSTB_RESCAL                     policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
+ CONFIG_RESET_IMX7                               policy<{'arm64': 'y', 'armhf-generic': 'y'}>
++CONFIG_RESET_INTEL_GW                           policy<{'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
+ CONFIG_RESET_MESON                              policy<{'arm64': 'y', 'armhf': 'y'}>
+ CONFIG_RESET_MESON_AUDIO_ARB                    policy<{'arm64': 'm', 'armhf': 'm'}>
+ CONFIG_RESET_NPCM                               policy<{'armhf': 'y'}>
+@@ -10624,7 +10627,11 @@ CONFIG_PSTORE_FTRACE                            policy<{'amd64': 'n', 'arm64': '
  CONFIG_PSTORE_RAM                               policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'y', 'ppc64el': 'm'}>
  
  # Menu: File systems >> Miscellaneous filesystems >> Persistent store support >> Log panic/oops to a block device
@@ -109,7 +119,7 @@ index 4a2d86a9dda4..4df597748feb 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 5dabbce93cae..7b8b2080daf6 100644
+index 2520368746de..7b8b2080daf6 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -158,15 +168,7 @@ index 5dabbce93cae..7b8b2080daf6 100644
  CONFIG_DELL_WMI=m
  CONFIG_DELL_WMI_AIO=m
  CONFIG_DELL_WMI_DESCRIPTOR=m
-@@ -3291,6 +3286,7 @@ CONFIG_EDAC_I7300=m
- CONFIG_EDAC_I7CORE=m
- CONFIG_EDAC_I82975X=m
- CONFIG_EDAC_IE31200=m
-+CONFIG_EDAC_IGEN6=m
- CONFIG_EDAC_LAYERSCAPE=m
- # CONFIG_EDAC_LEGACY_SYSFS is not set
- CONFIG_EDAC_PND2=m
-@@ -3867,7 +3863,6 @@ CONFIG_GPIO_104_IDIO_16=m
+@@ -3868,7 +3863,6 @@ CONFIG_GPIO_104_IDIO_16=m
  CONFIG_GPIO_104_IDI_48=m
  CONFIG_GPIO_74X164=m
  CONFIG_GPIO_74XX_MMIO=m
@@ -174,7 +176,7 @@ index 5dabbce93cae..7b8b2080daf6 100644
  CONFIG_GPIO_ACPI=y
  CONFIG_GPIO_ADNP=m
  CONFIG_GPIO_ADP5520=m
-@@ -4339,7 +4334,6 @@ CONFIG_HIGHMEM=y
+@@ -4340,7 +4334,6 @@ CONFIG_HIGHMEM=y
  CONFIG_HIGHPTE=y
  CONFIG_HIGH_RES_TIMERS=y
  CONFIG_HINIC=m
@@ -182,7 +184,7 @@ index 5dabbce93cae..7b8b2080daf6 100644
  CONFIG_HIP04_ETH=m
  # CONFIG_HIPPI is not set
  CONFIG_HISILICON_ERRATUM_161010101=y
-@@ -5527,9 +5521,8 @@ CONFIG_LDISC_AUTOLOAD=y
+@@ -5528,9 +5521,8 @@ CONFIG_LDISC_AUTOLOAD=y
  # CONFIG_LD_HEAD_STUB_CATCH is not set
  CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
@@ -193,7 +195,7 @@ index 5dabbce93cae..7b8b2080daf6 100644
  CONFIG_LEDS_AAT1290=m
  CONFIG_LEDS_ACER_A500=m
  CONFIG_LEDS_ADP5520=m
-@@ -5680,7 +5673,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -5681,7 +5673,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -201,7 +203,7 @@ index 5dabbce93cae..7b8b2080daf6 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -5973,7 +5965,6 @@ CONFIG_MESON_SM=y
+@@ -5974,7 +5965,6 @@ CONFIG_MESON_SM=y
  CONFIG_MESON_WATCHDOG=m
  CONFIG_MESSAGE_LOGLEVEL_DEFAULT=4
  CONFIG_MFD_88PM860X=y
@@ -209,14 +211,6 @@ index 5dabbce93cae..7b8b2080daf6 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
-@@ -8662,7 +8653,6 @@ CONFIG_RESET_BRCMSTB=m
- CONFIG_RESET_BRCMSTB_RESCAL=y
- CONFIG_RESET_HISI=y
- CONFIG_RESET_IMX7=y
--CONFIG_RESET_INTEL_GW=y
- CONFIG_RESET_MESON=y
- CONFIG_RESET_MESON_AUDIO_ARB=m
- CONFIG_RESET_NPCM=y
 @@ -9209,7 +9199,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
