@@ -1,7 +1,7 @@
-From b0ea005ee00cddefa36639d5f8f9660b3a51c245 Mon Sep 17 00:00:00 2001
+From c83531c64ddc3837f6f9b454a44477617651e685 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 19 Jun 2021 16:09:42 +0200
-Subject: [PATCH 1/9] block, bfq: let also stably merged queues enjoy weight
+Subject: [PATCH 01/10] block, bfq: let also stably merged queues enjoy weight
  raising
 
 Merged bfq_queues are kept out of weight-raising (low-latency)
@@ -23,7 +23,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index eccbe2aed..efbe5b91a 100644
+index eccbe2a..efbe5b9 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1729,10 +1729,23 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
@@ -52,14 +52,14 @@ index eccbe2aed..efbe5b91a 100644
  	/*
  	 * Using the last flag, update budget and check whether bfqq
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From 498cd35ab371e228c15decdab07c81e82d4dad12 Mon Sep 17 00:00:00 2001
+From bb4f8fb9fde2b0aa84b2beff312000cfe38beb2d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 19 Jun 2021 16:09:44 +0200
-Subject: [PATCH 2/9] block, bfq: consider also creation time in delayed stable
- merge
+Subject: [PATCH 02/10] block, bfq: consider also creation time in delayed
+ stable merge
 
 Since commit 430a67f9d616 ("block, bfq: merge bursts of newly-created
 queues"), BFQ may schedule a merge between a newly created sync
@@ -105,7 +105,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index efbe5b91a..6d2bf74c4 100644
+index efbe5b9..6d2bf74 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2717,7 +2717,9 @@ bfq_setup_cooperator(struct bfq_data *bfqd, struct bfq_queue *bfqq,
@@ -120,13 +120,13 @@ index efbe5b91a..6d2bf74c4 100644
  				bic->stable_merge_bfqq;
  			int proc_ref = min(bfqq_process_refs(bfqq),
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From 77739799f0527dc3e0c11d40fdaf51ef0d763677 Mon Sep 17 00:00:00 2001
+From 00963eaae6c1424066784e4cef5fba3a39debe50 Mon Sep 17 00:00:00 2001
 From: Pietro Pedroni <pedroni.pietro.96@gmail.com>
 Date: Sat, 19 Jun 2021 16:09:45 +0200
-Subject: [PATCH 3/9] block, bfq: boost throughput by extending queue-merging
+Subject: [PATCH 03/10] block, bfq: boost throughput by extending queue-merging
  times
 
 One of the methods with which bfq boosts throughput is by merging queues.
@@ -163,7 +163,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 6d2bf74c4..0b7034067 100644
+index 6d2bf74..0b70340 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -364,6 +364,16 @@ static int ref_wr_duration[2];
@@ -205,14 +205,14 @@ index 6d2bf74c4..0b7034067 100644
  		bfqq->entity.parent != last_bfqq_created->entity.parent ||
  		bfqq->ioprio != last_bfqq_created->ioprio ||
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From 7be87e8f64f498bb8c353233da0b04d73aa6e565 Mon Sep 17 00:00:00 2001
+From 277a000dfdfbec595de55fd424db875a83b60a0f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 19 Jun 2021 16:09:47 +0200
-Subject: [PATCH 4/9] block, bfq: check waker only for queues with no in-flight
- I/O
+Subject: [PATCH 04/10] block, bfq: check waker only for queues with no
+ in-flight I/O
 
 Consider two bfq_queues, say Q1 and Q2, with Q2 empty. If a request of
 Q1 gets completed shortly before a new request arrives for Q2, then
@@ -234,7 +234,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 0b7034067..fedb0a8fd 100644
+index 0b70340..fedb0a8 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -1985,14 +1985,18 @@ static void bfq_update_io_intensity(struct bfq_queue *bfqq, u64 now_ns)
@@ -273,13 +273,13 @@ index 0b7034067..fedb0a8fd 100644
  	    bfqd->last_completed_rq_bfqq == bfqq->waker_bfqq)
  		return;
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From e3e04c2846457a00130d83b296abce749a084b92 Mon Sep 17 00:00:00 2001
+From 8da900e2f9c37d4ad82be279b5ab09bb0c3db95a Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Thu, 3 Jun 2021 12:47:21 +0200
-Subject: [PATCH 5/9] block: Do not pull requests from the scheduler when we
+Subject: [PATCH 05/10] block: Do not pull requests from the scheduler when we
  cannot dispatch them
 
 Provided the device driver does not implement dispatch budget accounting
@@ -316,7 +316,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  3 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index 996a4b2f7..714e678f5 100644
+index 996a4b2..714e678 100644
 --- a/block/blk-mq-sched.c
 +++ b/block/blk-mq-sched.c
 @@ -168,9 +168,19 @@ static int __blk_mq_do_dispatch_sched(struct blk_mq_hw_ctx *hctx)
@@ -341,7 +341,7 @@ index 996a4b2f7..714e678f5 100644
  	if (!count) {
  		if (run_queue)
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index c732aa581..ea34b28de 100644
+index c732aa5..ea34b28 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
 @@ -1104,7 +1104,7 @@ static bool __blk_mq_get_driver_tag(struct request *rq)
@@ -354,7 +354,7 @@ index c732aa581..ea34b28de 100644
  	struct blk_mq_hw_ctx *hctx = rq->mq_hctx;
  
 diff --git a/block/blk-mq.h b/block/blk-mq.h
-index 556368d2c..4b1ca7b7b 100644
+index 556368d..4b1ca7b 100644
 --- a/block/blk-mq.h
 +++ b/block/blk-mq.h
 @@ -260,6 +260,8 @@ static inline void blk_mq_put_driver_tag(struct request *rq)
@@ -367,13 +367,13 @@ index 556368d2c..4b1ca7b7b 100644
  {
  	int cpu;
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From 1c4e268e56c33ca637b481a78dc88c6ad912ba15 Mon Sep 17 00:00:00 2001
+From 29557479e5d686f285d19df249c443bbb0b6a436 Mon Sep 17 00:00:00 2001
 From: Damien Le Moal <damien.lemoal@wdc.com>
 Date: Fri, 18 Jun 2021 10:59:22 +0900
-Subject: [PATCH 6/9] block: Remove unnecessary elevator operation checks
+Subject: [PATCH 06/10] block: Remove unnecessary elevator operation checks
 
 The insert_requests and dispatch_request elevator operations are
 mandatory for the correct execution of an elevator, and all implemented
@@ -400,7 +400,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  2 files changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index 714e678f5..83a2b3cdd 100644
+index 714e678..83a2b3c 100644
 --- a/block/blk-mq-sched.c
 +++ b/block/blk-mq-sched.c
 @@ -294,8 +294,7 @@ static int blk_mq_do_dispatch_ctx(struct blk_mq_hw_ctx *hctx)
@@ -450,7 +450,7 @@ index 714e678f5..83a2b3cdd 100644
  		 * try to issue requests directly if the hw queue isn't
  		 * busy in case of 'none' scheduler, and this way may save
 diff --git a/block/elevator.c b/block/elevator.c
-index 440699c28..d107f3225 100644
+index 440699c..d107f32 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -522,6 +522,10 @@ void elv_unregister_queue(struct request_queue *q)
@@ -465,13 +465,13 @@ index 440699c28..d107f3225 100644
  	if (e->icq_size) {
  		if (WARN_ON(e->icq_size < sizeof(struct io_cq)) ||
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From 036a94677ebf032c6139d1c779092992852003f0 Mon Sep 17 00:00:00 2001
+From ed71d29087ba06475321bce01b5a6f5b64534782 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Wed, 23 Jun 2021 11:36:33 +0200
-Subject: [PATCH 7/9] bfq: Remove merged request already in
+Subject: [PATCH 07/10] bfq: Remove merged request already in
  bfq_requests_merged()
 
 Currently, bfq does very little in bfq_requests_merged() and handles all
@@ -494,7 +494,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 13 insertions(+), 28 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index fedb0a8fd..9433d38e4 100644
+index fedb0a8..9433d38 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2433,7 +2433,7 @@ static void bfq_requests_merged(struct request_queue *q, struct request *rq,
@@ -573,13 +573,13 @@ index fedb0a8fd..9433d38e4 100644
  	/*
  	 * Reset private fields. In case of a requeue, this allows
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From 48bc548f6d24e6f14cbc4bc4600be70acdfb6955 Mon Sep 17 00:00:00 2001
+From d7f0a0c8cb95f2d94caa9849dfcaf9ac59d114cb Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Wed, 23 Jun 2021 11:36:34 +0200
-Subject: [PATCH 8/9] blk: Fix lock inversion between ioc lock and bfqd lock
+Subject: [PATCH 08/10] blk: Fix lock inversion between ioc lock and bfqd lock
 
 Lockdep complains about lock inversion between ioc->lock and bfqd->lock:
 
@@ -630,7 +630,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  9 files changed, 43 insertions(+), 22 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 9433d38e4..727955918 100644
+index 9433d38..7279559 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -2345,9 +2345,9 @@ static bool bfq_bio_merge(struct request_queue *q, struct bio *bio,
@@ -663,7 +663,7 @@ index 9433d38e4..727955918 100644
  	}
  
 diff --git a/block/blk-merge.c b/block/blk-merge.c
-index bcdff1879..a11b3b537 100644
+index bcdff18..a11b3b5 100644
 --- a/block/blk-merge.c
 +++ b/block/blk-merge.c
 @@ -850,18 +850,15 @@ static struct request *attempt_front_merge(struct request_queue *q,
@@ -694,7 +694,7 @@ index bcdff1879..a11b3b537 100644
  
  bool blk_rq_merge_ok(struct request *rq, struct bio *bio)
 diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
-index 83a2b3cdd..ad35ce814 100644
+index 83a2b3c..ad35ce8 100644
 --- a/block/blk-mq-sched.c
 +++ b/block/blk-mq-sched.c
 @@ -399,9 +399,10 @@ bool __blk_mq_sched_bio_merge(struct request_queue *q, struct bio *bio,
@@ -711,7 +711,7 @@ index 83a2b3cdd..ad35ce814 100644
  EXPORT_SYMBOL_GPL(blk_mq_sched_try_insert_merge);
  
 diff --git a/block/blk-mq-sched.h b/block/blk-mq-sched.h
-index 5b18ab915..8b70de4b8 100644
+index 5b18ab9..8b70de4 100644
 --- a/block/blk-mq-sched.h
 +++ b/block/blk-mq-sched.h
 @@ -11,7 +11,8 @@ bool blk_mq_sched_try_merge(struct request_queue *q, struct bio *bio,
@@ -725,7 +725,7 @@ index 5b18ab915..8b70de4b8 100644
  void blk_mq_sched_restart(struct blk_mq_hw_ctx *hctx);
  
 diff --git a/block/blk-mq.h b/block/blk-mq.h
-index 4b1ca7b7b..d08779f77 100644
+index 4b1ca7b..d08779f 100644
 --- a/block/blk-mq.h
 +++ b/block/blk-mq.h
 @@ -302,6 +302,17 @@ static inline struct blk_plug *blk_mq_plug(struct request_queue *q,
@@ -747,7 +747,7 @@ index 4b1ca7b7b..d08779f77 100644
   * For shared tag users, we track the number of currently active users
   * and attempt to provide a fair share of the tag depth for each of them.
 diff --git a/block/blk.h b/block/blk.h
-index 8b3591aee..99ef4f7e7 100644
+index 8b3591a..99ef4f7 100644
 --- a/block/blk.h
 +++ b/block/blk.h
 @@ -225,7 +225,7 @@ ssize_t part_timeout_store(struct device *, struct device_attribute *,
@@ -760,7 +760,7 @@ index 8b3591aee..99ef4f7e7 100644
  unsigned int blk_recalc_rq_segments(struct request *rq);
  void blk_rq_set_mixed_merge(struct request *rq);
 diff --git a/block/elevator.c b/block/elevator.c
-index d107f3225..b020eb98f 100644
+index d107f32..b020eb9 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -350,9 +350,11 @@ enum elv_merge elv_merge(struct request_queue *q, struct request **req,
@@ -798,7 +798,7 @@ index d107f3225..b020eb98f 100644
  		ret = true;
  		rq = __rq;
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 8eea2cbf2..713626281 100644
+index 8eea2cb..7136262 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
 @@ -487,6 +487,7 @@ static void dd_insert_request(struct blk_mq_hw_ctx *hctx, struct request *rq,
@@ -822,7 +822,7 @@ index 8eea2cbf2..713626281 100644
  	trace_block_rq_insert(rq);
  
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index dcb2f9022..1a5965174 100644
+index dcb2f90..1a59651 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -117,7 +117,8 @@ extern void elv_merge_requests(struct request_queue *, struct request *,
@@ -836,13 +836,13 @@ index dcb2f9022..1a5965174 100644
  extern struct request *elv_latter_request(struct request_queue *, struct request *);
  
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
 
 
-From 9da32a9398a6e3298c7c83ed2edcf1ee807c6207 Mon Sep 17 00:00:00 2001
+From 5edf0290e51e511b60699d843a44dda86acf013e Mon Sep 17 00:00:00 2001
 From: Shaokun Zhang <zhangshaokun () hisilicon ! com>
 Date: Sat, 29 May 2021 07:34:49 +0000
-Subject: [PATCH 9/9] block, bfq: remove the repeated declaration
+Subject: [PATCH 09/10] block, bfq: remove the repeated declaration
 
 Function 'bfq_entity_to_bfqq' is declared twice, so remove the
 repeated declaration.
@@ -855,7 +855,7 @@ Signed-off-by: Shaokun Zhang <zhangshaokun@hisilicon.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
-index 99c2a3cb0..ab72fb1df 100644
+index 99c2a3c..ab72fb1 100644
 --- a/block/bfq-iosched.h
 +++ b/block/bfq-iosched.h
 @@ -955,8 +955,6 @@ struct bfq_group {
@@ -868,5 +868,128 @@ index 99c2a3cb0..ab72fb1df 100644
  
  #define BFQ_SERVICE_TREE_INIT	((struct bfq_service_tree)		\
 -- 
-2.32.0.93.g670b81a890
+2.32.0.452.g940fe202ad
+
+
+From e42a25864c982d270b7a6991799b7e2a71688e29 Mon Sep 17 00:00:00 2001
+From: Ming Lei <ming.lei () redhat ! com>
+Date: Thu, 29 Jul 2021 03:42:26 +0000
+Subject: [PATCH 10/10] block: return ELEVATOR_DISCARD_MERGE if possible
+
+When merging one bio to request, if they are discard IO and the queue
+supports multi-range discard, we need to return ELEVATOR_DISCARD_MERGE
+because both block core and related drivers(nvme, virtio-blk) doesn't
+handle mixed discard io merge(traditional IO merge together with
+discard merge) well.
+
+Fix the issue by returning ELEVATOR_DISCARD_MERGE in this situation,
+so both blk-mq and drivers just need to handle multi-range discard.
+
+Reported-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+---
+ block/bfq-iosched.c    |  3 +++
+ block/blk-merge.c      | 16 ----------------
+ block/elevator.c       |  3 +++
+ block/mq-deadline.c    |  2 ++
+ include/linux/blkdev.h | 16 ++++++++++++++++
+ 5 files changed, 24 insertions(+), 16 deletions(-)
+
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 7279559..673a634 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -2361,6 +2361,9 @@ static int bfq_request_merge(struct request_queue *q, struct request **req,
+ 	__rq = bfq_find_rq_fmerge(bfqd, bio, q);
+ 	if (__rq && elv_bio_merge_ok(__rq, bio)) {
+ 		*req = __rq;
++
++		if (blk_discard_mergable(__rq))
++			return ELEVATOR_DISCARD_MERGE;
+ 		return ELEVATOR_FRONT_MERGE;
+ 	}
+ 
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index a11b3b5..f8707ff 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -705,22 +705,6 @@ static void blk_account_io_merge_request(struct request *req)
+ 	}
+ }
+ 
+-/*
+- * Two cases of handling DISCARD merge:
+- * If max_discard_segments > 1, the driver takes every bio
+- * as a range and send them to controller together. The ranges
+- * needn't to be contiguous.
+- * Otherwise, the bios/requests will be handled as same as
+- * others which should be contiguous.
+- */
+-static inline bool blk_discard_mergable(struct request *req)
+-{
+-	if (req_op(req) == REQ_OP_DISCARD &&
+-	    queue_max_discard_segments(req->q) > 1)
+-		return true;
+-	return false;
+-}
+-
+ static enum elv_merge blk_try_req_merge(struct request *req,
+ 					struct request *next)
+ {
+diff --git a/block/elevator.c b/block/elevator.c
+index b020eb9..6d0b15e 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -336,6 +336,9 @@ enum elv_merge elv_merge(struct request_queue *q, struct request **req,
+ 	__rq = elv_rqhash_find(q, bio->bi_iter.bi_sector);
+ 	if (__rq && elv_bio_merge_ok(__rq, bio)) {
+ 		*req = __rq;
++
++		if (blk_discard_mergable(__rq))
++			return ELEVATOR_DISCARD_MERGE;
+ 		return ELEVATOR_BACK_MERGE;
+ 	}
+ 
+diff --git a/block/mq-deadline.c b/block/mq-deadline.c
+index 7136262..7c60ac2 100644
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -454,6 +454,8 @@ static int dd_request_merge(struct request_queue *q, struct request **rq,
+ 
+ 		if (elv_bio_merge_ok(__rq, bio)) {
+ 			*rq = __rq;
++			if (blk_discard_mergable(__rq))
++				return ELEVATOR_DISCARD_MERGE;
+ 			return ELEVATOR_FRONT_MERGE;
+ 		}
+ 	}
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index f69c75b..9bfb2f6 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1531,6 +1531,22 @@ static inline int queue_limit_discard_alignment(struct queue_limits *lim, sector
+ 	return offset << SECTOR_SHIFT;
+ }
+ 
++/*
++ * Two cases of handling DISCARD merge:
++ * If max_discard_segments > 1, the driver takes every bio
++ * as a range and send them to controller together. The ranges
++ * needn't to be contiguous.
++ * Otherwise, the bios/requests will be handled as same as
++ * others which should be contiguous.
++ */
++static inline bool blk_discard_mergable(struct request *req)
++{
++	if (req_op(req) == REQ_OP_DISCARD &&
++	    queue_max_discard_segments(req->q) > 1)
++		return true;
++	return false;
++}
++
+ static inline int bdev_discard_alignment(struct block_device *bdev)
+ {
+ 	struct request_queue *q = bdev_get_queue(bdev);
+-- 
+2.32.0.452.g940fe202ad
 

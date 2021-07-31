@@ -1,6 +1,6 @@
-From 4bf807b9bf37100efb03740da59a6ed539ef8212 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 28 Jul 2021 13:42:28 +0000
+From 196935d0712b08fa38b46750faf3ebfa83853adb Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 31 Jul 2021 07:33:12 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.13.0-13.13)
 
 ---
