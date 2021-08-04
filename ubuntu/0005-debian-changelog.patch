@@ -1,27 +1,50 @@
-From 9352616952ca6334eed6e5e24ad80cc478f5ad16 Mon Sep 17 00:00:00 2001
+From 83abc3f77119d555b0acb85d288c13a3c12bd978 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 31 Jul 2021 07:32:33 +0000
+Date: Wed, 4 Aug 2021 12:23:22 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11526 +-------------------------------------
- 1 file changed, 3 insertions(+), 11523 deletions(-)
+ debian.master/changelog | 11549 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11546 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index e2a1be7cbca7..24d75f97a789 100644
+index 1f9f84f6cddf..f2eb87dbc8e2 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11526 +1,6 @@
+@@ -1,11549 +1,6 @@
+-linux (5.13.0-14.14) impish; urgency=medium
++linux (5.13.8-051308.202108041223) impish; urgency=low
+ 
+-  * impish/linux: 5.13.0-14.14 -proposed tracker (LP: #1938565)
++  Mainline build at commit: v5.13.8
+ 
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: Revert "UBUNTU: SAUCE: random: Make getrandom() ready earlier"
+-    - SAUCE: random: properly make getrandom() ready earlier
++ -- Mainline Build <kernel@kathleen>  Wed, 04 Aug 2021 12:23:22 +0000
+ 
+-  * Miscellaneous upstream changes
+-    - seq_buf: Fix overflow in seq_buf_putmem_hex()
+-    - bpf: Fix integer overflow in argument calculation for bpf_map_area_alloc
+-    - ext4: cleanup in-core orphan list if ext4_truncate() failed to get a
+-      transaction handle
+-    - ext4: fix kernel infoleak via ext4_extent_header
+-    - ext4: fix overflow in ext4_iomap_alloc()
+-    - ext4: return error code when ext4_fill_flex_info() fails
+-    - ext4: correct the cache_nr in tracepoint ext4_es_shrink_exit
+-    - ext4: remove check for zero nr_to_scan in ext4_es_scan()
+-    - ext4: fix avefreec in find_group_orlov
+-    - ext4: use ext4_grp_locked_error in mb_find_extent
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 02 Aug 2021 14:23:08 +0200
+-
 -linux (5.13.0-13.13) impish; urgency=medium
-+linux (5.13.7-051307.202107310732) impish; urgency=low
- 
+-
 -  * impish/linux: 5.13.0-13.13 -proposed tracker (LP: #1937577)
-+  Mainline build at commit: v5.13.7
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - update dkms package versions
-+ -- Mainline Build <kernel@kathleen>  Sat, 31 Jul 2021 07:32:33 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - SAUCE: shifts: update shiftfs for idmapped mounts
 -    - [Config] re-enable shiftfs

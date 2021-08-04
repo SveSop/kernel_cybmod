@@ -1,19 +1,19 @@
-From 196935d0712b08fa38b46750faf3ebfa83853adb Mon Sep 17 00:00:00 2001
+From b22e040f69a310979bd2d645964a13512797be12 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 31 Jul 2021 07:33:12 +0000
-Subject: [PATCH 6/6] configs (based on Ubuntu-5.13.0-13.13)
+Date: Wed, 4 Aug 2021 12:24:01 +0000
+Subject: [PATCH 6/6] configs (based on Ubuntu-5.13.0-14.14)
 
 ---
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
- debian.master/config/annotations              | 11 ++++++--
+ debian.master/config/annotations              | 15 ++++++++---
  .../config/arm64/config.common.arm64          |  1 -
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  1 -
- debian.master/config/config.common.ubuntu     | 25 +++----------------
+ debian.master/config/config.common.ubuntu     | 27 ++++---------------
  .../config/ppc64el/config.common.ppc64el      |  1 -
  .../config/s390x/config.common.s390x          |  2 +-
- 9 files changed, 15 insertions(+), 30 deletions(-)
+ 9 files changed, 18 insertions(+), 33 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.flavour.generic b/debian.master/config/amd64/config.flavour.generic
 index ed147346517c..2004bc9317f9 100644
@@ -40,7 +40,7 @@ index cd2da6dec1c2..437e8ea6c9a1 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 2c5f756c9d56..7d58abaef6a0 100644
+index 141ca101f959..7d58abaef6a0 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
 @@ -1647,6 +1647,7 @@ CONFIG_EDAC_SBRIDGE                             policy<{'amd64': 'm'}>
@@ -70,6 +70,23 @@ index 2c5f756c9d56..7d58abaef6a0 100644
  CONFIG_RESET_MESON                              policy<{'arm64': 'y', 'armhf': 'y'}>
  CONFIG_RESET_MESON_AUDIO_ARB                    policy<{'arm64': 'm', 'armhf': 'm'}>
  CONFIG_RESET_NPCM                               policy<{'armhf': 'y'}>
+@@ -8731,14 +8734,14 @@ CONFIG_SND_SOC_INTEL_CNL                        policy<{'amd64': 'n'}>
+ CONFIG_SND_SOC_INTEL_CFL                        policy<{'amd64': 'n'}>
+ CONFIG_SND_SOC_INTEL_CML_H                      policy<{'amd64': 'n'}>
+ CONFIG_SND_SOC_INTEL_CML_LP                     policy<{'amd64': 'n'}>
+-CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC      policy<{'amd64': 'y'}>
++CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC      policy<{'amd64': 'n'}>
+ #
+ CONFIG_SND_SOC_INTEL_SKYLAKE                    mark<ENFORCED> note<deprecated>
+ CONFIG_SND_SOC_INTEL_CNL                        mark<ENFORCED> note<deprecated>
+ CONFIG_SND_SOC_INTEL_CFL                        mark<ENFORCED> note<deprecated>
+ CONFIG_SND_SOC_INTEL_CML_H                      mark<ENFORCED> note<deprecated>
+ CONFIG_SND_SOC_INTEL_CML_LP                     mark<ENFORCED> note<deprecated>
+-CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC		mark<ENFORCED> note<LP:1915117>
++CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC      mark<ENFORCED> note<deprecated>
+ 
+ # Menu: Device Drivers >> Sound card support >> Advanced Linux Sound Architecture >> ALSA for SoC audio support >> Intel ASoC SST drivers >> Intel Machine drivers
+ CONFIG_SND_SOC_INTEL_MACH                       policy<{'amd64': 'y'}>
 @@ -10624,7 +10627,11 @@ CONFIG_PSTORE_FTRACE                            policy<{'amd64': 'n', 'arm64': '
  CONFIG_PSTORE_RAM                               policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'y', 'ppc64el': 'm'}>
  
@@ -119,7 +136,7 @@ index 4a2d86a9dda4..4df597748feb 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 2520368746de..7b8b2080daf6 100644
+index 0fd9c195b1ad..7b8b2080daf6 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -236,6 +253,15 @@ index 2520368746de..7b8b2080daf6 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
+@@ -10016,7 +10002,7 @@ CONFIG_SND_SOC_INTEL_SKL_RT286_MACH=m
+ # CONFIG_SND_SOC_INTEL_SKYLAKE is not set
+ CONFIG_SND_SOC_INTEL_SKYLAKE_COMMON=m
+ CONFIG_SND_SOC_INTEL_SKYLAKE_FAMILY=m
+-CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC=y
++# CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC is not set
+ CONFIG_SND_SOC_INTEL_SKYLAKE_SSP_CLK=m
+ CONFIG_SND_SOC_INTEL_SOF_CML_RT1011_RT5682_MACH=m
+ CONFIG_SND_SOC_INTEL_SOF_DA7219_MAX98373_MACH=m
 @@ -11218,8 +11204,6 @@ CONFIG_UBIFS_FS_XATTR=y
  CONFIG_UBIFS_FS_ZLIB=y
  CONFIG_UBIFS_FS_ZSTD=y
