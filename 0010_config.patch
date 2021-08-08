@@ -2,7 +2,7 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11097 @@
+@@ -0,0 +1,11095 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
 +# Linux/x86 5.13.9-cybmod5 Kernel Configuration
@@ -195,8 +195,6 @@ new file mode 100644
 +# end of Scheduler features
 +
 +CONFIG_CACULE_SCHED=y
-+CONFIG_CACULE_RDB=y
-+CONFIG_RDB_INTERVAL=19
 +CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
 +CONFIG_ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH=y
 +CONFIG_CC_HAS_INT128=y
