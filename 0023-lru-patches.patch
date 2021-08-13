@@ -1,7 +1,7 @@
-From 5ddbad434db7ab0aa9ad8b9a94507d49929ef872 Mon Sep 17 00:00:00 2001
+From 8ca34e1b95e7e2c97f6ff42664a02e5d1aa9c059 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:42 -0600
-Subject: [PATCH 01/22] include/linux/memcontrol.h: do not warn in
+Subject: [PATCH 01/23] include/linux/memcontrol.h: do not warn in
  page_memcg_rcu() if !CONFIG_MEMCG
 
 page_memcg_rcu() warns on !rcu_read_lock_held() regardless of
@@ -51,10 +51,10 @@ index c193be7..6bcac3d 100644
 2.32.0.452.g940fe202ad
 
 
-From d85b18072358f0b4a79cad322b3ea8ab94814ad7 Mon Sep 17 00:00:00 2001
+From 92430ad3f908c332a8f1e03848cde473653c8a31 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:43 -0600
-Subject: [PATCH 02/22] include/linux/nodemask.h: define next_memory_node() if
+Subject: [PATCH 02/23] include/linux/nodemask.h: define next_memory_node() if
  !CONFIG_NUMA
 
 Currently next_memory_node only exists when CONFIG_NUMA=y. This patch
@@ -82,10 +82,10 @@ index ac398e1..89fe4e3 100644
 2.32.0.452.g940fe202ad
 
 
-From b947263ad6e69a179763ecc49b0cbbc787e54348 Mon Sep 17 00:00:00 2001
+From 8c609ad3441c584d1ff63e97d88c95f026434788 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:44 -0600
-Subject: [PATCH 03/22] include/linux/cgroup.h: export cgroup_mutex
+Subject: [PATCH 03/23] include/linux/cgroup.h: export cgroup_mutex
 
 cgroup_mutex is needed to synchronize with memcg creations.
 
@@ -139,10 +139,10 @@ index 6bc9c76..e52e44a 100644
 2.32.0.452.g940fe202ad
 
 
-From c43a1796ffcfdd88228566f7db26568ca3358e28 Mon Sep 17 00:00:00 2001
+From 120ad9e55df3a88f098cf566a7591d7abc5aa733 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:45 -0600
-Subject: [PATCH 04/22] mm, x86: support the access bit on non-leaf PMD entries
+Subject: [PATCH 04/23] mm, x86: support the access bit on non-leaf PMD entries
 
 Some architectures support the accessed bit on non-leaf PMD entries
 (parents) in addition to leaf PTE entries (children) where pages are
@@ -260,10 +260,10 @@ index c32600c..afa7b6f 100644
 2.32.0.452.g940fe202ad
 
 
-From 9b769c9845925243fc29f71511620f698f919ce3 Mon Sep 17 00:00:00 2001
+From 55a9e10df7c6c1e69c53814af8c20a6f26484872 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:46 -0600
-Subject: [PATCH 05/22] mm/vmscan.c: refactor shrink_node()
+Subject: [PATCH 05/23] mm/vmscan.c: refactor shrink_node()
 
 Heuristics that determine scan balance between anon and file LRUs are
 rather independent. Move them into a separate function to improve
@@ -490,10 +490,10 @@ index 5199b96..2339459 100644
 2.32.0.452.g940fe202ad
 
 
-From 0aff7e672f845289415b93937446d5e7fb3e934b Mon Sep 17 00:00:00 2001
+From 817ff5c0ee20e6ff763506e572b2545ed585aac5 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:47 -0600
-Subject: [PATCH 06/22] mm/workingset.c: refactor pack_shadow() and
+Subject: [PATCH 06/23] mm/workingset.c: refactor pack_shadow() and
  unpack_shadow()
 
 This patches moves the bucket order and PageWorkingset() out of
@@ -632,10 +632,10 @@ index b7cdeca..edb8aed 100644
 2.32.0.452.g940fe202ad
 
 
-From 5f0ebd4195a8b89eef7b0f2877ae4556b35648d9 Mon Sep 17 00:00:00 2001
+From ad64883a7b375f5a42aa57b530a11a08fbe127b6 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:48 -0600
-Subject: [PATCH 07/22] mm: multigenerational lru: groundwork
+Subject: [PATCH 07/23] mm: multigenerational lru: groundwork
 
 For each lruvec, evictable pages are divided into multiple
 generations. The youngest generation number is stored in
@@ -1566,10 +1566,10 @@ index 2339459..f7bbfc0 100644
 2.32.0.452.g940fe202ad
 
 
-From ab7be11f9202862a277217725d8a9ed23f7efd3f Mon Sep 17 00:00:00 2001
+From d43508458ffab9d21445d91f5ce34e586ead1ccf Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:49 -0600
-Subject: [PATCH 08/22] mm: multigenerational lru: activation
+Subject: [PATCH 08/23] mm: multigenerational lru: activation
 
 For pages accessed multiple times via file descriptors, instead of
 activating them upon the second access, we activate them based on the
@@ -2159,10 +2159,10 @@ index edb8aed..3f3f03d 100644
 2.32.0.452.g940fe202ad
 
 
-From 4d69df3194fe08f68e2ff7d02464e0bc981a9443 Mon Sep 17 00:00:00 2001
+From 18c190983f7be36f8cd6e92cbf12ddca956f61b8 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:50 -0600
-Subject: [PATCH 09/22] mm: multigenerational lru: mm_struct list
+Subject: [PATCH 09/23] mm: multigenerational lru: mm_struct list
 
 In order to scan page tables, we add an infrastructure to maintain
 either a system-wide mm_struct list or per-memcg mm_struct lists, and
@@ -2855,10 +2855,10 @@ index 84d2507..d93d227 100644
 2.32.0.452.g940fe202ad
 
 
-From 7c51ebab72a696139215821ab5e4e3223643ce84 Mon Sep 17 00:00:00 2001
+From ed52634fb88bfd79879258e3f76e28c5dccb5f74 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:51 -0600
-Subject: [PATCH 10/22] mm: multigenerational lru: aging
+Subject: [PATCH 10/23] mm: multigenerational lru: aging
 
 The aging produces young generations. Given an lruvec, the aging scans
 page tables for referenced pages of this lruvec. Upon finding one, the
@@ -3766,10 +3766,10 @@ index d93d227..837d5e6 100644
 2.32.0.452.g940fe202ad
 
 
-From 0624f491b7d2780499af32d78dcb32798d69ef1a Mon Sep 17 00:00:00 2001
+From 635f1972a3914d0692fd897a237a292f9c8d3fe5 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:52 -0600
-Subject: [PATCH 11/22] mm: multigenerational lru: eviction
+Subject: [PATCH 11/23] mm: multigenerational lru: eviction
 
 The eviction consumes old generations. Given an lruvec, the eviction
 scans the pages on the per-zone lists indexed by either of min_seq[2].
@@ -4441,10 +4441,10 @@ index 837d5e6..2f86dcc 100644
 2.32.0.452.g940fe202ad
 
 
-From 86b78ca9576a333fce81769b364b4ff088595390 Mon Sep 17 00:00:00 2001
+From 4316fc8cecd25530dc40a3039c4dbf7fa97ae902 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:53 -0600
-Subject: [PATCH 12/22] mm: multigenerational lru: user interface
+Subject: [PATCH 12/23] mm: multigenerational lru: user interface
 
 Add a sysfs file /sys/kernel/mm/lru_gen/enabled to enable and disable
 the multigenerational lru at runtime.
@@ -4920,10 +4920,10 @@ index 2f86dcc..ff2deec 100644
 2.32.0.452.g940fe202ad
 
 
-From 4105b433c5df68cfedca9e503219aa66a3c5ba0e Mon Sep 17 00:00:00 2001
+From f1e220a9b933ec2b56fbd7af873e03e2727b417e Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:54 -0600
-Subject: [PATCH 13/22] mm: multigenerational lru: Kconfig
+Subject: [PATCH 13/23] mm: multigenerational lru: Kconfig
 
 Add configuration options for the multigenerational lru.
 
@@ -5004,10 +5004,10 @@ index 02d44e3..da125f1 100644
 2.32.0.452.g940fe202ad
 
 
-From faedb491dae847b5079e927e624ed5e33b13f45c Mon Sep 17 00:00:00 2001
+From 571690fbbeaee7356bcc0f20b171df0e8fc16ced Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 20 May 2021 00:53:55 -0600
-Subject: [PATCH 14/22] mm: multigenerational lru: documentation
+Subject: [PATCH 14/23] mm: multigenerational lru: documentation
 
 Add Documentation/vm/multigen_lru.rst.
 
@@ -5184,10 +5184,10 @@ index 0000000..a18416e
 2.32.0.452.g940fe202ad
 
 
-From 4c4ec0a4282790711d4659996101a92ab4663eab Mon Sep 17 00:00:00 2001
+From 228c7b1900bfc3b64913a72cd3ba0165ddfc3481 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 1 Mar 2021 16:09:43 +0100
-Subject: [PATCH 15/22] mm-5.13: protect file mappings under memory pressure
+Subject: [PATCH 15/23] mm-5.13: protect file mappings under memory pressure
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -5451,10 +5451,10 @@ index ff2deec..88bbbd5 100644
 2.32.0.452.g940fe202ad
 
 
-From cabc0ded53dc4686d30a9ce7ac41926afd19c09d Mon Sep 17 00:00:00 2001
+From 31cd1e241528367e8538f8b68facef5c5df16f3f Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Sat, 10 Jul 2021 19:21:54 +0200
-Subject: [PATCH 16/22] mm-5.13: protect anonymous mappings under memory
+Subject: [PATCH 16/23] mm-5.13: protect anonymous mappings under memory
  pressure
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
@@ -5704,10 +5704,10 @@ index 88bbbd5..ac8c71d 100644
 2.32.0.452.g940fe202ad
 
 
-From b60a5625a40ad0aebedc6ca377db75feaa86ef81 Mon Sep 17 00:00:00 2001
+From d61ff39dec4e322f5eefc1e4d83a3740f36f3f84 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 21 Jul 2021 17:24:25 -0600
-Subject: [PATCH 17/22] mm: fix priority queue in multigenerational lru
+Subject: [PATCH 17/23] mm: fix priority queue in multigenerational lru
 
 The priority queue helps select the best memcg to reclaim memory from
 when there are multiple candidates. If reclaim didn't make progress
@@ -5753,10 +5753,10 @@ index ac8c71d..0cc6e59 100644
 2.32.0.452.g940fe202ad
 
 
-From e6599aa5c57e3d90d0b493abeedb586cedcfcb65 Mon Sep 17 00:00:00 2001
+From b33f556125ba74133bd1c96d9d2d0f649d1c8190 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Thu, 22 Jul 2021 01:54:42 -0600
-Subject: [PATCH 18/22] mm: fix priority queue in multigenerational lru v2
+Subject: [PATCH 18/23] mm: fix priority queue in multigenerational lru v2
 
 The priority queue helps select the best memcg to reclaim memory from
 when there are multiple candidates. If reclaim didn't make progress
@@ -5839,10 +5839,10 @@ index 0cc6e59..c9a4a19 100644
 2.32.0.452.g940fe202ad
 
 
-From c5cb2baca3061e984804bed58bbeb7140b0214c3 Mon Sep 17 00:00:00 2001
+From ff888d9f05f7c7764c602afd5cc042d814dba7ef Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Jul 2021 15:01:33 +0200
-Subject: [PATCH 19/22] Revert "mm: fix priority queue in multigenerational lru
+Subject: [PATCH 19/23] Revert "mm: fix priority queue in multigenerational lru
  v2"
 
 This reverts commit ea2907d5561a7fea56d39e1115f4b430d6f64fbc.
@@ -5917,10 +5917,10 @@ index c9a4a19..0cc6e59 100644
 2.32.0.452.g940fe202ad
 
 
-From 05e9f6a6d33da8750be44a136d5a83cd9a9707de Mon Sep 17 00:00:00 2001
+From e1f78a6ec5732de9e2c680f44152390873101fac Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Jul 2021 15:01:34 +0200
-Subject: [PATCH 20/22] Revert "mm: fix priority queue in multigenerational
+Subject: [PATCH 20/23] Revert "mm: fix priority queue in multigenerational
  lru"
 
 This reverts commit c176ca593e1ee248f177233b6d0852c221301182.
@@ -5958,10 +5958,10 @@ index 0cc6e59..ac8c71d 100644
 2.32.0.452.g940fe202ad
 
 
-From fb3310d23cbf808de7167e4d8f1289932b889489 Mon Sep 17 00:00:00 2001
+From 3672b0414263ce308eea7055ef5422b329e4b403 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 21 Jul 2021 17:24:25 -0600
-Subject: [PATCH 21/22] mm: fix priority queue in multigenerational lru
+Subject: [PATCH 21/23] mm: fix priority queue in multigenerational lru
 
 The priority queue helps select the best memcg to reclaim memory from
 when there are multiple candidates. If reclaim didn't make progress
@@ -6055,10 +6055,10 @@ index ac8c71d..c9a4a19 100644
 2.32.0.452.g940fe202ad
 
 
-From 18c480ec387c8af634fe9953d883397160e77e95 Mon Sep 17 00:00:00 2001
+From cf8e4dec4fcf65fc03dbbbcd1fdf1ac9c3b817cf Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Tue, 3 Aug 2021 13:16:37 -0600
-Subject: [PATCH 22/22] mm: multigenerational lru: balance memory pressure
+Subject: [PATCH 22/23] mm: multigenerational lru: balance memory pressure
  between memcgs
 
 Properly balance memory pressure with a two-pass sweep of all memcgs.
@@ -6243,6 +6243,126 @@ index c9a4a19..5519cdc 100644
  	for (i = 0; i <= MIN_NR_GENS + 1; i++)
  		lrugen->timestamps[i] = jiffies;
  
+-- 
+2.32.0.452.g940fe202ad
+
+
+From 7d5d0c4888197f02ef41ed671e57202c45a0ff86 Mon Sep 17 00:00:00 2001
+From: Yu Zhao <yuzhao@google.com>
+Date: Sat, 7 Aug 2021 19:13:59 -0600
+Subject: [PATCH 23/23] mm: multigenerational lru: add
+ /sys/kernel/mm/lru_gen/min_ttl_ms
+
+Add /sys/kernel/mm/lru_gen/min_ttl_ms to protect generations that are
+younger than the value of this file. The multigenerational lru will
+not consider those generations. And if there are no older generations
+left, it will oom kill. The default value 0 means this feature is
+disabled.
+
+Signed-off-by: Yu Zhao <yuzhao@google.com>
+---
+ mm/memcontrol.c |  2 +-
+ mm/vmscan.c     | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 1 deletion(-)
+
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index e2f792f..17f9414 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -6011,7 +6011,7 @@ static void mem_cgroup_attach(struct cgroup_taskset *tset)
+ 	struct task_struct *task = NULL;
+ 
+ 	cgroup_taskset_for_each_leader(task, css, tset)
+-		;
++		break;
+ 
+ 	if (!task)
+ 		return;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 5519cdc..2c771e8 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4421,6 +4421,8 @@ static int get_swappiness(struct lruvec *lruvec)
+ 	return swappiness;
+ }
+ 
++static DEFINE_RATELIMIT_STATE(lru_gen_min_ttl, 0, 1);
++
+ static unsigned long get_nr_to_scan(struct lruvec *lruvec, struct scan_control *sc,
+ 				    int swappiness)
+ {
+@@ -4450,6 +4452,11 @@ static unsigned long get_nr_to_scan(struct lruvec *lruvec, struct scan_control *
+ 	nr_gens = max_nr_gens(max_seq, min_seq, swappiness);
+ 
+ 	if (current_is_kswapd()) {
++		gen = lru_gen_from_seq(max_seq - nr_gens + 1);
++		if (time_is_before_eq_jiffies(READ_ONCE(lrugen->timestamps[gen]) +
++					      READ_ONCE(lru_gen_min_ttl.interval)))
++			sc->file_is_tiny = 0;
++
+ 		/* leave the work to age_lru_gens() */
+ 		if (nr_gens == MIN_NR_GENS)
+ 			return 0;
+@@ -4554,6 +4561,21 @@ static void lru_gen_age_node(struct pglist_data *pgdat, struct scan_control *sc)
+ 
+ 	VM_BUG_ON(!current_is_kswapd());
+ 
++	if (sc->file_is_tiny && READ_ONCE(lru_gen_min_ttl.interval) &&
++	    __ratelimit(&lru_gen_min_ttl)) {
++		struct oom_control oc = {
++			.gfp_mask = sc->gfp_mask,
++			.order = sc->order,
++		};
++
++		if (mutex_trylock(&oom_lock)) {
++			out_of_memory(&oc);
++			mutex_unlock(&oom_lock);
++		}
++	}
++
++	sc->file_is_tiny = 1;
++
+ 	if (!mem_cgroup_disabled() && !sc->force_deactivate) {
+ 		/* we may clear this later in get_nr_to_scan() */
+ 		sc->force_deactivate = 1;
+@@ -4818,6 +4840,29 @@ static struct kobj_attribute lru_gen_spread_attr = __ATTR(
+ 	spread, 0644, show_lru_gen_spread, store_lru_gen_spread
+ );
+ 
++static ssize_t show_lru_gen_min_ttl(struct kobject *kobj, struct kobj_attribute *attr,
++				    char *buf)
++{
++	return sprintf(buf, "%u\n", jiffies_to_msecs(READ_ONCE(lru_gen_min_ttl.interval)));
++}
++
++static ssize_t store_lru_gen_min_ttl(struct kobject *kobj, struct kobj_attribute *attr,
++				     const char *buf, size_t len)
++{
++	unsigned int msecs;
++
++	if (kstrtouint(buf, 10, &msecs))
++		return -EINVAL;
++
++	WRITE_ONCE(lru_gen_min_ttl.interval, msecs_to_jiffies(msecs));
++
++	return len;
++}
++
++static struct kobj_attribute lru_gen_min_ttl_attr = __ATTR(
++	min_ttl_ms, 0644, show_lru_gen_min_ttl, store_lru_gen_min_ttl
++);
++
+ static ssize_t show_lru_gen_enabled(struct kobject *kobj, struct kobj_attribute *attr,
+ 				    char *buf)
+ {
+@@ -4843,6 +4888,7 @@ static struct kobj_attribute lru_gen_enabled_attr = __ATTR(
+ 
+ static struct attribute *lru_gen_attrs[] = {
+ 	&lru_gen_spread_attr.attr,
++	&lru_gen_min_ttl_attr.attr,
+ 	&lru_gen_enabled_attr.attr,
+ 	NULL
+ };
 -- 
 2.32.0.452.g940fe202ad
 

@@ -4,8 +4,8 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.13.9  
-0001 : CacULE scheduler(RDB)  
+0000 : Patch 5.13.10  
+0001 : CacULE scheduler  
 0002 : 5.13 Graysky's CPU optimization patches  
 0003 : "Old" fsync patch for backwards compatibility  
 0004 : Futex2 interface  
