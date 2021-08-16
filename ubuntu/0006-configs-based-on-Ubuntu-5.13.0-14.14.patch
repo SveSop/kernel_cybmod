@@ -1,20 +1,20 @@
-From 5af0f776547c983373f3386e1aa56cf4adfb58c4 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 8 Aug 2021 04:38:44 -0400
+From e08ac91e62a8333a1768c96f83ae8be406ad1410 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 15 Aug 2021 13:33:17 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.13.0-14.14)
 
 ---
  .../config/amd64/config.common.amd64          |  2 +-
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
- debian.master/config/annotations              | 15 +++++---
+ debian.master/config/annotations              | 15 ++++++---
  .../config/arm64/config.common.arm64          |  3 +-
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  3 +-
- debian.master/config/config.common.ubuntu     | 35 +++++++------------
+ debian.master/config/config.common.ubuntu     | 33 ++++++-------------
  .../config/ppc64el/config.common.ppc64el      |  3 +-
  .../config/s390x/config.common.s390x          |  4 +--
- 10 files changed, 30 insertions(+), 39 deletions(-)
+ 10 files changed, 28 insertions(+), 39 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 35cc7e12b803..183ab9687b7f 100644
@@ -168,7 +168,7 @@ index 4a2d86a9dda4..163598d3b232 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 0fd9c195b1ad..e51ae1239e3d 100644
+index 44acc66e469a..e51ae1239e3d 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -324,15 +324,7 @@ index 0fd9c195b1ad..e51ae1239e3d 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -10000,6 +9990,7 @@ CONFIG_SND_SOC_INTEL_GLK=m
- CONFIG_SND_SOC_INTEL_GLK_DA7219_MAX98357A_MACH=m
- CONFIG_SND_SOC_INTEL_GLK_RT5682_MAX98357A_MACH=m
- CONFIG_SND_SOC_INTEL_HASWELL_MACH=m
-+CONFIG_SND_SOC_INTEL_HDA_DSP_COMMON=m
- CONFIG_SND_SOC_INTEL_KBL=m
- CONFIG_SND_SOC_INTEL_KBL_DA7219_MAX98357A_MACH=m
- CONFIG_SND_SOC_INTEL_KBL_DA7219_MAX98927_MACH=m
-@@ -10016,10 +10007,11 @@ CONFIG_SND_SOC_INTEL_SKL_RT286_MACH=m
+@@ -10017,7 +10007,7 @@ CONFIG_SND_SOC_INTEL_SKL_RT286_MACH=m
  # CONFIG_SND_SOC_INTEL_SKYLAKE is not set
  CONFIG_SND_SOC_INTEL_SKYLAKE_COMMON=m
  CONFIG_SND_SOC_INTEL_SKYLAKE_FAMILY=m
@@ -341,11 +333,7 @@ index 0fd9c195b1ad..e51ae1239e3d 100644
  CONFIG_SND_SOC_INTEL_SKYLAKE_SSP_CLK=m
  CONFIG_SND_SOC_INTEL_SOF_CML_RT1011_RT5682_MACH=m
  CONFIG_SND_SOC_INTEL_SOF_DA7219_MAX98373_MACH=m
-+CONFIG_SND_SOC_INTEL_SOF_MAXIM_COMMON=m
- CONFIG_SND_SOC_INTEL_SOF_PCM512x_MACH=m
- CONFIG_SND_SOC_INTEL_SOF_RT5682_MACH=m
- CONFIG_SND_SOC_INTEL_SOF_WM8804_MACH=m
-@@ -11218,8 +11210,6 @@ CONFIG_UBIFS_FS_XATTR=y
+@@ -11220,8 +11210,6 @@ CONFIG_UBIFS_FS_XATTR=y
  CONFIG_UBIFS_FS_ZLIB=y
  CONFIG_UBIFS_FS_ZSTD=y
  # CONFIG_UBSAN is not set
@@ -354,7 +342,7 @@ index 0fd9c195b1ad..e51ae1239e3d 100644
  CONFIG_UCB1400_CORE=m
  CONFIG_UCC=y
  CONFIG_UCC_FAST=y
-@@ -11786,7 +11776,6 @@ CONFIG_VDSO=y
+@@ -11788,7 +11776,6 @@ CONFIG_VDSO=y
  CONFIG_VDSO32=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m

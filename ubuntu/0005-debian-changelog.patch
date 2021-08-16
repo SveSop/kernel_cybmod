@@ -1,6 +1,6 @@
-From 8764ea3d65d3ca0094b02d8d2920b9fe4dd3d87c Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 8 Aug 2021 04:38:03 -0400
+From 420e3a20c17b9c0fb4442799f9002c717d403b45 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 15 Aug 2021 13:32:37 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11546 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 1f9f84f6cddf..dba4b125fa44 100644
+index 1f9f84f6cddf..be7213195882 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11549 +1,6 @@
 -linux (5.13.0-14.14) impish; urgency=medium
-+linux (5.13.9-051309.202108080438) impish; urgency=low
++linux (5.13.11-051311.202108151332) impish; urgency=low
  
 -  * impish/linux: 5.13.0-14.14 -proposed tracker (LP: #1938565)
-+  Mainline build at commit: v5.13.9
++  Mainline build at commit: v5.13.11
  
 -  * Miscellaneous Ubuntu changes
 -    - SAUCE: Revert "UBUNTU: SAUCE: random: Make getrandom() ready earlier"
 -    - SAUCE: random: properly make getrandom() ready earlier
-+ -- Mainline Build <kernel@sita>  Sun, 08 Aug 2021 04:38:02 -0400
++ -- Mainline Build <kernel@kathleen>  Sun, 15 Aug 2021 13:32:37 +0000
  
 -  * Miscellaneous upstream changes
 -    - seq_buf: Fix overflow in seq_buf_putmem_hex()
