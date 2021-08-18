@@ -1,20 +1,20 @@
-From e08ac91e62a8333a1768c96f83ae8be406ad1410 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 15 Aug 2021 13:33:17 +0000
+From 5aebc0c8fcf5e48ec5802cbbb5204864190ee994 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 18 Aug 2021 08:39:40 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.13.0-14.14)
 
 ---
  .../config/amd64/config.common.amd64          |  2 +-
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
- debian.master/config/annotations              | 15 ++++++---
+ debian.master/config/annotations              | 17 ++++++---
  .../config/arm64/config.common.arm64          |  3 +-
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  3 +-
- debian.master/config/config.common.ubuntu     | 33 ++++++-------------
+ debian.master/config/config.common.ubuntu     | 35 ++++++-------------
  .../config/ppc64el/config.common.ppc64el      |  3 +-
  .../config/s390x/config.common.s390x          |  4 +--
- 10 files changed, 28 insertions(+), 39 deletions(-)
+ 10 files changed, 30 insertions(+), 41 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 35cc7e12b803..183ab9687b7f 100644
@@ -54,9 +54,18 @@ index cd2da6dec1c2..437e8ea6c9a1 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 141ca101f959..7d58abaef6a0 100644
+index 81f0d50e5db5..7d58abaef6a0 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
+@@ -1376,7 +1376,7 @@ CONFIG_DMA_SUN6I                                policy<{'arm64': 'm'}>
+ CONFIG_DW_AXI_DMAC                              policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
+ CONFIG_FSL_EDMA                                 policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
+ CONFIG_FSL_QDMA                                 policy<{'arm64': 'm', 'armhf': 'm'}>
+-CONFIG_HISI_DMA                                 policy<{'arm64': 'n'}>
++CONFIG_HISI_DMA                                 policy<{'arm64': 'm'}>
+ CONFIG_IMX_DMA                                  policy<{'arm64': 'm', 'armhf-generic': 'm'}>
+ CONFIG_IMX_SDMA                                 policy<{'arm64': 'm', 'armhf-generic': 'm'}>
+ CONFIG_INTEL_IDMA64                             policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
 @@ -1647,6 +1647,7 @@ CONFIG_EDAC_SBRIDGE                             policy<{'amd64': 'm'}>
  CONFIG_EDAC_SKX                                 policy<{'amd64': 'm'}>
  CONFIG_EDAC_I10NM                               policy<{'amd64': 'm'}>
@@ -168,7 +177,7 @@ index 4a2d86a9dda4..163598d3b232 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 44acc66e469a..e51ae1239e3d 100644
+index 8f140f6fb4db..e51ae1239e3d 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -256,7 +265,7 @@ index 44acc66e469a..e51ae1239e3d 100644
  CONFIG_HAVE_KERNEL_BZIP2=y
  CONFIG_HAVE_KERNEL_GZIP=y
  CONFIG_HAVE_KERNEL_LZ4=y
-@@ -4340,7 +4337,6 @@ CONFIG_HIGHMEM=y
+@@ -4340,14 +4337,13 @@ CONFIG_HIGHMEM=y
  CONFIG_HIGHPTE=y
  CONFIG_HIGH_RES_TIMERS=y
  CONFIG_HINIC=m
@@ -264,6 +273,14 @@ index 44acc66e469a..e51ae1239e3d 100644
  CONFIG_HIP04_ETH=m
  # CONFIG_HIPPI is not set
  CONFIG_HISILICON_ERRATUM_161010101=y
+ CONFIG_HISILICON_ERRATUM_161600802=y
+ CONFIG_HISILICON_IRQ_MBIGEN=y
+ CONFIG_HISILICON_LPC=y
+-# CONFIG_HISI_DMA is not set
++CONFIG_HISI_DMA=m
+ CONFIG_HISI_FEMAC=m
+ CONFIG_HISI_HIKEY_USB=m
+ CONFIG_HISI_PMU=y
 @@ -5357,6 +5353,7 @@ CONFIG_KALLSYMS_BASE_RELATIVE=y
  # CONFIG_KASAN is not set
  CONFIG_KCMP=y
