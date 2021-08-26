@@ -1,20 +1,20 @@
-From 5aebc0c8fcf5e48ec5802cbbb5204864190ee994 Mon Sep 17 00:00:00 2001
+From 99a7ed59718e0b5b17b8610b0a27d80ce2a258fb Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 18 Aug 2021 08:39:40 +0000
+Date: Thu, 26 Aug 2021 14:41:08 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.13.0-14.14)
 
 ---
  .../config/amd64/config.common.amd64          |  2 +-
  .../config/amd64/config.flavour.generic       |  1 -
  .../config/amd64/config.flavour.lowlatency    |  1 -
- debian.master/config/annotations              | 17 ++++++---
+ debian.master/config/annotations              | 33 ++++++------
  .../config/arm64/config.common.arm64          |  3 +-
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  3 +-
- debian.master/config/config.common.ubuntu     | 35 ++++++-------------
+ debian.master/config/config.common.ubuntu     | 53 ++++++-------------
  .../config/ppc64el/config.common.ppc64el      |  3 +-
- .../config/s390x/config.common.s390x          |  4 +--
- 10 files changed, 30 insertions(+), 41 deletions(-)
+ .../config/s390x/config.common.s390x          |  4 +-
+ 10 files changed, 37 insertions(+), 68 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 35cc7e12b803..183ab9687b7f 100644
@@ -54,7 +54,7 @@ index cd2da6dec1c2..437e8ea6c9a1 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 81f0d50e5db5..7d58abaef6a0 100644
+index 3706f062812d..7d58abaef6a0 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
 @@ -1376,7 +1376,7 @@ CONFIG_DMA_SUN6I                                policy<{'arm64': 'm'}>
@@ -105,11 +105,20 @@ index 81f0d50e5db5..7d58abaef6a0 100644
  CONFIG_SND_SOC_INTEL_CFL                        mark<ENFORCED> note<deprecated>
  CONFIG_SND_SOC_INTEL_CML_H                      mark<ENFORCED> note<deprecated>
  CONFIG_SND_SOC_INTEL_CML_LP                     mark<ENFORCED> note<deprecated>
--CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC		mark<ENFORCED> note<LP:1915117>
+-CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC      mark<ENFORCED> note<LP:1915117>
 +CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC      mark<ENFORCED> note<deprecated>
  
  # Menu: Device Drivers >> Sound card support >> Advanced Linux Sound Architecture >> ALSA for SoC audio support >> Intel ASoC SST drivers >> Intel Machine drivers
  CONFIG_SND_SOC_INTEL_MACH                       policy<{'amd64': 'y'}>
+@@ -10445,7 +10448,7 @@ CONFIG_ZONEFS_FS                                policy<{'amd64': 'm', 'arm64': '
+ CONFIG_FS_DAX                                   policy<{'amd64': 'y', 'arm64': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_EXPORTFS_BLOCK_OPS                       policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_FILE_LOCKING                             policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_MANDATORY_FILE_LOCKING                   policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
++CONFIG_MANDATORY_FILE_LOCKING                   policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_FS_ENCRYPTION                            policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_FS_ENCRYPTION_INLINE_CRYPT               policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_FS_VERITY                                policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
 @@ -10624,7 +10627,11 @@ CONFIG_PSTORE_FTRACE                            policy<{'amd64': 'n', 'arm64': '
  CONFIG_PSTORE_RAM                               policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'y', 'ppc64el': 'm'}>
  
@@ -123,6 +132,48 @@ index 81f0d50e5db5..7d58abaef6a0 100644
  
  # Menu: File systems >> Miscellaneous filesystems >> RomFS backing stores
  CONFIG_ROMFS_BACKED_BY_BLOCK                    policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
+@@ -10951,7 +10958,6 @@ CONFIG_ARCH_MMAP_RND_BITS                       policy<{'amd64': '28', 'arm64':
+ CONFIG_ARCH_MMAP_RND_COMPAT_BITS                policy<{'amd64': '8', 'arm64': '11', 'ppc64el': '8'}>
+ CONFIG_COMPAT_32BIT_TIME                        policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_VMAP_STACK                               policy<{'amd64': 'y', 'arm64': 'y', 's390x': 'y'}>
+-CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT          policy<{'amd64': 'y', 'arm64': 'y', 's390x': 'y'}>
+ CONFIG_STRICT_KERNEL_RWX                        policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_STRICT_MODULE_RWX                        policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 's390x': 'y'}>
+ CONFIG_LOCK_EVENT_COUNTS                        policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+@@ -11164,8 +11170,6 @@ CONFIG_KERNEL_LZO                               policy<{'amd64': 'n', 'armhf': '
+ CONFIG_KERNEL_LZ4                               policy<{'amd64': 'n', 'armhf': 'n', 's390x': 'n'}>
+ CONFIG_KERNEL_ZSTD                              policy<{'amd64': 'y', 's390x': 'y'}>
+ CONFIG_KERNEL_UNCOMPRESSED                      policy<{'s390x': 'n'}>
+-#
+-CONFIG_KERNEL_ZSTD                              mark<ENFORCED> note<LP:#1931725>
+ 
+ # Menu: General setup >> Namespaces support
+ CONFIG_NAMESPACES                               policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+@@ -11411,14 +11415,7 @@ CONFIG_KDB_KEYBOARD                             policy<{'amd64': 'y', 'arm64': '
+ CONFIG_KDB_CONTINUE_CATASTROPHIC                policy<{'amd64': '0', 'arm64': '0', 'armhf': '0', 'ppc64el': '0'}>
+ 
+ # Menu: Kernel hacking >> Generic Kernel Debugging Instruments >> Undefined behaviour sanity checker
+-CONFIG_UBSAN                                    policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_UBSAN_TRAP                               policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_UBSAN_BOUNDS                             policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_UBSAN_SHIFT                              policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+-CONFIG_UBSAN_DIV_ZERO                           policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+-CONFIG_UBSAN_BOOL                               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+-CONFIG_UBSAN_ENUM                               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+-CONFIG_UBSAN_SANITIZE_ALL                       policy<{'amd64': 'y', 'arm64': 'y', 'armhf': '-', 'ppc64el': 'y', 's390x': 'y'}>
++CONFIG_UBSAN                                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ 
+ # Menu: Kernel hacking >> Kernel Testing and Coverage
+ CONFIG_MEMTEST                                  policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
+@@ -13587,7 +13584,7 @@ CONFIG_SECURITYFS                               policy<{'amd64': 'y', 'arm64': '
+ CONFIG_PAGE_TABLE_ISOLATION                     policy<{'amd64': 'y'}>
+ CONFIG_INTEL_TXT                                policy<{'amd64': 'y'}>
+ CONFIG_HARDENED_USERCOPY                        policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+-CONFIG_HARDENED_USERCOPY_FALLBACK               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
++CONFIG_HARDENED_USERCOPY_FALLBACK               policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_HARDENED_USERCOPY_PAGESPAN               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_FORTIFY_SOURCE                           policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_STATIC_USERMODEHELPER                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
 index 2e7958d93135..00cc449bb5eb 100644
 --- a/debian.master/config/arm64/config.common.arm64
@@ -177,7 +228,7 @@ index 4a2d86a9dda4..163598d3b232 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 8f140f6fb4db..e51ae1239e3d 100644
+index 404a2da1e6b9..035d0ec5f170 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -218,7 +269,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_AS_VFP_VMRS_FPINST=y
  CONFIG_AT76C50X_USB=m
  CONFIG_AT803X_PHY=m
-@@ -1484,11 +1480,13 @@ CONFIG_CCW_CONSOLE=y
+@@ -1484,15 +1480,16 @@ CONFIG_CCW_CONSOLE=y
  CONFIG_CC_CAN_LINK=y
  CONFIG_CC_CAN_LINK_STATIC=y
  CONFIG_CC_HAS_ASM_GOTO=y
@@ -232,7 +283,11 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_CC_HAS_SANCOV_TRACE_PC=y
  CONFIG_CC_HAS_SANE_STACKPROTECTOR=y
  CONFIG_CC_HAS_SIGN_RETURN_ADDRESS=y
-@@ -2614,7 +2612,6 @@ CONFIG_DELL_SMBIOS=m
+-CONFIG_CC_HAS_UBSAN_BOUNDS=y
+ CONFIG_CC_HAS_WORKING_NOSANITIZE_ADDRESS=y
+ CONFIG_CC_HAVE_STACKPROTECTOR_SYSREG=y
+ CONFIG_CC_IS_GCC=y
+@@ -2615,7 +2612,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
  CONFIG_DELL_SMO8800=m
@@ -240,7 +295,15 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_DELL_WMI=m
  CONFIG_DELL_WMI_AIO=m
  CONFIG_DELL_WMI_DESCRIPTOR=m
-@@ -3783,7 +3780,7 @@ CONFIG_GAMEPORT_L4=m
+@@ -3242,6 +3238,7 @@ CONFIG_DYNAMIC_DEBUG=y
+ CONFIG_DYNAMIC_DEBUG_CORE=y
+ CONFIG_DYNAMIC_EVENTS=y
+ CONFIG_DYNAMIC_FTRACE=y
++CONFIG_DYNAMIC_FTRACE_WITH_ARGS=y
+ CONFIG_DYNAMIC_FTRACE_WITH_DIRECT_CALLS=y
+ CONFIG_DYNAMIC_FTRACE_WITH_REGS=y
+ CONFIG_DYNAMIC_MEMORY_LAYOUT=y
+@@ -3784,7 +3781,7 @@ CONFIG_GAMEPORT_L4=m
  CONFIG_GAMEPORT_NS558=m
  CONFIG_GARP=m
  CONFIG_GART_IOMMU=y
@@ -249,7 +312,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  # CONFIG_GCOV_KERNEL is not set
  CONFIG_GDB_SCRIPTS=y
  CONFIG_GEMINI_ETHERNET=m
-@@ -3868,7 +3865,6 @@ CONFIG_GPIO_104_IDIO_16=m
+@@ -3869,7 +3866,6 @@ CONFIG_GPIO_104_IDIO_16=m
  CONFIG_GPIO_104_IDI_48=m
  CONFIG_GPIO_74X164=m
  CONFIG_GPIO_74XX_MMIO=m
@@ -257,7 +320,16 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_GPIO_ACPI=y
  CONFIG_GPIO_ADNP=m
  CONFIG_GPIO_ADP5520=m
-@@ -4114,6 +4110,7 @@ CONFIG_HAVE_INTEL_TXT=y
+@@ -4020,7 +4016,7 @@ CONFIG_HANDLE_DOMAIN_IRQ=y
+ CONFIG_HANGCHECK_TIMER=m
+ CONFIG_HAPPYMEAL=m
+ CONFIG_HARDENED_USERCOPY=y
+-# CONFIG_HARDENED_USERCOPY_FALLBACK is not set
++CONFIG_HARDENED_USERCOPY_FALLBACK=y
+ # CONFIG_HARDENED_USERCOPY_PAGESPAN is not set
+ CONFIG_HARDEN_BRANCH_PREDICTOR=y
+ CONFIG_HARDIRQS_SW_RESEND=y
+@@ -4115,6 +4111,7 @@ CONFIG_HAVE_INTEL_TXT=y
  CONFIG_HAVE_IOREMAP_PROT=y
  CONFIG_HAVE_IRQ_EXIT_ON_IRQ_STACK=y
  CONFIG_HAVE_IRQ_TIME_ACCOUNTING=y
@@ -265,7 +337,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_HAVE_KERNEL_BZIP2=y
  CONFIG_HAVE_KERNEL_GZIP=y
  CONFIG_HAVE_KERNEL_LZ4=y
-@@ -4340,14 +4337,13 @@ CONFIG_HIGHMEM=y
+@@ -4341,14 +4338,13 @@ CONFIG_HIGHMEM=y
  CONFIG_HIGHPTE=y
  CONFIG_HIGH_RES_TIMERS=y
  CONFIG_HINIC=m
@@ -281,7 +353,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_HISI_FEMAC=m
  CONFIG_HISI_HIKEY_USB=m
  CONFIG_HISI_PMU=y
-@@ -5357,6 +5353,7 @@ CONFIG_KALLSYMS_BASE_RELATIVE=y
+@@ -5358,6 +5354,7 @@ CONFIG_KALLSYMS_BASE_RELATIVE=y
  # CONFIG_KASAN is not set
  CONFIG_KCMP=y
  # CONFIG_KCOV is not set
@@ -289,7 +361,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_KDB_CONTINUE_CATASTROPHIC=0
  CONFIG_KDB_DEFAULT_ENABLE=0x1
  CONFIG_KDB_KEYBOARD=y
-@@ -5528,9 +5525,8 @@ CONFIG_LDISC_AUTOLOAD=y
+@@ -5529,9 +5526,8 @@ CONFIG_LDISC_AUTOLOAD=y
  # CONFIG_LD_HEAD_STUB_CATCH is not set
  CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
@@ -300,7 +372,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_LEDS_AAT1290=m
  CONFIG_LEDS_ACER_A500=m
  CONFIG_LEDS_ADP5520=m
-@@ -5681,7 +5677,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -5682,7 +5678,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -308,7 +380,16 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -5974,7 +5969,6 @@ CONFIG_MESON_SM=y
+@@ -5784,7 +5779,7 @@ CONFIG_MAGIC_SYSRQ_SERIAL=y
+ CONFIG_MAGIC_SYSRQ_SERIAL_SEQUENCE=""
+ CONFIG_MAILBOX_TEST=m
+ CONFIG_MANAGER_SBS=m
+-# CONFIG_MANDATORY_FILE_LOCKING is not set
++CONFIG_MANDATORY_FILE_LOCKING=y
+ CONFIG_MANTIS_CORE=m
+ CONFIG_MAPPING_DIRTY_HELPERS=y
+ # CONFIG_MARCH_Z10 is not set
+@@ -5975,7 +5970,6 @@ CONFIG_MESON_SM=y
  CONFIG_MESON_WATCHDOG=m
  CONFIG_MESSAGE_LOGLEVEL_DEFAULT=4
  CONFIG_MFD_88PM860X=y
@@ -316,7 +397,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
-@@ -9209,7 +9203,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+@@ -9210,7 +9204,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
  CONFIG_SECURITY_PATH=y
@@ -324,7 +405,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_SECURITY_SAFESETID=y
  CONFIG_SECURITY_SELINUX=y
  CONFIG_SECURITY_SELINUX_AVC_STATS=y
-@@ -9232,7 +9225,6 @@ CONFIG_SECURITY_TOMOYO_POLICY_LOADER="/sbin/tomoyo-init"
+@@ -9233,7 +9226,6 @@ CONFIG_SECURITY_TOMOYO_POLICY_LOADER="/sbin/tomoyo-init"
  CONFIG_SECURITY_YAMA=y
  CONFIG_SELECT_MEMORY_MODEL=y
  CONFIG_SENSIRION_SGP30=m
@@ -332,7 +413,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_SENSORS_ABITUGURU=m
  CONFIG_SENSORS_ABITUGURU3=m
  CONFIG_SENSORS_ACPI_POWER=m
-@@ -9592,8 +9584,6 @@ CONFIG_SGI_XP=m
+@@ -9593,8 +9585,6 @@ CONFIG_SGI_XP=m
  CONFIG_SGL_ALLOC=y
  CONFIG_SG_POOL=y
  CONFIG_SG_SPLIT=y
@@ -341,7 +422,7 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -10017,7 +10007,7 @@ CONFIG_SND_SOC_INTEL_SKL_RT286_MACH=m
+@@ -10018,7 +10008,7 @@ CONFIG_SND_SOC_INTEL_SKL_RT286_MACH=m
  # CONFIG_SND_SOC_INTEL_SKYLAKE is not set
  CONFIG_SND_SOC_INTEL_SKYLAKE_COMMON=m
  CONFIG_SND_SOC_INTEL_SKYLAKE_FAMILY=m
@@ -350,16 +431,35 @@ index 8f140f6fb4db..e51ae1239e3d 100644
  CONFIG_SND_SOC_INTEL_SKYLAKE_SSP_CLK=m
  CONFIG_SND_SOC_INTEL_SOF_CML_RT1011_RT5682_MACH=m
  CONFIG_SND_SOC_INTEL_SOF_DA7219_MAX98373_MACH=m
-@@ -11220,8 +11210,6 @@ CONFIG_UBIFS_FS_XATTR=y
+@@ -10874,7 +10864,6 @@ CONFIG_TEST_POWER=m
+ # CONFIG_TEST_STRING_HELPERS is not set
+ # CONFIG_TEST_STRSCPY is not set
+ # CONFIG_TEST_SYSCTL is not set
+-# CONFIG_TEST_UBSAN is not set
+ # CONFIG_TEST_UDELAY is not set
+ # CONFIG_TEST_USER_COPY is not set
+ # CONFIG_TEST_UUID is not set
+@@ -11221,18 +11210,7 @@ CONFIG_UBIFS_FS_SECURITY=y
+ CONFIG_UBIFS_FS_XATTR=y
  CONFIG_UBIFS_FS_ZLIB=y
  CONFIG_UBIFS_FS_ZSTD=y
- # CONFIG_UBSAN is not set
+-CONFIG_UBSAN=y
+-# CONFIG_UBSAN_BOOL is not set
+-CONFIG_UBSAN_BOUNDS=y
+-# CONFIG_UBSAN_DIV_ZERO is not set
+-# CONFIG_UBSAN_ENUM is not set
+-CONFIG_UBSAN_ONLY_BOUNDS=y
+-CONFIG_UBSAN_SANITIZE_ALL=y
+-# CONFIG_UBSAN_SHIFT is not set
+-CONFIG_UBSAN_TRAP=y
+-# CONFIG_UBSAN_UNREACHABLE is not set
 -CONFIG_UBUNTU_HOST=m
 -CONFIG_UBUNTU_ODM_DRIVERS=y
++# CONFIG_UBSAN is not set
  CONFIG_UCB1400_CORE=m
  CONFIG_UCC=y
  CONFIG_UCC_FAST=y
-@@ -11788,7 +11776,6 @@ CONFIG_VDSO=y
+@@ -11799,7 +11777,6 @@ CONFIG_VDSO=y
  CONFIG_VDSO32=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m

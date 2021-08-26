@@ -1,7 +1,7 @@
-From 690899c7840952163b5760758f027d7d6097a924 Mon Sep 17 00:00:00 2001
+From e39e625fa422ddec3143695ef0fb433156723c6e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 19 Jun 2021 16:09:42 +0200
-Subject: [PATCH 01/13] block, bfq: let also stably merged queues enjoy weight
+Subject: [PATCH 01/15] block, bfq: let also stably merged queues enjoy weight
  raising
 
 Merged bfq_queues are kept out of weight-raising (low-latency)
@@ -52,13 +52,13 @@ index eccbe2aed..efbe5b91a 100644
  	/*
  	 * Using the last flag, update budget and check whether bfqq
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From 06a4450afcadacb83c0b3ca1bae81e6ca83e3ff6 Mon Sep 17 00:00:00 2001
+From b0b066a7799692523b1c895f6717bebf35203b23 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 19 Jun 2021 16:09:44 +0200
-Subject: [PATCH 02/13] block, bfq: consider also creation time in delayed
+Subject: [PATCH 02/15] block, bfq: consider also creation time in delayed
  stable merge
 
 Since commit 430a67f9d616 ("block, bfq: merge bursts of newly-created
@@ -120,13 +120,13 @@ index efbe5b91a..6d2bf74c4 100644
  				bic->stable_merge_bfqq;
  			int proc_ref = min(bfqq_process_refs(bfqq),
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From f531c6fd56be53ea22212c4e137f2e7fdae1e16c Mon Sep 17 00:00:00 2001
+From 07c5be49c0858bb61d71e130c4c84bf5c87e255e Mon Sep 17 00:00:00 2001
 From: Pietro Pedroni <pedroni.pietro.96@gmail.com>
 Date: Sat, 19 Jun 2021 16:09:45 +0200
-Subject: [PATCH 03/13] block, bfq: boost throughput by extending queue-merging
+Subject: [PATCH 03/15] block, bfq: boost throughput by extending queue-merging
  times
 
 One of the methods with which bfq boosts throughput is by merging queues.
@@ -205,13 +205,13 @@ index 6d2bf74c4..0b7034067 100644
  		bfqq->entity.parent != last_bfqq_created->entity.parent ||
  		bfqq->ioprio != last_bfqq_created->ioprio ||
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From e8f93be69ce9dd0c109b06f4d262586b02533c4e Mon Sep 17 00:00:00 2001
+From 17703e7c14ab924c8f1318723aa2d797c67308f3 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 19 Jun 2021 16:09:47 +0200
-Subject: [PATCH 04/13] block, bfq: check waker only for queues with no
+Subject: [PATCH 04/15] block, bfq: check waker only for queues with no
  in-flight I/O
 
 Consider two bfq_queues, say Q1 and Q2, with Q2 empty. If a request of
@@ -273,13 +273,13 @@ index 0b7034067..fedb0a8fd 100644
  	    bfqd->last_completed_rq_bfqq == bfqq->waker_bfqq)
  		return;
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From f73644973e7bed678979fd1f241bc11effeebdc7 Mon Sep 17 00:00:00 2001
+From 107960b3c11a7e6574eea1585c402461fa59e8e4 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Thu, 3 Jun 2021 12:47:21 +0200
-Subject: [PATCH 05/13] block: Do not pull requests from the scheduler when we
+Subject: [PATCH 05/15] block: Do not pull requests from the scheduler when we
  cannot dispatch them
 
 Provided the device driver does not implement dispatch budget accounting
@@ -367,13 +367,13 @@ index 556368d2c..4b1ca7b7b 100644
  {
  	int cpu;
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From cbbe9cc06371e8464537b178a541d2dee14eb2eb Mon Sep 17 00:00:00 2001
+From 3caee855b45b33cf006800c694a0eb0336515da1 Mon Sep 17 00:00:00 2001
 From: Damien Le Moal <damien.lemoal@wdc.com>
 Date: Fri, 18 Jun 2021 10:59:22 +0900
-Subject: [PATCH 06/13] block: Remove unnecessary elevator operation checks
+Subject: [PATCH 06/15] block: Remove unnecessary elevator operation checks
 
 The insert_requests and dispatch_request elevator operations are
 mandatory for the correct execution of an elevator, and all implemented
@@ -465,13 +465,13 @@ index 440699c28..d107f3225 100644
  	if (e->icq_size) {
  		if (WARN_ON(e->icq_size < sizeof(struct io_cq)) ||
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From d2412ad8f2d635eaab89df47f48f36a5607de896 Mon Sep 17 00:00:00 2001
+From 2ba706f89c850625ced9a91f9849417d874e29fa Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Wed, 23 Jun 2021 11:36:33 +0200
-Subject: [PATCH 07/13] bfq: Remove merged request already in
+Subject: [PATCH 07/15] bfq: Remove merged request already in
  bfq_requests_merged()
 
 Currently, bfq does very little in bfq_requests_merged() and handles all
@@ -573,13 +573,13 @@ index fedb0a8fd..9433d38e4 100644
  	/*
  	 * Reset private fields. In case of a requeue, this allows
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From 66de4bc92003d17a66170c2fa15f1934f81b36fa Mon Sep 17 00:00:00 2001
+From 00fc517ad9a842e50c489ab61f5b74364f9766a1 Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Wed, 23 Jun 2021 11:36:34 +0200
-Subject: [PATCH 08/13] blk: Fix lock inversion between ioc lock and bfqd lock
+Subject: [PATCH 08/15] blk: Fix lock inversion between ioc lock and bfqd lock
 
 Lockdep complains about lock inversion between ioc->lock and bfqd->lock:
 
@@ -836,13 +836,13 @@ index dcb2f9022..1a5965174 100644
  extern struct request *elv_latter_request(struct request_queue *, struct request *);
  
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From 734d16151ea415771ec4aff9fba804daf68e794b Mon Sep 17 00:00:00 2001
+From b877590a508a9be41cfdf9251de2f1c6aac21c92 Mon Sep 17 00:00:00 2001
 From: Shaokun Zhang <zhangshaokun () hisilicon ! com>
 Date: Sat, 29 May 2021 07:34:49 +0000
-Subject: [PATCH 09/13] block, bfq: remove the repeated declaration
+Subject: [PATCH 09/15] block, bfq: remove the repeated declaration
 
 Function 'bfq_entity_to_bfqq' is declared twice, so remove the
 repeated declaration.
@@ -868,13 +868,13 @@ index 99c2a3cb0..ab72fb1df 100644
  
  #define BFQ_SERVICE_TREE_INIT	((struct bfq_service_tree)		\
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From a601f67af11fcb0b103003705a360446800a8188 Mon Sep 17 00:00:00 2001
+From a20e6a3b0e147310522f537796d0451da692378e Mon Sep 17 00:00:00 2001
 From: Ming Lei <ming.lei () redhat ! com>
 Date: Thu, 29 Jul 2021 03:42:26 +0000
-Subject: [PATCH 10/13] block: return ELEVATOR_DISCARD_MERGE if possible
+Subject: [PATCH 10/15] block: return ELEVATOR_DISCARD_MERGE if possible
 
 When merging one bio to request, if they are discard IO and the queue
 supports multi-range discard, we need to return ELEVATOR_DISCARD_MERGE
@@ -991,13 +991,13 @@ index f69c75bd6..9bfb2f655 100644
  {
  	struct request_queue *q = bdev_get_queue(bdev);
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From 1ab44d2c0893daa1a234c090cf749a34e22b8574 Mon Sep 17 00:00:00 2001
+From fe8398e1cd26b2b2572dd00ae8cec87be39f02cb Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente () linaro ! org>
 Date: Mon, 2 Aug 2021 14:13:52 +0000
-Subject: [PATCH 11/13] block, bfq: honor already-setup queue merges
+Subject: [PATCH 11/15] block, bfq: honor already-setup queue merges
 
 The function bfq_setup_merge prepares the merging between two
 bfq_queues, say bfqq and new_bfqq. To this goal, it assigns
@@ -1070,13 +1070,13 @@ index 673a634ea..16394e4d7 100644
  		return NULL;
  
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From a1e6ebe047670cd466c71a32dfe567fc413f384a Mon Sep 17 00:00:00 2001
+From 94eda11fe6a710dc641309452590b3e70758d5ae Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 10 Aug 2021 11:50:57 +0200
-Subject: [PATCH 12/13] Revert "block: return ELEVATOR_DISCARD_MERGE if
+Subject: [PATCH 12/15] Revert "block: return ELEVATOR_DISCARD_MERGE if
  possible"
 
 This reverts commit 317a99fea90a07b0fcece323c1029935a9aa1c77.
@@ -1186,13 +1186,13 @@ index 9bfb2f655..f69c75bd6 100644
  {
  	struct request_queue *q = bdev_get_queue(bdev);
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
 
 
-From 7d405671a2a84e5d43b12eebb2dfc9572ba13417 Mon Sep 17 00:00:00 2001
+From 4e3ba75699ce317afec8fcf884407c08ded8644d Mon Sep 17 00:00:00 2001
 From: Ming Lei <ming.lei () redhat ! com>
 Date: Tue, 10 Aug 2021 02:52:07 +0000
-Subject: [PATCH 13/13] block: return ELEVATOR_DISCARD_MERGE if possible
+Subject: [PATCH 13/15] block: return ELEVATOR_DISCARD_MERGE if possible
 
 When merging one bio to request, if they are discard IO and the queue
 supports multi-range discard, we need to return ELEVATOR_DISCARD_MERGE
@@ -1315,5 +1315,66 @@ index f69c75bd6..9bfb2f655 100644
  {
  	struct request_queue *q = bdev_get_queue(bdev);
 -- 
-2.33.0.rc0.52.ge5a14ddd2d
+2.33.0
+
+
+From 51d45392c194132b0b08f290aeee17aa1332bb2d Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Wed, 25 Aug 2021 18:16:56 +0200
+Subject: [PATCH 14/15] Revert "block, bfq: remove the repeated declaration"
+
+This reverts commit ecca4e1d8e08d641d9fc60f06b061e6290593790.
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ block/bfq-iosched.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
+index ab72fb1df..99c2a3cb0 100644
+--- a/block/bfq-iosched.h
++++ b/block/bfq-iosched.h
+@@ -955,6 +955,8 @@ struct bfq_group {
+ };
+ #endif
+ 
++struct bfq_queue *bfq_entity_to_bfqq(struct bfq_entity *entity);
++
+ /* --------------- main algorithm interface ----------------- */
+ 
+ #define BFQ_SERVICE_TREE_INIT	((struct bfq_service_tree)		\
+-- 
+2.33.0
+
+
+From 8f04a61d3cfcf6a827899fe14690e6e96b0aff04 Mon Sep 17 00:00:00 2001
+From: Shaokun Zhang <zhangshaokun () hisilicon ! com>
+Date: Wed, 25 Aug 2021 06:19:51 +0000
+Subject: [PATCH 15/15] block, bfq: cleanup the repeated declaration
+
+Function 'bfq_entity_to_bfqq' is declared twice, so remove the
+repeated declaration and blank line.
+
+Cc: Paolo Valente <paolo.valente@linaro.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Shaokun Zhang <zhangshaokun@hisilicon.com>
+---
+ block/bfq-iosched.h | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
+index 99c2a3cb0..ab72fb1df 100644
+--- a/block/bfq-iosched.h
++++ b/block/bfq-iosched.h
+@@ -955,8 +955,6 @@ struct bfq_group {
+ };
+ #endif
+ 
+-struct bfq_queue *bfq_entity_to_bfqq(struct bfq_entity *entity);
+-
+ /* --------------- main algorithm interface ----------------- */
+ 
+ #define BFQ_SERVICE_TREE_INIT	((struct bfq_service_tree)		\
+-- 
+2.33.0
 
