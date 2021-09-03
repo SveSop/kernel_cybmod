@@ -1,12 +1,12 @@
-## Cybmod patches for 5.13 kernel  
+## Cybmod patches for 5.14 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.13.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.13.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.14.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.14.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.13.13  
-0001 : ProjectC 5.13-r3  
-0002 : 5.13 Graysky's CPU optimization patches  
+0000 : Patch 5.14.1  
+0001 : ProjectC 5.14-r0  
+0002 : 5.14 Graysky's CPU optimization patches  
 0003 : "Old" fsync patch for backwards compatibility  
 0004 : Futex2 interface  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  

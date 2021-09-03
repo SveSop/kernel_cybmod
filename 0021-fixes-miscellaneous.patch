@@ -1,7 +1,7 @@
-From a11b8e786ff21cd9bbaccb08bd22a7c0cb744c22 Mon Sep 17 00:00:00 2001
+From cce542f77e3b3d7c176a381cb783d5baed6ce27b Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/18] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/12] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index 1e8ab4749..75122fd65 100644
  endif
  
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From a132b3897a5d62b0ff07dc7e85e68f2a6092f367 Mon Sep 17 00:00:00 2001
+From ed92c6c0575e093ea4bd76f931473f264a87083b Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/18] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/12] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 65e3e7df8..b41afee77 100644
  	int ret;
  
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From b23e93a58daf569344b7d70daf40b54d1552b8c4 Mon Sep 17 00:00:00 2001
+From 61419ab6c2bd23b9790c333d16e6a2c9b4b3fa00 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/18] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/12] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,10 +76,10 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 0565caea0..08e59035c 100644
+index 61741e9d9..a2b799fc9 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -688,6 +688,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
+@@ -699,6 +699,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
  RETPOLINE_VDSO_CFLAGS_CLANG := -mretpoline
  RETPOLINE_CFLAGS := $(call cc-option,$(RETPOLINE_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_CFLAGS_CLANG)))
  RETPOLINE_VDSO_CFLAGS := $(call cc-option,$(RETPOLINE_VDSO_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_VDSO_CFLAGS_CLANG)))
@@ -91,74 +91,13 @@ index 0565caea0..08e59035c 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 37ab98d3419013e10edb7dd9f7d367d6bdfcd572 Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 04/18] mm: Disable watermark boosting by default
-
-What watermark boosting does is preemptively fire up kswapd to free
-memory when there hasn't been an allocation failure. It does this by
-increasing kswapd's high watermark goal and then firing up kswapd. The
-reason why this causes freezes is because, with the increased high
-watermark goal, kswapd will steal memory from processes that need it in
-order to make forward progress. These processes will, in turn, try to
-allocate memory again, which will cause kswapd to steal necessary pages
-from those processes again, in a positive feedback loop known as page
-thrashing. When page thrashing occurs, your system is essentially
-livelocked until the necessary forward progress can be made to stop
-processes from trying to continuously allocate memory and trigger
-kswapd to steal it back.
-
-This problem already occurs with kswapd *without* watermark boosting,
-but it's usually only encountered on machines with a small amount of
-memory and/or a slow CPU. Watermark boosting just makes the existing
-problem worse enough to notice on higher spec'd machines.
-
-Disable watermark boosting by default since it's a total dumpster fire.
-I can't imagine why anyone would want to explicitly enable it, but the
-option is there in case someone does.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- mm/page_alloc.c | 13 -------------
- 1 file changed, 13 deletions(-)
-
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ef2265f86..15577fcd9 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -331,20 +331,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
- 
- int min_free_kbytes = 1024;
- int user_min_free_kbytes = -1;
--#ifdef CONFIG_DISCONTIGMEM
--/*
-- * DiscontigMem defines memory ranges as separate pg_data_t even if the ranges
-- * are not on separate NUMA nodes. Functionally this works but with
-- * watermark_boost_factor, it can reclaim prematurely as the ranges can be
-- * quite small. By default, do not boost watermarks on discontigmem as in
-- * many cases very high-order allocations like THP are likely to be
-- * unsupported and the premature reclaim offsets the advantage of long-term
-- * fragmentation avoidance.
-- */
- int watermark_boost_factor __read_mostly;
--#else
--int watermark_boost_factor __read_mostly = 15000;
--#endif
- int watermark_scale_factor = 10;
- 
- static unsigned long nr_kernel_pages __initdata;
--- 
-2.32.0.93.g670b81a890
-
-
-From f2930ac46a6df6396b483f736c39d37ce1287742 Mon Sep 17 00:00:00 2001
+From bcba6374e10925f9cd91868b893eb2476c957a14 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 05/18] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 04/12] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -175,10 +114,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 0d53eba1c..2730e5e19 100644
+index fcb535560..914f1c89c 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
-@@ -801,6 +801,7 @@ typedef struct pglist_data {
+@@ -832,6 +832,7 @@ typedef struct pglist_data {
  	unsigned long node_spanned_pages; /* total size of physical page
  					     range, including holes */
  	int node_id;
@@ -187,10 +126,10 @@ index 0d53eba1c..2730e5e19 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 15577fcd9..ea9c7d8f3 100644
+index eeb3a9cb3..e389c14ac 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4706,6 +4706,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4896,6 +4896,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -199,7 +138,7 @@ index 15577fcd9..ea9c7d8f3 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4739,8 +4741,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4929,8 +4931,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -214,7 +153,7 @@ index 15577fcd9..ea9c7d8f3 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -4945,9 +4952,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -5135,9 +5142,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -229,7 +168,7 @@ index 15577fcd9..ea9c7d8f3 100644
  	return page;
  }
  
-@@ -7139,6 +7149,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -7397,6 +7407,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  
  	pgdat_page_ext_init(pgdat);
  	lruvec_init(&pgdat->__lruvec);
@@ -238,10 +177,10 @@ index 15577fcd9..ea9c7d8f3 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 5199b9696..7f24c7490 100644
+index eeae2f6bc..b65023797 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3881,7 +3881,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3941,7 +3941,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		__fs_reclaim_release();
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
@@ -252,13 +191,13 @@ index 5199b9696..7f24c7490 100644
  
  		/*
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From ce91b6880aa163fb825475251df30cabb9d09284 Mon Sep 17 00:00:00 2001
+From 2d06d361a32e38d5a292542d73e5b9e47ce0bdc5 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 06/18] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 05/12] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -270,10 +209,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index ea9c7d8f3..97e6e3198 100644
+index e389c14ac..a36e71307 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -2599,8 +2599,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
+@@ -2690,8 +2690,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
  	 * likelihood of future fallbacks. Wake kswapd now as the node
  	 * may be balanced overall and kswapd will not wake naturally.
  	 */
@@ -288,13 +227,13 @@ index ea9c7d8f3..97e6e3198 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From b6b7f89c07baf7be9592f8ea671dbfb4788aea87 Mon Sep 17 00:00:00 2001
+From 293f08ead99b0a6afe35bb7285205249661f096d Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 07/18] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 06/12] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -311,10 +250,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  4 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 2730e5e19..0d53eba1c 100644
+index 914f1c89c..fcb535560 100644
 --- a/include/linux/mmzone.h
 +++ b/include/linux/mmzone.h
-@@ -801,7 +801,6 @@ typedef struct pglist_data {
+@@ -832,7 +832,6 @@ typedef struct pglist_data {
  	unsigned long node_spanned_pages; /* total size of physical page
  					     range, including holes */
  	int node_id;
@@ -323,19 +262,19 @@ index 2730e5e19..0d53eba1c 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/internal.h b/mm/internal.h
-index e8fdb531f..3e68959cd 100644
+index 31ff935b2..f49143be9 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
-@@ -197,6 +197,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
+@@ -202,6 +202,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
  extern void post_alloc_hook(struct page *page, unsigned int order,
  					gfp_t gfp_flags);
  extern int user_min_free_kbytes;
 +extern atomic_long_t kswapd_waiters;
  
- extern void free_unref_page(struct page *page);
+ extern void free_unref_page(struct page *page, unsigned int order);
  extern void free_unref_page_list(struct list_head *list);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 97e6e3198..a823eb99d 100644
+index a36e71307..24e20e25e 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -118,6 +118,8 @@ typedef int __bitwise fpi_t;
@@ -346,8 +285,8 @@ index 97e6e3198..a823eb99d 100644
 +
  /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
  static DEFINE_MUTEX(pcp_batch_high_lock);
- #define MIN_PERCPU_PAGELIST_FRACTION	(8)
-@@ -4709,7 +4711,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ #define MIN_PERCPU_PAGELIST_HIGH_FRACTION (8)
+@@ -4899,7 +4901,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -355,7 +294,7 @@ index 97e6e3198..a823eb99d 100644
  	bool woke_kswapd = false;
  
  	/*
-@@ -4746,7 +4747,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4936,7 +4937,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  
  	if (alloc_flags & ALLOC_KSWAPD) {
  		if (!woke_kswapd) {
@@ -364,7 +303,7 @@ index 97e6e3198..a823eb99d 100644
  			woke_kswapd = true;
  		}
  		wake_all_kswapds(order, gfp_mask, ac);
-@@ -4957,7 +4958,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -5147,7 +5148,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  fail:
  got_pg:
  	if (woke_kswapd)
@@ -373,7 +312,7 @@ index 97e6e3198..a823eb99d 100644
  	if (!page)
  		warn_alloc(gfp_mask, ac->nodemask,
  				"page allocation failure: order:%u", order);
-@@ -7152,7 +7153,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -7410,7 +7411,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  
  	pgdat_page_ext_init(pgdat);
  	lruvec_init(&pgdat->__lruvec);
@@ -382,10 +321,10 @@ index 97e6e3198..a823eb99d 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 7f24c7490..8f7654297 100644
+index b65023797..aa536c6b2 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -3882,7 +3882,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -3942,7 +3942,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		ret = try_to_freeze();
  		__fs_reclaim_acquire();
  		if (ret || kthread_should_stop() ||
@@ -395,13 +334,13 @@ index 7f24c7490..8f7654297 100644
  
  		/*
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 393cfb6db0e440467f2584d519378bb6f2ae9312 Mon Sep 17 00:00:00 2001
+From 41019f5671d09e06125f16ebde19c1c20e442c85 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 08/18] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 07/12] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -414,10 +353,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 08e59035c..17b5b9311 100644
+index a2b799fc9..326e21208 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1001,9 +1001,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
+@@ -1013,9 +1013,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
  # Make sure -fstack-check isn't enabled (like gentoo apparently did)
  KBUILD_CFLAGS  += -fno-stack-check
  
@@ -428,13 +367,13 @@ index 08e59035c..17b5b9311 100644
  KBUILD_CFLAGS   += -Werror=date-time
  
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 9de042078f118e846f44a14fa73068523d7372f7 Mon Sep 17 00:00:00 2001
+From ce7b6dcdd98fc88943de0b89a11f359d2558129e Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 09/18] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 08/12] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -486,10 +425,10 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index cb89dbded..a6e423b3b 100644
+index bdb22006f..3375d7ca8 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -3792,6 +3792,15 @@
+@@ -3861,6 +3861,15 @@
  		nomsi		[MSI] If the PCI_MSI kernel config parameter is
  				enabled, this kernel boot option can be used to
  				disable the use of MSI interrupts system-wide.
@@ -506,10 +445,10 @@ index cb89dbded..a6e423b3b 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 22b2bb110..e8502c823 100644
+index ab3de1551..0ee826e42 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -3558,6 +3558,106 @@ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
+@@ -3560,6 +3560,106 @@ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
  			 quirk_nvidia_no_bus_reset);
  
@@ -616,7 +555,7 @@ index 22b2bb110..e8502c823 100644
  /*
   * Some Atheros AR9xxx and QCA988x chips do not behave after a bus reset.
   * The device will throw a Link Down error on AER-capable systems and
-@@ -4851,6 +4951,8 @@ static const struct pci_dev_acs_enabled {
+@@ -4863,6 +4963,8 @@ static const struct pci_dev_acs_enabled {
  	{ PCI_VENDOR_ID_ZHAOXIN, 0x9083, pci_quirk_mf_endpoint_acs },
  	/* Zhaoxin Root/Downstream Ports */
  	{ PCI_VENDOR_ID_ZHAOXIN, PCI_ANY_ID, pci_quirk_zhaoxin_pcie_ports_acs },
@@ -626,13 +565,13 @@ index 22b2bb110..e8502c823 100644
  };
  
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From acb0fa9c21d6be72a4227139234eeb383b4767ac Mon Sep 17 00:00:00 2001
+From 62ba4db20a4e0d0e6981fb84ef924d973e3f14d2 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 10/18] ZEN: Add OpenRGB patches
+Subject: [PATCH 09/12] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1375,83 +1314,13 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From e16d9823207c45326c60e7957dcf70f73de05ab1 Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 25 Sep 2020 13:22:05 +0200
-Subject: [PATCH 11/18] tty: Allow setting the number of available virtual TTYs
-
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
----
- drivers/tty/Kconfig     | 13 +++++++++++++
- include/uapi/linux/vt.h | 15 ++++++++++++++-
- 2 files changed, 27 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
-index f6a7fd6d3..6d8d69ba2 100644
---- a/drivers/tty/Kconfig
-+++ b/drivers/tty/Kconfig
-@@ -76,6 +76,19 @@ config VT_CONSOLE_SLEEP
- 	def_bool y
- 	depends on VT_CONSOLE && PM_SLEEP
- 
-+config NR_TTY_DEVICES
-+        int "Maximum tty device number"
-+        depends on VT
-+        range 12 63
-+        default 63
-+        help
-+          This option is used to change the number of tty devices in /dev.
-+          The default value is 63. The lowest number you can set is 12,
-+          63 is also the upper limit so we don't overrun the serial
-+          consoles.
-+
-+          If unsure, say 63.
-+
- config HW_CONSOLE
- 	bool
- 	depends on VT && !UML
-diff --git a/include/uapi/linux/vt.h b/include/uapi/linux/vt.h
-index e9d39c485..3bceead8d 100644
---- a/include/uapi/linux/vt.h
-+++ b/include/uapi/linux/vt.h
-@@ -3,12 +3,25 @@
- #define _UAPI_LINUX_VT_H
- 
- 
-+/*
-+ * We will make this definition solely for the purpose of making packages
-+ * such as splashutils build, because they can not understand that
-+ * NR_TTY_DEVICES is defined in the kernel configuration.
-+ */
-+#ifndef CONFIG_NR_TTY_DEVICES
-+#define CONFIG_NR_TTY_DEVICES 63
-+#endif
-+
- /*
-  * These constants are also useful for user-level apps (e.g., VC
-  * resizing).
-  */
- #define MIN_NR_CONSOLES 1       /* must be at least 1 */
--#define MAX_NR_CONSOLES	63	/* serial lines start at 64 */
-+/*
-+ * NR_TTY_DEVICES:
-+ * Value MUST be at least 12 and must never be higher then 63
-+ */
-+#define MAX_NR_CONSOLES CONFIG_NR_TTY_DEVICES	/* serial lines start above this */
- 		/* Note: the ioctl VT_GETSTATE does not work for
- 		   consoles 16 and higher (since it returns a short) */
- 
--- 
-2.32.0.93.g670b81a890
-
-
-From 654429510d26269467a3583941f0a613a57c0267 Mon Sep 17 00:00:00 2001
+From 945078e28e6baeaa6652d4b893a79dfaddc547b2 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 12/18] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 10/12] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -1478,7 +1347,7 @@ Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
  2 files changed, 40 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index a2c3d9ad9..8718f58ad 100644
+index b8d55af76..ee4f7e170 100644
 --- a/drivers/scsi/sd.c
 +++ b/drivers/scsi/sd.c
 @@ -2938,7 +2938,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
@@ -1579,13 +1448,13 @@ index b59136c41..4154030c8 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From c2d41af909641fb409ffbbd05072a958678a5ce9 Mon Sep 17 00:00:00 2001
+From 52d97749076c58b31939faa37981ea68ce708c41 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 13/18] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 11/12] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -1661,7 +1530,7 @@ Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
  1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 9023717c5..e0d5a6665 100644
+index 87ccb3438..52cb4d294 100644
 --- a/fs/iomap/buffered-io.c
 +++ b/fs/iomap/buffered-io.c
 @@ -17,6 +17,7 @@
@@ -1672,7 +1541,7 @@ index 9023717c5..e0d5a6665 100644
  #include "trace.h"
  
  #include "../internal.h"
-@@ -1434,9 +1435,11 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
+@@ -1404,9 +1405,11 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
  {
  	struct iomap_writepage_ctx *wpc = data;
  	struct inode *inode = page->mapping->host;
@@ -1684,7 +1553,7 @@ index 9023717c5..e0d5a6665 100644
  
  	trace_iomap_writepage(inode, page_offset(page), PAGE_SIZE);
  
-@@ -1520,7 +1523,16 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
+@@ -1490,7 +1493,16 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
  		end_offset = offset;
  	}
  
@@ -1703,874 +1572,75 @@ index 9023717c5..e0d5a6665 100644
  redirty:
  	redirty_page_for_writepage(wbc, page);
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 95dffa4210544c1b553f5d73487b90b6f2e55321 Mon Sep 17 00:00:00 2001
-From: Dave Chinner <dchinner@redhat.com>
-Date: Thu, 28 Jan 2021 15:41:50 +1100
-Subject: [PATCH 14/18] xfs: log stripe roundoff is a property of the log
+From 287a04a17b12275514e7c57185ddca7557f0292a Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Mon, 30 Aug 2021 13:28:51 +0200
+Subject: [PATCH 12/12] tty: Allow setting the number of available virtual TTYs
 
-We don't need to look at the xfs_mount and superblock every time we
-need to do an iclog roundoff calculation. The property is fixed for
-the life of the log, so store the roundoff in the log at mount time
-and use that everywhere.
-
-On a debug build:
-
-$ size fs/xfs/xfs_log.o.*
-   text	   data	    bss	    dec	    hex	filename
-  27360	    560	      8	  27928	   6d18	fs/xfs/xfs_log.o.orig
-  27219	    560	      8	  27787	   6c8b	fs/xfs/xfs_log.o.patched
-
-[HH: re-added lost factor 2 in xfs_log_calc_unit_res()]
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
- fs/xfs/libxfs/xfs_log_format.h |  3 --
- fs/xfs/xfs_log.c               | 60 +++++++++++++++-------------------
- fs/xfs/xfs_log_priv.h          |  2 ++
- 3 files changed, 28 insertions(+), 37 deletions(-)
+ drivers/tty/Kconfig     | 13 +++++++++++++
+ include/uapi/linux/vt.h | 15 ++++++++++++++-
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/fs/xfs/libxfs/xfs_log_format.h b/fs/xfs/libxfs/xfs_log_format.h
-index 3e15ea29f..d548ea4b6 100644
---- a/fs/xfs/libxfs/xfs_log_format.h
-+++ b/fs/xfs/libxfs/xfs_log_format.h
-@@ -34,9 +34,6 @@ typedef uint32_t xlog_tid_t;
- #define XLOG_MIN_RECORD_BSHIFT	14		/* 16384 == 1 << 14 */
- #define XLOG_BIG_RECORD_BSHIFT	15		/* 32k == 1 << 15 */
- #define XLOG_MAX_RECORD_BSHIFT	18		/* 256k == 1 << 18 */
--#define XLOG_BTOLSUNIT(log, b)  (((b)+(log)->l_mp->m_sb.sb_logsunit-1) / \
--                                 (log)->l_mp->m_sb.sb_logsunit)
--#define XLOG_LSUNITTOB(log, su) ((su) * (log)->l_mp->m_sb.sb_logsunit)
+diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
+index 23cc988c6..d49b71eab 100644
+--- a/drivers/tty/Kconfig
++++ b/drivers/tty/Kconfig
+@@ -75,6 +75,19 @@ config VT_CONSOLE_SLEEP
+ 	def_bool y
+ 	depends on VT_CONSOLE && PM_SLEEP
  
- #define XLOG_HEADER_SIZE	512
- 
-diff --git a/fs/xfs/xfs_log.c b/fs/xfs/xfs_log.c
-index c19a82ade..a9dd86b50 100644
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -1401,6 +1401,12 @@ xlog_alloc_log(
- 	xlog_assign_atomic_lsn(&log->l_last_sync_lsn, 1, 0);
- 	log->l_curr_cycle  = 1;	    /* 0 is bad since this is initial value */
- 
-+	/* roundoff padding for transaction data and one for commit record */
-+	if (xfs_sb_version_haslogv2(&mp->m_sb) && mp->m_sb.sb_logsunit > 1)
-+		log->l_iclog_roundoff = mp->m_sb.sb_logsunit;
-+	else
-+		log->l_iclog_roundoff = BBSIZE;
++config NR_TTY_DEVICES
++        int "Maximum tty device number"
++        depends on VT
++        range 12 63
++        default 63
++        help
++          This option is used to change the number of tty devices in /dev.
++          The default value is 63. The lowest number you can set is 12,
++          63 is also the upper limit so we don't overrun the serial
++          consoles.
 +
- 	xlog_grant_head_init(&log->l_reserve_head);
- 	xlog_grant_head_init(&log->l_write_head);
- 
-@@ -1854,29 +1860,15 @@ xlog_calc_iclog_size(
- 	uint32_t		*roundoff)
- {
- 	uint32_t		count_init, count;
--	bool			use_lsunit;
--
--	use_lsunit = xfs_sb_version_haslogv2(&log->l_mp->m_sb) &&
--			log->l_mp->m_sb.sb_logsunit > 1;
- 
- 	/* Add for LR header */
- 	count_init = log->l_iclog_hsize + iclog->ic_offset;
-+	count = roundup(count_init, log->l_iclog_roundoff);
- 
--	/* Round out the log write size */
--	if (use_lsunit) {
--		/* we have a v2 stripe unit to use */
--		count = XLOG_LSUNITTOB(log, XLOG_BTOLSUNIT(log, count_init));
--	} else {
--		count = BBTOB(BTOBB(count_init));
--	}
--
--	ASSERT(count >= count_init);
- 	*roundoff = count - count_init;
- 
--	if (use_lsunit)
--		ASSERT(*roundoff < log->l_mp->m_sb.sb_logsunit);
--	else
--		ASSERT(*roundoff < BBTOB(1));
-+	ASSERT(count >= count_init);
-+	ASSERT(*roundoff < log->l_iclog_roundoff);
- 	return count;
- }
- 
-@@ -3151,10 +3143,9 @@ xlog_state_switch_iclogs(
- 	log->l_curr_block += BTOBB(eventual_size)+BTOBB(log->l_iclog_hsize);
- 
- 	/* Round up to next log-sunit */
--	if (xfs_sb_version_haslogv2(&log->l_mp->m_sb) &&
--	    log->l_mp->m_sb.sb_logsunit > 1) {
--		uint32_t sunit_bb = BTOBB(log->l_mp->m_sb.sb_logsunit);
--		log->l_curr_block = roundup(log->l_curr_block, sunit_bb);
-+	if (log->l_iclog_roundoff > BBSIZE) {
-+		log->l_curr_block = roundup(log->l_curr_block,
-+						BTOBB(log->l_iclog_roundoff));
- 	}
- 
- 	if (log->l_curr_block >= log->l_logBBsize) {
-@@ -3406,12 +3397,11 @@ xfs_log_ticket_get(
-  * Figure out the total log space unit (in bytes) that would be
-  * required for a log ticket.
-  */
--int
--xfs_log_calc_unit_res(
--	struct xfs_mount	*mp,
-+static int
-+xlog_calc_unit_res(
-+	struct xlog		*log,
- 	int			unit_bytes)
- {
--	struct xlog		*log = mp->m_log;
- 	int			iclog_space;
- 	uint			num_headers;
- 
-@@ -3487,18 +3477,20 @@ xfs_log_calc_unit_res(
- 	/* for commit-rec LR header - note: padding will subsume the ophdr */
- 	unit_bytes += log->l_iclog_hsize;
- 
--	/* for roundoff padding for transaction data and one for commit record */
--	if (xfs_sb_version_haslogv2(&mp->m_sb) && mp->m_sb.sb_logsunit > 1) {
--		/* log su roundoff */
--		unit_bytes += 2 * mp->m_sb.sb_logsunit;
--	} else {
--		/* BB roundoff */
--		unit_bytes += 2 * BBSIZE;
--        }
-+	/* roundoff padding for transaction data and one for commit record */
-+	unit_bytes += 2 * log->l_iclog_roundoff;
- 
- 	return unit_bytes;
- }
- 
-+int
-+xfs_log_calc_unit_res(
-+	struct xfs_mount	*mp,
-+	int			unit_bytes)
-+{
-+	return xlog_calc_unit_res(mp->m_log, unit_bytes);
-+}
++          If unsure, say 63.
 +
- /*
-  * Allocate and initialise a new log ticket.
-  */
-@@ -3515,7 +3507,7 @@ xlog_ticket_alloc(
+ config HW_CONSOLE
+ 	bool
+ 	depends on VT
+diff --git a/include/uapi/linux/vt.h b/include/uapi/linux/vt.h
+index e9d39c485..3bceead8d 100644
+--- a/include/uapi/linux/vt.h
++++ b/include/uapi/linux/vt.h
+@@ -3,12 +3,25 @@
+ #define _UAPI_LINUX_VT_H
  
- 	tic = kmem_cache_zalloc(xfs_log_ticket_zone, GFP_NOFS | __GFP_NOFAIL);
- 
--	unit_res = xfs_log_calc_unit_res(log->l_mp, unit_bytes);
-+	unit_res = xlog_calc_unit_res(log, unit_bytes);
- 
- 	atomic_set(&tic->t_ref, 1);
- 	tic->t_task		= current;
-diff --git a/fs/xfs/xfs_log_priv.h b/fs/xfs/xfs_log_priv.h
-index 1c6fdbf3d..037950cf1 100644
---- a/fs/xfs/xfs_log_priv.h
-+++ b/fs/xfs/xfs_log_priv.h
-@@ -436,6 +436,8 @@ struct xlog {
- #endif
- 	/* log recovery lsn tracking (for buffer submission */
- 	xfs_lsn_t		l_recovery_lsn;
-+
-+	uint32_t		l_iclog_roundoff;/* padding roundoff */
- };
- 
- #define XLOG_BUF_CANCEL_BUCKET(log, blkno) \
--- 
-2.32.0.93.g670b81a890
-
-
-From d31c2f917a1f7e3ede11d00444ac80a681e32b5a Mon Sep 17 00:00:00 2001
-From: Dave Chinner <dchinner@redhat.com>
-Date: Thu, 28 Jan 2021 15:41:51 +1100
-Subject: [PATCH 15/18] xfs: separate CIL commit record IO
-
-To allow for iclog IO device cache flush behaviour to be optimised,
-we first need to separate out the commit record iclog IO from the
-rest of the checkpoint so we can wait for the checkpoint IO to
-complete before we issue the commit record.
-
-This separate is only necessary if the commit record is being
-written into a different iclog to the start of the checkpoint. If
-the entire checkpoint and commit is in the one iclog, then they are
-both covered by the one set of cache flush primitives on the iclog
-and hence there is no need to separate them.
-
-Otherwise, we need to wait for all the previous iclogs to complete
-so they are ordered correctly and made stable by the REQ_PREFLUSH
-that the commit record iclog IO issues. This guarantees that if a
-reader sees the commit record in the journal, they will also see the
-entire checkpoint that commit record closes off.
-
-This also provides the guarantee that when the commit record IO
-completes, we can safely unpin all the log items in the checkpoint
-so they can be written back because the entire checkpoint is stable
-in the journal.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Chandan Babu R <chandanrlinux@gmail.com>
----
- fs/xfs/xfs_log.c      | 47 +++++++++++++++++++++++++++++++++++++++++++
- fs/xfs/xfs_log_cil.c  |  7 +++++++
- fs/xfs/xfs_log_priv.h |  2 ++
- 3 files changed, 56 insertions(+)
-
-diff --git a/fs/xfs/xfs_log.c b/fs/xfs/xfs_log.c
-index a9dd86b50..88a142628 100644
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -810,6 +810,53 @@ xlog_wait_on_iclog(
- 	return 0;
- }
  
 +/*
-+ * Wait on any iclogs that are still flushing in the range of start_lsn to
-+ * the current iclog's lsn. The caller holds a reference to the iclog, but
-+ * otherwise holds no log locks.
-+ *
-+ * We walk backwards through the iclogs to find the iclog with the highest lsn
-+ * in the range that we need to wait for and then wait for it to complete.
-+ * Completion ordering of iclog IOs ensures that all prior iclogs to this IO are
-+ * complete by the time our candidate has completed.
++ * We will make this definition solely for the purpose of making packages
++ * such as splashutils build, because they can not understand that
++ * NR_TTY_DEVICES is defined in the kernel configuration.
 + */
-+int
-+xlog_wait_on_iclog_lsn(
-+	struct xlog_in_core	*iclog,
-+	xfs_lsn_t		start_lsn)
-+{
-+	struct xlog		*log = iclog->ic_log;
-+	struct xlog_in_core	*prev;
-+	int			error = -EIO;
-+
-+	spin_lock(&log->l_icloglock);
-+	if (XLOG_FORCED_SHUTDOWN(log))
-+		goto out_unlock;
-+
-+	error = 0;
-+	for (prev = iclog->ic_prev; prev != iclog; prev = prev->ic_prev) {
-+
-+		/* Done if the lsn is before our start lsn */
-+		if (XFS_LSN_CMP(be64_to_cpu(prev->ic_header.h_lsn),
-+				start_lsn) < 0)
-+			break;
-+
-+		/* Don't need to wait on completed, clean iclogs */
-+		if (prev->ic_state == XLOG_STATE_DIRTY ||
-+		    prev->ic_state == XLOG_STATE_ACTIVE) {
-+			continue;
-+		}
-+
-+		/* wait for completion on this iclog */
-+		xlog_wait(&prev->ic_force_wait, &log->l_icloglock);
-+		return 0;
-+	}
-+
-+out_unlock:
-+	spin_unlock(&log->l_icloglock);
-+	return error;
-+}
++#ifndef CONFIG_NR_TTY_DEVICES
++#define CONFIG_NR_TTY_DEVICES 63
++#endif
 +
  /*
-  * Write out an unmount record using the ticket provided. We have to account for
-  * the data space used in the unmount ticket as this write is not done from a
-diff --git a/fs/xfs/xfs_log_cil.c b/fs/xfs/xfs_log_cil.c
-index b0ef071b3..c5cc1b7ad 100644
---- a/fs/xfs/xfs_log_cil.c
-+++ b/fs/xfs/xfs_log_cil.c
-@@ -870,6 +870,13 @@ xlog_cil_push_work(
- 	wake_up_all(&cil->xc_commit_wait);
- 	spin_unlock(&cil->xc_push_lock);
- 
-+	/*
-+	 * If the checkpoint spans multiple iclogs, wait for all previous
-+	 * iclogs to complete before we submit the commit_iclog.
-+	 */
-+	if (ctx->start_lsn != commit_lsn)
-+		xlog_wait_on_iclog_lsn(commit_iclog, ctx->start_lsn);
-+
- 	/* release the hounds! */
- 	xfs_log_release_iclog(commit_iclog);
- 	return;
-diff --git a/fs/xfs/xfs_log_priv.h b/fs/xfs/xfs_log_priv.h
-index 037950cf1..a7ac85aaf 100644
---- a/fs/xfs/xfs_log_priv.h
-+++ b/fs/xfs/xfs_log_priv.h
-@@ -584,6 +584,8 @@ xlog_wait(
- 	remove_wait_queue(wq, &wait);
- }
- 
-+int xlog_wait_on_iclog_lsn(struct xlog_in_core *iclog, xfs_lsn_t start_lsn);
-+
- /*
-  * The LSN is valid so long as it is behind the current LSN. If it isn't, this
-  * means that the next log record that includes this metadata could have a
--- 
-2.32.0.93.g670b81a890
-
-
-From 0fbfca4b7a8eb132b95c448d141b5365027b0ec9 Mon Sep 17 00:00:00 2001
-From: Dave Chinner <dchinner@redhat.com>
-Date: Thu, 28 Jan 2021 15:41:52 +1100
-Subject: [PATCH 16/18] xfs: journal IO cache flush reductions
-
-Currently every journal IO is issued as REQ_PREFLUSH | REQ_FUA to
-guarantee the ordering requirements the journal has w.r.t. metadata
-writeback. THe two ordering constraints are:
-
-1. we cannot overwrite metadata in the journal until we guarantee
-that the dirty metadata has been written back in place and is
-stable.
-
-2. we cannot write back dirty metadata until it has been written to
-the journal and guaranteed to be stable (and hence recoverable) in
-the journal.
-
-THe ordering guarantees of #1 are provided by REQ_PREFLUSH. This
-causes the journal IO to issue a cache flush and wait for it to
-complete before issuing the write IO to the journal. Hence all
-completed metadata IO is guaranteed to be stable before the journal
-overwrites the old metadata.
-
-THe ordering guarantees of #2 are provided by the REQ_FUA, which
-ensures the journal writes do not complete until they are on stable
-storage. Hence by the time the last journal IO in a checkpoint
-completes, we know that the entire checkpoint is on stable storage
-and we can unpin the dirty metadata and allow it to be written back.
-
-This is the mechanism by which ordering was first implemented in XFS
-way back in 2002 by this commit:
-
-commit 95d97c36e5155075ba2eb22b17562cfcc53fcf96
-Author: Steve Lord <lord@sgi.com>
-Date:   Fri May 24 14:30:21 2002 +0000
-
-    Add support for drive write cache flushing - should the kernel
-    have the infrastructure
-
-A lot has changed since then, most notably we now use delayed
-logging to checkpoint the filesystem to the journal rather than
-write each individual transaction to the journal. Cache flushes on
-journal IO are necessary when individual transactions are wholly
-contained within a single iclog. However, CIL checkpoints are single
-transactions that typically span hundreds to thousands of individual
-journal writes, and so the requirements for device cache flushing
-have changed.
-
-That is, the ordering rules I state above apply to ordering of
-atomic transactions recorded in the journal, not to the journal IO
-itself. Hence we need to ensure metadata is stable before we start
-writing a new transaction to the journal (guarantee #1), and we need
-to ensure the entire transaction is stable in the journal before we
-start metadata writeback (guarantee #2).
-
-Hence we only need a REQ_PREFLUSH on the journal IO that starts a
-new journal transaction to provide #1, and it is not on any other
-journal IO done within the context of that journal transaction.
-
-To ensure that the entire journal transaction is on stable storage
-before we run the completion code that unpins all the dirty metadata
-recorded in the journal transaction, the last write of the
-transaction must also ensure that the entire journal transaction is
-stable. We already know what IO that will be, thanks to the commit
-record we explicitly write to complete the transaction. We can order
-all the previous journal IO for this transaction by waiting for all
-the previous iclogs containing the transaction data to complete
-their IO, then issuing the commit record IO using REQ_PREFLUSH
-| REQ_FUA. The preflush ensures all the previous journal IO is
-stable before the commit record hits the log, and the REQ_FUA
-ensures that the commit record is stable before completion is
-signalled to the filesystem.
-
-Hence using REQ_PREFLUSH on the first IO of a journal transaction,
-and then ordering the journal IO before issuing the commit record
-with REQ_PREFLUSH | REQ_FUA, we get all the same ordering guarantees
-that we currently achieve by issuing all journal IO with cache
-flushes.
-
-As an optimisation, when the commit record lands in the same iclog
-as the journal transaction starts, we don't need to wait for
-anything and can simply issue the journal IO with REQ_PREFLUSH |
-REQ_FUA as we do right now. This means that for fsync() heavy
-workloads, the cache flush behaviour is completely unchanged and
-there is no degradation in performance as a result of optimise the
-multi-IO transaction case.
-
-To further simplify the implementation, we also issue the initial IO
-in a journal transaction with REQ_FUA. THis ensures the journal is
-dirtied by the first IO in a long running transaction as quickly as
-possible. This helps ensure that log recovery will at least have a
-transaction header for the incomplete transaction in the log similar
-to the stable journal write behaviour we have now.
-
-The most notable sign that there is less IO latency on my test
-machine (nvme SSDs) is that the "noiclogs" rate has dropped
-substantially. This metric indicates that the CIL push is blocking
-in xlog_get_iclog_space() waiting for iclog IO completion to occur.
-With 8 iclogs of 256kB, the rate is appoximately 1 noiclog event to
-every 4 iclog writes. IOWs, every 4th call to xlog_get_iclog_space()
-is blocking waiting for log IO. With the changes in this patch, this
-drops to 1 noiclog event for every 100 iclog writes. Hence it is
-clear that log IO is completing much faster than it was previously,
-but it is also clear that for large iclog sizes, this isn't the
-performance limiting factor on this hardware.
-
-With smaller iclogs (32kB), however, there is a sustantial
-difference. With the cache flush modifications, the journal is now
-running at over 4000 write IOPS, and the journal throughput is
-largely identical to the 256kB iclogs and the noiclog event rate
-stays low at about 1:50 iclog writes. The existing code tops out at
-about 2500 IOPS as the number of cache flushes dominate performance
-and latency. The noiclog event rate is about 1:4, and the
-performance variance is quite large as the journal throughput can
-fall to less than half the peak sustained rate when the cache flush
-rate prevents metadata writeback from keeping up and the log runs
-out of space and throttles reservations.
-
-As a result:
-
-	logbsize	fsmark create rate	rm -rf
-before	32kb		152851+/-5.3e+04	5m28s
-patched	32kb		221533+/-1.1e+04	5m24s
-
-before	256kb		220239+/-6.2e+03	4m58s
-patched	256kb		228286+/-9.2e+03	5m06s
-
-The rm -rf times are included because I ran them, but the
-differences are largely noise. This workload is largely metadata
-read IO latency bound and the changes to the journal cache flushing
-doesn't really make any noticable difference to behaviour apart from
-a reduction in noiclog events from background CIL pushing.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
----
- fs/xfs/xfs_log.c      | 34 ++++++++++++++++++++++------------
- fs/xfs/xfs_log_priv.h |  3 +++
- 2 files changed, 25 insertions(+), 12 deletions(-)
-
-diff --git a/fs/xfs/xfs_log.c b/fs/xfs/xfs_log.c
-index 88a142628..62853457f 100644
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -1806,8 +1806,7 @@ xlog_write_iclog(
- 	struct xlog		*log,
- 	struct xlog_in_core	*iclog,
- 	uint64_t		bno,
--	unsigned int		count,
--	bool			need_flush)
-+	unsigned int		count)
- {
- 	ASSERT(bno < log->l_logBBsize);
- 
-@@ -1845,10 +1844,11 @@ xlog_write_iclog(
- 	 * writeback throttle from throttling log writes behind background
- 	 * metadata writeback and causing priority inversions.
- 	 */
--	iclog->ic_bio.bi_opf = REQ_OP_WRITE | REQ_META | REQ_SYNC |
--				REQ_IDLE | REQ_FUA;
--	if (need_flush)
--		iclog->ic_bio.bi_opf |= REQ_PREFLUSH;
-+	iclog->ic_bio.bi_opf = REQ_OP_WRITE | REQ_META | REQ_SYNC | REQ_IDLE;
-+	if (iclog->ic_flags & XLOG_ICL_NEED_FLUSH) {
-+		iclog->ic_bio.bi_opf |= REQ_PREFLUSH | REQ_FUA;
-+		iclog->ic_flags &= ~XLOG_ICL_NEED_FLUSH;
-+	}
- 
- 	if (xlog_map_iclog_data(&iclog->ic_bio, iclog->ic_data, count)) {
- 		xfs_force_shutdown(log->l_mp, SHUTDOWN_LOG_IO_ERROR);
-@@ -1951,7 +1951,7 @@ xlog_sync(
- 	unsigned int		roundoff;       /* roundoff to BB or stripe */
- 	uint64_t		bno;
- 	unsigned int		size;
--	bool			need_flush = true, split = false;
-+	bool			split = false;
- 
- 	ASSERT(atomic_read(&iclog->ic_refcnt) == 0);
- 
-@@ -2009,13 +2009,14 @@ xlog_sync(
- 	 * synchronously here; for an internal log we can simply use the block
- 	 * layer state machine for preflushes.
- 	 */
--	if (log->l_targ != log->l_mp->m_ddev_targp || split) {
-+	if (log->l_targ != log->l_mp->m_ddev_targp ||
-+	    (split && (iclog->ic_flags & XLOG_ICL_NEED_FLUSH))) {
- 		xfs_blkdev_issue_flush(log->l_mp->m_ddev_targp);
--		need_flush = false;
-+		iclog->ic_flags &= ~XLOG_ICL_NEED_FLUSH;
- 	}
- 
- 	xlog_verify_iclog(log, iclog, count);
--	xlog_write_iclog(log, iclog, bno, count, need_flush);
-+	xlog_write_iclog(log, iclog, bno, count);
- }
- 
- /*
-@@ -2466,9 +2467,18 @@ xlog_write(
- 		ASSERT(log_offset <= iclog->ic_size - 1);
- 		ptr = iclog->ic_datap + log_offset;
- 
--		/* start_lsn is the first lsn written to. That's all we need. */
--		if (!*start_lsn)
-+		/*
-+		 * Start_lsn is the first lsn written to. That's all the caller
-+		 * needs to have returned. Setting it indicates the first iclog
-+		 * of a new checkpoint or the commit record for a checkpoint, so
-+		 * also mark the iclog as requiring a pre-flush to ensure all
-+		 * metadata writeback or journal IO in the checkpoint is
-+		 * correctly ordered against this new log write.
-+		 */
-+		if (!*start_lsn) {
- 			*start_lsn = be64_to_cpu(iclog->ic_header.h_lsn);
-+			iclog->ic_flags |= XLOG_ICL_NEED_FLUSH;
-+		}
- 
- 		/*
- 		 * This loop writes out as many regions as can fit in the amount
-diff --git a/fs/xfs/xfs_log_priv.h b/fs/xfs/xfs_log_priv.h
-index a7ac85aaf..9f1e627cc 100644
---- a/fs/xfs/xfs_log_priv.h
-+++ b/fs/xfs/xfs_log_priv.h
-@@ -133,6 +133,8 @@ enum xlog_iclog_state {
- 
- #define XLOG_COVER_OPS		5
- 
-+#define XLOG_ICL_NEED_FLUSH     (1 << 0)        /* iclog needs REQ_PREFLUSH */
-+
- /* Ticket reservation region accounting */ 
- #define XLOG_TIC_LEN_MAX	15
- 
-@@ -201,6 +203,7 @@ typedef struct xlog_in_core {
- 	u32			ic_size;
- 	u32			ic_offset;
- 	enum xlog_iclog_state	ic_state;
-+	unsigned int		ic_flags;
- 	char			*ic_datap;	/* pointer to iclog data */
- 
- 	/* Callback structures need their own cacheline */
--- 
-2.32.0.93.g670b81a890
-
-
-From f845a9cd73661b8b359392ecedbb0d8a1c788dbb Mon Sep 17 00:00:00 2001
-From: Dave Chinner <dchinner@redhat.com>
-Date: Thu, 28 Jan 2021 15:41:53 +1100
-Subject: [PATCH 17/18] xfs: Fix CIL throttle hang when CIL space used going
- backwards
-
-A hang with tasks stuck on the CIL hard throttle was reported and
-largely diagnosed by Donald Buczek, who discovered that it was a
-result of the CIL context space usage decrementing in committed
-transactions once the hard throttle limit had been hit and processes
-were already blocked.  This resulted in the CIL push not waking up
-those waiters because the CIL context was no longer over the hard
-throttle limit.
-
-The surprising aspect of this was the CIL space usage going
-backwards regularly enough to trigger this situation. Assumptions
-had been made in design that the relogging process would only
-increase the size of the objects in the CIL, and so that space would
-only increase.
-
-This change and commit message fixes the issue and documents the
-result of an audit of the triggers that can cause the CIL space to
-go backwards, how large the backwards steps tend to be, the
-frequency in which they occur, and what the impact on the CIL
-accounting code is.
-
-Even though the CIL ctx->space_used can go backwards, it will only
-do so if the log item is already logged to the CIL and contains a
-space reservation for it's entire logged state. This is tracked by
-the shadow buffer state on the log item. If the item is not
-previously logged in the CIL it has no shadow buffer nor log vector,
-and hence the entire size of the logged item copied to the log
-vector is accounted to the CIL space usage. i.e.  it will always go
-up in this case.
-
-If the item has a log vector (i.e. already in the CIL) and the size
-decreases, then the existing log vector will be overwritten and the
-space usage will go down. This is the only condition where the space
-usage reduces, and it can only occur when an item is already tracked
-in the CIL. Hence we are safe from CIL space usage underruns as a
-result of log items decreasing in size when they are relogged.
-
-Typically this reduction in CIL usage occurs from metadta blocks
-being free, such as when a btree block merge
-occurs or a directory enter/xattr entry is removed and the da-tree
-is reduced in size. This generally results in a reduction in size of
-around a single block in the CIL, but also tends to increase the
-number of log vectors because the parent and sibling nodes in the
-tree needs to be updated when a btree block is removed. If a
-multi-level merge occurs, then we see reduction in size of 2+
-blocks, but again the log vector count goes up.
-
-The other vector is inode fork size changes, which only log the
-current size of the fork and ignore the previously logged size when
-the fork is relogged. Hence if we are removing items from the inode
-fork (dir/xattr removal in shortform, extent record removal in
-extent form, etc) the relogged size of the inode for can decrease.
-
-No other log items can decrease in size either because they are a
-fixed size (e.g. dquots) or they cannot be relogged (e.g. relogging
-an intent actually creates a new intent log item and doesn't relog
-the old item at all.) Hence the only two vectors for CIL context
-size reduction are relogging inode forks and marking buffers active
-in the CIL as stale.
-
-Long story short: the majority of the code does the right thing and
-handles the reduction in log item size correctly, and only the CIL
-hard throttle implementation is problematic and needs fixing. This
-patch makes that fix, as well as adds comments in the log item code
-that result in items shrinking in size when they are relogged as a
-clear reminder that this can and does happen frequently.
-
-The throttle fix is based upon the change Donald proposed, though it
-goes further to ensure that once the throttle is activated, it
-captures all tasks until the CIL push issues a wakeup, regardless of
-whether the CIL space used has gone back under the throttle
-threshold.
-
-This ensures that we prevent tasks reducing the CIL slightly under
-the throttle threshold and then making more changes that push it
-well over the throttle limit. This is acheived by checking if the
-throttle wait queue is already active as a condition of throttling.
-Hence once we start throttling, we continue to apply the throttle
-until the CIL context push wakes everything on the wait queue.
-
-We can use waitqueue_active() for the waitqueue manipulations and
-checks as they are all done under the ctx->xc_push_lock. Hence the
-waitqueue has external serialisation and we can safely peek inside
-the wait queue without holding the internal waitqueue locks.
-
-Many thanks to Donald for his diagnostic and analysis work to
-isolate the cause of this hang.
-
-Reported-by: Donald Buczek <buczek@molgen.mpg.de>
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Chandan Babu R <chandanrlinux@gmail.com>
----
- fs/xfs/xfs_buf_item.c   | 37 ++++++++++++++++++-------------------
- fs/xfs/xfs_inode_item.c | 14 ++++++++++++++
- fs/xfs/xfs_log_cil.c    | 22 +++++++++++++++++-----
- 3 files changed, 49 insertions(+), 24 deletions(-)
-
-diff --git a/fs/xfs/xfs_buf_item.c b/fs/xfs/xfs_buf_item.c
-index fb69879e4..14d1fefcb 100644
---- a/fs/xfs/xfs_buf_item.c
-+++ b/fs/xfs/xfs_buf_item.c
-@@ -74,14 +74,12 @@ xfs_buf_item_straddle(
- }
- 
- /*
-- * This returns the number of log iovecs needed to log the
-- * given buf log item.
-+ * Return the number of log iovecs and space needed to log the given buf log
-+ * item segment.
-  *
-- * It calculates this as 1 iovec for the buf log format structure
-- * and 1 for each stretch of non-contiguous chunks to be logged.
-- * Contiguous chunks are logged in a single iovec.
-- *
-- * If the XFS_BLI_STALE flag has been set, then log nothing.
-+ * It calculates this as 1 iovec for the buf log format structure and 1 for each
-+ * stretch of non-contiguous chunks to be logged.  Contiguous chunks are logged
-+ * in a single iovec.
+  * These constants are also useful for user-level apps (e.g., VC
+  * resizing).
   */
- STATIC void
- xfs_buf_item_size_segment(
-@@ -168,11 +166,8 @@ xfs_buf_item_size_segment(
- }
- 
- /*
-- * This returns the number of log iovecs needed to log the given buf log item.
-- *
-- * It calculates this as 1 iovec for the buf log format structure and 1 for each
-- * stretch of non-contiguous chunks to be logged.  Contiguous chunks are logged
-- * in a single iovec.
-+ * Return the number of log iovecs and space needed to log the given buf log
-+ * item.
-  *
-  * Discontiguous buffers need a format structure per region that is being
-  * logged. This makes the changes in the buffer appear to log recovery as though
-@@ -182,7 +177,11 @@ xfs_buf_item_size_segment(
-  * what ends up on disk.
-  *
-  * If the XFS_BLI_STALE flag has been set, then log nothing but the buf log
-- * format structures.
-+ * format structures. If the item has previously been logged and has dirty
-+ * regions, we do not relog them in stale buffers. This has the effect of
-+ * reducing the size of the relogged item by the amount of dirty data tracked
-+ * by the log item. This can result in the committing transaction reducing the
-+ * amount of space being consumed by the CIL.
-  */
- STATIC void
- xfs_buf_item_size(
-@@ -199,9 +198,9 @@ xfs_buf_item_size(
- 	ASSERT(atomic_read(&bip->bli_refcount) > 0);
- 	if (bip->bli_flags & XFS_BLI_STALE) {
- 		/*
--		 * The buffer is stale, so all we need to log
--		 * is the buf log format structure with the
--		 * cancel flag in it.
-+		 * The buffer is stale, so all we need to log is the buf log
-+		 * format structure with the cancel flag in it as we are never
-+		 * going to replay the changes tracked in the log item.
- 		 */
- 		trace_xfs_buf_item_size_stale(bip);
- 		ASSERT(bip->__bli_format.blf_flags & XFS_BLF_CANCEL);
-@@ -216,9 +215,9 @@ xfs_buf_item_size(
- 
- 	if (bip->bli_flags & XFS_BLI_ORDERED) {
- 		/*
--		 * The buffer has been logged just to order it.
--		 * It is not being included in the transaction
--		 * commit, so no vectors are used at all.
-+		 * The buffer has been logged just to order it. It is not being
-+		 * included in the transaction commit, so no vectors are used at
-+		 * all.
- 		 */
- 		trace_xfs_buf_item_size_ordered(bip);
- 		*nvecs = XFS_LOG_VEC_ORDERED;
-diff --git a/fs/xfs/xfs_inode_item.c b/fs/xfs/xfs_inode_item.c
-index 6764d1234..5a2dd3302 100644
---- a/fs/xfs/xfs_inode_item.c
-+++ b/fs/xfs/xfs_inode_item.c
-@@ -28,6 +28,20 @@ static inline struct xfs_inode_log_item *INODE_ITEM(struct xfs_log_item *lip)
- 	return container_of(lip, struct xfs_inode_log_item, ili_item);
- }
- 
+ #define MIN_NR_CONSOLES 1       /* must be at least 1 */
+-#define MAX_NR_CONSOLES	63	/* serial lines start at 64 */
 +/*
-+ * The logged size of an inode fork is always the current size of the inode
-+ * fork. This means that when an inode fork is relogged, the size of the logged
-+ * region is determined by the current state, not the combination of the
-+ * previously logged state + the current state. This is different relogging
-+ * behaviour to most other log items which will retain the size of the
-+ * previously logged changes when smaller regions are relogged.
-+ *
-+ * Hence operations that remove data from the inode fork (e.g. shortform
-+ * dir/attr remove, extent form extent removal, etc), the size of the relogged
-+ * inode gets -smaller- rather than stays the same size as the previously logged
-+ * size and this can result in the committing transaction reducing the amount of
-+ * space being consumed by the CIL.
++ * NR_TTY_DEVICES:
++ * Value MUST be at least 12 and must never be higher then 63
 + */
- STATIC void
- xfs_inode_item_data_fork_size(
- 	struct xfs_inode_log_item *iip,
-diff --git a/fs/xfs/xfs_log_cil.c b/fs/xfs/xfs_log_cil.c
-index c5cc1b7ad..daf1f3eb2 100644
---- a/fs/xfs/xfs_log_cil.c
-+++ b/fs/xfs/xfs_log_cil.c
-@@ -668,9 +668,14 @@ xlog_cil_push_work(
- 	ASSERT(push_seq <= ctx->sequence);
++#define MAX_NR_CONSOLES CONFIG_NR_TTY_DEVICES	/* serial lines start above this */
+ 		/* Note: the ioctl VT_GETSTATE does not work for
+ 		   consoles 16 and higher (since it returns a short) */
  
- 	/*
--	 * Wake up any background push waiters now this context is being pushed.
-+	 * As we are about to switch to a new CILi, empty context, we no longer
-+	 * need to throttle tasks on CIL space overruns. Wake any waiters that
-+	 * the hard push throttle may have caught so they can start committing
-+	 * to the new context. The ctx->xc_push_lock provides the serialisation
-+	 * necessary for safely using the lockless waitqueue_active() check in
-+	 * this context.
- 	 */
--	if (ctx->space_used >= XLOG_CIL_BLOCKING_SPACE_LIMIT(log))
-+	if (waitqueue_active(&cil->xc_push_wait))
- 		wake_up_all(&cil->xc_push_wait);
- 
- 	/*
-@@ -914,7 +919,7 @@ xlog_cil_push_background(
- 	ASSERT(!list_empty(&cil->xc_cil));
- 
- 	/*
--	 * don't do a background push if we haven't used up all the
-+	 * Don't do a background push if we haven't used up all the
- 	 * space available yet.
- 	 */
- 	if (cil->xc_ctx->space_used < XLOG_CIL_SPACE_LIMIT(log)) {
-@@ -938,9 +943,16 @@ xlog_cil_push_background(
- 
- 	/*
- 	 * If we are well over the space limit, throttle the work that is being
--	 * done until the push work on this context has begun.
-+	 * done until the push work on this context has begun. Enforce the hard
-+	 * throttle on all transaction commits once it has been activated, even
-+	 * if the committing transactions have resulted in the space usage
-+	 * dipping back down under the hard limit.
-+	 *
-+	 * The ctx->xc_push_lock provides the serialisation necessary for safely
-+	 * using the lockless waitqueue_active() check in this context.
- 	 */
--	if (cil->xc_ctx->space_used >= XLOG_CIL_BLOCKING_SPACE_LIMIT(log)) {
-+	if (cil->xc_ctx->space_used >= XLOG_CIL_BLOCKING_SPACE_LIMIT(log) ||
-+	    waitqueue_active(&cil->xc_push_wait)) {
- 		trace_xfs_log_cil_wait(log, cil->xc_ctx->ticket);
- 		ASSERT(cil->xc_ctx->space_used < log->l_logsize);
- 		xlog_wait(&cil->xc_push_wait, &cil->xc_push_lock);
 -- 
-2.32.0.93.g670b81a890
-
-
-From ea9a4d6851d1596d0dbad8cdae6c3b1f634aa87d Mon Sep 17 00:00:00 2001
-From: "Darrick J. Wong" <djwong@kernel.org>
-Date: Sat, 20 Mar 2021 09:40:07 -0700
-Subject: [PATCH 18/18] xfs: only reset incore inode health state flags when
- reclaiming an inode
-
-While running some fuzz tests on inode metadata, I noticed that the
-filesystem health report (as provided by xfs_spaceman) failed to report
-the file corruption even when spaceman was run immediately after running
-xfs_scrub to detect the corruption.  That isn't the intended behavior;
-one ought to be able to run scrub to detect errors in the ondisk
-metadata and be able to access to those reports for some time after the
-scrub.
-
-After running the same sequence through an instrumented kernel, I
-discovered the reason why -- scrub igets the file, scans it, marks it
-sick, and ireleases the inode.  When the VFS lets go of the incore
-inode, it moves to RECLAIMABLE state.  If spaceman igets the incore
-inode before it moves to RECLAIM state, iget reinitializes the VFS
-state, clears the sick and checked masks, and hands back the inode.  At
-this point, the caller has the exact same incore inode, but with all the
-health state erased.
-
-In other words, we're erasing the incore inode's health state flags when
-we've decided NOT to sever the link between the incore inode and the
-ondisk inode.  This is wrong, so we need to remove the lines that zero
-the fields from xfs_iget_cache_hit.
-
-As a precaution, we add the same lines into xfs_reclaim_inode just after
-we sever the link between incore and ondisk inode.  Strictly speaking
-this isn't necessary because once an inode has gone through reclaim it
-must go through xfs_inode_alloc (which also zeroes the state) and
-xfs_iget is careful to check for mismatches between the inode it pulls
-out of the radix tree and the one it wants.
-
-Fixes: 6772c1f11206 ("xfs: track metadata health status")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
----
- fs/xfs/xfs_icache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/fs/xfs/xfs_icache.c b/fs/xfs/xfs_icache.c
-index 3c81daca0..4ce251970 100644
---- a/fs/xfs/xfs_icache.c
-+++ b/fs/xfs/xfs_icache.c
-@@ -435,8 +435,6 @@ xfs_iget_cache_hit(
- 		ip->i_flags |= XFS_INEW;
- 		xfs_inode_clear_reclaim_tag(pag, ip->i_ino);
- 		inode->i_state = I_NEW;
--		ip->i_sick = 0;
--		ip->i_checked = 0;
- 
- 		spin_unlock(&ip->i_flags_lock);
- 		spin_unlock(&pag->pag_ici_lock);
-@@ -1002,6 +1000,8 @@ xfs_reclaim_inode(
- 	spin_lock(&ip->i_flags_lock);
- 	ip->i_flags = XFS_IRECLAIM;
- 	ip->i_ino = 0;
-+	ip->i_sick = 0;
-+	ip->i_checked = 0;
- 	spin_unlock(&ip->i_flags_lock);
- 
- 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
--- 
-2.32.0.93.g670b81a890
+2.33.0
 

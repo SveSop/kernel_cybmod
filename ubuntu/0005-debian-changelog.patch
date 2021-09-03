@@ -1,80 +1,272 @@
-From 8224606d425574d570f5a32e1b83d0c0d275fe33 Mon Sep 17 00:00:00 2001
+From e305c1d9ba5e4a3a474edc2178ed7c34c1c47911 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 26 Aug 2021 14:40:28 +0000
+Date: Fri, 3 Sep 2021 09:36:59 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11549 +-------------------------------------
- 1 file changed, 3 insertions(+), 11546 deletions(-)
+ debian.master/changelog | 11741 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11738 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 1f9f84f6cddf..386691c507df 100644
+index bc40d4f1e55a..141eaf82056e 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11549 +1,6 @@
--linux (5.13.0-14.14) impish; urgency=medium
-+linux (5.13.13-051313.202108261440) impish; urgency=low
+@@ -1,11741 +1,6 @@
+-linux-unstable (5.14.0-8.8) impish; urgency=medium
++linux (5.14.1-051401.202109030936) impish; urgency=low
  
--  * impish/linux: 5.13.0-14.14 -proposed tracker (LP: #1938565)
-+  Mainline build at commit: v5.13.13
+-  * impish/linux-unstable: 5.14.0-8.8 -proposed tracker (LP: #1941887)
++  Mainline build at commit: v5.14.1
  
+-  * Fix  Intel AC9560 BT function cannot turn on if BT turn off before S3 entry
+-    (LP: #1941696)
+-    - SAUCE: Bluetooth: btusb: add a reject table to disable msft
++ -- Mainline Build <kernel@sita>  Fri, 03 Sep 2021 09:36:59 +0000
+ 
+-  *  Add USB4 support for AMD SoC (LP: #1941036)
+-    - thunderbolt: Add vendor specific NHI quirk for auto-clearing interrupt
+-      status
+-    - thunderbolt: Handle ring interrupt by reading interrupt status register
+-    - thunderbolt: Do not read control adapter config space
+-    - thunderbolt: Fix port linking by checking all adapters
+-
+-  * Support builtin revoked certificates (LP: #1932029)
+-    - [Config] Enforce SYSTEM_TRUSTED_KEYS and SYSTEM_REVOCATION_KEYS
+-
+-  * GPIO error logs in start and dmesg after update of kernel (LP: #1937897)
+-    - ODM: mfd: Check AAEON BFPI version before adding device
+-
+-  * initramfs-tools & kernel: use zstd as the default compression method
+-    (LP: #1931725)
+-    - [Config] enforce ZSTD compression
+-
 -  * Miscellaneous Ubuntu changes
--    - SAUCE: Revert "UBUNTU: SAUCE: random: Make getrandom() ready earlier"
--    - SAUCE: random: properly make getrandom() ready earlier
-+ -- Mainline Build <kernel@sita>  Thu, 26 Aug 2021 14:40:28 +0000
- 
+-    - rebase to v5.14
+-    - [Config] RESET_MCHP_SPARX5 depends on ARCH_SPARX5
+-
 -  * Miscellaneous upstream changes
--    - seq_buf: Fix overflow in seq_buf_putmem_hex()
--    - bpf: Fix integer overflow in argument calculation for bpf_map_area_alloc
--    - ext4: cleanup in-core orphan list if ext4_truncate() failed to get a
--      transaction handle
--    - ext4: fix kernel infoleak via ext4_extent_header
--    - ext4: fix overflow in ext4_iomap_alloc()
--    - ext4: return error code when ext4_fill_flex_info() fails
--    - ext4: correct the cache_nr in tracepoint ext4_es_shrink_exit
--    - ext4: remove check for zero nr_to_scan in ext4_es_scan()
--    - ext4: fix avefreec in find_group_orlov
--    - ext4: use ext4_grp_locked_error in mb_find_extent
+-    - Revert "UBUNTU: [Packaging] FTBFS: disable zfs"
 -
-- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 02 Aug 2021 14:23:08 +0200
+-  [ Upstream Kernel Changes ]
 -
--linux (5.13.0-13.13) impish; urgency=medium
+-  * Rebase to v5.14
 -
--  * impish/linux: 5.13.0-13.13 -proposed tracker (LP: #1937577)
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 30 Aug 2021 12:57:19 +0200
 -
--  * Packaging resync (LP: #1786013)
--    - update dkms package versions
+-linux-unstable (5.14.0-7.7) impish; urgency=medium
+-
+-  * Please enable CONFIG_UBSAN_BOUNDS (LP: #1914685)
+-    - [Config] Enable CONFIG_UBSAN_BOUNDS
+-
+-  * CONFIG_HARDENED_USERCOPY_FALLBACK should be disabled (LP: #1855340)
+-    - [Config] Disable CONFIG_HARDENED_USERCOPY_FALLBACK
+-
+-  * fs: removing mandatory locks (LP: #1940392)
+-    - [Config] Disable CONFIG_MANDATORY_FILE_LOCKING
+-
+-  * Fix kernel panic caused by legacy devices on AMD platforms (LP: #1936682)
+-    - SAUCE: iommu/amd: Keep swiotlb enabled to ensure devices with 32bit DMA
+-      still work
+-
+-  * ALSA: hda/cs8409: Add support for dolphin (LP: #1939541)
+-    - ALSA: hda/cirrus: Move CS8409 HDA bridge to separate module
+-    - ALSA: hda/cs8409: Move arrays of configuration to a new file
+-    - ALSA: hda/cs8409: Use enums for register names and coefficients
+-    - ALSA: hda/cs8409: Mask all CS42L42 interrupts on initialization
+-    - ALSA: hda/cs8409: Reduce HS pops/clicks for Cyborg
+-    - ALSA: hda/cs8409: Disable unnecessary Ring Sense for Cyborg/Warlock/Bullseye
+-    - ALSA: hda/cs8409: Disable unsolicited responses during suspend
+-    - ALSA: hda/cs8409: Disable unsolicited response for the first boot
+-    - ALSA: hda/cs8409: Mask CS42L42 wake events
+-    - ALSA: hda/cs8409: Simplify CS42L42 jack detect.
+-    - ALSA: hda/cs8409: Prevent I2C access during suspend time
+-    - ALSA: hda/cs8409: Generalize volume controls
+-    - ALSA: hda/cs8409: Dont disable I2C clock between consecutive accesses
+-    - ALSA: hda/cs8409: Avoid setting the same I2C address for every access
+-    - ALSA: hda/cs8409: Avoid re-setting the same page as the last access
+-    - ALSA: hda/cs8409: Support i2c bulk read/write functions
+-    - ALSA: hda/cs8409: Separate CS8409, CS42L42 and project functions
+-    - ALSA: hda/cs8409: Move codec properties to its own struct
+-    - ALSA: hda/cs8409: Support multiple sub_codecs for Suspend/Resume/Unsol
+-      events
+-    - ALSA: hda/cs8409: Add Support to disable jack type detection for CS42L42
+-    - ALSA: hda/cs8409: Add support for dolphin
+-    - ALSA: hda/cs8409: Enable Full Scale Volume for Line Out Codec on Dolphin
+-    - ALSA: hda/cs8409: Set fixed sample rate of 48kHz for CS42L42
+-    - ALSA: hda/cs8409: Use timeout rather than retries for I2C transaction waits
+-    - ALSA: hda/cs8409: Remove unnecessary delays
+-    - ALSA: hda/cs8409: Follow correct CS42L42 power down sequence for suspend
+-    - ALSA: hda/cs8409: Unmute/Mute codec when stream starts/stops
+-    - ALSA: hda/cs8409: Prevent pops and clicks during suspend
+-    - SAUCE: ALSA: hda/cs8409: Prevent pops and clicks during reboot
+-    - [Config] Enable Cirrus Logic HDA bridge support
+-
+-  * e1000e: add handshake with the Intel CSME to support S0ix (LP: #1937252)
+-    - SAUCE: e1000e: Add handshake with the CSME to support S0ix
+-    - SAUCE: e1000e: Add polling mechanism to indicate CSME DPG exit
+-    - SAUCE: e1000e: Additional PHY power saving in S0ix
+-
+-  * AMDGPU: Fix System hang after resume from suspend (LP: #1940204)
+-    - SAUCE: drm/amdgpu: disable BACO support for 699F:C7 polaris12 SKU
+-      temporarily
+-
+-  * [Regression] Audio card [8086:9d71] not detected after upgrade from linux
+-    5.4 to 5.8 (LP: #1915117)
+-    - [Config] set CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC to y
 -
 -  * Miscellaneous Ubuntu changes
--    - SAUCE: shifts: update shiftfs for idmapped mounts
--    - [Config] re-enable shiftfs
--    - [Config] update toolchain in configs
--
-- -- Andrea Righi <andrea.righi@canonical.com>  Fri, 23 Jul 2021 16:12:58 +0200
--
--linux (5.13.0-12.12) impish; urgency=medium
--
--  * Packaging resync (LP: #1786013)
--    - update dkms package versions
--
--  * Impish update: v5.13.1 upstream stable release (LP: #1935807)
--    - Revert "KVM: x86/mmu: Drop kvm_mmu_extended_role.cr4_la57 hack"
--    - Linux 5.13.1
--
--  * ubuntu_kernel_selftests ftrace fails on arm64 F / aws-5.8 / amd64 F
--    azure-5.8 (LP: #1927749) // Impish update: v5.13.1 upstream stable release
--    (LP: #1935807)
--    - selftests/ftrace: fix event-no-pid on 1-core machine
--
--  * ubuntu-host driver lacks lseek ops (LP: #1934110) // Impish update: v5.13.1
--    upstream stable release (LP: #1935807)
--    - ubuntu-host: add generic lseek op
--
--  * Miscellaneous Ubuntu changes
+-    - rebase to v5.14-rc7
+-    - [Config] updateconfigs following 5.14-rc7 rebase
 -    - [Config] Enable CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT
--    - [Packaging] rename linux-unstable to linux in getabis
+-    - [Config] annotations: set CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT to y
 -
-- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 12 Jul 2021 14:09:16 +0200
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Config] annotations: set
+-      CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC to y"
+-    - Revert "UBUNTU: [Config] set CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC to
+-      y"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.14-rc7
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 24 Aug 2021 10:32:31 +0200
+-
+-linux-unstable (5.14.0-6.6) impish; urgency=medium
+-
+-  * Miscellaneous Ubuntu changes
+-    - no changes upload (to avoid picking up libc6 from -proposed)
+-
+-  * No changes upload (to avoid picking up libc6 from -proposed)
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Wed, 18 Aug 2021 13:41:16 +0200
+-
+-linux-unstable (5.14.0-5.5) impish; urgency=medium
+-
+-  * disable “CONFIG_HISI_DMA” config for ubuntu version (LP: #1936771)
+-    - [Config] Disable CONFIG_HISI_DMA
+-
+-  * Dell XPS 17 (9710) PCI/internal sound card not detected  (LP: #1935850)
+-    - ASoC: Intel: sof_sdw: include rt711.h for RT711 JD mode
+-    - ASoC: Intel: sof_sdw: add quirk for Dell XPS 9710
+-
+-  * [regression] USB device is not detected during boot (LP: #1939638)
+-    - SAUCE: Revert "usb: core: reduce power-on-good delay time of root hub"
+-
+-  * armhf build failure (LP: #1939308)
+-    - SAUCE: arm: Fix instruction set selection for GCC 11
+-
+-  * REGRESSION: shiftfs lets sendfile fail with EINVAL (LP: #1939301)
+-    - SAUCE: shiftfs: fix sendfile() invocations
+-
+-  * Wobbly graphics on built-in display since linux-image-5.11.0-22-generic
+-    (LP: #1936708)
+-    - SAUCE: drm/i915/dp: Use max params for older panels
+-
+-  * [SRU][H/OEM-5.10/OEM-5.13/U] Fix system hang after unplug tbt dock
+-    (LP: #1938689)
+-    - SAUCE: igc: fix page fault when thunderbolt is unplugged
+-
+-  * e1000e blocks the boot process when it tried to write checksum to its NVM
+-    (LP: #1936998)
+-    - SAUCE: e1000e: Do not take care about recovery NVM checksum
+-
+-  * [Regression] Audio card [8086:9d71] not detected after upgrade from linux
+-    5.4 to 5.8 (LP: #1915117)
+-    - [Config] set CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC to y
+-    - [Config] annotations: set CONFIG_SND_SOC_INTEL_SKYLAKE_HDAUDIO_CODEC to y
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] updateconfigs following 5.14-rc6 rebase
+-    - rebase to v5.14-rc6
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.14-rc6
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 17 Aug 2021 17:49:15 +0200
+-
+-linux-unstable (5.14.0-4.4) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.14.0-4.4 -proposed tracker (LP: #1938566)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * Miscellaneous upstream changes
+-    - Revert "riscv: Get CPU manufacturer information"
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 03 Aug 2021 14:50:27 +0200
+-
+-linux-unstable (5.14.0-3.3) impish; urgency=medium
+-
+-  * Add additional Mediatek MT7921 WiFi/BT device IDs (LP: #1937004)
+-    - SAUCE: Bluetooth: btusb: Add Mediatek MT7921 support for Foxconn
+-    - SAUCE: Bluetooth: btusb: Add Mediatek MT7921 support for IMC Network
+-    - SAUCE: Bluetooth: btusb: Add support for Foxconn Mediatek Chip
+-
+-  * Fix display output on HP hybrid GFX laptops (LP: #1936296)
+-    - drm/i915: Invoke another _DSM to enable MUX on HP Workstation laptops
+-
+-  * Miscellaneous Ubuntu changes
+-    - rebase to v5.14-rc3
+-    - [Config] updateconfigs following 5.14-rc3 rebase
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.14-rc3
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 26 Jul 2021 12:52:38 +0200
+-
+-linux-unstable (5.14.0-2.2) impish; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: xr-usb-serial: update return code for xr_usb_serial_tty_write_room()
+-      and xr_usb_serial_tty_chars_in_buffer()
+-    - SAUCE: platform/x86: dell-uart-backlight: update return code for
+-      uart_chars_in_buffer(()
+-    - [Config] updateconfigs following 5.14-rc2 rebase
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Config] FTBFS: disable ubuntu/xr-usb-serial"
+-    - Revert "UBUNTU: [Config] FTBFS: disable DELL_UART_BACKLIGHT"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.14-rc2
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Thu, 22 Jul 2021 11:03:28 +0200
+-
+-linux-unstable (5.14.0-1.1) impish; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] bump kernel version to 5.14
+-    - [Config] updateconfigs following 5.14-rc1 rebase
+-    - [Config] update annotations
+-    - [Packaging] FTBFS: disable zfs
+-    - [Config] FTBFS: disable DELL_UART_BACKLIGHT
+-    - [Config] FTBFS: disable ubuntu/xr-usb-serial
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Packaging] update variants"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.14-rc1
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Fri, 16 Jul 2021 15:20:04 +0200
+-
+-linux-unstable (5.14.0-0.0) impish; urgency=medium
+-
+-  * Empty entry
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 13 Jul 2021 12:15:35 +0200
 -
 -linux (5.13.0-11.11) impish; urgency=medium
 -

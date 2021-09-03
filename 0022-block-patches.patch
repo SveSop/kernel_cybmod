@@ -1,4 +1,4 @@
-From 4a99e057e3a45ba04bcb3842415244fae6ddc1ca Mon Sep 17 00:00:00 2001
+From 89a681f5b22cf7ec831910d865e45a3338d32f80 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
 Subject: [PATCH 1/5] block, Kconfig.iosched: set default value of IOSCHED_BFQ
@@ -36,10 +36,10 @@ index 2f2158e05..e58b2953a 100644
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 0a0923624a9869b3d74dddaac784224dd27d5155 Mon Sep 17 00:00:00 2001
+From 053d6949b42617aecca77e8289cb0095eed343c9 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
 Subject: [PATCH 2/5] block: Fix depends for BLK_DEV_ZONED
@@ -50,7 +50,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index a2297edfd..f688ea5f0 100644
+index fd732aede..6a9e172c1 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
 @@ -83,7 +83,7 @@ config BLK_DEV_INTEGRITY_T10
@@ -63,10 +63,10 @@ index a2297edfd..f688ea5f0 100644
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC/ZNS host-managed and host-aware zoned block
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 3030f505c6812544a6e0b3eaad38c4888876aecf Mon Sep 17 00:00:00 2001
+From 2a89dc82aaf42578f6075f5ca89ddb789803187a Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
 Subject: [PATCH 3/5] block: set rq_affinity = 2 for full multithreading I/O
@@ -77,10 +77,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index f69c75bd6..bc203cf62 100644
+index d3afea47a..85c501fe7 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
-@@ -629,6 +629,7 @@ struct request_queue {
+@@ -606,6 +606,7 @@ struct request_queue {
  
  #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
  				 (1 << QUEUE_FLAG_SAME_COMP) |		\
@@ -89,10 +89,10 @@ index f69c75bd6..bc203cf62 100644
  
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From e7147af30263e56d15cc7a2a941580b1a49c2afe Mon Sep 17 00:00:00 2001
+From 3ca40e7d02e9abe160be9df005b3d2e41e6883b9 Mon Sep 17 00:00:00 2001
 From: Tom Saeger <tom.saeger () oracle ! com>
 Date: Fri, 26 Mar 2021 03:04:57 +0000
 Subject: [PATCH 4/5] block: fix trivial typos in comments
@@ -123,7 +123,7 @@ Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
  block/blk-iocost.c        | 10 +++++-----
  block/blk-iolatency.c     |  4 ++--
  block/blk-merge.c         |  6 +++---
- block/blk-mq.c            |  4 ++--
+ block/blk-mq.c            |  2 +-
  block/blk-settings.c      |  2 +-
  block/blk-stat.h          |  2 +-
  block/blk.h               |  2 +-
@@ -132,13 +132,13 @@ Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
  block/partitions/ibm.c    |  2 +-
  block/partitions/sun.c    |  2 +-
  block/scsi_ioctl.c        |  2 +-
- 16 files changed, 28 insertions(+), 28 deletions(-)
+ 16 files changed, 27 insertions(+), 27 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 2a2e6e4ff..3be191e88 100644
+index 727955918..cb50b4c71 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -1827,7 +1827,7 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
+@@ -1850,7 +1850,7 @@ static void bfq_bfqq_handle_idle_busy_switch(struct bfq_data *bfqd,
  	 * As for throughput, we ask bfq_better_to_idle() whether we
  	 * still need to plug I/O dispatching. If bfq_better_to_idle()
  	 * says no, then plugging is not needed any longer, either to
@@ -147,7 +147,7 @@ index 2a2e6e4ff..3be191e88 100644
  	 * the best option is to stop plugging I/O, as not doing so
  	 * would certainly lower throughput. We may end up in this
  	 * case if: (1) upon a dispatch attempt, we detected that it
-@@ -5090,7 +5090,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
+@@ -5120,7 +5120,7 @@ void bfq_put_queue(struct bfq_queue *bfqq)
  		 * by the fact that bfqq has just been merged.
  		 * 2) burst_size is greater than 0, to handle
  		 * unbalanced decrements. Unbalanced decrements may
@@ -170,10 +170,10 @@ index 3304e841d..0039e4756 100644
  u64 __blkg_prfill_rwstat(struct seq_file *sf, struct blkg_policy_data *pd,
  			 const struct blkg_rwstat_sample *rwstat)
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 582d2f187..fb6e19d52 100644
+index 31fe9be17..d589f002b 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -143,7 +143,7 @@ static void blkg_async_bio_workfn(struct work_struct *work)
+@@ -146,7 +146,7 @@ static void blkg_async_bio_workfn(struct work_struct *work)
   * @q: request_queue the new blkg is associated with
   * @gfp_mask: allocation mask to use
   *
@@ -182,7 +182,7 @@ index 582d2f187..fb6e19d52 100644
   */
  static struct blkcg_gq *blkg_alloc(struct blkcg *blkcg, struct request_queue *q,
  				   gfp_t gfp_mask)
-@@ -526,7 +526,7 @@ EXPORT_SYMBOL_GPL(blkcg_print_blkgs);
+@@ -542,7 +542,7 @@ EXPORT_SYMBOL_GPL(blkcg_print_blkgs);
   * @pd: policy private data of interest
   * @v: value to print
   *
@@ -191,7 +191,7 @@ index 582d2f187..fb6e19d52 100644
   */
  u64 __blkg_prfill_u64(struct seq_file *sf, struct blkg_policy_data *pd, u64 v)
  {
-@@ -715,7 +715,7 @@ EXPORT_SYMBOL_GPL(blkg_conf_prep);
+@@ -731,7 +731,7 @@ EXPORT_SYMBOL_GPL(blkg_conf_prep);
  
  /**
   * blkg_conf_finish - finish up per-blkg config update
@@ -201,10 +201,10 @@ index 582d2f187..fb6e19d52 100644
   * Finish up after per-blkg config update.  This function must be paired
   * with blkg_conf_prep().
 diff --git a/block/blk-core.c b/block/blk-core.c
-index 9bcdae93f..d693006d6 100644
+index 4f8449b29..feb26c457 100644
 --- a/block/blk-core.c
 +++ b/block/blk-core.c
-@@ -1035,7 +1035,7 @@ blk_qc_t submit_bio_noacct(struct bio *bio)
+@@ -1031,7 +1031,7 @@ blk_qc_t submit_bio_noacct(struct bio *bio)
  	/*
  	 * We only want one ->submit_bio to be active at a time, else stack
  	 * usage with stacked devices could be a problem.  Use current->bio_list
@@ -214,7 +214,7 @@ index 9bcdae93f..d693006d6 100644
  	 */
  	if (current->bio_list) {
 diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index c2d6bc88d..dd587d9ac 100644
+index 0e56557ca..4a23a53c4 100644
 --- a/block/blk-iocost.c
 +++ b/block/blk-iocost.c
 @@ -111,7 +111,7 @@
@@ -253,7 +253,7 @@ index c2d6bc88d..dd587d9ac 100644
  	 */
  	if (!list_empty(&iocg->active_list)) {
  		ioc_now(ioc, now);
-@@ -2128,7 +2128,7 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
+@@ -2129,7 +2129,7 @@ static void ioc_forgive_debts(struct ioc *ioc, u64 usage_us_sum, int nr_debtors,
  }
  
  /*
@@ -263,7 +263,7 @@ index c2d6bc88d..dd587d9ac 100644
   *
   * Since waiters determine the sleep durations based on the vrate
 diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
-index 81be00964..1b2a537ed 100644
+index d8b0d8bd1..73e79559b 100644
 --- a/block/blk-iolatency.c
 +++ b/block/blk-iolatency.c
 @@ -18,7 +18,7 @@
@@ -285,7 +285,7 @@ index 81be00964..1b2a537ed 100644
   * adjust the queue depth of ourselves if needed.
   *
 diff --git a/block/blk-merge.c b/block/blk-merge.c
-index bcdff1879..1d4c0d1c0 100644
+index a11b3b537..246ebd28d 100644
 --- a/block/blk-merge.c
 +++ b/block/blk-merge.c
 @@ -283,7 +283,7 @@ static struct bio *blk_bio_segment_split(struct request_queue *q,
@@ -316,19 +316,10 @@ index bcdff1879..1d4c0d1c0 100644
  	for (bio = rq->bio; bio; bio = bio->bi_next) {
  		WARN_ON_ONCE((bio->bi_opf & REQ_FAILFAST_MASK) &&
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index c732aa581..f33bcf66d 100644
+index 9d4fdc2be..181b2c5ac 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -924,7 +924,7 @@ static bool blk_mq_check_expired(struct blk_mq_hw_ctx *hctx,
- 
- 	/*
- 	 * Just do a quick check if it is expired before locking the request in
--	 * so we're not unnecessarilly synchronizing across CPUs.
-+	 * so we're not unnecessarily synchronizing across CPUs.
- 	 */
- 	if (!blk_mq_req_expired(rq, next))
- 		return true;
-@@ -1646,7 +1646,7 @@ static bool blk_mq_has_sqsched(struct request_queue *q)
+@@ -1626,7 +1626,7 @@ static bool blk_mq_has_sqsched(struct request_queue *q)
  }
  
  /*
@@ -364,10 +355,10 @@ index 17b47a86e..0541f7228 100644
  void blk_stat_remove_callback(struct request_queue *q,
  			      struct blk_stat_callback *cb);
 diff --git a/block/blk.h b/block/blk.h
-index 8b3591aee..af45e6f74 100644
+index cb01429c1..be7dfc7cf 100644
 --- a/block/blk.h
 +++ b/block/blk.h
-@@ -253,7 +253,7 @@ static inline void req_set_nomerge(struct request_queue *q, struct request *req)
+@@ -248,7 +248,7 @@ static inline void req_set_nomerge(struct request_queue *q, struct request *req)
  }
  
  /*
@@ -377,7 +368,7 @@ index 8b3591aee..af45e6f74 100644
   * block size which is the minimum accepted unit by hardware.
   */
 diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
-index 81e3279ec..85f03ee08 100644
+index 15a8be572..07f575c24 100644
 --- a/block/kyber-iosched.c
 +++ b/block/kyber-iosched.c
 @@ -142,7 +142,7 @@ struct kyber_cpu_latency {
@@ -438,10 +429,10 @@ index 47dc53ecc..c67b4d145 100644
  	use_vtoc = use_vtoc || !(label->vtoc.sanity ||
  				 label->vtoc.version || label->vtoc.nparts);
 diff --git a/block/scsi_ioctl.c b/block/scsi_ioctl.c
-index 1b3fe99b8..7eebb0fb3 100644
+index d247431a6..e3fae9d5d 100644
 --- a/block/scsi_ioctl.c
 +++ b/block/scsi_ioctl.c
-@@ -457,7 +457,7 @@ int sg_scsi_ioctl(struct request_queue *q, struct gendisk *disk, fmode_t mode,
+@@ -459,7 +459,7 @@ int sg_scsi_ioctl(struct request_queue *q, struct gendisk *disk, fmode_t mode,
  	if (err)
  		goto error;
  
@@ -451,10 +442,10 @@ index 1b3fe99b8..7eebb0fb3 100644
  
  	switch (opcode) {
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 04efeadcf145301fa28b00b43091269cd63c60c8 Mon Sep 17 00:00:00 2001
+From c8ea37e277ecd719b43552a9f211afd1efdade4f Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 28 Jun 2021 13:12:54 +0200
 Subject: [PATCH 5/5] block: Add CONFIG to rename the mq-deadline scheduler
@@ -488,10 +479,10 @@ index e58b2953a..9e5a3c5c6 100644
  	tristate "Kyber I/O scheduler"
  	help
 diff --git a/block/elevator.c b/block/elevator.c
-index 440699c28..f92f45154 100644
+index 52ada14cf..ed90090d4 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
-@@ -625,7 +625,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
+@@ -634,7 +634,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
  			!blk_mq_is_sbitmap_shared(q->tag_set->flags))
  		return NULL;
  
@@ -504,10 +495,10 @@ index 440699c28..f92f45154 100644
  
  /*
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 8eea2cbf2..ee0afb467 100644
+index 36920670d..bc796f736 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -790,12 +790,21 @@ static struct elevator_type mq_deadline = {
+@@ -1079,12 +1079,21 @@ static struct elevator_type mq_deadline = {
  	.queue_debugfs_attrs = deadline_queue_debugfs_attrs,
  #endif
  	.elevator_attrs = deadline_attrs,
@@ -530,7 +521,7 @@ index 8eea2cbf2..ee0afb467 100644
  static int __init deadline_init(void)
  {
 diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index dcb2f9022..0b3c67155 100644
+index ef9ceead3..b6c59500c 100644
 --- a/include/linux/elevator.h
 +++ b/include/linux/elevator.h
 @@ -52,7 +52,7 @@ struct elevator_mq_ops {
@@ -543,5 +534,5 @@ index dcb2f9022..0b3c67155 100644
  struct elv_fs_entry {
  	struct attribute attr;
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 

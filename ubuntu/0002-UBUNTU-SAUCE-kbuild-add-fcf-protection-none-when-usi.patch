@@ -1,4 +1,4 @@
-From 193a52c086b2b9b2e57302533e9c6a0680a9eaeb Mon Sep 17 00:00:00 2001
+From 25dbf5ce5d21829e654b3a4f2c379c28237b220f Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Sun, 7 Jul 2019 21:37:43 -0500
 Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
@@ -19,20 +19,20 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index ed4031db3894..1881b1f670ba 100644
+index 83d1f7c1fd30..814c6a1c4c09 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -899,6 +899,12 @@ endif
- ifdef CONFIG_HAVE_FENTRY
-   ifeq ($(call cc-option-yn, -mfentry),y)
-     CC_FLAGS_FTRACE	+= -mfentry
+ ifdef CONFIG_FTRACE_MCOUNT_USE_RECORDMCOUNT
+   ifdef CONFIG_HAVE_C_RECORDMCOUNT
+     BUILD_C_RECORDMCOUNT := y
 +# ensure -fcf-protection is disabled when using retpoline as it is
 +# incompatible with -mindirect-branch=thunk-extern
 +ifdef CONFIG_RETPOLINE
 +KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none,)
 +endif
 +
-     CC_FLAGS_USING	+= -DCC_USING_FENTRY
+     export BUILD_C_RECORDMCOUNT
    endif
  endif
 -- 

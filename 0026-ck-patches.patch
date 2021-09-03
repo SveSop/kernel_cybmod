@@ -1,10 +1,10 @@
-From 014af161265d0090571328108d390d4b8df383c4 Mon Sep 17 00:00:00 2001
+From 0043984c0a1c6b548d12dcfc60f4f1b842d8dcae Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 12 Aug 2017 11:53:39 +1000
-Subject: [PATCH] hrtimer: Create highres timeout variants of schedule_timeout
- functions.
+Subject: [PATCH 1/8] hrtimer: Create highres timeout variants of
+ schedule_timeout functions.
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  include/linux/freezer.h |  1 +
  include/linux/sched.h   | 31 ++++++++++++++++--
@@ -12,7 +12,7 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  3 files changed, 99 insertions(+), 2 deletions(-)
 
 diff --git a/include/linux/freezer.h b/include/linux/freezer.h
-index 0621c5f86c397..97f58f6c2b635 100644
+index 0621c5f86c39..97f58f6c2b63 100644
 --- a/include/linux/freezer.h
 +++ b/include/linux/freezer.h
 @@ -310,6 +310,7 @@ static inline void set_freezable(void) {}
@@ -24,10 +24,10 @@ index 0621c5f86c397..97f58f6c2b635 100644
  
  #endif	/* FREEZER_H_INCLUDED */
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 32813c345115f..59a0e1e9d5c01 100644
+index ec8d07d88641..2680db953493 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
-@@ -216,13 +216,40 @@ struct task_group;
+@@ -220,13 +220,40 @@ struct task_group;
  
  extern void scheduler_tick(void);
  
@@ -71,7 +71,7 @@ index 32813c345115f..59a0e1e9d5c01 100644
  extern void schedule_preempt_disabled(void);
  asmlinkage void preempt_schedule_irq(void);
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 4a66725b1d4ac..46757e9c60e11 100644
+index 4a66725b1d4a..46757e9c60e1 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -2236,3 +2236,72 @@ int __sched schedule_hrtimeout(ktime_t *expires,
@@ -147,22 +147,25 @@ index 4a66725b1d4ac..46757e9c60e11 100644
 +	return schedule_msec_hrtimeout(timeout);
 +}
 +EXPORT_SYMBOL(schedule_msec_hrtimeout_uninterruptible);
-From 3805e10893b55c065047465e9db7d602831647ce Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From c5c8cae90cc6a6839bdee9bec259de25e8c9a239 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Sat, 5 Nov 2016 09:27:36 +1100
-Subject: [PATCH] time: Special case calls of schedule_timeout(1) to use the
- min hrtimeout of 1ms, working around low Hz resolutions.
+Subject: [PATCH 2/8] time: Special case calls of schedule_timeout(1) to use
+ the min hrtimeout of 1ms, working around low Hz resolutions.
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  kernel/time/timer.c | 16 ++++++++++++++--
  1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index d111adf4a0cb4..d43389579b677 100644
+index e3d2c23c413d..ffafd93b2a10 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
-@@ -1886,6 +1886,18 @@ signed long __sched schedule_timeout(signed long timeout)
+@@ -1875,6 +1875,18 @@ signed long __sched schedule_timeout(signed long timeout)
  
  	expire = timeout + jiffies;
  
@@ -181,7 +184,7 @@ index d111adf4a0cb4..d43389579b677 100644
  	timer.task = current;
  	timer_setup_on_stack(&timer.timer, process_timeout, 0);
  	__mod_timer(&timer.timer, expire, MOD_TIMER_NOTPENDING);
-@@ -1894,10 +1906,10 @@ signed long __sched schedule_timeout(signed long timeout)
+@@ -1883,10 +1895,10 @@ signed long __sched schedule_timeout(signed long timeout)
  
  	/* Remove the timer from the object tracker */
  	destroy_timer_on_stack(&timer.timer);
@@ -194,21 +197,24 @@ index d111adf4a0cb4..d43389579b677 100644
  	return timeout < 0 ? 0 : timeout;
  }
  EXPORT_SYMBOL(schedule_timeout);
-From 2362167cbfea9f499f2d77a703d09dfec9765eed Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 42a33fc07429abb177633eec183975f811d3f57b Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Fri, 4 Nov 2016 09:25:54 +1100
-Subject: [PATCH] timer: Convert msleep to use hrtimers when active.
+Subject: [PATCH 3/8] timer: Convert msleep to use hrtimers when active.
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  kernel/time/timer.c | 24 ++++++++++++++++++++++--
  1 file changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index d43389579b677..96a7610e72402 100644
+index ffafd93b2a10..dbae87bf91ef 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
-@@ -2052,7 +2052,19 @@ void __init init_timers(void)
+@@ -2042,7 +2042,19 @@ void __init init_timers(void)
   */
  void msleep(unsigned int msecs)
  {
@@ -229,7 +235,7 @@ index d43389579b677..96a7610e72402 100644
  
  	while (timeout)
  		timeout = schedule_timeout_uninterruptible(timeout);
-@@ -2066,7 +2078,15 @@ EXPORT_SYMBOL(msleep);
+@@ -2056,7 +2068,15 @@ EXPORT_SYMBOL(msleep);
   */
  unsigned long msleep_interruptible(unsigned int msecs)
  {
@@ -246,13 +252,16 @@ index d43389579b677..96a7610e72402 100644
  
  	while (timeout && !signal_pending(current))
  		timeout = schedule_timeout_interruptible(timeout);
-From cdc128ec06453c6d0167f67d0dd07f99106047b2 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 0d346a3d84782b2bb59a4ac8de5084bec0fe0723 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 15 Feb 2021 21:56:16 +0000
-Subject: [PATCH] hrtimer: Replace all schedule timeout(1) with
+Subject: [PATCH 4/8] hrtimer: Replace all schedule timeout(1) with
  schedule_min_hrtimeout()
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  drivers/accessibility/speakup/speakup_acntpc.c  |  4 ++--
  drivers/accessibility/speakup/speakup_apollo.c  |  2 +-
@@ -271,7 +280,6 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  drivers/media/pci/ivtv/ivtv-streams.c           |  2 +-
  drivers/mfd/ucb1x00-core.c                      |  2 +-
  drivers/misc/sgi-xp/xpc_channel.c               |  2 +-
- drivers/net/caif/caif_hsi.c                     |  2 +-
  drivers/net/can/usb/peak_usb/pcan_usb.c         |  2 +-
  drivers/net/usb/lan78xx.c                       |  2 +-
  drivers/net/usb/usbnet.c                        |  2 +-
@@ -283,10 +291,10 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  drivers/video/fbdev/pxafb.c                     |  2 +-
  fs/btrfs/delalloc-space.c                       |  2 +-
  sound/usb/line6/pcm.c                           |  2 +-
- 29 files changed, 40 insertions(+), 45 deletions(-)
+ 28 files changed, 39 insertions(+), 44 deletions(-)
 
 diff --git a/drivers/accessibility/speakup/speakup_acntpc.c b/drivers/accessibility/speakup/speakup_acntpc.c
-index c1ec087dca130..b2d0d4266f62d 100644
+index c1ec087dca13..b2d0d4266f62 100644
 --- a/drivers/accessibility/speakup/speakup_acntpc.c
 +++ b/drivers/accessibility/speakup/speakup_acntpc.c
 @@ -198,7 +198,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -308,7 +316,7 @@ index c1ec087dca130..b2d0d4266f62d 100644
  		}
  	}
 diff --git a/drivers/accessibility/speakup/speakup_apollo.c b/drivers/accessibility/speakup/speakup_apollo.c
-index cd63581b2e99e..d636157a28448 100644
+index cd63581b2e99..d636157a2844 100644
 --- a/drivers/accessibility/speakup/speakup_apollo.c
 +++ b/drivers/accessibility/speakup/speakup_apollo.c
 @@ -165,7 +165,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -321,7 +329,7 @@ index cd63581b2e99e..d636157a28448 100644
  		}
  		if (time_after_eq(jiffies, jiff_max) && (ch == SPACE)) {
 diff --git a/drivers/accessibility/speakup/speakup_decext.c b/drivers/accessibility/speakup/speakup_decext.c
-index 092cfd08a9e18..e7fc85f8ce5c8 100644
+index 092cfd08a9e1..e7fc85f8ce5c 100644
 --- a/drivers/accessibility/speakup/speakup_decext.c
 +++ b/drivers/accessibility/speakup/speakup_decext.c
 @@ -180,7 +180,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -334,7 +342,7 @@ index 092cfd08a9e18..e7fc85f8ce5c8 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/accessibility/speakup/speakup_decpc.c b/drivers/accessibility/speakup/speakup_decpc.c
-index dec314dee214f..2a5deb5256b25 100644
+index dec314dee214..2a5deb5256b2 100644
 --- a/drivers/accessibility/speakup/speakup_decpc.c
 +++ b/drivers/accessibility/speakup/speakup_decpc.c
 @@ -398,7 +398,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -347,7 +355,7 @@ index dec314dee214f..2a5deb5256b25 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/accessibility/speakup/speakup_dectlk.c b/drivers/accessibility/speakup/speakup_dectlk.c
-index 580ec796816bc..67c156b90ddbc 100644
+index 580ec796816b..67c156b90ddb 100644
 --- a/drivers/accessibility/speakup/speakup_dectlk.c
 +++ b/drivers/accessibility/speakup/speakup_dectlk.c
 @@ -256,7 +256,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -360,7 +368,7 @@ index 580ec796816bc..67c156b90ddbc 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/accessibility/speakup/speakup_dtlk.c b/drivers/accessibility/speakup/speakup_dtlk.c
-index 92838d3ae9eb8..b687cb4d32683 100644
+index 92838d3ae9eb..b687cb4d3268 100644
 --- a/drivers/accessibility/speakup/speakup_dtlk.c
 +++ b/drivers/accessibility/speakup/speakup_dtlk.c
 @@ -211,7 +211,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -382,7 +390,7 @@ index 92838d3ae9eb8..b687cb4d32683 100644
  		}
  	}
 diff --git a/drivers/accessibility/speakup/speakup_keypc.c b/drivers/accessibility/speakup/speakup_keypc.c
-index 311f4aa0be22d..99c523fdcc98f 100644
+index 311f4aa0be22..99c523fdcc98 100644
 --- a/drivers/accessibility/speakup/speakup_keypc.c
 +++ b/drivers/accessibility/speakup/speakup_keypc.c
 @@ -199,7 +199,7 @@ static void do_catch_up(struct spk_synth *synth)
@@ -404,7 +412,7 @@ index 311f4aa0be22d..99c523fdcc98f 100644
  		}
  	}
 diff --git a/drivers/accessibility/speakup/synth.c b/drivers/accessibility/speakup/synth.c
-index 2b8699673bace..bf0cbdaf564f8 100644
+index 2b8699673bac..bf0cbdaf564f 100644
 --- a/drivers/accessibility/speakup/synth.c
 +++ b/drivers/accessibility/speakup/synth.c
 @@ -93,12 +93,8 @@ static void _spk_do_catch_up(struct spk_synth *synth, int unicode)
@@ -437,7 +445,7 @@ index 2b8699673bace..bf0cbdaf564f8 100644
  		}
  		set_current_state(TASK_RUNNING);
 diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 2917b21f48ff2..fcad8d963cd89 100644
+index 7ccc8d2a41bc..86f29041cf98 100644
 --- a/drivers/block/swim.c
 +++ b/drivers/block/swim.c
 @@ -328,7 +328,7 @@ static inline void swim_motor(struct swim __iomem *base,
@@ -467,10 +475,10 @@ index 2917b21f48ff2..fcad8d963cd89 100644
  		swim_select(base, RELAX);
  		if (!swim_readbit(base, STEP))
 diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 8a0e97b33caef..b5b22e487c003 100644
+index e96cb5c4f97a..d129cdab8b6e 100644
 --- a/drivers/char/ipmi/ipmi_msghandler.c
 +++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3548,7 +3548,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
+@@ -3549,7 +3549,7 @@ static void cleanup_smi_msgs(struct ipmi_smi *intf)
  	/* Current message first, to preserve order */
  	while (intf->curr_msg && !list_empty(&intf->waiting_rcv_msgs)) {
  		/* Wait for the message to clear out. */
@@ -480,7 +488,7 @@ index 8a0e97b33caef..b5b22e487c003 100644
  
  	/* No need for locks, the interface is down. */
 diff --git a/drivers/char/ipmi/ipmi_ssif.c b/drivers/char/ipmi/ipmi_ssif.c
-index 20d5af92966d4..05b8d6a8171ff 100644
+index 20d5af92966d..05b8d6a8171f 100644
 --- a/drivers/char/ipmi/ipmi_ssif.c
 +++ b/drivers/char/ipmi/ipmi_ssif.c
 @@ -1247,7 +1247,7 @@ static void shutdown_ssif(void *send_info)
@@ -493,7 +501,7 @@ index 20d5af92966d4..05b8d6a8171ff 100644
  	ssif_info->stopping = true;
  	del_timer_sync(&ssif_info->watch_timer);
 diff --git a/drivers/comedi/drivers/ni_mio_common.c b/drivers/comedi/drivers/ni_mio_common.c
-index 4f80a4991f953..c164c85249098 100644
+index 4f80a4991f95..c164c8524909 100644
 --- a/drivers/comedi/drivers/ni_mio_common.c
 +++ b/drivers/comedi/drivers/ni_mio_common.c
 @@ -4747,7 +4747,7 @@ static int cs5529_wait_for_idle(struct comedi_device *dev)
@@ -506,10 +514,10 @@ index 4f80a4991f953..c164c85249098 100644
  	}
  	if (i == timeout) {
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_irq.c b/drivers/gpu/drm/vmwgfx/vmwgfx_irq.c
-index 6c2a569f1fcb1..8d7feeb0d7abc 100644
+index b9a9b7ddadbd..e8447f466249 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_irq.c
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_irq.c
-@@ -201,7 +201,7 @@ int vmw_fallback_wait(struct vmw_private *dev_priv,
+@@ -198,7 +198,7 @@ int vmw_fallback_wait(struct vmw_private *dev_priv,
  			break;
  		}
  		if (lazy)
@@ -519,10 +527,10 @@ index 6c2a569f1fcb1..8d7feeb0d7abc 100644
  			/**
  			 * FIXME: Use schedule_hr_timeout here for
 diff --git a/drivers/media/pci/ivtv/ivtv-ioctl.c b/drivers/media/pci/ivtv/ivtv-ioctl.c
-index 35dccb31174c1..8181cd65e8764 100644
+index da19b2e95e6c..3d064c641306 100644
 --- a/drivers/media/pci/ivtv/ivtv-ioctl.c
 +++ b/drivers/media/pci/ivtv/ivtv-ioctl.c
-@@ -1139,7 +1139,7 @@ void ivtv_s_std_dec(struct ivtv *itv, v4l2_std_id std)
+@@ -1134,7 +1134,7 @@ void ivtv_s_std_dec(struct ivtv *itv, v4l2_std_id std)
  				TASK_UNINTERRUPTIBLE);
  		if ((read_reg(IVTV_REG_DEC_LINE_FIELD) >> 16) < 100)
  			break;
@@ -532,7 +540,7 @@ index 35dccb31174c1..8181cd65e8764 100644
  	finish_wait(&itv->vsync_waitq, &wait);
  	mutex_lock(&itv->serialize_lock);
 diff --git a/drivers/media/pci/ivtv/ivtv-streams.c b/drivers/media/pci/ivtv/ivtv-streams.c
-index f04ee84bab5fd..c4469b4b8f99c 100644
+index f04ee84bab5f..c4469b4b8f99 100644
 --- a/drivers/media/pci/ivtv/ivtv-streams.c
 +++ b/drivers/media/pci/ivtv/ivtv-streams.c
 @@ -849,7 +849,7 @@ int ivtv_stop_v4l2_encode_stream(struct ivtv_stream *s, int gop_end)
@@ -545,7 +553,7 @@ index f04ee84bab5fd..c4469b4b8f99c 100644
  
  			/* To convert jiffies to ms, we must multiply by 1000
 diff --git a/drivers/mfd/ucb1x00-core.c b/drivers/mfd/ucb1x00-core.c
-index b690796d24d4b..448b13da62b43 100644
+index b690796d24d4..448b13da62b4 100644
 --- a/drivers/mfd/ucb1x00-core.c
 +++ b/drivers/mfd/ucb1x00-core.c
 @@ -250,7 +250,7 @@ unsigned int ucb1x00_adc_read(struct ucb1x00 *ucb, int adc_channel, int sync)
@@ -558,7 +566,7 @@ index b690796d24d4b..448b13da62b43 100644
  
  	return UCB_ADC_DAT(val);
 diff --git a/drivers/misc/sgi-xp/xpc_channel.c b/drivers/misc/sgi-xp/xpc_channel.c
-index 8e6607fc8a67b..b9ab770bbdb5d 100644
+index 8e6607fc8a67..b9ab770bbdb5 100644
 --- a/drivers/misc/sgi-xp/xpc_channel.c
 +++ b/drivers/misc/sgi-xp/xpc_channel.c
 @@ -834,7 +834,7 @@ xpc_allocate_msg_wait(struct xpc_channel *ch)
@@ -570,24 +578,11 @@ index 8e6607fc8a67b..b9ab770bbdb5d 100644
  	finish_wait(&ch->msg_allocate_wq, &wait);
  	atomic_dec(&ch->n_on_msg_allocate_wq);
  
-diff --git a/drivers/net/caif/caif_hsi.c b/drivers/net/caif/caif_hsi.c
-index 3d63b15bbaa10..164071e9d4579 100644
---- a/drivers/net/caif/caif_hsi.c
-+++ b/drivers/net/caif/caif_hsi.c
-@@ -924,7 +924,7 @@ static void cfhsi_wake_down(struct work_struct *work)
- 			break;
- 
- 		set_current_state(TASK_INTERRUPTIBLE);
--		schedule_timeout(1);
-+		schedule_min_hrtimeout();
- 		retry--;
- 	}
- 
 diff --git a/drivers/net/can/usb/peak_usb/pcan_usb.c b/drivers/net/can/usb/peak_usb/pcan_usb.c
-index 1d6f77252f018..6ce9be987266c 100644
+index 899a3d21b77f..3747195b6cfd 100644
 --- a/drivers/net/can/usb/peak_usb/pcan_usb.c
 +++ b/drivers/net/can/usb/peak_usb/pcan_usb.c
-@@ -299,7 +299,7 @@ static int pcan_usb_write_mode(struct peak_usb_device *dev, u8 onoff)
+@@ -300,7 +300,7 @@ static int pcan_usb_write_mode(struct peak_usb_device *dev, u8 onoff)
  	} else {
  		/* the PCAN-USB needs time to init */
  		set_current_state(TASK_INTERRUPTIBLE);
@@ -597,10 +592,10 @@ index 1d6f77252f018..6ce9be987266c 100644
  
  	return err;
 diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 02bce40a67e5b..69758f825a4da 100644
+index 6d092d78e0cb..8ec7cf9bdc02 100644
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -2655,7 +2655,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
+@@ -2663,7 +2663,7 @@ static void lan78xx_terminate_urbs(struct lan78xx_net *dev)
  	while (!skb_queue_empty(&dev->rxq) &&
  	       !skb_queue_empty(&dev->txq) &&
  	       !skb_queue_empty(&dev->done)) {
@@ -610,10 +605,10 @@ index 02bce40a67e5b..69758f825a4da 100644
  		netif_dbg(dev, ifdown, dev->net,
  			  "waited for %d urb completions\n", temp);
 diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index ecf62849f4c1f..ed6b424a59709 100644
+index 470e1c1e6353..ac83ef6f7fa9 100644
 --- a/drivers/net/usb/usbnet.c
 +++ b/drivers/net/usb/usbnet.c
-@@ -764,7 +764,7 @@ static void wait_skb_queue_empty(struct sk_buff_head *q)
+@@ -781,7 +781,7 @@ static void wait_skb_queue_empty(struct sk_buff_head *q)
  	spin_lock_irqsave(&q->lock, flags);
  	while (!skb_queue_empty(q)) {
  		spin_unlock_irqrestore(&q->lock, flags);
@@ -623,7 +618,7 @@ index ecf62849f4c1f..ed6b424a59709 100644
  		spin_lock_irqsave(&q->lock, flags);
  	}
 diff --git a/drivers/scsi/fnic/fnic_scsi.c b/drivers/scsi/fnic/fnic_scsi.c
-index 762cc8bd2653f..c2b62b5113fce 100644
+index 762cc8bd2653..c2b62b5113fc 100644
 --- a/drivers/scsi/fnic/fnic_scsi.c
 +++ b/drivers/scsi/fnic/fnic_scsi.c
 @@ -217,7 +217,7 @@ int fnic_fw_reset_handler(struct fnic *fnic)
@@ -645,7 +640,7 @@ index 762cc8bd2653f..c2b62b5113fce 100644
  	/* walk again to check, if IOs are still pending in fw */
  	if (fnic_is_abts_pending(fnic, lr_sc))
 diff --git a/drivers/scsi/snic/snic_scsi.c b/drivers/scsi/snic/snic_scsi.c
-index 6dd0ff188bb49..aedf0b78f6229 100644
+index 6dd0ff188bb4..aedf0b78f622 100644
 --- a/drivers/scsi/snic/snic_scsi.c
 +++ b/drivers/scsi/snic/snic_scsi.c
 @@ -2349,7 +2349,7 @@ snic_reset(struct Scsi_Host *shost, struct scsi_cmnd *sc)
@@ -658,7 +653,7 @@ index 6dd0ff188bb49..aedf0b78f6229 100644
  	ret = snic_issue_hba_reset(snic, sc);
  	if (ret) {
 diff --git a/drivers/staging/rts5208/rtsx.c b/drivers/staging/rts5208/rtsx.c
-index 898add4d1fc88..0aa9dd4673492 100644
+index 898add4d1fc8..0aa9dd467349 100644
 --- a/drivers/staging/rts5208/rtsx.c
 +++ b/drivers/staging/rts5208/rtsx.c
 @@ -477,7 +477,7 @@ static int rtsx_polling_thread(void *__dev)
@@ -671,7 +666,7 @@ index 898add4d1fc88..0aa9dd4673492 100644
  		/* lock the device pointers */
  		mutex_lock(&dev->dev_mutex);
 diff --git a/drivers/staging/unisys/visornic/visornic_main.c b/drivers/staging/unisys/visornic/visornic_main.c
-index a3bc568c660d4..e7cac6df0202a 100644
+index a3bc568c660d..e7cac6df0202 100644
 --- a/drivers/staging/unisys/visornic/visornic_main.c
 +++ b/drivers/staging/unisys/visornic/visornic_main.c
 @@ -547,7 +547,7 @@ static int visornic_disable_with_timeout(struct net_device *netdev,
@@ -702,7 +697,7 @@ index a3bc568c660d4..e7cac6df0202a 100644
  	}
  
 diff --git a/drivers/video/fbdev/omap/hwa742.c b/drivers/video/fbdev/omap/hwa742.c
-index b191bef22d984..a8c491e1d844e 100644
+index b191bef22d98..a8c491e1d844 100644
 --- a/drivers/video/fbdev/omap/hwa742.c
 +++ b/drivers/video/fbdev/omap/hwa742.c
 @@ -927,7 +927,7 @@ static void hwa742_resume(void)
@@ -715,7 +710,7 @@ index b191bef22d984..a8c491e1d844e 100644
  	hwa742_set_update_mode(hwa742.update_mode_before_suspend);
  }
 diff --git a/drivers/video/fbdev/pxafb.c b/drivers/video/fbdev/pxafb.c
-index f1551e00eb12f..f0f651e925044 100644
+index f1551e00eb12..f0f651e92504 100644
 --- a/drivers/video/fbdev/pxafb.c
 +++ b/drivers/video/fbdev/pxafb.c
 @@ -1287,7 +1287,7 @@ static int pxafb_smart_thread(void *arg)
@@ -728,7 +723,7 @@ index f1551e00eb12f..f0f651e925044 100644
  
  	pr_debug("%s(): task ending\n", __func__);
 diff --git a/fs/btrfs/delalloc-space.c b/fs/btrfs/delalloc-space.c
-index 56642ca7af105..fa1c3bc93ccfc 100644
+index 2059d1504149..f2d1a73e4975 100644
 --- a/fs/btrfs/delalloc-space.c
 +++ b/fs/btrfs/delalloc-space.c
 @@ -311,7 +311,7 @@ int btrfs_delalloc_reserve_metadata(struct btrfs_inode *inode, u64 num_bytes)
@@ -741,7 +736,7 @@ index 56642ca7af105..fa1c3bc93ccfc 100644
  
  	num_bytes = ALIGN(num_bytes, fs_info->sectorsize);
 diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
-index fdbdfb7bce92b..fa8e8faf3eb34 100644
+index fdbdfb7bce92..fa8e8faf3eb3 100644
 --- a/sound/usb/line6/pcm.c
 +++ b/sound/usb/line6/pcm.c
 @@ -127,7 +127,7 @@ static void line6_wait_clear_audio_urbs(struct snd_line6_pcm *line6pcm,
@@ -753,13 +748,17 @@ index fdbdfb7bce92b..fa8e8faf3eb34 100644
  	} while (--timeout > 0);
  	if (alive)
  		dev_err(line6pcm->line6->ifcdev,
-From 566dae0ba9409d80c5dec523527438504cd7f68e Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 562acc64e2c49d69839c4f0d78bc1c2c967c4cb7 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:07 +1100
-Subject: [PATCH] hrtimer: Replace all calls to schedule_timeout_interruptible
- of potentially under 50ms to use schedule_msec_hrtimeout_interruptible.
+Subject: [PATCH 5/8] hrtimer: Replace all calls to
+ schedule_timeout_interruptible of potentially under 50ms to use
+ schedule_msec_hrtimeout_interruptible.
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  drivers/hwmon/fam15h_power.c        |  2 +-
  drivers/iio/light/tsl2563.c         |  6 +-----
@@ -778,7 +777,7 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  14 files changed, 26 insertions(+), 30 deletions(-)
 
 diff --git a/drivers/hwmon/fam15h_power.c b/drivers/hwmon/fam15h_power.c
-index 29f5fed28c2a7..974cb08c7aa71 100644
+index 29f5fed28c2a..974cb08c7aa7 100644
 --- a/drivers/hwmon/fam15h_power.c
 +++ b/drivers/hwmon/fam15h_power.c
 @@ -221,7 +221,7 @@ static ssize_t power1_average_show(struct device *dev,
@@ -791,7 +790,7 @@ index 29f5fed28c2a7..974cb08c7aa71 100644
  		return 0;
  
 diff --git a/drivers/iio/light/tsl2563.c b/drivers/iio/light/tsl2563.c
-index 5bf2bfbc5379e..6ce37819fb73f 100644
+index 5bf2bfbc5379..6ce37819fb73 100644
 --- a/drivers/iio/light/tsl2563.c
 +++ b/drivers/iio/light/tsl2563.c
 @@ -271,11 +271,7 @@ static void tsl2563_wait_adc(struct tsl2563_chip *chip)
@@ -808,7 +807,7 @@ index 5bf2bfbc5379e..6ce37819fb73f 100644
  
  static int tsl2563_adjust_gainlevel(struct tsl2563_chip *chip, u16 adc)
 diff --git a/drivers/media/i2c/msp3400-driver.c b/drivers/media/i2c/msp3400-driver.c
-index 39530d43590e3..a7caf2eb57712 100644
+index 39530d43590e..a7caf2eb5771 100644
 --- a/drivers/media/i2c/msp3400-driver.c
 +++ b/drivers/media/i2c/msp3400-driver.c
 @@ -170,7 +170,7 @@ static int msp_read(struct i2c_client *client, int dev, int addr)
@@ -830,7 +829,7 @@ index 39530d43590e3..a7caf2eb57712 100644
  	if (err == 3) {
  		dev_warn(&client->dev, "resetting chip, sound will go off.\n");
 diff --git a/drivers/media/pci/ivtv/ivtv-gpio.c b/drivers/media/pci/ivtv/ivtv-gpio.c
-index 856e7ab7f33e8..766a262513373 100644
+index 856e7ab7f33e..766a26251337 100644
 --- a/drivers/media/pci/ivtv/ivtv-gpio.c
 +++ b/drivers/media/pci/ivtv/ivtv-gpio.c
 @@ -105,7 +105,7 @@ void ivtv_reset_ir_gpio(struct ivtv *itv)
@@ -857,7 +856,7 @@ index 856e7ab7f33e8..766a262513373 100644
  }
  
 diff --git a/drivers/media/radio/radio-mr800.c b/drivers/media/radio/radio-mr800.c
-index cb0437b4c3312..163fffc0e1d47 100644
+index cb0437b4c331..163fffc0e1d4 100644
 --- a/drivers/media/radio/radio-mr800.c
 +++ b/drivers/media/radio/radio-mr800.c
 @@ -366,7 +366,7 @@ static int vidioc_s_hw_freq_seek(struct file *file, void *priv,
@@ -870,7 +869,7 @@ index cb0437b4c3312..163fffc0e1d47 100644
  			break;
  		}
 diff --git a/drivers/media/radio/radio-tea5777.c b/drivers/media/radio/radio-tea5777.c
-index fb9de7bbcd195..e53cf45e7f3fe 100644
+index fb9de7bbcd19..e53cf45e7f3f 100644
 --- a/drivers/media/radio/radio-tea5777.c
 +++ b/drivers/media/radio/radio-tea5777.c
 @@ -235,7 +235,7 @@ static int radio_tea5777_update_read_reg(struct radio_tea5777 *tea, int wait)
@@ -883,7 +882,7 @@ index fb9de7bbcd195..e53cf45e7f3fe 100644
  	}
  
 diff --git a/drivers/media/radio/tea575x.c b/drivers/media/radio/tea575x.c
-index c37315226c427..e73e6393403c8 100644
+index c37315226c42..e73e6393403c 100644
 --- a/drivers/media/radio/tea575x.c
 +++ b/drivers/media/radio/tea575x.c
 @@ -401,7 +401,7 @@ int snd_tea575x_s_hw_freq_seek(struct file *file, struct snd_tea575x *tea,
@@ -896,7 +895,7 @@ index c37315226c427..e73e6393403c8 100644
  			tea->val &= ~TEA575X_BIT_SEARCH;
  			snd_tea575x_set_freq(tea);
 diff --git a/drivers/parport/ieee1284.c b/drivers/parport/ieee1284.c
-index 4547ac44c8d48..8fa1a7fdf12cc 100644
+index 4547ac44c8d4..8fa1a7fdf12c 100644
 --- a/drivers/parport/ieee1284.c
 +++ b/drivers/parport/ieee1284.c
 @@ -202,7 +202,7 @@ int parport_wait_peripheral(struct parport *port,
@@ -909,7 +908,7 @@ index 4547ac44c8d48..8fa1a7fdf12cc 100644
  	}
  
 diff --git a/drivers/parport/ieee1284_ops.c b/drivers/parport/ieee1284_ops.c
-index 2c11bd3fe1fd6..8cb6b61c0880d 100644
+index 2c11bd3fe1fd..8cb6b61c0880 100644
 --- a/drivers/parport/ieee1284_ops.c
 +++ b/drivers/parport/ieee1284_ops.c
 @@ -520,7 +520,7 @@ size_t parport_ieee1284_ecp_read_data (struct parport *port,
@@ -922,7 +921,7 @@ index 2c11bd3fe1fd6..8cb6b61c0880d 100644
  			}
  			else
 diff --git a/drivers/platform/x86/intel_ips.c b/drivers/platform/x86/intel_ips.c
-index bffe548187eed..c2918ee3e100a 100644
+index 4dfdbfca6841..7a9ad5a9c88b 100644
 --- a/drivers/platform/x86/intel_ips.c
 +++ b/drivers/platform/x86/intel_ips.c
 @@ -798,7 +798,7 @@ static int ips_adjust(void *data)
@@ -962,10 +961,10 @@ index bffe548187eed..c2918ee3e100a 100644
  
  	timer_setup(&ips->timer, monitor_timeout, TIMER_DEFERRABLE);
 diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index 3fba429f1f57b..9a3a9a6eb8377 100644
+index 7e258d255e90..89718e8bf7ba 100644
 --- a/net/core/pktgen.c
 +++ b/net/core/pktgen.c
-@@ -1894,7 +1894,7 @@ static void pktgen_mark_device(const struct pktgen_net *pn, const char *ifname)
+@@ -1891,7 +1891,7 @@ static void pktgen_mark_device(const struct pktgen_net *pn, const char *ifname)
  		mutex_unlock(&pktgen_thread_lock);
  		pr_debug("%s: waiting for %s to disappear....\n",
  			 __func__, ifname);
@@ -975,7 +974,7 @@ index 3fba429f1f57b..9a3a9a6eb8377 100644
  
  		if (++i >= max_tries) {
 diff --git a/sound/soc/codecs/wm8350.c b/sound/soc/codecs/wm8350.c
-index 15d42ce3b21d6..897fced9589bc 100644
+index 15d42ce3b21d..897fced9589b 100644
 --- a/sound/soc/codecs/wm8350.c
 +++ b/sound/soc/codecs/wm8350.c
 @@ -234,10 +234,10 @@ static void wm8350_pga_work(struct work_struct *work)
@@ -1028,7 +1027,7 @@ index 15d42ce3b21d6..897fced9589bc 100644
  
  		pm1 &= ~WM8350_BIASEN;
 diff --git a/sound/soc/codecs/wm8900.c b/sound/soc/codecs/wm8900.c
-index a9a6d766a1763..45bf31de6282a 100644
+index a9a6d766a176..45bf31de6282 100644
 --- a/sound/soc/codecs/wm8900.c
 +++ b/sound/soc/codecs/wm8900.c
 @@ -1104,7 +1104,7 @@ static int wm8900_set_bias_level(struct snd_soc_component *component,
@@ -1041,7 +1040,7 @@ index a9a6d766a1763..45bf31de6282a 100644
  			     WM8900_REG_POWER2_SYSCLK_ENA);
  		break;
 diff --git a/sound/soc/codecs/wm9713.c b/sound/soc/codecs/wm9713.c
-index e0ce32dd4a811..eb91c0282aad4 100644
+index e0ce32dd4a81..eb91c0282aad 100644
 --- a/sound/soc/codecs/wm9713.c
 +++ b/sound/soc/codecs/wm9713.c
 @@ -199,7 +199,7 @@ static int wm9713_voice_shutdown(struct snd_soc_dapm_widget *w,
@@ -1062,14 +1061,17 @@ index e0ce32dd4a811..eb91c0282aad4 100644
  	return 0;
  }
  
-From c885e05107d34b59b509ecf9ec8b0465f4533180 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 59d5197c43c9910b0ba1d2a92730b7ccedf669d5 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:30:32 +1100
-Subject: [PATCH] hrtimer: Replace all calls to
+Subject: [PATCH 6/8] hrtimer: Replace all calls to
  schedule_timeout_uninterruptible of potentially under 50ms to use
  schedule_msec_hrtimeout_uninterruptible
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  drivers/media/pci/cx18/cx18-gpio.c           | 4 ++--
  drivers/net/wireless/intel/ipw2x00/ipw2100.c | 4 ++--
@@ -1081,7 +1083,7 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  7 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/media/pci/cx18/cx18-gpio.c b/drivers/media/pci/cx18/cx18-gpio.c
-index cf7cfda941071..f63e17489547c 100644
+index cf7cfda94107..f63e17489547 100644
 --- a/drivers/media/pci/cx18/cx18-gpio.c
 +++ b/drivers/media/pci/cx18/cx18-gpio.c
 @@ -81,11 +81,11 @@ static void gpio_reset_seq(struct cx18 *cx, u32 active_lo, u32 active_hi,
@@ -1099,7 +1101,7 @@ index cf7cfda941071..f63e17489547c 100644
  
  /*
 diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2100.c b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-index 23fbddd0c1f8e..534ab3b894e2d 100644
+index 47eb89b773cf..e096e3c02244 100644
 --- a/drivers/net/wireless/intel/ipw2x00/ipw2100.c
 +++ b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
 @@ -815,7 +815,7 @@ static int ipw2100_hw_send_command(struct ipw2100_priv *priv,
@@ -1121,7 +1123,7 @@ index 23fbddd0c1f8e..534ab3b894e2d 100644
  
  		read_register(priv->net_dev, IPW_REG_INTA, &inta);
 diff --git a/drivers/rtc/rtc-wm8350.c b/drivers/rtc/rtc-wm8350.c
-index 2018614f258f6..fc19b312c345f 100644
+index 2018614f258f..fc19b312c345 100644
 --- a/drivers/rtc/rtc-wm8350.c
 +++ b/drivers/rtc/rtc-wm8350.c
 @@ -114,7 +114,7 @@ static int wm8350_rtc_settime(struct device *dev, struct rtc_time *tm)
@@ -1152,10 +1154,10 @@ index 2018614f258f6..fc19b312c345f 100644
  
  	if (rtc_ctrl & WM8350_RTC_ALMSTS)
 diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
-index eefbb9b227984..ab7d7869dd121 100644
+index 1b248c237be1..fbfb9ce8a6ea 100644
 --- a/drivers/scsi/lpfc/lpfc_scsi.c
 +++ b/drivers/scsi/lpfc/lpfc_scsi.c
-@@ -5829,7 +5829,7 @@ lpfc_reset_flush_io_context(struct lpfc_vport *vport, uint16_t tgt_id,
+@@ -6161,7 +6161,7 @@ lpfc_reset_flush_io_context(struct lpfc_vport *vport, uint16_t tgt_id,
  					tgt_id, lun_id, context);
  	later = msecs_to_jiffies(2 * vport->cfg_devloss_tmo * 1000) + jiffies;
  	while (time_after(later, jiffies) && cnt) {
@@ -1165,10 +1167,10 @@ index eefbb9b227984..ab7d7869dd121 100644
  	}
  	if (cnt) {
 diff --git a/sound/pci/maestro3.c b/sound/pci/maestro3.c
-index cdc4b61062526..159c40ec680db 100644
+index 77a484bc8c0d..425666b818be 100644
 --- a/sound/pci/maestro3.c
 +++ b/sound/pci/maestro3.c
-@@ -1990,7 +1990,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
+@@ -1992,7 +1992,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
  		outw(0, io + GPIO_DATA);
  		outw(dir | GPO_PRIMARY_AC97, io + GPIO_DIRECTION);
  
@@ -1177,7 +1179,7 @@ index cdc4b61062526..159c40ec680db 100644
  
  		outw(GPO_PRIMARY_AC97, io + GPIO_DATA);
  		udelay(5);
-@@ -1998,7 +1998,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
+@@ -2000,7 +2000,7 @@ static void snd_m3_ac97_reset(struct snd_m3 *chip)
  		outw(IO_SRAM_ENABLE | SERIAL_AC_LINK_ENABLE, io + RING_BUS_CTRL_A);
  		outw(~0, io + GPIO_MASK);
  
@@ -1187,7 +1189,7 @@ index cdc4b61062526..159c40ec680db 100644
  		if (! snd_m3_try_read_vendor(chip))
  			break;
 diff --git a/sound/soc/codecs/rt5631.c b/sound/soc/codecs/rt5631.c
-index 3000bc128b5bc..d9b64d61bd865 100644
+index 38356ea2bd6e..8a8b4db5a8da 100644
 --- a/sound/soc/codecs/rt5631.c
 +++ b/sound/soc/codecs/rt5631.c
 @@ -417,7 +417,7 @@ static void onebit_depop_mute_stage(struct snd_soc_component *component, int ena
@@ -1209,7 +1211,7 @@ index 3000bc128b5bc..d9b64d61bd865 100644
  		/* config depop sequence parameter */
  		rt5631_write_index(component, RT5631_SPK_INTL_CTRL, 0x302f);
 diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
-index 91bf939d5233e..1bf7118d96a4c 100644
+index 91bf939d5233..1bf7118d96a4 100644
 --- a/sound/soc/soc-dapm.c
 +++ b/sound/soc/soc-dapm.c
 @@ -154,7 +154,7 @@ static void dapm_assert_locked(struct snd_soc_dapm_context *dapm)
@@ -1221,20 +1223,23 @@ index 91bf939d5233e..1bf7118d96a4c 100644
  }
  
  __printf(3, 4)
-From 1e6491a8e58321c292b21555c33a0f37ca6f7f76 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 5c71b417f91615d8f5f9d4eaf2b97cdc3903bdda Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 20 Feb 2017 13:32:58 +1100
-Subject: [PATCH] time: Don't use hrtimer overlay when pm_freezing since some
- drivers still don't correctly use freezable timeouts.
+Subject: [PATCH 7/8] time: Don't use hrtimer overlay when pm_freezing since
+ some drivers still don't correctly use freezable timeouts.
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  kernel/time/hrtimer.c | 2 +-
  kernel/time/timer.c   | 9 +++++----
  2 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 46757e9c60e11..dd8dd73da8e0e 100644
+index 46757e9c60e1..dd8dd73da8e0 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -2258,7 +2258,7 @@ long __sched schedule_msec_hrtimeout(long timeout)
@@ -1247,7 +1252,7 @@ index 46757e9c60e11..dd8dd73da8e0e 100644
  
  	secs = timeout / 1000;
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index 96a7610e72402..f3b1b41e94b69 100644
+index dbae87bf91ef..abd736fa6fce 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
 @@ -44,6 +44,7 @@
@@ -1258,7 +1263,7 @@ index 96a7610e72402..f3b1b41e94b69 100644
  
  #include <linux/uaccess.h>
  #include <asm/unistd.h>
-@@ -2059,12 +2060,12 @@ void msleep(unsigned int msecs)
+@@ -2049,12 +2050,12 @@ void msleep(unsigned int msecs)
  	 * Use high resolution timers where the resolution of tick based
  	 * timers is inadequate.
  	 */
@@ -1273,7 +1278,7 @@ index 96a7610e72402..f3b1b41e94b69 100644
  
  	while (timeout)
  		timeout = schedule_timeout_uninterruptible(timeout);
-@@ -2081,12 +2082,12 @@ unsigned long msleep_interruptible(unsigned int msecs)
+@@ -2071,12 +2072,12 @@ unsigned long msleep_interruptible(unsigned int msecs)
  	int jiffs = msecs_to_jiffies(msecs);
  	unsigned long timeout;
  
@@ -1288,14 +1293,17 @@ index 96a7610e72402..f3b1b41e94b69 100644
  
  	while (timeout && !signal_pending(current))
  		timeout = schedule_timeout_interruptible(timeout);
-From af3f13dec469240feb2de138caeaa3590619d48f Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From e935130141cf368c6e3df25aa04950d6b8f469b2 Mon Sep 17 00:00:00 2001
 From: Con Kolivas <kernel@kolivas.org>
 Date: Mon, 14 Dec 2020 19:09:01 +0000
-Subject: [PATCH] clockevents, hrtimer: Make hrtimer granularity and minimum
- hrtimeout configurable in sysctl. Set default granularity to 100us and min
- timeout to 500us
+Subject: [PATCH 8/8] clockevents, hrtimer: Make hrtimer granularity and
+ minimum hrtimeout configurable in sysctl. Set default granularity to 100us
+ and min timeout to 500us
 
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
+Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
  kernel/sysctl.c           | 22 ++++++++++++++++--
  kernel/time/clockevents.c |  3 ++-
@@ -1303,10 +1311,10 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  3 files changed, 67 insertions(+), 7 deletions(-)
 
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index ba4cc6bf8..0b9ac5f26 100644
+index 07ba1b7b1..edc1c82bb 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -156,9 +156,9 @@ static int one_thousand = 1000;
+@@ -158,9 +158,9 @@ static int one_thousand = 1000;
  static int __maybe_unused zero = 0;
  extern int sched_yield_type;
  #endif
@@ -1318,10 +1326,10 @@ index ba4cc6bf8..0b9ac5f26 100644
  #ifdef CONFIG_PERF_EVENTS
  static int six_hundred_forty_kb = 640 * 1024;
  #endif
-@@ -1783,6 +1783,24 @@ static struct ctl_table kern_table[] = {
- #endif /* CONFIG_SMP */
- #endif /* CONFIG_SCHED_DEBUG */
- #else  /* !CONFIG_SCHED_ALT */
+@@ -1780,6 +1780,24 @@ static struct ctl_table kern_table[] = {
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= SYSCTL_ONE,
+ 	},
 +	{
 +		.procname	= "hrtimer_granularity_us",
 +		.data		= &hrtimer_granularity_us,
@@ -1340,11 +1348,11 @@ index ba4cc6bf8..0b9ac5f26 100644
 +		.extra1		= SYSCTL_ONE,
 +		.extra2		= &ten_thousand,
 +	},
- 	{
- 		.procname	= "sched_child_runs_first",
- 		.data		= &sysctl_sched_child_runs_first,
+ #endif /* CONFIG_SCHEDSTATS */
+ #endif /* CONFIG_SMP */
+ #endif /* CONFIG_SCHED_DEBUG */
 diff --git a/kernel/time/clockevents.c b/kernel/time/clockevents.c
-index f5490222e..23db3c39e 100644
+index 003ccf338..45fdd88fe 100644
 --- a/kernel/time/clockevents.c
 +++ b/kernel/time/clockevents.c
 @@ -190,8 +190,9 @@ int clockevents_tick_resume(struct clock_event_device *dev)

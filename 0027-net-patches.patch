@@ -1,7 +1,7 @@
-From 39b24060c7f4792aa1c784ed48ffc352d8626089 Mon Sep 17 00:00:00 2001
+From f7ce8f9689ba4e840eca4434bc423ab03f0f7931 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Tue, 11 Jun 2019 12:26:55 -0400
-Subject: [PATCH] net-tcp_bbr: broaden app-limited rate sample detection
+Subject: [PATCH 01/21] net-tcp_bbr: broaden app-limited rate sample detection
 
 This commit is a bug fix for the Linux TCP app-limited
 (application-limited) logic that is used for collecting rate
@@ -30,10 +30,10 @@ Change-Id: I37221506f5166877c2b110753d39bb0757985e68
  2 files changed, 2 insertions(+)
 
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 4cf4dd532d1c6..14bca3761bf45 100644
+index 149ceb5c94ff..a9fb0f500cde 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -3742,6 +3742,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+@@ -3749,6 +3749,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
  
  	prior_fack = tcp_is_sack(tp) ? tcp_highest_sack_seq(tp) : tp->snd_una;
  	rs.prior_in_flight = tcp_packets_in_flight(tp);
@@ -42,7 +42,7 @@ index 4cf4dd532d1c6..14bca3761bf45 100644
  	/* ts_recent update must be made after we are sure that the packet
  	 * is in window.
 diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 4ef08079ccfa9..b5b24caa8ba01 100644
+index 20cf4a98c69d..b5f7e49a003a 100644
 --- a/net/ipv4/tcp_timer.c
 +++ b/net/ipv4/tcp_timer.c
 @@ -607,6 +607,7 @@ void tcp_write_timer_handler(struct sock *sk)
@@ -53,10 +53,14 @@ index 4ef08079ccfa9..b5b24caa8ba01 100644
  	tcp_mstamp_refresh(tcp_sk(sk));
  	event = icsk->icsk_pending;
  
-From 7ef26812cc5241a14abf80e1cc50a80c558e9cc0 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 0384efbd7b715430d9321a9645565a097e450a27 Mon Sep 17 00:00:00 2001
 From: Yuchung Cheng <ycheng@google.com>
 Date: Tue, 27 Mar 2018 18:33:29 -0700
-Subject: [PATCH] net-tcp_rate: consolidate inflight tracking approaches in TCP
+Subject: [PATCH 02/21] net-tcp_rate: consolidate inflight tracking approaches
+ in TCP
 
 In order to track CE marks per rate sample (one round trip), we'll
 need to snap the starting tcp delivered_ce acount in the packet
@@ -81,10 +85,10 @@ Change-Id: I1a184aad6d101c981ac7f2f275aa9417ff856910
  3 files changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index d05193cb0d990..f4a68ecb237ec 100644
+index 784d5c3ef1c5..c397e4a8ce6c 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -867,9 +867,8 @@ struct tcp_skb_cb {
+@@ -875,9 +875,8 @@ struct tcp_skb_cb {
  	union {
  		struct {
  			/* There is space for up to 24 bytes */
@@ -97,10 +101,10 @@ index d05193cb0d990..f4a68ecb237ec 100644
  			__u32 delivered;
  			/* start of send pipeline phase */
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 14bca3761bf45..e0c6f3d9b9c99 100644
+index a9fb0f500cde..f1b1d42261f0 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -3182,7 +3182,6 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
+@@ -3189,7 +3189,6 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
  	long seq_rtt_us = -1L;
  	long ca_rtt_us = -1L;
  	u32 pkts_acked = 0;
@@ -108,7 +112,7 @@ index 14bca3761bf45..e0c6f3d9b9c99 100644
  	bool rtt_update;
  	int flag = 0;
  
-@@ -3218,7 +3217,6 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
+@@ -3225,7 +3224,6 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
  			if (!first_ackt)
  				first_ackt = last_ackt;
  
@@ -116,7 +120,7 @@ index 14bca3761bf45..e0c6f3d9b9c99 100644
  			if (before(start_seq, reord))
  				reord = start_seq;
  			if (!after(scb->end_seq, tp->high_seq))
-@@ -3284,8 +3282,8 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
+@@ -3291,8 +3289,8 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
  		seq_rtt_us = tcp_stamp_us_delta(tp->tcp_mstamp, first_ackt);
  		ca_rtt_us = tcp_stamp_us_delta(tp->tcp_mstamp, last_ackt);
  
@@ -127,7 +131,7 @@ index 14bca3761bf45..e0c6f3d9b9c99 100644
  		    sack->rate->prior_delivered + 1 == tp->delivered &&
  		    !(flag & (FLAG_CA_ALERT | FLAG_SYN_ACKED))) {
  			/* Conservatively mark a delayed ACK. It's typically
-@@ -3342,9 +3340,10 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
+@@ -3349,9 +3347,10 @@ static int tcp_clean_rtx_queue(struct sock *sk, const struct sk_buff *ack_skb,
  
  	if (icsk->icsk_ca_ops->pkts_acked) {
  		struct ack_sample sample = { .pkts_acked = pkts_acked,
@@ -141,7 +145,7 @@ index 14bca3761bf45..e0c6f3d9b9c99 100644
  	}
  
 diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index bde781f46b41a..88797f0e3b309 100644
+index 29553fce8502..5ca809468fae 100644
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
 @@ -1256,8 +1256,6 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
@@ -153,10 +157,13 @@ index bde781f46b41a..88797f0e3b309 100644
  		oskb = skb;
  
  		tcp_skb_tsorted_save(oskb) {
-From 0b6885b342b47d86f4c693eb488655924bd73c81 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From d97bc46a9d0a65cb72a226ef79f5c815d6b2659c Mon Sep 17 00:00:00 2001
 From: Yuchung Cheng <ycheng@google.com>
 Date: Tue, 27 Mar 2018 18:01:46 -0700
-Subject: [PATCH] net-tcp_rate: account for CE marks in rate sample
+Subject: [PATCH 03/21] net-tcp_rate: account for CE marks in rate sample
 
 This patch counts number of packets delivered have CE mark in the
 rate sample, using similar approach of delivery accounting.
@@ -170,10 +177,10 @@ Change-Id: I0968fb33fe19b5c774e8c3afd2685558a6ec8710
  2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index f4a68ecb237ec..f989b5f03e3f5 100644
+index c397e4a8ce6c..2b274fb8f2ae 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -866,9 +866,11 @@ struct tcp_skb_cb {
+@@ -874,9 +874,11 @@ struct tcp_skb_cb {
  	__u32		ack_seq;	/* Sequence number ACK'd	*/
  	union {
  		struct {
@@ -186,7 +193,7 @@ index f4a68ecb237ec..f989b5f03e3f5 100644
  			/* pkts S/ACKed so far upon tx of skb, incl retrans: */
  			__u32 delivered;
  			/* start of send pipeline phase */
-@@ -1020,7 +1022,9 @@ struct ack_sample {
+@@ -1028,7 +1030,9 @@ struct ack_sample {
  struct rate_sample {
  	u64  prior_mstamp; /* starting timestamp for interval */
  	u32  prior_delivered;	/* tp->delivered at "prior_mstamp" */
@@ -197,7 +204,7 @@ index f4a68ecb237ec..f989b5f03e3f5 100644
  	u32 snd_interval_us;	/* snd interval for delivered packets */
  	u32 rcv_interval_us;	/* rcv interval for delivered packets */
 diff --git a/net/ipv4/tcp_rate.c b/net/ipv4/tcp_rate.c
-index 0de6935659635..fbab921670cc9 100644
+index 0de693565963..fbab921670cc 100644
 --- a/net/ipv4/tcp_rate.c
 +++ b/net/ipv4/tcp_rate.c
 @@ -65,6 +65,7 @@ void tcp_rate_skb_sent(struct sock *sk, struct sk_buff *skb)
@@ -227,11 +234,14 @@ index 0de6935659635..fbab921670cc9 100644
  	/* Model sending data and receiving ACKs as separate pipeline phases
  	 * for a window. Usually the ACK phase is longer, but with ACK
  	 * compression the send phase can be longer. To be safe we use the
-From 0afe1df768336756315cad96c36ea538772cc8dc Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 5bab8de1923e0509ab4250fdd306ceba14af0951 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Sun, 24 Jun 2018 21:55:59 -0400
-Subject: [PATCH] net-tcp_bbr: v2: shrink delivered_mstamp, first_tx_mstamp to
- u32 to free up 8 bytes
+Subject: [PATCH 04/21] net-tcp_bbr: v2: shrink delivered_mstamp,
+ first_tx_mstamp to u32 to free up 8 bytes
 
 Free up some space for tracking inflight and losses for each
 bw sample, in upcoming commits.
@@ -252,10 +262,10 @@ Change-Id: I3b779603797263b52a61ad57c565eb91fe42680c
  2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index f989b5f03e3f5..5477441d0128b 100644
+index 2b274fb8f2ae..6f0243c70b03 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -799,6 +799,11 @@ static inline u32 tcp_stamp_us_delta(u64 t1, u64 t0)
+@@ -807,6 +807,11 @@ static inline u32 tcp_stamp_us_delta(u64 t1, u64 t0)
  	return max_t(s64, t1 - t0, 0);
  }
  
@@ -267,7 +277,7 @@ index f989b5f03e3f5..5477441d0128b 100644
  static inline u32 tcp_skb_timestamp(const struct sk_buff *skb)
  {
  	return tcp_ns_to_ts(skb->skb_mstamp_ns);
-@@ -874,9 +879,9 @@ struct tcp_skb_cb {
+@@ -882,9 +887,9 @@ struct tcp_skb_cb {
  			/* pkts S/ACKed so far upon tx of skb, incl retrans: */
  			__u32 delivered;
  			/* start of send pipeline phase */
@@ -280,7 +290,7 @@ index f989b5f03e3f5..5477441d0128b 100644
  		union {
  			struct inet_skb_parm	h4;
 diff --git a/net/ipv4/tcp_rate.c b/net/ipv4/tcp_rate.c
-index fbab921670cc9..b64d82481ae93 100644
+index fbab921670cc..b64d82481ae9 100644
 --- a/net/ipv4/tcp_rate.c
 +++ b/net/ipv4/tcp_rate.c
 @@ -96,8 +96,9 @@ void tcp_rate_skb_delivered(struct sock *sk, struct sk_buff *skb,
@@ -304,11 +314,14 @@ index fbab921670cc9..b64d82481ae93 100644
  				    rs->prior_mstamp); /* ack phase */
  	rs->interval_us = max(snd_us, ack_us);
  
-From 7cda445ac95319d80b204fcfdac56f8f9c8e0f63 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From b4a668e7b4720904aba5d710010d838cd3245e26 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Sat, 5 Aug 2017 11:49:50 -0400
-Subject: [PATCH] net-tcp_bbr: v2: snapshot packets in flight at transmit time
- and pass in rate_sample
+Subject: [PATCH 05/21] net-tcp_bbr: v2: snapshot packets in flight at transmit
+ time and pass in rate_sample
 
 For understanding the relationship between inflight and losses or ECN
 signals, to try to find the highest inflight value that has acceptable
@@ -323,10 +336,10 @@ Change-Id: I7314047d0ff14dd261a04b1969a46dc658c8836a
  2 files changed, 19 insertions(+)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 5477441d0128b..5a24ccc1028ef 100644
+index 6f0243c70b03..c5797f42bcd6 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -882,6 +882,10 @@ struct tcp_skb_cb {
+@@ -890,6 +890,10 @@ struct tcp_skb_cb {
  			u32 first_tx_mstamp;
  			/* when we reached the "delivered" count */
  			u32 delivered_mstamp;
@@ -337,7 +350,7 @@ index 5477441d0128b..5a24ccc1028ef 100644
  		} tx;   /* only used for outgoing skbs */
  		union {
  			struct inet_skb_parm	h4;
-@@ -1028,6 +1032,7 @@ struct rate_sample {
+@@ -1036,6 +1040,7 @@ struct rate_sample {
  	u64  prior_mstamp; /* starting timestamp for interval */
  	u32  prior_delivered;	/* tp->delivered at "prior_mstamp" */
  	u32  prior_delivered_ce;/* tp->delivered_ce at "prior_mstamp" */
@@ -346,7 +359,7 @@ index 5477441d0128b..5a24ccc1028ef 100644
  	s32  delivered_ce;	/* number of packets delivered w/ CE marks*/
  	long interval_us;	/* time for tp->delivered to incr "delivered" */
 diff --git a/net/ipv4/tcp_rate.c b/net/ipv4/tcp_rate.c
-index b64d82481ae93..3ecc831206b58 100644
+index b64d82481ae9..3ecc831206b5 100644
 --- a/net/ipv4/tcp_rate.c
 +++ b/net/ipv4/tcp_rate.c
 @@ -40,6 +40,7 @@
@@ -384,11 +397,14 @@ index b64d82481ae93..3ecc831206b58 100644
  
  		/* Record send time of most recently ACKed packet: */
  		tp->first_tx_mstamp  = tcp_skb_timestamp_us(skb);
-From ec58ebdc0e0b575fdb6088c1864a660f53f7b6c8 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 294227bea00700d3c56dcba6683ebaf2422e792a Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Thu, 12 Oct 2017 23:44:27 -0400
-Subject: [PATCH] net-tcp_bbr: v2: count packets lost over TCP rate sampling
- interval
+Subject: [PATCH 06/21] net-tcp_bbr: v2: count packets lost over TCP rate
+ sampling interval
 
 For understanding the relationship between inflight and packet loss
 signals, to try to find the highest inflight value that has acceptable
@@ -403,10 +419,10 @@ Change-Id: I594c2500868d9c530770e7ddd68ffc87c57f4fd5
  2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 5a24ccc1028ef..a9d132ad75aa8 100644
+index c5797f42bcd6..1b656ec48d87 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -886,6 +886,7 @@ struct tcp_skb_cb {
+@@ -894,6 +894,7 @@ struct tcp_skb_cb {
  #define TCPCB_IN_FLIGHT_MAX ((1U << TCPCB_IN_FLIGHT_BITS) - 1)
  			u32 in_flight:20,   /* packets in flight at transmit */
  			    unused2:12;
@@ -414,7 +430,7 @@ index 5a24ccc1028ef..a9d132ad75aa8 100644
  		} tx;   /* only used for outgoing skbs */
  		union {
  			struct inet_skb_parm	h4;
-@@ -1030,11 +1031,13 @@ struct ack_sample {
+@@ -1038,11 +1039,13 @@ struct ack_sample {
   */
  struct rate_sample {
  	u64  prior_mstamp; /* starting timestamp for interval */
@@ -430,7 +446,7 @@ index 5a24ccc1028ef..a9d132ad75aa8 100644
  	u32 snd_interval_us;	/* snd interval for delivered packets */
  	u32 rcv_interval_us;	/* rcv interval for delivered packets */
 diff --git a/net/ipv4/tcp_rate.c b/net/ipv4/tcp_rate.c
-index 3ecc831206b58..f454fce5e1fd9 100644
+index 3ecc831206b5..f454fce5e1fd 100644
 --- a/net/ipv4/tcp_rate.c
 +++ b/net/ipv4/tcp_rate.c
 @@ -67,6 +67,7 @@ void tcp_rate_skb_sent(struct sock *sk, struct sk_buff *skb)
@@ -457,10 +473,13 @@ index 3ecc831206b58..f454fce5e1fd9 100644
  
  	rs->delivered_ce = tp->delivered_ce - rs->prior_delivered_ce;
  	/* delivered_ce occupies less than 32 bits in the skb control block */
-From 2567ef4ab9429f43deb2329411d529c44806432c Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From ef9c839454c908c680e061a95756586b7ccef67c Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Mon, 19 Nov 2018 13:48:36 -0500
-Subject: [PATCH] net-tcp_bbr: v2: export FLAG_ECE in rate_sample.is_ece
+Subject: [PATCH 07/21] net-tcp_bbr: v2: export FLAG_ECE in rate_sample.is_ece
 
 For understanding the relationship between inflight and ECN signals,
 to try to find the highest inflight value that has acceptable levels
@@ -475,10 +494,10 @@ Change-Id: I3a964e04cee83e11649a54507043d2dfe769a3b3
  2 files changed, 2 insertions(+)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index a9d132ad75aa8..c582058924d1c 100644
+index 1b656ec48d87..971b37cda0c8 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -1048,6 +1048,7 @@ struct rate_sample {
+@@ -1056,6 +1056,7 @@ struct rate_sample {
  	bool is_app_limited;	/* is sample from packet with bubble in pipe? */
  	bool is_retrans;	/* is sample from retransmission? */
  	bool is_ack_delayed;	/* is this (likely) a delayed ACK? */
@@ -487,10 +506,10 @@ index a9d132ad75aa8..c582058924d1c 100644
  
  struct tcp_congestion_ops {
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index e0c6f3d9b9c99..de75b9930ea61 100644
+index f1b1d42261f0..b579246bd368 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -3839,6 +3839,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+@@ -3846,6 +3846,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
  	delivered = tcp_newly_delivered(sk, delivered, flag);
  	lost = tp->lost - lost;			/* freshly marked lost */
  	rs.is_ack_delayed = !!(flag & FLAG_ACK_MAYBE_DELAYED);
@@ -498,10 +517,13 @@ index e0c6f3d9b9c99..de75b9930ea61 100644
  	tcp_rate_gen(sk, delivered, lost, is_sack_reneg, sack_state.rate);
  	tcp_cong_control(sk, ack, delivered, flag, sack_state.rate);
  	tcp_xmit_recovery(sk, rexmit);
-From 9d5d2cac73f74a9fc8508f603599c921ec56e85e Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From e954245de813f06d2e5e3a2812f10d33182a91d2 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Tue, 7 Aug 2018 21:52:06 -0400
-Subject: [PATCH] net-tcp_bbr: v2: introduce ca_ops->skb_marked_lost() CC
+Subject: [PATCH 08/21] net-tcp_bbr: v2: introduce ca_ops->skb_marked_lost() CC
  module callback API
 
 For connections experiencing reordering, RACK can mark packets lost
@@ -523,25 +545,26 @@ Effort: net-tcp_bbr
 Origin-9xx-SHA1: afcbebe3374e4632ac6714d39e4dc8a8455956f4
 Change-Id: I54826ab53df636be537e5d3c618a46145d12d51a
 ---
- include/net/tcp.h    | 2 ++
+ include/net/tcp.h    | 3 +++
  net/ipv4/tcp_input.c | 5 +++++
- 2 files changed, 7 insertions(+)
+ 2 files changed, 8 insertions(+)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index c582058924d1c..58eee82761c7c 100644
+index 971b37cda0c8..4fbc5f01e1fb 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -1085,6 +1085,8 @@ struct tcp_congestion_ops {
- 	u32  (*undo_cwnd)(struct sock *sk);
- 	/* returns the multiplier used in tcp_sndbuf_expand (optional) */
- 	u32 (*sndbuf_expand)(struct sock *sk);
+@@ -1083,6 +1083,9 @@ struct tcp_congestion_ops {
+ 	/* override sysctl_tcp_min_tso_segs */
+ 	u32 (*min_tso_segs)(struct sock *sk);
+ 
 +	/* react to a specific lost skb (optional) */
 +	void (*skb_marked_lost)(struct sock *sk, const struct sk_buff *skb);
- 
- /* control/slow paths put last */
- 	/* get info for inet_diag (optional) */
++
+ 	/* call when packets are delivered to update cwnd and pacing rate,
+ 	 * after all the ca_state processing. (optional)
+ 	 */
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index de75b9930ea61..a6585bdd72533 100644
+index b579246bd368..638d9ab39c46 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
 @@ -1039,7 +1039,12 @@ static void tcp_verify_retransmit_hint(struct tcp_sock *tp, struct sk_buff *skb)
@@ -557,10 +580,13 @@ index de75b9930ea61..a6585bdd72533 100644
  }
  
  void tcp_mark_skb_lost(struct sock *sk, struct sk_buff *skb)
-From 76821784fbd3409fed7ee05b43f4adc143edf9d9 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 10e8afe8eda2a8c2ce14676708eb84b5f211c3cf Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Tue, 7 May 2019 22:36:36 -0400
-Subject: [PATCH] net-tcp_bbr: v2: factor out tx.in_flight setting into
+Subject: [PATCH 09/21] net-tcp_bbr: v2: factor out tx.in_flight setting into
  tcp_set_tx_in_flight()
 
 Factor out the code to set an skb's tx.in_flight field into its own
@@ -580,10 +606,10 @@ Change-Id: I4fbd4a6e18a51ab06d50ab1c9ad820ce5bea89af
  2 files changed, 20 insertions(+), 13 deletions(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 58eee82761c7c..569410b2f5930 100644
+index 4fbc5f01e1fb..6e2e97aa0d1e 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -1163,6 +1163,7 @@ static inline void tcp_ca_event(struct sock *sk, const enum tcp_ca_event event)
+@@ -1172,6 +1172,7 @@ static inline void tcp_ca_event(struct sock *sk, const enum tcp_ca_event event)
  }
  
  /* From tcp_rate.c */
@@ -592,7 +618,7 @@ index 58eee82761c7c..569410b2f5930 100644
  void tcp_rate_skb_delivered(struct sock *sk, struct sk_buff *skb,
  			    struct rate_sample *rs);
 diff --git a/net/ipv4/tcp_rate.c b/net/ipv4/tcp_rate.c
-index f454fce5e1fd9..796fa6e5310ce 100644
+index f454fce5e1fd..796fa6e5310c 100644
 --- a/net/ipv4/tcp_rate.c
 +++ b/net/ipv4/tcp_rate.c
 @@ -34,13 +34,30 @@
@@ -647,10 +673,13 @@ index f454fce5e1fd9..796fa6e5310ce 100644
  }
  
  /* When an skb is sacked or acked, we fill in the rate sample with the (prior)
-From 579c6a93a97b4b2ebba38d2f9f7e02da5b1c3ff0 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From f76025a806b53761074863c04058df195b5d137e Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Wed, 1 May 2019 20:16:33 -0400
-Subject: [PATCH] net-tcp_bbr: v2: adjust skb tx.in_flight upon merge in
+Subject: [PATCH 10/21] net-tcp_bbr: v2: adjust skb tx.in_flight upon merge in
  tcp_shifted_skb()
 
 When tcp_shifted_skb() updates state as adjacent SACKed skbs are
@@ -688,7 +717,7 @@ Change-Id: I1b0b75c27519953430c7db51c6f358f104c7af55
  1 file changed, 11 insertions(+)
 
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index a6585bdd72533..fda94c6653633 100644
+index 638d9ab39c46..430d734fc283 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
 @@ -1425,6 +1425,17 @@ static bool tcp_shifted_skb(struct sock *sk, struct sk_buff *prev,
@@ -709,10 +738,13 @@ index a6585bdd72533..fda94c6653633 100644
  	/* When we're adding to gso_segs == 1, gso_size will be zero,
  	 * in theory this shouldn't be necessary but as long as DSACK
  	 * code can come after this skb later on it's better to keep
-From 35560060f6d729ad38606bdc3092a65be1930f62 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From b39cec83d2142fc096b0c006c46f6337b693b9ee Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Wed, 1 May 2019 20:16:25 -0400
-Subject: [PATCH] net-tcp_bbr: v2: adjust skb tx.in_flight upon split in
+Subject: [PATCH 11/21] net-tcp_bbr: v2: adjust skb tx.in_flight upon split in
  tcp_fragment()
 
 When we fragment an skb that has already been sent, we need to update
@@ -737,7 +769,7 @@ Change-Id: I617f8cab4e9be7a0b8e8d30b047bf8645393354d
  1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 88797f0e3b309..454b72da6580a 100644
+index 5ca809468fae..fbaf6ed39b19 100644
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
 @@ -1534,7 +1534,7 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
@@ -765,11 +797,14 @@ index 88797f0e3b309..454b72da6580a 100644
  	}
  
  	/* Link BUFF into the send queue. */
-From 0d84776c598a28776b29aa8f7ed7fb7b48cb5da1 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 2e54f05b1e5918d3409032211c41b4ad2cbf1953 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Tue, 7 May 2019 22:37:19 -0400
-Subject: [PATCH] net-tcp_bbr: v2: set tx.in_flight for skbs in repair write
- queue
+Subject: [PATCH 12/21] net-tcp_bbr: v2: set tx.in_flight for skbs in repair
+ write queue
 
 Syzkaller was able to use TCP_REPAIR to reproduce the new warning
 added in tcp_fragment():
@@ -796,10 +831,10 @@ Change-Id: I0bc4a790f040fd4239620e1eedd5dc64666c6f05
  1 file changed, 1 insertion(+)
 
 diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 454b72da6580a..1697382648cdc 100644
+index fbaf6ed39b19..a909be0a9b8c 100644
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
-@@ -2635,6 +2635,7 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
+@@ -2636,6 +2636,7 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
  			skb->skb_mstamp_ns = tp->tcp_wstamp_ns = tp->tcp_clock_cache;
  			list_move_tail(&skb->tcp_tsorted_anchor, &tp->tsorted_sent_queue);
  			tcp_init_tso_segs(skb, mss_now);
@@ -807,10 +842,13 @@ index 454b72da6580a..1697382648cdc 100644
  			goto repair; /* Skip network transmission */
  		}
  
-From 5d925d39230e9b38781d3de56f34823d2d0e96ad Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 87bdd4075a0281f498b2722cfac903a9ee3d4f24 Mon Sep 17 00:00:00 2001
 From: Yousuk Seung <ysseung@google.com>
 Date: Wed, 23 May 2018 17:55:54 -0700
-Subject: [PATCH] net-tcp: add new ca opts flag TCP_CONG_WANTS_CE_EVENTS
+Subject: [PATCH 13/21] net-tcp: add new ca opts flag TCP_CONG_WANTS_CE_EVENTS
 
 Add a a new ca opts flag TCP_CONG_WANTS_CE_EVENTS that allows a
 congestion control module to receive CE events.
@@ -830,10 +868,10 @@ Change-Id: I2255506985242f376d910c6fd37daabaf4744f24
  2 files changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 569410b2f5930..2bda883c7bf7a 100644
+index 6e2e97aa0d1e..b74fe7142386 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -1011,7 +1011,11 @@ enum tcp_ca_ack_event_flags {
+@@ -1019,7 +1019,11 @@ enum tcp_ca_ack_event_flags {
  #define TCP_CONG_NON_RESTRICTED 0x1
  /* Requires ECN/ECT set on all packets */
  #define TCP_CONG_NEEDS_ECN	0x2
@@ -846,7 +884,7 @@ index 569410b2f5930..2bda883c7bf7a 100644
  
  union tcp_cc_info;
  
-@@ -1138,6 +1142,14 @@ static inline char *tcp_ca_get_name_by_key(u32 key, char *buffer)
+@@ -1147,6 +1151,14 @@ static inline char *tcp_ca_get_name_by_key(u32 key, char *buffer)
  }
  #endif
  
@@ -862,7 +900,7 @@ index 569410b2f5930..2bda883c7bf7a 100644
  {
  	const struct inet_connection_sock *icsk = inet_csk(sk);
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index fda94c6653633..649b7219a6e23 100644
+index 430d734fc283..2cf77fdad9ce 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
 @@ -348,7 +348,7 @@ static void __tcp_ecn_check_ce(struct sock *sk, const struct sk_buff *skb)
@@ -883,10 +921,13 @@ index fda94c6653633..649b7219a6e23 100644
  			tcp_ca_event(sk, CA_EVENT_ECN_NO_CE);
  		tp->ecn_flags |= TCP_ECN_SEEN;
  		break;
-From 3feef542c4831f2b663782b093a57e61edbc3e0f Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From cf0728b801ab6d7c8801e426985ce929ebab21b2 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Fri, 27 Sep 2019 17:10:26 -0400
-Subject: [PATCH] net-tcp: re-generalize TSO sizing in TCP CC module API
+Subject: [PATCH 14/21] net-tcp: re-generalize TSO sizing in TCP CC module API
 
 Reorganize the API for CC modules so that the CC module once again
 gets complete control of the TSO sizing decision. This is how the API
@@ -911,10 +952,10 @@ Change-Id: Ic8ccfdbe4010ee8d4bf6a6334c48a2fceb2171ea
  4 files changed, 34 insertions(+), 21 deletions(-)
 
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 2bda883c7bf7a..276761ada22c4 100644
+index b74fe7142386..3b91bbdf3f31 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
-@@ -1076,8 +1076,8 @@ struct tcp_congestion_ops {
+@@ -1084,8 +1084,8 @@ struct tcp_congestion_ops {
  	/* hook for packet ack accounting (optional) */
  	void (*pkts_acked)(struct sock *sk, const struct ack_sample *sample);
  
@@ -923,10 +964,10 @@ index 2bda883c7bf7a..276761ada22c4 100644
 +	/* pick target number of segments per TSO/GSO skb (optional): */
 +	u32 (*tso_segs)(struct sock *sk, unsigned int mss_now);
  
- 	/* call when packets are delivered to update cwnd and pacing rate,
- 	 * after all the ca_state processing. (optional)
+ 	/* react to a specific lost skb (optional) */
+ 	void (*skb_marked_lost)(struct sock *sk, const struct sk_buff *skb);
 diff --git a/net/ipv4/bpf_tcp_ca.c b/net/ipv4/bpf_tcp_ca.c
-index 9e41eff4a6858..f26b0fcbb9f52 100644
+index 9e41eff4a685..f26b0fcbb9f5 100644
 --- a/net/ipv4/bpf_tcp_ca.c
 +++ b/net/ipv4/bpf_tcp_ca.c
 @@ -17,7 +17,7 @@ static u32 optional_ops[] = {
@@ -939,7 +980,7 @@ index 9e41eff4a6858..f26b0fcbb9f52 100644
  	offsetof(struct tcp_congestion_ops, cong_control),
  };
 diff --git a/net/ipv4/tcp_bbr.c b/net/ipv4/tcp_bbr.c
-index 6ea3dc2e42194..8ef512fefe255 100644
+index 6274462b86b4..c0d5a4211fc1 100644
 --- a/net/ipv4/tcp_bbr.c
 +++ b/net/ipv4/tcp_bbr.c
 @@ -292,26 +292,40 @@ static void bbr_set_pacing_rate(struct sock *sk, u32 bw, int gain)
@@ -1004,10 +1045,10 @@ index 6ea3dc2e42194..8ef512fefe255 100644
  	.set_state	= bbr_set_state,
  };
 diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 1697382648cdc..424c2154cd200 100644
+index a909be0a9b8c..9d87dc854c85 100644
 --- a/net/ipv4/tcp_output.c
 +++ b/net/ipv4/tcp_output.c
-@@ -1989,13 +1989,12 @@ static u32 tcp_tso_autosize(const struct sock *sk, unsigned int mss_now,
+@@ -1990,13 +1990,12 @@ static u32 tcp_tso_autosize(const struct sock *sk, unsigned int mss_now,
  static u32 tcp_tso_segs(struct sock *sk, unsigned int mss_now)
  {
  	const struct tcp_congestion_ops *ca_ops = inet_csk(sk)->icsk_ca_ops;
@@ -1026,10 +1067,13 @@ index 1697382648cdc..424c2154cd200 100644
  	return min_t(u32, tso_segs, sk->sk_gso_max_segs);
  }
  
-From 18fc2c83ed5d99742a6b9aea6fe9437a86ca1b02 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From ace4445577b327d7b45bc29bcf1523ce8c894dbf Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Sat, 16 Nov 2019 13:16:25 -0500
-Subject: [PATCH] net-tcp: add fast_ack_mode=1: skip rwin check in
+Subject: [PATCH 15/21] net-tcp: add fast_ack_mode=1: skip rwin check in
  tcp_fast_ack_mode__tcp_ack_snd_check()
 
 Add logic for an experimental TCP connection behavior, enabled with
@@ -1047,7 +1091,7 @@ Change-Id: Iaa0a0fd7108221f883137a79d5bfa724f1b096d4
  4 files changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/include/linux/tcp.h b/include/linux/tcp.h
-index 48d8a363319e5..1bd559c69e839 100644
+index 48d8a363319e..1bd559c69e83 100644
 --- a/include/linux/tcp.h
 +++ b/include/linux/tcp.h
 @@ -225,7 +225,8 @@ struct tcp_sock {
@@ -1061,10 +1105,10 @@ index 48d8a363319e5..1bd559c69e839 100644
  	u32	chrono_stat[3];	/* Time in jiffies for chrono_stat stats */
  	u8	chrono_type:2,	/* current chronograph type */
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index f1c1f9e3de723..f70ac717eb7b3 100644
+index 8cb44040ec68..68c8eee7f831 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -3046,6 +3046,7 @@ int tcp_disconnect(struct sock *sk, int flags)
+@@ -3047,6 +3047,7 @@ int tcp_disconnect(struct sock *sk, int flags)
  	tp->rx_opt.dsack = 0;
  	tp->rx_opt.num_sacks = 0;
  	tp->rcv_ooopack = 0;
@@ -1073,7 +1117,7 @@ index f1c1f9e3de723..f70ac717eb7b3 100644
  
  	/* Clean up fastopen related fields */
 diff --git a/net/ipv4/tcp_cong.c b/net/ipv4/tcp_cong.c
-index db5831e6c136a..153ed9010c0c2 100644
+index db5831e6c136..153ed9010c0c 100644
 --- a/net/ipv4/tcp_cong.c
 +++ b/net/ipv4/tcp_cong.c
 @@ -179,6 +179,7 @@ void tcp_init_congestion_control(struct sock *sk)
@@ -1085,10 +1129,10 @@ index db5831e6c136a..153ed9010c0c2 100644
  		icsk->icsk_ca_ops->init(sk);
  	if (tcp_ca_needs_ecn(sk))
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 649b7219a6e23..921ef339b0ca5 100644
+index 2cf77fdad9ce..af1f5742b4f8 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -5416,13 +5416,14 @@ static void __tcp_ack_snd_check(struct sock *sk, int ofo_possible)
+@@ -5431,13 +5431,14 @@ static void __tcp_ack_snd_check(struct sock *sk, int ofo_possible)
  
  	    /* More than one full frame received... */
  	if (((tp->rcv_nxt - tp->rcv_wup) > inet_csk(sk)->icsk_ack.rcv_mss &&
@@ -1105,11 +1149,14 @@ index 649b7219a6e23..921ef339b0ca5 100644
  	    /* We ACK each frame or... */
  	    tcp_in_quickack_mode(sk) ||
  	    /* Protocol state mandates a one-time immediate ACK */
-From 6d1fea18523f193cd3527f36955c26d7f6927a76 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 6657f8c064b69eb5aba7997bf271b1a281590832 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Tue, 11 Jun 2019 12:54:22 -0400
-Subject: [PATCH] net-tcp_bbr: v2: BBRv2 ("bbr2") congestion control for Linux
- TCP
+Subject: [PATCH 16/21] net-tcp_bbr: v2: BBRv2 ("bbr2") congestion control for
+ Linux TCP
 
 BBR v2 is an enhacement to the BBR v1 algorithm. It's designed to aim for lower
 queues, lower loss, and better Reno/CUBIC coexistence than BBR v1.
@@ -1236,8 +1283,6 @@ o Internal notes:
 Effort: net-tcp_bbr
 Origin-9xx-SHA1: 2c84098e60bed6d67dde23cd7538c51dee273102
 Change-Id: I125cf26ba2a7a686f2fa5e87f4c2afceb65f7a05
-
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
 ---
  include/net/inet_connection_sock.h |    5 +-
  include/uapi/linux/inet_diag.h     |   33 +
@@ -1248,7 +1293,7 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  create mode 100644 net/ipv4/tcp_bbr2.c
 
 diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
-index 3c8c59471bc19..2cdc5a0709fe0 100644
+index b06c2d02ec84..2cdc5a0709fe 100644
 --- a/include/net/inet_connection_sock.h
 +++ b/include/net/inet_connection_sock.h
 @@ -134,8 +134,9 @@ struct inet_connection_sock {
@@ -1256,7 +1301,7 @@ index 3c8c59471bc19..2cdc5a0709fe0 100644
  	u32			  icsk_user_timeout;
  
 -	u64			  icsk_ca_priv[104 / sizeof(u64)];
--#define ICSK_CA_PRIV_SIZE      (13 * sizeof(u64))
+-#define ICSK_CA_PRIV_SIZE	  sizeof_field(struct inet_connection_sock, icsk_ca_priv)
 +/* XXX inflated by temporary internal debugging info */
 +#define ICSK_CA_PRIV_SIZE      (216)
 +	u64			  icsk_ca_priv[ICSK_CA_PRIV_SIZE / sizeof(u64)];
@@ -1264,7 +1309,7 @@ index 3c8c59471bc19..2cdc5a0709fe0 100644
  
  #define ICSK_TIME_RETRANS	1	/* Retransmit timer */
 diff --git a/include/uapi/linux/inet_diag.h b/include/uapi/linux/inet_diag.h
-index 20ee93f0f8761..96d52dd9c48ac 100644
+index 20ee93f0f876..96d52dd9c48a 100644
 --- a/include/uapi/linux/inet_diag.h
 +++ b/include/uapi/linux/inet_diag.h
 @@ -231,9 +231,42 @@ struct tcp_bbr_info {
@@ -1311,7 +1356,7 @@ index 20ee93f0f8761..96d52dd9c48ac 100644
  };
  #endif /* _UAPI_INET_DIAG_H_ */
 diff --git a/net/ipv4/Kconfig b/net/ipv4/Kconfig
-index 87983e70f03f3..a833a7a67ce79 100644
+index 87983e70f03f..a833a7a67ce7 100644
 --- a/net/ipv4/Kconfig
 +++ b/net/ipv4/Kconfig
 @@ -669,6 +669,24 @@ config TCP_CONG_BBR
@@ -1358,7 +1403,7 @@ index 87983e70f03f3..a833a7a67ce79 100644
  
  config TCP_MD5SIG
 diff --git a/net/ipv4/Makefile b/net/ipv4/Makefile
-index bbdd9c44f14e3..8dee1547d8202 100644
+index bbdd9c44f14e..8dee1547d820 100644
 --- a/net/ipv4/Makefile
 +++ b/net/ipv4/Makefile
 @@ -46,6 +46,7 @@ obj-$(CONFIG_INET_TCP_DIAG) += tcp_diag.o
@@ -1371,7 +1416,7 @@ index bbdd9c44f14e3..8dee1547d8202 100644
  obj-$(CONFIG_TCP_CONG_CUBIC) += tcp_cubic.o
 diff --git a/net/ipv4/tcp_bbr2.c b/net/ipv4/tcp_bbr2.c
 new file mode 100644
-index 0000000000000..a6959b70e51d1
+index 000000000000..a6959b70e51d
 --- /dev/null
 +++ b/net/ipv4/tcp_bbr2.c
 @@ -0,0 +1,2683 @@
@@ -4058,11 +4103,14 @@ index 0000000000000..a6959b70e51d1
 +
 +MODULE_LICENSE("Dual BSD/GPL");
 +MODULE_DESCRIPTION("TCP BBR (Bottleneck Bandwidth and RTT)");
-From 95c333a67f22ed1f02e7ba2108e348c925a02107 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 92ea7ec085cd89451c561e7d80f6cec12b90ece3 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Thu, 21 Nov 2019 15:28:01 -0500
-Subject: [PATCH] net-tcp_bbr: v2: remove unnecessary rs.delivered_ce logic
- upon loss
+Subject: [PATCH 17/21] net-tcp_bbr: v2: remove unnecessary rs.delivered_ce
+ logic upon loss
 
 There is no reason to compute rs.delivered_ce upon loss.
 
@@ -4094,7 +4142,7 @@ Change-Id: I37f83f418a259ec31d8f82de986db071b364b76a
  1 file changed, 1 deletion(-)
 
 diff --git a/net/ipv4/tcp_bbr2.c b/net/ipv4/tcp_bbr2.c
-index a6959b70e51d1..e00b47850dcef 100644
+index a6959b70e51d..e00b47850dce 100644
 --- a/net/ipv4/tcp_bbr2.c
 +++ b/net/ipv4/tcp_bbr2.c
 @@ -2508,7 +2508,6 @@ static void bbr2_skb_marked_lost(struct sock *sk, const struct sk_buff *skb)
@@ -4105,10 +4153,14 @@ index a6959b70e51d1..e00b47850dcef 100644
  	rs.is_app_limited = scb->tx.is_app_limited;
  	if (bbr2_is_inflight_too_high(sk, &rs)) {
  		rs.tx_in_flight = bbr2_inflight_hi_from_lost_skb(sk, &rs, skb);
-From cb1802b2bd6333def771ac74c04b7f31d631e861 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 8f6b5232415de713eb28c338d3e584ee5108a001 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Mon, 17 Aug 2020 19:08:41 -0400
-Subject: [PATCH] net-tcp_bbr: v2: remove field bw_rtts that is unused in BBRv2
+Subject: [PATCH 18/21] net-tcp_bbr: v2: remove field bw_rtts that is unused in
+ BBRv2
 
 Change-Id: I58e3346c707748a6f316f3ed060d2da84c32a79b
 ---
@@ -4116,7 +4168,7 @@ Change-Id: I58e3346c707748a6f316f3ed060d2da84c32a79b
  1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/net/ipv4/tcp_bbr2.c b/net/ipv4/tcp_bbr2.c
-index e00b47850dcef..6121cd46f81a8 100644
+index e00b47850dce..6121cd46f81a 100644
 --- a/net/ipv4/tcp_bbr2.c
 +++ b/net/ipv4/tcp_bbr2.c
 @@ -179,9 +179,8 @@ struct bbr {
@@ -4155,11 +4207,14 @@ index e00b47850dcef..6121cd46f81a8 100644
  	bbr->params.full_bw_thresh = min(0x3FFU, bbr_full_bw_thresh);
  	bbr->params.extra_acked_gain = min(0x7FF, bbr_extra_acked_gain);
  	bbr->params.extra_acked_win_rtts = min(0x1FU, bbr_extra_acked_win_rtts);
-From fe92fc6b8b602a9b19d2edb9b008c849bfda1d86 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From 7f3b5f67372feab33efdae179743f8f98084039d Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Mon, 17 Aug 2020 19:10:21 -0400
-Subject: [PATCH] net-tcp_bbr: v2: remove cycle_rand parameter that is unused
- in BBRv2
+Subject: [PATCH 19/21] net-tcp_bbr: v2: remove cycle_rand parameter that is
+ unused in BBRv2
 
 Change-Id: Iee1df7e41e42de199068d7c89131ed3d228327c0
 ---
@@ -4167,7 +4222,7 @@ Change-Id: Iee1df7e41e42de199068d7c89131ed3d228327c0
  1 file changed, 3 deletions(-)
 
 diff --git a/net/ipv4/tcp_bbr2.c b/net/ipv4/tcp_bbr2.c
-index 6121cd46f81a8..57b4abebb275b 100644
+index 6121cd46f81a..57b4abebb275 100644
 --- a/net/ipv4/tcp_bbr2.c
 +++ b/net/ipv4/tcp_bbr2.c
 @@ -303,8 +303,6 @@ static int bbr_pacing_gain[] = {
@@ -4187,11 +4242,14 @@ index 6121cd46f81a8..57b4abebb275b 100644
  module_param_named(cwnd_min_target,   bbr_cwnd_min_target,   uint,   0644);
  module_param_named(probe_rtt_cwnd_gain,
  		   bbr_probe_rtt_cwnd_gain,		     uint,   0664);
-From 26424c585889e5266866d59448b4409017cfe0c7 Mon Sep 17 00:00:00 2001
+-- 
+2.33.0
+
+From a822c88e7b9a974503dd698bddd4de4e8bd3c286 Mon Sep 17 00:00:00 2001
 From: Neal Cardwell <ncardwell@google.com>
 Date: Mon, 28 Dec 2020 19:23:09 -0500
-Subject: [PATCH] net-tcp_bbr: v2: don't assume prior_cwnd was set entering
- CA_Loss
+Subject: [PATCH 20/21] net-tcp_bbr: v2: don't assume prior_cwnd was set
+ entering CA_Loss
 
 Fix WARN_ON_ONCE() warnings that were firing and pointing to a
 bbr->prior_cwnd of 0 when exiting CA_Loss and transitioning to
@@ -4222,7 +4280,7 @@ Change-Id: I575dce871c2f20e91e3e9449e1706f42a07b8118
  1 file changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/net/ipv4/tcp_bbr2.c b/net/ipv4/tcp_bbr2.c
-index 57b4abebb275b..5510adc92bbb4 100644
+index 57b4abebb275..5510adc92bbb 100644
 --- a/net/ipv4/tcp_bbr2.c
 +++ b/net/ipv4/tcp_bbr2.c
 @@ -2617,15 +2617,12 @@ static void bbr2_set_state(struct sock *sk, u8 new_state)
@@ -4243,3 +4301,71 @@ index 57b4abebb275b..5510adc92bbb4 100644
  		tp->snd_cwnd = max(tp->snd_cwnd, bbr->prior_cwnd);
  		bbr->try_fast_path = 0; /* bound cwnd using latest model */
  	}
+-- 
+2.33.0
+
+From 2063affcf3e2af58c359a1cb9fd0f3d1b62932a0 Mon Sep 17 00:00:00 2001
+From: Adithya Abraham Philip <abrahamphilip@google.com>
+Date: Fri, 11 Jun 2021 21:56:10 +0000
+Subject: [PATCH 21/21] net-tcp_bbr: v2: Fix missing ECT markings on
+ retransmits for BBRv2
+
+Adds a new flag TCP_ECN_ECT_PERMANENT that is used by CCAs to
+indicate that retransmitted packets and pure ACKs must have the
+ECT bit set. This is a necessary fix for BBRv2, which when using
+ECN expects ECT to be set even on retransmitted packets and ACKs.
+Currently CCAs like BBRv2 which can use ECN but don't "need" it
+do not have a way to indicate that ECT should be set on
+retransmissions/ACKs.
+
+Signed-off-by: Adithya Abraham Philip <abrahamphilip@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+---
+ include/net/tcp.h     | 1 +
+ net/ipv4/tcp_bbr2.c   | 3 +++
+ net/ipv4/tcp_output.c | 3 ++-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 3b91bbdf3f31..daa878118bd3 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -371,6 +371,7 @@ static inline void tcp_dec_quickack_mode(struct sock *sk,
+ #define	TCP_ECN_QUEUE_CWR	2
+ #define	TCP_ECN_DEMAND_CWR	4
+ #define	TCP_ECN_SEEN		8
++#define	TCP_ECN_ECT_PERMANENT	16
+ 
+ enum tcp_tw_status {
+ 	TCP_TW_SUCCESS = 0,
+diff --git a/net/ipv4/tcp_bbr2.c b/net/ipv4/tcp_bbr2.c
+index 5510adc92bbb..fa49e17c47ca 100644
+--- a/net/ipv4/tcp_bbr2.c
++++ b/net/ipv4/tcp_bbr2.c
+@@ -2471,6 +2471,9 @@ static void bbr2_init(struct sock *sk)
+ 	bbr->alpha_last_delivered_ce = 0;
+ 
+ 	tp->fast_ack_mode = min_t(u32, 0x2U, bbr_fast_ack_mode);
++
++	if ((tp->ecn_flags & TCP_ECN_OK) && bbr_ecn_enable)
++		tp->ecn_flags |= TCP_ECN_ECT_PERMANENT;
+ }
+ 
+ /* Core TCP stack informs us that the given skb was just marked lost. */
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 9d87dc854c85..0eb462008718 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -377,7 +377,8 @@ static void tcp_ecn_send(struct sock *sk, struct sk_buff *skb,
+ 				th->cwr = 1;
+ 				skb_shinfo(skb)->gso_type |= SKB_GSO_TCP_ECN;
+ 			}
+-		} else if (!tcp_ca_needs_ecn(sk)) {
++		} else if (!(tp->ecn_flags & TCP_ECN_ECT_PERMANENT) &&
++			!tcp_ca_needs_ecn(sk)) {
+ 			/* ACK or retransmitted segment: clear ECT|CE */
+ 			INET_ECN_dontxmit(sk);
+ 		}
+-- 
+2.33.0
+

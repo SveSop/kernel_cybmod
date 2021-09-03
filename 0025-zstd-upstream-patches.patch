@@ -1,6 +1,6 @@
-From 4e5e0e5d1e1b0b098645e69fd17ad55f175a827e Mon Sep 17 00:00:00 2001
+From f322509db4e52454f797ec9a724f3bec194dc8d5 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Fri, 11 Sep 2020 16:49:00 -0700
+Date: Thu, 29 Apr 2021 18:31:54 -0700
 Subject: [PATCH 1/4] lib: zstd: Add kernel-specific API
 
 This patch:
@@ -307,10 +307,10 @@ index 3e26b4664..6d984a832 100644
  			goto finish;
  		}
 diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 925a5ca37..274750875 100644
+index 455561826..003c602b0 100644
 --- a/fs/f2fs/compress.c
 +++ b/fs/f2fs/compress.c
-@@ -333,8 +333,8 @@ static const struct f2fs_compress_ops f2fs_lz4_ops = {
+@@ -334,8 +334,8 @@ static const struct f2fs_compress_ops f2fs_lz4_ops = {
  
  static int zstd_init_compress_ctx(struct compress_ctx *cc)
  {
@@ -321,7 +321,7 @@ index 925a5ca37..274750875 100644
  	void *workspace;
  	unsigned int workspace_size;
  	unsigned char level = F2FS_I(cc->inode)->i_compress_flag >>
-@@ -343,17 +343,17 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
+@@ -344,17 +344,17 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
  	if (!level)
  		level = F2FS_ZSTD_DEFAULT_CLEVEL;
  
@@ -343,7 +343,7 @@ index 925a5ca37..274750875 100644
  				KERN_ERR, F2FS_I_SB(cc->inode)->sb->s_id,
  				__func__);
  		kvfree(workspace);
-@@ -376,9 +376,9 @@ static void zstd_destroy_compress_ctx(struct compress_ctx *cc)
+@@ -377,9 +377,9 @@ static void zstd_destroy_compress_ctx(struct compress_ctx *cc)
  
  static int zstd_compress_pages(struct compress_ctx *cc)
  {
@@ -356,7 +356,7 @@ index 925a5ca37..274750875 100644
  	int src_size = cc->rlen;
  	int dst_size = src_size - PAGE_SIZE - COMPRESS_HEADER_SIZE;
  	int ret;
-@@ -391,19 +391,19 @@ static int zstd_compress_pages(struct compress_ctx *cc)
+@@ -392,19 +392,19 @@ static int zstd_compress_pages(struct compress_ctx *cc)
  	outbuf.dst = cc->cbuf->cdata;
  	outbuf.size = dst_size;
  
@@ -384,7 +384,7 @@ index 925a5ca37..274750875 100644
  		return -EIO;
  	}
  
-@@ -420,22 +420,22 @@ static int zstd_compress_pages(struct compress_ctx *cc)
+@@ -421,22 +421,22 @@ static int zstd_compress_pages(struct compress_ctx *cc)
  
  static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
  {
@@ -411,7 +411,7 @@ index 925a5ca37..274750875 100644
  				KERN_ERR, F2FS_I_SB(dic->inode)->sb->s_id,
  				__func__);
  		kvfree(workspace);
-@@ -457,9 +457,9 @@ static void zstd_destroy_decompress_ctx(struct decompress_io_ctx *dic)
+@@ -458,9 +458,9 @@ static void zstd_destroy_decompress_ctx(struct decompress_io_ctx *dic)
  
  static int zstd_decompress_pages(struct decompress_io_ctx *dic)
  {
@@ -424,7 +424,7 @@ index 925a5ca37..274750875 100644
  	int ret;
  
  	inbuf.pos = 0;
-@@ -470,11 +470,11 @@ static int zstd_decompress_pages(struct decompress_io_ctx *dic)
+@@ -471,11 +471,11 @@ static int zstd_decompress_pages(struct decompress_io_ctx *dic)
  	outbuf.dst = dic->rbuf;
  	outbuf.size = dic->rlen;
  
@@ -441,10 +441,10 @@ index 925a5ca37..274750875 100644
  	}
  
 diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 7d325bfaf..895431619 100644
+index 8fecd3050..8164ed1bc 100644
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -529,7 +529,7 @@ static int f2fs_set_zstd_level(struct f2fs_sb_info *sbi, const char *str)
+@@ -588,7 +588,7 @@ static int f2fs_set_zstd_level(struct f2fs_sb_info *sbi, const char *str)
  	if (kstrtouint(str + 1, 10, &level))
  		return -EINVAL;
  
@@ -3105,7 +3105,7 @@ index 000000000..13151c34f
 +
 +#endif  /* ZSTD_H */
 diff --git a/lib/decompress_unzstd.c b/lib/decompress_unzstd.c
-index 790abc472..c88aad49e 100644
+index 6b629ab31..c076d6f05 100644
 --- a/lib/decompress_unzstd.c
 +++ b/lib/decompress_unzstd.c
 @@ -91,11 +91,15 @@
@@ -3487,12 +3487,12 @@ index 66cd487a3..02e92c2cb 100644
  MODULE_LICENSE("Dual BSD/GPL");
  MODULE_DESCRIPTION("Zstd Decompressor");
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 026fcea30a1ff9414648e69a09168f41408bb8b2 Mon Sep 17 00:00:00 2001
+From 78ccbb2c033678905ad3b295b1fac5d43a38bdfe Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Mon, 14 Sep 2020 12:54:12 -0700
+Date: Thu, 29 Apr 2021 18:31:55 -0700
 Subject: [PATCH 2/4] lib: zstd: Add decompress_sources.h for decompress_unzstd
 
 Adds decompress_sources.h which includes every .c file necessary for
@@ -3510,7 +3510,7 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  create mode 100644 lib/zstd/decompress_sources.h
 
 diff --git a/lib/decompress_unzstd.c b/lib/decompress_unzstd.c
-index c88aad49e..6e5ecfba0 100644
+index c076d6f05..a512b99ae 100644
 --- a/lib/decompress_unzstd.c
 +++ b/lib/decompress_unzstd.c
 @@ -68,11 +68,7 @@
@@ -3556,14 +3556,81 @@ index 000000000..d82cea431
 +#include "zstd_common.c"
 +#include "decompress.c"
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From afaeb5cc223ee1157e3bdfa740f59407afc14e94 Mon Sep 17 00:00:00 2001
+From 216666d3721caa361795122cc497587b2873dd64 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Thu, 29 Apr 2021 18:25:04 -0700
-Subject: [PATCH 3/4] Import upstream zstd modified for linux
+Date: Thu, 29 Apr 2021 18:31:56 -0700
+Subject: [PATCH 3/4] lib: zstd: Upgrade to latest upstream zstd version 1.4.10
 
+Upgrade to the latest upstream zstd version 1.4.10.
+
+This patch is 100% generated from upstream zstd commit 67a426c322c5 [0].
+
+This patch is very large because it is transitioning from the custom
+kernel zstd to using upstream directly. The new zstd follows upstreams
+file structure which is different. Future update patches will be much
+smaller because they will only contain the changes from one upstream
+zstd release.
+
+As an aid for review I've created a commit [1] that shows the diff
+between upstream zstd as-is (which doesn't compile), and the zstd
+code imported in this patch. The verion of zstd in this patch is
+generated from upstream with changes applied by automation to replace
+upstreams libc dependencies, remove unnecessary portability macros,
+replace `/**` comments with `/*` comments, and use the kernel's xxhash
+instead of bundling it.
+
+The benefits of this patch are as follows:
+1. Using upstream directly with automated script to generate kernel
+   code. This allows us to update the kernel every upstream release, so
+   the kernel gets the latest bug fixes and performance improvements,
+   and doesn't get 3 years out of date again. The automation and the
+   translated code are tested every upstream commit to ensure it
+   continues to work.
+2. Upgrades from a custom zstd based on 1.3.1 to 1.4.10, getting 3 years
+   of performance improvements and bug fixes. On x86_64 I've measured
+   15% faster BtrFS and SquashFS decompression+read speeds, 35% faster
+   kernel decompression, and 30% faster ZRAM decompression+read speeds.
+3. Zstd-1.4.10 supports negative compression levels, which allow zstd to
+   match or subsume lzo's performance.
+4. Maintains the same kernel-specific wrapper API, so no callers have to
+   be modified with zstd version updates.
+
+One concern that was brought up was stack usage. Upstream zstd had
+already removed most of its heavy stack usage functions, but I just
+removed the last functions that allocate arrays on the stack. I've
+measured the high water mark for both compression and decompression
+before and after this patch. Decompression is approximately neutral,
+using about 1.2KB of stack space. Compression levels up to 3 regressed
+from 1.4KB -> 1.6KB, and higher compression levels regressed from 1.5KB
+-> 2KB. We've added unit tests upstream to prevent further regression.
+I believe that this is a reasonable increase, and if it does end up
+causing problems, this commit can be cleanly reverted, because it only
+touches zstd.
+
+I chose the bulk update instead of replaying upstream commits because
+there have been ~3500 upstream commits since the 1.3.1 release, zstd
+wasn't ready to be used in the kernel as-is before a month ago, and not
+all upstream zstd commits build. The bulk update preserves bisectablity
+because bugs can be bisected to the zstd version update. At that point
+the update can be reverted, and we can work with upstream to find and
+fix the bug.
+
+Note that upstream zstd release 1.4.10 doesn't exist yet. I have cut a
+staging branch at 4432dac93bea [0] and will apply any changes requested
+to the staging branch. Once we're ready to merge this update I will cut
+a zstd release at the commit we merge, so we have a known zstd release
+in the kernel.
+
+The implementation of the kernel API is contained in
+zstd_compress_module.c and zstd_decompress_module.c.
+
+[0] https://github.com/facebook/zstd/commit/67a426c322c58a91b7fa59fdb2d59ea4f641b185
+[1] https://github.com/terrelln/linux/commit/cc1caeead9ca616386e35078a36e05ab536af112
+
+Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
  include/linux/zstd.h                          |   11 +-
  include/linux/zstd_errors.h                   |   77 +
@@ -3578,18 +3645,18 @@ Subject: [PATCH 3/4] Import upstream zstd modified for linux
  lib/zstd/common/entropy_common.c              |  357 ++
  lib/zstd/common/error_private.c               |   56 +
  lib/zstd/common/error_private.h               |   66 +
- lib/zstd/common/fse.h                         |  710 +++
+ lib/zstd/common/fse.h                         |  708 +++
  lib/zstd/common/fse_decompress.c              |  390 ++
- lib/zstd/common/huf.h                         |  356 ++
+ lib/zstd/common/huf.h                         |  355 ++
  lib/zstd/common/mem.h                         |  259 +
  lib/zstd/common/zstd_common.c                 |   83 +
  lib/zstd/common/zstd_deps.h                   |  125 +
  lib/zstd/common/zstd_internal.h               |  450 ++
  lib/zstd/compress.c                           | 3534 ------------
  lib/zstd/compress/fse_compress.c              |  625 ++
- lib/zstd/compress/hist.c                      |  165 +
+ lib/zstd/compress/hist.c                      |  164 +
  lib/zstd/compress/hist.h                      |   75 +
- lib/zstd/compress/huf_compress.c              |  902 +++
+ lib/zstd/compress/huf_compress.c              |  901 +++
  lib/zstd/compress/zstd_compress.c             | 5105 +++++++++++++++++
  lib/zstd/compress/zstd_compress_internal.h    | 1188 ++++
  lib/zstd/compress/zstd_compress_literals.c    |  158 +
@@ -3611,7 +3678,7 @@ Subject: [PATCH 3/4] Import upstream zstd modified for linux
  lib/zstd/compress/zstd_opt.c                  | 1345 +++++
  lib/zstd/compress/zstd_opt.h                  |   50 +
  lib/zstd/decompress.c                         | 2571 ---------
- lib/zstd/decompress/huf_decompress.c          | 1206 ++++
+ lib/zstd/decompress/huf_decompress.c          | 1205 ++++
  lib/zstd/decompress/zstd_ddict.c              |  241 +
  lib/zstd/decompress/zstd_ddict.h              |   44 +
  lib/zstd/decompress/zstd_decompress.c         | 2075 +++++++
@@ -3633,7 +3700,7 @@ Subject: [PATCH 3/4] Import upstream zstd modified for linux
  lib/zstd/zstd_decompress_module.c             |  105 +
  lib/zstd/zstd_internal.h                      |  273 -
  lib/zstd/zstd_opt.h                           | 1014 ----
- 68 files changed, 26786 insertions(+), 12991 deletions(-)
+ 68 files changed, 26780 insertions(+), 12991 deletions(-)
  create mode 100644 include/linux/zstd_errors.h
  delete mode 100644 lib/zstd/bitstream.h
  create mode 100644 lib/zstd/common/bitstream.h
@@ -3734,7 +3801,7 @@ index 9fbc7729b..446ecabcd 100644
   * zstd_get_frame_header() - extracts parameters from a zstd or skippable frame
 diff --git a/include/linux/zstd_errors.h b/include/linux/zstd_errors.h
 new file mode 100644
-index 000000000..58b6dd45a
+index 000000000..bb58f7c51
 --- /dev/null
 +++ b/include/linux/zstd_errors.h
 @@ -0,0 +1,77 @@
@@ -3757,7 +3824,7 @@ index 000000000..58b6dd45a
 +
 +
 +/* =====   ZSTDERRORLIB_API : control library symbols visibility   ===== */
-+#define ZSTDERRORLIB_VISIBILITY 
++#define ZSTDERRORLIB_VISIBILITY
 +#define ZSTDERRORLIB_API ZSTDERRORLIB_VISIBILITY
 +
 +/*-*********************************************
@@ -3816,7 +3883,7 @@ index 000000000..58b6dd45a
 +
 +#endif /* ZSTD_ERRORS_H_398273423 */
 diff --git a/include/linux/zstd_lib.h b/include/linux/zstd_lib.h
-index 13151c34f..b8c7dbf98 100644
+index 13151c34f..d945c2998 100644
 --- a/include/linux/zstd_lib.h
 +++ b/include/linux/zstd_lib.h
 @@ -2,1156 +2,2431 @@
@@ -3867,7 +3934,7 @@ index 13151c34f..b8c7dbf98 100644
 - *  - a single step, reusing a dictionary (described as Fast dictionary API)
 - ******************************************************************************/
 +/* =====   ZSTDLIB_API : control library symbols visibility   ===== */
-+#define ZSTDLIB_VISIBILITY 
++#define ZSTDLIB_VISIBILITY
 +#define ZSTDLIB_API ZSTDLIB_VISIBILITY
 +
 +
@@ -9174,10 +9241,10 @@ index 000000000..d14e686ad
 +#endif /* ERROR_H_MODULE */
 diff --git a/lib/zstd/common/fse.h b/lib/zstd/common/fse.h
 new file mode 100644
-index 000000000..0bb174c2c
+index 000000000..320eec971
 --- /dev/null
 +++ b/lib/zstd/common/fse.h
-@@ -0,0 +1,710 @@
+@@ -0,0 +1,708 @@
 +/* ******************************************************************
 + * FSE : Finite State Entropy codec
 + * Public Prototypes declaration
@@ -9886,8 +9953,6 @@ index 000000000..0bb174c2c
 +
 +
 +#endif /* FSE_STATIC_LINKING_ONLY */
-+
-+
 diff --git a/lib/zstd/common/fse_decompress.c b/lib/zstd/common/fse_decompress.c
 new file mode 100644
 index 000000000..2c8bbe3e4
@@ -10286,10 +10351,10 @@ index 000000000..2c8bbe3e4
 +#endif   /* FSE_COMMONDEFS_ONLY */
 diff --git a/lib/zstd/common/huf.h b/lib/zstd/common/huf.h
 new file mode 100644
-index 000000000..88c558664
+index 000000000..c5d4ac24b
 --- /dev/null
 +++ b/lib/zstd/common/huf.h
-@@ -0,0 +1,356 @@
+@@ -0,0 +1,355 @@
 +/* ******************************************************************
 + * huff0 huffman codec,
 + * part of Finite State Entropy library
@@ -10645,7 +10710,6 @@ index 000000000..88c558664
 +#endif
 +
 +#endif /* HUF_STATIC_LINKING_ONLY */
-+
 diff --git a/lib/zstd/common/mem.h b/lib/zstd/common/mem.h
 new file mode 100644
 index 000000000..4b5db5756
@@ -15760,10 +15824,10 @@ index 000000000..436985b62
 +#endif   /* FSE_COMMONDEFS_ONLY */
 diff --git a/lib/zstd/compress/hist.c b/lib/zstd/compress/hist.c
 new file mode 100644
-index 000000000..3ddc6dfb6
+index 000000000..5fc30f766
 --- /dev/null
 +++ b/lib/zstd/compress/hist.c
-@@ -0,0 +1,165 @@
+@@ -0,0 +1,164 @@
 +/* ******************************************************************
 + * hist : Histogram functions
 + * part of Finite State Entropy project
@@ -15928,7 +15992,6 @@ index 000000000..3ddc6dfb6
 +    *maxSymbolValuePtr = 255;
 +    return HIST_countFast_wksp(count, maxSymbolValuePtr, source, sourceSize, workSpace, workSpaceSize);
 +}
-+
 diff --git a/lib/zstd/compress/hist.h b/lib/zstd/compress/hist.h
 new file mode 100644
 index 000000000..fc1830abc
@@ -16012,10 +16075,10 @@ index 000000000..fc1830abc
 +                           const void* src, size_t srcSize);
 diff --git a/lib/zstd/compress/huf_compress.c b/lib/zstd/compress/huf_compress.c
 new file mode 100644
-index 000000000..122e81264
+index 000000000..b6186f850
 --- /dev/null
 +++ b/lib/zstd/compress/huf_compress.c
-@@ -0,0 +1,902 @@
+@@ -0,0 +1,901 @@
 +/* ******************************************************************
 + * Huffman encoder, part of New Generation Entropy library
 + * Copyright (c) Yann Collet, Facebook, Inc.
@@ -16917,7 +16980,6 @@ index 000000000..122e81264
 +                                 workSpace, wkspSize,
 +                                 hufTable, repeat, preferRepeat, bmi2);
 +}
-+
 diff --git a/lib/zstd/compress/zstd_compress.c b/lib/zstd/compress/zstd_compress.c
 new file mode 100644
 index 000000000..f5b37ad65
@@ -27920,7 +27982,7 @@ index 000000000..2fc5a6182
 +#endif /* ZSTD_LAZY_H */
 diff --git a/lib/zstd/compress/zstd_ldm.c b/lib/zstd/compress/zstd_ldm.c
 new file mode 100644
-index 000000000..8ef7e88a5
+index 000000000..29d5f2576
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_ldm.c
 @@ -0,0 +1,686 @@
@@ -28181,7 +28243,7 @@ index 000000000..8ef7e88a5
 +    while (ip < iend) {
 +        size_t hashed;
 +        unsigned n;
-+        
++
 +        numSplits = 0;
 +        hashed = ZSTD_ldm_gear_feed(&hashState, ip, iend - ip, splits, &numSplits);
 +
@@ -28837,7 +28899,7 @@ index 000000000..e5c24d856
 +#endif /* ZSTD_LDM_GEARTAB_H */
 diff --git a/lib/zstd/compress/zstd_opt.c b/lib/zstd/compress/zstd_opt.c
 new file mode 100644
-index 000000000..956ee6b2a
+index 000000000..b955cf559
 --- /dev/null
 +++ b/lib/zstd/compress/zstd_opt.c
 @@ -0,0 +1,1345 @@
@@ -29736,7 +29798,7 @@ index 000000000..956ee6b2a
 +             */
 +            U32 posOvershoot = currPosInBlock - optLdm->endPosInBlock;
 +            ZSTD_optLdm_skipRawSeqStoreBytes(&optLdm->seqStore, posOvershoot);
-+        } 
++        }
 +        ZSTD_opt_getNextMatchAndUpdateSeqStore(optLdm, currPosInBlock, remainingBytes);
 +    }
 +    ZSTD_optLdm_maybeAddMatch(matches, nbMatches, optLdm, currPosInBlock);
@@ -32821,10 +32883,10 @@ index 02e92c2cb..000000000
 -MODULE_DESCRIPTION("Zstd Decompressor");
 diff --git a/lib/zstd/decompress/huf_decompress.c b/lib/zstd/decompress/huf_decompress.c
 new file mode 100644
-index 000000000..05570ed5f
+index 000000000..8cb8b3a7d
 --- /dev/null
 +++ b/lib/zstd/decompress/huf_decompress.c
-@@ -0,0 +1,1206 @@
+@@ -0,0 +1,1205 @@
 +/* ******************************************************************
 + * huff0 huffman decoder,
 + * part of Finite State Entropy library
@@ -34030,7 +34092,6 @@ index 000000000..05570ed5f
 +#endif
 +    }
 +}
-+
 diff --git a/lib/zstd/decompress/zstd_ddict.c b/lib/zstd/decompress/zstd_ddict.c
 new file mode 100644
 index 000000000..dbbc7919d
@@ -40277,7 +40338,7 @@ index 0b353530f..000000000
 -}
 diff --git a/lib/zstd/huf.h b/lib/zstd/huf.h
 deleted file mode 100644
-index 2143da28d..000000000
+index 923218d12..000000000
 --- a/lib/zstd/huf.h
 +++ /dev/null
 @@ -1,212 +0,0 @@
@@ -40417,7 +40478,7 @@ index 2143da28d..000000000
 -	HUF_repeat_none,  /**< Cannot use the previous table */
 -	HUF_repeat_check, /**< Can use the previous table but it must be checked. Note : The previous table must have been constructed by HUF_compress{1,
 -			     4}X_repeat */
--	HUF_repeat_valid  /**< Can use the previous table and it is asumed to be valid */
+-	HUF_repeat_valid  /**< Can use the previous table and it is assumed to be valid */
 -} HUF_repeat;
 -/** HUF_compress4X_repeat() :
 -*   Same as HUF_compress4X_wksp(), but considers using hufTable if *repeat != HUF_repeat_none.
@@ -44017,10 +44078,10 @@ index 55e1b4cba..000000000
 -
 -#endif /* ZSTD_OPT_H_91842398743 */
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
 
-From 971ffe26f9561d66689e9fcf1441a883f1bda4f7 Mon Sep 17 00:00:00 2001
+From 4db51b910fb979df8b3a0c6ee87bcd48943d0c47 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 29 Apr 2021 18:31:57 -0700
 Subject: [PATCH 4/4] MAINTAINERS: Add maintainer entry for zstd
@@ -44035,10 +44096,10 @@ Signed-off-by: Nick Terrell <terrelln@fb.com>
  1 file changed, 12 insertions(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 0cce91cd5..c8eb9c87e 100644
+index d7b4f3287..4e2240d31 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -20259,6 +20259,18 @@ F:	Documentation/vm/zsmalloc.rst
+@@ -20566,6 +20566,18 @@ F:	Documentation/vm/zsmalloc.rst
  F:	include/linux/zsmalloc.h
  F:	mm/zsmalloc.c
  
@@ -44058,5 +44119,5 @@ index 0cce91cd5..c8eb9c87e 100644
  M:	Seth Jennings <sjenning@redhat.com>
  M:	Dan Streetman <ddstreet@ieee.org>
 -- 
-2.32.0.93.g670b81a890
+2.33.0
 
