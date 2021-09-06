@@ -1,7 +1,7 @@
-From 0dc5b36bba6f3593169422b09be926d1beb717ce Mon Sep 17 00:00:00 2001
+From 691859b99a854b1844f8387717aabbc7b7498921 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:30:57 -0600
-Subject: [PATCH 01/12] mm: x86, arm64: add arch_has_hw_pte_young()
+Subject: [PATCH 01/13] mm: x86, arm64: add arch_has_hw_pte_young()
 
 Some architectures set the accessed bit in PTEs automatically, e.g.,
 x86, and arm64 v8.2 and later. On architectures that do not have this
@@ -237,13 +237,13 @@ index 25fc46e87..2f96179db 100644
  
  		vmf->pte = pte_offset_map_lock(mm, vmf->pmd, addr, &vmf->ptl);
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From 5cf405fdbd1ac6a556332d970cb24317302edd57 Mon Sep 17 00:00:00 2001
+From f22ea4459a0efd4ad3c72b94644de1c6577ae5fc Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:30:58 -0600
-Subject: [PATCH 02/12] mm: x86: add CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
+Subject: [PATCH 02/13] mm: x86: add CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 
 Some architectures support the accessed bit on non-leaf PMD entries,
 e.g., x86_64 sets the accessed bit on a non-leaf PMD entry when using
@@ -361,13 +361,13 @@ index 3a8221fa2..483d5ff7a 100644
  
  #ifndef __HAVE_ARCH_PTEP_CLEAR_YOUNG_FLUSH
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From 1b5d7aec2efa453034f1042954e6490ba21d57f2 Mon Sep 17 00:00:00 2001
+From 562d1044d125792b13d3459fa18b03770aff06c4 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:30:59 -0600
-Subject: [PATCH 03/12] mm/vmscan.c: refactor shrink_node()
+Subject: [PATCH 03/13] mm/vmscan.c: refactor shrink_node()
 
 This patch refactors shrink_node(). This will make the upcoming
 changes to mm/vmscan.c more readable.
@@ -590,13 +590,13 @@ index eeae2f6bc..66e15308f 100644
  	shrink_node_memcgs(pgdat, sc);
  
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From 8435548f137f8a6d7e447f0ca89b4c701cd02d6e Mon Sep 17 00:00:00 2001
+From e69004533d2cd537bfaf5f366c6d3b3b4af70631 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:00 -0600
-Subject: [PATCH 04/12] mm: multigenerational lru: groundwork
+Subject: [PATCH 04/13] mm: multigenerational lru: groundwork
 
 For each lruvec, evictable pages are divided into multiple
 generations. The youngest generation number is stored in
@@ -1589,13 +1589,13 @@ index 66e15308f..d5444a27f 100644
  {
  	unsigned long nr[NR_LRU_LISTS];
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From d6fe2a2cc298c1020872b4514177e07f1214a925 Mon Sep 17 00:00:00 2001
+From 7adcc1a4fda373b859a68f7f24a5d3d14cbe5e15 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:01 -0600
-Subject: [PATCH 05/12] mm: multigenerational lru: protection
+Subject: [PATCH 05/13] mm: multigenerational lru: protection
 
 The protection is based on page access types and patterns. There are
 two access types: one via page tables and the other via file
@@ -2110,13 +2110,13 @@ index 5ba3e4244..75dbfba77 100644
  	rcu_read_lock();
  	/*
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From 6ca4abd693158544cda9134dcf4fcb6650a7b041 Mon Sep 17 00:00:00 2001
+From 64262dcf290198345eec5ce4bd700756c0b0c34b Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:02 -0600
-Subject: [PATCH 06/12] mm: multigenerational lru: mm_struct list
+Subject: [PATCH 06/13] mm: multigenerational lru: mm_struct list
 
 To scan PTEs for accessed pages, a mm_struct list is maintained for
 each memcg. When multiple threads traverse the same memcg->mm_list,
@@ -2796,13 +2796,13 @@ index 0ca67a5a5..804dfbcf4 100644
  	if (hotplug_memory_notifier(mem_notifier, 0))
  		pr_err("lru_gen: failed to subscribe hotplug notifications\n");
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From 7d508ac5763439b9fa15d92a062dab32a51977c0 Mon Sep 17 00:00:00 2001
+From c49cafea3a8be7a8667893a803c6e625ecc585c0 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:03 -0600
-Subject: [PATCH 07/12] mm: multigenerational lru: aging
+Subject: [PATCH 07/13] mm: multigenerational lru: aging
 
 The aging produces young generations. Given an lruvec, the aging
 traverses lruvec_memcg()->mm_list and calls walk_page_range() to scan
@@ -3956,13 +3956,13 @@ index 804dfbcf4..25757969c 100644
  		return;
  
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From c13b91d9597249517f7dc5c80a2ad38820bc49ea Mon Sep 17 00:00:00 2001
+From 81dc6ca744b2bed9c0d46865edc7ddcff4d3996d Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:04 -0600
-Subject: [PATCH 08/12] mm: multigenerational lru: eviction
+Subject: [PATCH 08/13] mm: multigenerational lru: eviction
 
 The eviction consumes old generations. Given an lruvec, the eviction
 scans pages on lrugen->lists indexed by anon and file min_seq[2]
@@ -4476,13 +4476,13 @@ index 25757969c..217fd6a47 100644
  	refaults = lruvec_page_state(target_lruvec, WORKINGSET_ACTIVATE_ANON);
  	target_lruvec->refaults[0] = refaults;
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From 961ac9c51591ee3a79d7dea3e705aef38f649ff0 Mon Sep 17 00:00:00 2001
+From c649c75a1a31d2b99f1ed994f2c83f93b3090adb Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:05 -0600
-Subject: [PATCH 09/12] mm: multigenerational lru: user interface
+Subject: [PATCH 09/13] mm: multigenerational lru: user interface
 
 Add /sys/kernel/mm/lru_gen/enabled to enable and disable the
 multigenerational lru at runtime.
@@ -4975,13 +4975,13 @@ index 217fd6a47..6f7c69924 100644
  };
  /*
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From ca258c1f4907efd6c92173468f76b0e9e698e428 Mon Sep 17 00:00:00 2001
+From 379abbd9ca9bf9a430c8489556b281fd031e5177 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:06 -0600
-Subject: [PATCH 10/12] mm: multigenerational lru: Kconfig
+Subject: [PATCH 10/13] mm: multigenerational lru: Kconfig
 
 Add configuration options for the multigenerational lru.
 
@@ -5060,13 +5060,13 @@ index 40a9bfcd5..4cd257cfd 100644
 +
  endmenu
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From ff338389998ff1173e52e951eb4304161e56b085 Mon Sep 17 00:00:00 2001
+From f2e6fac726e1bd3ffe07445426883431b7b299b9 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 18 Aug 2021 00:31:07 -0600
-Subject: [PATCH 11/12] mm: multigenerational lru: documentation
+Subject: [PATCH 11/13] mm: multigenerational lru: documentation
 
 Add Documentation/vm/multigen_lru.rst.
 
@@ -5231,13 +5231,105 @@ index 000000000..adedff531
 +-----------------
 +Optimize page table walk for NUMA.
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
 
-From 6ae1181de03d10efe179469a69906aa9e9a13458 Mon Sep 17 00:00:00 2001
+From ae0d5982f95f0eacb26b1dc1649fe9bbe624bab3 Mon Sep 17 00:00:00 2001
+From: Yu Zhao <yuzhao@google.com>
+Date: Wed, 21 Jul 2021 17:24:25 -0600
+Subject: [PATCH 12/13] mm: fix priority queue in multigenerational lru
+
+The priority queue helps select the best memcg to reclaim memory from
+when there are multiple candidates. If reclaim didn't make progress
+after it has tried those at the front, it increments the priority of
+the rest in the queue by one. If the queue is not empty, more memcgs
+will appear at the front and then reclaim will try them again.
+
+However, this wasn't properly implemented, which causes the memory
+pressure to be distributed to all memcgs in the queue. If one of them
+uses a large amount of page cache, the distributed memory pressure
+will slow down the rest.
+
+Signed-off-by: Yu Zhao <yuzhao@google.com>
+---
+ include/linux/mmzone.h |  2 ++
+ mm/vmscan.c            | 14 +++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index b6005e881..f0c8378e4 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -364,6 +364,8 @@ struct lrugen {
+ 	unsigned long avg_refaulted[ANON_AND_FILE][MAX_NR_TIERS];
+ 	/* the exponential moving average of evicted+protected */
+ 	unsigned long avg_total[ANON_AND_FILE][MAX_NR_TIERS];
++	/* the priority queue when choosing reclaimable memcgs */
++	atomic_t priority;
+ 	/* whether the multigenerational lru is enabled */
+ 	bool enabled[ANON_AND_FILE];
+ };
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 6f7c69924..bb5cbf849 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4248,6 +4248,8 @@ static int scan_pages(struct lruvec *lruvec, struct scan_control *sc, long *nr_t
+ 	}
+ 
+ 	success = try_to_inc_min_seq(lruvec, type);
++	if (memcg && !mem_cgroup_is_root(memcg) && !cgroup_reclaim(sc) && success && type)
++		atomic_add_unless(&lrugen->priority, -1, 0);
+ 
+ 	*nr_to_scan -= scanned;
+ 
+@@ -4449,6 +4451,10 @@ static long get_nr_to_scan(struct lruvec *lruvec, struct scan_control *sc, int s
+ 	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
+ 	DEFINE_MAX_SEQ(lruvec);
+ 	DEFINE_MIN_SEQ(lruvec);
++	/* only proceed with memcgs at the front of the priority queue */
++	if (!cgroup_reclaim(sc) && atomic_read(&lrugen->priority) != DEF_PRIORITY)
++		return 0;
++
+ 
+ 	for (type = !swappiness; type < ANON_AND_FILE; type++) {
+ 		unsigned long seq;
+@@ -4529,6 +4535,10 @@ static void lru_gen_shrink_lruvec(struct lruvec *lruvec, struct scan_control *sc
+ }
+ 
+ /******************************************************************************
++		struct lrugen *lrugen = &lruvec->evictable;
++		if (memcg && !mem_cgroup_is_root(memcg) && sc->priority != DEF_PRIORITY)
++			atomic_add_unless(&lrugen->priority, 1, DEF_PRIORITY);
++
+  *                          state change
+  ******************************************************************************/
+ 
+@@ -4931,7 +4941,7 @@ static int lru_gen_seq_show(struct seq_file *m, void *v)
+ 		seq_printf(m, "memcg %5hu %s\n", mem_cgroup_id(memcg), path);
+ 	}
+ 
+-	seq_printf(m, " node %5d\n", nid);
++	seq_printf(m, " node %5d %10d\n", nid, atomic_read(&lrugen->priority));
+ 
+ 	if (!full)
+ 		seq = min(min_seq[0], min_seq[1]);
+@@ -5163,6 +5173,8 @@ void lru_gen_init_lrugen(struct lruvec *lruvec)
+ 	lrugen->enabled[0] = lru_gen_enabled() && lru_gen_nr_swapfiles;
+ 	lrugen->enabled[1] = lru_gen_enabled();
+ 
++	atomic_set(&lrugen->priority, DEF_PRIORITY);
++
+ 	for (i = 0; i <= MIN_NR_GENS + 1; i++)
+ 		lrugen->timestamps[i] = jiffies;
+ 
+-- 
+2.33.0.113.g6c40894d24
+
+
+From 7b5649fe40148b2cf3bc1c7309a9a86b24f58fa9 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Mon, 12 Jul 2021 09:20:47 +0200
-Subject: [PATCH 12/12] mm-5.14: protect mappings under memory pressure
+Subject: [PATCH 13/13] mm-5.14: protect mappings under memory pressure
 
 Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
 ---
@@ -5492,7 +5584,7 @@ index 4cd257cfd..f0351e7b7 100644
  	def_bool y
  	depends on (!SELECT_MEMORY_MODEL && ARCH_SPARSEMEM_ENABLE) || SPARSEMEM_MANUAL
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 6f7c69924..3b17bf7da 100644
+index bb5cbf849..5955ae6ad 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -123,9 +123,25 @@ struct scan_control {
@@ -5634,5 +5726,5 @@ index 6f7c69924..3b17bf7da 100644
  	}
  }
 -- 
-2.33.0
+2.33.0.113.g6c40894d24
 
