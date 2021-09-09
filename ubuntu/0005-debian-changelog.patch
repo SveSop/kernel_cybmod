@@ -1,6 +1,6 @@
-From e305c1d9ba5e4a3a474edc2178ed7c34c1c47911 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 3 Sep 2021 09:36:59 +0000
+From 1361ccd1b56e5328cf710258fb41f8d98ea90b2d Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 8 Sep 2021 03:32:02 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11738 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index bc40d4f1e55a..141eaf82056e 100644
+index bc40d4f1e55a..f49c02fb7452 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11741 +1,6 @@
 -linux-unstable (5.14.0-8.8) impish; urgency=medium
-+linux (5.14.1-051401.202109030936) impish; urgency=low
++linux (5.14.2-051402.202109080331) impish; urgency=low
  
 -  * impish/linux-unstable: 5.14.0-8.8 -proposed tracker (LP: #1941887)
-+  Mainline build at commit: v5.14.1
++  Mainline build at commit: v5.14.2
  
 -  * Fix  Intel AC9560 BT function cannot turn on if BT turn off before S3 entry
 -    (LP: #1941696)
 -    - SAUCE: Bluetooth: btusb: add a reject table to disable msft
-+ -- Mainline Build <kernel@sita>  Fri, 03 Sep 2021 09:36:59 +0000
++ -- Mainline Build <kernel@gloin>  Wed, 08 Sep 2021 03:32:02 -0400
  
 -  *  Add USB4 support for AMD SoC (LP: #1941036)
 -    - thunderbolt: Add vendor specific NHI quirk for auto-clearing interrupt
