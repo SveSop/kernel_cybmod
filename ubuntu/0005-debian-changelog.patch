@@ -1,28 +1,56 @@
-From 1361ccd1b56e5328cf710258fb41f8d98ea90b2d Mon Sep 17 00:00:00 2001
+From 2d760e548e8314f9e3542c1481959936a3d93d62 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 8 Sep 2021 03:32:02 -0400
+Date: Sun, 12 Sep 2021 04:31:30 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11741 +-------------------------------------
- 1 file changed, 3 insertions(+), 11738 deletions(-)
+ debian.master/changelog | 11769 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11766 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index bc40d4f1e55a..f49c02fb7452 100644
+index 917ac3d7118f..c1b3faef643b 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11741 +1,6 @@
+@@ -1,11769 +1,6 @@
+-linux-unstable (5.14.0-9.9) impish; urgency=medium
++linux (5.14.3-051403.202109120431) impish; urgency=low
+ 
+-  * impish/linux-unstable: 5.14.0-9.9 -proposed tracker (LP: #1943022)
++  Mainline build at commit: v5.14.3
+ 
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
++ -- Mainline Build <kernel@gloin>  Sun, 12 Sep 2021 04:31:30 -0400
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] NVIDIA -- Add the NVIDIA 470 driver
+-    - [Packaging] NVIDIA: transition -460 and -465 to -470, transition -460-server
+-      to -470-server
+-
+-  * Miscellaneous upstream changes
+-    - vt_kdsetmode: extend console locking
+-    - Bluetooth: btusb: check conditions before enabling USB ALT 3 for WBS
+-    - net: dsa: mt7530: fix VLAN traffic leaks again
+-    - btrfs: fix NULL pointer dereference when deleting device by invalid id
+-    - Revert "floppy: reintroduce O_NDELAY fix"
+-    - fscrypt: add fscrypt_symlink_getattr() for computing st_size
+-    - ext4: report correct st_size for encrypted symlinks
+-    - f2fs: report correct st_size for encrypted symlinks
+-    - ubifs: report correct st_size for encrypted symlinks
+-    - net: don't unconditionally copy_from_user a struct ifreq for socket ioctls
+-    - audit: move put_tree() to avoid trim_trees refcount underflow and UAF
+-    - Linux 5.14.1
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Wed, 08 Sep 2021 12:20:18 +0200
+-
 -linux-unstable (5.14.0-8.8) impish; urgency=medium
-+linux (5.14.2-051402.202109080331) impish; urgency=low
- 
+-
 -  * impish/linux-unstable: 5.14.0-8.8 -proposed tracker (LP: #1941887)
-+  Mainline build at commit: v5.14.2
- 
+-
 -  * Fix  Intel AC9560 BT function cannot turn on if BT turn off before S3 entry
 -    (LP: #1941696)
 -    - SAUCE: Bluetooth: btusb: add a reject table to disable msft
-+ -- Mainline Build <kernel@gloin>  Wed, 08 Sep 2021 03:32:02 -0400
- 
+-
 -  *  Add USB4 support for AMD SoC (LP: #1941036)
 -    - thunderbolt: Add vendor specific NHI quirk for auto-clearing interrupt
 -      status

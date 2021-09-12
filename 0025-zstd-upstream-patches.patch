@@ -1,7 +1,7 @@
-From f322509db4e52454f797ec9a724f3bec194dc8d5 Mon Sep 17 00:00:00 2001
+From b96738faae7c854251c1220c5580029f4c5937b1 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Thu, 29 Apr 2021 18:31:54 -0700
-Subject: [PATCH 1/4] lib: zstd: Add kernel-specific API
+Date: Fri, 11 Sep 2020 16:49:00 -0700
+Subject: [PATCH 1/5] lib: zstd: Add kernel-specific API
 
 This patch:
 - Moves `include/linux/zstd.h` -> `include/linux/zstd_lib.h`
@@ -3487,13 +3487,13 @@ index 66cd487a3..02e92c2cb 100644
  MODULE_LICENSE("Dual BSD/GPL");
  MODULE_DESCRIPTION("Zstd Decompressor");
 -- 
-2.33.0
+2.33.0.142.ge0a2f5cbc5
 
 
-From 78ccbb2c033678905ad3b295b1fac5d43a38bdfe Mon Sep 17 00:00:00 2001
+From e78adf733b8f45f8965952254fa94b2f4e491977 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Thu, 29 Apr 2021 18:31:55 -0700
-Subject: [PATCH 2/4] lib: zstd: Add decompress_sources.h for decompress_unzstd
+Date: Mon, 14 Sep 2020 12:54:12 -0700
+Subject: [PATCH 2/5] lib: zstd: Add decompress_sources.h for decompress_unzstd
 
 Adds decompress_sources.h which includes every .c file necessary for
 zstd decompression. This is used in decompress_unzstd.c so the internal
@@ -3556,81 +3556,14 @@ index 000000000..d82cea431
 +#include "zstd_common.c"
 +#include "decompress.c"
 -- 
-2.33.0
+2.33.0.142.ge0a2f5cbc5
 
 
-From 216666d3721caa361795122cc497587b2873dd64 Mon Sep 17 00:00:00 2001
+From a9a8faac4677a7957fcc7c649d021f73963833a3 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
-Date: Thu, 29 Apr 2021 18:31:56 -0700
-Subject: [PATCH 3/4] lib: zstd: Upgrade to latest upstream zstd version 1.4.10
+Date: Thu, 29 Apr 2021 18:25:04 -0700
+Subject: [PATCH 3/5] Import upstream zstd modified for linux
 
-Upgrade to the latest upstream zstd version 1.4.10.
-
-This patch is 100% generated from upstream zstd commit 67a426c322c5 [0].
-
-This patch is very large because it is transitioning from the custom
-kernel zstd to using upstream directly. The new zstd follows upstreams
-file structure which is different. Future update patches will be much
-smaller because they will only contain the changes from one upstream
-zstd release.
-
-As an aid for review I've created a commit [1] that shows the diff
-between upstream zstd as-is (which doesn't compile), and the zstd
-code imported in this patch. The verion of zstd in this patch is
-generated from upstream with changes applied by automation to replace
-upstreams libc dependencies, remove unnecessary portability macros,
-replace `/**` comments with `/*` comments, and use the kernel's xxhash
-instead of bundling it.
-
-The benefits of this patch are as follows:
-1. Using upstream directly with automated script to generate kernel
-   code. This allows us to update the kernel every upstream release, so
-   the kernel gets the latest bug fixes and performance improvements,
-   and doesn't get 3 years out of date again. The automation and the
-   translated code are tested every upstream commit to ensure it
-   continues to work.
-2. Upgrades from a custom zstd based on 1.3.1 to 1.4.10, getting 3 years
-   of performance improvements and bug fixes. On x86_64 I've measured
-   15% faster BtrFS and SquashFS decompression+read speeds, 35% faster
-   kernel decompression, and 30% faster ZRAM decompression+read speeds.
-3. Zstd-1.4.10 supports negative compression levels, which allow zstd to
-   match or subsume lzo's performance.
-4. Maintains the same kernel-specific wrapper API, so no callers have to
-   be modified with zstd version updates.
-
-One concern that was brought up was stack usage. Upstream zstd had
-already removed most of its heavy stack usage functions, but I just
-removed the last functions that allocate arrays on the stack. I've
-measured the high water mark for both compression and decompression
-before and after this patch. Decompression is approximately neutral,
-using about 1.2KB of stack space. Compression levels up to 3 regressed
-from 1.4KB -> 1.6KB, and higher compression levels regressed from 1.5KB
--> 2KB. We've added unit tests upstream to prevent further regression.
-I believe that this is a reasonable increase, and if it does end up
-causing problems, this commit can be cleanly reverted, because it only
-touches zstd.
-
-I chose the bulk update instead of replaying upstream commits because
-there have been ~3500 upstream commits since the 1.3.1 release, zstd
-wasn't ready to be used in the kernel as-is before a month ago, and not
-all upstream zstd commits build. The bulk update preserves bisectablity
-because bugs can be bisected to the zstd version update. At that point
-the update can be reverted, and we can work with upstream to find and
-fix the bug.
-
-Note that upstream zstd release 1.4.10 doesn't exist yet. I have cut a
-staging branch at 4432dac93bea [0] and will apply any changes requested
-to the staging branch. Once we're ready to merge this update I will cut
-a zstd release at the commit we merge, so we have a known zstd release
-in the kernel.
-
-The implementation of the kernel API is contained in
-zstd_compress_module.c and zstd_decompress_module.c.
-
-[0] https://github.com/facebook/zstd/commit/67a426c322c58a91b7fa59fdb2d59ea4f641b185
-[1] https://github.com/terrelln/linux/commit/cc1caeead9ca616386e35078a36e05ab536af112
-
-Signed-off-by: Nick Terrell <terrelln@fb.com>
 ---
  include/linux/zstd.h                          |   11 +-
  include/linux/zstd_errors.h                   |   77 +
@@ -44078,13 +44011,13 @@ index 55e1b4cba..000000000
 -
 -#endif /* ZSTD_OPT_H_91842398743 */
 -- 
-2.33.0
+2.33.0.142.ge0a2f5cbc5
 
 
-From 4db51b910fb979df8b3a0c6ee87bcd48943d0c47 Mon Sep 17 00:00:00 2001
+From 7bf3c6e46e17038168fff0c019b032875e3dd701 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Thu, 29 Apr 2021 18:31:57 -0700
-Subject: [PATCH 4/4] MAINTAINERS: Add maintainer entry for zstd
+Subject: [PATCH 4/5] MAINTAINERS: Add maintainer entry for zstd
 
 Adds a maintainer entry for zstd listing myself as the maintainer for
 all zstd code, pointing to the upstream issues tracker for bugs, and
@@ -44119,5 +44052,133 @@ index d7b4f3287..4e2240d31 100644
  M:	Seth Jennings <sjenning@redhat.com>
  M:	Dan Streetman <ddstreet@ieee.org>
 -- 
-2.33.0
+2.33.0.142.ge0a2f5cbc5
+
+
+From 89f72a70e7c2a9dd47511d34cc7f8062fda67593 Mon Sep 17 00:00:00 2001
+From: Tor Vic <torvic9@mailbox.org>
+Date: Fri, 10 Sep 2021 15:05:58 +0200
+Subject: [PATCH 5/5] zstd: fix fall-through warnings
+
+---
+ lib/zstd/common/bitstream.h                 | 12 ++++++------
+ lib/zstd/compress/huf_compress.c            |  6 +++---
+ lib/zstd/compress/zstd_compress.c           |  2 +-
+ lib/zstd/decompress/zstd_decompress.c       |  6 +++---
+ lib/zstd/decompress/zstd_decompress_block.c |  2 +-
+ 5 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/lib/zstd/common/bitstream.h b/lib/zstd/common/bitstream.h
+index 2d6c95b4f..17fa02f26 100644
+--- a/lib/zstd/common/bitstream.h
++++ b/lib/zstd/common/bitstream.h
+@@ -274,22 +274,22 @@ MEM_STATIC size_t BIT_initDStream(BIT_DStream_t* bitD, const void* srcBuffer, si
+         switch(srcSize)
+         {
+         case 7: bitD->bitContainer += (size_t)(((const BYTE*)(srcBuffer))[6]) << (sizeof(bitD->bitContainer)*8 - 16);
+-                /* fall-through */
++                fallthrough;
+ 
+         case 6: bitD->bitContainer += (size_t)(((const BYTE*)(srcBuffer))[5]) << (sizeof(bitD->bitContainer)*8 - 24);
+-                /* fall-through */
++                fallthrough;
+ 
+         case 5: bitD->bitContainer += (size_t)(((const BYTE*)(srcBuffer))[4]) << (sizeof(bitD->bitContainer)*8 - 32);
+-                /* fall-through */
++                fallthrough;
+ 
+         case 4: bitD->bitContainer += (size_t)(((const BYTE*)(srcBuffer))[3]) << 24;
+-                /* fall-through */
++                fallthrough;
+ 
+         case 3: bitD->bitContainer += (size_t)(((const BYTE*)(srcBuffer))[2]) << 16;
+-                /* fall-through */
++                fallthrough;
+ 
+         case 2: bitD->bitContainer += (size_t)(((const BYTE*)(srcBuffer))[1]) <<  8;
+-                /* fall-through */
++                fallthrough;
+ 
+         default: break;
+         }
+diff --git a/lib/zstd/compress/huf_compress.c b/lib/zstd/compress/huf_compress.c
+index b6186f850..303875ff8 100644
+--- a/lib/zstd/compress/huf_compress.c
++++ b/lib/zstd/compress/huf_compress.c
+@@ -595,13 +595,13 @@ HUF_compress1X_usingCTable_internal_body(void* dst, size_t dstSize,
+     {
+         case 3 : HUF_encodeSymbol(&bitC, ip[n+ 2], CTable);
+                  HUF_FLUSHBITS_2(&bitC);
+-		 /* fall-through */
++        fallthrough;
+         case 2 : HUF_encodeSymbol(&bitC, ip[n+ 1], CTable);
+                  HUF_FLUSHBITS_1(&bitC);
+-		 /* fall-through */
++        fallthrough;
+         case 1 : HUF_encodeSymbol(&bitC, ip[n+ 0], CTable);
+                  HUF_FLUSHBITS(&bitC);
+-		 /* fall-through */
++        fallthrough;
+         case 0 : /* fall-through */
+         default: break;
+     }
+diff --git a/lib/zstd/compress/zstd_compress.c b/lib/zstd/compress/zstd_compress.c
+index f5b37ad65..7f729dadb 100644
+--- a/lib/zstd/compress/zstd_compress.c
++++ b/lib/zstd/compress/zstd_compress.c
+@@ -4213,7 +4213,7 @@ static size_t ZSTD_compressStream_generic(ZSTD_CStream* zcs,
+                 zcs->outBuffFlushedSize = 0;
+                 zcs->streamStage = zcss_flush; /* pass-through to flush stage */
+             }
+-	    /* fall-through */
++	    fallthrough;
+         case zcss_flush:
+             DEBUGLOG(5, "flush stage");
+             assert(zcs->appliedParams.outBufferMode == ZSTD_bm_buffered);
+diff --git a/lib/zstd/decompress/zstd_decompress.c b/lib/zstd/decompress/zstd_decompress.c
+index 099f708ac..3f723b843 100644
+--- a/lib/zstd/decompress/zstd_decompress.c
++++ b/lib/zstd/decompress/zstd_decompress.c
+@@ -1835,7 +1835,7 @@ size_t ZSTD_decompressStream(ZSTD_DStream* zds, ZSTD_outBuffer* output, ZSTD_inB
+             zds->legacyVersion = 0;
+             zds->hostageByte = 0;
+             zds->expectedOutBuffer = *output;
+-            /* fall-through */
++            fallthrough;
+ 
+         case zdss_loadHeader :
+             DEBUGLOG(5, "stage zdss_loadHeader (srcSize : %u)", (U32)(iend - ip));
+@@ -1946,7 +1946,7 @@ size_t ZSTD_decompressStream(ZSTD_DStream* zds, ZSTD_outBuffer* output, ZSTD_inB
+                         zds->outBuffSize = neededOutBuffSize;
+             }   }   }
+             zds->streamStage = zdss_read;
+-            /* fall-through */
++            fallthrough;
+ 
+         case zdss_read:
+             DEBUGLOG(5, "stage zdss_read");
+@@ -1965,7 +1965,7 @@ size_t ZSTD_decompressStream(ZSTD_DStream* zds, ZSTD_outBuffer* output, ZSTD_inB
+             }   }
+             if (ip==iend) { someMoreWork = 0; break; }   /* no more input */
+             zds->streamStage = zdss_load;
+-            /* fall-through */
++            fallthrough;
+ 
+         case zdss_load:
+             {   size_t const neededInSize = ZSTD_nextSrcSizeToDecompress(zds);
+diff --git a/lib/zstd/decompress/zstd_decompress_block.c b/lib/zstd/decompress/zstd_decompress_block.c
+index cd6eba55a..bc78a2344 100644
+--- a/lib/zstd/decompress/zstd_decompress_block.c
++++ b/lib/zstd/decompress/zstd_decompress_block.c
+@@ -90,7 +90,7 @@ size_t ZSTD_decodeLiteralsBlock(ZSTD_DCtx* dctx,
+         case set_repeat:
+             DEBUGLOG(5, "set_repeat flag : re-using stats from previous compressed literals block");
+             RETURN_ERROR_IF(dctx->litEntropy==0, dictionary_corrupted, "");
+-            /* fall-through */
++            fallthrough;
+ 
+         case set_compressed:
+             RETURN_ERROR_IF(srcSize < 5, corruption_detected, "srcSize >= MIN_CBLOCK_SIZE == 3; here we need up to 5 for case 3");
+-- 
+2.33.0.142.ge0a2f5cbc5
 

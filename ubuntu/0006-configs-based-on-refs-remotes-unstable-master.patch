@@ -1,6 +1,6 @@
-From bec9ac76d3982153d7981832a80e4ec76f63dac3 Mon Sep 17 00:00:00 2001
+From 3e2faff61f42d3cf7d34b5afe64860c5f0e37a5e Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 8 Sep 2021 03:32:50 -0400
+Date: Sun, 12 Sep 2021 04:32:18 -0400
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
 
 ---
@@ -16,7 +16,7 @@ Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
  9 files changed, 15 insertions(+), 33 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 767235a263c6..7617aded2d2d 100644
+index 767235a263c6..1476eff2cf39 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -58,7 +58,7 @@ CONFIG_CADENCE_WATCHDOG=m
@@ -24,7 +24,7 @@ index 767235a263c6..7617aded2d2d 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.3.0-4ubuntu1) 10.3.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-1ubuntu2) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CMA is not set
  CONFIG_CMDLINE_PARTITION=y
@@ -53,7 +53,7 @@ index cd2da6dec1c2..437e8ea6c9a1 100644
  CONFIG_PREEMPT=y
  # CONFIG_PREEMPT_VOLUNTARY is not set
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index b93938141d84..a915b8ef7eb3 100644
+index b93938141d84..8277fa5a5038 100644
 --- a/debian.master/config/arm64/config.common.arm64
 +++ b/debian.master/config/arm64/config.common.arm64
 @@ -62,7 +62,7 @@ CONFIG_CADENCE_WATCHDOG=m
@@ -61,7 +61,7 @@ index b93938141d84..a915b8ef7eb3 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 10.3.0-2ubuntu1) 10.3.0"
-+CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-1ubuntu2) 11.2.0"
++CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  CONFIG_CMA=y
  CONFIG_CMDLINE="console=ttyAMA0"
@@ -85,7 +85,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index 99e96e6f5a38..32a6e9fa59b7 100644
+index 99e96e6f5a38..8492a2cf72da 100644
 --- a/debian.master/config/armhf/config.common.armhf
 +++ b/debian.master/config/armhf/config.common.armhf
 @@ -57,7 +57,7 @@ CONFIG_CADENCE_WATCHDOG=m
@@ -93,7 +93,7 @@ index 99e96e6f5a38..32a6e9fa59b7 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 10.3.0-2ubuntu1) 10.3.0"
-+CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-1ubuntu2) 11.2.0"
++CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  CONFIG_CMA=y
  CONFIG_CMDLINE=""
@@ -287,7 +287,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index 18f562722fd2..9bdd11a91c50 100644
+index 18f562722fd2..0fc1ed59bc4c 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
 +++ b/debian.master/config/ppc64el/config.common.ppc64el
 @@ -55,7 +55,7 @@ CONFIG_CADENCE_WATCHDOG=m
@@ -295,7 +295,7 @@ index 18f562722fd2..9bdd11a91c50 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 10.3.0-2ubuntu1) 10.3.0"
-+CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-1ubuntu2) 11.2.0"
++CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  CONFIG_CMA=y
  CONFIG_CMDLINE=""
@@ -308,7 +308,7 @@ index 18f562722fd2..9bdd11a91c50 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index c0f79fdd38d1..0f6df2717c84 100644
+index c0f79fdd38d1..2268546b3fe8 100644
 --- a/debian.master/config/s390x/config.common.s390x
 +++ b/debian.master/config/s390x/config.common.s390x
 @@ -45,7 +45,7 @@ CONFIG_AUTOFS_FS=y
@@ -316,7 +316,7 @@ index c0f79fdd38d1..0f6df2717c84 100644
  # CONFIG_CAN is not set
  # CONFIG_CB710_CORE is not set
 -CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 10.3.0-2ubuntu1) 10.3.0"
-+CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-1ubuntu2) 11.2.0"
++CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
  # CONFIG_CDROM_PKTCDVD is not set
  CONFIG_CMA=y
  # CONFIG_CMDLINE_PARTITION is not set
