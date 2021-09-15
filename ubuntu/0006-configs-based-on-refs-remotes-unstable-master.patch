@@ -1,6 +1,6 @@
-From 3e2faff61f42d3cf7d34b5afe64860c5f0e37a5e Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 12 Sep 2021 04:32:18 -0400
+From 4d9ebcaba84c5f4befdd49ca95358488d7a4ed22 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 15 Sep 2021 09:35:34 +0000
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
 
 ---
@@ -10,13 +10,13 @@ Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
  .../config/arm64/config.common.arm64          |  3 +-
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  3 +-
- debian.master/config/config.common.ubuntu     | 31 ++++++-------------
+ debian.master/config/config.common.ubuntu     | 33 ++++++-------------
  .../config/ppc64el/config.common.ppc64el      |  3 +-
  .../config/s390x/config.common.s390x          |  2 +-
- 9 files changed, 15 insertions(+), 33 deletions(-)
+ 9 files changed, 16 insertions(+), 34 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 767235a263c6..1476eff2cf39 100644
+index 767235a263c6..7c67e22962f0 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -58,7 +58,7 @@ CONFIG_CADENCE_WATCHDOG=m
@@ -24,7 +24,7 @@ index 767235a263c6..1476eff2cf39 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 10.3.0-4ubuntu1) 10.3.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CMA is not set
  CONFIG_CMDLINE_PARTITION=y
@@ -106,7 +106,7 @@ index 99e96e6f5a38..8492a2cf72da 100644
  CONFIG_ISL29020=m
  CONFIG_JFS_FS=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index dcd4ef0ff95e..7676483d29b9 100644
+index dcd4ef0ff95e..084e2f712ad0 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -161,7 +161,15 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_CC_HAS_NO_PROFILE_FN_ATTR=y
  CONFIG_CC_HAS_SANCOV_TRACE_PC=y
  CONFIG_CC_HAS_SANE_STACKPROTECTOR=y
-@@ -2634,7 +2632,6 @@ CONFIG_DELL_SMBIOS=m
+@@ -2044,6 +2042,7 @@ CONFIG_COMMON_CLK_TI_ADPLL=y
+ CONFIG_COMMON_CLK_VC5=m
+ CONFIG_COMMON_CLK_WM831X=m
+ CONFIG_COMMON_CLK_XGENE=y
++CONFIG_COMMON_CLK_XLNX_CLKWZRD=m
+ CONFIG_COMMON_CLK_ZYNQMP=y
+ CONFIG_COMMON_RESET_HI3660=m
+ CONFIG_COMMON_RESET_HI6220=m
+@@ -2634,7 +2633,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
  CONFIG_DELL_SMO8800=m
@@ -169,7 +177,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_DELL_WMI=m
  CONFIG_DELL_WMI_AIO=m
  CONFIG_DELL_WMI_DESCRIPTOR=m
-@@ -3812,7 +3809,7 @@ CONFIG_GAMEPORT_L4=m
+@@ -3812,7 +3810,7 @@ CONFIG_GAMEPORT_L4=m
  CONFIG_GAMEPORT_NS558=m
  CONFIG_GARP=m
  CONFIG_GART_IOMMU=y
@@ -178,7 +186,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  # CONFIG_GCOV_KERNEL is not set
  CONFIG_GDB_SCRIPTS=y
  CONFIG_GEMINI_ETHERNET=m
-@@ -3897,7 +3894,6 @@ CONFIG_GPIO_104_IDIO_16=m
+@@ -3897,7 +3895,6 @@ CONFIG_GPIO_104_IDIO_16=m
  CONFIG_GPIO_104_IDI_48=m
  CONFIG_GPIO_74X164=m
  CONFIG_GPIO_74XX_MMIO=m
@@ -186,7 +194,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_GPIO_ACPI=y
  CONFIG_GPIO_ADNP=m
  CONFIG_GPIO_ADP5520=m
-@@ -4142,6 +4138,7 @@ CONFIG_HAVE_INTEL_TXT=y
+@@ -4142,6 +4139,7 @@ CONFIG_HAVE_INTEL_TXT=y
  CONFIG_HAVE_IOREMAP_PROT=y
  CONFIG_HAVE_IRQ_EXIT_ON_IRQ_STACK=y
  CONFIG_HAVE_IRQ_TIME_ACCOUNTING=y
@@ -194,7 +202,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_HAVE_KERNEL_BZIP2=y
  CONFIG_HAVE_KERNEL_GZIP=y
  CONFIG_HAVE_KERNEL_LZ4=y
-@@ -4369,7 +4366,6 @@ CONFIG_HIGHMEM=y
+@@ -4369,7 +4367,6 @@ CONFIG_HIGHMEM=y
  CONFIG_HIGHPTE=y
  CONFIG_HIGH_RES_TIMERS=y
  CONFIG_HINIC=m
@@ -202,7 +210,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_HIP04_ETH=m
  # CONFIG_HIPPI is not set
  CONFIG_HISILICON_ERRATUM_161010101=y
-@@ -5399,6 +5395,7 @@ CONFIG_KALLSYMS_BASE_RELATIVE=y
+@@ -5399,6 +5396,7 @@ CONFIG_KALLSYMS_BASE_RELATIVE=y
  # CONFIG_KASAN is not set
  CONFIG_KCMP=y
  # CONFIG_KCOV is not set
@@ -210,7 +218,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_KDB_CONTINUE_CATASTROPHIC=0
  CONFIG_KDB_DEFAULT_ENABLE=0x1
  CONFIG_KDB_KEYBOARD=y
-@@ -5565,9 +5562,8 @@ CONFIG_LDISC_AUTOLOAD=y
+@@ -5565,9 +5563,8 @@ CONFIG_LDISC_AUTOLOAD=y
  # CONFIG_LD_HEAD_STUB_CATCH is not set
  CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
@@ -221,7 +229,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_LEDS_AAT1290=m
  CONFIG_LEDS_ACER_A500=m
  CONFIG_LEDS_ADP5520=m
-@@ -5718,7 +5714,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -5718,7 +5715,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -229,7 +237,7 @@ index dcd4ef0ff95e..7676483d29b9 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -6010,7 +6005,6 @@ CONFIG_MESON_SM=y
+@@ -6010,7 +6006,6 @@ CONFIG_MESON_SM=y
  CONFIG_MESON_WATCHDOG=m
  CONFIG_MESSAGE_LOGLEVEL_DEFAULT=4
  CONFIG_MFD_88PM860X=y
@@ -237,6 +245,14 @@ index dcd4ef0ff95e..7676483d29b9 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
+@@ -6836,7 +6831,6 @@ CONFIG_NET_DSA_SJA1105_VL=y
+ CONFIG_NET_DSA_SMSC_LAN9303=m
+ CONFIG_NET_DSA_SMSC_LAN9303_I2C=m
+ CONFIG_NET_DSA_SMSC_LAN9303_MDIO=m
+-CONFIG_NET_DSA_TAG_8021Q=m
+ CONFIG_NET_DSA_TAG_AR9331=m
+ CONFIG_NET_DSA_TAG_BRCM=m
+ CONFIG_NET_DSA_TAG_BRCM_COMMON=m
 @@ -9264,7 +9258,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
