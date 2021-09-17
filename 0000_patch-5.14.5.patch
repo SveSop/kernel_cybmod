@@ -12,7 +12,7 @@ index a20ba5d939320..18de17354206a 100644
  
  cpoint_type
 diff --git a/Makefile b/Makefile
-index 61741e9d9c6e6..e16a1a80074cd 100644
+index 61741e9d9c6e6..0eaa5623f4060 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1,7 +1,7 @@
@@ -20,7 +20,7 @@ index 61741e9d9c6e6..e16a1a80074cd 100644
  VERSION = 5
  PATCHLEVEL = 14
 -SUBLEVEL = 0
-+SUBLEVEL = 4
++SUBLEVEL = 5
  EXTRAVERSION =
  NAME = Opossums on Parade
  
@@ -11571,36 +11571,6 @@ index e91d51ea028bb..65185d1e07ea6 100644
  int		   svc_encode_result_payload(struct svc_rqst *rqstp,
  					     unsigned int offset,
  					     unsigned int length);
-diff --git a/include/linux/time64.h b/include/linux/time64.h
-index 5117cb5b56561..81b9686a20799 100644
---- a/include/linux/time64.h
-+++ b/include/linux/time64.h
-@@ -25,7 +25,9 @@ struct itimerspec64 {
- #define TIME64_MIN			(-TIME64_MAX - 1)
- 
- #define KTIME_MAX			((s64)~((u64)1 << 63))
-+#define KTIME_MIN			(-KTIME_MAX - 1)
- #define KTIME_SEC_MAX			(KTIME_MAX / NSEC_PER_SEC)
-+#define KTIME_SEC_MIN			(KTIME_MIN / NSEC_PER_SEC)
- 
- /*
-  * Limits for settimeofday():
-@@ -124,10 +126,13 @@ static inline bool timespec64_valid_settod(const struct timespec64 *ts)
-  */
- static inline s64 timespec64_to_ns(const struct timespec64 *ts)
- {
--	/* Prevent multiplication overflow */
--	if ((unsigned long long)ts->tv_sec >= KTIME_SEC_MAX)
-+	/* Prevent multiplication overflow / underflow */
-+	if (ts->tv_sec >= KTIME_SEC_MAX)
- 		return KTIME_MAX;
- 
-+	if (ts->tv_sec <= KTIME_SEC_MIN)
-+		return KTIME_MIN;
-+
- 	return ((s64) ts->tv_sec * NSEC_PER_SEC) + ts->tv_nsec;
- }
- 
 diff --git a/include/net/dsa.h b/include/net/dsa.h
 index 33f40c1ec379f..048d297623c9a 100644
 --- a/include/net/dsa.h
@@ -12723,19 +12693,6 @@ index 4a66725b1d4ac..5af7584734888 100644
 +		ret = remove_hrtimer(timer, base, false, false);
  
  	unlock_hrtimer_base(timer, &flags);
- 
-diff --git a/kernel/time/posix-cpu-timers.c b/kernel/time/posix-cpu-timers.c
-index 517be7fd175ef..a002685f688d6 100644
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -1346,8 +1346,6 @@ void set_process_cpu_timer(struct task_struct *tsk, unsigned int clkid,
- 			}
- 		}
- 
--		if (!*newval)
--			return;
- 		*newval += now;
- 	}
  
 diff --git a/kernel/time/tick-internal.h b/kernel/time/tick-internal.h
 index 6a742a29e545f..cd610faa25235 100644
