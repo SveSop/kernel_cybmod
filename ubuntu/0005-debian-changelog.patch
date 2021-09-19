@@ -1,27 +1,64 @@
-From da1284a5e9bef5b25b520f0e7b49d46e5a9b3714 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 16 Sep 2021 11:31:23 +0000
+From 582a842a425292a715f6b322cf7f2d0ac99c1f75 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 18 Sep 2021 12:32:06 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11769 +-------------------------------------
- 1 file changed, 3 insertions(+), 11766 deletions(-)
+ debian.master/changelog | 11806 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11803 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 917ac3d7118f..8412878dae04 100644
+index e9ea9ae53624..dd7ecd9f1802 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11769 +1,6 @@
--linux-unstable (5.14.0-9.9) impish; urgency=medium
-+linux (5.14.5-051405.202109161131) impish; urgency=low
- 
--  * impish/linux-unstable: 5.14.0-9.9 -proposed tracker (LP: #1943022)
-+  Mainline build at commit: v5.14.5
+@@ -1,11806 +1,6 @@
+-linux-unstable (5.15.0-1.1) impish; urgency=medium
++linux (5.14.6-051406.202109181232) impish; urgency=low
  
 -  * Packaging resync (LP: #1786013)
--    - update dkms package versions
-+ -- Mainline Build <kernel@sita>  Thu, 16 Sep 2021 11:31:23 +0000
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
++  Mainline build at commit: v5.14.6
  
+-  *  LRMv5: switch primary version handling to kernel-versions data set
+-    (LP: #1928921)
+-    - [Packaging] switch to kernel-versions
++ -- Mainline Build <kernel@kathleen>  Sat, 18 Sep 2021 12:32:05 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] remove remaining references to ports
+-    - [Packaging] drop x32 architecture configs
+-    - [Config] mark CONFIG_BPF_UNPRIV_DEFAULT_OFF enforced
+-    - [Packaging] bump kernel version to 5.15
+-    - rebase to v5.15-rc1
+-    - [Config] updateconfigs following v5.15-rc1 rebase
+-    - [Config] FTBFS: disable INTEL_ATOMISP
+-    - [Config] FTBFS: disable xr-usb-serial
+-    - [Packaging] FTBFS: disable zfs
+-
+-  * Miscellaneous upstream changes
+-    - Revert "r8169: avoid link-up interrupt issue on RTL8106e if user enables
+-      ASPM"
+-    - Revert "UBUNTU: SAUCE: RDMA/core: Introduce peer memory interface"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15-rc1
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Fri, 17 Sep 2021 11:42:25 +0200
+-
+-linux-unstable (5.15.0-0.0) impish; urgency=medium
+-
+-  * Empty entry
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Wed, 15 Sep 2021 11:54:10 +0200
+-
+-linux-unstable (5.14.0-9.9) impish; urgency=medium
+-
+-  * impish/linux-unstable: 5.14.0-9.9 -proposed tracker (LP: #1943022)
+-
+-  * Packaging resync (LP: #1786013)
+-    - update dkms package versions
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] NVIDIA -- Add the NVIDIA 470 driver
 -    - [Packaging] NVIDIA: transition -460 and -465 to -470, transition -460-server
