@@ -1,7 +1,7 @@
-From 4d04306bf2b4466792a79dfeb8bcc02b09d34813 Mon Sep 17 00:00:00 2001
+From 53ad4259d8a835b2fe82105d3077108410bfa612 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:29 +0300
-Subject: [PATCH 01/77] fs/ntfs3: Add headers and misc files
+Subject: [PATCH 01/80] fs/ntfs3: Add headers and misc files
 
 This adds headers and misc files
 
@@ -2544,10 +2544,10 @@ index 000000000..9617382ac
 2.33.0.328.g8b7c11b866
 
 
-From 5e89ffbbdc2ad3a9d7c746ee2dbb900a9fe08e93 Mon Sep 17 00:00:00 2001
+From 66110f994109ec783998ed8eb281b63925c8a935 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:29 +0300
-Subject: [PATCH 02/77] fs/ntfs3: Add initialization of super block
+Subject: [PATCH 02/80] fs/ntfs3: Add initialization of super block
 
 This adds initialization of super block
 
@@ -11322,10 +11322,10 @@ index 000000000..6be13e256
 2.33.0.328.g8b7c11b866
 
 
-From b8dcea96f10a29ed3373290363b56a3c18d12488 Mon Sep 17 00:00:00 2001
+From 0cb42685c2a3149f0e2c0ce23cb6052a827768ee Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:29 +0300
-Subject: [PATCH 03/77] fs/ntfs3: Add bitmap
+Subject: [PATCH 03/80] fs/ntfs3: Add bitmap
 
 This adds bitmap
 
@@ -13007,10 +13007,10 @@ index 000000000..32aab0031
 2.33.0.328.g8b7c11b866
 
 
-From 3df0f80fb5e6a49b1af12af75c83c695a62bf792 Mon Sep 17 00:00:00 2001
+From a4b1629f2860100db4b0a3816c759238fafff922 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:29 +0300
-Subject: [PATCH 04/77] fs/ntfs3: Add file operations and implementation
+Subject: [PATCH 04/80] fs/ntfs3: Add file operations and implementation
 
 This adds file operations and implementation
 
@@ -20248,10 +20248,10 @@ index 000000000..5cdf6efe6
 2.33.0.328.g8b7c11b866
 
 
-From a15d40ec0e11eed54a73417195d23b8e2e8e34de Mon Sep 17 00:00:00 2001
+From f1b822fa3596fd95329a472eda58bb624de0121b Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:30 +0300
-Subject: [PATCH 05/77] fs/ntfs3: Add attrib operations
+Subject: [PATCH 05/80] fs/ntfs3: Add attrib operations
 
 This adds attrib operations
 
@@ -23967,10 +23967,10 @@ index 000000000..98871c895
 2.33.0.328.g8b7c11b866
 
 
-From 26810622f3287a851f6695c776e78d40f3fb3009 Mon Sep 17 00:00:00 2001
+From 1678269a2ef6ac983e7a7481b697e45bd98bcd88 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:30 +0300
-Subject: [PATCH 06/77] fs/ntfs3: Add compression
+Subject: [PATCH 06/80] fs/ntfs3: Add compression
 
 This patch adds different types of NTFS-applicable compressions:
 - lznt
@@ -26037,10 +26037,10 @@ index 000000000..ead9ab7d6
 2.33.0.328.g8b7c11b866
 
 
-From 5a68daa9f344d885ae809fe416eda18a55042a07 Mon Sep 17 00:00:00 2001
+From 08c77347b6d8369d3daa834fd705706aa7543263 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:30 +0300
-Subject: [PATCH 07/77] fs/ntfs3: Add NTFS journal
+Subject: [PATCH 07/80] fs/ntfs3: Add NTFS journal
 
 This adds NTFS journal
 
@@ -31242,10 +31242,10 @@ index 000000000..397ba6a95
 2.33.0.328.g8b7c11b866
 
 
-From c0bb68131415f810687cd217176bb5089fcfc39a Mon Sep 17 00:00:00 2001
+From ec8a61a7098556a47ce1f5c82d4910f732686946 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:30 +0300
-Subject: [PATCH 08/77] fs/ntfs3: Add Kconfig, Makefile and doc
+Subject: [PATCH 08/80] fs/ntfs3: Add Kconfig, Makefile and doc
 
 This adds Kconfig, Makefile and doc
 
@@ -31483,10 +31483,10 @@ index 000000000..279701b62
 2.33.0.328.g8b7c11b866
 
 
-From b0caf2e894ec6fecfc7dd9405969108f8b000be6 Mon Sep 17 00:00:00 2001
+From a4e55a04f58c10cfce8a6cb1b5d96fb877be223b Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:30 +0300
-Subject: [PATCH 09/77] fs/ntfs3: Add NTFS3 in fs/Kconfig and fs/Makefile
+Subject: [PATCH 09/80] fs/ntfs3: Add NTFS3 in fs/Kconfig and fs/Makefile
 
 This adds NTFS3 in fs/Kconfig and fs/Makefile
 
@@ -31524,10 +31524,10 @@ index f98f3e691..25daacebb 100644
 2.33.0.328.g8b7c11b866
 
 
-From 2dd2a675c4dce40dc8f1069b288a00c35325d357 Mon Sep 17 00:00:00 2001
+From 6be6c3fc6996ce3653cc56277797df4d75c122c6 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Fri, 13 Aug 2021 17:21:31 +0300
-Subject: [PATCH 10/77] fs/ntfs3: Add MAINTAINERS
+Subject: [PATCH 10/80] fs/ntfs3: Add MAINTAINERS
 
 This adds MAINTAINERS
 
@@ -31560,10 +31560,10 @@ index d7b4f3287..952d23cf7 100644
 2.33.0.328.g8b7c11b866
 
 
-From 370b5ff148b607c8a8cebe07ff2dc0268a394810 Mon Sep 17 00:00:00 2001
+From 63fc0f86f1d55530a708c6633508c7da74fc3406 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Mon, 16 Aug 2021 11:13:08 +0100
-Subject: [PATCH 11/77] fs/ntfs3: Fix various spelling mistakes
+Subject: [PATCH 11/80] fs/ntfs3: Fix various spelling mistakes
 
 There is a spelling mistake in a ntfs_err error message. Also
 fix various spelling mistakes in comments.
@@ -31657,10 +31657,10 @@ index 9617382ac..b53943538 100644
 2.33.0.328.g8b7c11b866
 
 
-From e4fd358fe37c4a1ed12241c2ae253c01114241e9 Mon Sep 17 00:00:00 2001
+From 077d15610e5ed1c13b8506550072ec4da75cfba9 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Mon, 16 Aug 2021 13:37:32 +0300
-Subject: [PATCH 12/77] fs/ntfs3: Use linux/log2 is_power_of_2 function
+Subject: [PATCH 12/80] fs/ntfs3: Use linux/log2 is_power_of_2 function
 
 We do not need our own implementation for this function in this
 driver. It is much better to use generic one.
@@ -31759,10 +31759,10 @@ index 84d4f389f..903975b7e 100644
 2.33.0.328.g8b7c11b866
 
 
-From af7017d07fa85e8557736c27886b52810dc7cf01 Mon Sep 17 00:00:00 2001
+From dd3afd7dbeecc63d6ababc01504345c6734c2d82 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Mon, 16 Aug 2021 15:01:56 +0300
-Subject: [PATCH 13/77] fs/ntfs3: Add ifndef + define to all header files
+Subject: [PATCH 13/80] fs/ntfs3: Add ifndef + define to all header files
 
 Add guards so that compiler will only include header files once.
 
@@ -31838,10 +31838,10 @@ index c8ea6dd38..b5da2f06f 100644
 2.33.0.328.g8b7c11b866
 
 
-From 9f3ce37220b08b0ca5513d0df7894e11aef05bfd Mon Sep 17 00:00:00 2001
+From 80690684838c3a5c58eb8d4c641faa3d2b27c7eb Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Mon, 16 Aug 2021 17:30:25 +0100
-Subject: [PATCH 14/77] fs/ntfs3: Fix integer overflow in multiplication
+Subject: [PATCH 14/80] fs/ntfs3: Fix integer overflow in multiplication
 
 The multiplication of the u32 data_size with a int is being performed
 using 32 bit arithmetic however the results is being assigned to the
@@ -31874,10 +31874,10 @@ index 6aa9540ec..9386c551e 100644
 2.33.0.328.g8b7c11b866
 
 
-From ea941afbc2d43d6916b3a445c39c2766ff203bfd Mon Sep 17 00:00:00 2001
+From 23c40b5e66ccfe4879d6b01bf67671e055507bf8 Mon Sep 17 00:00:00 2001
 From: Nathan Chancellor <nathan@kernel.org>
 Date: Mon, 16 Aug 2021 12:30:41 -0700
-Subject: [PATCH 15/77] fs/ntfs3: Remove unused variable cnt in
+Subject: [PATCH 15/80] fs/ntfs3: Remove unused variable cnt in
  ntfs_security_init()
 
 Clang warns:
@@ -31933,10 +31933,10 @@ index 92140050f..c6599c514 100644
 2.33.0.328.g8b7c11b866
 
 
-From bb22be3781a4a9d74e3dbc017b5001935fede5c7 Mon Sep 17 00:00:00 2001
+From 0a8271a68fb17db052d536c93a1b9cf9a81e0a24 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Wed, 18 Aug 2021 04:06:47 +0300
-Subject: [PATCH 16/77] fs/ntfs3: Fix one none utf8 char in source file
+Subject: [PATCH 16/80] fs/ntfs3: Fix one none utf8 char in source file
 
 In one source file there is for some reason non utf8 char. But hey this
 is fs development so this kind of thing might happen.
@@ -31964,10 +31964,10 @@ index c3121bf9c..e377d7247 100644
 2.33.0.328.g8b7c11b866
 
 
-From adeedf7da8bf43f86297eedd8d9cb2258a42d259 Mon Sep 17 00:00:00 2001
+From 92c8a94578d7b934ee84b116876c5470f83bf7d9 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 18 Aug 2021 17:21:46 -0500
-Subject: [PATCH 17/77] fs/ntfs3: Fix fall-through warnings for Clang
+Subject: [PATCH 17/80] fs/ntfs3: Fix fall-through warnings for Clang
 
 Fix the following fallthrough warnings:
 
@@ -32014,10 +32014,10 @@ index bf51e2944..a573c6e98 100644
 2.33.0.328.g8b7c11b866
 
 
-From 4a9838e0280e750e051f4fcb8ca3cee0bacf48dc Mon Sep 17 00:00:00 2001
+From 87e6cebabaca878b56fe08ca475b9aa0bda7515e Mon Sep 17 00:00:00 2001
 From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 Date: Thu, 19 Aug 2021 16:23:37 +0800
-Subject: [PATCH 18/77] fs/ntfs3: Remove unused including <linux/version.h>
+Subject: [PATCH 18/80] fs/ntfs3: Remove unused including <linux/version.h>
 
 Eliminate the follow versioncheck warning:
 
@@ -32048,10 +32048,10 @@ index a573c6e98..ed64489ed 100644
 2.33.0.328.g8b7c11b866
 
 
-From cce4a830df2c2c7f90a6785b1ad54e4f7429a03e Mon Sep 17 00:00:00 2001
+From 1ed862eb53ddb4f7844610be7e7e10f6b600b3dd Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 24 Aug 2021 21:37:06 +0300
-Subject: [PATCH 19/77] fs/ntfs3: Restyle comment block in ni_parse_reparse()
+Subject: [PATCH 19/80] fs/ntfs3: Restyle comment block in ni_parse_reparse()
 
 First of this fix one none utf8 char in this comment block. Maybe
 this happened because error in filesystem ;)
@@ -32099,10 +32099,10 @@ index e377d7247..e94d830b2 100644
 2.33.0.328.g8b7c11b866
 
 
-From 2729442ac9b8fd289ba8ffba612b8c2d4670c732 Mon Sep 17 00:00:00 2001
+From a86d154f53f4859f9eea5e66be2006e011d31053 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 26 Aug 2021 11:56:29 +0300
-Subject: [PATCH 20/77] fs/ntfs3: Use kernel ALIGN macros over driver specific
+Subject: [PATCH 20/80] fs/ntfs3: Use kernel ALIGN macros over driver specific
 
 The static checkers (Smatch) were complaining because QuadAlign() was
 buggy.  If you try to align something higher than UINT_MAX it got
@@ -32674,10 +32674,10 @@ index 98871c895..6b17d46b9 100644
 2.33.0.328.g8b7c11b866
 
 
-From 34684074feda5088c6a111f1ee80fdd61f62424d Mon Sep 17 00:00:00 2001
+From 2c0431451e79a798884cb57b6bc4f5baa7dca46d Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 24 Aug 2021 21:37:07 +0300
-Subject: [PATCH 21/77] fs/ntfs3: Do not use driver own alloc wrappers
+Subject: [PATCH 21/80] fs/ntfs3: Do not use driver own alloc wrappers
 
 Problem with these wrapper is that we cannot take off example GFP_NOFS
 flag. It is not recomended use those in all places. Also if we change
@@ -34257,10 +34257,10 @@ index 6b17d46b9..af89e50f7 100644
 2.33.0.328.g8b7c11b866
 
 
-From 4719c549c35f335147d92515840713a6e2f44869 Mon Sep 17 00:00:00 2001
+From 92a1a8948a411d6af6255ae679a02beb4b78ca2f Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 24 Aug 2021 21:37:08 +0300
-Subject: [PATCH 22/77] fs/ntfs3: Use kcalloc/kmalloc_array over
+Subject: [PATCH 22/80] fs/ntfs3: Use kcalloc/kmalloc_array over
  kzalloc/kmalloc
 
 Use kcalloc/kmalloc_array over kzalloc/kmalloc when we allocate array.
@@ -34338,10 +34338,10 @@ index 2f7d16543..329bc76df 100644
 2.33.0.328.g8b7c11b866
 
 
-From 152fb3381e6460284e786f163da463372e1dd0a5 Mon Sep 17 00:00:00 2001
+From c9c1c497766a5a8c3a545a70f6ba29d5c64bb10a Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Tue, 24 Aug 2021 14:52:36 +0300
-Subject: [PATCH 23/77] fs/ntfs3: add checks for allocation failure
+Subject: [PATCH 23/80] fs/ntfs3: add checks for allocation failure
 
 Add a check for when the kzalloc() in init_rsttbl() fails.  Some of
 the callers checked for NULL and some did not.  I went down the call
@@ -34410,10 +34410,10 @@ index 2c213b559..7144ea8a9 100644
 2.33.0.328.g8b7c11b866
 
 
-From e0d70ca3534f3b5f5bba086767d5a543a6fd4fc6 Mon Sep 17 00:00:00 2001
+From 5a88129e789db78eafca110182d3602253e52afb Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Tue, 24 Aug 2021 14:48:58 +0300
-Subject: [PATCH 24/77] fs/ntfs3: fix an error code in ntfs_get_acl_ex()
+Subject: [PATCH 24/80] fs/ntfs3: fix an error code in ntfs_get_acl_ex()
 
 The ntfs_get_ea() function returns negative error codes or on success
 it returns the length.  In the original code a zero length return was
@@ -34444,10 +34444,10 @@ index af89e50f7..d3d5b9d33 100644
 2.33.0.328.g8b7c11b866
 
 
-From b425860f54105bf9148f1afed458dc69080f57ff Mon Sep 17 00:00:00 2001
+From eb1408d341b94033d3883d70310caae8586cd14f Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Tue, 24 Aug 2021 10:49:32 +0300
-Subject: [PATCH 25/77] fs/ntfs3: Fix error code in indx_add_allocate()
+Subject: [PATCH 25/80] fs/ntfs3: Fix error code in indx_add_allocate()
 
 Return -EINVAL if ni_find_attr() fails.  Don't return success.
 
@@ -34475,10 +34475,10 @@ index 334a3cef7..5fb41c9c8 100644
 2.33.0.328.g8b7c11b866
 
 
-From 1e999d8378410eaf3d0ed17135dafdb76303f53a Mon Sep 17 00:00:00 2001
+From 11abae7d742d19917816ed90a0c8b43f8a938df9 Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Tue, 24 Aug 2021 10:50:15 +0300
-Subject: [PATCH 26/77] fs/ntfs3: Potential NULL dereference in
+Subject: [PATCH 26/80] fs/ntfs3: Potential NULL dereference in
  hdr_find_split()
 
 The "e" pointer is dereferenced before it has been checked for NULL.
@@ -34514,10 +34514,10 @@ index 5fb41c9c8..f4729aa50 100644
 2.33.0.328.g8b7c11b866
 
 
-From fae7a801068411954b4eca92f45e6a6a35af9ce8 Mon Sep 17 00:00:00 2001
+From 295fa6c269465ba6b1b666ca4e9de2b77d525bef Mon Sep 17 00:00:00 2001
 From: Dan Carpenter <dan.carpenter@oracle.com>
 Date: Tue, 24 Aug 2021 10:51:04 +0300
-Subject: [PATCH 27/77] fs/ntfs3: Fix error handling in indx_insert_into_root()
+Subject: [PATCH 27/80] fs/ntfs3: Fix error handling in indx_insert_into_root()
 
 There are three bugs in this code:
 1) If indx_get_root() fails, then return -EINVAL instead of success.
@@ -34668,10 +34668,10 @@ index f4729aa50..69c6c4e0b 100644
 2.33.0.328.g8b7c11b866
 
 
-From 75888cba3291dc405eeaeb6fd9e6b3338726b295 Mon Sep 17 00:00:00 2001
+From 334e51cff959c254897f6e83d1d23ea47ed2c64e Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 3 Aug 2021 14:57:09 +0300
-Subject: [PATCH 28/77] fs/ntfs3: Restyle comments to better align with
+Subject: [PATCH 28/80] fs/ntfs3: Restyle comments to better align with
  kernel-doc
 
 Capitalize comments and end with period for better reading.
@@ -46891,10 +46891,10 @@ index d3d5b9d33..b4c921e4b 100644
 2.33.0.328.g8b7c11b866
 
 
-From 6e46369c310cb67372e65835eb1f3fea65d05caf Mon Sep 17 00:00:00 2001
+From b4f4bc6db8a42e6a32d86a11c4d17dc7b9519daf Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 24 Aug 2021 21:20:20 +0300
-Subject: [PATCH 29/77] fs/ntfs3: Remove fat ioctl's from ntfs3 driver for now
+Subject: [PATCH 29/80] fs/ntfs3: Remove fat ioctl's from ntfs3 driver for now
 
 For some reason we have FAT ioctl calls. Even old ntfs driver did not
 use these. We should not use these because it his hard to get things out
@@ -46941,10 +46941,10 @@ index 26346771d..62ebfa324 100644
 2.33.0.328.g8b7c11b866
 
 
-From 1c19071d5a4438448b59b09e09fbec0be979e302 Mon Sep 17 00:00:00 2001
+From 7a181df73f16f4ccac39b5a68cb09e79a2f54ec5 Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Tue, 31 Aug 2021 18:52:39 +0300
-Subject: [PATCH 30/77] fs/ntfs3: Rework file operations
+Subject: [PATCH 30/80] fs/ntfs3: Rework file operations
 
 Rename now works "Add new name and remove old name".
 "Remove old name and add new name" may result in bad inode
@@ -48920,10 +48920,10 @@ index b4c921e4b..22fd5eb32 100644
 2.33.0.328.g8b7c11b866
 
 
-From 26f8300c91fb4ec1304bb3c4032ded54d4ce96b0 Mon Sep 17 00:00:00 2001
+From 19ecfc2b247568a7906c8811500af5df00c3ffca Mon Sep 17 00:00:00 2001
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Date: Tue, 31 Aug 2021 16:57:40 +0300
-Subject: [PATCH 31/77] fs/ntfs3: Restyle comments to better align with
+Subject: [PATCH 31/80] fs/ntfs3: Restyle comments to better align with
  kernel-doc
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
@@ -49529,10 +49529,10 @@ index 22fd5eb32..b15d532e4 100644
 2.33.0.328.g8b7c11b866
 
 
-From 2aa10a2eb4c00078f2bf72613eb424466cd8dfd8 Mon Sep 17 00:00:00 2001
+From 3c905cbebe163b1de47ff0ac81f605c2f2eeb437 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Wed, 25 Aug 2021 21:24:35 +0300
-Subject: [PATCH 32/77] fs/ntfs3: Fix integer overflow in ni_fiemap with
+Subject: [PATCH 32/80] fs/ntfs3: Fix integer overflow in ni_fiemap with
  fiemap_prep()
 
 Use fiemap_prep() to check valid flags. It also shrink request scope
@@ -49574,10 +49574,10 @@ index 89557d60a..f9c9a8c91 100644
 2.33.0.328.g8b7c11b866
 
 
-From d3cf720f5e5408a47fc1ac5c49749947f14fca26 Mon Sep 17 00:00:00 2001
+From 3f285bf13a228b2d2912d5c57c720dc3af3479bb Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Wed, 25 Aug 2021 21:25:22 +0300
-Subject: [PATCH 33/77] fs/ntfs3: Remove unnecessary condition checking from
+Subject: [PATCH 33/80] fs/ntfs3: Remove unnecessary condition checking from
  ntfs_file_read_iter
 
 This check will be also performed in generic_file_read_iter() so we do
@@ -49621,10 +49621,10 @@ index f9c9a8c91..424450e77 100644
 2.33.0.328.g8b7c11b866
 
 
-From 685ca10332bf4c8f15cebaf9ab7958ab42fd9035 Mon Sep 17 00:00:00 2001
+From 30b0a8a2cbc51a0d533da07455ac0ea776fde68c Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Fri, 27 Aug 2021 00:44:41 +0300
-Subject: [PATCH 34/77] fs/ntfs3: Remove GPL boilerplates from decompress lib
+Subject: [PATCH 34/80] fs/ntfs3: Remove GPL boilerplates from decompress lib
  files
 
 Files already have SDPX identifier so no reason to keep boilerplates in
@@ -49743,10 +49743,10 @@ index 3d98f36a9..769c6d3dd 100644
 2.33.0.328.g8b7c11b866
 
 
-From 605f433fd4cf3de251b33847d763a0f7ff94fd40 Mon Sep 17 00:00:00 2001
+From 20c2ca435cd371798b964b456699fbc4c3c08978 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Sun, 29 Aug 2021 17:42:39 +0300
-Subject: [PATCH 35/77] fs/ntfs3: Change how module init/info messages are
+Subject: [PATCH 35/80] fs/ntfs3: Change how module init/info messages are
  displayed
 
 Usually in file system init() messages are only displayed in info level.
@@ -49819,10 +49819,10 @@ index dbecf095d..55bbc9200 100644
 2.33.0.328.g8b7c11b866
 
 
-From 305d14578f19b102e581ec121c52b3d2fbfcfa15 Mon Sep 17 00:00:00 2001
+From 6347a2b25103faf968d77f17b9d0632b7bd9cd43 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:49 +0300
-Subject: [PATCH 36/77] fs/ntfs3: Remove unnecesarry mount option noatime
+Subject: [PATCH 36/80] fs/ntfs3: Remove unnecesarry mount option noatime
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -49898,10 +49898,10 @@ index 55bbc9200..a18b99a3e 100644
 2.33.0.328.g8b7c11b866
 
 
-From 5bf9163f0a37420ea2ebefeb8d6ab63bf150ad29 Mon Sep 17 00:00:00 2001
+From f115e65fde577d54d76f335d2025bbebdbba85b6 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:50 +0300
-Subject: [PATCH 37/77] fs/ntfs3: Remove unnecesarry remount flag handling
+Subject: [PATCH 37/80] fs/ntfs3: Remove unnecesarry remount flag handling
 
 Remove unnecesarry remount flag handling. This does not do anything for
 this driver. We have already set SB_NODIRATIME when we fill super. Also
@@ -49938,10 +49938,10 @@ index a18b99a3e..6cb689605 100644
 2.33.0.328.g8b7c11b866
 
 
-From c6969d6b0d7bb67ff5818ef085b35db0da151f80 Mon Sep 17 00:00:00 2001
+From 363556610865eb782fea36b7bf6b44e59fdee6cd Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:51 +0300
-Subject: [PATCH 38/77] fs/ntfs3: Convert mount options to pointer in sbi
+Subject: [PATCH 38/80] fs/ntfs3: Convert mount options to pointer in sbi
 
 Use pointer to mount options. We want to do this because we will use new
 mount api which will benefit that we have spi and mount options in
@@ -50213,10 +50213,10 @@ index b15d532e4..ac4b37bf8 100644
 2.33.0.328.g8b7c11b866
 
 
-From feab4209275616885c901b79fda4821516bf3ac9 Mon Sep 17 00:00:00 2001
+From 0a188212699df112db9491c2dd708b6cd60f0ff7 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:52 +0300
-Subject: [PATCH 39/77] fs/ntfs3: Use new api for mounting
+Subject: [PATCH 39/80] fs/ntfs3: Use new api for mounting
 
 We have now new mount api as described in Documentation/filesystems. We
 should use it as it gives us some benefits which are desribed here
@@ -50814,10 +50814,10 @@ index 0f3820342..befa78d3c 100644
 2.33.0.328.g8b7c11b866
 
 
-From 03f5d4d4aa139786a8755376e8631c7b23b2d442 Mon Sep 17 00:00:00 2001
+From 42d37ffaa52a32c9dbd48b9615a53af92b522024 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:53 +0300
-Subject: [PATCH 40/77] fs/ntfs3: Init spi more in init_fs_context than
+Subject: [PATCH 40/80] fs/ntfs3: Init spi more in init_fs_context than
  fill_super
 
 init_fs_context() is meant to initialize s_fs_info (spi). Move spi
@@ -50920,10 +50920,10 @@ index befa78d3c..420cd1409 100644
 2.33.0.328.g8b7c11b866
 
 
-From 1968d1662d72e1f701655e0f3f2f9530e742a4d0 Mon Sep 17 00:00:00 2001
+From ca2d045f897c875e55391deefc08df926bdba798 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:54 +0300
-Subject: [PATCH 41/77] fs/ntfs3: Make mount option nohidden more universal
+Subject: [PATCH 41/80] fs/ntfs3: Make mount option nohidden more universal
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -50968,10 +50968,10 @@ index 420cd1409..729ead6f2 100644
 2.33.0.328.g8b7c11b866
 
 
-From 62ee0f0c0f923ceb976fa9c7250a432be7c3c545 Mon Sep 17 00:00:00 2001
+From a9f1ec4d5feee50c3a5f3eee51285d66c8370688 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:55 +0300
-Subject: [PATCH 42/77] fs/ntfs3: Add iocharset= mount option as alias for nls=
+Subject: [PATCH 42/80] fs/ntfs3: Add iocharset= mount option as alias for nls=
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -51073,10 +51073,10 @@ index 729ead6f2..503e2e23f 100644
 2.33.0.328.g8b7c11b866
 
 
-From 23dba8e0db55decf2909bec3e93df372ec8bb576 Mon Sep 17 00:00:00 2001
+From fadbd0bda4dde6ccf928de18df479fd313adc1aa Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:56 +0300
-Subject: [PATCH 43/77] fs/ntfs3: Rename mount option no_acs_rules >
+Subject: [PATCH 43/80] fs/ntfs3: Rename mount option no_acs_rules >
  (no)acsrules
 
 Rename mount option no_acs_rules to (no)acsrules. This allow us to use
@@ -51194,10 +51194,10 @@ index ac4b37bf8..6f88cb77a 100644
 2.33.0.328.g8b7c11b866
 
 
-From 587dc429e2d14aaf5c8b128ef442033b6fe9741f Mon Sep 17 00:00:00 2001
+From 3a1523fad4ac36f39adadb0840a6f0c061335097 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 18:35:57 +0300
-Subject: [PATCH 44/77] fs/ntfs3: Show uid/gid always in show_options()
+Subject: [PATCH 44/80] fs/ntfs3: Show uid/gid always in show_options()
 
 Show options should show option according documentation when some value
 is not default or when ever coder wants. Uid/gid are problematic because
@@ -51289,10 +51289,10 @@ index 0690e7e4f..3cba0b5e7 100644
 2.33.0.328.g8b7c11b866
 
 
-From c6c62abf3bfe173f7da7f8350237be302107167b Mon Sep 17 00:00:00 2001
+From 2b8a3b3ad198eb1c6ccd1072529dce451886d5cc Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 3 Sep 2021 14:24:58 +0100
-Subject: [PATCH 45/77] fs/ntfs3: Remove redundant initialization of variable
+Subject: [PATCH 45/80] fs/ntfs3: Remove redundant initialization of variable
  err
 
 The variable err is being initialized with a value that is never read, it
@@ -51323,10 +51323,10 @@ index 0daca9adc..b1175542d 100644
 2.33.0.328.g8b7c11b866
 
 
-From 3c5cfcc6f6cb908d2f9a50f1d8780e3073786c05 Mon Sep 17 00:00:00 2001
+From f7cdd2149dbc787d75de40cf6e49c23df7a50301 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:21 +0300
-Subject: [PATCH 46/77] fs/ntfs3. Add forward declarations for structs to
+Subject: [PATCH 46/80] fs/ntfs3. Add forward declarations for structs to
  debug.h
 
 Add forward declarations for structs so that we can include this file
@@ -51356,10 +51356,10 @@ index 31120569a..53ef7489c 100644
 2.33.0.328.g8b7c11b866
 
 
-From 5123c265a4c3393ea5540d86973147e481cbd0be Mon Sep 17 00:00:00 2001
+From 9fa9de654f6b617e289be95bbb8d3de53944d293 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:22 +0300
-Subject: [PATCH 47/77] fs/ntfs3: Add missing header files to ntfs.h
+Subject: [PATCH 47/80] fs/ntfs3: Add missing header files to ntfs.h
 
 We do not have header files at all in this file. Add following headers
 and there is also explanation which for it was added. Note that
@@ -51404,10 +51404,10 @@ index 6bb3e5952..695b684bc 100644
 2.33.0.328.g8b7c11b866
 
 
-From 17916cd9ac620dd918bc22121ceb3e389b184e55 Mon Sep 17 00:00:00 2001
+From 09b7dcd787e0e5eec41a9b567a65aac6723047ae Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:23 +0300
-Subject: [PATCH 48/77] fs/ntfs3: Add missing headers and forward declarations
+Subject: [PATCH 48/80] fs/ntfs3: Add missing headers and forward declarations
  to ntfs_fs.h
 
 We do not have headers at all in this file. We should have them so that
@@ -51500,10 +51500,10 @@ index 372cda697..dae6dd4ac 100644
 2.33.0.328.g8b7c11b866
 
 
-From fbc2f91176662889d6566fed9149d80e3cd27e82 Mon Sep 17 00:00:00 2001
+From 7a11402c8ac3d48aad5701a20a333e0bb2871c7e Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:24 +0300
-Subject: [PATCH 49/77] fs/ntfs3: Add missing header and guards to lib/ headers
+Subject: [PATCH 49/80] fs/ntfs3: Add missing header and guards to lib/ headers
 
 size_t needs header. Add missing header guards so that compiler will
 only include these ones.
@@ -51560,10 +51560,10 @@ index f508fbad2..90309a5ae 100644
 2.33.0.328.g8b7c11b866
 
 
-From f1c971e998a0735e53030f23ac5f8c100fa3fd44 Mon Sep 17 00:00:00 2001
+From c9a29c6ed692abdbbb554b932a15608ab01b185e Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:25 +0300
-Subject: [PATCH 50/77] fs/ntfs3: Change right headers to bitfunc.c
+Subject: [PATCH 50/80] fs/ntfs3: Change right headers to bitfunc.c
 
 We only need linux/types.h for types like u8 etc. So we can remove rest
 and help compiler a little bit.
@@ -51597,10 +51597,10 @@ index ce304d40b..bf10e2da5 100644
 2.33.0.328.g8b7c11b866
 
 
-From d9de906e5def114555b2652f63a182bee1cb1b62 Mon Sep 17 00:00:00 2001
+From 133704819ff6f4d63ba80febec221b3e71c11910 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:26 +0300
-Subject: [PATCH 51/77] fs/ntfs3: Change right headers to upcase.c
+Subject: [PATCH 51/80] fs/ntfs3: Change right headers to upcase.c
 
 There is no headers. They will be included through ntfs_fs.c, but that
 is not right thing to do. Let's include headers what this file need
@@ -51639,10 +51639,10 @@ index bbeba7782..b5e8256fd 100644
 2.33.0.328.g8b7c11b866
 
 
-From 662e9fb61a03067e64174c6b856c0532f0961acd Mon Sep 17 00:00:00 2001
+From 6a3ee18c93cd991f3e7986c191f0e1d1fca12d59 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:27 +0300
-Subject: [PATCH 52/77] fs/ntfs3: Change right headers to lznt.c
+Subject: [PATCH 52/80] fs/ntfs3: Change right headers to lznt.c
 
 There is lot of headers which we do not need in this file. Delete them
 and add what we really need. Here is list which identify why we need
@@ -51689,10 +51689,10 @@ index f1f691a67..12ba42518 100644
 2.33.0.328.g8b7c11b866
 
 
-From 3441af55fc15900a902d54048edba7a47f5bbf7f Mon Sep 17 00:00:00 2001
+From 070603f2d384561119849fe3814d9ccf94c605f1 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 19:15:28 +0300
-Subject: [PATCH 53/77] fs/ntfs3: Remove unneeded header files from c files
+Subject: [PATCH 53/80] fs/ntfs3: Remove unneeded header files from c files
 
 We have lot of unnecessary headers in these files. Remove them so that
 we help compiler a little bit.
@@ -51949,10 +51949,10 @@ index 6f88cb77a..a8c5a899f 100644
 2.33.0.328.g8b7c11b866
 
 
-From 24cabe27ac7ac575bc9b96a8a18e85fc7467c65d Mon Sep 17 00:00:00 2001
+From 83c902d0ec55ad5d99883d74760772222ca065ee Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 18:40:48 +0300
-Subject: [PATCH 54/77] fs/ntfs3: Limit binary search table size
+Subject: [PATCH 54/80] fs/ntfs3: Limit binary search table size
 
 Current binary search allocates memory for table and fill whole table
 before we start actual binary search. This is quite inefficient because
@@ -52117,10 +52117,10 @@ index 35b77c92e..a16256ab3 100644
 2.33.0.328.g8b7c11b866
 
 
-From 1680e3730ae97b93b9e4586b0021574861863e9b Mon Sep 17 00:00:00 2001
+From 06bfcc9b49e3360805d6aeef84cdbe8774faf44f Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 18:40:49 +0300
-Subject: [PATCH 55/77] fs/ntfs3: Make binary search to search smaller chunks
+Subject: [PATCH 55/80] fs/ntfs3: Make binary search to search smaller chunks
  in beginning
 
 We could try to optimize algorithm to first fill just small table and
@@ -52178,10 +52178,10 @@ index a16256ab3..3ad1ee608 100644
 2.33.0.328.g8b7c11b866
 
 
-From e87a5ad6d0adea6c176fa45874ba774bdfdf424d Mon Sep 17 00:00:00 2001
+From 2256e05040d982fdde7172bfe93067ed9591d17b Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 2 Sep 2021 18:40:50 +0300
-Subject: [PATCH 56/77] fs/ntfs3: Always use binary search with entry search
+Subject: [PATCH 56/80] fs/ntfs3: Always use binary search with entry search
 
 We do not have any reason to keep old linear search in. Before this was
 used for error path or if table was so big that it cannot be allocated.
@@ -52294,10 +52294,10 @@ index 695b684bc..303a162c3 100644
 2.33.0.328.g8b7c11b866
 
 
-From e81956e59b410406f78a12ecd1f8167f4fd7ddb4 Mon Sep 17 00:00:00 2001
+From 79549959b07b8af59b81e4d996c52059c8dcfcca Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 11:34:38 +0300
-Subject: [PATCH 57/77] fs/ntfs3: Remove '+' before constant in
+Subject: [PATCH 57/80] fs/ntfs3: Remove '+' before constant in
  ni_insert_resident()
 
 No need for plus sign here. So remove it. Checkpatch will also be happy.
@@ -52325,10 +52325,10 @@ index 080264ced..df41eae8f 100644
 2.33.0.328.g8b7c11b866
 
 
-From be89ece60af7a71fcf056ce42bd97425a4b68fd5 Mon Sep 17 00:00:00 2001
+From 4d740777e48f096dfa9d01fe4b05113c91416ae9 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 11:34:39 +0300
-Subject: [PATCH 58/77] fs/ntfs3: Place Comparisons constant right side of the
+Subject: [PATCH 58/80] fs/ntfs3: Place Comparisons constant right side of the
  test
 
 For better code readability place constant always right side of the
@@ -52357,10 +52357,10 @@ index df41eae8f..2f8af53da 100644
 2.33.0.328.g8b7c11b866
 
 
-From 37ca3f7e8b2145f7eac256df01387b0f068ab1e1 Mon Sep 17 00:00:00 2001
+From c401c03a46ce4690ed78cf96d84c92a4e93eb521 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 11:34:40 +0300
-Subject: [PATCH 59/77] fs/ntfs3: Remove braces from single statment block
+Subject: [PATCH 59/80] fs/ntfs3: Remove braces from single statment block
 
 Remove braces from single statment block as they are not needed. Also
 Linux kernel coding style guide recommend this and checkpatch warn about
@@ -52391,10 +52391,10 @@ index 2f8af53da..1e1a09034 100644
 2.33.0.328.g8b7c11b866
 
 
-From 475d9398b1e7ace1752e66bfd41499349a7c8ee7 Mon Sep 17 00:00:00 2001
+From a339298371c48e4af926dba693e037bbc4f6ed9d Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 11:34:41 +0300
-Subject: [PATCH 60/77] fs/ntfs3: Remove tabs before spaces from comment
+Subject: [PATCH 60/80] fs/ntfs3: Remove tabs before spaces from comment
 
 Remove tabs before spaces from comment as recommended by kernel coding
 style. Checkpatch also warn about these.
@@ -52422,10 +52422,10 @@ index 12ba42518..28f654561 100644
 2.33.0.328.g8b7c11b866
 
 
-From 952de6f69c89c37eac6a49d59516325d4842e6ab Mon Sep 17 00:00:00 2001
+From 17c33a24185376291421c0c8b316b700c2e1888a Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 17:28:39 +0300
-Subject: [PATCH 61/77] fs/ntfs3: Fix ntfs_look_for_free_space() does only
+Subject: [PATCH 61/80] fs/ntfs3: Fix ntfs_look_for_free_space() does only
  report -ENOSPC
 
 If ntfs_refresh_zone() returns error it will be changed to -ENOSPC. It
@@ -52547,10 +52547,10 @@ index 9232a7f41..e77fad89e 100644
 2.33.0.328.g8b7c11b866
 
 
-From 7c8cf6f1f62ba619c1f977a424bd00573de5adbd Mon Sep 17 00:00:00 2001
+From 9832cd692da7daa5d7fbe9eb7c304944fc4938e1 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 17:28:40 +0300
-Subject: [PATCH 62/77] fs/ntfs3: Remove always false condition check
+Subject: [PATCH 62/80] fs/ntfs3: Remove always false condition check
 
 We do not need this check as this is same thing as
 NTFS_MIN_MFT_ZONE > zlen. We already check NTFS_MIN_MFT_ZONE <= zlen and
@@ -52583,10 +52583,10 @@ index e77fad89e..4cd24e4e5 100644
 2.33.0.328.g8b7c11b866
 
 
-From 3520a0cebb1f9b1804706cb3d27cc6cdc7fc55f8 Mon Sep 17 00:00:00 2001
+From a01d0b4230c8d0997f6e43e87cb34289f3dcb21c Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 17:28:41 +0300
-Subject: [PATCH 63/77] fs/ntfs3: Use clamp/max macros instead of comparisons
+Subject: [PATCH 63/80] fs/ntfs3: Use clamp/max macros instead of comparisons
 
 We can make code little more readable by using kernel macros clamp/max.
 
@@ -52628,10 +52628,10 @@ index 4cd24e4e5..c964d3996 100644
 2.33.0.328.g8b7c11b866
 
 
-From 9f1fb469e757df55a6beaadea1d7f0fc124c8417 Mon Sep 17 00:00:00 2001
+From 4b0797f2f268f6d87cd958b6fe3b0103322fa4d2 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Tue, 7 Sep 2021 17:28:42 +0300
-Subject: [PATCH 64/77] fs/ntfs3: Use min/max macros instated of ternary
+Subject: [PATCH 64/80] fs/ntfs3: Use min/max macros instated of ternary
  operators
 
 We can make code little bit more readable by using min/max macros.
@@ -52759,10 +52759,10 @@ index c964d3996..77d2e56d5 100644
 2.33.0.328.g8b7c11b866
 
 
-From fd8bdda2acc587a39718ae3f462c7a04521153cb Mon Sep 17 00:00:00 2001
+From cdb4da366777c5622b1814dd8a09dea2283de0c1 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:32 +0300
-Subject: [PATCH 65/77] fs/ntfs3: Fix wrong error message $Logfile -> $UpCase
+Subject: [PATCH 65/80] fs/ntfs3: Fix wrong error message $Logfile -> $UpCase
 
 Fix wrong error message $Logfile -> $UpCase. Probably copy paste.
 
@@ -52790,10 +52790,10 @@ index acfa00acf..1e01184f4 100644
 2.33.0.328.g8b7c11b866
 
 
-From 0366c388e07180e13cde421bda0ed44d3eaf6d2d Mon Sep 17 00:00:00 2001
+From 7b8e0bd56aa7a64f36b012cb8d5fe0df85d09410 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:33 +0300
-Subject: [PATCH 66/77] fs/ntfs3: Change EINVAL to ENOMEM when d_make_root
+Subject: [PATCH 66/80] fs/ntfs3: Change EINVAL to ENOMEM when d_make_root
  fails
 
 Change EINVAL to ENOMEM when d_make_root fails because that is right
@@ -52822,10 +52822,10 @@ index 1e01184f4..642bd6393 100644
 2.33.0.328.g8b7c11b866
 
 
-From 936f2569e4533c60164320912cd166d1baeeaae0 Mon Sep 17 00:00:00 2001
+From 1405ca43a13970549dc010908a62e53e3f428515 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:34 +0300
-Subject: [PATCH 67/77] fs/ntfs3: Remove impossible fault condition in
+Subject: [PATCH 67/80] fs/ntfs3: Remove impossible fault condition in
  fill_super
 
 Remove root drop when we fault out. This can never happened because
@@ -52858,10 +52858,10 @@ index 642bd6393..ad185c723 100644
 2.33.0.328.g8b7c11b866
 
 
-From 98e9c47240bd093d44534d8b73fc69374f0981a1 Mon Sep 17 00:00:00 2001
+From 19bf55e959aa9c05196afa6f99998a1ec4590ff1 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:35 +0300
-Subject: [PATCH 68/77] fs/ntfs3: Return straight without goto in fill_super
+Subject: [PATCH 68/80] fs/ntfs3: Return straight without goto in fill_super
 
 In many places it is not needed to use goto out. We can just return
 right away. This will make code little bit more cleaner as we won't
@@ -53052,10 +53052,10 @@ index ad185c723..31a9a0d16 100644
 2.33.0.328.g8b7c11b866
 
 
-From b051fc2aafc293218422113e10d4eaaed1031f5b Mon Sep 17 00:00:00 2001
+From f152fece38ba3ea8ed1eb07aef4459c45cc90c71 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:36 +0300
-Subject: [PATCH 69/77] fs/ntfs3: Remove unnecessary variable loading in
+Subject: [PATCH 69/80] fs/ntfs3: Remove unnecessary variable loading in
  fill_super
 
 Remove some unnecessary variable loading. These look like copy paste
@@ -53137,10 +53137,10 @@ index 31a9a0d16..4ff615346 100644
 2.33.0.328.g8b7c11b866
 
 
-From 2db974bdd3eeaf0f2be27856d4972fc68926521e Mon Sep 17 00:00:00 2001
+From 7034015ae670a3fc68a1cf910676c0ebdf2d0b4e Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:37 +0300
-Subject: [PATCH 70/77] fs/ntfs3: Use sb instead of sbi->sb in fill_super
+Subject: [PATCH 70/80] fs/ntfs3: Use sb instead of sbi->sb in fill_super
 
 Use sb instead of sbi->sb in fill_super. We have sb so why not use
 it. Also makes code more readable.
@@ -53186,10 +53186,10 @@ index 4ff615346..c18705bf8 100644
 2.33.0.328.g8b7c11b866
 
 
-From a8169c56ded73268f9bd938e3acf88c77f8b5283 Mon Sep 17 00:00:00 2001
+From 16efd7eb458a98b5a70be43eb79bf35285ff55b2 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:38 +0300
-Subject: [PATCH 71/77] fs/ntfs3: Remove tmp var is_ro in ntfs_fill_super
+Subject: [PATCH 71/80] fs/ntfs3: Remove tmp var is_ro in ntfs_fill_super
 
 We only use this in two places so we do not really need it. Also
 wrapper sb_rdonly() is pretty self explanatory. This will make little
@@ -53237,10 +53237,10 @@ index c18705bf8..93b8a1f4d 100644
 2.33.0.328.g8b7c11b866
 
 
-From 4b79f45899984d5084020b5f94575948ada5d620 Mon Sep 17 00:00:00 2001
+From 893ed0418f6e9f87d02a6bb0392db5ead6d16123 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:39 +0300
-Subject: [PATCH 72/77] fs/ntfs3: Remove tmp pointer bd_inode in fill_super
+Subject: [PATCH 72/80] fs/ntfs3: Remove tmp pointer bd_inode in fill_super
 
 Drop tmp pointer bd_inode because this is only used ones in fill_super.
 Also we have so many initializing happening at the beginning that it is
@@ -53277,10 +53277,10 @@ index 93b8a1f4d..e5ec808bd 100644
 2.33.0.328.g8b7c11b866
 
 
-From f61fb70fdd79f7596c0d4321e87eb503b5f11e51 Mon Sep 17 00:00:00 2001
+From 26eeb6d81e51e906552aa55ab74cc1089a989edb Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:40 +0300
-Subject: [PATCH 73/77] fs/ntfs3: Remove tmp pointer upcase in fill_super
+Subject: [PATCH 73/80] fs/ntfs3: Remove tmp pointer upcase in fill_super
 
 We can survive without this tmp point upcase. So remove it we don't have
 so many tmp pointer in this function.
@@ -53334,10 +53334,10 @@ index e5ec808bd..8ce0d4f43 100644
 2.33.0.328.g8b7c11b866
 
 
-From 103ef3fe2bb5d4ec793e6d24d5a68f0ffefb9f87 Mon Sep 17 00:00:00 2001
+From 1a5cd402f625974f7105653cf9a29ba6e11df677 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:41 +0300
-Subject: [PATCH 74/77] fs/ntfs3: Initialize pointer before use place in
+Subject: [PATCH 74/80] fs/ntfs3: Initialize pointer before use place in
  fill_super
 
 Initializing should be as close as possible when we use it so that
@@ -53381,10 +53381,10 @@ index 8ce0d4f43..3d034eac2 100644
 2.33.0.328.g8b7c11b866
 
 
-From fb21350308cc70f1879f6e1ee7155a8867957608 Mon Sep 17 00:00:00 2001
+From 8e6bb4668140ef7e208d14b84e22fe35ab19dfc1 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Thu, 9 Sep 2021 21:09:42 +0300
-Subject: [PATCH 75/77] fs/ntfs3: Initiliaze sb blocksize only in one place +
+Subject: [PATCH 75/80] fs/ntfs3: Initiliaze sb blocksize only in one place +
  refactor
 
 Right now sb blocksize first get initiliazed in fill_super but in can be
@@ -53453,10 +53453,10 @@ index 3d034eac2..cefb9ddaf 100644
 2.33.0.328.g8b7c11b866
 
 
-From 9eaefe36d70ba829ba496f0470408964d6d351fe Mon Sep 17 00:00:00 2001
+From d7f2a6da784af160f836050c18bbbd6e59c60287 Mon Sep 17 00:00:00 2001
 From: Kari Argillander <kari.argillander@gmail.com>
 Date: Fri, 10 Sep 2021 00:57:53 +0300
-Subject: [PATCH 76/77] Doc/fs/ntfs3: Fix rst format and make it cleaner
+Subject: [PATCH 76/80] Doc/fs/ntfs3: Fix rst format and make it cleaner
 
 Current ntfs3 rst documentation is broken. I turn table to list table as
 this is current Linux documentation quide line. Simple table also did
@@ -53655,10 +53655,10 @@ index 7b6afe452..d67ccd22c 100644
 2.33.0.328.g8b7c11b866
 
 
-From 37c3e991f4e30cc39801537288ab0c8914c79f6d Mon Sep 17 00:00:00 2001
+From 1f61ae2ff02e390807a3902ba0288f2a22acf34b Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
 Date: Fri, 10 Sep 2021 11:02:02 +0100
-Subject: [PATCH 77/77] fs/ntfs3: Fix a memory leak on object opts
+Subject: [PATCH 77/80] fs/ntfs3: Fix a memory leak on object opts
 
 Currently a failed allocation on sbi->upcase will cause an exit via
 the label free_sbi causing a memory leak on object opts. Fix this by
@@ -53691,6 +53691,285 @@ index cefb9ddaf..6a535b144 100644
  	return -ENOMEM;
  }
  
+-- 
+2.33.0.328.g8b7c11b866
+
+
+From 5e42c7de8697995f083440b8ccecba5500d9ee6e Mon Sep 17 00:00:00 2001
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Date: Wed, 8 Sep 2021 18:39:53 +0300
+Subject: [PATCH 78/80] fs/ntfs3: Fix insertion of attr in ni_ins_attr_ext
+
+Do not try to insert attribute if there is no room in record.
+
+Reviewed-by: Kari Argillander <kari.argillander@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+---
+ fs/ntfs3/frecord.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 1e1a09034..0d00b2301 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -953,6 +953,13 @@ static int ni_ins_attr_ext(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le,
+ 			continue;
+ 		}
+ 
++		/*
++		 * Do not try to insert this attribute
++		 * if there is no room in record.
++		 */
++		if (le32_to_cpu(mi->mrec->used) + asize > sbi->record_size)
++			continue;
++
+ 		/* Try to insert attribute into this subrecord. */
+ 		attr = ni_ins_new_attr(ni, mi, le, type, name, name_len, asize,
+ 				       name_off, svcn, ins_le);
+-- 
+2.33.0.328.g8b7c11b866
+
+
+From f6713c5382c4c25ea25bb35ca5c011eaf5148a2d Mon Sep 17 00:00:00 2001
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Date: Thu, 9 Sep 2021 13:12:41 +0300
+Subject: [PATCH 79/80] fs/ntfs3: Change max hardlinks limit to 4000
+
+xfstest generic/041 works with 3003 hardlinks.
+Because of this we raise hardlinks limit to 4000.
+There are no drawbacks or regressions.
+Theoretically we can raise all the way up to ffff,
+but there is no practical use for this.
+
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+---
+ fs/ntfs3/ntfs.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
+index 303a162c3..9cc396b11 100644
+--- a/fs/ntfs3/ntfs.h
++++ b/fs/ntfs3/ntfs.h
+@@ -26,9 +26,11 @@
+ 
+ #define NTFS_NAME_LEN 255
+ 
+-/* ntfs.sys used 500 maximum links on-disk struct allows up to 0xffff. */
+-#define NTFS_LINK_MAX 0x400
+-//#define NTFS_LINK_MAX 0xffff
++/*
++ * ntfs.sys used 500 maximum links on-disk struct allows up to 0xffff.
++ * xfstest generic/041 creates 3003 hardlinks.
++ */
++#define NTFS_LINK_MAX 4000
+ 
+ /*
+  * Activate to use 64 bit clusters instead of 32 bits in ntfs.sys.
+-- 
+2.33.0.328.g8b7c11b866
+
+
+From c66b1fbc341b5fe92c7016d28e4d5aa53f515ea1 Mon Sep 17 00:00:00 2001
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Date: Thu, 9 Sep 2021 13:15:20 +0300
+Subject: [PATCH 80/80] fs/ntfs3: Add sync flag to ntfs_sb_write_run and
+ al_update
+
+This allows to wait only when it's requested.
+It speeds up creation of hardlinks.
+
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+---
+ fs/ntfs3/attrib.c   | 2 +-
+ fs/ntfs3/attrlist.c | 6 +++---
+ fs/ntfs3/frecord.c  | 2 +-
+ fs/ntfs3/fslog.c    | 8 ++++----
+ fs/ntfs3/fsntfs.c   | 8 ++++----
+ fs/ntfs3/inode.c    | 2 +-
+ fs/ntfs3/ntfs_fs.h  | 4 ++--
+ fs/ntfs3/xattr.c    | 2 +-
+ 8 files changed, 17 insertions(+), 17 deletions(-)
+
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index c15cc17e3..8a00fa978 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -287,7 +287,7 @@ int attr_make_nonresident(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 		if (!rsize) {
+ 			/* Empty resident -> Non empty nonresident. */
+ 		} else if (!is_data) {
+-			err = ntfs_sb_write_run(sbi, run, 0, data, rsize);
++			err = ntfs_sb_write_run(sbi, run, 0, data, rsize, 0);
+ 			if (err)
+ 				goto out2;
+ 		} else if (!page) {
+diff --git a/fs/ntfs3/attrlist.c b/fs/ntfs3/attrlist.c
+index b9da527b9..bad6d8a84 100644
+--- a/fs/ntfs3/attrlist.c
++++ b/fs/ntfs3/attrlist.c
+@@ -333,7 +333,7 @@ int al_add_le(struct ntfs_inode *ni, enum ATTR_TYPE type, const __le16 *name,
+ 
+ 	if (attr && attr->non_res) {
+ 		err = ntfs_sb_write_run(ni->mi.sbi, &al->run, 0, al->le,
+-					al->size);
++					al->size, 0);
+ 		if (err)
+ 			return err;
+ 		al->dirty = false;
+@@ -420,7 +420,7 @@ bool al_delete_le(struct ntfs_inode *ni, enum ATTR_TYPE type, CLST vcn,
+ 	return true;
+ }
+ 
+-int al_update(struct ntfs_inode *ni)
++int al_update(struct ntfs_inode *ni, int sync)
+ {
+ 	int err;
+ 	struct ATTRIB *attr;
+@@ -442,7 +442,7 @@ int al_update(struct ntfs_inode *ni)
+ 		memcpy(resident_data(attr), al->le, al->size);
+ 	} else {
+ 		err = ntfs_sb_write_run(ni->mi.sbi, &al->run, 0, al->le,
+-					al->size);
++					al->size, sync);
+ 		if (err)
+ 			goto out;
+ 
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 0d00b2301..9a53f8095 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -3208,7 +3208,7 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint)
+ 					goto out;
+ 			}
+ 
+-			err = al_update(ni);
++			err = al_update(ni, sync);
+ 			if (err)
+ 				goto out;
+ 		}
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 6e7f9b727..06492f088 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2215,7 +2215,7 @@ static int last_log_lsn(struct ntfs_log *log)
+ 
+ 			err = ntfs_sb_write_run(log->ni->mi.sbi,
+ 						&log->ni->file.run, off, page,
+-						log->page_size);
++						log->page_size, 0);
+ 
+ 			if (err)
+ 				goto out;
+@@ -3706,7 +3706,7 @@ static int do_action(struct ntfs_log *log, struct OPEN_ATTR_ENRTY *oe,
+ 
+ 	if (a_dirty) {
+ 		attr = oa->attr;
+-		err = ntfs_sb_write_run(sbi, oa->run1, vbo, buffer_le, bytes);
++		err = ntfs_sb_write_run(sbi, oa->run1, vbo, buffer_le, bytes, 0);
+ 		if (err)
+ 			goto out;
+ 	}
+@@ -5148,10 +5148,10 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
+ 
+ 	ntfs_fix_pre_write(&rh->rhdr, log->page_size);
+ 
+-	err = ntfs_sb_write_run(sbi, &ni->file.run, 0, rh, log->page_size);
++	err = ntfs_sb_write_run(sbi, &ni->file.run, 0, rh, log->page_size, 0);
+ 	if (!err)
+ 		err = ntfs_sb_write_run(sbi, &log->ni->file.run, log->page_size,
+-					rh, log->page_size);
++					rh, log->page_size, 0);
+ 
+ 	kfree(rh);
+ 	if (err)
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 77d2e56d5..4de9acb16 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -1077,7 +1077,7 @@ int ntfs_sb_write(struct super_block *sb, u64 lbo, size_t bytes,
+ }
+ 
+ int ntfs_sb_write_run(struct ntfs_sb_info *sbi, const struct runs_tree *run,
+-		      u64 vbo, const void *buf, size_t bytes)
++		      u64 vbo, const void *buf, size_t bytes, int sync)
+ {
+ 	struct super_block *sb = sbi->sb;
+ 	u8 cluster_bits = sbi->cluster_bits;
+@@ -1097,7 +1097,7 @@ int ntfs_sb_write_run(struct ntfs_sb_info *sbi, const struct runs_tree *run,
+ 
+ 	for (;;) {
+ 		u32 op = min_t(u64, len, bytes);
+-		int err = ntfs_sb_write(sb, lbo, op, buf, 0);
++		int err = ntfs_sb_write(sb, lbo, op, buf, sync);
+ 
+ 		if (err)
+ 			return err;
+@@ -2172,7 +2172,7 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,
+ 
+ 	/* Write main SDS bucket. */
+ 	err = ntfs_sb_write_run(sbi, &ni->file.run, sbi->security.next_off,
+-				d_security, aligned_sec_size);
++				d_security, aligned_sec_size, 0);
+ 
+ 	if (err)
+ 		goto out;
+@@ -2190,7 +2190,7 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,
+ 
+ 	/* Write copy SDS bucket. */
+ 	err = ntfs_sb_write_run(sbi, &ni->file.run, mirr_off, d_security,
+-				aligned_sec_size);
++				aligned_sec_size, 0);
+ 	if (err)
+ 		goto out;
+ 
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 33f278a09..d583b71be 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1584,7 +1584,7 @@ struct inode *ntfs_create_inode(struct user_namespace *mnt_userns,
+ 
+ 	/* Write non resident data. */
+ 	if (nsize) {
+-		err = ntfs_sb_write_run(sbi, &ni->file.run, 0, rp, nsize);
++		err = ntfs_sb_write_run(sbi, &ni->file.run, 0, rp, nsize, 0);
+ 		if (err)
+ 			goto out7;
+ 	}
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index dae6dd4ac..6731b5d9e 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -465,7 +465,7 @@ bool al_remove_le(struct ntfs_inode *ni, struct ATTR_LIST_ENTRY *le);
+ bool al_delete_le(struct ntfs_inode *ni, enum ATTR_TYPE type, CLST vcn,
+ 		  const __le16 *name, size_t name_len,
+ 		  const struct MFT_REF *ref);
+-int al_update(struct ntfs_inode *ni);
++int al_update(struct ntfs_inode *ni, int sync);
+ static inline size_t al_aligned(size_t size)
+ {
+ 	return (size + 1023) & ~(size_t)1023;
+@@ -606,7 +606,7 @@ int ntfs_sb_read(struct super_block *sb, u64 lbo, size_t bytes, void *buffer);
+ int ntfs_sb_write(struct super_block *sb, u64 lbo, size_t bytes,
+ 		  const void *buffer, int wait);
+ int ntfs_sb_write_run(struct ntfs_sb_info *sbi, const struct runs_tree *run,
+-		      u64 vbo, const void *buf, size_t bytes);
++		      u64 vbo, const void *buf, size_t bytes, int sync);
+ struct buffer_head *ntfs_bread_run(struct ntfs_sb_info *sbi,
+ 				   const struct runs_tree *run, u64 vbo);
+ int ntfs_read_run_nb(struct ntfs_sb_info *sbi, const struct runs_tree *run,
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index a8c5a899f..5c7c5c7a5 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -441,7 +441,7 @@ static noinline int ntfs_set_ea(struct inode *inode, const char *name,
+ 		/* Delete xattr, ATTR_EA */
+ 		ni_remove_attr_le(ni, attr, mi, le);
+ 	} else if (attr->non_res) {
+-		err = ntfs_sb_write_run(sbi, &ea_run, 0, ea_all, size);
++		err = ntfs_sb_write_run(sbi, &ea_run, 0, ea_all, size, 0);
+ 		if (err)
+ 			goto out;
+ 	} else {
 -- 
 2.33.0.328.g8b7c11b866
 

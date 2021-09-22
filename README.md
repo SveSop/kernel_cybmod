@@ -4,13 +4,13 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.14.6  
-0001 : ProjectC 5.14-r1  
+0000 : Patch 5.14.7  
+0001 : ProjectC 5.14-r2  
 0002 : 5.14 Graysky's CPU optimization patches  
 0003 : "Old" fsync patch for backwards compatibility  
 0004 : Futex2 interface  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
-0006 : Add option for SCHED_AUTOGROUP (Xanmod)  
+0006 : Fix for ProjectC scheduler  
 0007 : zstd kernel settings  
 0008 : Winesync/Fastsync patchset for Wine (See note)  
 0010 : Ubuntu based config (See note below!)  
