@@ -1,29 +1,43 @@
-From a76caa135237215c705a1fc3e07cecb2718548ea Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 22 Sep 2021 12:10:37 +0000
+From f70ae264e1cff0936ed8a009a77d5c59313da991 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 26 Sep 2021 09:37:07 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11806 +-------------------------------------
- 1 file changed, 3 insertions(+), 11803 deletions(-)
+ debian.master/changelog | 11820 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11817 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index e9ea9ae53624..0c53de2d87de 100644
+index 0408811fbcfb..20cdba9da548 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11806 +1,6 @@
--linux-unstable (5.15.0-1.1) impish; urgency=medium
-+linux (5.14.7-051407.202109221210) impish; urgency=low
+@@ -1,11820 +1,6 @@
+-linux-unstable (5.15.0-2.2) impish; urgency=medium
++linux (5.14.8-051408.202109260937) impish; urgency=low
  
+-  * impish/linux-unstable: 5.15.0-2.2 -proposed tracker (LP: #1944423)
++  Mainline build at commit: v5.14.8
+ 
+-  * Miscellaneous Ubuntu changes
+-    - rebase to v5.15-rc2
+-    - [Config] updateconfigs following v5.15-rc2 rebase
++ -- Mainline Build <kernel@gloin>  Sun, 26 Sep 2021 09:37:07 -0400
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15-rc2
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 21 Sep 2021 11:46:59 +0200
+-
+-linux-unstable (5.15.0-1.1) impish; urgency=medium
+-
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+  Mainline build at commit: v5.14.7
- 
+-
 -  *  LRMv5: switch primary version handling to kernel-versions data set
 -    (LP: #1928921)
 -    - [Packaging] switch to kernel-versions
-+ -- Mainline Build <kernel@kathleen>  Wed, 22 Sep 2021 12:10:37 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] remove remaining references to ports
 -    - [Packaging] drop x32 architecture configs

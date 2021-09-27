@@ -4,15 +4,13 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.14.7  
-0001 : ProjectC 5.14-r2  
+0000 : Patch 5.14.8  
+0001 : ProjectC 5.14-r3  
 0002 : 5.14 Graysky's CPU optimization patches  
 0003 : "Old" fsync patch for backwards compatibility  
 0004 : Futex2 interface  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
-0006 : Fix for ProjectC scheduler  
 0007 : zstd kernel settings  
-0008 : Winesync/Fastsync patchset for Wine (See note)  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
 0020 : Clearlinux patches  
@@ -30,10 +28,9 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0010), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default PDS scheduler (Project C) and CONFIG_HZ=1000 + NO_HZ_FULL + Futex2 & Winesync/Fastsync**  
+**This config has default PDS scheduler (Project C) and CONFIG_HZ=1000 + NO_HZ_FULL + Futex2**  
 **Also see [http://cchalpha.blogspot.com/](http://cchalpha.blogspot.com/) for scheduler info**  
 
-**Winesync is a custom "Fast Synchronization" patchset for wine replacing Esync(staging) and Fsync. Requires patched wine!**  
 **Futex2 usage requires a patched wine version! Default proton will use futex2**  
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 

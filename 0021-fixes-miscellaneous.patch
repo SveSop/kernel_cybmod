@@ -1,7 +1,7 @@
-From 3d71bfd40bad719ff4115c86488fe3f14494a46e Mon Sep 17 00:00:00 2001
+From 25ded4cbecd73f67227603d007de96d17f140893 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/14] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/17] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index 1e8ab4749..75122fd65 100644
  endif
  
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From 6936b9dcea87ed7775884e938a46dd988abd2f52 Mon Sep 17 00:00:00 2001
+From 9c32f756cb6b7b7be3f699a1e8f8ef41825e9824 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/14] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/17] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 65e3e7df8..b41afee77 100644
  	int ret;
  
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From e9dcd3e21010d059dfd29b6799a5c3d0d6e5b471 Mon Sep 17 00:00:00 2001
+From 64896e417f405760ba54b9ae66cb429060520572 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/14] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/17] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,10 +76,10 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 9a2b00ecc..3b534e916 100644
+index e1a5c96ad..0ee3990f2 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -699,6 +699,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
+@@ -704,6 +704,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
  RETPOLINE_VDSO_CFLAGS_CLANG := -mretpoline
  RETPOLINE_CFLAGS := $(call cc-option,$(RETPOLINE_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_CFLAGS_CLANG)))
  RETPOLINE_VDSO_CFLAGS := $(call cc-option,$(RETPOLINE_VDSO_CFLAGS_GCC),$(call cc-option,$(RETPOLINE_VDSO_CFLAGS_CLANG)))
@@ -91,13 +91,13 @@ index 9a2b00ecc..3b534e916 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From aa3b2f80cfd3d227c485717a4679132d0f7abb15 Mon Sep 17 00:00:00 2001
+From ac6661b054902e30ac13d5dd100918269493fcdd Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 04/14] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 04/17] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -126,10 +126,10 @@ index fcb535560..914f1c89c 100644
  	wait_queue_head_t pfmemalloc_wait;
  	struct task_struct *kswapd;	/* Protected by
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index eeb3a9cb3..e389c14ac 100644
+index 7a28f7db7..7caa0e3ea 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4896,6 +4896,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4898,6 +4898,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -138,7 +138,7 @@ index eeb3a9cb3..e389c14ac 100644
  
  	/*
  	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4929,8 +4931,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4931,8 +4933,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	if (!ac->preferred_zoneref->zone)
  		goto nopage;
  
@@ -153,7 +153,7 @@ index eeb3a9cb3..e389c14ac 100644
  
  	/*
  	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -5135,9 +5142,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -5137,9 +5144,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  		goto retry;
  	}
  fail:
@@ -168,7 +168,7 @@ index eeb3a9cb3..e389c14ac 100644
  	return page;
  }
  
-@@ -7397,6 +7407,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -7399,6 +7409,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  
  	pgdat_page_ext_init(pgdat);
  	lruvec_init(&pgdat->__lruvec);
@@ -177,7 +177,7 @@ index eeb3a9cb3..e389c14ac 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index eeae2f6bc..b65023797 100644
+index f1782b816..b902b66d2 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -3941,7 +3941,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
@@ -191,13 +191,13 @@ index eeae2f6bc..b65023797 100644
  
  		/*
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From aabe4e4c51e6ec85d07b70f23bc25a3262b9edcb Mon Sep 17 00:00:00 2001
+From 1bf1fe81b269f59a4ba1012d10c0053c40939a23 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 05/14] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 05/17] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -209,7 +209,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index e389c14ac..a36e71307 100644
+index 7caa0e3ea..9970653e0 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -2690,8 +2690,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
@@ -227,13 +227,13 @@ index e389c14ac..a36e71307 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From ae896c40677ed5bda3b53cf88575900cd39995d1 Mon Sep 17 00:00:00 2001
+From 6e8766b4e7a1a822c951e35e8f93a2b5ec3d228e Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 06/14] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 06/17] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -274,7 +274,7 @@ index 31ff935b2..f49143be9 100644
  extern void free_unref_page(struct page *page, unsigned int order);
  extern void free_unref_page_list(struct list_head *list);
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index a36e71307..24e20e25e 100644
+index 9970653e0..47a108bf6 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -118,6 +118,8 @@ typedef int __bitwise fpi_t;
@@ -286,7 +286,7 @@ index a36e71307..24e20e25e 100644
  /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
  static DEFINE_MUTEX(pcp_batch_high_lock);
  #define MIN_PERCPU_PAGELIST_HIGH_FRACTION (8)
-@@ -4899,7 +4901,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4901,7 +4903,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
@@ -294,7 +294,7 @@ index a36e71307..24e20e25e 100644
  	bool woke_kswapd = false;
  
  	/*
-@@ -4936,7 +4937,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4938,7 +4939,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  
  	if (alloc_flags & ALLOC_KSWAPD) {
  		if (!woke_kswapd) {
@@ -303,7 +303,7 @@ index a36e71307..24e20e25e 100644
  			woke_kswapd = true;
  		}
  		wake_all_kswapds(order, gfp_mask, ac);
-@@ -5147,7 +5148,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -5149,7 +5150,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  fail:
  got_pg:
  	if (woke_kswapd)
@@ -312,7 +312,7 @@ index a36e71307..24e20e25e 100644
  	if (!page)
  		warn_alloc(gfp_mask, ac->nodemask,
  				"page allocation failure: order:%u", order);
-@@ -7410,7 +7411,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
+@@ -7412,7 +7413,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
  
  	pgdat_page_ext_init(pgdat);
  	lruvec_init(&pgdat->__lruvec);
@@ -321,7 +321,7 @@ index a36e71307..24e20e25e 100644
  
  static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index b65023797..aa536c6b2 100644
+index b902b66d2..1bf7dcfbe 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -3942,7 +3942,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
@@ -334,13 +334,13 @@ index b65023797..aa536c6b2 100644
  
  		/*
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From e5e9036c5f560646098dda66062f5d52809d2eb2 Mon Sep 17 00:00:00 2001
+From 46bb0992325041ea1d5e0db94f7cf261fb713edb Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 07/14] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 07/17] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -353,10 +353,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 3b534e916..6832b28dc 100644
+index 0ee3990f2..73e2cd673 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1013,9 +1013,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
+@@ -1020,9 +1020,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
  # Make sure -fstack-check isn't enabled (like gentoo apparently did)
  KBUILD_CFLAGS  += -fno-stack-check
  
@@ -367,13 +367,13 @@ index 3b534e916..6832b28dc 100644
  KBUILD_CFLAGS   += -Werror=date-time
  
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From c99041f2d6905724a77dfdbf009fd2a983588a92 Mon Sep 17 00:00:00 2001
+From 88c26374d685ce696afb49a3207e7d16f92b7009 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 08/14] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 08/17] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -445,10 +445,10 @@ index bdb22006f..3375d7ca8 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index ab3de1551..0ee826e42 100644
+index 8c3c1ef92..49c9c58bd 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
-@@ -3560,6 +3560,106 @@ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
+@@ -3561,6 +3561,106 @@ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
  DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
  			 quirk_nvidia_no_bus_reset);
  
@@ -555,8 +555,8 @@ index ab3de1551..0ee826e42 100644
  /*
   * Some Atheros AR9xxx and QCA988x chips do not behave after a bus reset.
   * The device will throw a Link Down error on AER-capable systems and
-@@ -4863,6 +4963,8 @@ static const struct pci_dev_acs_enabled {
- 	{ PCI_VENDOR_ID_ZHAOXIN, 0x9083, pci_quirk_mf_endpoint_acs },
+@@ -4913,6 +5013,8 @@ static const struct pci_dev_acs_enabled {
+ 	{ PCI_VENDOR_ID_NXP, 0x8d9b, pci_quirk_nxp_rp_acs },
  	/* Zhaoxin Root/Downstream Ports */
  	{ PCI_VENDOR_ID_ZHAOXIN, PCI_ANY_ID, pci_quirk_zhaoxin_pcie_ports_acs },
 +	/* PCIe ACS overrides */
@@ -565,13 +565,13 @@ index ab3de1551..0ee826e42 100644
  };
  
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From f7727a6d60269ac87b7310feedf56c27e50eac14 Mon Sep 17 00:00:00 2001
+From ce8ca633be0c8837d0980a361dad44a0efe13b5e Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 09/14] ZEN: Add OpenRGB patches
+Subject: [PATCH 09/17] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1314,13 +1314,13 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From bafb649cc06207b09abe8006e8da967d7f6bd98d Mon Sep 17 00:00:00 2001
+From c4db6a4b55cfbab0cfc56455ad6e64aa3694ede8 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 10/14] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 10/17] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -1448,13 +1448,13 @@ index b59136c41..4154030c8 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From cfaa65faf4f8f8aa9f7e78c16e476f8dfbbfd11a Mon Sep 17 00:00:00 2001
+From 444830b11e6f7692be422f5be08abc5b41ea1a6f Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 11/14] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 11/17] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -1530,7 +1530,7 @@ Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
  1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 87ccb3438..52cb4d294 100644
+index b06138c61..ec17d82ea 100644
 --- a/fs/iomap/buffered-io.c
 +++ b/fs/iomap/buffered-io.c
 @@ -17,6 +17,7 @@
@@ -1572,13 +1572,13 @@ index 87ccb3438..52cb4d294 100644
  redirty:
  	redirty_page_for_writepage(wbc, page);
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From f99320b4696f85dacd64a7b4adaf2e30a90a8774 Mon Sep 17 00:00:00 2001
+From b57a78b246e10618630fd736461bafe0a98448e4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 12/14] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 12/17] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1642,13 +1642,13 @@ index e9d39c485..3bceead8d 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From 726655d8c0894c4e5c32a47b079b7ae6ed01f697 Mon Sep 17 00:00:00 2001
+From f5487f93a219093cbca64a396efe92802177e6ee Mon Sep 17 00:00:00 2001
 From: Josef Bacik <josef@toxicpanda.com>
 Date: Wed, 14 Jul 2021 14:47:22 -0400
-Subject: [PATCH 13/14] fs: add a filemap_fdatawrite_wbc helper
+Subject: [PATCH 13/17] fs: add a filemap_fdatawrite_wbc helper
 
 Btrfs sometimes needs to flush dirty pages on a bunch of dirty inodes in
 order to reclaim metadata reservations.  Unfortunately most helpers in
@@ -1760,13 +1760,13 @@ index d1458ecf2..034d370d4 100644
  
  static inline int __filemap_fdatawrite(struct address_space *mapping,
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
 
 
-From bd7a17620807a77627831463968b92b85efa3a90 Mon Sep 17 00:00:00 2001
+From 1a289043382854bb5340f00eed46e978bac75324 Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Fri, 27 Aug 2021 14:00:56 -0400
-Subject: [PATCH 14/14] NFS: Always provide aligned buffers to the RPC read
+Subject: [PATCH 14/17] NFS: Always provide aligned buffers to the RPC read
  layers
 
 Instead of messing around with XDR padding in the RDMA layer, we should
@@ -1806,5 +1806,129 @@ index 9f39e0a1a..08d6cc57c 100644
  		goto out_error;
  
 -- 
-2.33.0.142.ge0a2f5cbc5
+2.33.0.328.g8b7c11b866
+
+
+From 441986a654daad95a2838a93beb727096676cc98 Mon Sep 17 00:00:00 2001
+From: Sudarsana Reddy Kalluru <skalluru@marvell.com>
+Date: Thu, 23 Sep 2021 03:16:05 -0700
+Subject: [PATCH 15/17] atlantic: Fix issue in the pm resume flow.
+
+After fixing hibernation resume flow, another usecase was found which
+should be explicitly handled - resume when device is in "down" state.
+Invoke aq_nic_init jointly with aq_nic_start only if ndev was already
+up during suspend/hibernate. We still need to perform nic_deinit() if
+caller requests for it, to handle the freeze/resume scenarios.
+
+Fixes: 57f780f1c433 ("atlantic: Fix driver resume flow.")
+Signed-off-by: Sudarsana Reddy Kalluru <skalluru@marvell.com>
+Signed-off-by: Igor Russkikh <irusskikh@marvell.com>
+---
+ drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+index f26d03735..5b996330f 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+@@ -419,13 +419,13 @@ static int atl_resume_common(struct device *dev, bool deep)
+ 	if (deep) {
+ 		/* Reinitialize Nic/Vecs objects */
+ 		aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
++	}
+ 
++	if (netif_running(nic->ndev)) {
+ 		ret = aq_nic_init(nic);
+ 		if (ret)
+ 			goto err_exit;
+-	}
+ 
+-	if (netif_running(nic->ndev)) {
+ 		ret = aq_nic_start(nic);
+ 		if (ret)
+ 			goto err_exit;
+-- 
+2.33.0.328.g8b7c11b866
+
+
+From 6eff1267f02439bd94c23b8b753feda9b96c0723 Mon Sep 17 00:00:00 2001
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
+Date: Tue, 24 Aug 2021 11:38:17 -0400
+Subject: [PATCH 16/17] SUNRPC: Simplify socket shutdown when not reusing TCP
+ ports
+
+If we're not required to reuse the TCP port, then we can just
+immediately close the socket, and leave the cleanup details to the TCP
+layer.
+
+Fixes: e6237b6feb37 ("NFSv4.1: Don't rebind to the same source port when reconnecting to the server")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+---
+ net/sunrpc/xprtsock.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 02b071dbd..5fb969f8a 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2099,6 +2099,10 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
+ 
+ 	if (sock == NULL)
+ 		return;
++	if (!xprt->reuseport) {
++		xs_close(xprt);
++		return;
++	}
+ 	switch (skst) {
+ 	default:
+ 		kernel_sock_shutdown(sock, SHUT_RDWR);
+-- 
+2.33.0.328.g8b7c11b866
+
+
+From 34121e93fcadfd41cb32103007ea2d7d3e2ff94c Mon Sep 17 00:00:00 2001
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
+Date: Tue, 24 Aug 2021 11:38:18 -0400
+Subject: [PATCH 17/17] SUNRPC: Tweak TCP socket shutdown in the RPC client
+
+We only really need to call shutdown() if we're in the ESTABLISHED TCP
+state, since that is the only case where the client is initiating a
+close of an established connection.
+
+If the socket is in FIN_WAIT1 or FIN_WAIT2, then we've already initiated
+socket shutdown and are waiting for the server's reply, so do nothing.
+
+In all other cases where we've already received a FIN from the server,
+we should be able to just close the socket.
+
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+---
+ net/sunrpc/xprtsock.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 5fb969f8a..d80793a1b 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -2104,12 +2104,15 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
+ 		return;
+ 	}
+ 	switch (skst) {
+-	default:
++	case TCP_FIN_WAIT1:
++	case TCP_FIN_WAIT2:
++		break;
++	case TCP_ESTABLISHED:
++	case TCP_CLOSE_WAIT:
+ 		kernel_sock_shutdown(sock, SHUT_RDWR);
+ 		trace_rpc_socket_shutdown(xprt, sock);
+ 		break;
+-	case TCP_CLOSE:
+-	case TCP_TIME_WAIT:
++	default:
+ 		xs_reset_transport(transport);
+ 	}
+ }
+-- 
+2.33.0.328.g8b7c11b866
 
