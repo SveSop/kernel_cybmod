@@ -1,28 +1,46 @@
-From f70ae264e1cff0936ed8a009a77d5c59313da991 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 26 Sep 2021 09:37:07 -0400
+From 646c4d5b2c177d018f366ca415407af1747c1e49 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 30 Sep 2021 09:34:25 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11820 +-------------------------------------
- 1 file changed, 3 insertions(+), 11817 deletions(-)
+ debian.master/changelog | 11838 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11835 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 0408811fbcfb..20cdba9da548 100644
+index 2b7e0852d63b..fd1d67e07216 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11820 +1,6 @@
+@@ -1,11838 +1,6 @@
+-linux-unstable (5.15.0-3.3) impish; urgency=medium
++linux (5.14.9-051409.202109300934) impish; urgency=low
+ 
+-  * impish/linux-unstable: 5.15.0-3.3 -proposed tracker (LP: #1944944)
++  Mainline build at commit: v5.14.9
+ 
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
++ -- Mainline Build <kernel@kathleen>  Thu, 30 Sep 2021 09:34:25 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - rebase to v5.15-rc3
+-    - [Config] updateconfigs following v5.15-rc3 rebase
+-    - [Packaging] correctly evaluate release in update-dkms-versions
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15-rc3
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 27 Sep 2021 16:48:03 +0200
+-
 -linux-unstable (5.15.0-2.2) impish; urgency=medium
-+linux (5.14.8-051408.202109260937) impish; urgency=low
- 
+-
 -  * impish/linux-unstable: 5.15.0-2.2 -proposed tracker (LP: #1944423)
-+  Mainline build at commit: v5.14.8
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - rebase to v5.15-rc2
 -    - [Config] updateconfigs following v5.15-rc2 rebase
-+ -- Mainline Build <kernel@gloin>  Sun, 26 Sep 2021 09:37:07 -0400
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v5.15-rc2

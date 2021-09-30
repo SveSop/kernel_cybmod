@@ -1,7 +1,7 @@
-From 25ded4cbecd73f67227603d007de96d17f140893 Mon Sep 17 00:00:00 2001
+From 46d66ae26b4bc9449c3bc7e22d0c44d84812d1c8 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/17] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.33.0.328.g8b7c11b866
 
 
-From 9c32f756cb6b7b7be3f699a1e8f8ef41825e9824 Mon Sep 17 00:00:00 2001
+From 0a458f6e38e30ea9eed97729ccab786b261a505e Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/17] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index 65e3e7df8..b41afee77 100644
 2.33.0.328.g8b7c11b866
 
 
-From 64896e417f405760ba54b9ae66cb429060520572 Mon Sep 17 00:00:00 2001
+From 84316bfd654f7bdb274a0af5ce4769847410f3d9 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/17] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/16] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index e1a5c96ad..0ee3990f2 100644
+index d6b473719..9b947e501 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -704,6 +704,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -94,10 +94,10 @@ index e1a5c96ad..0ee3990f2 100644
 2.33.0.328.g8b7c11b866
 
 
-From ac6661b054902e30ac13d5dd100918269493fcdd Mon Sep 17 00:00:00 2001
+From 5e3e19f8fd4cbe768a59930c316965ffa7fb6549 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 04/17] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 04/16] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -194,10 +194,10 @@ index f1782b816..b902b66d2 100644
 2.33.0.328.g8b7c11b866
 
 
-From 1bf1fe81b269f59a4ba1012d10c0053c40939a23 Mon Sep 17 00:00:00 2001
+From caf10a5553a73140092f9e9910154a35720517be Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 05/17] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 05/16] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -230,10 +230,10 @@ index 7caa0e3ea..9970653e0 100644
 2.33.0.328.g8b7c11b866
 
 
-From 6e8766b4e7a1a822c951e35e8f93a2b5ec3d228e Mon Sep 17 00:00:00 2001
+From ae3325df20b88c5881807cfd68126dce97f1edd2 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 06/17] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 06/16] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -337,10 +337,10 @@ index b902b66d2..1bf7dcfbe 100644
 2.33.0.328.g8b7c11b866
 
 
-From 46bb0992325041ea1d5e0db94f7cf261fb713edb Mon Sep 17 00:00:00 2001
+From bfe84c80ee6aa132c50f63d2e6ae27c65b89a72f Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 07/17] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 07/16] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -353,7 +353,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0ee3990f2..73e2cd673 100644
+index 9b947e501..9c762c67f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1020,9 +1020,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -370,10 +370,10 @@ index 0ee3990f2..73e2cd673 100644
 2.33.0.328.g8b7c11b866
 
 
-From 88c26374d685ce696afb49a3207e7d16f92b7009 Mon Sep 17 00:00:00 2001
+From 308f26b8c9cdb8b3a3c0d70f5c04aff427b8a80b Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 08/17] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 08/16] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -568,10 +568,10 @@ index 8c3c1ef92..49c9c58bd 100644
 2.33.0.328.g8b7c11b866
 
 
-From ce8ca633be0c8837d0980a361dad44a0efe13b5e Mon Sep 17 00:00:00 2001
+From 3e1395b020f4330caf0e44154858377b5812cf9e Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 09/17] ZEN: Add OpenRGB patches
+Subject: [PATCH 09/16] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1317,10 +1317,10 @@ index 8c1b31ed0..0b1b36fa0 100644
 2.33.0.328.g8b7c11b866
 
 
-From c4db6a4b55cfbab0cfc56455ad6e64aa3694ede8 Mon Sep 17 00:00:00 2001
+From b3d155cd1859a57f690cb4438bd36ebbba6a2490 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 10/17] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 10/16] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -1451,10 +1451,10 @@ index b59136c41..4154030c8 100644
 2.33.0.328.g8b7c11b866
 
 
-From 444830b11e6f7692be422f5be08abc5b41ea1a6f Mon Sep 17 00:00:00 2001
+From 38b6b75549fdc2fd95c352e16d5471137f9dd263 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 11/17] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 11/16] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -1575,10 +1575,10 @@ index b06138c61..ec17d82ea 100644
 2.33.0.328.g8b7c11b866
 
 
-From b57a78b246e10618630fd736461bafe0a98448e4 Mon Sep 17 00:00:00 2001
+From 0f006c385771806188653f3d16dc95dced63b004 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 12/17] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 12/16] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1645,10 +1645,10 @@ index e9d39c485..3bceead8d 100644
 2.33.0.328.g8b7c11b866
 
 
-From f5487f93a219093cbca64a396efe92802177e6ee Mon Sep 17 00:00:00 2001
+From bc7bdf1397ec28dc2f0623e9662e42600bcf93f1 Mon Sep 17 00:00:00 2001
 From: Josef Bacik <josef@toxicpanda.com>
 Date: Wed, 14 Jul 2021 14:47:22 -0400
-Subject: [PATCH 13/17] fs: add a filemap_fdatawrite_wbc helper
+Subject: [PATCH 13/16] fs: add a filemap_fdatawrite_wbc helper
 
 Btrfs sometimes needs to flush dirty pages on a bunch of dirty inodes in
 order to reclaim metadata reservations.  Unfortunately most helpers in
@@ -1763,10 +1763,10 @@ index d1458ecf2..034d370d4 100644
 2.33.0.328.g8b7c11b866
 
 
-From 1a289043382854bb5340f00eed46e978bac75324 Mon Sep 17 00:00:00 2001
+From 5d7c9f59390a24633ec13ab1539c9802997d6968 Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Fri, 27 Aug 2021 14:00:56 -0400
-Subject: [PATCH 14/17] NFS: Always provide aligned buffers to the RPC read
+Subject: [PATCH 14/16] NFS: Always provide aligned buffers to the RPC read
  layers
 
 Instead of messing around with XDR padding in the RDMA layer, we should
@@ -1809,52 +1809,10 @@ index 9f39e0a1a..08d6cc57c 100644
 2.33.0.328.g8b7c11b866
 
 
-From 441986a654daad95a2838a93beb727096676cc98 Mon Sep 17 00:00:00 2001
-From: Sudarsana Reddy Kalluru <skalluru@marvell.com>
-Date: Thu, 23 Sep 2021 03:16:05 -0700
-Subject: [PATCH 15/17] atlantic: Fix issue in the pm resume flow.
-
-After fixing hibernation resume flow, another usecase was found which
-should be explicitly handled - resume when device is in "down" state.
-Invoke aq_nic_init jointly with aq_nic_start only if ndev was already
-up during suspend/hibernate. We still need to perform nic_deinit() if
-caller requests for it, to handle the freeze/resume scenarios.
-
-Fixes: 57f780f1c433 ("atlantic: Fix driver resume flow.")
-Signed-off-by: Sudarsana Reddy Kalluru <skalluru@marvell.com>
-Signed-off-by: Igor Russkikh <irusskikh@marvell.com>
----
- drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-index f26d03735..5b996330f 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-@@ -419,13 +419,13 @@ static int atl_resume_common(struct device *dev, bool deep)
- 	if (deep) {
- 		/* Reinitialize Nic/Vecs objects */
- 		aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
-+	}
- 
-+	if (netif_running(nic->ndev)) {
- 		ret = aq_nic_init(nic);
- 		if (ret)
- 			goto err_exit;
--	}
- 
--	if (netif_running(nic->ndev)) {
- 		ret = aq_nic_start(nic);
- 		if (ret)
- 			goto err_exit;
--- 
-2.33.0.328.g8b7c11b866
-
-
-From 6eff1267f02439bd94c23b8b753feda9b96c0723 Mon Sep 17 00:00:00 2001
+From 122e2589b5ff4922b7484f3b6a73ccb6c3487d9d Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 24 Aug 2021 11:38:17 -0400
-Subject: [PATCH 16/17] SUNRPC: Simplify socket shutdown when not reusing TCP
+Subject: [PATCH 15/16] SUNRPC: Simplify socket shutdown when not reusing TCP
  ports
 
 If we're not required to reuse the TCP port, then we can just
@@ -1886,10 +1844,10 @@ index 02b071dbd..5fb969f8a 100644
 2.33.0.328.g8b7c11b866
 
 
-From 34121e93fcadfd41cb32103007ea2d7d3e2ff94c Mon Sep 17 00:00:00 2001
+From bdb8488f51e939f6c4fad886bddc467d5f6693aa Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 24 Aug 2021 11:38:18 -0400
-Subject: [PATCH 17/17] SUNRPC: Tweak TCP socket shutdown in the RPC client
+Subject: [PATCH 16/16] SUNRPC: Tweak TCP socket shutdown in the RPC client
 
 We only really need to call shutdown() if we're in the ESTABLISHED TCP
 state, since that is the only case where the client is initiating a

@@ -5,7 +5,7 @@ new file mode 100644
 @@ -0,0 +1,11143 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.14.8-cybmod10 Kernel Configuration
++# Linux/x86 5.14.9-cybmod11 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -1139,7 +1139,7 @@ new file mode 100644
 +CONFIG_MAPPING_DIRTY_HELPERS=y
 +CONFIG_SECRETMEM=y
 +CONFIG_LRU_GEN=y
-+# CONFIG_LRU_GEN_ENABLED is not set
++CONFIG_LRU_GEN_ENABLED=y
 +# CONFIG_LRU_GEN_STATS is not set
 +CONFIG_NR_LRU_GENS=4
 +CONFIG_TIERS_PER_GEN=2
