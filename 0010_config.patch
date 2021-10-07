@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11143 @@
+@@ -0,0 +1,11144 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.14.9-cybmod11 Kernel Configuration
++# Linux/x86 5.14.10-cybmod12 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -5235,6 +5235,7 @@ new file mode 100644
 +#
 +CONFIG_SENSORS_ACPI_POWER=m
 +CONFIG_SENSORS_ATK0110=m
++CONFIG_SENSORS_ASUS_WMI=m
 +CONFIG_THERMAL=y
 +CONFIG_THERMAL_NETLINK=y
 +CONFIG_THERMAL_STATISTICS=y

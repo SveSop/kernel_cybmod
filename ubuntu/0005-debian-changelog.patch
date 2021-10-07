@@ -1,27 +1,49 @@
-From 646c4d5b2c177d018f366ca415407af1747c1e49 Mon Sep 17 00:00:00 2001
+From f85bcbee3bc91f3f4fe9b2f3dc1270de9211dfd4 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 30 Sep 2021 09:34:25 +0000
+Date: Thu, 7 Oct 2021 06:32:11 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11838 +-------------------------------------
- 1 file changed, 3 insertions(+), 11835 deletions(-)
+ debian.master/changelog | 11860 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11857 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 2b7e0852d63b..fd1d67e07216 100644
+index f1de0e36199a..23e189736cb5 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11838 +1,6 @@
+@@ -1,11860 +1,6 @@
+-linux-unstable (5.15.0-4.4) impish; urgency=medium
++linux (5.14.10-051410.202110070632) impish; urgency=low
+ 
+-  * impish/linux-unstable: 5.15.0-4.4 -proposed tracker (LP: #1945953)
++  Mainline build at commit: v5.14.10
+ 
+-  * Fix missing HDMI audio on Intel RKL (LP: #1945556)
+-    - drm/i915/audio: Use BIOS provided value for RKL HDA link
++ -- Mainline Build <kernel@kathleen>  Thu, 07 Oct 2021 06:32:11 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: media: atomisp: add missing return type (fix -Werror=return-type)
+-    - SAUCE: xr-usb-serial: switch to tty_alloc_driver() and tty_driver_kref_put()
+-    - rebase to v5.15-rc4
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Config] FTBFS: disable INTEL_ATOMISP"
+-    - Revert "UBUNTU: [Config] FTBFS: disable xr-usb-serial"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15-rc4
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 04 Oct 2021 10:52:41 +0200
+-
 -linux-unstable (5.15.0-3.3) impish; urgency=medium
-+linux (5.14.9-051409.202109300934) impish; urgency=low
- 
+-
 -  * impish/linux-unstable: 5.15.0-3.3 -proposed tracker (LP: #1944944)
-+  Mainline build at commit: v5.14.9
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@kathleen>  Thu, 30 Sep 2021 09:34:25 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - rebase to v5.15-rc3
 -    - [Config] updateconfigs following v5.15-rc3 rebase
