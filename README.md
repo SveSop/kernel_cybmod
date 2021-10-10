@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.14.10  
+0000 : Patch 5.14.11  
 0001 : ProjectC 5.14-r3  
 0002 : 5.14 Graysky's CPU optimization patches  
 0003 : "Old" fsync patch for backwards compatibility  
@@ -13,6 +13,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0006 : ProjectC scheduler tweaks  
 0007 : zstd kernel settings  
 0008 : hwmon driver for Asus (WMI) motherboards  
+0009 : ProjectC compile fixup  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
 0020 : Clearlinux patches  

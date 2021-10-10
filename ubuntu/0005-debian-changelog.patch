@@ -1,6 +1,6 @@
-From f85bcbee3bc91f3f4fe9b2f3dc1270de9211dfd4 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 7 Oct 2021 06:32:11 +0000
+From c1065c534d92763de822986c8de98545c32531db Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 9 Oct 2021 14:38:56 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11857 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index f1de0e36199a..23e189736cb5 100644
+index f1de0e36199a..7d2f2c1bb120 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11860 +1,6 @@
 -linux-unstable (5.15.0-4.4) impish; urgency=medium
-+linux (5.14.10-051410.202110070632) impish; urgency=low
++linux (5.14.11-051411.202110091438) impish; urgency=low
  
 -  * impish/linux-unstable: 5.15.0-4.4 -proposed tracker (LP: #1945953)
-+  Mainline build at commit: v5.14.10
++  Mainline build at commit: v5.14.11
  
 -  * Fix missing HDMI audio on Intel RKL (LP: #1945556)
 -    - drm/i915/audio: Use BIOS provided value for RKL HDA link
-+ -- Mainline Build <kernel@kathleen>  Thu, 07 Oct 2021 06:32:11 +0000
++ -- Mainline Build <kernel@sita>  Sat, 09 Oct 2021 14:38:56 +0000
  
 -  * Miscellaneous Ubuntu changes
 -    - SAUCE: media: atomisp: add missing return type (fix -Werror=return-type)
