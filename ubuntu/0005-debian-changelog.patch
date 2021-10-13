@@ -1,27 +1,42 @@
-From c1065c534d92763de822986c8de98545c32531db Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 9 Oct 2021 14:38:56 +0000
+From 2a68f49c8101c402aee033172589a152a99f7d98 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 13 Oct 2021 04:38:51 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11860 +-------------------------------------
- 1 file changed, 3 insertions(+), 11857 deletions(-)
+ debian.master/changelog | 11875 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11872 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index f1de0e36199a..7d2f2c1bb120 100644
+index 7f6ea04e7e79..c617820bddde 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11860 +1,6 @@
+@@ -1,11875 +1,6 @@
+-linux-unstable (5.15.0-5.5) impish; urgency=medium
++linux (5.14.12-051412.202110130438) impish; urgency=low
+ 
+-  * impish/linux-unstable: 5.15.0-5.5 -proposed tracker (LP: #1946338)
++  Mainline build at commit: v5.14.12
+ 
+-  * Miscellaneous Ubuntu changes
+-    - rebase to v5.15-rc5
+-    - [Config] FB_SIMPLE=m
+-    - [Config] update annotations
++ -- Mainline Build <kernel@gloin>  Wed, 13 Oct 2021 04:38:51 -0400
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15-rc5
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 11 Oct 2021 12:14:02 +0200
+-
 -linux-unstable (5.15.0-4.4) impish; urgency=medium
-+linux (5.14.11-051411.202110091438) impish; urgency=low
- 
+-
 -  * impish/linux-unstable: 5.15.0-4.4 -proposed tracker (LP: #1945953)
-+  Mainline build at commit: v5.14.11
- 
+-
 -  * Fix missing HDMI audio on Intel RKL (LP: #1945556)
 -    - drm/i915/audio: Use BIOS provided value for RKL HDA link
-+ -- Mainline Build <kernel@sita>  Sat, 09 Oct 2021 14:38:56 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - SAUCE: media: atomisp: add missing return type (fix -Werror=return-type)
 -    - SAUCE: xr-usb-serial: switch to tty_alloc_driver() and tty_driver_kref_put()

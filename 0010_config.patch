@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11144 @@
+@@ -0,0 +1,11145 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.14.11-cybmod13 Kernel Configuration
++# Linux/x86 5.14.12-cybmod14 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -5236,6 +5236,7 @@ new file mode 100644
 +CONFIG_SENSORS_ACPI_POWER=m
 +CONFIG_SENSORS_ATK0110=m
 +CONFIG_SENSORS_ASUS_WMI=m
++CONFIG_SENSORS_ASUS_WMI_EC=m
 +CONFIG_THERMAL=y
 +CONFIG_THERMAL_NETLINK=y
 +CONFIG_THERMAL_STATISTICS=y
@@ -6744,7 +6745,7 @@ new file mode 100644
 +CONFIG_FB_MB862XX_PCI_GDC=y
 +CONFIG_FB_MB862XX_I2C=y
 +CONFIG_FB_HYPERV=m
-+CONFIG_FB_SIMPLE=y
++CONFIG_FB_SIMPLE=m
 +CONFIG_FB_SSD1307=m
 +CONFIG_FB_SM712=m
 +# end of Frame buffer Devices

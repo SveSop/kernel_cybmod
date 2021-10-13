@@ -1,7 +1,7 @@
-From cff11ac4143f6011a23ed2488d7e9ca9537dda07 Mon Sep 17 00:00:00 2001
+From 74d645eaf2a37fff002c7f39fc1f6ef8a9a0eae5 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Fri, 11 Sep 2020 16:49:00 -0700
-Subject: [PATCH 1/5] lib: zstd: Add kernel-specific API
+Subject: [PATCH 1/6] lib: zstd: Add kernel-specific API
 
 This patch:
 - Moves `include/linux/zstd.h` -> `include/linux/zstd_lib.h`
@@ -3490,10 +3490,10 @@ index 66cd487a3..02e92c2cb 100644
 2.33.0.610.gcefe983a32
 
 
-From 1e94b27b19a5de294fe0ce3438c66e2d96796046 Mon Sep 17 00:00:00 2001
+From d5ff2e7b90718cf779389b25020b5d1d2ea78c8f Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 14 Sep 2020 12:54:12 -0700
-Subject: [PATCH 2/5] lib: zstd: Add decompress_sources.h for decompress_unzstd
+Subject: [PATCH 2/6] lib: zstd: Add decompress_sources.h for decompress_unzstd
 
 Adds decompress_sources.h which includes every .c file necessary for
 zstd decompression. This is used in decompress_unzstd.c so the internal
@@ -3559,10 +3559,10 @@ index 000000000..9ba367b44
 2.33.0.610.gcefe983a32
 
 
-From f3880bb01227733c79b864a41c13fac80f8add30 Mon Sep 17 00:00:00 2001
+From 1c9c6e53ed233a6999f6a1c80675703f62df1aaa Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 4 Oct 2021 18:07:50 -0700
-Subject: [PATCH 3/5] Import upstream zstd as-is
+Subject: [PATCH 3/6] Import upstream zstd as-is
 
 ---
  include/linux/zstd_errors.h                   |   95 +
@@ -45123,10 +45123,10 @@ index 55e1b4cba..000000000
 2.33.0.610.gcefe983a32
 
 
-From 21fcd34b6cfee6976ee31817a7d6f6c660ca2442 Mon Sep 17 00:00:00 2001
+From a381b80c71ebd0e8635eb2f5d6770c6695c62ae1 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 4 Oct 2021 18:08:46 -0700
-Subject: [PATCH 4/5] Import upstream zstd modified for Linux
+Subject: [PATCH 4/6] Import upstream zstd modified for Linux
 
 ---
  include/linux/zstd.h                          |  13 +-
@@ -50278,10 +50278,10 @@ index 000000000..f4ed952ed
 2.33.0.610.gcefe983a32
 
 
-From c58daae4e2eea55db58e22537c489adb6766d1cd Mon Sep 17 00:00:00 2001
+From c106a4bf99686f15a00bbacee1701ac5884d578f Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 26 Apr 2021 16:34:03 -0700
-Subject: [PATCH 5/5] MAINTAINERS: Add maintainer entry for zstd
+Subject: [PATCH 5/6] MAINTAINERS: Add maintainer entry for zstd
 
 Adds a maintainer entry for zstd listing myself as the maintainer for
 all zstd code, pointing to the upstream issues tracker for bugs, and
@@ -50315,6 +50315,154 @@ index d7b4f3287..4e2240d31 100644
  ZSWAP COMPRESSED SWAP CACHING
  M:	Seth Jennings <sjenning@redhat.com>
  M:	Dan Streetman <ddstreet@ieee.org>
+-- 
+2.33.0.610.gcefe983a32
+
+
+From 6ede933e7230dac9484a37bae63e5e6b62399b27 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Tue, 12 Oct 2021 08:59:03 +0200
+Subject: [PATCH 6/6] zstd-5.14: update to next-20211012
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ lib/zstd/compress/zstd_compress.c     |  4 ++--
+ lib/zstd/compress/zstd_lazy.c         | 10 ++++++----
+ lib/zstd/compress/zstd_opt.c          |  7 ++++---
+ lib/zstd/decompress/zstd_decompress.c |  9 ++++++---
+ 4 files changed, 18 insertions(+), 12 deletions(-)
+
+diff --git a/lib/zstd/compress/zstd_compress.c b/lib/zstd/compress/zstd_compress.c
+index 59e5d1016..a4e916008 100644
+--- a/lib/zstd/compress/zstd_compress.c
++++ b/lib/zstd/compress/zstd_compress.c
+@@ -721,8 +721,8 @@ size_t ZSTD_CCtxParams_setParameter(ZSTD_CCtx_params* CCtxParams,
+         return CCtxParams->ldmParams.bucketSizeLog;
+ 
+     case ZSTD_c_ldmHashRateLog :
+-        RETURN_ERROR_IF(value > ZSTD_WINDOWLOG_MAX - ZSTD_HASHLOG_MIN,
+-                        parameter_outOfBound, "Param out of bounds!");
++        if (value!=0)   /* 0 ==> default */
++            BOUNDCHECK(ZSTD_c_ldmHashRateLog, value);
+         CCtxParams->ldmParams.hashRateLog = value;
+         return CCtxParams->ldmParams.hashRateLog;
+ 
+diff --git a/lib/zstd/compress/zstd_lazy.c b/lib/zstd/compress/zstd_lazy.c
+index 87cfa353a..fb54d4e28 100644
+--- a/lib/zstd/compress/zstd_lazy.c
++++ b/lib/zstd/compress/zstd_lazy.c
+@@ -93,7 +93,7 @@ ZSTD_insertDUBT1(ZSTD_matchState_t* ms,
+     assert(curr >= btLow);
+     assert(ip < iend);   /* condition for ZSTD_count */
+ 
+-    while (nbCompares-- && (matchIndex > windowLow)) {
++    for (; nbCompares && (matchIndex > windowLow); --nbCompares) {
+         U32* const nextPtr = bt + 2*(matchIndex & btMask);
+         size_t matchLength = MIN(commonLengthSmaller, commonLengthLarger);   /* guaranteed minimum nb of common bytes */
+         assert(matchIndex < curr);
+@@ -185,7 +185,7 @@ ZSTD_DUBT_findBetterDictMatch (
+     (void)dictMode;
+     assert(dictMode == ZSTD_dictMatchState);
+ 
+-    while (nbCompares-- && (dictMatchIndex > dictLowLimit)) {
++    for (; nbCompares && (dictMatchIndex > dictLowLimit); --nbCompares) {
+         U32* const nextPtr = dictBt + 2*(dictMatchIndex & btMask);
+         size_t matchLength = MIN(commonLengthSmaller, commonLengthLarger);   /* guaranteed minimum nb of common bytes */
+         const BYTE* match = dictBase + dictMatchIndex;
+@@ -309,7 +309,7 @@ ZSTD_DUBT_findBestMatch(ZSTD_matchState_t* ms,
+         matchIndex  = hashTable[h];
+         hashTable[h] = curr;   /* Update Hash Table */
+ 
+-        while (nbCompares-- && (matchIndex > windowLow)) {
++        for (; nbCompares && (matchIndex > windowLow); --nbCompares) {
+             U32* const nextPtr = bt + 2*(matchIndex & btMask);
+             size_t matchLength = MIN(commonLengthSmaller, commonLengthLarger);   /* guaranteed minimum nb of common bytes */
+             const BYTE* match;
+@@ -357,6 +357,7 @@ ZSTD_DUBT_findBestMatch(ZSTD_matchState_t* ms,
+ 
+         *smallerPtr = *largerPtr = 0;
+ 
++        assert(nbCompares <= (1U << ZSTD_SEARCHLOG_MAX)); /* Check we haven't underflowed. */
+         if (dictMode == ZSTD_dictMatchState && nbCompares) {
+             bestLength = ZSTD_DUBT_findBetterDictMatch(
+                     ms, ip, iend,
+@@ -660,6 +661,7 @@ size_t ZSTD_HcFindBestMatch_generic (
+         matchIndex = NEXT_IN_CHAIN(matchIndex, chainMask);
+     }
+ 
++    assert(nbAttempts <= (1U << ZSTD_SEARCHLOG_MAX)); /* Check we haven't underflowed. */
+     if (dictMode == ZSTD_dedicatedDictSearch) {
+         const U32 ddsLowestIndex  = dms->window.dictLimit;
+         const BYTE* const ddsBase = dms->window.base;
+@@ -1264,7 +1266,7 @@ size_t ZSTD_compressBlock_lazy_extDict_generic(
+                 matchLength = ml2, start = ip, offset=offsetFound;
+         }
+ 
+-         if (matchLength < 4) {
++        if (matchLength < 4) {
+             ip += ((ip-anchor) >> kSearchStrength) + 1;   /* jump faster over incompressible sections */
+             continue;
+         }
+diff --git a/lib/zstd/compress/zstd_opt.c b/lib/zstd/compress/zstd_opt.c
+index 956ee6b2a..04337050f 100644
+--- a/lib/zstd/compress/zstd_opt.c
++++ b/lib/zstd/compress/zstd_opt.c
+@@ -408,7 +408,7 @@ static U32 ZSTD_insertBt1(
+     hashTable[h] = curr;   /* Update Hash Table */
+ 
+     assert(windowLow > 0);
+-    while (nbCompares-- && (matchIndex >= windowLow)) {
++    for (; nbCompares && (matchIndex >= windowLow); --nbCompares) {
+         U32* const nextPtr = bt + 2*(matchIndex & btMask);
+         size_t matchLength = MIN(commonLengthSmaller, commonLengthLarger);   /* guaranteed minimum nb of common bytes */
+         assert(matchIndex < curr);
+@@ -639,7 +639,7 @@ U32 ZSTD_insertBtAndGetAllMatches (
+ 
+     hashTable[h] = curr;   /* Update Hash Table */
+ 
+-    while (nbCompares-- && (matchIndex >= matchLow)) {
++    for (; nbCompares && (matchIndex >= matchLow); --nbCompares) {
+         U32* const nextPtr = bt + 2*(matchIndex & btMask);
+         const BYTE* match;
+         size_t matchLength = MIN(commonLengthSmaller, commonLengthLarger);   /* guaranteed minimum nb of common bytes */
+@@ -692,12 +692,13 @@ U32 ZSTD_insertBtAndGetAllMatches (
+ 
+     *smallerPtr = *largerPtr = 0;
+ 
++    assert(nbCompares <= (1U << ZSTD_SEARCHLOG_MAX)); /* Check we haven't underflowed. */
+     if (dictMode == ZSTD_dictMatchState && nbCompares) {
+         size_t const dmsH = ZSTD_hashPtr(ip, dmsHashLog, mls);
+         U32 dictMatchIndex = dms->hashTable[dmsH];
+         const U32* const dmsBt = dms->chainTable;
+         commonLengthSmaller = commonLengthLarger = 0;
+-        while (nbCompares-- && (dictMatchIndex > dmsLowLimit)) {
++        for (; nbCompares && (dictMatchIndex > dmsLowLimit); --nbCompares) {
+             const U32* const nextPtr = dmsBt + 2*(dictMatchIndex & dmsBtMask);
+             size_t matchLength = MIN(commonLengthSmaller, commonLengthLarger);   /* guaranteed minimum nb of common bytes */
+             const BYTE* match = dmsBase + dictMatchIndex;
+diff --git a/lib/zstd/decompress/zstd_decompress.c b/lib/zstd/decompress/zstd_decompress.c
+index 7a39dc799..b4d81d844 100644
+--- a/lib/zstd/decompress/zstd_decompress.c
++++ b/lib/zstd/decompress/zstd_decompress.c
+@@ -171,12 +171,15 @@ static const ZSTD_DDict* ZSTD_DDictHashSet_getDDict(ZSTD_DDictHashSet* hashSet,
+ static ZSTD_DDictHashSet* ZSTD_createDDictHashSet(ZSTD_customMem customMem) {
+     ZSTD_DDictHashSet* ret = (ZSTD_DDictHashSet*)ZSTD_customMalloc(sizeof(ZSTD_DDictHashSet), customMem);
+     DEBUGLOG(4, "Allocating new hash set");
++    if (!ret)
++        return NULL;
+     ret->ddictPtrTable = (const ZSTD_DDict**)ZSTD_customCalloc(DDICT_HASHSET_TABLE_BASE_SIZE * sizeof(ZSTD_DDict*), customMem);
+-    ret->ddictPtrTableSize = DDICT_HASHSET_TABLE_BASE_SIZE;
+-    ret->ddictPtrCount = 0;
+-    if (!ret || !ret->ddictPtrTable) {
++    if (!ret->ddictPtrTable) {
++        ZSTD_customFree(ret, customMem);
+         return NULL;
+     }
++    ret->ddictPtrTableSize = DDICT_HASHSET_TABLE_BASE_SIZE;
++    ret->ddictPtrCount = 0;
+     return ret;
+ }
+ 
 -- 
 2.33.0.610.gcefe983a32
 
