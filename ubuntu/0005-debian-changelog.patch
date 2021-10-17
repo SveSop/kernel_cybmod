@@ -1,6 +1,6 @@
-From 2a68f49c8101c402aee033172589a152a99f7d98 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 13 Oct 2021 04:38:51 -0400
+From 011b6fdbffbf3a9f8846740de707baaf94e58337 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 17 Oct 2021 09:52:09 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11872 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 7f6ea04e7e79..c617820bddde 100644
+index 7f6ea04e7e79..c9e88f6af0f1 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11875 +1,6 @@
 -linux-unstable (5.15.0-5.5) impish; urgency=medium
-+linux (5.14.12-051412.202110130438) impish; urgency=low
++linux (5.14.13-051413.202110170952) impish; urgency=low
  
 -  * impish/linux-unstable: 5.15.0-5.5 -proposed tracker (LP: #1946338)
-+  Mainline build at commit: v5.14.12
++  Mainline build at commit: v5.14.13
  
 -  * Miscellaneous Ubuntu changes
 -    - rebase to v5.15-rc5
 -    - [Config] FB_SIMPLE=m
 -    - [Config] update annotations
-+ -- Mainline Build <kernel@gloin>  Wed, 13 Oct 2021 04:38:51 -0400
++ -- Mainline Build <kernel@sita>  Sun, 17 Oct 2021 09:52:09 +0000
  
 -  [ Upstream Kernel Changes ]
 -

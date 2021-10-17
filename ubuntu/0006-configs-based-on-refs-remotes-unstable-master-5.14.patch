@@ -1,21 +1,21 @@
-From 17d4bec01e7342439dc8a18df9a1961c04009ba3 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 13 Oct 2021 04:39:29 -0400
+From 97f20ba50ce1ee76f56b9e9833424a365f3f56d8 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 17 Oct 2021 09:52:51 +0000
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master-5.14)
 
 ---
  .../config/amd64/config.common.amd64          |  14 +-
  debian.master/config/annotations              | 335 ++++++------------
- .../config/arm64/config.common.arm64          |  11 -
+ .../config/arm64/config.common.arm64          |  13 +-
  .../config/arm64/config.flavour.generic       |   2 +-
- .../config/armhf/config.common.armhf          |  12 -
+ .../config/armhf/config.common.armhf          |  14 +-
  debian.master/config/config.common.ubuntu     | 182 ++--------
- .../config/ppc64el/config.common.ppc64el      |  11 -
- .../config/s390x/config.common.s390x          |  10 -
- 8 files changed, 157 insertions(+), 420 deletions(-)
+ .../config/ppc64el/config.common.ppc64el      |  13 +-
+ .../config/s390x/config.common.s390x          |  12 +-
+ 8 files changed, 161 insertions(+), 424 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index fedfaa8dde4d..c4e1fb1d3da9 100644
+index fedfaa8dde4d..d23a9519bb2e 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -24,7 +24,6 @@ CONFIG_ARCH_MMAP_RND_BITS_MIN=28
@@ -31,7 +31,7 @@ index fedfaa8dde4d..c4e1fb1d3da9 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-7ubuntu2) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CMA is not set
  CONFIG_CMDLINE_PARTITION=y
@@ -1498,9 +1498,18 @@ index e0b9f55acae8..1ed245a150c3 100644
  CONFIG_APPLDATA_NET_SUM                         policy<{'s390x': 'm'}>
 +
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index e29e5d986152..21e82a30595d 100644
+index e29e5d986152..a5fd83ea3e07 100644
 --- a/debian.master/config/arm64/config.common.arm64
 +++ b/debian.master/config/arm64/config.common.arm64
+@@ -62,7 +62,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE="console=ttyAMA0"
 @@ -172,7 +172,6 @@ CONFIG_FDDI=y
  CONFIG_FEALNX=m
  CONFIG_FIREWIRE=m
@@ -1588,7 +1597,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index 896f6f78bf63..15ed2d9b0d63 100644
+index 896f6f78bf63..630855cb6339 100644
 --- a/debian.master/config/armhf/config.common.armhf
 +++ b/debian.master/config/armhf/config.common.armhf
 @@ -20,7 +20,6 @@ CONFIG_ARCH_EXYNOS=y
@@ -1599,6 +1608,15 @@ index 896f6f78bf63..15ed2d9b0d63 100644
  # CONFIG_ARCH_SUNXI is not set
  CONFIG_ARCH_UNIPHIER=y
  CONFIG_ARCNET=m
+@@ -58,7 +57,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
 @@ -167,7 +166,6 @@ CONFIG_FDDI=y
  CONFIG_FEALNX=m
  CONFIG_FIREWIRE=m
@@ -2731,9 +2749,18 @@ index 20c1ec9552be..2342babf67d8 100644
  CONFIG_ZISOFS=y
  CONFIG_ZLIB_DEFLATE=y
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index e964426671de..439c34e4524f 100644
+index e964426671de..ecdc833db1b0 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
 +++ b/debian.master/config/ppc64el/config.common.ppc64el
+@@ -55,7 +55,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
 @@ -163,7 +163,6 @@ CONFIG_FDDI=y
  CONFIG_FEALNX=m
  CONFIG_FIREWIRE=m
@@ -2805,9 +2832,18 @@ index e964426671de..439c34e4524f 100644
  CONFIG_VIRTIO_MMIO=y
  # CONFIG_VIRT_CPU_ACCOUNTING_NATIVE is not set
 diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index 3aa168ca5858..e476daa553ea 100644
+index 3aa168ca5858..6916d73dfee1 100644
 --- a/debian.master/config/s390x/config.common.s390x
 +++ b/debian.master/config/s390x/config.common.s390x
+@@ -45,7 +45,7 @@ CONFIG_AUTOFS_FS=y
+ # CONFIG_CAIF is not set
+ # CONFIG_CAN is not set
+ # CONFIG_CB710_CORE is not set
+-CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-3ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
+ # CONFIG_CDROM_PKTCDVD is not set
+ CONFIG_CMA=y
+ # CONFIG_CMDLINE_PARTITION is not set
 @@ -148,7 +148,6 @@ CONFIG_FB_CFB_IMAGEBLIT=m
  # CONFIG_FEALNX is not set
  # CONFIG_FIREWIRE is not set

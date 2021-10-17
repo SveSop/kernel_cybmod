@@ -1,7 +1,7 @@
-From 619948cc5546a50c7e7b86e6ff9dbcf3e1d9755e Mon Sep 17 00:00:00 2001
+From c53b0697ff9965f633c4bbb6656e6c68072f24d1 Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Sat, 18 Sep 2021 01:02:38 +0300
-Subject: [PATCH 01/16] hwmon: (nct6775) Use superio_*() function pointers in
+Subject: [PATCH 01/18] hwmon: (nct6775) Use superio_*() function pointers in
  sio_data.
 
 Prepare for platform specific callbacks usage:
@@ -462,10 +462,10 @@ index 5bd15622a..9b503c88e 100644
 2.33.0.610.gcefe983a32
 
 
-From 3d40bb06634b24c22ff0c9aa0b215da97c5a0e76 Mon Sep 17 00:00:00 2001
+From 8c1f42844921f2547f028045b53cfb333c07f847 Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Sat, 18 Sep 2021 01:02:39 +0300
-Subject: [PATCH 02/16] hwmon: (nct6775) Use nct6775_*() function pointers in
+Subject: [PATCH 02/18] hwmon: (nct6775) Use nct6775_*() function pointers in
  nct6775_data.
 
 Prepare for platform specific callbacks usage:
@@ -1265,10 +1265,10 @@ index 9b503c88e..4253eed7f 100644
 2.33.0.610.gcefe983a32
 
 
-From c3401e476f581229724ad470d77ea23993dfec6a Mon Sep 17 00:00:00 2001
+From 5e0fc2d9325cd2d130e073e22413c38d25030765 Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Sat, 18 Sep 2021 01:02:40 +0300
-Subject: [PATCH 03/16] hwmon: (nct6775) Support access via Asus WMI
+Subject: [PATCH 03/18] hwmon: (nct6775) Support access via Asus WMI
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -1667,10 +1667,10 @@ index 4253eed7f..aa58ead0a 100644
 2.33.0.610.gcefe983a32
 
 
-From 119bf1b9cd3964222316cb4a039307901b6b4baf Mon Sep 17 00:00:00 2001
+From 343563df19e12bf9441a1c073962e2523f7507c5 Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Sun, 3 Oct 2021 00:08:54 +0300
-Subject: [PATCH 04/16] hwmon: (nct6775) Add additional ASUS motherboards.
+Subject: [PATCH 04/18] hwmon: (nct6775) Add additional ASUS motherboards.
 
 Add support:
 * PRIME B360-PLUS
@@ -1736,10 +1736,10 @@ index aa58ead0a..8eaf86ea2 100644
 2.33.0.610.gcefe983a32
 
 
-From 7737389b0dbf3c2c7393364d331cb9933dc45d8e Mon Sep 17 00:00:00 2001
+From 789b4cd9311e44d10539a3c92bb2d76a9b08c7fe Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Sun, 3 Oct 2021 00:08:55 +0300
-Subject: [PATCH 05/16] hwmon: (nct6775) Use custom scale for ASUS
+Subject: [PATCH 05/18] hwmon: (nct6775) Use custom scale for ASUS
  motherboards.
 
 Use custom scaling factor for:
@@ -1864,10 +1864,10 @@ index 8eaf86ea2..ba18c1cbf 100644
 2.33.0.610.gcefe983a32
 
 
-From 8ab1df654797385de5a35cd26627128cbbac71f1 Mon Sep 17 00:00:00 2001
+From db636d1773a1211fbffab31e0b10cf796c1d810a Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Sun, 3 Oct 2021 00:08:56 +0300
-Subject: [PATCH 06/16] hwmon: (asus_wmi_sensors) Support access via Asus WMI.
+Subject: [PATCH 06/18] hwmon: (asus_wmi_sensors) Support access via Asus WMI.
 
 Linux HWMON sensors driver for ASUS motherboards to read
 sensors from the embedded controller.
@@ -2543,10 +2543,10 @@ index 000000000..6b04fad18
 2.33.0.610.gcefe983a32
 
 
-From 9f84785aad760f36105831788fb1998706c7c724 Mon Sep 17 00:00:00 2001
+From 994d145f7890dcc0c324411a5a40ca474386f4f9 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Sun, 3 Oct 2021 13:56:15 +0200
-Subject: [PATCH 07/16] hwmon: (nct6775) add Pro WS X570-ACE
+Subject: [PATCH 07/18] hwmon: (nct6775) add Pro WS X570-ACE
 
 This is a test patch only. Still not sure whether the board will work.
 
@@ -2571,10 +2571,10 @@ index ba18c1cbf..ff28ba70a 100644
 2.33.0.610.gcefe983a32
 
 
-From 77bf33b2ec7ad7bb55be3376b7ddcfba4756a44e Mon Sep 17 00:00:00 2001
+From 1e8342214678f207673468e75871ac25b3064745 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Sun, 3 Oct 2021 14:32:56 +0200
-Subject: [PATCH 08/16] hwmon: (asus_wmi_sensors) add Pro WS X570-ACE
+Subject: [PATCH 08/18] hwmon: (asus_wmi_sensors) add Pro WS X570-ACE
 
 This is a test patch only. Still not sure whether the board will work.
 
@@ -2631,10 +2631,10 @@ index 6b04fad18..f6817ec9d 100644
 2.33.0.610.gcefe983a32
 
 
-From 7c25e9825f29f0683cc4c08256bd423e5231cf56 Mon Sep 17 00:00:00 2001
+From e0f8564797870ae42ad95112863039b83f72666a Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Sun, 3 Oct 2021 14:54:51 +0200
-Subject: [PATCH 09/16] hwmon: (asus_wmi_sensors) remove T_Sensor for Pro WS
+Subject: [PATCH 09/18] hwmon: (asus_wmi_sensors) remove T_Sensor for Pro WS
  X570-ACE
 
 Readings give some garbage, probably, there's no header for that sensor
@@ -2679,10 +2679,10 @@ index f6817ec9d..319c87962 100644
 2.33.0.610.gcefe983a32
 
 
-From 9f2e4ae66e70f0bde17b58d0c896779c9a81f8d4 Mon Sep 17 00:00:00 2001
+From 858b1352bc51175d63ad6c9c5c23eda6c3b4c45c Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Tue, 12 Oct 2021 14:16:07 +0200
-Subject: [PATCH 10/16] Revert "hwmon: (nct6775) Use custom scale for ASUS
+Subject: [PATCH 10/18] Revert "hwmon: (nct6775) Use custom scale for ASUS
  motherboards."
 
 This reverts commit 7d7bff54143c53bb540ca62fb4992b2c938556f4.
@@ -2797,10 +2797,10 @@ index ff28ba70a..f345e1902 100644
 2.33.0.610.gcefe983a32
 
 
-From cc6d6e9e554163ff115e72f808e2da07af478866 Mon Sep 17 00:00:00 2001
+From ac18f9bed051fdd20718b360e0bcfa62c3448150 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Tue, 12 Oct 2021 14:16:33 +0200
-Subject: [PATCH 11/16] Revert "hwmon: (asus_wmi_sensors) remove T_Sensor for
+Subject: [PATCH 11/18] Revert "hwmon: (asus_wmi_sensors) remove T_Sensor for
  Pro WS X570-ACE"
 
 This reverts commit 9783b82c44f32bf9e394e458d223eb756343c9a7.
@@ -2840,10 +2840,10 @@ index 319c87962..f6817ec9d 100644
 2.33.0.610.gcefe983a32
 
 
-From 2ac6079a3b2ccdab99bb9e99a8bd6124b332f15e Mon Sep 17 00:00:00 2001
+From d51d635926077b51434e4c1fe1e7904c98f1563c Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Tue, 12 Oct 2021 14:16:38 +0200
-Subject: [PATCH 12/16] Revert "hwmon: (asus_wmi_sensors) add Pro WS X570-ACE"
+Subject: [PATCH 12/18] Revert "hwmon: (asus_wmi_sensors) add Pro WS X570-ACE"
 
 This reverts commit 3463bb3e23cbd2f564b18bdd5ba7e5768ce3f006.
 ---
@@ -2898,10 +2898,10 @@ index f6817ec9d..6b04fad18 100644
 2.33.0.610.gcefe983a32
 
 
-From d6df8e7bfb2dceb310b1a1f2b4ed2bf08bb9361e Mon Sep 17 00:00:00 2001
+From f659de4712e5cf243952f606b4c3e0f147f4370a Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
 Date: Tue, 12 Oct 2021 14:16:44 +0200
-Subject: [PATCH 13/16] Revert "hwmon: (asus_wmi_sensors) Support access via
+Subject: [PATCH 13/18] Revert "hwmon: (asus_wmi_sensors) Support access via
  Asus WMI."
 
 This reverts commit 2e8739d5fd7e39d6efea278737f0ad0cc326f1c7.
@@ -3552,10 +3552,10 @@ index 6b04fad18..000000000
 2.33.0.610.gcefe983a32
 
 
-From 61fada7e8b2eea2d8b8d6615d2ca7bdc3780672d Mon Sep 17 00:00:00 2001
+From af078011bf15e67d84a39a0c66ca4dd3c75e68a8 Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Mon, 11 Oct 2021 22:55:01 +0300
-Subject: [PATCH 14/16] hwmon: (asus_wmi_ec_sensors) Support B550 Asus WMI.
+Subject: [PATCH 14/18] hwmon: (asus_wmi_ec_sensors) Support B550 Asus WMI.
 
 Linux HWMON sensors driver for ASUS motherboards to read
 sensors from the embedded controller.
@@ -4348,10 +4348,10 @@ index 000000000..f9d8a0be7
 2.33.0.610.gcefe983a32
 
 
-From b6204e19e2aa399a8fd9796b8352a39f941ed9c0 Mon Sep 17 00:00:00 2001
+From 816ca1521bdb31b25c772dcd65331ae434ac54fb Mon Sep 17 00:00:00 2001
 From: Denis Pauk <pauk.denis@gmail.com>
 Date: Mon, 11 Oct 2021 22:55:02 +0300
-Subject: [PATCH 15/16] hwmon: (asus_wmi_sensors) Support X370 Asus WMI.
+Subject: [PATCH 15/18] hwmon: (asus_wmi_sensors) Support X370 Asus WMI.
 
 Provides a Linux kernel module "asus_wmi_sensors" that provides sensor
 readouts via ASUS' WMI interface present in the UEFI of
@@ -5145,10 +5145,10 @@ index 000000000..a45fbec4e
 2.33.0.610.gcefe983a32
 
 
-From c600bc288b21a314d9a2ef2d19d74e678c5cd5d5 Mon Sep 17 00:00:00 2001
+From 80d6384dcdbc992c3fb2908a558d5c1531f4c0d6 Mon Sep 17 00:00:00 2001
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Date: Mon, 12 Jul 2021 17:20:25 +0300
-Subject: [PATCH 16/16] units: Add SI metric prefix definitions
+Subject: [PATCH 16/18] units: Add SI metric prefix definitions
 
 Sometimes it's useful to have well-defined SI metric prefix to be used
 to self-describe the formulas or equations.
@@ -5188,6 +5188,485 @@ index dcc30a53f..4a25e0cc8 100644
  #define MILLIWATT_PER_WATT	1000L
  #define MICROWATT_PER_MILLIWATT	1000L
  #define MICROWATT_PER_WATT	1000000L
+-- 
+2.33.0.610.gcefe983a32
+
+
+From ed9003fc36ea4faf88c4f4c5a2b56785c3e7f287 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Thu, 14 Oct 2021 10:20:58 +0200
+Subject: [PATCH 17/18] nct6775-5.14: update to v6 ASUS WMI submission
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ Documentation/hwmon/index.rst       |  2 +
+ drivers/hwmon/asus_wmi_ec_sensors.c | 77 +++++++++++++----------------
+ drivers/hwmon/asus_wmi_sensors.c    |  2 +-
+ 3 files changed, 36 insertions(+), 45 deletions(-)
+
+diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
+index bc01601ea..98c485dc0 100644
+--- a/Documentation/hwmon/index.rst
++++ b/Documentation/hwmon/index.rst
+@@ -42,6 +42,8 @@ Hardware Monitoring Kernel Drivers
+    asb100
+    asc7621
+    aspeed-pwm-tacho
++   asus_wmi_ec_sensors
++   asus_wmi_sensors
+    bcm54140
+    bel-pfe
+    bpa-rs600
+diff --git a/drivers/hwmon/asus_wmi_ec_sensors.c b/drivers/hwmon/asus_wmi_ec_sensors.c
+index f9d8a0be7..632c1d500 100644
+--- a/drivers/hwmon/asus_wmi_ec_sensors.c
++++ b/drivers/hwmon/asus_wmi_ec_sensors.c
+@@ -237,7 +237,7 @@ struct asus_wmi_ec_info {
+ };
+ 
+ struct asus_wmi_sensors {
+-	/* lock access to instrnal cache */
++	/* lock access to internal cache */
+ 	struct mutex lock;
+ 	struct asus_wmi_ec_info ec;
+ };
+@@ -321,16 +321,6 @@ static void asus_wmi_ec_make_block_read_query(struct asus_wmi_ec_info *ec)
+ 	const struct ec_sensor_info *si;
+ 	int i, j, register_idx = 0;
+ 
+-	/*
+-	 * if we can get values for all the registers in a single query,
+-	 * the query will not change from call to call
+-	 */
+-	if (ec->nr_registers <= ASUS_WMI_BLOCK_READ_REGISTERS_MAX &&
+-	    ec->read_arg[0] > 0) {
+-		/* no need to update */
+-		return;
+-	}
+-
+ 	for (i = 0; i < ec->nr_sensors; i++) {
+ 		si = &known_ec_sensors[ec->sensors[i].info_index];
+ 		for (j = 0; j < si->addr.size;
+@@ -361,55 +351,45 @@ static int asus_wmi_ec_block_read(u32 method_id, char *query, u8 *out)
+ 
+ 	obj = output.pointer;
+ 	if (!obj || obj->type != ACPI_TYPE_BUFFER) {
+-		if (!obj)
+-			acpi_os_free(output.pointer);
+-
++		acpi_os_free(obj);
+ 		return -EIO;
+ 	}
+ 	asus_wmi_ec_decode_reply_buffer(obj->buffer.pointer, out);
+-	acpi_os_free(output.pointer);
++	acpi_os_free(obj);
+ 	return 0;
+ #else
+ 	return -EOPNOTSUPP;
+ #endif
+ }
+ 
+-static int asus_wmi_ec_update_ec_sensors(struct asus_wmi_ec_info *ec)
++static inline u32 get_sensor_value(const struct ec_sensor_info *si, u8 *data)
++{
++	switch (si->addr.size) {
++	case 1:
++		return *data;
++	case 2:
++		return get_unaligned_be16(data);
++	case 4:
++		return get_unaligned_be32(data);
++	default:
++		return 0;
++	}
++}
++
++static void asus_wmi_ec_update_ec_sensors(struct asus_wmi_ec_info *ec)
+ {
+ 	const struct ec_sensor_info *si;
++	u8 i_sensor;
+ 	struct ec_sensor *s;
++	u8 *data;
+ 
+-	int status;
+-	u8 i_sensor, read_reg_ct;
+-
+-	asus_wmi_ec_make_block_read_query(ec);
+-	status = asus_wmi_ec_block_read(ASUSWMI_METHODID_BLOCK_READ_EC,
+-					ec->read_arg,
+-					ec->read_buffer);
+-	if (status)
+-		return status;
+-
+-	read_reg_ct = 0;
++	data = ec->read_buffer;
+ 	for (i_sensor = 0; i_sensor < ec->nr_sensors; i_sensor++) {
+ 		s = &ec->sensors[i_sensor];
+ 		si = &known_ec_sensors[s->info_index];
+-
+-		switch (si->addr.size) {
+-		case 1:
+-			s->cached_value = ec->read_buffer[read_reg_ct];
+-			break;
+-		case 2:
+-			s->cached_value = get_unaligned_be16(&ec->read_buffer[read_reg_ct]);
+-			break;
+-		case 4:
+-			s->cached_value = get_unaligned_be32(&ec->read_buffer[read_reg_ct]);
+-			break;
+-		default:
+-			s->cached_value =  0;
+-		}
+-		read_reg_ct += si->addr.size;
++		s->cached_value = get_sensor_value(si, data);
++		data += si->addr.size;
+ 	}
+-	return 0;
+ }
+ 
+ static int asus_wmi_ec_scale_sensor_value(u32 value, int data_type)
+@@ -447,10 +427,13 @@ static int asus_wmi_ec_get_cached_value_or_update(int sensor_index,
+ 	int ret;
+ 
+ 	if (time_after(jiffies, state->ec.last_updated + HZ)) {
+-		ret = asus_wmi_ec_update_ec_sensors(&state->ec);
++		ret = asus_wmi_ec_block_read(ASUSWMI_METHODID_BLOCK_READ_EC,
++					     state->ec.read_arg,
++					     state->ec.read_buffer);
+ 		if (ret)
+ 			return ret;
+ 
++		asus_wmi_ec_update_ec_sensors(&state->ec);
+ 		state->ec.last_updated = jiffies;
+ 	}
+ 
+@@ -569,6 +552,12 @@ static int asus_wmi_ec_configure_sensor_setup(struct device *dev,
+ 		nr_types++;
+ 	}
+ 
++	/*
++	 * if we can get values for all the registers in a single query,
++	 * the query will not change from call to call
++	 */
++	asus_wmi_ec_make_block_read_query(&sensor_data->ec);
++
+ 	asus_wmi_hwmon_chan = devm_kcalloc(dev, nr_types,
+ 					   sizeof(*asus_wmi_hwmon_chan),
+ 					   GFP_KERNEL);
+diff --git a/drivers/hwmon/asus_wmi_sensors.c b/drivers/hwmon/asus_wmi_sensors.c
+index a45fbec4e..9fe26e164 100644
+--- a/drivers/hwmon/asus_wmi_sensors.c
++++ b/drivers/hwmon/asus_wmi_sensors.c
+@@ -166,7 +166,7 @@ struct asus_wmi_wmi_info {
+ };
+ 
+ struct asus_wmi_sensors {
+-	/* lock access to instrnal cache */
++	/* lock access to internal cache */
+ 	struct mutex lock;
+ 	struct asus_wmi_wmi_info wmi;
+ };
+-- 
+2.33.0.610.gcefe983a32
+
+
+From f223437032b17052896f026a45f26318077e155f Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Fri, 15 Oct 2021 18:38:06 +0200
+Subject: [PATCH 18/18] nct6775-5.14: update to v7 ASUS WMI submission
+
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ drivers/hwmon/Kconfig               |  2 +
+ drivers/hwmon/asus_wmi_ec_sensors.c | 85 ++++++++++++++---------------
+ drivers/hwmon/asus_wmi_sensors.c    | 20 +++----
+ 3 files changed, 50 insertions(+), 57 deletions(-)
+
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index c85460d8f..316f841f5 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -2187,6 +2187,7 @@ config SENSORS_ATK0110
+ 
+ config SENSORS_ASUS_WMI
+ 	tristate "ASUS WMI X370/X470/B450/X399"
++	depends on ACPI_WMI
+ 	help
+ 	  If you say yes here you get support for the ACPI hardware monitoring
+ 	  interface found in X370/X470/B450/X399 ASUS motherboards. This driver
+@@ -2198,6 +2199,7 @@ config SENSORS_ASUS_WMI
+ 
+ config SENSORS_ASUS_WMI_EC
+ 	tristate "ASUS WMI B550/X570"
++	depends on ACPI_WMI
+ 	help
+ 	  If you say yes here you get support for the ACPI embedded controller
+ 	  hardware monitoring interface found in B550/X570 ASUS motherboards.
+diff --git a/drivers/hwmon/asus_wmi_ec_sensors.c b/drivers/hwmon/asus_wmi_ec_sensors.c
+index 632c1d500..7080c3085 100644
+--- a/drivers/hwmon/asus_wmi_ec_sensors.c
++++ b/drivers/hwmon/asus_wmi_ec_sensors.c
+@@ -34,13 +34,13 @@
+ #include <linux/units.h>
+ #include <linux/wmi.h>
+ 
+-#define ASUSWMI_MONITORING_GUID		"466747A0-70EC-11DE-8A39-0800200C9A66"
+-#define ASUSWMI_METHODID_BLOCK_READ_EC		0x42524543 /* BREC */
+-
+-#define ASUS_WMI_BLOCK_READ_REGISTERS_MAX 0x10 /* from the ASUS DSDT source */
+-/* from the ASUS_WMI_BLOCK_READ_REGISTERS_MAX value */
+-#define ASUS_WMI_MAX_BUF_LEN 0x80
+-#define MAX_SENSOR_LABEL_LENGTH 0x10
++#define	ASUSWMI_MONITORING_GUID	"466747A0-70EC-11DE-8A39-0800200C9A66"
++/* BLOCK_READ_EC */
++#define	ASUSWMI_METHODID_BREC	0x42524543
++/* from the ASUS DSDT source */
++#define	ASUSWMI_BREC_REGISTERS_MAX	0x10
++#define	ASUSWMI_MAX_BUF_LEN	0x80
++#define	SENSOR_LABEL_LEN	0x10
+ 
+ static u32 hwmon_attributes[] = {
+ 	[hwmon_chip] = HWMON_C_REGISTER_TZ,
+@@ -56,18 +56,18 @@ struct asus_wmi_ec_sensor_address {
+ 	u8 size;
+ };
+ 
+-#define MAKE_SENSOR_ADDRESS(size_i, bank_i, index_i) \
++#define	MAKE_SENSOR_ADDRESS(size_i, bank_i, index_i) \
+ 	{ .size = size_i,\
+ 	   .bank = bank_i,\
+ 	   .index = index_i}
+ 
+ struct ec_sensor_info {
+-	char label[MAX_SENSOR_LABEL_LENGTH];
++	char label[SENSOR_LABEL_LEN];
+ 	enum hwmon_sensor_types type;
+ 	struct asus_wmi_ec_sensor_address addr;
+ };
+ 
+-#define EC_SENSOR(sensor_label, sensor_type, size, bank, index) \
++#define	EC_SENSOR(sensor_label, sensor_type, size, bank, index) \
+ 	{ .label = sensor_label,\
+ 	.type = sensor_type, \
+ 	.addr = MAKE_SENSOR_ADDRESS(size, bank, index) \
+@@ -181,17 +181,8 @@ static struct asus_wmi_data sensors_board_RS_X570_E_G = {
+ 	},
+ };
+ 
+-static struct asus_wmi_data *board_sensors;
+-
+-static int __init asus_wmi_dmi_matched(const struct dmi_system_id *d)
+-{
+-	board_sensors = d->driver_data;
+-	return 0;
+-}
+-
+-#define DMI_EXACT_MATCH_ASUS_BOARD_NAME(name, sensors) \
++#define	DMI_EXACT_MATCH_ASUS_BOARD_NAME(name, sensors) \
+ 	{ \
+-		.callback = asus_wmi_dmi_matched, \
+ 		.matches = { \
+ 			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, \
+ 					"ASUSTeK COMPUTER INC."), \
+@@ -229,8 +220,8 @@ struct ec_sensor {
+  */
+ struct asus_wmi_ec_info {
+ 	struct ec_sensor sensors[SENSOR_MAX];
+-	char read_arg[((ASUS_WMI_BLOCK_READ_REGISTERS_MAX * 4) + 1) * 2];
+-	u8 read_buffer[ASUS_WMI_BLOCK_READ_REGISTERS_MAX];
++	char read_arg[((ASUSWMI_BREC_REGISTERS_MAX * 4) + 1) * 2];
++	u8 read_buffer[ASUSWMI_BREC_REGISTERS_MAX];
+ 	unsigned int nr_sensors;
+ 	unsigned int nr_registers;
+ 	unsigned long last_updated;
+@@ -242,16 +233,12 @@ struct asus_wmi_sensors {
+ 	struct asus_wmi_ec_info ec;
+ };
+ 
+-static int asus_wmi_ec_fill_board_sensors(struct asus_wmi_ec_info *ec)
++static int asus_wmi_ec_fill_board_sensors(struct asus_wmi_ec_info *ec,
++					  const enum known_ec_sensor *bsi)
+ {
+-	const enum known_ec_sensor *bsi;
+ 	struct ec_sensor *s = ec->sensors;
+ 	int i;
+ 
+-	if (!board_sensors)
+-		return -ENODEV;
+-
+-	bsi = board_sensors->known_board_sensors;
+ 	ec->nr_sensors = 0;
+ 	ec->nr_registers = 0;
+ 
+@@ -275,13 +262,15 @@ static int asus_wmi_ec_fill_board_sensors(struct asus_wmi_ec_info *ec)
+  * values are byte-long (0x00 to 0xFF)
+  * Numbers are encoded as UTF-16 hex values
+  */
+-static void asus_wmi_ec_decode_reply_buffer(const u8 *inp, u8 *out)
++static void asus_wmi_ec_decode_reply_buffer(const u8 *inp, u8 *out, u32 length)
+ {
+-	unsigned int len = ACPI_MIN(ASUS_WMI_MAX_BUF_LEN, inp[0] / 4);
+-	char buffer[ASUS_WMI_MAX_BUF_LEN * 2];
++	char buffer[ASUSWMI_MAX_BUF_LEN * 2];
+ 	const char *pos = buffer;
+ 	const u8 *data = inp + 2;
+ 	unsigned int i;
++	u32 len;
++
++	len = min3((u32)ASUSWMI_MAX_BUF_LEN, (length - 2) / 4, (u32)inp[0] / 4);
+ 
+ 	utf16s_to_utf8s((wchar_t *)data, len * 2,  UTF16_LITTLE_ENDIAN, buffer, len * 2);
+ 
+@@ -291,7 +280,7 @@ static void asus_wmi_ec_decode_reply_buffer(const u8 *inp, u8 *out)
+ 
+ static void asus_wmi_ec_encode_registers(u16 *registers, u8 len, char *out)
+ {
+-	char buffer[ASUS_WMI_MAX_BUF_LEN * 2];
++	char buffer[ASUSWMI_MAX_BUF_LEN * 2];
+ 	char *pos = buffer;
+ 	unsigned int i;
+ 	u8 byte;
+@@ -317,7 +306,7 @@ static void asus_wmi_ec_encode_registers(u16 *registers, u8 len, char *out)
+ 
+ static void asus_wmi_ec_make_block_read_query(struct asus_wmi_ec_info *ec)
+ {
+-	u16 registers[ASUS_WMI_BLOCK_READ_REGISTERS_MAX];
++	u16 registers[ASUSWMI_BREC_REGISTERS_MAX];
+ 	const struct ec_sensor_info *si;
+ 	int i, j, register_idx = 0;
+ 
+@@ -334,9 +323,7 @@ static void asus_wmi_ec_make_block_read_query(struct asus_wmi_ec_info *ec)
+ 
+ static int asus_wmi_ec_block_read(u32 method_id, char *query, u8 *out)
+ {
+-#if IS_ENABLED(CONFIG_ACPI_WMI)
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER,
+-				      NULL };
++	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct acpi_buffer input;
+ 	union acpi_object *obj;
+ 	acpi_status status;
+@@ -354,12 +341,9 @@ static int asus_wmi_ec_block_read(u32 method_id, char *query, u8 *out)
+ 		acpi_os_free(obj);
+ 		return -EIO;
+ 	}
+-	asus_wmi_ec_decode_reply_buffer(obj->buffer.pointer, out);
++	asus_wmi_ec_decode_reply_buffer(obj->buffer.pointer, out, obj->buffer.length);
+ 	acpi_os_free(obj);
+ 	return 0;
+-#else
+-	return -EOPNOTSUPP;
+-#endif
+ }
+ 
+ static inline u32 get_sensor_value(const struct ec_sensor_info *si, u8 *data)
+@@ -427,7 +411,7 @@ static int asus_wmi_ec_get_cached_value_or_update(int sensor_index,
+ 	int ret;
+ 
+ 	if (time_after(jiffies, state->ec.last_updated + HZ)) {
+-		ret = asus_wmi_ec_block_read(ASUSWMI_METHODID_BLOCK_READ_EC,
++		ret = asus_wmi_ec_block_read(ASUSWMI_METHODID_BREC,
+ 					     state->ec.read_arg,
+ 					     state->ec.read_buffer);
+ 		if (ret)
+@@ -522,7 +506,8 @@ static struct hwmon_chip_info asus_wmi_ec_chip_info = {
+ };
+ 
+ static int asus_wmi_ec_configure_sensor_setup(struct device *dev,
+-					      struct asus_wmi_sensors *sensor_data)
++					      struct asus_wmi_sensors *sensor_data,
++					      const enum known_ec_sensor *bsi)
+ {
+ 	struct hwmon_channel_info *asus_wmi_hwmon_chan;
+ 	const struct hwmon_channel_info **ptr_asus_wmi_ci;
+@@ -533,7 +518,7 @@ static int asus_wmi_ec_configure_sensor_setup(struct device *dev,
+ 	struct device *hwdev;
+ 	int i, ret;
+ 
+-	ret = asus_wmi_ec_fill_board_sensors(&sensor_data->ec);
++	ret = asus_wmi_ec_fill_board_sensors(&sensor_data->ec, bsi);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -598,11 +583,21 @@ static int asus_wmi_ec_configure_sensor_setup(struct device *dev,
+ static int asus_wmi_probe(struct wmi_device *wdev, const void *context)
+ {
+ 	struct asus_wmi_sensors *sensor_data;
++	struct asus_wmi_data *board_sensors;
++	const enum known_ec_sensor *bsi;
++	const struct dmi_system_id *dmi_id;
+ 	struct device *dev = &wdev->dev;
+ 
+-	if (!dmi_check_system(asus_wmi_ec_dmi_table))
++	dmi_id = dmi_first_match(asus_wmi_ec_dmi_table);
++	if (!dmi_id)
+ 		return -ENODEV;
+ 
++	board_sensors = dmi_id->driver_data;
++	if (!board_sensors)
++		return -ENODEV;
++
++	bsi = board_sensors->known_board_sensors;
++
+ 	sensor_data = devm_kzalloc(dev, sizeof(struct asus_wmi_sensors),
+ 				   GFP_KERNEL);
+ 	if (!sensor_data)
+@@ -614,7 +609,7 @@ static int asus_wmi_probe(struct wmi_device *wdev, const void *context)
+ 
+ 	/* ec init */
+ 	return asus_wmi_ec_configure_sensor_setup(dev,
+-						  sensor_data);
++						  sensor_data, bsi);
+ }
+ 
+ static const struct wmi_device_id asus_ec_wmi_id_table[] = {
+diff --git a/drivers/hwmon/asus_wmi_sensors.c b/drivers/hwmon/asus_wmi_sensors.c
+index 9fe26e164..5f255b5fe 100644
+--- a/drivers/hwmon/asus_wmi_sensors.c
++++ b/drivers/hwmon/asus_wmi_sensors.c
+@@ -52,16 +52,16 @@
+ #include <linux/units.h>
+ #include <linux/wmi.h>
+ 
+-#define ASUSWMI_MONITORING_GUID		"466747A0-70EC-11DE-8A39-0800200C9A66"
+-#define ASUSWMI_METHODID_GET_VALUE	0x52574543
+-#define ASUSWMI_METHODID_UPDATE_BUFFER	0x51574543
+-#define ASUSWMI_METHODID_GET_INFO	0x50574543
+-#define ASUSWMI_METHODID_GET_NUMBER		0x50574572
+-#define ASUSWMI_METHODID_GET_VERSION		0x50574574
++#define	ASUSWMI_MONITORING_GUID	"466747A0-70EC-11DE-8A39-0800200C9A66"
++#define	ASUSWMI_METHODID_GET_VALUE	0x52574543
++#define	ASUSWMI_METHODID_UPDATE_BUFFER	0x51574543
++#define	ASUSWMI_METHODID_GET_INFO	0x50574543
++#define	ASUSWMI_METHODID_GET_NUMBER	0x50574572
++#define	ASUSWMI_METHODID_GET_VERSION	0x50574574
+ 
+-#define ASUS_WMI_MAX_STR_SIZE	32
++#define	ASUS_WMI_MAX_STR_SIZE	32
+ 
+-#define DMI_EXACT_MATCH_ASUS_BOARD_NAME(name) \
++#define	DMI_EXACT_MATCH_ASUS_BOARD_NAME(name) \
+ 	{ \
+ 		.matches = { \
+ 			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, \
+@@ -176,7 +176,6 @@ struct asus_wmi_sensors {
+  */
+ static int asus_wmi_call_method(u32 method_id, u32 *args, struct acpi_buffer *output)
+ {
+-#if IS_ENABLED(CONFIG_ACPI_WMI)
+ 	struct acpi_buffer input = {(acpi_size) sizeof(*args), args };
+ 	acpi_status status;
+ 
+@@ -185,9 +184,6 @@ static int asus_wmi_call_method(u32 method_id, u32 *args, struct acpi_buffer *ou
+ 		return -EIO;
+ 
+ 	return 0;
+-#else
+-	return -EOPNOTSUPP;
+-#endif
+ }
+ 
+ /*
 -- 
 2.33.0.610.gcefe983a32
 

@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.14.12  
+0000 : Patch 5.14.13  
 0001 : ProjectC 5.14-r3  
 0002 : 5.14 Graysky's CPU optimization patches  
 0003 : "Old" fsync patch for backwards compatibility  
