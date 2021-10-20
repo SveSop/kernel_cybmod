@@ -1,29 +1,57 @@
-From 011b6fdbffbf3a9f8846740de707baaf94e58337 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 17 Oct 2021 09:52:09 +0000
+From 02801b5a25b2c208087a95110d6dab6579e85b08 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 20 Oct 2021 10:37:22 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11875 +-------------------------------------
- 1 file changed, 3 insertions(+), 11872 deletions(-)
+ debian.master/changelog | 11903 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11900 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 7f6ea04e7e79..c9e88f6af0f1 100644
+index bbdb23a7f7b5..959bd8bfb330 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11875 +1,6 @@
+@@ -1,11903 +1,6 @@
+-linux-unstable (5.15.0-6.6) impish; urgency=medium
++linux (5.14.14-051414.202110201037) impish; urgency=low
+ 
+-  * impish/linux-unstable: 5.15.0-6.6 -proposed tracker (LP: #1947565)
++  Mainline build at commit: v5.14.14
+ 
+-  * [impish] Remove the downstream xr-usb-uart driver (LP: #1945938)
+-    - SAUCE: xr-usb-serial: remove driver
+-    - [Config] update modules list
++ -- Mainline Build <kernel@kathleen>  Wed, 20 Oct 2021 10:37:22 +0000
+ 
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
+-  * Miscellaneous Ubuntu changes
+-    - rebase to v5.15-rc6
+-    - [Config] update config & annotations following v5.15-rc6 rebase
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: SAUCE: xr-usb-serial: switch to tty_alloc_driver() and
+-      tty_driver_kref_put()"
+-    - Revert "UBUNTU: SAUCE: xr-usb-serial: update return code for
+-      xr_usb_serial_tty_write_room() and xr_usb_serial_tty_chars_in_buffer()"
+-    - Revert "UBUNTU: [Packaging] FTBFS: disable zfs"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15-rc6
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 18 Oct 2021 12:24:45 +0200
+-
 -linux-unstable (5.15.0-5.5) impish; urgency=medium
-+linux (5.14.13-051413.202110170952) impish; urgency=low
- 
+-
 -  * impish/linux-unstable: 5.15.0-5.5 -proposed tracker (LP: #1946338)
-+  Mainline build at commit: v5.14.13
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - rebase to v5.15-rc5
 -    - [Config] FB_SIMPLE=m
 -    - [Config] update annotations
-+ -- Mainline Build <kernel@sita>  Sun, 17 Oct 2021 09:52:09 +0000
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v5.15-rc5
