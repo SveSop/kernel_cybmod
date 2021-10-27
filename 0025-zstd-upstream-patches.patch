@@ -1,7 +1,7 @@
-From ba84d456cf343aa51b5dbfe8e90f645c6637a77e Mon Sep 17 00:00:00 2001
+From bd1c2b4dbecb832859b8aa8096e05711839bafaf Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Fri, 11 Sep 2020 16:49:00 -0700
-Subject: [PATCH 1/7] lib: zstd: Add kernel-specific API
+Subject: [PATCH 1/8] lib: zstd: Add kernel-specific API
 
 This patch:
 - Moves `include/linux/zstd.h` -> `include/linux/zstd_lib.h`
@@ -3487,13 +3487,13 @@ index 66cd487a3..02e92c2cb 100644
  MODULE_LICENSE("Dual BSD/GPL");
  MODULE_DESCRIPTION("Zstd Decompressor");
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From e6cc1236e793032e2285decab672243d51780624 Mon Sep 17 00:00:00 2001
+From d24e9754404911167619b428124cb70466ad78c3 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 14 Sep 2020 12:54:12 -0700
-Subject: [PATCH 2/7] lib: zstd: Add decompress_sources.h for decompress_unzstd
+Subject: [PATCH 2/8] lib: zstd: Add decompress_sources.h for decompress_unzstd
 
 Adds decompress_sources.h which includes every .c file necessary for
 zstd decompression. This is used in decompress_unzstd.c so the internal
@@ -3556,13 +3556,13 @@ index 000000000..9ba367b44
 +#include "zstd_common.c"
 +#include "decompress.c"
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 9e36ffbe49e6afd8f0a5a9bd84f12251e8cd1179 Mon Sep 17 00:00:00 2001
+From e43927aa116fdec25283b9b263457085f0a2d03a Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 4 Oct 2021 18:07:50 -0700
-Subject: [PATCH 3/7] Import upstream zstd as-is
+Subject: [PATCH 3/8] Import upstream zstd as-is
 
 ---
  include/linux/zstd_errors.h                   |   95 +
@@ -45120,13 +45120,13 @@ index 55e1b4cba..000000000
 -
 -#endif /* ZSTD_OPT_H_91842398743 */
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 6f67026a02d26be942b6a9dba923dd778085047b Mon Sep 17 00:00:00 2001
+From d39122a3ca91c8963cab08c12b5680d1d8db2bd5 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 4 Oct 2021 18:08:46 -0700
-Subject: [PATCH 4/7] Import upstream zstd modified for Linux
+Subject: [PATCH 4/8] Import upstream zstd modified for Linux
 
 ---
  include/linux/zstd.h                          |  13 +-
@@ -50275,13 +50275,13 @@ index 000000000..f4ed952ed
 +MODULE_LICENSE("Dual BSD/GPL");
 +MODULE_DESCRIPTION("Zstd Decompressor");
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 7ca8710b3181fa7f1c0e6f5408d4ba6f6e83e42d Mon Sep 17 00:00:00 2001
+From 096063aa51e815d38682aa831e772b601bb1dfc7 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 26 Apr 2021 16:34:03 -0700
-Subject: [PATCH 5/7] MAINTAINERS: Add maintainer entry for zstd
+Subject: [PATCH 5/8] MAINTAINERS: Add maintainer entry for zstd
 
 Adds a maintainer entry for zstd listing myself as the maintainer for
 all zstd code, pointing to the upstream issues tracker for bugs, and
@@ -50316,13 +50316,13 @@ index d7b4f3287..4e2240d31 100644
  M:	Seth Jennings <sjenning@redhat.com>
  M:	Dan Streetman <ddstreet@ieee.org>
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From c2950207e35cfa2ab305824e51b9b7a249e5d2b9 Mon Sep 17 00:00:00 2001
+From 08252b03fc8982e27572aea95f360895d9dffe88 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 12 Oct 2021 08:59:03 +0200
-Subject: [PATCH 6/7] zstd-5.14: update to next-20211012
+Subject: [PATCH 6/8] zstd-5.14: update to next-20211012
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -50464,13 +50464,13 @@ index 7a39dc799..b4d81d844 100644
  }
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 32841e9b97053c1e9458775bcb98ab6b76e9f80d Mon Sep 17 00:00:00 2001
+From 28a88f23b6c8739d7342280b86bc0b8ed835cc4b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Pawe=C5=82=20Jasiak?= <pawel@jasiak.dev>
 Date: Fri, 8 Oct 2021 13:37:59 +0200
-Subject: [PATCH 7/7] kbuild: Add make tarzst-pkg build option
+Subject: [PATCH 7/8] kbuild: Add make tarzst-pkg build option
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -50541,5 +50541,61 @@ index 221aa7df0..cb54c7f1a 100755
  		echo "Unknown tarball target \"${1}\" requested, please add it to ${0}." >&2
  		exit 1
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
+
+
+From 66da8e9bfc801b309187c5bf55d52fa1560f4c1e Mon Sep 17 00:00:00 2001
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 21 Oct 2021 13:23:53 -0700
+Subject: [PATCH 8/8] lib: zstd: Add cast to silence clang's
+ -Wbitwise-instead-of-logical
+
+A new warning in clang warns that there is an instance where boolean
+expressions are being used with bitwise operators instead of logical
+ones:
+
+lib/zstd/decompress/huf_decompress.c:890:25: warning: use of bitwise '&' with boolean operands [-Wbitwise-instead-of-logical]
+                        (BIT_reloadDStreamFast(&bitD1) == BIT_DStream_unfinished)
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+zstd does this frequently to help with performance, as logical operators
+have branches whereas bitwise ones do not.
+
+To fix this warning in other cases, the expressions were placed on
+separate lines with the '&=' operator; however, this particular instance
+was moved away from that so that it could be surrounded by LIKELY, which
+is a macro for __builtin_expect(), to help with a performance
+regression, according to upstream zstd pull #1973.
+
+Aside from switching to logical operators, which is likely undesirable
+in this instance, or disabling the warning outright, the solution is
+casting one of the expressions to an integer type to make it clear to
+clang that the author knows what they are doing. Add a cast to U32 to
+silence the warning. The first U32 cast is to silence an instance of
+-Wshorten-64-to-32 because __builtin_expect() returns long so it cannot
+be moved.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1486
+Link: https://github.com/facebook/zstd/pull/1973
+Reported-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ lib/zstd/decompress/huf_decompress.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/zstd/decompress/huf_decompress.c b/lib/zstd/decompress/huf_decompress.c
+index 05570ed5f..5105e59ac 100644
+--- a/lib/zstd/decompress/huf_decompress.c
++++ b/lib/zstd/decompress/huf_decompress.c
+@@ -886,7 +886,7 @@ HUF_decompress4X2_usingDTable_internal_body(
+             HUF_DECODE_SYMBOLX2_0(op2, &bitD2);
+             HUF_DECODE_SYMBOLX2_0(op3, &bitD3);
+             HUF_DECODE_SYMBOLX2_0(op4, &bitD4);
+-            endSignal = (U32)LIKELY(
++            endSignal = (U32)LIKELY((U32)
+                         (BIT_reloadDStreamFast(&bitD1) == BIT_DStream_unfinished)
+                       & (BIT_reloadDStreamFast(&bitD2) == BIT_DStream_unfinished)
+                       & (BIT_reloadDStreamFast(&bitD3) == BIT_DStream_unfinished)
+-- 
+2.33.1.711.g9d530dc002
 

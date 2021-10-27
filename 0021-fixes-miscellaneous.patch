@@ -1,7 +1,7 @@
-From 5c4c630e88b953b3bb443a69c2780f43a1e886ee Mon Sep 17 00:00:00 2001
+From e18c4df189f046762388ce2e4c994bb06a736fa8 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/20] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/19] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index 1e8ab4749..75122fd65 100644
  endif
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 0c76abb4dcbdcdbe4ff604431231802118e765af Mon Sep 17 00:00:00 2001
+From b68e7f38d61ed390fe293da9fc363685fca281f9 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/20] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/19] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 65e3e7df8..b41afee77 100644
  	int ret;
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 224c7e7bad9da5582e4b328a7b1cd2704b29fcc3 Mon Sep 17 00:00:00 2001
+From efe1c00539f180170c45d5e65e5c570565dff2ed Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Tue, 9 Jul 2019 13:49:19 -0500
-Subject: [PATCH 03/20] kbuild: add -fcf-protection=none to retpoline flags
+Subject: [PATCH 03/19] kbuild: add -fcf-protection=none to retpoline flags
 
 -mindirect-branch and -fcf-protection are not compatible, and
 so kernel builds fail with a gcc build where -fcf-protection is
@@ -76,7 +76,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 7bdca9dc0..299f370ad 100644
+index f05668e1f..7051608b1 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -704,6 +704,10 @@ RETPOLINE_CFLAGS_CLANG := -mretpoline-external-thunk
@@ -91,13 +91,13 @@ index 7bdca9dc0..299f370ad 100644
  export RETPOLINE_VDSO_CFLAGS
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 171f1e40d3235888bf21f381cfc1ec6318d694ab Mon Sep 17 00:00:00 2001
+From 964fa2c836e0e5d66fe8d7b15ad41811e7bcfba7 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 04/20] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 04/19] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -191,13 +191,13 @@ index f1782b816..b902b66d2 100644
  
  		/*
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 118e8e49737dd5c31c9cb166f304e782dc135f9c Mon Sep 17 00:00:00 2001
+From 547119a6a843d9b24a76ff031690d2aaa900b00f Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 05/20] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 05/19] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -227,13 +227,13 @@ index 7caa0e3ea..9970653e0 100644
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 8c6aa1d29d46ba2859019f3345791d8d3b3b7d3b Mon Sep 17 00:00:00 2001
+From 87c6e51bdf994c6a4db79fe008000aff37e887e8 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 06/20] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 06/19] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -334,13 +334,13 @@ index b902b66d2..1bf7dcfbe 100644
  
  		/*
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From f663bdf45d78004d8b424e479407a8a4a2c7fe2b Mon Sep 17 00:00:00 2001
+From fc60f8844526759c5554b34719e7faeeee197206 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 07/20] kbuild: Disable stack conservation for GCC
+Subject: [PATCH 07/19] kbuild: Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -353,7 +353,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 299f370ad..d15a5f2d6 100644
+index 7051608b1..ab8beca82 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1020,9 +1020,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -367,13 +367,13 @@ index 299f370ad..d15a5f2d6 100644
  KBUILD_CFLAGS   += -Werror=date-time
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From aab7588014ca9be5a3e483aa7f42e1a90972a07b Mon Sep 17 00:00:00 2001
+From 9a79968adbf41dd6ae45a9c5baa676955f52d7ef Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 08/20] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 08/19] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -565,13 +565,13 @@ index 8c3c1ef92..49c9c58bd 100644
  };
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From f5d3d2a7e62280d0e56ee4ab8e4676526047a515 Mon Sep 17 00:00:00 2001
+From d18e78dece2cc77053bfb729b6dc7b4a51e59ba9 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Mon, 3 Aug 2020 21:18:53 +0200
-Subject: [PATCH 09/20] ZEN: Add OpenRGB patches
+Subject: [PATCH 09/19] ZEN: Add OpenRGB patches
 
 Squashed commit of the following:
 
@@ -1314,13 +1314,13 @@ index 8c1b31ed0..0b1b36fa0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 0d53b3e8d0372da00005666d0a4df511c5f4285c Mon Sep 17 00:00:00 2001
+From e31b73bc8834fdfa9383aff9c6b462a5560782b0 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 10/20] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 10/19] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -1448,13 +1448,13 @@ index b59136c41..4154030c8 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 342b63cfd57089aab8d85263d3f888aa3e40f248 Mon Sep 17 00:00:00 2001
+From 1079baa45f83cb1999c04fba7ca0f6dcd1a9cbd5 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 11/20] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 11/19] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -1572,13 +1572,13 @@ index b06138c61..ec17d82ea 100644
  redirty:
  	redirty_page_for_writepage(wbc, page);
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From ee94bacc3f5117acdbc0e0e1dea34b45246a6518 Mon Sep 17 00:00:00 2001
+From 3913f561cdbebf299ba4a6d11c3c7f22be3b4471 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 12/20] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 12/19] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1642,13 +1642,13 @@ index e9d39c485..3bceead8d 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From dbb81eef0990bf95790107dd550e332b0ef66525 Mon Sep 17 00:00:00 2001
+From 2e4ac07d2831f6782163be846278a9965f799a8d Mon Sep 17 00:00:00 2001
 From: Josef Bacik <josef@toxicpanda.com>
 Date: Wed, 14 Jul 2021 14:47:22 -0400
-Subject: [PATCH 13/20] fs: add a filemap_fdatawrite_wbc helper
+Subject: [PATCH 13/19] fs: add a filemap_fdatawrite_wbc helper
 
 Btrfs sometimes needs to flush dirty pages on a bunch of dirty inodes in
 order to reclaim metadata reservations.  Unfortunately most helpers in
@@ -1760,13 +1760,13 @@ index d1458ecf2..034d370d4 100644
  
  static inline int __filemap_fdatawrite(struct address_space *mapping,
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 806746827c43dc5313024ad803d567d1037dd4d1 Mon Sep 17 00:00:00 2001
+From 2dfe73f5f45f4eda123d2b21b80ad9bad04b1ada Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Fri, 27 Aug 2021 14:00:56 -0400
-Subject: [PATCH 14/20] NFS: Always provide aligned buffers to the RPC read
+Subject: [PATCH 14/19] NFS: Always provide aligned buffers to the RPC read
  layers
 
 Instead of messing around with XDR padding in the RDMA layer, we should
@@ -1806,13 +1806,13 @@ index 9f39e0a1a..08d6cc57c 100644
  		goto out_error;
  
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 8f957f7cad6855723e782180290060ddd7e3a81e Mon Sep 17 00:00:00 2001
+From 3cf83deb7e69402423cc2fbfb73996d43cfe6e9f Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 24 Aug 2021 11:38:17 -0400
-Subject: [PATCH 15/20] SUNRPC: Simplify socket shutdown when not reusing TCP
+Subject: [PATCH 15/19] SUNRPC: Simplify socket shutdown when not reusing TCP
  ports
 
 If we're not required to reuse the TCP port, then we can just
@@ -1841,13 +1841,13 @@ index 02b071dbd..5fb969f8a 100644
  	default:
  		kernel_sock_shutdown(sock, SHUT_RDWR);
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 20ae2ecb5db3044b257454d44ee4e86c096cf33b Mon Sep 17 00:00:00 2001
+From 7385d5db50fd0734e306c4dedbfe90778a072202 Mon Sep 17 00:00:00 2001
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 Date: Tue, 24 Aug 2021 11:38:18 -0400
-Subject: [PATCH 16/20] SUNRPC: Tweak TCP socket shutdown in the RPC client
+Subject: [PATCH 16/19] SUNRPC: Tweak TCP socket shutdown in the RPC client
 
 We only really need to call shutdown() if we're in the ESTABLISHED TCP
 state, since that is the only case where the client is initiating a
@@ -1888,13 +1888,13 @@ index 5fb969f8a..d80793a1b 100644
  	}
  }
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From b61f25314db5ff50b7d7f26f13f0a3b2de262ca3 Mon Sep 17 00:00:00 2001
+From d3d299bb8279c1b0f2c1ac0db616150ad5e74cb4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 7 Oct 2021 20:08:13 +0200
-Subject: [PATCH 17/20] Revert "ZEN: Add OpenRGB patches"
+Subject: [PATCH 17/19] Revert "ZEN: Add OpenRGB patches"
 
 This reverts commit 445d880f8944f6f0169bee1d9f3bf5ddb7bc97ed.
 
@@ -2611,13 +2611,13 @@ index 0b1b36fa0..8c1b31ed0 100644
  	/* If the SMBus is still busy, we give up */
  	if (timeout == MAX_TIMEOUT) {
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From b946a3d1d3ca3c58d9ee3edda09a82c1cb72cbde Mon Sep 17 00:00:00 2001
+From 883c50796919b12dfc909aeda79f3d8e0907404a Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 18/20] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 18/19] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -3345,13 +3345,13 @@ index 8c1b31ed0..9131e4004 100644
  		/* Try to add the aux adapter if it exists,
  		 * piix4_add_adapter will clean up if this fails */
 -- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 
 
-From 4e08441a64425fe6bd9bd7067474b988784d54e9 Mon Sep 17 00:00:00 2001
+From 34595ce65ccc3d6dd91bde9f63868d229cd1f4f5 Mon Sep 17 00:00:00 2001
 From: Jens Axboe <axboe@kernel.dk>
 Date: Tue, 12 Oct 2021 12:13:52 -0600
-Subject: [PATCH 19/20] nvme: don't memset() the normal read/write command
+Subject: [PATCH 19/19] nvme: don't memset() the normal read/write command
 
 This memset in the fast path costs a lot of cycles on my setup. Here's a
 top-of-profile of doing ~6.7M IOPS:
@@ -3469,72 +3469,5 @@ index 9b6f78eac..9f0207561 100644
  		break;
  	default:
 -- 
-2.33.0.610.gcefe983a32
-
-
-From 87ca243da68bd27b57cacfe06488aa0d6565b835 Mon Sep 17 00:00:00 2001
-From: Sean Christopherson <seanjc@google.com>
-Date: Sun, 17 Oct 2021 15:56:52 +0000
-Subject: [PATCH 20/20] mm/secretmem: Fix NULL page->mapping dereference in
- page_is_secretmem()
-
-Check for a NULL page->mapping before dereferencing the mapping in
-page_is_secretmem(), as the page's mapping can be nullified while gup() is
-running, e.g.  by reclaim or truncation.
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000068
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 6 PID: 4173897 Comm: CPU 3/KVM Tainted: G        W
-  RIP: 0010:internal_get_user_pages_fast+0x621/0x9d0
-  Code: <48> 81 7a 68 80 08 04 bc 0f 85 21 ff ff 8 89 c7 be
-  RSP: 0018:ffffaa90087679b0 EFLAGS: 00010046
-  RAX: ffffe3f37905b900 RBX: 00007f2dd561e000 RCX: ffffe3f37905b934
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffe3f37905b900
-  ...
-  CR2: 0000000000000068 CR3: 00000004c5898003 CR4: 00000000001726e0
-  Call Trace:
-   get_user_pages_fast_only+0x13/0x20
-   hva_to_pfn+0xa9/0x3e0
-   try_async_pf+0xa1/0x270
-   direct_page_fault+0x113/0xad0
-   kvm_mmu_page_fault+0x69/0x680
-   vmx_handle_exit+0xe1/0x5d0
-   kvm_arch_vcpu_ioctl_run+0xd81/0x1c70
-   kvm_vcpu_ioctl+0x267/0x670
-   __x64_sys_ioctl+0x83/0xa0
-   do_syscall_64+0x56/0x80
-   entry_SYSCALL_64_after_hwframe+0x44/0xae
-
-Link: https://lkml.kernel.org/r/20211007231502.3552715-1-seanjc@google.com
-Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reported-by: Darrick J. Wong <djwong@kernel.org>
-Reported-by: Stephen <stephenackerman16@gmail.com>
-Tested-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Mike Rapoport <rppt@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
- include/linux/secretmem.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/include/linux/secretmem.h b/include/linux/secretmem.h
-index 21c3771e6..988528b5d 100644
---- a/include/linux/secretmem.h
-+++ b/include/linux/secretmem.h
-@@ -23,7 +23,7 @@ static inline bool page_is_secretmem(struct page *page)
- 	mapping = (struct address_space *)
- 		((unsigned long)page->mapping & ~PAGE_MAPPING_FLAGS);
- 
--	if (mapping != page->mapping)
-+	if (!mapping || mapping != page->mapping)
- 		return false;
- 
- 	return mapping->a_ops == &secretmem_aops;
--- 
-2.33.0.610.gcefe983a32
+2.33.1.711.g9d530dc002
 

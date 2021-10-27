@@ -1,28 +1,44 @@
-From 02801b5a25b2c208087a95110d6dab6579e85b08 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 20 Oct 2021 10:37:22 +0000
+From b5e93c7c86e92592327cb638505cd20408e5f5f3 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 27 Oct 2021 05:48:12 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11903 +-------------------------------------
- 1 file changed, 3 insertions(+), 11900 deletions(-)
+ debian.master/changelog | 11919 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11916 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index bbdb23a7f7b5..959bd8bfb330 100644
+index 81c449e41a6e..36d6cfe71d27 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11903 +1,6 @@
--linux-unstable (5.15.0-6.6) impish; urgency=medium
-+linux (5.14.14-051414.202110201037) impish; urgency=low
+@@ -1,11919 +1,6 @@
+-linux-unstable (5.15.0-7.7) jammy; urgency=medium
++linux (5.14.15-051415.202110270548) jammy; urgency=low
  
+-  * jammy/linux-unstable: 5.15.0-7.7 -proposed tracker (LP: #1948770)
++  Mainline build at commit: v5.14.15
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Config] Temporarily disable signing for ppc64el and s390x
+-    - packaging: switch release to Jammy
+-    - rebase to v5.15-rc7
+-    - [Config] GCC version update
++ -- Mainline Build <kernel@gloin>  Wed, 27 Oct 2021 05:48:12 -0400
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15-rc7
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 26 Oct 2021 11:38:14 +0200
+-
+-linux-unstable (5.15.0-6.6) jammy; urgency=medium
+-
 -  * impish/linux-unstable: 5.15.0-6.6 -proposed tracker (LP: #1947565)
-+  Mainline build at commit: v5.14.14
- 
+-
 -  * [impish] Remove the downstream xr-usb-uart driver (LP: #1945938)
 -    - SAUCE: xr-usb-serial: remove driver
 -    - [Config] update modules list
-+ -- Mainline Build <kernel@kathleen>  Wed, 20 Oct 2021 10:37:22 +0000
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
 -
