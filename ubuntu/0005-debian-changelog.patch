@@ -1,30 +1,81 @@
-From b5e93c7c86e92592327cb638505cd20408e5f5f3 Mon Sep 17 00:00:00 2001
+From 9e306185fc19be04a0a98215a3c5a528e13506b3 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 27 Oct 2021 05:48:12 -0400
+Date: Tue, 2 Nov 2021 15:35:24 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11919 +-------------------------------------
- 1 file changed, 3 insertions(+), 11916 deletions(-)
+ debian.master/changelog | 11970 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11967 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 81c449e41a6e..36d6cfe71d27 100644
+index 7fd80db3149c..6e0ee1e1a34f 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11919 +1,6 @@
+@@ -1,11970 +1,6 @@
+-linux-unstable (5.15.0-8.8) jammy; urgency=medium
++linux (5.14.16-051416.202111021535) jammy; urgency=low
+ 
+-  * jammy/linux-unstable: 5.15.0-8.8 -proposed tracker (LP: #1949436)
++  Mainline build at commit: v5.14.16
+ 
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
++ -- Mainline Build <kernel@gloin>  Tue, 02 Nov 2021 15:35:24 -0400
+ 
+-  * Drop "UBUNTU: SAUCE: cachefiles: Page leaking in
+-    cachefiles_read_backing_file while vmscan is active" (LP: #1947709)
+-    - Revert "UBUNTU: SAUCE: cachefiles: Page leaking in
+-      cachefiles_read_backing_file while vmscan is active"
+-
+-  * Add l2tp.sh in net from ubuntu_kernel_selftests back (LP: #1934293)
+-    - Revert "UBUNTU: SAUCE: selftests/net -- disable l2tp.sh test"
+-
+-  * Check for changes relevant for security certifications (LP: #1945989)
+-    - [Packaging] Add fips-checks as part of finalchecks
+-
+-  * Add final-checks to check certificates (LP: #1947174)
+-    - [Packaging] Add system trusted and revocation keys final check
+-
+-  * Can only reach PC3 when ethernet is plugged r8169 (LP: #1946433)
+-    - r8169: Enable chip-specific ASPM regardless of PCIe ASPM status
+-    - PCI/ASPM: Introduce a new helper to report ASPM capability
+-    - r8169: Implement dynamic ASPM mechanism
+-
+-  * rtw89 kernel module for Realtek 8852 wifi is missing (LP: #1945967)
+-    - rtw89: add Realtek 802.11ax driver
+-    - rtw89: Remove redundant check of ret after call to rtw89_mac_enable_bb_rf
+-    - rtw89: fix return value check in rtw89_cam_send_sec_key_cmd()
+-    - rtw89: remove unneeded semicolon
+-    - [Config] RTW89=m
+-
+-  * Fix A yellow screen pops up in an instant (< 1 second) and then disappears
+-    before loading the system (LP: #1945932)
+-    - drm/i915: Stop force enabling pipe bottom color gammma/csc
+-
+-  * disable CONFIG_KFENCE_STATIC_KEYS in linux 5.15 (LP: #1948038)
+-    - [Config] disable CONFIG_KFENCE_STATIC_KEYS
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Debian] Remove old and unused firmware helper scripts
+-    - [Packaging] Replace Perl oneliner with Bash statements
+-    - rebase to v5.15
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.15
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 02 Nov 2021 08:29:45 +0100
+-
 -linux-unstable (5.15.0-7.7) jammy; urgency=medium
-+linux (5.14.15-051415.202110270548) jammy; urgency=low
- 
+-
 -  * jammy/linux-unstable: 5.15.0-7.7 -proposed tracker (LP: #1948770)
-+  Mainline build at commit: v5.14.15
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Config] Temporarily disable signing for ppc64el and s390x
 -    - packaging: switch release to Jammy
 -    - rebase to v5.15-rc7
 -    - [Config] GCC version update
-+ -- Mainline Build <kernel@gloin>  Wed, 27 Oct 2021 05:48:12 -0400
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v5.15-rc7
