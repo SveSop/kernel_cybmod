@@ -7,8 +7,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0000 : Patch 5.14.15  
 0001 : ProjectC 5.14-r3  
 0002 : 5.14 Graysky's CPU optimization patches  
-0003 : "Old" fsync patch for backwards compatibility  
-0004 : Futex2 interface  
+0003 : v5.14-fsync-waitvcompat  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0006 : ProjectC scheduler tweaks  
 0007 : zstd kernel settings  
@@ -31,7 +30,7 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0010), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default PDS scheduler (Project C) and CONFIG_HZ=1000 + NO_HZ_FULL + Futex2**  
+**This config has default PDS scheduler (Project C) and CONFIG_HZ=1000 + NO_HZ_IDLE + Fsync_waitv (backwards compatible)**  
 **Also see [http://cchalpha.blogspot.com/](http://cchalpha.blogspot.com/) for scheduler info**  
 
 **Futex2 usage requires a patched wine version! Default proton will use futex2**  
