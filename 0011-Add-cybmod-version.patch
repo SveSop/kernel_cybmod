@@ -1,6 +1,6 @@
 From 820bfe3fc1a6ffddec9019bf80d6dbd541bdd10b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Sun, 17 Jan 2021 13:53:54 +0100
+Date: Mon, 8 Nov 2021 13:53:54 +0100
 Subject: [PATCH] Version
 
 ---
@@ -15,7 +15,7 @@ index e99310c2b..92c0f623e 100644
  PHONY := __all
  __all:
  
-+CYBVERSION = -cybmod20
++CYBVERSION = -cybmod1
 +CYBNAME = PDS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +

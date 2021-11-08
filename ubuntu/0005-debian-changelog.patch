@@ -1,27 +1,50 @@
-From 9e306185fc19be04a0a98215a3c5a528e13506b3 Mon Sep 17 00:00:00 2001
+From c0b17b7bd17d33e21ef3845f628a57612e059eb7 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 2 Nov 2021 15:35:24 -0400
+Date: Sat, 6 Nov 2021 10:36:20 -0400
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11970 +-------------------------------------
- 1 file changed, 3 insertions(+), 11967 deletions(-)
+ debian.master/changelog | 11993 +-------------------------------------
+ 1 file changed, 3 insertions(+), 11990 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 7fd80db3149c..6e0ee1e1a34f 100644
+index ea32795cb20c..e3211709bd1c 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11970 +1,6 @@
--linux-unstable (5.15.0-8.8) jammy; urgency=medium
-+linux (5.14.16-051416.202111021535) jammy; urgency=low
+@@ -1,11993 +1,6 @@
+-linux (5.15.0-1.1) jammy; urgency=medium
++linux (5.15.1-051501.202111061036) jammy; urgency=low
  
--  * jammy/linux-unstable: 5.15.0-8.8 -proposed tracker (LP: #1949436)
-+  Mainline build at commit: v5.14.16
+-  * jammy/linux: 5.15.0-1.1 -proposed tracker (LP: #1949876)
++  Mainline build at commit: v5.15.1
  
 -  * Packaging resync (LP: #1786013)
--    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@gloin>  Tue, 02 Nov 2021 15:35:24 -0400
+-    - [Packaging] update variants
+-    - [Packaging] update Ubuntu.md
++ -- Mainline Build <kernel@gloin>  Sat, 06 Nov 2021 10:36:19 -0400
  
+-  * Add F81966 watchdog support (LP: #1949063)
+-    - SAUCE: ODM: watchdog: f71808e_wdt: Add F81966 support
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Rewrite debian/scripts/misc/insert-changes.pl in Python
+-    - [Packaging] change source package name to linux
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 04 Nov 2021 18:47:19 +0100
+-
+-linux (5.15.0-0.0) jammy; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 04 Nov 2021 16:47:16 +0100
+-
+-linux-unstable (5.15.0-8.8) jammy; urgency=medium
+-
+-  * jammy/linux-unstable: 5.15.0-8.8 -proposed tracker (LP: #1949436)
+-
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
 -  * Drop "UBUNTU: SAUCE: cachefiles: Page leaking in
 -    cachefiles_read_backing_file while vmscan is active" (LP: #1947709)
 -    - Revert "UBUNTU: SAUCE: cachefiles: Page leaking in

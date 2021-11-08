@@ -1,30 +1,29 @@
-## Cybmod patches for 5.14 kernel  
+## Cybmod patches for 5.15 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.14.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.14.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.14.15  
-0001 : ProjectC 5.14-r3  
-0002 : 5.14 Graysky's CPU optimization patches  
-0003 : v5.14-futex_waitv  
-0004 : v5.14-fsync-waitvcompat  
+0000 : Patch 5.15.1  
+0001 : ProjectC 5.15-r0  
+0002 : 5.15 Graysky's CPU optimization patches  
+0003 : v5.15-futex_waitv  
+0004 : v5.15-fsync-waitvcompat  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0006 : ProjectC scheduler tweaks  
 0007 : zstd kernel settings  
 0008 : hwmon driver for Asus (WMI) motherboards  
-0009 : ProjectC compile fixup  
+0009 : Spectre patches  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
 0020 : Clearlinux patches  
 0021 : Misc fixes  
 0022 : Block patchset  
 0023 : mm: LRU patchset  
-0024 : BFQ disk patchset  
-0025 : zstd upstream patches  
-0026 : -ck picked patches (Xanmod)  
-0027 : BBR2 + various net/TCP patches  
-0028 : ntf3 patches  
+0024 : zstd upstream patches  
+0025 : -ck picked patches (Xanmod)  
+0026 : BBR2 + various net/TCP patches  
+0027 : LRNG kernel patches  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
@@ -34,14 +33,13 @@ ubuntu : Ubuntu mainline kernel patchset
 **This config has default PDS scheduler (Project C) and CONFIG_HZ=1000 + NO_HZ_IDLE + Fsync_waitv (backwards compatible)**  
 **Also see [http://cchalpha.blogspot.com/](http://cchalpha.blogspot.com/) for scheduler info**  
 
-**Futex2 usage requires a patched wine version! Default proton will use futex2**  
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.12.tar.xz    
-cd linux-5.12  
+tar xf linux-5.15.tar.xz    
+cd linux-5.15  
 /path/to/patches/and/cybmod_patch.sh  
 make -j12 deb-pkg # -j depending on your processor cores  
 ```

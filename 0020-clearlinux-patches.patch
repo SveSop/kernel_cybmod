@@ -1,4 +1,4 @@
-From bf579100a960fad5f196fbbdb3b4f1babb124a98 Mon Sep 17 00:00:00 2001
+From 6d467802edc5409cf2b330bd72611e4d9aabbfc0 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 14 Mar 2016 11:10:58 -0600
 Subject: [PATCH 04/26] pci pme wakeups
@@ -10,10 +10,10 @@ boards (sadly, too many of them) in laptops.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index aacf575c1..6cee9b97e 100644
+index ce2ab62b6..feb0e07f4 100644
 --- a/drivers/pci/pci.c
 +++ b/drivers/pci/pci.c
-@@ -59,7 +59,7 @@ struct pci_pme_device {
+@@ -60,7 +60,7 @@ struct pci_pme_device {
  	struct pci_dev *dev;
  };
  
@@ -23,9 +23,9 @@ index aacf575c1..6cee9b97e 100644
  static void pci_dev_d3_sleep(struct pci_dev *dev)
  {
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From acfbce5cec5ad34da668d2390e84586a8f7ffce5 Mon Sep 17 00:00:00 2001
+From 0ded9565700826a04fac4f3ed48a8d412c99ec71 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 6 May 2019 12:57:09 -0500
 Subject: [PATCH 05/26] ksm-wakeups
@@ -53,10 +53,10 @@ index ad912511a..8ccb40284 100644
  
  struct cpumask watchdog_cpumask __read_mostly;
 diff --git a/mm/ksm.c b/mm/ksm.c
-index 3fa9bc8a6..841045858 100644
+index a5716fdec..7d5ec0138 100644
 --- a/mm/ksm.c
 +++ b/mm/ksm.c
-@@ -2417,9 +2417,14 @@ static int ksm_scan_thread(void *nothing)
+@@ -2415,9 +2415,14 @@ static int ksm_scan_thread(void *nothing)
  
  		if (ksmd_should_run()) {
  			sleep_ms = READ_ONCE(ksm_thread_sleep_millisecs);
@@ -75,9 +75,9 @@ index 3fa9bc8a6..841045858 100644
  			wait_event_freezable(ksm_thread_wait,
  				ksmd_should_run() || kthread_should_stop());
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From 5ca5d89f7b97e8d92c2796e34397457073c6a3bc Mon Sep 17 00:00:00 2001
+From 9cb4ecfb92d7a2065ed2938dfcd03bb955a0676a Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 19 Mar 2016 21:32:19 -0400
 Subject: [PATCH 06/26] intel_idle: tweak cpuidle cstates
@@ -295,9 +295,9 @@ index e6c543b5e..b73df64b2 100644
  		.enter_s2idle = intel_idle_s2idle, },
  	{
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From a557cd233c3c285d8c781b7be26a307424f091ba Mon Sep 17 00:00:00 2001
+From b6003154ade1b6ee9166767093e575e4db0f3bc0 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 11 Feb 2015 17:28:14 -0600
 Subject: [PATCH 09/26] smpboot: reuse timer calibration
@@ -323,22 +323,20 @@ index 2e076a459..94bc11664 100644
  	if (sibling < nr_cpu_ids)
  		return cpu_data(sibling).loops_per_jiffy;
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From 703fbccc2e067ce7d70a43e17e8bd32d8fd2412b Mon Sep 17 00:00:00 2001
-From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Thu, 2 Jun 2016 23:36:32 -0500
-Subject: [PATCH 10/26] initialize ata before graphics
+From 0adbedd85c2c8edf18ecbbe44ca3eb098e331cfa Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Mon, 1 Nov 2021 13:07:50 +0100
+Subject: [PATCH 10/26] port: initialize ata before graphics
 
-ATA init is the long pole in the boot process, and its asynchronous.
-move the graphics init after it so that ata and graphics initialize
-in parallel
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  drivers/Makefile | 15 ++++++++-------
  1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/Makefile b/drivers/Makefile
-index 27c018bdf..975edd7f2 100644
+index be5d40ae1..5cf1c4a93 100644
 --- a/drivers/Makefile
 +++ b/drivers/Makefile
 @@ -60,15 +60,8 @@ obj-y				+= char/
@@ -355,9 +353,9 @@ index 27c018bdf..975edd7f2 100644
 -obj-$(CONFIG_FB_INTEL)          += video/fbdev/intelfb/
 -
  obj-$(CONFIG_PARPORT)		+= parport/
- obj-$(CONFIG_NVM)		+= lightnvm/
  obj-y				+= base/ block/ misc/ mfd/ nfc/
-@@ -81,6 +74,14 @@ obj-y				+= macintosh/
+ obj-$(CONFIG_LIBNVDIMM)		+= nvdimm/
+@@ -80,6 +73,14 @@ obj-y				+= macintosh/
  obj-y				+= scsi/
  obj-y				+= nvme/
  obj-$(CONFIG_ATA)		+= ata/
@@ -373,9 +371,9 @@ index 27c018bdf..975edd7f2 100644
  obj-$(CONFIG_MTD)		+= mtd/
  obj-$(CONFIG_SPI)		+= spi/
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From d4f864e401f41101913137328252f69dd72c1782 Mon Sep 17 00:00:00 2001
+From 11f4b8efc970b85b4208eda2f9c8baece9ff6173 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Fri, 6 Jan 2017 15:34:09 +0000
 Subject: [PATCH 12/26] ipv4/tcp: allow the memory tuning for tcp to go a
@@ -386,7 +384,7 @@ Subject: [PATCH 12/26] ipv4/tcp: allow the memory tuning for tcp to go a
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 8cb44040e..c2585c8a6 100644
+index f5c336f8b..27aa106ca 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
 @@ -4557,8 +4557,8 @@ void __init tcp_init(void)
@@ -401,9 +399,62 @@ index 8cb44040e..c2585c8a6 100644
  	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
  	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From 18117cb8f7b4f74275b74930ea53437755714e70 Mon Sep 17 00:00:00 2001
+From 457cc9fa56a61e9aa47b6e3b8819e09357a1565e Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Wed, 17 May 2017 01:52:11 +0000
+Subject: [PATCH 13/26] init: wait for partition and retry scan
+
+As Clear Linux boots fast the device is not ready when
+the mounting code is reached, so a retry device scan will
+be performed every 0.5 sec for at least 40 sec
+and synchronize the async task.
+
+Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
+---
+ init/do_mounts.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/init/do_mounts.c b/init/do_mounts.c
+index 762b53497..107b96927 100644
+--- a/init/do_mounts.c
++++ b/init/do_mounts.c
+@@ -284,8 +284,18 @@ dev_t name_to_dev_t(const char *name)
+ 	if (strcmp(name, "/dev/ram") == 0)
+ 		return Root_RAM0;
+ #ifdef CONFIG_BLOCK
+-	if (strncmp(name, "PARTUUID=", 9) == 0)
+-		return devt_from_partuuid(name + 9);
++	if (strncmp(name, "PARTUUID=", 9) == 0) {
++		dev_t res;
++		int  needtowait = 40<<1;
++		res = devt_from_partuuid(name + 9);
++		while (!res && needtowait) {
++			/* waiting 0.5 sec */
++			msleep(500);
++			res = devt_from_partuuid(name + 9);
++			needtowait--;
++		}
++		return res;
++	}
+ 	if (strncmp(name, "PARTLABEL=", 10) == 0)
+ 		return devt_from_partlabel(name + 10);
+ 	if (strncmp(name, "/dev/", 5) == 0)
+@@ -613,7 +623,9 @@ void __init prepare_namespace(void)
+ 	 * For example, it is not atypical to wait 5 seconds here
+ 	 * for the touchpad of a laptop to initialize.
+ 	 */
++	async_synchronize_full();
+ 	wait_for_device_probe();
++	async_synchronize_full();
+ 
+ 	md_run_setup();
+ 
+-- 
+2.33.1.711.g9d530dc002
+
+From 2f804726f07170adf6741a2058db7c1f5418dd3c Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sat, 8 Dec 2018 18:21:32 +0000
 Subject: [PATCH 18/26] use lfence instead of rep and nop
@@ -426,9 +477,9 @@ index 57b1a7034..e2c45674f 100644
  
  static __always_inline void cpu_relax(void)
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From 9ce06c6af976793e7e21edd5ac3476b0b88dc0cc Mon Sep 17 00:00:00 2001
+From 008cf5fe0a683631268ad73c27fd1edec7e65742 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Thu, 13 Dec 2018 01:00:49 +0000
 Subject: [PATCH 19/26] do accept() in LIFO order for cache efficiency
@@ -440,7 +491,7 @@ Subject: [PATCH 19/26] do accept() in LIFO order for cache efficiency
  3 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/wait.h b/include/linux/wait.h
-index 6598ae35e..100dbbcd0 100644
+index 93dab0e95..04d89a54c 100644
 --- a/include/linux/wait.h
 +++ b/include/linux/wait.h
 @@ -165,6 +165,7 @@ static inline bool wq_has_sleeper(struct wait_queue_head *wq_head)
@@ -502,7 +553,7 @@ index 76577d164..c33f48ed2 100644
  {
  	wq_entry->flags = flags;
 diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 754013fa3..6c7c6393a 100644
+index f25d02ad4..6ed567138 100644
 --- a/net/ipv4/inet_connection_sock.c
 +++ b/net/ipv4/inet_connection_sock.c
 @@ -441,7 +441,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
@@ -515,9 +566,9 @@ index 754013fa3..6c7c6393a 100644
  		release_sock(sk);
  		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From a92829d5ae1c7ef460c8b709e744bd74804992e3 Mon Sep 17 00:00:00 2001
+From b966c8a23d7112ff10f605f9963952f4e4e93d26 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Sun, 18 Feb 2018 23:35:41 +0000
 Subject: [PATCH 20/26] locking: rwsem: spin faster
@@ -528,10 +579,10 @@ tweak rwsem owner spinning a bit
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index 16bfbb10c..3ed590be5 100644
+index 000e8d5a2..fad392d42 100644
 --- a/kernel/locking/rwsem.c
 +++ b/kernel/locking/rwsem.c
-@@ -668,6 +668,7 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+@@ -669,6 +669,7 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
  	struct task_struct *new, *owner;
  	unsigned long flags, new_flags;
  	enum owner_state state;
@@ -539,7 +590,7 @@ index 16bfbb10c..3ed590be5 100644
  
  	owner = rwsem_owner_flags(sem, &flags);
  	state = rwsem_owner_state(owner, flags);
-@@ -701,7 +702,8 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+@@ -702,7 +703,8 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
  			break;
  		}
  
@@ -550,9 +601,9 @@ index 16bfbb10c..3ed590be5 100644
  	rcu_read_unlock();
  
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From 3e1808ee2e4b41a421e76b8f735d24eb83fa7b5f Mon Sep 17 00:00:00 2001
+From ec759643c6bf295e548e6ef04d0e571a73bbbfdf Mon Sep 17 00:00:00 2001
 From: Jim Kukunas <james.t.kukunas@linux.intel.com>
 Date: Sat, 2 Nov 2019 00:59:52 +0000
 Subject: [PATCH 23/26] fix bug in ucode force reload revision check
@@ -576,9 +627,9 @@ index 7e8e07bdd..1ef03ab31 100644
  		goto out;
  	}
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From b9a551193c1c8ff89ccf30562c9c621c614ad495 Mon Sep 17 00:00:00 2001
+From 90a6af121fc606bbfb1739b5a5c9fcc50bc0f176 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Mon, 11 Nov 2019 23:12:11 +0000
 Subject: [PATCH 24/26] nvme workaround
@@ -588,10 +639,10 @@ Subject: [PATCH 24/26] nvme workaround
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index dfd9dec0c..4a080598b 100644
+index f8dd664b2..a11ce1420 100644
 --- a/drivers/nvme/host/core.c
 +++ b/drivers/nvme/host/core.c
-@@ -48,7 +48,7 @@ static u8 nvme_max_retries = 5;
+@@ -47,7 +47,7 @@ static u8 nvme_max_retries = 5;
  module_param_named(max_retries, nvme_max_retries, byte, 0644);
  MODULE_PARM_DESC(max_retries, "max number of retries a command may have");
  
@@ -601,9 +652,9 @@ index dfd9dec0c..4a080598b 100644
  MODULE_PARM_DESC(default_ps_max_latency_us,
  		 "max power saving latency for new devices; use PM QOS to change per device");
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
-From 9e778e12c537cd93f8683dc3fa7effe64f37434a Mon Sep 17 00:00:00 2001
+From 5ecf5e8c7b75924fc3a21cbc0a034f91aaaa9686 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 11 Jun 2020 22:30:56 +0200
 Subject: [PATCH 26/26] Port microcode patches
@@ -615,7 +666,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 62 insertions(+), 4 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index 6a6318e95..1951b34e4 100644
+index efb69be41..10bf3d746 100644
 --- a/arch/x86/kernel/cpu/microcode/core.c
 +++ b/arch/x86/kernel/cpu/microcode/core.c
 @@ -604,6 +604,7 @@ static int microcode_reload_late(void)
@@ -648,7 +699,7 @@ index 6a6318e95..1951b34e4 100644
 +	if (val == 2)
 +		force_ucode_load = true;
 +
- 	get_online_cpus();
+ 	cpus_read_lock();
  
  	ret = check_online_cpus();
 @@ -644,6 +650,7 @@ static ssize_t reload_store(struct device *dev,
@@ -656,7 +707,7 @@ index 6a6318e95..1951b34e4 100644
  
  put:
 +	force_ucode_load = orig_cmd_line;
- 	put_online_cpus();
+ 	cpus_read_unlock();
  
  	if (ret == 0)
 diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
@@ -776,5 +827,5 @@ index 1ef03ab31..92af2b9f1 100644
  		if (!find_matching_signature(phdr,
  					     uci->cpu_sig.sig,
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 
