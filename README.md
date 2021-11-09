@@ -4,13 +4,11 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.15.1  
-0001 : ProjectC 5.15-r0  
+0001 : Patch 5.15.1  
 0002 : 5.15 Graysky's CPU optimization patches  
 0003 : v5.15-futex_waitv  
 0004 : v5.15-fsync-waitvcompat  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
-0006 : ProjectC scheduler tweaks  
 0007 : zstd kernel settings  
 0008 : hwmon driver for Asus (WMI) motherboards  
 0009 : Spectre patches  
@@ -30,8 +28,7 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0010), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default PDS scheduler (Project C) and CONFIG_HZ=1000 + NO_HZ_IDLE + Fsync_waitv (backwards compatible)**  
-**Also see [http://cchalpha.blogspot.com/](http://cchalpha.blogspot.com/) for scheduler info**  
+**This config has default CFS scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE + Fsync_waitv (backwards compatible)**  
 
 **OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
 

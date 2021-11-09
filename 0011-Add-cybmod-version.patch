@@ -16,7 +16,7 @@ index e99310c2b..92c0f623e 100644
  __all:
  
 +CYBVERSION = -cybmod1
-+CYBNAME = PDS Powered
++CYBNAME = CFS Scheduler
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +
  # We are using a recursive build, so we need to do a little thinking

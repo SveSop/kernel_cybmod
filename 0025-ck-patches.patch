@@ -1311,13 +1311,13 @@ Rebased-by: Alexandre Frade <kernel@xanmod.org>
  3 files changed, 67 insertions(+), 7 deletions(-)
 
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 0667e6272..a81b52c06 100644
+index 083be6af29d7..f9da9b1b7a7f 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -126,9 +126,9 @@ static int one_thousand = 1000;
- static int __maybe_unused zero = 0;
- extern int sched_yield_type;
- #endif
+@@ -122,9 +122,9 @@ static unsigned long long_max = LONG_MAX;
+ static int one_hundred = 100;
+ static int two_hundred = 200;
+ static int one_thousand = 1000;
 -#ifdef CONFIG_PRINTK
  static int ten_thousand = 10000;
 -#endif
@@ -1326,10 +1326,10 @@ index 0667e6272..a81b52c06 100644
  #ifdef CONFIG_PERF_EVENTS
  static int six_hundred_forty_kb = 640 * 1024;
  #endif
-@@ -1789,6 +1789,24 @@ static struct ctl_table kern_table[] = {
- 		.extra1		= SYSCTL_ZERO,
- 		.extra2		= SYSCTL_ONE,
- 	},
+@@ -1771,6 +1771,24 @@ int proc_do_static_key(struct ctl_table *table, int write,
+ }
+ 
+ static struct ctl_table kern_table[] = {
 +	{
 +		.procname	= "hrtimer_granularity_us",
 +		.data		= &hrtimer_granularity_us,
@@ -1348,11 +1348,11 @@ index 0667e6272..a81b52c06 100644
 +		.extra1		= SYSCTL_ONE,
 +		.extra2		= &ten_thousand,
 +	},
- #endif /* CONFIG_SCHEDSTATS */
- #endif /* CONFIG_SMP */
- #endif /* CONFIG_SCHED_DEBUG */
+ 	{
+ 		.procname	= "sched_child_runs_first",
+ 		.data		= &sysctl_sched_child_runs_first,
 diff --git a/kernel/time/clockevents.c b/kernel/time/clockevents.c
-index 003ccf338..45fdd88fe 100644
+index 003ccf338d20..45fdd88fe933 100644
 --- a/kernel/time/clockevents.c
 +++ b/kernel/time/clockevents.c
 @@ -190,8 +190,9 @@ int clockevents_tick_resume(struct clock_event_device *dev)
@@ -1367,10 +1367,10 @@ index 003ccf338..45fdd88fe 100644
  /**
   * clockevents_increase_min_delta - raise minimum delta of a clock event device
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 8386840c1..6a6c2552b 100644
+index c71894647aed..115cfff08bfb 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
-@@ -2394,7 +2394,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout);
+@@ -2392,7 +2392,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout);
  long __sched schedule_msec_hrtimeout(long timeout)
  {
  	struct hrtimer_sleeper t;
@@ -1379,7 +1379,7 @@ index 8386840c1..6a6c2552b 100644
  	ktime_t expires;
  
  	if (!timeout) {
-@@ -2411,9 +2411,8 @@ long __sched schedule_msec_hrtimeout(long timeout)
+@@ -2409,9 +2409,8 @@ long __sched schedule_msec_hrtimeout(long timeout)
  	if (jiffs > 4 || hrtimer_resolution >= NSEC_PER_SEC / HZ || pm_freezing)
  		return schedule_timeout(jiffs);
  
@@ -1390,7 +1390,7 @@ index 8386840c1..6a6c2552b 100644
  
  	hrtimer_init_sleeper_on_stack(&t, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
  	hrtimer_set_expires_range_ns(&t.timer, expires, delta);
-@@ -2435,9 +2434,51 @@ long __sched schedule_msec_hrtimeout(long timeout)
+@@ -2433,9 +2432,51 @@ long __sched schedule_msec_hrtimeout(long timeout)
  
  EXPORT_SYMBOL(schedule_msec_hrtimeout);
  
@@ -1444,5 +1444,5 @@ index 8386840c1..6a6c2552b 100644
  
  EXPORT_SYMBOL(schedule_min_hrtimeout);
 -- 
-2.25.1
+2.33.1
 
