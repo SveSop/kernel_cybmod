@@ -4,10 +4,10 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Patch 5.15.1  
+0001 : Patch 5.15.2  
 0002 : 5.15 Graysky's CPU optimization patches  
 0003 : v5.15-futex_waitv  
-0004 : v5.15-fsync-waitvcompat  
+0004 : v5.15-fsync1-compat patch  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0007 : zstd kernel settings  
 0008 : hwmon driver for Asus (WMI) motherboards  
