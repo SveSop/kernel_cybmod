@@ -1,6 +1,6 @@
-From d3ae88949a088cd8a22f8bd6d4a7a20540c238e2 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 18 Nov 2021 14:33:36 -0500
+From db8a07ba7e1a98089dbdb4e154cac09837a34171 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 21 Nov 2021 13:32:06 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-11.11)
 
 ---
@@ -11,7 +11,7 @@ Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-11.11)
  4 files changed, 13 insertions(+), 36 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index b39dc03a035c..f168c92c8366 100644
+index b39dc03a035c..8a13ed6ae8bc 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -59,7 +59,7 @@ CONFIG_CADENCE_WATCHDOG=m
@@ -19,7 +19,7 @@ index b39dc03a035c..f168c92c8366 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-7ubuntu2) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-10ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-12ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CMA is not set
  CONFIG_CMDLINE_PARTITION=y

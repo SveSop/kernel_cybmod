@@ -1,6 +1,6 @@
-From 33a3b834368ce24771fb724ced5209067514c7c8 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 18 Nov 2021 14:32:54 -0500
+From 1968afa29270736b42569c4598d88b8f294cc20d Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 21 Nov 2021 13:31:25 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 12077 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 23a99b3d967b..3b632e15d235 100644
+index 23a99b3d967b..6730b88c2663 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,12080 +1,6 @@
 -linux (5.15.0-11.11) jammy; urgency=medium
-+linux (5.15.3-051503.202111181432) jammy; urgency=low
++linux (5.15.4-051504.202111211331) jammy; urgency=low
  
 -  * jammy/linux: 5.15.0-11.11 -proposed tracker (LP: #1950948)
-+  Mainline build at commit: v5.15.3
++  Mainline build at commit: v5.15.4
  
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@gloin>  Thu, 18 Nov 2021 14:32:53 -0500
++ -- Mainline Build <kernel@kathleen>  Sun, 21 Nov 2021 13:31:25 +0000
  
 -  * OOPs on boot: invalid opcode: 0000 [#1] SMP NOPTI (LP: #1942215)
 -    - SAUCE: ACPICA: prevent out-of-bound access with buggy DSDT
