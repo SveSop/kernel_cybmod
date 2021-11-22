@@ -1,28 +1,115 @@
-From c0b17b7bd17d33e21ef3845f628a57612e059eb7 Mon Sep 17 00:00:00 2001
+From 33a3b834368ce24771fb724ced5209067514c7c8 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 6 Nov 2021 10:36:20 -0400
+Date: Thu, 18 Nov 2021 14:32:54 -0500
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 11993 +-------------------------------------
- 1 file changed, 3 insertions(+), 11990 deletions(-)
+ debian.master/changelog | 12080 +-------------------------------------
+ 1 file changed, 3 insertions(+), 12077 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index ea32795cb20c..e3211709bd1c 100644
+index 23a99b3d967b..3b632e15d235 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,11993 +1,6 @@
--linux (5.15.0-1.1) jammy; urgency=medium
-+linux (5.15.1-051501.202111061036) jammy; urgency=low
+@@ -1,12080 +1,6 @@
+-linux (5.15.0-11.11) jammy; urgency=medium
++linux (5.15.3-051503.202111181432) jammy; urgency=low
  
+-  * jammy/linux: 5.15.0-11.11 -proposed tracker (LP: #1950948)
++  Mainline build at commit: v5.15.3
+ 
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
++ -- Mainline Build <kernel@gloin>  Thu, 18 Nov 2021 14:32:53 -0500
+ 
+-  * OOPs on boot: invalid opcode: 0000 [#1] SMP NOPTI (LP: #1942215)
+-    - SAUCE: ACPICA: prevent out-of-bound access with buggy DSDT
+-    - [Config] disable UBSAN
+-    - SAUCE: ACPICA: avoid accessing operands out-of-bounds
+-
+-  * Jammy update: v5.15.2 upstream stable release (LP: #1950949)
+-    - KVM: x86: avoid warning with -Wbitwise-instead-of-logical
+-    - Revert "x86/kvm: fix vcpu-id indexed array sizes"
+-    - usb: ehci: handshake CMD_RUN instead of STS_HALT
+-    - usb: gadget: Mark USB_FSL_QE broken on 64-bit
+-    - usb: musb: Balance list entry in musb_gadget_queue
+-    - usb-storage: Add compatibility quirk flags for iODD 2531/2541
+-    - Revert "proc/wchan: use printk format instead of lookup_symbol_name()"
+-    - binder: use euid from cred instead of using task
+-    - binder: don't detect sender/target during buffer cleanup
+-    - kfence: always use static branches to guard kfence_alloc()
+-    - kfence: default to dynamic branch instead of static keys mode
+-    - btrfs: fix lzo_decompress_bio() kmap leakage
+-    - staging: rtl8712: fix use-after-free in rtl8712_dl_fw
+-    - isofs: Fix out of bound access for corrupted isofs image
+-    - comedi: dt9812: fix DMA buffers on stack
+-    - comedi: ni_usb6501: fix NULL-deref in command paths
+-    - comedi: vmk80xx: fix transfer-buffer overflows
+-    - comedi: vmk80xx: fix bulk-buffer overflow
+-    - comedi: vmk80xx: fix bulk and interrupt message timeouts
+-    - staging: r8712u: fix control-message timeout
+-    - staging: rtl8192u: fix control-message timeouts
+-    - staging: r8188eu: fix memleak in rtw_wx_set_enc_ext
+-    - media: staging/intel-ipu3: css: Fix wrong size comparison imgu_css_fw_init
+-    - rsi: fix control-message timeout
+-    - Linux 5.15.2
+-
+-  * reuseport_bpf_numa in net from ubuntu_kernel_selftests fails on ppc64le
+-    (LP: #1867570)
+-    - selftests/net: Fix reuseport_bpf_numa by skipping unavailable nodes
+-
+-  * Miscellaneous Ubuntu changes
+-    - packaging: switch getabis to the linux package name
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: SAUCE: (no-up) rename the adv7511 drm driver to adv7511_drm"
+-    - Revert "UBUNTU: SAUCE: drm/i915/dp: Use max params for older panels"
+-    - Revert "UBUNTU: SAUCE: i915: Fix build error due to missing struct
+-      definition"
+-    - selftests/core: fix conflicting types compile error for close_range()
+-    - selftests: net: test_vxlan_under_vrf: fix HV connectivity test
+-    - Revert "UBUNTU: SAUCE: ACPICA: prevent out-of-bound access with buggy DSDT"
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 15 Nov 2021 10:12:47 +0100
+-
+-linux (5.15.0-10.10) jammy; urgency=medium
+-
+-  * jammy/linux: 5.15.0-10.10 -proposed tracker (LP: #1950133)
+-
+-  * Jammy update: v5.15.1 upstream stable release (LP: #1950131)
+-    - sfc: Fix reading non-legacy supported link modes
+-    - media: firewire: firedtv-avc: fix a buffer overflow in avc_ca_pmt()
+-    - Revert "xhci: Set HCD flag to defer primary roothub registration"
+-    - Revert "usb: core: hcd: Add support for deferring roothub registration"
+-    - drm/amdkfd: fix boot failure when iommu is disabled in Picasso.
+-    - Revert "soc: imx: gpcv2: move reset assert after requesting domain power up"
+-    - ARM: 9120/1: Revert "amba: make use of -1 IRQs warn"
+-    - Revert "wcn36xx: Disable bmps when encryption is disabled"
+-    - drm/amdgpu: revert "Add autodump debugfs node for gpu reset v8"
+-    - drm/amd/display: Revert "Directly retrain link from debugfs"
+-    - Revert "drm/i915/gt: Propagate change in error status to children on unhold"
+-    - ALSA: usb-audio: Add quirk for Audient iD14
+-    - Linux 5.15.1
+-
+-  * Miscellaneous Ubuntu changes
+-    - packaging: fixup previous ABI/spin to -9.9
+-    - [Packaging] Drop unused d-i build-deps and packaging
+-    - [Packaging] Drop now unsupported d-i/ input files
+-
+-  * Miscellaneous upstream changes
+-    - selftests: net: properly support IPv6 in GSO GRE test
+-    - signal: Add SA_IMMUTABLE to ensure forced siganls do not get changed
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 08 Nov 2021 14:43:24 +0100
+-
+-linux (5.15.0-9.9) jammy; urgency=medium
+-
 -  * jammy/linux: 5.15.0-1.1 -proposed tracker (LP: #1949876)
-+  Mainline build at commit: v5.15.1
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update variants
 -    - [Packaging] update Ubuntu.md
-+ -- Mainline Build <kernel@gloin>  Sat, 06 Nov 2021 10:36:19 -0400
- 
+-
 -  * Add F81966 watchdog support (LP: #1949063)
 -    - SAUCE: ODM: watchdog: f71808e_wdt: Add F81966 support
 -
