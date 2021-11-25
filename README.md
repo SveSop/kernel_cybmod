@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Patch 5.15.4  
+0001 : Patch 5.15.5  
 0002 : 5.15 Graysky's CPU optimization patches  
 0003 : v5.15-futex_waitv  
 0004 : v5.15-fsync1-compat patch  
@@ -23,6 +23,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0026 : various net/TCP patches  
 0027 : LRNG kernel patches  
 0028 : BBR2 patchset  
+0029 : ntfs3 patchset  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
