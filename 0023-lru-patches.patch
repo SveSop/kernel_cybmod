@@ -1,4 +1,4 @@
-From 3eead65a6cc4da4631992385c6eaf9726d0e03de Mon Sep 17 00:00:00 2001
+From cffc4a99faca22fa4c92b43a4b5e378e991173ec Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:01 -0700
 Subject: [PATCH 01/11] mm: x86, arm64: add arch_has_hw_pte_young()
@@ -41,10 +41,10 @@ index ef6be92b1..99518b4b2 100644
  
  static inline u32 id_aa64mmfr0_parange_to_phys_shift(int parange)
 diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-index dfa76afa0..880ae658a 100644
+index 72f95c6a7..a7a23e589 100644
 --- a/arch/arm64/include/asm/pgtable.h
 +++ b/arch/arm64/include/asm/pgtable.h
-@@ -993,13 +993,16 @@ static inline void update_mmu_cache(struct vm_area_struct *vma,
+@@ -999,13 +999,16 @@ static inline void update_mmu_cache(struct vm_area_struct *vma,
   * page after fork() + CoW for pfn mappings. We don't always have a
   * hardware-managed access flag on arm64.
   */
@@ -65,7 +65,7 @@ index dfa76afa0..880ae658a 100644
  
  /*
   * Experimentally, it's cheap to set the access flag in hardware and we
-@@ -1007,7 +1010,7 @@ static inline bool arch_faults_on_old_pte(void)
+@@ -1013,7 +1016,7 @@ static inline bool arch_faults_on_old_pte(void)
   */
  static inline bool arch_wants_old_prefaulted_pte(void)
  {
@@ -75,10 +75,10 @@ index dfa76afa0..880ae658a 100644
  #define arch_wants_old_prefaulted_pte	arch_wants_old_prefaulted_pte
  
 diff --git a/arch/arm64/kernel/cpufeature.c b/arch/arm64/kernel/cpufeature.c
-index 6ec7036ef..940615d33 100644
+index 7553c98f3..bafd0728e 100644
 --- a/arch/arm64/kernel/cpufeature.c
 +++ b/arch/arm64/kernel/cpufeature.c
-@@ -2157,6 +2157,16 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
+@@ -2161,6 +2161,16 @@ static const struct arm64_cpu_capabilities arm64_features[] = {
  		.matches = has_hw_dbm,
  		.cpu_enable = cpu_enable_hw_dbm,
  	},
@@ -182,10 +182,10 @@ index c52be6d6b..012fad94b 100644
  
  		vmf->pte = pte_offset_map_lock(mm, vmf->pmd, addr, &vmf->ptl);
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 59fc235d80ab9d4886bcb98b0cb309c3dbaec2b3 Mon Sep 17 00:00:00 2001
+From 15965a4c34aa05b378552bc118663d7823c96088 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:02 -0700
 Subject: [PATCH 02/11] mm: x86: add CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
@@ -215,10 +215,10 @@ Tested-by: Konstantin Kharlamov <Hi-Angel@yandex.ru>
  5 files changed, 18 insertions(+), 4 deletions(-)
 
 diff --git a/arch/Kconfig b/arch/Kconfig
-index 8df1c7102..7392fcc88 100644
+index d1e69d6e8..ec01a6d69 100644
 --- a/arch/Kconfig
 +++ b/arch/Kconfig
-@@ -1288,6 +1288,15 @@ config ARCH_HAS_ELFCORE_COMPAT
+@@ -1291,6 +1291,15 @@ config ARCH_HAS_ELFCORE_COMPAT
  config ARCH_HAS_PARANOID_L1D_FLUSH
  	bool
  
@@ -235,7 +235,7 @@ index 8df1c7102..7392fcc88 100644
  
  source "scripts/gcc-plugins/Kconfig"
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index d9830e7e1..245742b79 100644
+index 6ce906815..4c33730b7 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
 @@ -84,6 +84,7 @@ config X86
@@ -306,10 +306,10 @@ index a64c6124c..afb9004b7 100644
  
  #ifndef __HAVE_ARCH_PTEP_CLEAR_YOUNG_FLUSH
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 285236de13a39747fd10dd8b9520888c99229250 Mon Sep 17 00:00:00 2001
+From c3f33a6f267c822995bf9e73892b5072b66cedad Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:03 -0700
 Subject: [PATCH 03/11] mm/vmscan.c: refactor shrink_node()
@@ -535,10 +535,10 @@ index 74296c2d1..802b6c7ce 100644
  	shrink_node_memcgs(pgdat, sc);
  
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From cc36ccabfa46b3ab359256932d3e8a2cc8eb45ec Mon Sep 17 00:00:00 2001
+From 2449e09abed49087f56de993e81cafbcac733d2c Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:04 -0700
 Subject: [PATCH 04/11] mm: multigenerational lru: groundwork
@@ -618,7 +618,7 @@ Tested-by: Konstantin Kharlamov <Hi-Angel@yandex.ru>
  18 files changed, 612 insertions(+), 15 deletions(-)
 
 diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index dde341a63..33a2fda74 100644
+index a9d21b33d..52fd23d69 100644
 --- a/fs/fuse/dev.c
 +++ b/fs/fuse/dev.c
 @@ -785,7 +785,8 @@ static int fuse_check_page(struct page *page)
@@ -1153,10 +1153,10 @@ index c5142d237..875ed5559 100644
  	/* ->mapping in first tail page is compound_mapcount */
  	VM_BUG_ON_PAGE(tail > 2 && page_tail->mapping != TAIL_MAPPING,
 diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 6da5020a8..d72bfc960 100644
+index 87e41c3ca..b499d9d31 100644
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
-@@ -5173,6 +5173,7 @@ static struct mem_cgroup *mem_cgroup_alloc(void)
+@@ -5162,6 +5162,7 @@ static struct mem_cgroup *mem_cgroup_alloc(void)
  	memcg->deferred_split_queue.split_queue_len = 0;
  #endif
  	idr_replace(&mem_cgroup_idr, memcg, memcg->id.id);
@@ -1564,10 +1564,10 @@ index 802b6c7ce..cfda593af 100644
  {
  	unsigned long nr[NR_LRU_LISTS];
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From cb1515203343b81aeb821e61e1a50f044c950b6b Mon Sep 17 00:00:00 2001
+From 0bbd9b4530fac8cab309efc90d998a57246319d5 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:05 -0700
 Subject: [PATCH 05/11] mm: multigenerational lru: mm_struct list
@@ -1604,7 +1604,7 @@ Tested-by: Konstantin Kharlamov <Hi-Angel@yandex.ru>
  11 files changed, 551 insertions(+)
 
 diff --git a/fs/exec.c b/fs/exec.c
-index a098c133d..c7e55b757 100644
+index ac7b51b51..fb1729fa1 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
 @@ -1007,6 +1007,7 @@ static int exec_mmap(struct mm_struct *mm)
@@ -1901,7 +1901,7 @@ index 91a43e57a..788a299ab 100644
  	put_task_struct(c);
  }
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 38681ad44..8d6bb4e76 100644
+index 10885c649..291b371ab 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -681,6 +681,7 @@ static void check_mm(struct mm_struct *mm)
@@ -1928,7 +1928,7 @@ index 38681ad44..8d6bb4e76 100644
  	mmdrop(mm);
  }
  
-@@ -2605,6 +2608,13 @@ pid_t kernel_clone(struct kernel_clone_args *args)
+@@ -2606,6 +2609,13 @@ pid_t kernel_clone(struct kernel_clone_args *args)
  		get_task_struct(p);
  	}
  
@@ -1955,10 +1955,10 @@ index 5b37a8567..fd827fdad 100644
  	task_unlock(tsk);
  #ifdef finish_arch_post_lock_switch
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index f21714ea3..e5e4cc86e 100644
+index 6f4625f82..c34002d5f 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -4924,6 +4924,7 @@ context_switch(struct rq *rq, struct task_struct *prev,
+@@ -4928,6 +4928,7 @@ context_switch(struct rq *rq, struct task_struct *prev,
  		 * finish_task_switch()'s mmdrop().
  		 */
  		switch_mm_irqs_off(prev->active_mm, next->mm, next);
@@ -1966,7 +1966,7 @@ index f21714ea3..e5e4cc86e 100644
  
  		if (!prev->mm) {                        // from kernel
  			/* will mmdrop() in finish_task_switch(). */
-@@ -8792,6 +8793,7 @@ void idle_task_exit(void)
+@@ -8793,6 +8794,7 @@ void idle_task_exit(void)
  
  	if (mm != &init_mm) {
  		switch_mm(mm, &init_mm, current);
@@ -1975,10 +1975,10 @@ index f21714ea3..e5e4cc86e 100644
  	}
  
 diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index d72bfc960..27fd99d44 100644
+index b499d9d31..6e1bb6a1e 100644
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
-@@ -5110,6 +5110,7 @@ static void __mem_cgroup_free(struct mem_cgroup *memcg)
+@@ -5099,6 +5099,7 @@ static void __mem_cgroup_free(struct mem_cgroup *memcg)
  
  static void mem_cgroup_free(struct mem_cgroup *memcg)
  {
@@ -1986,7 +1986,7 @@ index d72bfc960..27fd99d44 100644
  	memcg_wb_domain_exit(memcg);
  	__mem_cgroup_free(memcg);
  }
-@@ -6157,6 +6158,29 @@ static void mem_cgroup_move_task(void)
+@@ -6146,6 +6147,29 @@ static void mem_cgroup_move_task(void)
  }
  #endif
  
@@ -2016,7 +2016,7 @@ index d72bfc960..27fd99d44 100644
  static int seq_puts_memcg_tunable(struct seq_file *m, unsigned long value)
  {
  	if (value == PAGE_COUNTER_MAX)
-@@ -6500,6 +6524,7 @@ struct cgroup_subsys memory_cgrp_subsys = {
+@@ -6489,6 +6513,7 @@ struct cgroup_subsys memory_cgrp_subsys = {
  	.css_reset = mem_cgroup_css_reset,
  	.css_rstat_flush = mem_cgroup_css_rstat_flush,
  	.can_attach = mem_cgroup_can_attach,
@@ -2400,10 +2400,10 @@ index cfda593af..ea2e9c101 100644
  	return 0;
  };
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From dd61446c530bc61fff5109c81455630bfe052fd7 Mon Sep 17 00:00:00 2001
+From ad3ce497392f723eda2397ee66abe8092a7a5d0b Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:06 -0700
 Subject: [PATCH 06/11] mm: multigenerational lru: aging
@@ -2538,7 +2538,7 @@ index ba52f3a34..2c4a5a88f 100644
  
  #ifdef __KERNEL__
 diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 27fd99d44..49100d053 100644
+index 6e1bb6a1e..afaedd156 100644
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
 @@ -1239,12 +1239,17 @@ void mem_cgroup_update_lru_size(struct lruvec *lruvec, enum lru_list lru,
@@ -2560,7 +2560,7 @@ index 27fd99d44..49100d053 100644
  	if (nr_pages > 0)
  		*lru_size += nr_pages;
 diff --git a/mm/oom_kill.c b/mm/oom_kill.c
-index 989f35a2b..72855b7bd 100644
+index bfa9e348c..870a4f9f0 100644
 --- a/mm/oom_kill.c
 +++ b/mm/oom_kill.c
 @@ -508,8 +508,8 @@ bool process_shares_mm(struct task_struct *p, struct mm_struct *mm)
@@ -3595,10 +3595,10 @@ index ea2e9c101..25b419ad5 100644
  		return;
  
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From b3bb05774c350cb0deacff8a327bcea962b22140 Mon Sep 17 00:00:00 2001
+From a7d7c51cc8a8f3ad15ff94840b1732aca95fc06c Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:07 -0700
 Subject: [PATCH 07/11] mm: multigenerational lru: eviction
@@ -4610,10 +4610,10 @@ index d5b81e4f4..27d504a5d 100644
  	rcu_read_lock();
  	/*
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 3bec430d88e2a1750da3e12960b0b7ac5c4ef395 Mon Sep 17 00:00:00 2001
+From c16d2c07dc0b25c8d810700cfd1005a0e6aae37f Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:08 -0700
 Subject: [PATCH 08/11] mm: multigenerational lru: user interface
@@ -5113,10 +5113,10 @@ index c5ac8e8b6..7c3a49173 100644
  };
  late_initcall(init_lru_gen);
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From cf893acc67b7439cd571173f041e80a9c2a54df6 Mon Sep 17 00:00:00 2001
+From 18edaecec06300560c4a7b7a8f5ccebe9d9a0cdc Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:09 -0700
 Subject: [PATCH 09/11] mm: multigenerational lru: Kconfig
@@ -5130,10 +5130,10 @@ Tested-by: Konstantin Kharlamov <Hi-Angel@yandex.ru>
  1 file changed, 59 insertions(+)
 
 diff --git a/mm/Kconfig b/mm/Kconfig
-index d16ba9249..48e7babb2 100644
+index c048dea7e..01fe6156c 100644
 --- a/mm/Kconfig
 +++ b/mm/Kconfig
-@@ -896,4 +896,63 @@ config SECRETMEM
+@@ -899,4 +899,63 @@ config SECRETMEM
  
  source "mm/damon/Kconfig"
  
@@ -5198,10 +5198,10 @@ index d16ba9249..48e7babb2 100644
 +
  endmenu
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From a566798328ef7f0c8b676a727884a31b898e2e5f Mon Sep 17 00:00:00 2001
+From 0f48883243c00aa29712eb4672710ba8199452a4 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 10 Nov 2021 21:15:10 -0700
 Subject: [PATCH 10/11] mm: multigenerational lru: documentation
@@ -5367,12 +5367,12 @@ index 000000000..7c064a378
 +----------------
 +Support shadow page table walk.
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 054b3395e47ae19e555a8943c23cdb0b15e7a701 Mon Sep 17 00:00:00 2001
+From e6c2772cff078e8cd604083275322095a381b634 Mon Sep 17 00:00:00 2001
 From: Alexey Avramov <hakavlad@inbox.lv>
-Date: Tue, 24 Aug 2021 03:39:08 +0900
+Date: Sat, 13 Nov 2021 10:42:27 +0900
 Subject: [PATCH 11/11] mm/vmscan: add sysctl knobs for protecting the working
  set
 
@@ -5564,7 +5564,7 @@ index 083be6af2..65fc38756 100644
  		.procname	= "user_reserve_kbytes",
  		.data		= &sysctl_user_reserve_kbytes,
 diff --git a/mm/Kconfig b/mm/Kconfig
-index 48e7babb2..9167c043b 100644
+index 01fe6156c..e66fc11e5 100644
 --- a/mm/Kconfig
 +++ b/mm/Kconfig
 @@ -89,6 +89,69 @@ config SPARSEMEM_VMEMMAP
@@ -5638,12 +5638,12 @@ index 48e7babb2..9167c043b 100644
  	bool
  
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 7c3a49173..a52749159 100644
+index 7c3a49173..701510094 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -130,6 +130,15 @@ struct scan_control {
- 	/* Always discard instead of demoting to lower tier memory */
- 	unsigned int no_demotion:1;
+@@ -127,6 +127,15 @@ struct scan_control {
+ 	/* The file pages on the current node are dangerously low */
+ 	unsigned int file_is_tiny:1;
  
 +	/* The anonymous pages on the current node are below vm.anon_min_kbytes */
 +	unsigned int anon_below_min:1;
@@ -5654,8 +5654,8 @@ index 7c3a49173..a52749159 100644
 +	/* The clean file pages on the current node are below vm.clean_min_kbytes */
 +	unsigned int clean_below_min:1;
 +
- 	/* Allocation order */
- 	s8 order;
+ 	/* Always discard instead of demoting to lower tier memory */
+ 	unsigned int no_demotion:1;
  
 @@ -176,6 +185,10 @@ struct scan_control {
  #define prefetchw_prev_lru_page(_page, _base, _field) do { } while (0)
@@ -5775,5 +5775,5 @@ index 7c3a49173..a52749159 100644
  	}
  }
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 

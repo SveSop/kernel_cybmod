@@ -1,6 +1,6 @@
-From 1766e790a0ae8d69b089fec08bdd39ecac99e6f9 Mon Sep 17 00:00:00 2001
+From 54a6116c57fc84907fa0fa6926fa460049dabf8c Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 1 Dec 2021 04:37:57 -0500
+Date: Wed, 8 Dec 2021 04:59:36 -0500
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 13437 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 6b55bacfb67e..ba57d719cea6 100644
+index 6b55bacfb67e..5c2ecdfead34 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,13440 +1,6 @@
 -linux (5.15.0-13.13) jammy; urgency=medium
-+linux (5.15.6-051506.202112010437) jammy; urgency=low
++linux (5.15.7-051507.202112080459) jammy; urgency=low
  
 -  * jammy/linux: 5.15.0-13.13 -proposed tracker (LP: #1952583)
-+  Mainline build at commit: v5.15.6
++  Mainline build at commit: v5.15.7
  
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] resync update-dkms-versions helper
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@gloin>  Wed, 01 Dec 2021 04:37:57 -0500
++ -- Mainline Build <kernel@gloin>  Wed, 08 Dec 2021 04:59:36 -0500
  
 -  * Jammy update: v5.15.5 upstream stable release (LP: #1952579)
 -    - arm64: zynqmp: Do not duplicate flash partition label property
