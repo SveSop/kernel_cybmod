@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0001 : Patch 5.15.7  
+0001 : Patch 5.15.8  
 0002 : 5.15 Graysky's CPU optimization patches  
 0003 : v5.15-futex_waitv  
 0004 : v5.15-fsync1-compat patch  
@@ -14,6 +14,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0009 : Spectre patches  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
+0012 : Intel sched patches  
 0020 : Clearlinux patches  
 0021 : Misc fixes  
 0022 : Block patchset  
