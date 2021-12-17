@@ -1,7 +1,7 @@
-From 8f856011130d64c0d3426d0f9686cb7963f95a28 Mon Sep 17 00:00:00 2001
+From d37407b160b755a8816ece475cfff78fad172ac7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/17] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/18] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.34.1.75.gabe6bb3905
 
 
-From e5ffde827c2dd4fb0b04c83c66c07e6fa098e99b Mon Sep 17 00:00:00 2001
+From 84f3b5a40b50f8008e0a383020abc1724f71ad31 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/17] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/18] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index 65e3e7df8..b41afee77 100644
 2.34.1.75.gabe6bb3905
 
 
-From eb183b1d2709bbf4bb3817c151bba688c14ee744 Mon Sep 17 00:00:00 2001
+From 77ee331d433f7da2c3cc5c49ad8a433fdde31c63 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/17] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/18] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -258,10 +258,10 @@ index 208fa03ac..f78ed6e63 100644
 2.34.1.75.gabe6bb3905
 
 
-From 2fe315f97bbc002ee7ce42ab7c3d8f4be6c2aa8d Mon Sep 17 00:00:00 2001
+From c33edd0e6d437e62304c1e5ed2b29ebbaf81e20c Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/17] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/18] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -392,10 +392,10 @@ index b59136c41..4154030c8 100644
 2.34.1.75.gabe6bb3905
 
 
-From 35294871fee1fad5e34bb2a158832f798ad3f9fd Mon Sep 17 00:00:00 2001
+From bb71d8c5bb825e2074e0b044d06ee2336c1a907b Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 05/17] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 05/18] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -516,10 +516,10 @@ index 97119ec3b..b878d225a 100644
 2.34.1.75.gabe6bb3905
 
 
-From ae0a74f95b2b46f52077c6dab67352edbc80028d Mon Sep 17 00:00:00 2001
+From a3b073aa89cffda192803a812eebfeecab0cf470 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 06/17] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 06/18] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -586,10 +586,10 @@ index e9d39c485..3bceead8d 100644
 2.34.1.75.gabe6bb3905
 
 
-From 588d8019186096a19a9758f1a9a40c14efb0fc76 Mon Sep 17 00:00:00 2001
+From 67531574d96dcda473b33bf9fb895d154e97b069 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 07/17] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 07/18] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -1320,10 +1320,10 @@ index 8c1b31ed0..9131e4004 100644
 2.34.1.75.gabe6bb3905
 
 
-From 7fbf900979ee8a44b10c38ec66955a9d7426a3a1 Mon Sep 17 00:00:00 2001
+From ae79d2c0669b5233d16468af9d5151b60e9518c0 Mon Sep 17 00:00:00 2001
 From: Jens Axboe <axboe@kernel.dk>
 Date: Tue, 12 Oct 2021 12:13:52 -0600
-Subject: [PATCH 08/17] nvme: don't memset() the normal read/write command
+Subject: [PATCH 08/18] nvme: don't memset() the normal read/write command
 
 This memset in the fast path costs a lot of cycles on my setup. Here's a
 top-of-profile of doing ~6.7M IOPS:
@@ -1444,10 +1444,10 @@ index f8dd664b2..2d609ee57 100644
 2.34.1.75.gabe6bb3905
 
 
-From ae6db53232a81c24a8c899e5f4b5f57f6e605eda Mon Sep 17 00:00:00 2001
+From 05b8cf2f9a5470f73bf00221edbfec3ac3278a49 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 09/17] mm: Stop kswapd early when nothing's waiting for it to
+Subject: [PATCH 09/18] mm: Stop kswapd early when nothing's waiting for it to
  free pages
 
 Keeping kswapd running when all the failed allocations that invoked it
@@ -1544,10 +1544,10 @@ index 74296c2d1..e513736b2 100644
 2.34.1.75.gabe6bb3905
 
 
-From 0617dbdc9125b9fa7e39bce394a4724b8a90cee9 Mon Sep 17 00:00:00 2001
+From 1b5ceb0aa36f7658d350ef9a9aadb77090d198a5 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 10/17] mm: Fully disable watermark boosting when it isn't used
+Subject: [PATCH 10/18] mm: Fully disable watermark boosting when it isn't used
 
 The watermark boosting code still wakes kswapd even when there's no
 watermark boost in effect. Change it to only wake kswapd when there is
@@ -1580,10 +1580,10 @@ index 1756ecd05..6f61c3f2f 100644
 2.34.1.75.gabe6bb3905
 
 
-From 465a805fcc2f39603640f67f109c05ab2aec5166 Mon Sep 17 00:00:00 2001
+From be23ee3cb22d1b3365651b57c032509da5953aaa Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 11/17] mm: Don't stop kswapd on a per-node basis when there
+Subject: [PATCH 11/18] mm: Don't stop kswapd on a per-node basis when there
  are no waiters
 
 The page allocator wakes all kswapds in an allocation context's allowed
@@ -1687,10 +1687,10 @@ index e513736b2..0d7a5a61b 100644
 2.34.1.75.gabe6bb3905
 
 
-From 6836b15cebfe34af27a6988c075ea38ff5c84977 Mon Sep 17 00:00:00 2001
+From 456ce8ec00dfa7a483bbfb63e57aa447e77f6397 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 12/17] mm: Disable watermark boosting by default
+Subject: [PATCH 12/18] mm: Disable watermark boosting by default
 
 What watermark boosting does is preemptively fire up kswapd to free
 memory when there hasn't been an allocation failure. It does this by
@@ -1736,10 +1736,10 @@ index 4fb88150d..968a02c6b 100644
 2.34.1.75.gabe6bb3905
 
 
-From 8447e1d7be5313545352736c1a91aca44473650b Mon Sep 17 00:00:00 2001
+From 392f4665c32ded6585c2d939e020c452b225f61a Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 13/17] Disable stack conservation for GCC
+Subject: [PATCH 13/18] Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -1752,7 +1752,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0faa64733..e0ed2a4df 100644
+index e6d2ea920..47fef3b28 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1014,11 +1014,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -1771,10 +1771,10 @@ index 0faa64733..e0ed2a4df 100644
 2.34.1.75.gabe6bb3905
 
 
-From ea9c0d0b49ae51928d31c5c77facd13e0af95631 Mon Sep 17 00:00:00 2001
+From b4bb8ba925aad689b4dc37a4c212610b9d98fe25 Mon Sep 17 00:00:00 2001
 From: Johannes Weiner <hannes@cmpxchg.org>
 Date: Thu, 28 Oct 2021 13:22:05 +1100
-Subject: [PATCH 14/17] vfs: keep inodes with page cache off the inode shrinker
+Subject: [PATCH 14/18] vfs: keep inodes with page cache off the inode shrinker
  LRU
 
 Historically (pre-2.5), the inode shrinker used to reclaim only empty
@@ -2216,10 +2216,10 @@ index d5b81e4f4..23df60ce2 100644
 2.34.1.75.gabe6bb3905
 
 
-From 397b8c8678cabeb6631594d7073fa084042fd056 Mon Sep 17 00:00:00 2001
+From 7a2c5f1ad1e3aa7adfe09341b6f29a1e280140b5 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Fri, 12 Nov 2021 08:19:50 -0800
-Subject: [PATCH 15/17] x86/csum: rewrite csum_partial()
+Subject: [PATCH 15/18] x86/csum: rewrite csum_partial()
 
 With more NIC supporting CHECKSUM_COMPLETE, and IPv6 being widely used.
 csum_partial() is heavily used with small amount of bytes,
@@ -2469,10 +2469,10 @@ index e7925d668..5ec356269 100644
 2.34.1.75.gabe6bb3905
 
 
-From d857ac7d18b78a62a50e067e187a8bc7d44cb95c Mon Sep 17 00:00:00 2001
+From 8a4472808bf9469312cd55ca404a6bb24b452945 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 18 Nov 2021 09:52:39 -0800
-Subject: [PATCH 16/17] x86/csum: Fix compilation error for UM
+Subject: [PATCH 16/18] x86/csum: Fix compilation error for UM
 
 load_unaligned_zeropad() is not yet universal.
 
@@ -2538,10 +2538,10 @@ index 5ec356269..1eb8f2d11 100644
 2.34.1.75.gabe6bb3905
 
 
-From 7434941bdf5483067380bb33d5f6198596019a9d Mon Sep 17 00:00:00 2001
+From 7126c1e0cf6882bfbb1d0b3d890556061778e5d2 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 25 Nov 2021 06:18:17 -0800
-Subject: [PATCH 17/17] x86/csum: Fix initial seed for odd buffers
+Subject: [PATCH 17/18] x86/csum: Fix initial seed for odd buffers
 
 When I folded do_csum() into csum_partial(), I missed that we
 had to swap odd/even bytes from @sum argument.
@@ -2598,6 +2598,85 @@ index 1eb8f2d11..40b527ba1 100644
  		temp64 += (*(unsigned char *)buff << 8);
  		len--;
  		buff++;
+-- 
+2.34.1.75.gabe6bb3905
+
+
+From acf1dd1488b74a203e1f032ca754a4d039219215 Mon Sep 17 00:00:00 2001
+From: Dave Chinner <dchinner@redhat.com>
+Date: Thu, 16 Dec 2021 11:17:09 +1100
+Subject: [PATCH 18/18] xfs: check sb_meta_uuid for dabuf buffer recovery
+
+Got a report that a repeated crash test of a container host would
+eventually fail with a log recovery error preventing the system from
+mounting the root filesystem. It manifested as a directory leaf node
+corruption on writeback like so:
+
+ XFS (loop0): Mounting V5 Filesystem
+ XFS (loop0): Starting recovery (logdev: internal)
+ XFS (loop0): Metadata corruption detected at xfs_dir3_leaf_check_int+0x99/0xf0, xfs_dir3_leaf1 block 0x12faa158
+ XFS (loop0): Unmount and run xfs_repair
+ XFS (loop0): First 128 bytes of corrupted metadata buffer:
+ 00000000: 00 00 00 00 00 00 00 00 3d f1 00 00 e1 9e d5 8b  ........=.......
+ 00000010: 00 00 00 00 12 fa a1 58 00 00 00 29 00 00 1b cc  .......X...)....
+ 00000020: 91 06 78 ff f7 7e 4a 7d 8d 53 86 f2 ac 47 a8 23  ..x..~J}.S...G.#
+ 00000030: 00 00 00 00 17 e0 00 80 00 43 00 00 00 00 00 00  .........C......
+ 00000040: 00 00 00 2e 00 00 00 08 00 00 17 2e 00 00 00 0a  ................
+ 00000050: 02 35 79 83 00 00 00 30 04 d3 b4 80 00 00 01 50  .5y....0.......P
+ 00000060: 08 40 95 7f 00 00 02 98 08 41 fe b7 00 00 02 d4  .@.......A......
+ 00000070: 0d 62 ef a7 00 00 01 f2 14 50 21 41 00 00 00 0c  .b.......P!A....
+ XFS (loop0): Corruption of in-memory data (0x8) detected at xfs_do_force_shutdown+0x1a/0x20 (fs/xfs/xfs_buf.c:1514).  Shutting down.
+ XFS (loop0): Please unmount the filesystem and rectify the problem(s)
+ XFS (loop0): log mount/recovery failed: error -117
+ XFS (loop0): log mount failed
+
+Tracing indicated that we were recovering changes from a transaction
+at LSN 0x29/0x1c16 into a buffer that had an LSN of 0x29/0x1d57.
+That is, log recovery was overwriting a buffer with newer changes on
+disk than was in the transaction. Tracing indicated that we were
+hitting the "recovery immediately" case in
+xlog_recover_get_buf_lsn(), and hence it was ignoring the LSN in the
+buffer.
+
+The code was extracting the LSN correctly, then ignoring it because
+the UUID in the buffer did not match the superblock UUID. The
+problem arises because the UUID check uses the wrong UUID - it
+should be checking the sb_meta_uuid, not sb_uuid. This filesystem
+has sb_uuid != sb_meta_uuid (which is fine), and the buffer has the
+correct matching sb_meta_uuid in it, it's just the code checked it
+against the wrong superblock uuid.
+
+The is no corruption in the filesystem, and failing to recover the
+buffer due to a write verifier failure means the recovery bug did
+not propagate the corruption to disk. Hence there is no corruption
+before or after this bug has manifested, the impact is limited
+simply to an unmountable filesystem....
+
+This was missed back in 2015 during an audit of incorrect sb_uuid
+usage that resulted in commit fcfbe2c4ef42 ("xfs: log recovery needs
+to validate against sb_meta_uuid") that fixed the magic32 buffers to
+validate against sb_meta_uuid instead of sb_uuid. It missed the
+magicda buffers....
+
+Fixes: ce748eaa65f2 ("xfs: create new metadata UUID field and incompat flag")
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+---
+ fs/xfs/xfs_buf_item_recover.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/xfs/xfs_buf_item_recover.c b/fs/xfs/xfs_buf_item_recover.c
+index a476c7ef5..991fbf1eb 100644
+--- a/fs/xfs/xfs_buf_item_recover.c
++++ b/fs/xfs/xfs_buf_item_recover.c
+@@ -816,7 +816,7 @@ xlog_recover_get_buf_lsn(
+ 	}
+ 
+ 	if (lsn != (xfs_lsn_t)-1) {
+-		if (!uuid_equal(&mp->m_sb.sb_uuid, uuid))
++		if (!uuid_equal(&mp->m_sb.sb_meta_uuid, uuid))
+ 			goto recover_immediately;
+ 		return lsn;
+ 	}
 -- 
 2.34.1.75.gabe6bb3905
 

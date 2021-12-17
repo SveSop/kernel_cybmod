@@ -1,13 +1,27 @@
-From 33ef4a4aadc3ca7e41da68cf8ac519459b495d78 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 14 Dec 2021 10:41:01 +0000
+From 28c518c09008e21bd6d57e66b54a2207c35aea25 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Fri, 17 Dec 2021 10:32:08 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-14.14)
 
 ---
+ debian.master/config/annotations              |  2 +-
  .../config/arm64/config.flavour.generic       |  2 +-
- debian.master/config/config.common.ubuntu     | 27 ++-----------------
- 2 files changed, 3 insertions(+), 26 deletions(-)
+ debian.master/config/config.common.ubuntu     | 29 ++-----------------
+ 3 files changed, 5 insertions(+), 28 deletions(-)
 
+diff --git a/debian.master/config/annotations b/debian.master/config/annotations
+index 564b5582bc29..e366cb64e100 100644
+--- a/debian.master/config/annotations
++++ b/debian.master/config/annotations
+@@ -13930,7 +13930,7 @@ CONFIG_HARDENED_USERCOPY_FALLBACK               policy<{'amd64': 'n', 'arm64': '
+ CONFIG_HARDENED_USERCOPY_PAGESPAN               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+ CONFIG_FORTIFY_SOURCE                           policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_STATIC_USERMODEHELPER                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
+-CONFIG_LSM                                      policy<{'amd64': '"landlock,lockdown,yama,integrity,apparmor"', 'arm64': '"landlock,lockdown,yama,integrity,apparmor"', 'armhf': '"landlock,lockdown,yama,integrity,apparmor"', 'ppc64el': '"landlock,lockdown,yama,integrity,apparmor"', 's390x': '"landlock,lockdown,yama,integrity,apparmor"'}>
++CONFIG_LSM                                      policy<{'amd64': '"lockdown,yama,integrity,apparmor"', 'arm64': '"lockdown,yama,integrity,apparmor"', 'armhf': '"lockdown,yama,integrity,apparmor"', 'ppc64el': '"lockdown,yama,integrity,apparmor"', 's390x': '"lockdown,yama,integrity,apparmor"'}>
+ #
+ CONFIG_SECURITY_DMESG_RESTRICT                  mark<ENFORCED>
+ CONFIG_LSM                                      mark<ENFORCED>
 diff --git a/debian.master/config/arm64/config.flavour.generic b/debian.master/config/arm64/config.flavour.generic
 index d6e3ffa1d269..b7e35f458cc2 100644
 --- a/debian.master/config/arm64/config.flavour.generic
@@ -20,7 +34,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 03bc24a264c9..29899d8fb74f 100644
+index a10dcf1029bd..29899d8fb74f 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -92,6 +106,15 @@ index 03bc24a264c9..29899d8fb74f 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
+@@ -5788,7 +5779,7 @@ CONFIG_LPARCFG=y
+ # CONFIG_LP_CONSOLE is not set
+ CONFIG_LRU_CACHE=m
+ CONFIG_LSI_ET1011C_PHY=m
+-CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
++CONFIG_LSM="lockdown,yama,integrity,apparmor"
+ CONFIG_LSM_MMAP_MIN_ADDR=0
+ CONFIG_LS_EXTIRQ=y
+ CONFIG_LS_SCFG_MSI=y
 @@ -6058,7 +6049,6 @@ CONFIG_MESON_SM=y
  CONFIG_MESON_WATCHDOG=m
  CONFIG_MESSAGE_LOGLEVEL_DEFAULT=4
