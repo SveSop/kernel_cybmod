@@ -1,6 +1,6 @@
-From a2a5de5dcd14174d9132d8ddb787df678fd4e1a4 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 17 Dec 2021 10:31:28 +0000
+From b99d52be04b064f58700047a404fd635bae92061 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 22 Dec 2021 09:37:25 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,15 +8,15 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 13866 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index ef21e5790038..07c67457a824 100644
+index ef21e5790038..5ad0d571ff84 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,13869 +1,6 @@
 -linux (5.15.0-14.14) jammy; urgency=medium
-+linux (5.15.10-051510.202112171031) jammy; urgency=low
++linux (5.15.11-051511.202112220937) jammy; urgency=low
  
 -  * jammy/linux: 5.15.0-14.14 -proposed tracker (LP: #1954627)
-+  Mainline build at commit: v5.15.10
++  Mainline build at commit: v5.15.11
  
 -  * Jammy update: v5.15.7 upstream stable release (LP: #1953731)
 -    - ALSA: usb-audio: Restrict rates for the shared clocks
@@ -238,7 +238,7 @@ index ef21e5790038..07c67457a824 100644
 -    - serial: liteuart: fix minor-number leak on probe errors
 -    - ipmi: msghandler: Make symbol 'remove_work_wq' static
 -    - Linux 5.15.7
-+ -- Mainline Build <kernel@sita>  Fri, 17 Dec 2021 10:31:28 +0000
++ -- Mainline Build <kernel@kathleen>  Wed, 22 Dec 2021 09:37:25 +0000
  
 -  * Updates to ib_peer_memory requested by Nvidia (LP: #1947206)
 -    - SAUCE: RDMA/core: Updated ib_peer_memory

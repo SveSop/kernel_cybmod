@@ -1,19 +1,41 @@
-From 28c518c09008e21bd6d57e66b54a2207c35aea25 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 17 Dec 2021 10:32:08 +0000
+From e5cc7163cf84e6b40a77ec49ade4ab450d0a1808 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 22 Dec 2021 09:38:05 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-14.14)
 
 ---
- debian.master/config/annotations              |  2 +-
+ .../config/amd64/config.common.amd64          |  2 +-
+ debian.master/config/annotations              |  3 +-
  .../config/arm64/config.flavour.generic       |  2 +-
- debian.master/config/config.common.ubuntu     | 29 ++-----------------
- 3 files changed, 5 insertions(+), 28 deletions(-)
+ debian.master/config/config.common.ubuntu     | 30 ++-----------------
+ 4 files changed, 6 insertions(+), 31 deletions(-)
 
+diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
+index 8a13ed6ae8bc..4d8f0935b849 100644
+--- a/debian.master/config/amd64/config.common.amd64
++++ b/debian.master/config/amd64/config.common.amd64
+@@ -59,7 +59,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-12ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-13ubuntu1) 11.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ # CONFIG_CMA is not set
+ CONFIG_CMDLINE_PARTITION=y
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 564b5582bc29..e366cb64e100 100644
+index c745a5a74d21..e366cb64e100 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
-@@ -13930,7 +13930,7 @@ CONFIG_HARDENED_USERCOPY_FALLBACK               policy<{'amd64': 'n', 'arm64': '
+@@ -10557,7 +10557,6 @@ CONFIG_WMI_BMOF                                 policy<{'amd64': 'm'}>
+ CONFIG_HUAWEI_WMI                               policy<{'amd64': 'm'}>
+ CONFIG_MXM_WMI                                  policy<{'amd64': 'm'}>
+ CONFIG_PEAQ_WMI                                 policy<{'amd64': 'm'}>
+-CONFIG_NVIDIA_WMI_EC_BACKLIGHT			policy<{'amd64': 'm'}>
+ CONFIG_XIAOMI_WMI                               policy<{'amd64': 'm'}>
+ CONFIG_GIGABYTE_WMI                             policy<{'amd64': 'm'}>
+ CONFIG_ACER_WMI                                 policy<{'amd64': 'm'}>
+@@ -13931,7 +13930,7 @@ CONFIG_HARDENED_USERCOPY_FALLBACK               policy<{'amd64': 'n', 'arm64': '
  CONFIG_HARDENED_USERCOPY_PAGESPAN               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
  CONFIG_FORTIFY_SOURCE                           policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
  CONFIG_STATIC_USERMODEHELPER                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
@@ -34,7 +56,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index a10dcf1029bd..29899d8fb74f 100644
+index 05ad9d22c1ba..29899d8fb74f 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -123,7 +145,15 @@ index a10dcf1029bd..29899d8fb74f 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
-@@ -9108,13 +9098,6 @@ CONFIG_RTW88_CORE=m
+@@ -7323,7 +7313,6 @@ CONFIG_NVEC_PAZ00=m
+ CONFIG_NVEC_POWER=m
+ # CONFIG_NVHE_EL2_DEBUG is not set
+ CONFIG_NVIDIA_CARMEL_CNP_ERRATUM=y
+-CONFIG_NVIDIA_WMI_EC_BACKLIGHT=m
+ CONFIG_NVMEM_BCM_OCOTP=m
+ CONFIG_NVMEM_IMX_IIM=m
+ CONFIG_NVMEM_IMX_OCOTP=m
+@@ -9109,13 +9098,6 @@ CONFIG_RTW88_CORE=m
  CONFIG_RTW88_DEBUG=y
  CONFIG_RTW88_DEBUGFS=y
  CONFIG_RTW88_PCI=m
@@ -137,7 +167,7 @@ index a10dcf1029bd..29899d8fb74f 100644
  # CONFIG_RT_GROUP_SCHED is not set
  CONFIG_RT_MUTEXES=y
  CONFIG_RUNTIME_TESTING_MENU=y
-@@ -9352,7 +9335,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+@@ -9353,7 +9335,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
  CONFIG_SECURITY_PATH=y
@@ -145,7 +175,7 @@ index a10dcf1029bd..29899d8fb74f 100644
  CONFIG_SECURITY_SAFESETID=y
  CONFIG_SECURITY_SELINUX=y
  CONFIG_SECURITY_SELINUX_AVC_STATS=y
-@@ -9376,7 +9358,6 @@ CONFIG_SECURITY_YAMA=y
+@@ -9377,7 +9358,6 @@ CONFIG_SECURITY_YAMA=y
  CONFIG_SELECT_MEMORY_MODEL=y
  CONFIG_SENSIRION_SGP30=m
  CONFIG_SENSIRION_SGP40=m
@@ -153,7 +183,7 @@ index a10dcf1029bd..29899d8fb74f 100644
  CONFIG_SENSORS_ABITUGURU=m
  CONFIG_SENSORS_ABITUGURU3=m
  CONFIG_SENSORS_ACPI_POWER=m
-@@ -9740,7 +9721,6 @@ CONFIG_SGI_XP=m
+@@ -9741,7 +9721,6 @@ CONFIG_SGI_XP=m
  CONFIG_SGL_ALLOC=y
  CONFIG_SG_POOL=y
  CONFIG_SG_SPLIT=y
@@ -161,7 +191,7 @@ index a10dcf1029bd..29899d8fb74f 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -11413,8 +11393,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
+@@ -11414,8 +11393,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
  CONFIG_UBSAN_SHIFT=y
  # CONFIG_UBSAN_TRAP is not set
  # CONFIG_UBSAN_UNREACHABLE is not set
@@ -170,7 +200,7 @@ index a10dcf1029bd..29899d8fb74f 100644
  CONFIG_UCB1400_CORE=m
  CONFIG_UCC=y
  CONFIG_UCC_FAST=y
-@@ -11984,7 +11962,6 @@ CONFIG_VDSO=y
+@@ -11985,7 +11962,6 @@ CONFIG_VDSO=y
  CONFIG_VDSO32=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m
