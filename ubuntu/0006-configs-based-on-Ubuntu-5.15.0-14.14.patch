@@ -1,14 +1,14 @@
-From e5cc7163cf84e6b40a77ec49ade4ab450d0a1808 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 22 Dec 2021 09:38:05 +0000
+From 38553f44fbd4a679c741a207c00f50f62ec05309 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 29 Dec 2021 07:39:02 -0500
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-14.14)
 
 ---
  .../config/amd64/config.common.amd64          |  2 +-
  debian.master/config/annotations              |  3 +-
  .../config/arm64/config.flavour.generic       |  2 +-
- debian.master/config/config.common.ubuntu     | 30 ++-----------------
- 4 files changed, 6 insertions(+), 31 deletions(-)
+ debian.master/config/config.common.ubuntu     | 31 ++-----------------
+ 4 files changed, 6 insertions(+), 32 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 8a13ed6ae8bc..4d8f0935b849 100644
@@ -56,7 +56,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 05ad9d22c1ba..29899d8fb74f 100644
+index 05ad9d22c1ba..4f29addb0d9b 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -208,6 +208,14 @@ index 05ad9d22c1ba..29899d8fb74f 100644
  CONFIG_VETH=m
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
+@@ -12589,7 +12565,6 @@ CONFIG_X86_PCC_CPUFREQ=y
+ CONFIG_X86_PKG_TEMP_THERMAL=m
+ CONFIG_X86_PLATFORM_DEVICES=y
+ CONFIG_X86_PLATFORM_DRIVERS_DELL=y
+-CONFIG_X86_PLATFORM_DRIVERS_INTEL=y
+ CONFIG_X86_PMEM_LEGACY=y
+ CONFIG_X86_PMEM_LEGACY_DEVICE=y
+ CONFIG_X86_PM_TIMER=y
 -- 
 2.25.1
 
