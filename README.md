@@ -4,13 +4,13 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.15.1  
-0001 : ProjectC 5.15-r0  
+0000 : Patch 5.15.12  
+0001 : ProjectC 5.15-r1  
 0002 : 5.15 Graysky's CPU optimization patches  
 0003 : v5.15-futex_waitv  
-0004 : v5.15-fsync-waitvcompat  
+0004 : v5.15-fsync1-waitv  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
-0006 : ProjectC scheduler tweaks  
+0006 : PDS optimizations  
 0007 : zstd kernel settings  
 0008 : hwmon driver for Asus (WMI) motherboards  
 0009 : Spectre patches  
@@ -22,9 +22,11 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0023 : mm: LRU patchset  
 0024 : zstd upstream patches  
 0025 : -ck picked patches (Xanmod)  
-0026 : BBR2 + various net/TCP patches  
+0026 : net patches  
 0027 : LRNG kernel patches  
-0030 : Various kernel tweaks patch  
+0028 : BBR2  
+0029 : NTFS3 patches  
+0030 : Various kernel tweaks  
 
 ubuntu : Ubuntu mainline kernel patchset  
 
