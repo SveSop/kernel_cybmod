@@ -1,49 +1,13 @@
-From 38553f44fbd4a679c741a207c00f50f62ec05309 Mon Sep 17 00:00:00 2001
+From 5c16d9d207256124b2f61a5cb693b43ea6307b9f Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 29 Dec 2021 07:39:02 -0500
-Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-14.14)
+Date: Wed, 5 Jan 2022 07:32:46 -0500
+Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-15.15)
 
 ---
- .../config/amd64/config.common.amd64          |  2 +-
- debian.master/config/annotations              |  3 +-
  .../config/arm64/config.flavour.generic       |  2 +-
- debian.master/config/config.common.ubuntu     | 31 ++-----------------
- 4 files changed, 6 insertions(+), 32 deletions(-)
+ debian.master/config/config.common.ubuntu     | 28 ++-----------------
+ 2 files changed, 3 insertions(+), 27 deletions(-)
 
-diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 8a13ed6ae8bc..4d8f0935b849 100644
---- a/debian.master/config/amd64/config.common.amd64
-+++ b/debian.master/config/amd64/config.common.amd64
-@@ -59,7 +59,7 @@ CONFIG_CADENCE_WATCHDOG=m
- CONFIG_CAIF=m
- CONFIG_CAN=m
- CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-12ubuntu1) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-13ubuntu1) 11.2.0"
- CONFIG_CDROM_PKTCDVD=m
- # CONFIG_CMA is not set
- CONFIG_CMDLINE_PARTITION=y
-diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index c745a5a74d21..e366cb64e100 100644
---- a/debian.master/config/annotations
-+++ b/debian.master/config/annotations
-@@ -10557,7 +10557,6 @@ CONFIG_WMI_BMOF                                 policy<{'amd64': 'm'}>
- CONFIG_HUAWEI_WMI                               policy<{'amd64': 'm'}>
- CONFIG_MXM_WMI                                  policy<{'amd64': 'm'}>
- CONFIG_PEAQ_WMI                                 policy<{'amd64': 'm'}>
--CONFIG_NVIDIA_WMI_EC_BACKLIGHT			policy<{'amd64': 'm'}>
- CONFIG_XIAOMI_WMI                               policy<{'amd64': 'm'}>
- CONFIG_GIGABYTE_WMI                             policy<{'amd64': 'm'}>
- CONFIG_ACER_WMI                                 policy<{'amd64': 'm'}>
-@@ -13931,7 +13930,7 @@ CONFIG_HARDENED_USERCOPY_FALLBACK               policy<{'amd64': 'n', 'arm64': '
- CONFIG_HARDENED_USERCOPY_PAGESPAN               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
- CONFIG_FORTIFY_SOURCE                           policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
- CONFIG_STATIC_USERMODEHELPER                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
--CONFIG_LSM                                      policy<{'amd64': '"landlock,lockdown,yama,integrity,apparmor"', 'arm64': '"landlock,lockdown,yama,integrity,apparmor"', 'armhf': '"landlock,lockdown,yama,integrity,apparmor"', 'ppc64el': '"landlock,lockdown,yama,integrity,apparmor"', 's390x': '"landlock,lockdown,yama,integrity,apparmor"'}>
-+CONFIG_LSM                                      policy<{'amd64': '"lockdown,yama,integrity,apparmor"', 'arm64': '"lockdown,yama,integrity,apparmor"', 'armhf': '"lockdown,yama,integrity,apparmor"', 'ppc64el': '"lockdown,yama,integrity,apparmor"', 's390x': '"lockdown,yama,integrity,apparmor"'}>
- #
- CONFIG_SECURITY_DMESG_RESTRICT                  mark<ENFORCED>
- CONFIG_LSM                                      mark<ENFORCED>
 diff --git a/debian.master/config/arm64/config.flavour.generic b/debian.master/config/arm64/config.flavour.generic
 index d6e3ffa1d269..b7e35f458cc2 100644
 --- a/debian.master/config/arm64/config.flavour.generic
@@ -56,7 +20,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 05ad9d22c1ba..4f29addb0d9b 100644
+index 393b319d7a00..96766278890d 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -128,15 +92,6 @@ index 05ad9d22c1ba..4f29addb0d9b 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -5788,7 +5779,7 @@ CONFIG_LPARCFG=y
- # CONFIG_LP_CONSOLE is not set
- CONFIG_LRU_CACHE=m
- CONFIG_LSI_ET1011C_PHY=m
--CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
-+CONFIG_LSM="lockdown,yama,integrity,apparmor"
- CONFIG_LSM_MMAP_MIN_ADDR=0
- CONFIG_LS_EXTIRQ=y
- CONFIG_LS_SCFG_MSI=y
 @@ -6058,7 +6049,6 @@ CONFIG_MESON_SM=y
  CONFIG_MESON_WATCHDOG=m
  CONFIG_MESSAGE_LOGLEVEL_DEFAULT=4
@@ -208,14 +163,6 @@ index 05ad9d22c1ba..4f29addb0d9b 100644
  CONFIG_VETH=m
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
-@@ -12589,7 +12565,6 @@ CONFIG_X86_PCC_CPUFREQ=y
- CONFIG_X86_PKG_TEMP_THERMAL=m
- CONFIG_X86_PLATFORM_DEVICES=y
- CONFIG_X86_PLATFORM_DRIVERS_DELL=y
--CONFIG_X86_PLATFORM_DRIVERS_INTEL=y
- CONFIG_X86_PMEM_LEGACY=y
- CONFIG_X86_PMEM_LEGACY_DEVICE=y
- CONFIG_X86_PM_TIMER=y
 -- 
 2.25.1
 
