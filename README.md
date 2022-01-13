@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.15.13  
+0000 : Patch 5.15.14  
 0001 : ProjectC 5.15-r1  
 0002 : 5.15 Graysky's CPU optimization patches  
 0003 : v5.15-futex_waitv  
