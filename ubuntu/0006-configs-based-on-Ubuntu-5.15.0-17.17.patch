@@ -1,13 +1,27 @@
-From 9b16129cdbd61531ccfec2afeeb929501c41b715 Mon Sep 17 00:00:00 2001
+From 19f770fe6d7e3c32c7f7f2893dbf268fa56bd224 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 11 Jan 2022 13:48:28 -0500
-Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-16.16)
+Date: Sun, 16 Jan 2022 04:36:00 -0500
+Subject: [PATCH 6/6] configs (based on Ubuntu-5.15.0-17.17)
 
 ---
+ .../config/amd64/config.common.amd64          |  2 +-
  .../config/arm64/config.flavour.generic       |  2 +-
- debian.master/config/config.common.ubuntu     | 28 ++-----------------
- 2 files changed, 3 insertions(+), 27 deletions(-)
+ debian.master/config/config.common.ubuntu     | 32 +++----------------
+ 3 files changed, 6 insertions(+), 30 deletions(-)
 
+diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
+index 4d8f0935b849..b6eae373c446 100644
+--- a/debian.master/config/amd64/config.common.amd64
++++ b/debian.master/config/amd64/config.common.amd64
+@@ -59,7 +59,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-13ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-14ubuntu1) 11.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ # CONFIG_CMA is not set
+ CONFIG_CMDLINE_PARTITION=y
 diff --git a/debian.master/config/arm64/config.flavour.generic b/debian.master/config/arm64/config.flavour.generic
 index d6e3ffa1d269..b7e35f458cc2 100644
 --- a/debian.master/config/arm64/config.flavour.generic
@@ -20,7 +34,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index 393b319d7a00..96766278890d 100644
+index 393b319d7a00..af42a789ebdd 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -33,7 +33,6 @@ CONFIG_9P_FS=m
@@ -52,6 +66,15 @@ index 393b319d7a00..96766278890d 100644
  CONFIG_ASM_MODVERSIONS=y
  CONFIG_ASN1=y
  CONFIG_ASN1_ENCODER=y
+@@ -870,7 +866,7 @@ CONFIG_AS_IS_GNU=y
+ CONFIG_AS_SHA1_NI=y
+ CONFIG_AS_SHA256_NI=y
+ CONFIG_AS_TPAUSE=y
+-CONFIG_AS_VERSION=23700
++CONFIG_AS_VERSION=23750
+ CONFIG_AS_VFP_VMRS_FPINST=y
+ CONFIG_AT76C50X_USB=m
+ CONFIG_AT803X_PHY=m
 @@ -2662,7 +2658,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
@@ -76,9 +99,12 @@ index 393b319d7a00..96766278890d 100644
  CONFIG_HIP04_ETH=m
  # CONFIG_HIPPI is not set
  CONFIG_HISILICON_ERRATUM_161010101=y
-@@ -5616,7 +5609,6 @@ CONFIG_LD_IS_BFD=y
+@@ -5614,9 +5607,8 @@ CONFIG_LDISC_AUTOLOAD=y
+ # CONFIG_LD_HEAD_STUB_CATCH is not set
+ CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
- CONFIG_LD_VERSION=23700
+-CONFIG_LD_VERSION=23700
++CONFIG_LD_VERSION=23750
  CONFIG_LEDS_88PM860X=m
 -CONFIG_LEDS_AAEON=m
  CONFIG_LEDS_AAT1290=m

@@ -1,27 +1,33 @@
-From c89221305d4f067aeb4f59f31aa7e5c47a53bccd Mon Sep 17 00:00:00 2001
+From 173538bd6d5aa0c081c0279c15a734bcd6bd8a77 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 11 Jan 2022 13:47:50 -0500
+Date: Sun, 16 Jan 2022 04:35:12 -0500
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 14522 +-------------------------------------
- 1 file changed, 3 insertions(+), 14519 deletions(-)
+ debian.master/changelog | 14528 +-------------------------------------
+ 1 file changed, 3 insertions(+), 14525 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 17bfb7f3c4c4..98759a396731 100644
+index fa2b71da090a..8075b7084910 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,14522 +1,6 @@
+@@ -1,14528 +1,6 @@
+-linux (5.15.0-17.17) jammy; urgency=medium
++linux (5.15.15-051515.202201160435) jammy; urgency=low
+ 
+-  * jammy/linux: 5.15.0-17.17 -proposed tracker (LP: #1957809)
++  Mainline build at commit: v5.15.15
+ 
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 13 Jan 2022 17:11:21 +0100
++ -- Mainline Build <kernel@gloin>  Sun, 16 Jan 2022 04:35:12 -0500
+ 
 -linux (5.15.0-16.16) jammy; urgency=medium
-+linux (5.15.14-051514.202201111347) jammy; urgency=low
- 
+-
 -  * jammy/linux: 5.15.0-16.16 -proposed tracker (LP: #1956820)
-+  Mainline build at commit: v5.15.14
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@gloin>  Tue, 11 Jan 2022 13:47:50 -0500
- 
+-
 -  * 5.15 stuck at boot on c4.large (LP: #1956780)
 -    - Revert "PCI/MSI: Mask MSI-X vectors only on success"
 -
