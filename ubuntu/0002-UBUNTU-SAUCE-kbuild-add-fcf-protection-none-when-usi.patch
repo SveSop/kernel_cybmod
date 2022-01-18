@@ -1,4 +1,4 @@
-From 31549d54135379f19ec5212eda4821f6b4d5cad7 Mon Sep 17 00:00:00 2001
+From a6b0094d436cf94abe6c00e8d9ed113dcc9ffd3c Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Sun, 7 Jul 2019 21:37:43 -0500
 Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
@@ -19,22 +19,22 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 474b2a2292ca..23220bac4238 100644
+index fdbd06daf2af..75a071973146 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -899,6 +899,12 @@ ifdef CONFIG_FTRACE_MCOUNT_USE_OBJTOOL
-   CC_FLAGS_USING	+= -DCC_USING_NOP_MCOUNT
- endif
- ifdef CONFIG_FTRACE_MCOUNT_USE_RECORDMCOUNT
+@@ -899,6 +899,12 @@ CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
+ KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
+ else
+ CC_FLAGS_LTO	:= -flto
 +# ensure -fcf-protection is disabled when using retpoline as it is
 +# incompatible with -mindirect-branch=thunk-extern
 +ifdef CONFIG_RETPOLINE
 +KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none,)
 +endif
 +
-   ifdef CONFIG_HAVE_C_RECORDMCOUNT
-     BUILD_C_RECORDMCOUNT := y
-     export BUILD_C_RECORDMCOUNT
+ endif
+ CC_FLAGS_LTO	+= -fvisibility=hidden
+ 
 -- 
 2.25.1
 

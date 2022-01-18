@@ -1,4 +1,4 @@
-From 168493dab1e2ba2f21731ec6d73a3985867b6ebb Mon Sep 17 00:00:00 2001
+From d8021ad7d94a99ff7fe3af3f650097e546d0aed2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:16:43 +0200
 Subject: [PATCH 1/4] block, Kconfig.iosched: set default value of IOSCHED_BFQ
@@ -10,10 +10,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index 2f2158e05..e58b2953a 100644
+index 885fee86d..edf6d4f21 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
-@@ -5,13 +5,11 @@ menu "IO Schedulers"
+@@ -3,13 +3,11 @@ menu "IO Schedulers"
  
  config MQ_IOSCHED_DEADLINE
  	tristate "MQ deadline I/O scheduler"
@@ -27,7 +27,7 @@ index 2f2158e05..e58b2953a 100644
  	help
  	  The Kyber I/O scheduler is a low-overhead scheduler suitable for
  	  multiqueue and other fast devices. Given target latencies for reads and
-@@ -20,6 +18,7 @@ config MQ_IOSCHED_KYBER
+@@ -18,6 +16,7 @@ config MQ_IOSCHED_KYBER
  
  config IOSCHED_BFQ
  	tristate "BFQ I/O scheduler"
@@ -36,10 +36,10 @@ index 2f2158e05..e58b2953a 100644
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 72149cdad986c95ccd1356bee1385084791cea95 Mon Sep 17 00:00:00 2001
+From e90f54e102ecf81b14946ba63d04066ac0649ea0 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
 Subject: [PATCH 2/4] block: Fix depends for BLK_DEV_ZONED
@@ -50,7 +50,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index 8e28ae771..6ba62b6c7 100644
+index c6ce41a5e..b4d592856 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
 @@ -63,7 +63,7 @@ config BLK_DEV_INTEGRITY_T10
@@ -63,10 +63,10 @@ index 8e28ae771..6ba62b6c7 100644
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC/ZNS host-managed and host-aware zoned block
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From 75005ecce73f8718880f266f88c8f21f9cdb3f9a Mon Sep 17 00:00:00 2001
+From e79c716b5fe9471e11cb2a564646d79e31a90a36 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
 Subject: [PATCH 3/4] block: set rq_affinity = 2 for full multithreading I/O
@@ -77,10 +77,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 12b9dbcc9..52f8fff7e 100644
+index bd4370bac..8d90f0fab 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
-@@ -589,6 +589,7 @@ struct request_queue {
+@@ -408,6 +408,7 @@ struct request_queue {
  
  #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
  				 (1 << QUEUE_FLAG_SAME_COMP) |		\
@@ -89,27 +89,27 @@ index 12b9dbcc9..52f8fff7e 100644
  
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 
 
-From d7010ca833be91c3cd2735e24d66bcd0bcb31c68 Mon Sep 17 00:00:00 2001
+From 08ca8d3b06a500c69f7cc08baac57eef0f390b2f Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 28 Jun 2021 13:12:54 +0200
+Date: Mon, 10 Jan 2022 18:51:40 +0100
 Subject: [PATCH 4/4] block: Add CONFIG to rename the mq-deadline scheduler
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
- block/Kconfig.iosched    | 9 +++++++++
- block/elevator.c         | 4 ++++
- block/mq-deadline.c      | 9 +++++++++
- include/linux/elevator.h | 2 +-
+ block/Kconfig.iosched | 9 +++++++++
+ block/elevator.c      | 4 ++++
+ block/elevator.h      | 2 +-
+ block/mq-deadline.c   | 9 +++++++++
  4 files changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/block/Kconfig.iosched b/block/Kconfig.iosched
-index e58b2953a..9e5a3c5c6 100644
+index edf6d4f21..8af6ef2c4 100644
 --- a/block/Kconfig.iosched
 +++ b/block/Kconfig.iosched
-@@ -8,6 +8,15 @@ config MQ_IOSCHED_DEADLINE
+@@ -6,6 +6,15 @@ config MQ_IOSCHED_DEADLINE
  	help
  	  MQ version of the deadline IO scheduler.
  
@@ -126,11 +126,11 @@ index e58b2953a..9e5a3c5c6 100644
  	tristate "Kyber I/O scheduler"
  	help
 diff --git a/block/elevator.c b/block/elevator.c
-index ff45d8388..2ce4b7884 100644
+index 19a78d551..8a31c5b63 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -640,7 +640,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
- 			!blk_mq_is_sbitmap_shared(q->tag_set->flags))
+ 	    !blk_mq_is_shared_tags(q->tag_set->flags))
  		return NULL;
  
 +#if defined(CONFIG_MQ_IOSCHED_DEADLINE_NODEFAULT)
@@ -141,11 +141,24 @@ index ff45d8388..2ce4b7884 100644
  }
  
  /*
+diff --git a/block/elevator.h b/block/elevator.h
+index 16cd8bded..8d488775f 100644
+--- a/block/elevator.h
++++ b/block/elevator.h
+@@ -48,7 +48,7 @@ struct elevator_mq_ops {
+ 	void (*exit_icq)(struct io_cq *);
+ };
+ 
+-#define ELV_NAME_MAX	(16)
++#define ELV_NAME_MAX	(24)
+ 
+ struct elv_fs_entry {
+ 	struct attribute attr;
 diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 7f3c3932b..64bf0e8bb 100644
+index 85d919bf6..76c0843d7 100644
 --- a/block/mq-deadline.c
 +++ b/block/mq-deadline.c
-@@ -1081,12 +1081,21 @@ static struct elevator_type mq_deadline = {
+@@ -1147,12 +1147,21 @@ static struct elevator_type mq_deadline = {
  	.queue_debugfs_attrs = deadline_queue_debugfs_attrs,
  #endif
  	.elevator_attrs = deadline_attrs,
@@ -167,19 +180,6 @@ index 7f3c3932b..64bf0e8bb 100644
  
  static int __init deadline_init(void)
  {
-diff --git a/include/linux/elevator.h b/include/linux/elevator.h
-index ef9ceead3..b6c59500c 100644
---- a/include/linux/elevator.h
-+++ b/include/linux/elevator.h
-@@ -52,7 +52,7 @@ struct elevator_mq_ops {
- 	void (*exit_icq)(struct io_cq *);
- };
- 
--#define ELV_NAME_MAX	(16)
-+#define ELV_NAME_MAX	(24)
- 
- struct elv_fs_entry {
- 	struct attribute attr;
 -- 
-2.33.1.711.g9d530dc002
+2.34.1.75.gabe6bb3905
 

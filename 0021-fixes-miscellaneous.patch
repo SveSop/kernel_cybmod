@@ -1,7 +1,7 @@
-From d37407b160b755a8816ece475cfff78fad172ac7 Mon Sep 17 00:00:00 2001
+From f12616d56c784aa940f70f7c3efc47c2c2daa5d3 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/18] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/14] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/sched/Kconfig b/net/sched/Kconfig
-index 1e8ab4749..75122fd65 100644
+index 1e8ab47..75122fd 100644
 --- a/net/sched/Kconfig
 +++ b/net/sched/Kconfig
 @@ -474,6 +474,9 @@ choice
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.34.1.75.gabe6bb3905
 
 
-From 84f3b5a40b50f8008e0a383020abc1724f71ad31 Mon Sep 17 00:00:00 2001
+From c5155a77caee3b2b31a7fc1fe92333538cee1d8c Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/18] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/14] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -45,7 +45,7 @@ Subject: [PATCH 02/18] infiniband: Fix __read_overflow2 error with -O3
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/infiniband/core/addr.c b/drivers/infiniband/core/addr.c
-index 65e3e7df8..b41afee77 100644
+index 65e3e7d..b41afee 100644
 --- a/drivers/infiniband/core/addr.c
 +++ b/drivers/infiniband/core/addr.c
 @@ -821,6 +821,7 @@ int rdma_addr_find_l2_eth_by_grh(const union ib_gid *sgid,
@@ -60,10 +60,10 @@ index 65e3e7df8..b41afee77 100644
 2.34.1.75.gabe6bb3905
 
 
-From 77ee331d433f7da2c3cc5c49ad8a433fdde31c63 Mon Sep 17 00:00:00 2001
+From 6b85047f37fb5d1cb0d37231d45ccffa28d455d4 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/18] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/14] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -115,10 +115,10 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 1396fd2d9..7f56c8eaa 100644
+index 2fba824..79bfb73 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -3892,6 +3892,15 @@
+@@ -3922,6 +3922,15 @@
  		nomsi		[MSI] If the PCI_MSI kernel config parameter is
  				enabled, this kernel boot option can be used to
  				disable the use of MSI interrupts system-wide.
@@ -135,7 +135,7 @@ index 1396fd2d9..7f56c8eaa 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 208fa03ac..f78ed6e63 100644
+index 003950c..c9ff7a7 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -3600,6 +3600,106 @@ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
@@ -258,10 +258,10 @@ index 208fa03ac..f78ed6e63 100644
 2.34.1.75.gabe6bb3905
 
 
-From c33edd0e6d437e62304c1e5ed2b29ebbaf81e20c Mon Sep 17 00:00:00 2001
+From 56f0baa6539db7eb3db3fce47373117af908d0d5 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/18] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/14] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -288,10 +288,10 @@ Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
  2 files changed, 40 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 78ead3369..921b39385 100644
+index 65875a5..5dc5657 100644
 --- a/drivers/scsi/sd.c
 +++ b/drivers/scsi/sd.c
-@@ -2907,7 +2907,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
+@@ -2948,7 +2948,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
   */
  static void sd_read_block_limits(struct scsi_disk *sdkp)
  {
@@ -299,7 +299,7 @@ index 78ead3369..921b39385 100644
  	const int vpd_len = 64;
  	unsigned char *buffer = kmalloc(vpd_len, GFP_KERNEL);
  
-@@ -2916,9 +2915,7 @@ static void sd_read_block_limits(struct scsi_disk *sdkp)
+@@ -2957,9 +2956,7 @@ static void sd_read_block_limits(struct scsi_disk *sdkp)
  	    scsi_get_vpd_page(sdkp->device, 0xb0, buffer, vpd_len))
  		goto out;
  
@@ -310,8 +310,8 @@ index 78ead3369..921b39385 100644
  	sdkp->max_xfer_blocks = get_unaligned_be32(&buffer[8]);
  	sdkp->opt_xfer_blocks = get_unaligned_be32(&buffer[12]);
  
-@@ -3094,6 +3091,29 @@ static void sd_read_security(struct scsi_disk *sdkp, unsigned char *buffer)
- 		sdkp->security = 1;
+@@ -3215,6 +3212,29 @@ static void sd_read_cpr(struct scsi_disk *sdkp)
+ 	kfree(buffer);
  }
  
 +static bool sd_validate_min_xfer_size(struct scsi_disk *sdkp)
@@ -340,7 +340,7 @@ index 78ead3369..921b39385 100644
  /*
   * Determine the device's preferred I/O size for reads and writes
   * unless the reported value is unreasonably small, large, not a
-@@ -3105,6 +3125,8 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+@@ -3226,6 +3246,8 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
  	struct scsi_device *sdp = sdkp->device;
  	unsigned int opt_xfer_bytes =
  		logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
@@ -349,7 +349,7 @@ index 78ead3369..921b39385 100644
  
  	if (sdkp->opt_xfer_blocks == 0)
  		return false;
-@@ -3141,6 +3163,15 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
+@@ -3262,6 +3284,15 @@ static bool sd_validate_opt_xfer_size(struct scsi_disk *sdkp,
  		return false;
  	}
  
@@ -365,7 +365,7 @@ index 78ead3369..921b39385 100644
  	sd_first_printk(KERN_INFO, sdkp, "Optimal transfer size %u bytes\n",
  			opt_xfer_bytes);
  	return true;
-@@ -3224,6 +3255,10 @@ static int sd_revalidate_disk(struct gendisk *disk)
+@@ -3346,6 +3377,10 @@ static int sd_revalidate_disk(struct gendisk *disk)
  	dev_max = min_not_zero(dev_max, sdkp->max_xfer_blocks);
  	q->limits.max_dev_sectors = logical_to_sectors(sdp, dev_max);
  
@@ -377,7 +377,7 @@ index 78ead3369..921b39385 100644
  		q->limits.io_opt = logical_to_bytes(sdp, sdkp->opt_xfer_blocks);
  		rw_max = logical_to_sectors(sdp, sdkp->opt_xfer_blocks);
 diff --git a/drivers/scsi/sd.h b/drivers/scsi/sd.h
-index b59136c41..4154030c8 100644
+index 2e5932b..f4fbca9 100644
 --- a/drivers/scsi/sd.h
 +++ b/drivers/scsi/sd.h
 @@ -91,6 +91,7 @@ struct scsi_disk {
@@ -392,10 +392,10 @@ index b59136c41..4154030c8 100644
 2.34.1.75.gabe6bb3905
 
 
-From bb71d8c5bb825e2074e0b044d06ee2336c1a907b Mon Sep 17 00:00:00 2001
+From 7cafff8f8d2f0f85308d06bb24f755730d16cc98 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 05/18] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 05/14] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -471,7 +471,7 @@ Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
  1 file changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 97119ec3b..b878d225a 100644
+index 71a36ae..b0363d3 100644
 --- a/fs/iomap/buffered-io.c
 +++ b/fs/iomap/buffered-io.c
 @@ -17,6 +17,7 @@
@@ -482,7 +482,7 @@ index 97119ec3b..b878d225a 100644
  #include "trace.h"
  
  #include "../internal.h"
-@@ -1395,9 +1396,11 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
+@@ -1394,9 +1395,11 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
  {
  	struct iomap_writepage_ctx *wpc = data;
  	struct inode *inode = page->mapping->host;
@@ -494,7 +494,7 @@ index 97119ec3b..b878d225a 100644
  
  	trace_iomap_writepage(inode, page_offset(page), PAGE_SIZE);
  
-@@ -1481,7 +1484,16 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
+@@ -1480,7 +1483,16 @@ iomap_do_writepage(struct page *page, struct writeback_control *wbc, void *data)
  		end_offset = offset;
  	}
  
@@ -516,10 +516,10 @@ index 97119ec3b..b878d225a 100644
 2.34.1.75.gabe6bb3905
 
 
-From a3b073aa89cffda192803a812eebfeecab0cf470 Mon Sep 17 00:00:00 2001
+From 82b55fa58c999a4b1d7545d92d02658af9579e46 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 06/18] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 06/14] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -528,7 +528,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 27 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
-index 23cc988c6..d49b71eab 100644
+index cc30ff9..812116d 100644
 --- a/drivers/tty/Kconfig
 +++ b/drivers/tty/Kconfig
 @@ -75,6 +75,19 @@ config VT_CONSOLE_SLEEP
@@ -552,7 +552,7 @@ index 23cc988c6..d49b71eab 100644
  	bool
  	depends on VT
 diff --git a/include/uapi/linux/vt.h b/include/uapi/linux/vt.h
-index e9d39c485..3bceead8d 100644
+index e9d39c4..3bceead 100644
 --- a/include/uapi/linux/vt.h
 +++ b/include/uapi/linux/vt.h
 @@ -3,12 +3,25 @@
@@ -586,10 +586,10 @@ index e9d39c485..3bceead8d 100644
 2.34.1.75.gabe6bb3905
 
 
-From 67531574d96dcda473b33bf9fb895d154e97b069 Mon Sep 17 00:00:00 2001
+From 4ef7a995fa0bea40dc1f3f7043d5fd90f911be3f Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 07/18] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 07/14] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -602,7 +602,7 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  create mode 100644 drivers/i2c/busses/i2c-nct6775.c
 
 diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index e17790fe3..d4dd2a1dc 100644
+index dce3928..2d481f5 100644
 --- a/drivers/i2c/busses/Kconfig
 +++ b/drivers/i2c/busses/Kconfig
 @@ -219,6 +219,15 @@ config I2C_CHT_WC
@@ -622,7 +622,7 @@ index e17790fe3..d4dd2a1dc 100644
  	tristate "Nvidia nForce2, nForce3 and nForce4"
  	depends on PCI
 diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-index 1336b04f4..ccbe82704 100644
+index d85899f..b0f16b4 100644
 --- a/drivers/i2c/busses/Makefile
 +++ b/drivers/i2c/busses/Makefile
 @@ -17,6 +17,7 @@ obj-$(CONFIG_I2C_CHT_WC)	+= i2c-cht-wc.o
@@ -635,7 +635,7 @@ index 1336b04f4..ccbe82704 100644
  obj-$(CONFIG_I2C_NVIDIA_GPU)	+= i2c-nvidia-gpu.o
 diff --git a/drivers/i2c/busses/i2c-nct6775.c b/drivers/i2c/busses/i2c-nct6775.c
 new file mode 100644
-index 000000000..b59f842f7
+index 0000000..b59f842
 --- /dev/null
 +++ b/drivers/i2c/busses/i2c-nct6775.c
 @@ -0,0 +1,647 @@
@@ -1287,7 +1287,7 @@ index 000000000..b59f842f7
 +module_init(i2c_nct6775_init);
 +module_exit(i2c_nct6775_exit);
 diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
-index 8c1b31ed0..9131e4004 100644
+index 8c1b31e..9131e40 100644
 --- a/drivers/i2c/busses/i2c-piix4.c
 +++ b/drivers/i2c/busses/i2c-piix4.c
 @@ -467,11 +467,11 @@ static int piix4_transaction(struct i2c_adapter *piix4_adapter)
@@ -1320,249 +1320,53 @@ index 8c1b31ed0..9131e4004 100644
 2.34.1.75.gabe6bb3905
 
 
-From ae79d2c0669b5233d16468af9d5151b60e9518c0 Mon Sep 17 00:00:00 2001
-From: Jens Axboe <axboe@kernel.dk>
-Date: Tue, 12 Oct 2021 12:13:52 -0600
-Subject: [PATCH 08/18] nvme: don't memset() the normal read/write command
+From 000d2ff9051b47eba21a9baf1ef0eebe4831a3ea Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Mon, 10 Jan 2022 18:37:07 +0100
+Subject: [PATCH 08/14] fm-5.16: port mm kswapd patches
 
-This memset in the fast path costs a lot of cycles on my setup. Here's a
-top-of-profile of doing ~6.7M IOPS:
-
-+    5.90%  io_uring  [nvme]            [k] nvme_queue_rq
-+    5.32%  io_uring  [nvme_core]       [k] nvme_setup_cmd
-+    5.17%  io_uring  [kernel.vmlinux]  [k] io_submit_sqes
-+    4.97%  io_uring  [kernel.vmlinux]  [k] blkdev_direct_IO
-
-and a perf diff with this patch:
-
-     0.92%     +4.40%  [nvme_core]       [k] nvme_setup_cmd
-
-reducing it from 5.3% to only 0.9%. This takes it from the 2nd most
-cycle consumer to something that's mostly irrelevant.
-
-Retain the full clear for the other commands to avoid doing any audits
-there, and just clear the fields in the rw command manually that we
-don't already fill.
-
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
- drivers/nvme/host/core.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ mm/internal.h   |  1 +
+ mm/page_alloc.c | 26 ++++++++++++++++++++------
+ mm/vmscan.c     |  3 ++-
+ 3 files changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index f8dd664b2..2d609ee57 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -922,9 +922,16 @@ static inline blk_status_t nvme_setup_rw(struct nvme_ns *ns,
- 		dsmgmt |= NVME_RW_DSM_FREQ_PREFETCH;
+diff --git a/mm/internal.h b/mm/internal.h
+index 3b79a5c..a78d551 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -244,6 +244,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
+ extern void post_alloc_hook(struct page *page, unsigned int order,
+ 					gfp_t gfp_flags);
+ extern int user_min_free_kbytes;
++extern atomic_long_t kswapd_waiters;
  
- 	cmnd->rw.opcode = op;
-+	cmnd->rw.flags = 0;
-+	cmnd->rw.command_id = 0;
- 	cmnd->rw.nsid = cpu_to_le32(ns->head->ns_id);
-+	cmnd->rw.rsvd2 = 0;
-+	cmnd->rw.metadata = 0;
- 	cmnd->rw.slba = cpu_to_le64(nvme_sect_to_lba(ns, blk_rq_pos(req)));
- 	cmnd->rw.length = cpu_to_le16((blk_rq_bytes(req) >> ns->lba_shift) - 1);
-+	cmnd->rw.reftag = 0;
-+	cmnd->rw.apptag = 0;
-+	cmnd->rw.appmask = 0;
+ extern void free_unref_page(struct page *page, unsigned int order);
+ extern void free_unref_page_list(struct list_head *list);
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index c595274..c0fefa4 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -118,6 +118,8 @@ typedef int __bitwise fpi_t;
+  */
+ #define FPI_SKIP_KASAN_POISON	((__force fpi_t)BIT(2))
  
- 	if (req_op(req) == REQ_OP_WRITE && ctrl->nr_streams)
- 		nvme_assign_write_stream(ctrl, req, &control, &dsmgmt);
-@@ -975,51 +982,64 @@ void nvme_cleanup_cmd(struct request *req)
- }
- EXPORT_SYMBOL_GPL(nvme_cleanup_cmd);
- 
-+static void nvme_clear_cmd(struct request *req)
-+{
-+	if (!(req->rq_flags & RQF_DONTPREP)) {
-+		nvme_clear_nvme_request(req);
-+		memset(nvme_req(req)->cmd, 0, sizeof(struct nvme_command));
-+	}
-+}
++atomic_long_t kswapd_waiters = ATOMIC_LONG_INIT(0);
 +
- blk_status_t nvme_setup_cmd(struct nvme_ns *ns, struct request *req)
- {
- 	struct nvme_command *cmd = nvme_req(req)->cmd;
- 	struct nvme_ctrl *ctrl = nvme_req(req)->ctrl;
- 	blk_status_t ret = BLK_STS_OK;
+ /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
+ static DEFINE_MUTEX(pcp_batch_high_lock);
+ #define MIN_PERCPU_PAGELIST_HIGH_FRACTION (8)
+@@ -338,7 +340,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
  
--	if (!(req->rq_flags & RQF_DONTPREP)) {
--		nvme_clear_nvme_request(req);
--		memset(cmd, 0, sizeof(*cmd));
--	}
--
- 	switch (req_op(req)) {
- 	case REQ_OP_DRV_IN:
- 	case REQ_OP_DRV_OUT:
- 		/* these are setup prior to execution in nvme_init_request() */
- 		break;
- 	case REQ_OP_FLUSH:
-+		nvme_clear_cmd(req);
- 		nvme_setup_flush(ns, cmd);
- 		break;
- 	case REQ_OP_ZONE_RESET_ALL:
- 	case REQ_OP_ZONE_RESET:
-+		nvme_clear_cmd(req);
- 		ret = nvme_setup_zone_mgmt_send(ns, req, cmd, NVME_ZONE_RESET);
- 		break;
- 	case REQ_OP_ZONE_OPEN:
-+		nvme_clear_cmd(req);
- 		ret = nvme_setup_zone_mgmt_send(ns, req, cmd, NVME_ZONE_OPEN);
- 		break;
- 	case REQ_OP_ZONE_CLOSE:
-+		nvme_clear_cmd(req);
- 		ret = nvme_setup_zone_mgmt_send(ns, req, cmd, NVME_ZONE_CLOSE);
- 		break;
- 	case REQ_OP_ZONE_FINISH:
-+		nvme_clear_cmd(req);
- 		ret = nvme_setup_zone_mgmt_send(ns, req, cmd, NVME_ZONE_FINISH);
- 		break;
- 	case REQ_OP_WRITE_ZEROES:
-+		nvme_clear_cmd(req);
- 		ret = nvme_setup_write_zeroes(ns, req, cmd);
- 		break;
- 	case REQ_OP_DISCARD:
-+		nvme_clear_cmd(req);
- 		ret = nvme_setup_discard(ns, req, cmd);
- 		break;
- 	case REQ_OP_READ:
-+		nvme_clear_nvme_request(req);
- 		ret = nvme_setup_rw(ns, req, cmd, nvme_cmd_read);
- 		break;
- 	case REQ_OP_WRITE:
-+		nvme_clear_nvme_request(req);
- 		ret = nvme_setup_rw(ns, req, cmd, nvme_cmd_write);
- 		break;
- 	case REQ_OP_ZONE_APPEND:
-+		nvme_clear_nvme_request(req);
- 		ret = nvme_setup_rw(ns, req, cmd, nvme_cmd_zone_append);
- 		break;
- 	default:
--- 
-2.34.1.75.gabe6bb3905
-
-
-From 05b8cf2f9a5470f73bf00221edbfec3ac3278a49 Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Thu, 20 Feb 2020 20:30:52 -0800
-Subject: [PATCH 09/18] mm: Stop kswapd early when nothing's waiting for it to
- free pages
-
-Keeping kswapd running when all the failed allocations that invoked it
-are satisfied incurs a high overhead due to unnecessary page eviction
-and writeback, as well as spurious VM pressure events to various
-registered shrinkers. When kswapd doesn't need to work to make an
-allocation succeed anymore, stop it prematurely to save resources.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- include/linux/mmzone.h |  1 +
- mm/page_alloc.c        | 17 ++++++++++++++---
- mm/vmscan.c            |  3 ++-
- 3 files changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 6a1d79d84..85be97c56 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -839,6 +839,7 @@ typedef struct pglist_data {
- 	unsigned long node_spanned_pages; /* total size of physical page
- 					     range, including holes */
- 	int node_id;
-+	atomic_t kswapd_waiters;
- 	wait_queue_head_t kswapd_wait;
- 	wait_queue_head_t pfmemalloc_wait;
- 	struct task_struct *kswapd;	/* Protected by
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 23d3339ac..1756ecd05 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -4883,6 +4883,8 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 	int no_progress_loops;
- 	unsigned int cpuset_mems_cookie;
- 	int reserve_flags;
-+	pg_data_t *pgdat = ac->preferred_zoneref->zone->zone_pgdat;
-+	bool woke_kswapd = false;
+ int min_free_kbytes = 1024;
+ int user_min_free_kbytes = -1;
+-int watermark_boost_factor __read_mostly = 15000;
++int watermark_boost_factor __read_mostly;
+ int watermark_scale_factor = 10;
  
- 	/*
- 	 * We also sanity check to catch abuse of atomic reserves being used by
-@@ -4916,8 +4918,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 	if (!ac->preferred_zoneref->zone)
- 		goto nopage;
- 
--	if (alloc_flags & ALLOC_KSWAPD)
-+	if (alloc_flags & ALLOC_KSWAPD) {
-+		if (!woke_kswapd) {
-+			atomic_inc(&pgdat->kswapd_waiters);
-+			woke_kswapd = true;
-+		}
- 		wake_all_kswapds(order, gfp_mask, ac);
-+	}
- 
- 	/*
- 	 * The adjusted alloc_flags might result in immediate success, so try
-@@ -5122,9 +5129,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- 		goto retry;
- 	}
- fail:
--	warn_alloc(gfp_mask, ac->nodemask,
--			"page allocation failure: order:%u", order);
- got_pg:
-+	if (woke_kswapd)
-+		atomic_dec(&pgdat->kswapd_waiters);
-+	if (!page)
-+		warn_alloc(gfp_mask, ac->nodemask,
-+				"page allocation failure: order:%u", order);
- 	return page;
- }
- 
-@@ -7405,6 +7415,7 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
- 
- 	pgdat_page_ext_init(pgdat);
- 	lruvec_init(&pgdat->__lruvec);
-+	pgdat->kswapd_waiters = (atomic_t)ATOMIC_INIT(0);
- }
- 
- static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 74296c2d1..e513736b2 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -4082,7 +4082,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
- 		__fs_reclaim_release(_THIS_IP_);
- 		ret = try_to_freeze();
- 		__fs_reclaim_acquire(_THIS_IP_);
--		if (ret || kthread_should_stop())
-+		if (ret || kthread_should_stop() ||
-+		    !atomic_read(&pgdat->kswapd_waiters))
- 			break;
- 
- 		/*
--- 
-2.34.1.75.gabe6bb3905
-
-
-From 1b5ceb0aa36f7658d350ef9a9aadb77090d198a5 Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Thu, 9 Apr 2020 00:20:25 -0700
-Subject: [PATCH 10/18] mm: Fully disable watermark boosting when it isn't used
-
-The watermark boosting code still wakes kswapd even when there's no
-watermark boost in effect. Change it to only wake kswapd when there is
-actually a watermark boost.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- mm/page_alloc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 1756ecd05..6f61c3f2f 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -2675,8 +2675,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
+ static unsigned long nr_kernel_pages __initdata;
+@@ -2667,8 +2669,11 @@ static void steal_suitable_fallback(struct zone *zone, struct page *page,
  	 * likelihood of future fallbacks. Wake kswapd now as the node
  	 * may be balanced overall and kswapd will not wake naturally.
  	 */
@@ -1576,109 +1380,54 @@ index 1756ecd05..6f61c3f2f 100644
  
  	/* We are not allowed to try stealing from the whole block */
  	if (!whole_block)
--- 
-2.34.1.75.gabe6bb3905
-
-
-From be23ee3cb22d1b3365651b57c032509da5953aaa Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Wed, 20 May 2020 09:55:17 -0700
-Subject: [PATCH 11/18] mm: Don't stop kswapd on a per-node basis when there
- are no waiters
-
-The page allocator wakes all kswapds in an allocation context's allowed
-nodemask in the slow path, so it doesn't make sense to have the kswapd-
-waiter count per each NUMA node. Instead, it should be a global counter
-to stop all kswapds when there are no failed allocation requests.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- include/linux/mmzone.h | 1 -
- mm/internal.h          | 1 +
- mm/page_alloc.c        | 8 ++++----
- mm/vmscan.c            | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
-index 85be97c56..6a1d79d84 100644
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -839,7 +839,6 @@ typedef struct pglist_data {
- 	unsigned long node_spanned_pages; /* total size of physical page
- 					     range, including holes */
- 	int node_id;
--	atomic_t kswapd_waiters;
- 	wait_queue_head_t kswapd_wait;
- 	wait_queue_head_t pfmemalloc_wait;
- 	struct task_struct *kswapd;	/* Protected by
-diff --git a/mm/internal.h b/mm/internal.h
-index cf3cb933e..77b3bce68 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -202,6 +202,7 @@ extern void prep_compound_page(struct page *page, unsigned int order);
- extern void post_alloc_hook(struct page *page, unsigned int order,
- 					gfp_t gfp_flags);
- extern int user_min_free_kbytes;
-+extern atomic_long_t kswapd_waiters;
- 
- extern void free_unref_page(struct page *page, unsigned int order);
- extern void free_unref_page_list(struct list_head *list);
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 6f61c3f2f..4fb88150d 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -118,6 +118,8 @@ typedef int __bitwise fpi_t;
-  */
- #define FPI_SKIP_KASAN_POISON	((__force fpi_t)BIT(2))
- 
-+atomic_long_t kswapd_waiters = ATOMIC_LONG_INIT(0);
-+
- /* prevent >1 _updater_ of zone percpu pageset ->high and ->batch fields */
- static DEFINE_MUTEX(pcp_batch_high_lock);
- #define MIN_PERCPU_PAGELIST_HIGH_FRACTION (8)
-@@ -4886,7 +4888,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+@@ -4858,6 +4863,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
  	int no_progress_loops;
  	unsigned int cpuset_mems_cookie;
  	int reserve_flags;
--	pg_data_t *pgdat = ac->preferred_zoneref->zone->zone_pgdat;
- 	bool woke_kswapd = false;
++	bool woke_kswapd = false;
  
  	/*
-@@ -4923,7 +4924,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 	 * We also sanity check to catch abuse of atomic reserves being used by
+@@ -4904,8 +4910,13 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 			goto nopage;
+ 	}
  
- 	if (alloc_flags & ALLOC_KSWAPD) {
- 		if (!woke_kswapd) {
--			atomic_inc(&pgdat->kswapd_waiters);
+-	if (alloc_flags & ALLOC_KSWAPD)
++	if (alloc_flags & ALLOC_KSWAPD) {
++		if (!woke_kswapd) {
 +			atomic_long_inc(&kswapd_waiters);
- 			woke_kswapd = true;
- 		}
++			woke_kswapd = true;
++		}
  		wake_all_kswapds(order, gfp_mask, ac);
-@@ -5134,7 +5135,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
- fail:
- got_pg:
- 	if (woke_kswapd)
--		atomic_dec(&pgdat->kswapd_waiters);
-+		atomic_long_dec(&kswapd_waiters);
- 	if (!page)
- 		warn_alloc(gfp_mask, ac->nodemask,
- 				"page allocation failure: order:%u", order);
-@@ -7418,7 +7419,6 @@ static void __meminit pgdat_init_internals(struct pglist_data *pgdat)
++	}
  
- 	pgdat_page_ext_init(pgdat);
- 	lruvec_init(&pgdat->__lruvec);
--	pgdat->kswapd_waiters = (atomic_t)ATOMIC_INIT(0);
+ 	/*
+ 	 * The adjusted alloc_flags might result in immediate success, so try
+@@ -5110,9 +5121,12 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 		goto retry;
+ 	}
+ fail:
+-	warn_alloc(gfp_mask, ac->nodemask,
+-			"page allocation failure: order:%u", order);
+ got_pg:
++	if (woke_kswapd)
++		atomic_long_dec(&kswapd_waiters);
++	if (!page)
++		warn_alloc(gfp_mask, ac->nodemask,
++				"page allocation failure: order:%u", order);
+ 	return page;
  }
  
- static void __meminit zone_init_internals(struct zone *zone, enum zone_type idx, int nid,
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index e513736b2..0d7a5a61b 100644
+index 700434d..835f2ea 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -4083,7 +4083,7 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -4273,7 +4273,8 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+ 		__fs_reclaim_release(_THIS_IP_);
  		ret = try_to_freeze();
  		__fs_reclaim_acquire(_THIS_IP_);
- 		if (ret || kthread_should_stop() ||
--		    !atomic_read(&pgdat->kswapd_waiters))
+-		if (ret || kthread_should_stop())
++		if (ret || kthread_should_stop() ||
 +		    !atomic_long_read(&kswapd_waiters))
  			break;
  
@@ -1687,59 +1436,10 @@ index e513736b2..0d7a5a61b 100644
 2.34.1.75.gabe6bb3905
 
 
-From 456ce8ec00dfa7a483bbfb63e57aa447e77f6397 Mon Sep 17 00:00:00 2001
-From: Sultan Alsawaf <sultan@kerneltoast.com>
-Date: Sat, 28 Mar 2020 13:06:28 -0700
-Subject: [PATCH 12/18] mm: Disable watermark boosting by default
-
-What watermark boosting does is preemptively fire up kswapd to free
-memory when there hasn't been an allocation failure. It does this by
-increasing kswapd's high watermark goal and then firing up kswapd. The
-reason why this causes freezes is because, with the increased high
-watermark goal, kswapd will steal memory from processes that need it in
-order to make forward progress. These processes will, in turn, try to
-allocate memory again, which will cause kswapd to steal necessary pages
-from those processes again, in a positive feedback loop known as page
-thrashing. When page thrashing occurs, your system is essentially
-livelocked until the necessary forward progress can be made to stop
-processes from trying to continuously allocate memory and trigger
-kswapd to steal it back.
-
-This problem already occurs with kswapd *without* watermark boosting,
-but it's usually only encountered on machines with a small amount of
-memory and/or a slow CPU. Watermark boosting just makes the existing
-problem worse enough to notice on higher spec'd machines.
-
-Disable watermark boosting by default since it's a total dumpster fire.
-I can't imagine why anyone would want to explicitly enable it, but the
-option is there in case someone does.
-
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
----
- mm/page_alloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 4fb88150d..968a02c6b 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -340,7 +340,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
- 
- int min_free_kbytes = 1024;
- int user_min_free_kbytes = -1;
--int watermark_boost_factor __read_mostly = 15000;
-+int watermark_boost_factor __read_mostly;
- int watermark_scale_factor = 10;
- 
- static unsigned long nr_kernel_pages __initdata;
--- 
-2.34.1.75.gabe6bb3905
-
-
-From 392f4665c32ded6585c2d939e020c452b225f61a Mon Sep 17 00:00:00 2001
+From 61e2e465e3b74c2b1e49ff5ae2c93914d2943813 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 13/18] Disable stack conservation for GCC
+Subject: [PATCH 09/14] Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -1752,10 +1452,10 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index e6d2ea920..47fef3b28 100644
+index fdbd06d..2d41c65 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1014,11 +1014,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
+@@ -990,11 +990,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
  # Make sure -fstack-check isn't enabled (like gentoo apparently did)
  KBUILD_CFLAGS  += -fno-stack-check
  
@@ -1771,455 +1471,10 @@ index e6d2ea920..47fef3b28 100644
 2.34.1.75.gabe6bb3905
 
 
-From b4bb8ba925aad689b4dc37a4c212610b9d98fe25 Mon Sep 17 00:00:00 2001
-From: Johannes Weiner <hannes@cmpxchg.org>
-Date: Thu, 28 Oct 2021 13:22:05 +1100
-Subject: [PATCH 14/18] vfs: keep inodes with page cache off the inode shrinker
- LRU
-
-Historically (pre-2.5), the inode shrinker used to reclaim only empty
-inodes and skip over those that still contained page cache.  This caused
-problems on highmem hosts: struct inode could put fill lowmem zones before
-the cache was getting reclaimed in the highmem zones.
-
-To address this, the inode shrinker started to strip page cache to
-facilitate reclaiming lowmem.  However, this comes with its own set of
-problems: the shrinkers may drop actively used page cache just because the
-inodes are not currently open or dirty - think working with a large git
-tree.  It further doesn't respect cgroup memory protection settings and
-can cause priority inversions between containers.
-
-Nowadays, the page cache also holds non-resident info for evicted cache
-pages in order to detect refaults.  We've come to rely heavily on this
-data inside reclaim for protecting the cache workingset and driving swap
-behavior.  We also use it to quantify and report workload health through
-psi.  The latter in turn is used for fleet health monitoring, as well as
-driving automated memory sizing of workloads and containers, proactive
-reclaim and memory offloading schemes.
-
-The consequences of dropping page cache prematurely is that we're seeing
-subtle and not-so-subtle failures in all of the above-mentioned scenarios,
-with the workload generally entering unexpected thrashing states while
-losing the ability to reliably detect it.
-
-To fix this on non-highmem systems at least, going back to rotating inodes
-on the LRU isn't feasible.  We've tried (commit a76cf1a474d7 ("mm: don't
-reclaim inodes with many attached pages")) and failed (commit 69056ee6a8a3
-("Revert "mm: don't reclaim inodes with many attached pages"")).  The
-issue is mostly that shrinker pools attract pressure based on their size,
-and when objects get skipped the shrinkers remember this as deferred
-reclaim work.  This accumulates excessive pressure on the remaining
-inodes, and we can quickly eat into heavily used ones, or dirty ones that
-require IO to reclaim, when there potentially is plenty of cold, clean
-cache around still.
-
-Instead, this patch keeps populated inodes off the inode LRU in the first
-place - just like an open file or dirty state would.  An otherwise clean
-and unused inode then gets queued when the last cache entry disappears.
-This solves the problem without reintroducing the reclaim issues, and
-generally is a bit more scalable than having to wade through potentially
-hundreds of thousands of busy inodes.
-
-Locking is a bit tricky because the locks protecting the inode state
-(i_lock) and the inode LRU (lru_list.lock) don't nest inside the irq-safe
-page cache lock (i_pages.xa_lock).  Page cache deletions are serialized
-through i_lock, taken before the i_pages lock, to make sure depopulated
-inodes are queued reliably.  Additions may race with deletions, but we'll
-check again in the shrinker.  If additions race with the shrinker itself,
-we're protected by the i_lock: if find_inode() or iput() win, the shrinker
-will bail on the elevated i_count or I_REFERENCED; if the shrinker wins
-and goes ahead with the inode, it will set I_FREEING and inhibit further
-igets(), which will cause the other side to create a new instance of the
-inode instead.
-
-Link: https://lkml.kernel.org/r/20210614211904.14420-4-hannes@cmpxchg.org
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Roman Gushchin <guro@fb.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
----
- fs/inode.c              | 46 +++++++++++++++++++++----------------
- fs/internal.h           |  1 -
- include/linux/fs.h      |  1 +
- include/linux/pagemap.h | 50 +++++++++++++++++++++++++++++++++++++++++
- mm/filemap.c            |  8 +++++++
- mm/truncate.c           | 19 ++++++++++++++--
- mm/vmscan.c             |  7 ++++++
- mm/workingset.c         | 10 +++++++++
- 8 files changed, 120 insertions(+), 22 deletions(-)
-
-diff --git a/fs/inode.c b/fs/inode.c
-index 9abc88d79..3eba0940f 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -428,11 +428,20 @@ void ihold(struct inode *inode)
- }
- EXPORT_SYMBOL(ihold);
- 
--static void inode_lru_list_add(struct inode *inode)
-+static void __inode_add_lru(struct inode *inode, bool rotate)
- {
-+	if (inode->i_state & (I_DIRTY_ALL | I_SYNC | I_FREEING | I_WILL_FREE))
-+		return;
-+	if (atomic_read(&inode->i_count))
-+		return;
-+	if (!(inode->i_sb->s_flags & SB_ACTIVE))
-+		return;
-+	if (!mapping_shrinkable(&inode->i_data))
-+		return;
-+
- 	if (list_lru_add(&inode->i_sb->s_inode_lru, &inode->i_lru))
- 		this_cpu_inc(nr_unused);
--	else
-+	else if (rotate)
- 		inode->i_state |= I_REFERENCED;
- }
- 
-@@ -443,16 +452,11 @@ static void inode_lru_list_add(struct inode *inode)
-  */
- void inode_add_lru(struct inode *inode)
- {
--	if (!(inode->i_state & (I_DIRTY_ALL | I_SYNC |
--				I_FREEING | I_WILL_FREE)) &&
--	    !atomic_read(&inode->i_count) && inode->i_sb->s_flags & SB_ACTIVE)
--		inode_lru_list_add(inode);
-+	__inode_add_lru(inode, false);
- }
- 
--
- static void inode_lru_list_del(struct inode *inode)
- {
--
- 	if (list_lru_del(&inode->i_sb->s_inode_lru, &inode->i_lru))
- 		this_cpu_dec(nr_unused);
- }
-@@ -728,10 +732,6 @@ int invalidate_inodes(struct super_block *sb, bool kill_dirty)
- /*
-  * Isolate the inode from the LRU in preparation for freeing it.
-  *
-- * Any inodes which are pinned purely because of attached pagecache have their
-- * pagecache removed.  If the inode has metadata buffers attached to
-- * mapping->private_list then try to remove them.
-- *
-  * If the inode has the I_REFERENCED flag set, then it means that it has been
-  * used recently - the flag is set in iput_final(). When we encounter such an
-  * inode, clear the flag and move it to the back of the LRU so it gets another
-@@ -747,31 +747,39 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
- 	struct inode	*inode = container_of(item, struct inode, i_lru);
- 
- 	/*
--	 * we are inverting the lru lock/inode->i_lock here, so use a trylock.
--	 * If we fail to get the lock, just skip it.
-+	 * We are inverting the lru lock/inode->i_lock here, so use a
-+	 * trylock. If we fail to get the lock, just skip it.
- 	 */
- 	if (!spin_trylock(&inode->i_lock))
- 		return LRU_SKIP;
- 
- 	/*
--	 * Referenced or dirty inodes are still in use. Give them another pass
--	 * through the LRU as we canot reclaim them now.
-+	 * Inodes can get referenced, redirtied, or repopulated while
-+	 * they're already on the LRU, and this can make them
-+	 * unreclaimable for a while. Remove them lazily here; iput,
-+	 * sync, or the last page cache deletion will requeue them.
- 	 */
- 	if (atomic_read(&inode->i_count) ||
--	    (inode->i_state & ~I_REFERENCED)) {
-+	    (inode->i_state & ~I_REFERENCED) ||
-+	    !mapping_shrinkable(&inode->i_data)) {
- 		list_lru_isolate(lru, &inode->i_lru);
- 		spin_unlock(&inode->i_lock);
- 		this_cpu_dec(nr_unused);
- 		return LRU_REMOVED;
- 	}
- 
--	/* recently referenced inodes get one more pass */
-+	/* Recently referenced inodes get one more pass */
- 	if (inode->i_state & I_REFERENCED) {
- 		inode->i_state &= ~I_REFERENCED;
- 		spin_unlock(&inode->i_lock);
- 		return LRU_ROTATE;
- 	}
- 
-+	/*
-+	 * On highmem systems, mapping_shrinkable() permits dropping
-+	 * page cache in order to free up struct inodes: lowmem might
-+	 * be under pressure before the cache inside the highmem zone.
-+	 */
- 	if (inode_has_buffers(inode) || !mapping_empty(&inode->i_data)) {
- 		__iget(inode);
- 		spin_unlock(&inode->i_lock);
-@@ -1638,7 +1646,7 @@ static void iput_final(struct inode *inode)
- 	if (!drop &&
- 	    !(inode->i_state & I_DONTCACHE) &&
- 	    (sb->s_flags & SB_ACTIVE)) {
--		inode_add_lru(inode);
-+		__inode_add_lru(inode, true);
- 		spin_unlock(&inode->i_lock);
- 		return;
- 	}
-diff --git a/fs/internal.h b/fs/internal.h
-index 3cd065c8a..2854ff29f 100644
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -149,7 +149,6 @@ extern int vfs_open(const struct path *, struct file *);
-  * inode.c
-  */
- extern long prune_icache_sb(struct super_block *sb, struct shrink_control *sc);
--extern void inode_add_lru(struct inode *inode);
- extern int dentry_needs_remove_privs(struct dentry *dentry);
- 
- /*
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 56eba7234..af7bee128 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3194,6 +3194,7 @@ static inline void remove_inode_hash(struct inode *inode)
- }
- 
- extern void inode_sb_list_add(struct inode *inode);
-+extern void inode_add_lru(struct inode *inode);
- 
- extern int sb_set_blocksize(struct super_block *, int);
- extern int sb_min_blocksize(struct super_block *, int);
-diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index 62db6b017..5c74a45ff 100644
---- a/include/linux/pagemap.h
-+++ b/include/linux/pagemap.h
-@@ -23,6 +23,56 @@ static inline bool mapping_empty(struct address_space *mapping)
- 	return xa_empty(&mapping->i_pages);
- }
- 
-+/*
-+ * mapping_shrinkable - test if page cache state allows inode reclaim
-+ * @mapping: the page cache mapping
-+ *
-+ * This checks the mapping's cache state for the pupose of inode
-+ * reclaim and LRU management.
-+ *
-+ * The caller is expected to hold the i_lock, but is not required to
-+ * hold the i_pages lock, which usually protects cache state. That's
-+ * because the i_lock and the list_lru lock that protect the inode and
-+ * its LRU state don't nest inside the irq-safe i_pages lock.
-+ *
-+ * Cache deletions are performed under the i_lock, which ensures that
-+ * when an inode goes empty, it will reliably get queued on the LRU.
-+ *
-+ * Cache additions do not acquire the i_lock and may race with this
-+ * check, in which case we'll report the inode as shrinkable when it
-+ * has cache pages. This is okay: the shrinker also checks the
-+ * refcount and the referenced bit, which will be elevated or set in
-+ * the process of adding new cache pages to an inode.
-+ */
-+static inline bool mapping_shrinkable(struct address_space *mapping)
-+{
-+	void *head;
-+
-+	/*
-+	 * On highmem systems, there could be lowmem pressure from the
-+	 * inodes before there is highmem pressure from the page
-+	 * cache. Make inodes shrinkable regardless of cache state.
-+	 */
-+	if (IS_ENABLED(CONFIG_HIGHMEM))
-+		return true;
-+
-+	/* Cache completely empty? Shrink away. */
-+	head = rcu_access_pointer(mapping->i_pages.xa_head);
-+	if (!head)
-+		return true;
-+
-+	/*
-+	 * The xarray stores single offset-0 entries directly in the
-+	 * head pointer, which allows non-resident page cache entries
-+	 * to escape the shadow shrinker's list of xarray nodes. The
-+	 * inode shrinker needs to pick them up under memory pressure.
-+	 */
-+	if (!xa_is_node(head) && xa_is_value(head))
-+		return true;
-+
-+	return false;
-+}
-+
- /*
-  * Bits in mapping->flags.
-  */
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 82a17c35e..b432165a7 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -262,9 +262,13 @@ void delete_from_page_cache(struct page *page)
- 	struct address_space *mapping = page_mapping(page);
- 
- 	BUG_ON(!PageLocked(page));
-+	spin_lock(&mapping->host->i_lock);
- 	xa_lock_irq(&mapping->i_pages);
- 	__delete_from_page_cache(page, NULL);
- 	xa_unlock_irq(&mapping->i_pages);
-+	if (mapping_shrinkable(mapping))
-+		inode_add_lru(mapping->host);
-+	spin_unlock(&mapping->host->i_lock);
- 
- 	page_cache_free_page(mapping, page);
- }
-@@ -340,6 +344,7 @@ void delete_from_page_cache_batch(struct address_space *mapping,
- 	if (!pagevec_count(pvec))
- 		return;
- 
-+	spin_lock(&mapping->host->i_lock);
- 	xa_lock_irq(&mapping->i_pages);
- 	for (i = 0; i < pagevec_count(pvec); i++) {
- 		trace_mm_filemap_delete_from_page_cache(pvec->pages[i]);
-@@ -348,6 +353,9 @@ void delete_from_page_cache_batch(struct address_space *mapping,
- 	}
- 	page_cache_delete_batch(mapping, pvec);
- 	xa_unlock_irq(&mapping->i_pages);
-+	if (mapping_shrinkable(mapping))
-+		inode_add_lru(mapping->host);
-+	spin_unlock(&mapping->host->i_lock);
- 
- 	for (i = 0; i < pagevec_count(pvec); i++)
- 		page_cache_free_page(mapping, pvec->pages[i]);
-diff --git a/mm/truncate.c b/mm/truncate.c
-index 714eaf198..cc83a3f7c 100644
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -45,9 +45,13 @@ static inline void __clear_shadow_entry(struct address_space *mapping,
- static void clear_shadow_entry(struct address_space *mapping, pgoff_t index,
- 			       void *entry)
- {
-+	spin_lock(&mapping->host->i_lock);
- 	xa_lock_irq(&mapping->i_pages);
- 	__clear_shadow_entry(mapping, index, entry);
- 	xa_unlock_irq(&mapping->i_pages);
-+	if (mapping_shrinkable(mapping))
-+		inode_add_lru(mapping->host);
-+	spin_unlock(&mapping->host->i_lock);
- }
- 
- /*
-@@ -73,8 +77,10 @@ static void truncate_exceptional_pvec_entries(struct address_space *mapping,
- 		return;
- 
- 	dax = dax_mapping(mapping);
--	if (!dax)
-+	if (!dax) {
-+		spin_lock(&mapping->host->i_lock);
- 		xa_lock_irq(&mapping->i_pages);
-+	}
- 
- 	for (i = j; i < pagevec_count(pvec); i++) {
- 		struct page *page = pvec->pages[i];
-@@ -93,8 +99,12 @@ static void truncate_exceptional_pvec_entries(struct address_space *mapping,
- 		__clear_shadow_entry(mapping, index, page);
- 	}
- 
--	if (!dax)
-+	if (!dax) {
- 		xa_unlock_irq(&mapping->i_pages);
-+		if (mapping_shrinkable(mapping))
-+			inode_add_lru(mapping->host);
-+		spin_unlock(&mapping->host->i_lock);
-+	}
- 	pvec->nr = j;
- }
- 
-@@ -567,6 +577,7 @@ invalidate_complete_page2(struct address_space *mapping, struct page *page)
- 	if (page_has_private(page) && !try_to_release_page(page, GFP_KERNEL))
- 		return 0;
- 
-+	spin_lock(&mapping->host->i_lock);
- 	xa_lock_irq(&mapping->i_pages);
- 	if (PageDirty(page))
- 		goto failed;
-@@ -574,6 +585,9 @@ invalidate_complete_page2(struct address_space *mapping, struct page *page)
- 	BUG_ON(page_has_private(page));
- 	__delete_from_page_cache(page, NULL);
- 	xa_unlock_irq(&mapping->i_pages);
-+	if (mapping_shrinkable(mapping))
-+		inode_add_lru(mapping->host);
-+	spin_unlock(&mapping->host->i_lock);
- 
- 	if (mapping->a_ops->freepage)
- 		mapping->a_ops->freepage(page);
-@@ -582,6 +596,7 @@ invalidate_complete_page2(struct address_space *mapping, struct page *page)
- 	return 1;
- failed:
- 	xa_unlock_irq(&mapping->i_pages);
-+	spin_unlock(&mapping->host->i_lock);
- 	return 0;
- }
- 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 0d7a5a61b..da279fefd 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1105,6 +1105,8 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
- 	BUG_ON(!PageLocked(page));
- 	BUG_ON(mapping != page_mapping(page));
- 
-+	if (!PageSwapCache(page))
-+		spin_lock(&mapping->host->i_lock);
- 	xa_lock_irq(&mapping->i_pages);
- 	/*
- 	 * The non racy check for a busy page.
-@@ -1173,6 +1175,9 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
- 			shadow = workingset_eviction(page, target_memcg);
- 		__delete_from_page_cache(page, shadow);
- 		xa_unlock_irq(&mapping->i_pages);
-+		if (mapping_shrinkable(mapping))
-+			inode_add_lru(mapping->host);
-+		spin_unlock(&mapping->host->i_lock);
- 
- 		if (freepage != NULL)
- 			freepage(page);
-@@ -1182,6 +1187,8 @@ static int __remove_mapping(struct address_space *mapping, struct page *page,
- 
- cannot_free:
- 	xa_unlock_irq(&mapping->i_pages);
-+	if (!PageSwapCache(page))
-+		spin_unlock(&mapping->host->i_lock);
- 	return 0;
- }
- 
-diff --git a/mm/workingset.c b/mm/workingset.c
-index d5b81e4f4..23df60ce2 100644
---- a/mm/workingset.c
-+++ b/mm/workingset.c
-@@ -543,6 +543,13 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
- 		goto out;
- 	}
- 
-+	if (!spin_trylock(&mapping->host->i_lock)) {
-+		xa_unlock(&mapping->i_pages);
-+		spin_unlock_irq(lru_lock);
-+		ret = LRU_RETRY;
-+		goto out;
-+	}
-+
- 	list_lru_isolate(lru, item);
- 	__dec_lruvec_kmem_state(node, WORKINGSET_NODES);
- 
-@@ -562,6 +569,9 @@ static enum lru_status shadow_lru_isolate(struct list_head *item,
- 
- out_invalid:
- 	xa_unlock_irq(&mapping->i_pages);
-+	if (mapping_shrinkable(mapping))
-+		inode_add_lru(mapping->host);
-+	spin_unlock(&mapping->host->i_lock);
- 	ret = LRU_REMOVED_RETRY;
- out:
- 	cond_resched();
--- 
-2.34.1.75.gabe6bb3905
-
-
-From 7a2c5f1ad1e3aa7adfe09341b6f29a1e280140b5 Mon Sep 17 00:00:00 2001
+From 9c69b7ad8cbcdb02837f8d4f848957c414ec0562 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Fri, 12 Nov 2021 08:19:50 -0800
-Subject: [PATCH 15/18] x86/csum: rewrite csum_partial()
+Subject: [PATCH 10/14] x86/csum: rewrite csum_partial()
 
 With more NIC supporting CHECKSUM_COMPLETE, and IPv6 being widely used.
 csum_partial() is heavily used with small amount of bytes,
@@ -2262,7 +1517,7 @@ Cc: Andrew Cooper <andrew.cooper3@citrix.com>
  1 file changed, 67 insertions(+), 95 deletions(-)
 
 diff --git a/arch/x86/lib/csum-partial_64.c b/arch/x86/lib/csum-partial_64.c
-index e7925d668..5ec356269 100644
+index e7925d6..5ec3562 100644
 --- a/arch/x86/lib/csum-partial_64.c
 +++ b/arch/x86/lib/csum-partial_64.c
 @@ -9,6 +9,7 @@
@@ -2469,10 +1724,10 @@ index e7925d668..5ec356269 100644
 2.34.1.75.gabe6bb3905
 
 
-From 8a4472808bf9469312cd55ca404a6bb24b452945 Mon Sep 17 00:00:00 2001
+From 28d19b5f8ae748c2072b4fd1611ea9e22b88f5cd Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 18 Nov 2021 09:52:39 -0800
-Subject: [PATCH 16/18] x86/csum: Fix compilation error for UM
+Subject: [PATCH 11/14] x86/csum: Fix compilation error for UM
 
 load_unaligned_zeropad() is not yet universal.
 
@@ -2491,7 +1746,7 @@ Link: https://lkml.kernel.org/r/20211118175239.1525650-1-eric.dumazet@gmail.com
  1 file changed, 26 insertions(+)
 
 diff --git a/arch/x86/lib/csum-partial_64.c b/arch/x86/lib/csum-partial_64.c
-index 5ec356269..1eb8f2d11 100644
+index 5ec3562..1eb8f2d 100644
 --- a/arch/x86/lib/csum-partial_64.c
 +++ b/arch/x86/lib/csum-partial_64.c
 @@ -92,6 +92,7 @@ __wsum csum_partial(const void *buff, int len, __wsum sum)
@@ -2538,10 +1793,10 @@ index 5ec356269..1eb8f2d11 100644
 2.34.1.75.gabe6bb3905
 
 
-From 7126c1e0cf6882bfbb1d0b3d890556061778e5d2 Mon Sep 17 00:00:00 2001
+From d01190cec674034231d460805970e791657a3be4 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 25 Nov 2021 06:18:17 -0800
-Subject: [PATCH 17/18] x86/csum: Fix initial seed for odd buffers
+Subject: [PATCH 12/14] x86/csum: Fix initial seed for odd buffers
 
 When I folded do_csum() into csum_partial(), I missed that we
 had to swap odd/even bytes from @sum argument.
@@ -2587,7 +1842,7 @@ Link: https://lkml.kernel.org/r/20211125141817.3541501-1-eric.dumazet@gmail.com
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/x86/lib/csum-partial_64.c b/arch/x86/lib/csum-partial_64.c
-index 1eb8f2d11..40b527ba1 100644
+index 1eb8f2d..40b527b 100644
 --- a/arch/x86/lib/csum-partial_64.c
 +++ b/arch/x86/lib/csum-partial_64.c
 @@ -41,6 +41,7 @@ __wsum csum_partial(const void *buff, int len, __wsum sum)
@@ -2602,10 +1857,10 @@ index 1eb8f2d11..40b527ba1 100644
 2.34.1.75.gabe6bb3905
 
 
-From acf1dd1488b74a203e1f032ca754a4d039219215 Mon Sep 17 00:00:00 2001
+From e9475c569720e2d05225e7f176263bd1c9666708 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Dec 2021 11:17:09 +1100
-Subject: [PATCH 18/18] xfs: check sb_meta_uuid for dabuf buffer recovery
+Subject: [PATCH 13/14] xfs: check sb_meta_uuid for dabuf buffer recovery
 
 Got a report that a repeated crash test of a container host would
 eventually fail with a log recovery error preventing the system from
@@ -2665,7 +1920,7 @@ Signed-off-by: Dave Chinner <dchinner@redhat.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/xfs/xfs_buf_item_recover.c b/fs/xfs/xfs_buf_item_recover.c
-index a476c7ef5..991fbf1eb 100644
+index 70ca575..e484251 100644
 --- a/fs/xfs/xfs_buf_item_recover.c
 +++ b/fs/xfs/xfs_buf_item_recover.c
 @@ -816,7 +816,7 @@ xlog_recover_get_buf_lsn(
@@ -2677,6 +1932,45 @@ index a476c7ef5..991fbf1eb 100644
  			goto recover_immediately;
  		return lsn;
  	}
+-- 
+2.34.1.75.gabe6bb3905
+
+
+From 6562d4f09726db6a415ef8893e4a67d9462279c2 Mon Sep 17 00:00:00 2001
+From: Steven Barrett <steven@liquorix.net>
+Date: Sat, 4 Jul 2020 21:28:54 -0500
+Subject: [PATCH 14/14] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+ SMBUS
+
+In the original OpenRGB patches, the initialization code for CZ
+secondary SMBus controllers was copied.  Later, an upstream commit
+landed in 5.7 stable that combined the initialization code for both
+primary/secondary smbus channels.
+
+Combine the initialization code ahead of time so upstream merges
+correctly with OpenRGB.
+
+Fixes: https://github.com/zen-kernel/zen-kernel/issues/176
+---
+ drivers/i2c/busses/i2c-piix4.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/drivers/i2c/busses/i2c-piix4.c b/drivers/i2c/busses/i2c-piix4.c
+index 9131e40..0b1b36f 100644
+--- a/drivers/i2c/busses/i2c-piix4.c
++++ b/drivers/i2c/busses/i2c-piix4.c
+@@ -982,11 +982,6 @@ static int piix4_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 		retval = piix4_setup_sb800(dev, id, 1);
+ 	}
+ 
+-	if (dev->vendor == PCI_VENDOR_ID_AMD &&
+-	    dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS) {
+-		retval = piix4_setup_sb800(dev, id, 1);
+-	}
+-
+ 	if (retval > 0) {
+ 		/* Try to add the aux adapter if it exists,
+ 		 * piix4_add_adapter will clean up if this fails */
 -- 
 2.34.1.75.gabe6bb3905
 

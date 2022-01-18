@@ -15,8 +15,8 @@ index e99310c2b..92c0f623e 100644
  PHONY := __all
  __all:
  
-+CYBVERSION = -cybmod11
-+CYBNAME = CFS Scheduler
++CYBVERSION = -cybmod1
++CYBNAME = PDS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CYBVERSION)
 +
  # We are using a recursive build, so we need to do a little thinking
