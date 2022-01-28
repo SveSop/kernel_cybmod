@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11315 @@
+@@ -0,0 +1,11314 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.16.2-cybmod2 Kernel Configuration
++# Linux/x86 5.16.3-cybmod3 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -10871,7 +10871,6 @@ new file mode 100644
 +CONFIG_GENERIC_STRNCPY_FROM_USER=y
 +CONFIG_GENERIC_STRNLEN_USER=y
 +CONFIG_GENERIC_NET_UTILS=y
-+CONFIG_GENERIC_FIND_FIRST_BIT=y
 +CONFIG_CORDIC=m
 +# CONFIG_PRIME_NUMBERS is not set
 +CONFIG_RATIONAL=y

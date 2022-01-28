@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.16.2  
+0000 : Patch 5.16.3  
 0000 : ProjectC v5.16-r0  
 0002 : 5.16 Graysky's CPU optimization patches  
 0003 : v5.16-fsync1_futex_waitv  
@@ -22,6 +22,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0026 : various net/TCP patches  
 0027 : LRNG kernel patches  
 0028 : BBR2 patchset  
+0029 : Bitmap patches  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
