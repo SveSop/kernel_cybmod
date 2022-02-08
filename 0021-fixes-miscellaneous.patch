@@ -1,7 +1,7 @@
-From 8cf82669d3ad94282c52687bcd2c35c308fc89da Mon Sep 17 00:00:00 2001
+From 8f3a6b48c231dc2f83b0cca20369d8ffd6ff9e47 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/15] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/16] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -31,13 +31,13 @@ index 1e8ab4749..75122fd65 100644
  endif
  
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From b55c4dd9dbd3916cfd0a1a7b68cb4bd9f3d2ae6a Mon Sep 17 00:00:00 2001
+From 3c2ec0d34b383ea6de16e95f94bd29ff08226560 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/15] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/16] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -57,13 +57,13 @@ index 65e3e7df8..b41afee77 100644
  	int ret;
  
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From 662dffa3b41317c08ca54e2dcfba73cf37e4860e Mon Sep 17 00:00:00 2001
+From 481145e6bfa5f251c282f3ba215556d3898b5ef1 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/15] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/16] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -255,13 +255,13 @@ index 20a932690..6c363df1e 100644
  };
  
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From 745165034aa6e76d0067e7b314b44b95ae898e94 Mon Sep 17 00:00:00 2001
+From b82294f99afc46174afa1036efcf4143689b3291 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/15] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/16] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -389,13 +389,13 @@ index 2e5932bde..f4fbca90e 100644
  	u32		opt_xfer_blocks;
  	u32		max_ws_blocks;
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From cbcf750703ba62a4c17f049fb5fb4aecf38347d3 Mon Sep 17 00:00:00 2001
+From b0ad251be60bc8601f2cbfa70d945b721f1fa40e Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 05/15] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 05/16] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -513,13 +513,13 @@ index 71a36ae12..b0363d3be 100644
  redirty:
  	redirty_page_for_writepage(wbc, page);
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From b8b0962e2867aa251d7db3f16bec61fd17df3393 Mon Sep 17 00:00:00 2001
+From 5d5256c97cab2c6e9e347ceedae6598bddcc20fc Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 06/15] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 06/16] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -583,13 +583,13 @@ index e9d39c485..3bceead8d 100644
  		   consoles 16 and higher (since it returns a short) */
  
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From 3bd2fc154f1f14d8fcf02df04af6b446ef2db2ee Mon Sep 17 00:00:00 2001
+From e6ab5d4b5c657c2db8228e79be091a5595f0ca84 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 07/15] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 07/16] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -1317,13 +1317,13 @@ index 8c1b31ed0..9131e4004 100644
  		/* Try to add the aux adapter if it exists,
  		 * piix4_add_adapter will clean up if this fails */
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From ee3a10a17707171499b5f1f58b8b0941a7e582b4 Mon Sep 17 00:00:00 2001
+From 150f16ceadc6313ca048750517e0651f2095e886 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 10 Jan 2022 18:37:07 +0100
-Subject: [PATCH 08/15] fm-5.16: port mm kswapd patches
+Subject: [PATCH 08/16] fm-5.16: port mm kswapd patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1433,13 +1433,13 @@ index 700434db5..835f2ea5a 100644
  
  		/*
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From 381bca874ab2d6cd3067ce105ffe37e3ba9d5675 Mon Sep 17 00:00:00 2001
+From 72dcbb78f7dcdfffb7db00b80f969d0bf6123ef9 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 09/15] Disable stack conservation for GCC
+Subject: [PATCH 09/16] Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -1452,7 +1452,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index acb8ffee6..5dc8cd965 100644
+index 2f0e5c3d9..80d0a882f 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -990,11 +990,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -1468,13 +1468,13 @@ index acb8ffee6..5dc8cd965 100644
  KBUILD_CFLAGS   += -Werror=date-time
  
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From d553fe595f851b10369cd5b8b7448f14063781c5 Mon Sep 17 00:00:00 2001
+From 380ece9fc737e5bdb5e66cab8ccaa6fa16a95085 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Fri, 12 Nov 2021 08:19:50 -0800
-Subject: [PATCH 10/15] x86/csum: rewrite csum_partial()
+Subject: [PATCH 10/16] x86/csum: rewrite csum_partial()
 
 With more NIC supporting CHECKSUM_COMPLETE, and IPv6 being widely used.
 csum_partial() is heavily used with small amount of bytes,
@@ -1721,13 +1721,13 @@ index e7925d668..5ec356269 100644
  EXPORT_SYMBOL(ip_compute_csum);
 -
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From fe2ccab8360387d6b682f04e9a7781e7d622e686 Mon Sep 17 00:00:00 2001
+From 2a5d9a5b12ca7a4f00c8f21d7653286184cd527b Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 18 Nov 2021 09:52:39 -0800
-Subject: [PATCH 11/15] x86/csum: Fix compilation error for UM
+Subject: [PATCH 11/16] x86/csum: Fix compilation error for UM
 
 load_unaligned_zeropad() is not yet universal.
 
@@ -1790,13 +1790,13 @@ index 5ec356269..1eb8f2d11 100644
  	result = add32_with_carry(temp64 >> 32, temp64 & 0xffffffff);
  	if (unlikely(odd)) { 
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From e076203e9ada9468ae7330e3d2099f91f139619d Mon Sep 17 00:00:00 2001
+From 4fc9d66dd0d4f7c3cb176bcece37e8750fb7dc4f Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 25 Nov 2021 06:18:17 -0800
-Subject: [PATCH 12/15] x86/csum: Fix initial seed for odd buffers
+Subject: [PATCH 12/16] x86/csum: Fix initial seed for odd buffers
 
 When I folded do_csum() into csum_partial(), I missed that we
 had to swap odd/even bytes from @sum argument.
@@ -1854,13 +1854,13 @@ index 1eb8f2d11..40b527ba1 100644
  		len--;
  		buff++;
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From 49ee8eaeae81da0cad2a1c4923fd4e5d8d64b367 Mon Sep 17 00:00:00 2001
+From abc85fefe3a8f33ddd65c317cb1c8f07db6f26cf Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Dec 2021 11:17:09 +1100
-Subject: [PATCH 13/15] xfs: check sb_meta_uuid for dabuf buffer recovery
+Subject: [PATCH 13/16] xfs: check sb_meta_uuid for dabuf buffer recovery
 
 Got a report that a repeated crash test of a container host would
 eventually fail with a log recovery error preventing the system from
@@ -1933,13 +1933,13 @@ index 70ca5751b..e484251dc 100644
  		return lsn;
  	}
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From 08e513c1f8c62bde65aeb6495941c9cea3f74284 Mon Sep 17 00:00:00 2001
+From 99bc8dda788f805cc8decf79dd28d235a06922f1 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 14/15] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+Subject: [PATCH 14/16] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
  SMBUS
 
 In the original OpenRGB patches, the initialization code for CZ
@@ -1972,13 +1972,13 @@ index 9131e4004..0b1b36fa0 100644
  		/* Try to add the aux adapter if it exists,
  		 * piix4_add_adapter will clean up if this fails */
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
 
 
-From ed0d6f11d731d5c9f9dba297e813cc89ffca2f3b Mon Sep 17 00:00:00 2001
+From dd8f98828c1fd9f7dcef036cdcbcc329a9e82dd8 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <david@fromorbit.com>
 Date: Tue, 11 Jan 2022 10:37:46 +1100
-Subject: [PATCH 15/15] iomap: Address soft lockup in iomap_finish_ioend()
+Subject: [PATCH 15/16] iomap: Address soft lockup in iomap_finish_ioend()
 
 [V4] xfs: limit individual ioend chain length in writeback
 
@@ -2252,5 +2252,35 @@ index 6d1b08d0a..378bfc401 100644
  	struct bio		io_inline_bio;	/* MUST BE LAST! */
  };
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.4.g5d01301f2b
+
+
+From b0e980eb80d59f3515b2244fc84b95024e9d5d66 Mon Sep 17 00:00:00 2001
+From: Yury Norov <yury.norov@gmail.com>
+Date: Sun, 30 Jan 2022 17:46:48 -0800
+Subject: [PATCH 16/16] kernel/cpu.c: fix init_cpu_online
+
+cpu_online_mask has an associate counter of online cpus, which must be
+initialized in init_cpu_online().
+
+Fixes: 0c09ab96fc82010 (cpu/hotplug: Cache number of online CPUs)
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+---
+ kernel/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index 407a2568f..cd7605204 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2616,6 +2616,7 @@ void init_cpu_possible(const struct cpumask *src)
+ void init_cpu_online(const struct cpumask *src)
+ {
+ 	cpumask_copy(&__cpu_online_mask, src);
++	atomic_set(&__num_online_cpus, cpumask_weight(cpu_online_mask));
+ }
+ 
+ void set_cpu_online(unsigned int cpu, bool online)
+-- 
+2.35.1.4.g5d01301f2b
 

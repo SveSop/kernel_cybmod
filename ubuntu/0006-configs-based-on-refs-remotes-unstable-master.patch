@@ -1,20 +1,20 @@
-From adeefc94b66eb3c4e38fc83b42ae1ceb83876341 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 1 Feb 2022 17:32:25 +0000
+From b412de91ac215567e06e77009cba45bb7ef5700e Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (gloin)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 5 Feb 2022 14:32:15 -0500
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
 
 ---
  .../config/amd64/config.common.amd64          |   6 +-
- .../config/arm64/config.common.arm64          |   6 +-
+ .../config/arm64/config.common.arm64          |   8 +-
  .../config/arm64/config.flavour.generic       |   2 +-
- .../config/armhf/config.common.armhf          |   5 +-
+ .../config/armhf/config.common.armhf          |   7 +-
  debian.master/config/config.common.ubuntu     | 192 ++++++++++++++----
- .../config/ppc64el/config.common.ppc64el      |   4 -
- .../config/s390x/config.common.s390x          |   3 -
- 7 files changed, 159 insertions(+), 59 deletions(-)
+ .../config/ppc64el/config.common.ppc64el      |   6 +-
+ .../config/s390x/config.common.s390x          |   5 +-
+ 7 files changed, 163 insertions(+), 63 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index b39dc03a035c..c56718ecfa45 100644
+index b39dc03a035c..8d4431e5cab4 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -49,7 +49,6 @@ CONFIG_BE2ISCSI=m
@@ -30,7 +30,7 @@ index b39dc03a035c..c56718ecfa45 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-7ubuntu2) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-14ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CMA is not set
  CONFIG_CMDLINE_PARTITION=y
@@ -59,7 +59,7 @@ index b39dc03a035c..c56718ecfa45 100644
  CONFIG_SCSI_3W_9XXX=m
  CONFIG_SCSI_3W_SAS=m
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index 063edc5a167c..3d3af065c067 100644
+index 063edc5a167c..de5e00b246a6 100644
 --- a/debian.master/config/arm64/config.common.arm64
 +++ b/debian.master/config/arm64/config.common.arm64
 @@ -52,7 +52,6 @@ CONFIG_BE2ISCSI=m
@@ -70,9 +70,12 @@ index 063edc5a167c..3d3af065c067 100644
  CONFIG_BLK_DEV_PCIESSD_MTIP32XX=m
  CONFIG_BLK_DEV_RSXX=m
  CONFIG_BLK_DEV_SX8=m
-@@ -64,6 +63,7 @@ CONFIG_CAN=m
+@@ -62,8 +61,9 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
  CONFIG_CB710_CORE=m
- CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
+-CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
 +# CONFIG_CLK_ICST is not set
  CONFIG_CMA=y
@@ -122,7 +125,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index d48eb002d50f..84cc370a7b93 100644
+index d48eb002d50f..f70f70aa20c3 100644
 --- a/debian.master/config/armhf/config.common.armhf
 +++ b/debian.master/config/armhf/config.common.armhf
 @@ -48,7 +48,6 @@ CONFIG_BE2ISCSI=m
@@ -133,9 +136,12 @@ index d48eb002d50f..84cc370a7b93 100644
  CONFIG_BLK_DEV_PCIESSD_MTIP32XX=m
  CONFIG_BLK_DEV_RSXX=m
  CONFIG_BLK_DEV_SX8=m
-@@ -60,6 +59,7 @@ CONFIG_CAN=m
+@@ -58,8 +57,9 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
  CONFIG_CB710_CORE=m
- CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
+-CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
 +CONFIG_CLK_ICST=y
  CONFIG_CMA=y
@@ -1325,7 +1331,7 @@ index 6efda2ca0b13..2da365c0c307 100644
  CONFIG_YAMAHA_YAS530=m
  CONFIG_YENTA=m
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index 6d5a7c98e0ff..010cde9c3520 100644
+index 6d5a7c98e0ff..e4ccd7b5f8c4 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
 +++ b/debian.master/config/ppc64el/config.common.ppc64el
 @@ -45,7 +45,6 @@ CONFIG_BE2ISCSI=m
@@ -1336,6 +1342,15 @@ index 6d5a7c98e0ff..010cde9c3520 100644
  CONFIG_BLK_DEV_PCIESSD_MTIP32XX=m
  CONFIG_BLK_DEV_RSXX=m
  CONFIG_BLK_DEV_SX8=m
+@@ -55,7 +54,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
 @@ -311,7 +310,6 @@ CONFIG_MARVELL_88X2222_PHY=m
  CONFIG_MAX63XX_WATCHDOG=m
  CONFIG_MAXLINEAR_GPHY=m
@@ -1361,7 +1376,7 @@ index 6d5a7c98e0ff..010cde9c3520 100644
  CONFIG_NUMA_BALANCING_DEFAULT_ENABLED=y
  CONFIG_NVMEM=y
 diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index e60452c48874..f0ba8f9fee70 100644
+index e60452c48874..fb16f536fac6 100644
 --- a/debian.master/config/s390x/config.common.s390x
 +++ b/debian.master/config/s390x/config.common.s390x
 @@ -35,7 +35,6 @@ CONFIG_AUTOFS_FS=y
@@ -1372,6 +1387,15 @@ index e60452c48874..f0ba8f9fee70 100644
  # CONFIG_BLK_DEV_PCIESSD_MTIP32XX is not set
  # CONFIG_BLK_DEV_RSXX is not set
  # CONFIG_BLK_DEV_SX8 is not set
+@@ -45,7 +44,7 @@ CONFIG_AUTOFS_FS=y
+ # CONFIG_CAIF is not set
+ # CONFIG_CAN is not set
+ # CONFIG_CB710_CORE is not set
+-CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-5ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
+ # CONFIG_CDROM_PKTCDVD is not set
+ CONFIG_CMA=y
+ # CONFIG_CMDLINE_PARTITION is not set
 @@ -288,7 +287,6 @@ CONFIG_LOG_BUF_SHIFT=18
  # CONFIG_MAX63XX_WATCHDOG is not set
  # CONFIG_MAXLINEAR_GPHY is not set
