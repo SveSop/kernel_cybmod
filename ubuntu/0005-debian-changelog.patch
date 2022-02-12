@@ -1,6 +1,6 @@
-From da6f854810425be821dfd49ea6207d5dc5e33f65 Mon Sep 17 00:00:00 2001
+From 4cfaf12909f642859717d80e63be99df0d4832c5 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 8 Feb 2022 18:36:41 +0000
+Date: Fri, 11 Feb 2022 09:34:21 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 11982 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 0a4bdde4d520..16c5e1a34525 100644
+index 0a4bdde4d520..5c792110fd7a 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,11985 +1,6 @@
 -linux-unstable (5.15.0-9.9) jammy; urgency=medium
-+linux (5.16.8-051608.202202081836) jammy; urgency=low
++linux (5.16.9-051609.202202110934) jammy; urgency=low
  
 -  * jammy/linux-unstable: 5.15.0-9.9 -proposed tracker (LP: #1949805)
-+  Mainline build at commit: v5.16.8
++  Mainline build at commit: v5.16.9
  
 -  * Add F81966 watchdog support (LP: #1949063)
 -    - SAUCE: ODM: watchdog: f71808e_wdt: Add F81966 support
-+ -- Mainline Build <kernel@sita>  Tue, 08 Feb 2022 18:36:41 +0000
++ -- Mainline Build <kernel@sita>  Fri, 11 Feb 2022 09:34:21 +0000
  
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] Rewrite debian/scripts/misc/insert-changes.pl in Python
