@@ -1,27 +1,37 @@
-From db0ad1d904eaf42359f79a844d744811255f5ea7 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 2 Mar 2022 11:43:01 +0000
+From a32658af2e908227d819e45691f4a211b9d9ca33 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Tue, 8 Mar 2022 20:04:59 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 14675 +-------------------------------------
- 1 file changed, 3 insertions(+), 14672 deletions(-)
+ debian.master/changelog | 14685 +-------------------------------------
+ 1 file changed, 3 insertions(+), 14682 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 2754c7eacfde..bac924563414 100644
+index 4b4ced83876b..7c8c8e03703d 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,14675 +1,6 @@
+@@ -1,14685 +1,6 @@
+-linux-unstable (5.17.0-4.4) jammy; urgency=medium
++linux (5.16.13-051613.202203082004) jammy; urgency=low
+ 
+-  * jammy/linux-unstable: 5.17.0-4.4 -proposed tracker (LP: #1963880)
++  Mainline build at commit: v5.16.13
+ 
+-  [ Upstream Kernel Changes ]
++ -- Mainline Build <kernel@sita>  Tue, 08 Mar 2022 20:04:59 +0000
+ 
+-  * Rebase to v5.17-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 07 Mar 2022 10:20:48 +0100
+-
 -linux-unstable (5.17.0-3.3) jammy; urgency=medium
-+linux (5.16.12-051612.202203021142) jammy; urgency=low
- 
+-
 -  * jammy/linux-unstable: 5.17.0-3.3 -proposed tracker (LP: #1962450)
-+  Mainline build at commit: v5.16.12
- 
+-
 -  * 5.15 stuck at boot on c4.large (LP: #1956780)
 -    - Revert "PCI/MSI: Mask MSI-X vectors only on success"
-+ -- Mainline Build <kernel@kathleen>  Wed, 02 Mar 2022 11:43:01 +0000
- 
+-
 -  * [22.04 FEAT] KVM: Enable storage key checking for intercepted instruction
 -    handled by userspace (LP: #1933179)
 -    - s390/uaccess: Add copy_from/to_user_key functions
