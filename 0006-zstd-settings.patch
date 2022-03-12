@@ -1,7 +1,7 @@
-From 8cf412e399a0a8f944ba0f0dcb7f1463f348a46d Mon Sep 17 00:00:00 2001
+From bc35ba5c2a4081944e87b53bee9da384072f6310 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 10 Jan 2022 03:15:25 +0900
-Subject: [PATCH 01/10] sh: rename suffix-y to suffix_y
+Subject: [PATCH 01/13] sh: rename suffix-y to suffix_y
 
 'export suffix-y' does not work reliably because hyphens are disallowed
 in shell variables.
@@ -85,13 +85,13 @@ index cf3174df7..c1eb9a62d 100644
 +$(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/vmlinux.bin.$(suffix_y) FORCE
  	$(call if_changed,ld)
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From eafbd20c6b0ad36851d6454b336f13f92c140650 Mon Sep 17 00:00:00 2001
+From a1fc970a02cd4cfe388a476d8018dfe2692fe29b Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 10 Jan 2022 03:15:26 +0900
-Subject: [PATCH 02/10] kbuild: drop $(size_append) from cmd_zstd
+Subject: [PATCH 02/13] kbuild: drop $(size_append) from cmd_zstd
 
 The appended file size is only used by the decompressors, which some
 architectures support.
@@ -131,13 +131,13 @@ index d1f865b8c..5366466ea 100644
  quiet_cmd_zstd22 = ZSTD22  $@
        cmd_zstd22 = { cat $(real-prereqs) | $(ZSTD) -22 --ultra; $(size_append); } > $@
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From e544db6ea9ba46bcff86c92adca66d5a429643ca Mon Sep 17 00:00:00 2001
+From 1b8d840fd665a8884175c9aea434542e8a22e0d6 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 10 Jan 2022 03:15:27 +0900
-Subject: [PATCH 03/10] kbuild: rename cmd_{bzip2,lzma,lzo,lz4,xzkern,zstd22}
+Subject: [PATCH 03/13] kbuild: rename cmd_{bzip2,lzma,lzo,lz4,xzkern,zstd22}
 
 GZIP-compressed files end with 4 byte data that represents the size
 of the original input. The decompressors (the self-extracting kernel)
@@ -445,13 +445,13 @@ index b1a81a40e..7b89c0175 100644
  compress-$(CONFIG_INITRAMFS_COMPRESSION_GZIP)	:= gzip
  compress-$(CONFIG_INITRAMFS_COMPRESSION_BZIP2)	:= bzip2
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From ff930341b752614775fa488aebfd0fe84796d2b3 Mon Sep 17 00:00:00 2001
+From 78c273455b1072e2964ec35556f992d8dbb35acb Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 10 Jan 2022 03:15:28 +0900
-Subject: [PATCH 04/10] arch: decompressor: remove useless vmlinux.bin.all-y
+Subject: [PATCH 04/13] arch: decompressor: remove useless vmlinux.bin.all-y
 
 Presumably, arch/{parisc,s390,sh}/boot/compressed/Makefile copied
 arch/x86/boot/compressed/Makefile, but vmlinux.bin.all-y is useless
@@ -570,13 +570,13 @@ index a6808a403..591125c42 100644
  
  OBJCOPYFLAGS += -R .empty_zero_page
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From 732ebde04b9f77e6ee906801d41f84ce2b8ad356 Mon Sep 17 00:00:00 2001
+From c08dca40560fa2973e5abc7a65052f8755e2d468 Mon Sep 17 00:00:00 2001
 From: Masahiro Yamada <masahiroy@kernel.org>
 Date: Mon, 10 Jan 2022 03:15:29 +0900
-Subject: [PATCH 05/10] kbuild: add cmd_file_size
+Subject: [PATCH 05/13] kbuild: add cmd_file_size
 
 Some architectures support self-extracting kernel, which embeds the
 compressed vmlinux.
@@ -626,13 +626,13 @@ index 4207a72d4..05ca77706 100644
        cmd_bzip2 = cat $(real-prereqs) | $(KBZIP2) -9 > $@
  
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From c44faf5b7d31ef37880c0f2d5a7d83cc5d410414 Mon Sep 17 00:00:00 2001
+From 66d3f38e0d77bd077a87a65376bbb81c1b705a24 Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Mon, 7 Feb 2022 13:54:13 +0100
-Subject: [PATCH 06/10] kbuild, zstd: allow users to choose a compression level
+Subject: [PATCH 06/13] kbuild, zstd: allow users to choose a compression level
  for the kernel image
 
 The zstd compression algorithm has a wide range of different compression
@@ -698,13 +698,13 @@ index 05ca77706..13e2c77f2 100644
  # ASM offsets
  # ---------------------------------------------------------------------------
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From b4d45ca6a28d732e1e82f55509001f986cf6ef83 Mon Sep 17 00:00:00 2001
+From 4c37ed4c4b1591a2cfed2e6f7e087f0b30a99908 Mon Sep 17 00:00:00 2001
 From: torvic9 <torvic9@mailbox.org>
 Date: Fri, 9 Apr 2021 11:21:18 +0200
-Subject: [PATCH 07/10] kbuild: allow setting zstd compression level for
+Subject: [PATCH 07/13] kbuild: allow setting zstd compression level for
  modules
 
 Zstd offers a very fine-grained control of compression ratios.
@@ -752,13 +752,13 @@ index ff9b09e4c..0a0db2278 100644
  $(dst)/%.ko.gz: $(dst)/%.ko FORCE
  	$(call cmd,gzip)
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From 96aa7803ca60e0ee298f8432167b95935d2912c1 Mon Sep 17 00:00:00 2001
+From 86aff6db275983998b65a0a10604f4624f718afe Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 9 Apr 2021 15:39:11 +0200
-Subject: [PATCH 08/10] kbuild: optimize zstd compression settings
+Subject: [PATCH 08/13] kbuild: optimize zstd compression settings
 
 The --zstd=wlog=21 option is equivalent to --lzma2=dict=2MiB used in XZ compression.
 So let's unify the various compression options.
@@ -796,13 +796,13 @@ index 0a0db2278..8eeee2b3a 100644
  $(dst)/%.ko.gz: $(dst)/%.ko FORCE
  	$(call cmd,gzip)
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From c418e02dc405473c79faec5c4ba24ea75bd3534c Mon Sep 17 00:00:00 2001
+From 16be246b7d277df227be8e7ea4a6c626470336a2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 30 Jun 2021 17:22:44 +0200
-Subject: [PATCH 09/10] kbuild: allow setting ultra zstd compression level for
+Subject: [PATCH 09/13] kbuild: allow setting ultra zstd compression level for
  modules
 
 This patch enables users to choose either a compression level between 1 and 19,
@@ -865,13 +865,13 @@ index 8eeee2b3a..35148a7ae 100644
  $(dst)/%.ko.gz: $(dst)/%.ko FORCE
  	$(call cmd,gzip)
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From 04ff835ed8b2bb44a6daf3d82cf72c472d3691f1 Mon Sep 17 00:00:00 2001
+From d363d5c885adb82feeabb1a2cc744f46aec4c501 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 27 Jul 2021 19:56:35 +0200
-Subject: [PATCH 10/10] kbuild: add menu for ZSTD module compression options
+Subject: [PATCH 10/13] kbuild: add menu for ZSTD module compression options
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -929,5 +929,399 @@ index 7af3c0f6e..34880dac0 100644
  config MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS
  	bool "Allow loading of modules with missing namespace imports"
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
+
+
+From f475c1497ab833650e3522e61998f246de4cefb7 Mon Sep 17 00:00:00 2001
+From: Takashi Iwai <tiwai@suse.de>
+Date: Wed, 27 Jan 2021 16:22:48 +0100
+Subject: [PATCH 11/13] firmware: Add the support for ZSTD-compressed firmware
+ files
+
+Due to the popular demands on ZSTD, here is a patch to add a support
+of ZSTD-compressed firmware files via the direct firmware loader.
+It's just like XZ-compressed file support, providing a decompressor
+with ZSTD.  Since ZSTD API can give the decompression size beforehand,
+the code is even simpler than XZ.
+
+Link: https://lore.kernel.org/all/20210127154939.13288-1-tiwai@suse.de/
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ drivers/base/firmware_loader/Kconfig | 22 +++++++--
+ drivers/base/firmware_loader/main.c  | 74 ++++++++++++++++++++++++++--
+ 2 files changed, 88 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/base/firmware_loader/Kconfig b/drivers/base/firmware_loader/Kconfig
+index 5b24f3959..581bfe2c9 100644
+--- a/drivers/base/firmware_loader/Kconfig
++++ b/drivers/base/firmware_loader/Kconfig
+@@ -157,17 +157,29 @@ config FW_LOADER_USER_HELPER_FALLBACK
+ 
+ config FW_LOADER_COMPRESS
+ 	bool "Enable compressed firmware support"
+-	select FW_LOADER_PAGED_BUF
+-	select XZ_DEC
+ 	help
+ 	  This option enables the support for loading compressed firmware
+ 	  files. The caller of firmware API receives the decompressed file
+ 	  content. The compressed file is loaded as a fallback, only after
+ 	  loading the raw file failed at first.
+ 
+-	  Currently only XZ-compressed files are supported, and they have to
+-	  be compressed with either none or crc32 integrity check type (pass
+-	  "-C crc32" option to xz command).
++if FW_LOADER_COMPRESS
++config FW_LOADER_COMPRESS_XZ
++	bool "Enable XZ-compressed firmware support"
++	select FW_LOADER_PAGED_BUF
++	select XZ_DEC
++	help
++	  This option adds the support for XZ-compressed files.
++	  The files have to be compressed with either none or crc32
++	  integrity check type (pass "-C crc32" option to xz command).
++
++config FW_LOADER_COMPRESS_ZSTD
++	bool "Enable ZSTD-compressed firmware support"
++	select ZSTD_DECOMPRESS
++	help
++	  This option adds the support for ZSTD-compressed files.
++
++endif # FW_LOADER_COMPRESS
+ 
+ config FW_CACHE
+ 	bool "Enable firmware caching during suspend"
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index 94d1789a2..6e94f7e8c 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -35,6 +35,7 @@
+ #include <linux/syscore_ops.h>
+ #include <linux/reboot.h>
+ #include <linux/security.h>
++#include <linux/zstd.h>
+ #include <linux/xz.h>
+ 
+ #include <generated/utsrelease.h>
+@@ -304,10 +305,72 @@ int fw_map_paged_buf(struct fw_priv *fw_priv)
+ }
+ #endif
+ 
++/*
++ * ZSTD-compressed firmware support
++ */
++#ifdef CONFIG_FW_LOADER_COMPRESS_ZSTD
++static int fw_decompress_zstd(struct device *dev, struct fw_priv *fw_priv,
++			      size_t in_size, const void *in_buffer)
++{
++	size_t len, out_size, workspace_size;
++	void *workspace, *out_buf;
++	zstd_dctx *ctx;
++	int err;
++
++	if (fw_priv->data) {
++		out_size = fw_priv->allocated_size;
++		out_buf = fw_priv->data;
++	} else {
++		out_size = zstd_find_frame_compressed_size(in_buffer, in_size);
++		if (out_size == ZSTD_CONTENTSIZE_UNKNOWN ||
++		    out_size == ZSTD_CONTENTSIZE_ERROR) {
++			dev_dbg(dev, "%s: invalid decompression size\n", __func__);
++			return -EINVAL;
++		}
++		out_buf = vzalloc(out_size);
++		if (!out_buf)
++			return -ENOMEM;
++	}
++
++	workspace_size = zstd_dctx_workspace_bound();
++	workspace = kvzalloc(workspace_size, GFP_KERNEL);
++	if (!workspace) {
++		err = -ENOMEM;
++		goto error;
++	}
++
++	ctx = zstd_init_dctx(workspace, workspace_size);
++	if (!ctx) {
++		dev_dbg(dev, "%s: failed to initialize context\n", __func__);
++		err = -EINVAL;
++		goto error;
++	}
++
++	len = zstd_decompress_dctx(ctx, out_buf, out_size, in_buffer, in_size);
++	if (zstd_is_error(len)) {
++		dev_dbg(dev, "%s: failed to decompress: %d\n", __func__,
++			zstd_get_error_code(len));
++		err = -EINVAL;
++		goto error;
++	}
++
++	fw_priv->size = len;
++	if (!fw_priv->data)
++		fw_priv->data = out_buf;
++	err = 0;
++
++ error:
++	kvfree(workspace);
++	if (!fw_priv->data)
++		vfree(out_buf);
++	return err;
++}
++#endif /* CONFIG_FW_LOADER_COMPRESS_ZSTD */
++
+ /*
+  * XZ-compressed firmware support
+  */
+-#ifdef CONFIG_FW_LOADER_COMPRESS
++#ifdef CONFIG_FW_LOADER_COMPRESS_XZ
+ /* show an error and return the standard error code */
+ static int fw_decompress_xz_error(struct device *dev, enum xz_ret xz_ret)
+ {
+@@ -401,7 +464,7 @@ static int fw_decompress_xz(struct device *dev, struct fw_priv *fw_priv,
+ 	else
+ 		return fw_decompress_xz_pages(dev, fw_priv, in_size, in_buffer);
+ }
+-#endif /* CONFIG_FW_LOADER_COMPRESS */
++#endif /* CONFIG_FW_LOADER_COMPRESS_XZ */
+ 
+ /* direct firmware loading support */
+ static char fw_path_para[256];
+@@ -757,7 +820,12 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
+ 	if (!(opt_flags & FW_OPT_PARTIAL))
+ 		nondirect = true;
+ 
+-#ifdef CONFIG_FW_LOADER_COMPRESS
++#ifdef CONFIG_FW_LOADER_COMPRESS_ZSTD
++	if (ret == -ENOENT && nondirect)
++		ret = fw_get_filesystem_firmware(device, fw->priv, ".zst",
++						 fw_decompress_zstd);
++#endif
++#ifdef CONFIG_FW_LOADER_COMPRESS_XZ
+ 	if (ret == -ENOENT && nondirect)
+ 		ret = fw_get_filesystem_firmware(device, fw->priv, ".xz",
+ 						 fw_decompress_xz);
+-- 
+2.35.1.354.g715d08a9e5
+
+
+From be78659f0b27204c8f19d6b43959ed806c1d101e Mon Sep 17 00:00:00 2001
+From: Takashi Iwai <tiwai@suse.de>
+Date: Wed, 27 Jan 2021 16:32:55 +0100
+Subject: [PATCH 12/13] selftests: firmware: Simplify test patterns
+
+The test patterns are almost same in three sequential tests.
+Make the unified helper function for improving the readability.
+
+Link: https://lore.kernel.org/all/20210127154939.13288-1-tiwai@suse.de/
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ .../selftests/firmware/fw_filesystem.sh       | 106 +++++-------------
+ 1 file changed, 30 insertions(+), 76 deletions(-)
+
+diff --git a/tools/testing/selftests/firmware/fw_filesystem.sh b/tools/testing/selftests/firmware/fw_filesystem.sh
+index c2a2a1001..2424a97da 100755
+--- a/tools/testing/selftests/firmware/fw_filesystem.sh
++++ b/tools/testing/selftests/firmware/fw_filesystem.sh
+@@ -435,6 +435,32 @@ test_request_partial_firmware_into_buf()
+ 	echo "OK"
+ }
+ 
++do_tests ()
++{
++	mode="$1"
++	suffix="$2"
++
++	for i in $(seq 1 5); do
++		test_batched_request_firmware$suffix $i $mode
++	done
++
++	for i in $(seq 1 5); do
++		test_batched_request_firmware_into_buf$suffix $i $mode
++	done
++
++	for i in $(seq 1 5); do
++		test_batched_request_firmware_direct$suffix $i $mode
++	done
++
++	for i in $(seq 1 5); do
++		test_request_firmware_nowait_uevent$suffix $i $mode
++	done
++
++	for i in $(seq 1 5); do
++		test_request_firmware_nowait_custom$suffix $i $mode
++	done
++}
++
+ # Only continue if batched request triggers are present on the
+ # test-firmware driver
+ test_config_present
+@@ -442,25 +468,7 @@ test_config_present
+ # test with the file present
+ echo
+ echo "Testing with the file present..."
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware $i normal
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_into_buf $i normal
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_direct $i normal
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_uevent $i normal
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_custom $i normal
+-done
++do_tests normal
+ 
+ # Partial loads cannot use fallback, so do not repeat tests.
+ test_request_partial_firmware_into_buf 0 10
+@@ -472,25 +480,7 @@ test_request_partial_firmware_into_buf 2 10
+ # a hung task, which would require a hard reset.
+ echo
+ echo "Testing with the file missing..."
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_nofile $i
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_into_buf_nofile $i
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_direct_nofile $i
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_uevent_nofile $i
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_custom_nofile $i
+-done
++do_tests nofile _nofile
+ 
+ # Partial loads cannot use fallback, so do not repeat tests.
+ test_request_partial_firmware_into_buf_nofile 0 10
+@@ -505,48 +495,12 @@ xz -9 -C crc32 -k $FW
+ config_set_name $NAME
+ echo
+ echo "Testing with both plain and xz files present..."
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware $i both
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_into_buf $i both
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_direct $i both
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_uevent $i both
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_custom $i both
+-done
++do_tests both
+ 
+ # test with only xz file present
+ mv "$FW" "${FW}-orig"
+ echo
+ echo "Testing with only xz file present..."
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware $i xzonly
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_into_buf $i xzonly
+-done
+-
+-for i in $(seq 1 5); do
+-	test_batched_request_firmware_direct $i xzonly
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_uevent $i xzonly
+-done
+-
+-for i in $(seq 1 5); do
+-	test_request_firmware_nowait_custom $i xzonly
+-done
++do_tests xzonly
+ 
+ exit 0
+-- 
+2.35.1.354.g715d08a9e5
+
+
+From 6e3c1e30756de59ec9fdc39c7b328ab3b3b2a6a1 Mon Sep 17 00:00:00 2001
+From: Takashi Iwai <tiwai@suse.de>
+Date: Wed, 27 Jan 2021 16:34:53 +0100
+Subject: [PATCH 13/13] selftest: firmware: Fix the request_firmware_into_buf()
+ test for XZ format
+
+The test uses a different firmware name, and we forgot to adapt for
+the XZ compressed file tests.
+
+https://lore.kernel.org/all/20210127154939.13288-1-tiwai@suse.de/
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+ drivers/base/firmware_loader/main.c               | 10 ++++++----
+ tools/testing/selftests/firmware/fw_filesystem.sh |  2 ++
+ 2 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index 6e94f7e8c..771387976 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -321,12 +321,14 @@ static int fw_decompress_zstd(struct device *dev, struct fw_priv *fw_priv,
+ 		out_size = fw_priv->allocated_size;
+ 		out_buf = fw_priv->data;
+ 	} else {
+-		out_size = zstd_find_frame_compressed_size(in_buffer, in_size);
+-		if (out_size == ZSTD_CONTENTSIZE_UNKNOWN ||
+-		    out_size == ZSTD_CONTENTSIZE_ERROR) {
+-			dev_dbg(dev, "%s: invalid decompression size\n", __func__);
++		zstd_frame_header params;
++
++		if (zstd_get_frame_header(&params, in_buffer, in_size) ||
++		    params.frameContentSize == ZSTD_CONTENTSIZE_UNKNOWN) {
++			dev_dbg(dev, "%s: invalid zstd header\n", __func__);
+ 			return -EINVAL;
+ 		}
++		out_size = params.frameContentSize;
+ 		out_buf = vzalloc(out_size);
+ 		if (!out_buf)
+ 			return -ENOMEM;
+diff --git a/tools/testing/selftests/firmware/fw_filesystem.sh b/tools/testing/selftests/firmware/fw_filesystem.sh
+index 2424a97da..f1976e650 100755
+--- a/tools/testing/selftests/firmware/fw_filesystem.sh
++++ b/tools/testing/selftests/firmware/fw_filesystem.sh
+@@ -492,6 +492,7 @@ test "$HAS_FW_LOADER_COMPRESS" != "yes" && exit 0
+ 
+ # test with both files present
+ xz -9 -C crc32 -k $FW
++xz -9 -C crc32 -k $FW_INTO_BUF
+ config_set_name $NAME
+ echo
+ echo "Testing with both plain and xz files present..."
+@@ -499,6 +500,7 @@ do_tests both
+ 
+ # test with only xz file present
+ mv "$FW" "${FW}-orig"
++mv "$FW_INTO_BUF" "${FW_INTO_BUF}-orig"
+ echo
+ echo "Testing with only xz file present..."
+ do_tests xzonly
+-- 
+2.35.1.354.g715d08a9e5
 

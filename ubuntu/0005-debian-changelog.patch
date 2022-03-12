@@ -1,6 +1,6 @@
-From a32658af2e908227d819e45691f4a211b9d9ca33 Mon Sep 17 00:00:00 2001
+From 82869e69ff46a68304d87be10ae0ae57e3f2fe19 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Tue, 8 Mar 2022 20:04:59 +0000
+Date: Fri, 11 Mar 2022 12:31:49 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,18 +8,18 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 14682 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 4b4ced83876b..7c8c8e03703d 100644
+index 4b4ced83876b..d42d520ddae4 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,14685 +1,6 @@
 -linux-unstable (5.17.0-4.4) jammy; urgency=medium
-+linux (5.16.13-051613.202203082004) jammy; urgency=low
++linux (5.16.14-051614.202203111231) jammy; urgency=low
  
 -  * jammy/linux-unstable: 5.17.0-4.4 -proposed tracker (LP: #1963880)
-+  Mainline build at commit: v5.16.13
++  Mainline build at commit: v5.16.14
  
 -  [ Upstream Kernel Changes ]
-+ -- Mainline Build <kernel@sita>  Tue, 08 Mar 2022 20:04:59 +0000
++ -- Mainline Build <kernel@sita>  Fri, 11 Mar 2022 12:31:49 +0000
  
 -  * Rebase to v5.17-rc7
 -
