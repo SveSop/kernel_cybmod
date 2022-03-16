@@ -1,26 +1,42 @@
-From 82869e69ff46a68304d87be10ae0ae57e3f2fe19 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 11 Mar 2022 12:31:49 +0000
+From 7df476ee2c6ff6a06a73c5a7cc056335b7f74f3b Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 16 Mar 2022 14:44:38 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 14685 +-------------------------------------
- 1 file changed, 3 insertions(+), 14682 deletions(-)
+ debian.master/changelog | 14701 +-------------------------------------
+ 1 file changed, 3 insertions(+), 14698 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 4b4ced83876b..d42d520ddae4 100644
+index 757e612997eb..eee13c2eeb75 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,14685 +1,6 @@
--linux-unstable (5.17.0-4.4) jammy; urgency=medium
-+linux (5.16.14-051614.202203111231) jammy; urgency=low
+@@ -1,14701 +1,6 @@
+-linux-unstable (5.17.0-5.5) jammy; urgency=medium
++linux (5.16.15-051615.202203161444) jammy; urgency=low
  
--  * jammy/linux-unstable: 5.17.0-4.4 -proposed tracker (LP: #1963880)
-+  Mainline build at commit: v5.16.14
+-  * jammy/linux-unstable: 5.17.0-5.5 -proposed tracker (LP: #1964766)
++  Mainline build at commit: v5.16.15
  
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] resync dkms-build{,--nvidia-N} from LRMv5
++ -- Mainline Build <kernel@kathleen>  Wed, 16 Mar 2022 14:44:38 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update configs and annotations after rebase to v5.17-rc8
+-
 -  [ Upstream Kernel Changes ]
-+ -- Mainline Build <kernel@sita>  Fri, 11 Mar 2022 12:31:49 +0000
- 
+-
+-  * Rebase to v5.17-rc8
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 14 Mar 2022 13:15:50 +0100
+-
+-linux-unstable (5.17.0-4.4) jammy; urgency=medium
+-
+-  * jammy/linux-unstable: 5.17.0-4.4 -proposed tracker (LP: #1963880)
+-
+-  [ Upstream Kernel Changes ]
+-
 -  * Rebase to v5.17-rc7
 -
 - -- Andrea Righi <andrea.righi@canonical.com>  Mon, 07 Mar 2022 10:20:48 +0100

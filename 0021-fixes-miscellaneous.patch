@@ -1,7 +1,7 @@
-From c7eeca712311a7a8f97527be1d9f944070643b77 Mon Sep 17 00:00:00 2001
+From 731bf2de0ef44319ca4a3be86d75a9d9dd8fb86d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/27] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/26] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.35.1.354.g715d08a9e5
 
 
-From d121c368e5eacfb539ee761a1a6cc769f1e610cf Mon Sep 17 00:00:00 2001
+From 2480cc503b390df02f4ba375dd12f28570359533 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/27] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/26] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index 65e3e7df8..b41afee77 100644
 2.35.1.354.g715d08a9e5
 
 
-From 2238ca4fccc33fa6f995d02106df70017f547885 Mon Sep 17 00:00:00 2001
+From ea6b203816b5e6ceaa1adce9836e11c5173ba2c0 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/27] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/26] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -115,7 +115,7 @@ Signed-off-by: Alexandre Frade <admfrade@gmail.com>
  2 files changed, 111 insertions(+)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 2fba82431..79bfb73c3 100644
+index 391b3f905..8b7f95d6e 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -3922,6 +3922,15 @@
@@ -135,7 +135,7 @@ index 2fba82431..79bfb73c3 100644
  				Safety option to keep boot IRQs enabled. This
  				should never be necessary.
 diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 20a932690..6c363df1e 100644
+index db864bf63..966354d7d 100644
 --- a/drivers/pci/quirks.c
 +++ b/drivers/pci/quirks.c
 @@ -3600,6 +3600,106 @@ static void quirk_nvidia_no_bus_reset(struct pci_dev *dev)
@@ -258,10 +258,10 @@ index 20a932690..6c363df1e 100644
 2.35.1.354.g715d08a9e5
 
 
-From a3b6d8fbf0d78ba1256f179162aaf9887fb13a2a Mon Sep 17 00:00:00 2001
+From d9539733605f8383ddc964f60477f53413eb9349 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/27] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/26] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -392,10 +392,10 @@ index 2e5932bde..f4fbca90e 100644
 2.35.1.354.g715d08a9e5
 
 
-From 9d1629be084c6eceff1d62e4d11377b2b1ee194c Mon Sep 17 00:00:00 2001
+From 95098824639503762c89829b7c36c44fa9d98e89 Mon Sep 17 00:00:00 2001
 From: Yafang Shao <laoar.shao@gmail.com>
 Date: Thu, 4 Jun 2020 03:05:47 -0400
-Subject: [PATCH 05/27] iomap: avoid deadlock if memory reclaim is triggered in
+Subject: [PATCH 05/26] iomap: avoid deadlock if memory reclaim is triggered in
  writepage path
 
 Recently there is a XFS deadlock on our server with an old kernel.
@@ -516,10 +516,10 @@ index 71a36ae12..b0363d3be 100644
 2.35.1.354.g715d08a9e5
 
 
-From bbdaadb2cf9bc09b2d49d3b3aa164a114b7d3d0a Mon Sep 17 00:00:00 2001
+From cd94c8577679bebaac1a014cda0863cc8a21089d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 06/27] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 06/26] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -586,10 +586,10 @@ index e9d39c485..3bceead8d 100644
 2.35.1.354.g715d08a9e5
 
 
-From 5fa0b66e13250abe8c718d04a158c00d38bb4554 Mon Sep 17 00:00:00 2001
+From 874acc21f8ae16f8fe7aad626c8c9ed56e0df593 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 07/27] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 07/26] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -602,7 +602,7 @@ Signed-off-by: Alexandre Frade <kernel@xanmod.org>
  create mode 100644 drivers/i2c/busses/i2c-nct6775.c
 
 diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index dce392839..2d481f55e 100644
+index 37233bb48..e28959879 100644
 --- a/drivers/i2c/busses/Kconfig
 +++ b/drivers/i2c/busses/Kconfig
 @@ -219,6 +219,15 @@ config I2C_CHT_WC
@@ -1320,10 +1320,10 @@ index 8c1b31ed0..9131e4004 100644
 2.35.1.354.g715d08a9e5
 
 
-From b9b8c78f0ff194d75bafd3cd6e9a9c391f82c896 Mon Sep 17 00:00:00 2001
+From ce277eeec6ac78541861da25b6dd0a95e34f6906 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 10 Jan 2022 18:37:07 +0100
-Subject: [PATCH 08/27] fm-5.16: port mm kswapd patches
+Subject: [PATCH 08/26] fm-5.16: port mm kswapd patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1436,10 +1436,10 @@ index 8d24a2299..7c217d2b0 100644
 2.35.1.354.g715d08a9e5
 
 
-From 81611442871137f5e21c96aec299ed72c61f6c0b Mon Sep 17 00:00:00 2001
+From a677b01cb44d2af980743de7a96fed32f2bf3536 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Sun, 8 Mar 2020 00:31:35 -0800
-Subject: [PATCH 09/27] Disable stack conservation for GCC
+Subject: [PATCH 09/26] Disable stack conservation for GCC
 
 There's plenty of room on the stack for a few more inlined bytes here
 and there. The measured stack usage at runtime is still safe without
@@ -1452,7 +1452,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 09a9bb824..24e46c8ba 100644
+index 868354190..ab5ea55ed 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -990,11 +990,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -1471,10 +1471,10 @@ index 09a9bb824..24e46c8ba 100644
 2.35.1.354.g715d08a9e5
 
 
-From c5b72791d14a4aeffb2ff5b2a80728086d800495 Mon Sep 17 00:00:00 2001
+From 4d3f34472ffabb928ca1621be4d4eeef6a43c22c Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Fri, 12 Nov 2021 08:19:50 -0800
-Subject: [PATCH 10/27] x86/csum: rewrite csum_partial()
+Subject: [PATCH 10/26] x86/csum: rewrite csum_partial()
 
 With more NIC supporting CHECKSUM_COMPLETE, and IPv6 being widely used.
 csum_partial() is heavily used with small amount of bytes,
@@ -1724,10 +1724,10 @@ index e7925d668..5ec356269 100644
 2.35.1.354.g715d08a9e5
 
 
-From 37988e5d06e1b053ac863d3ad42ec89e92a4790b Mon Sep 17 00:00:00 2001
+From 17f0bf97ef673cf159488d07a8e634ed1b6dfd51 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 18 Nov 2021 09:52:39 -0800
-Subject: [PATCH 11/27] x86/csum: Fix compilation error for UM
+Subject: [PATCH 11/26] x86/csum: Fix compilation error for UM
 
 load_unaligned_zeropad() is not yet universal.
 
@@ -1793,10 +1793,10 @@ index 5ec356269..1eb8f2d11 100644
 2.35.1.354.g715d08a9e5
 
 
-From 4c6c11062ff1ec8e4ac0818503d4ad5e831f7212 Mon Sep 17 00:00:00 2001
+From 45449c73dcf563a18f73fe4a15ec50e07870f6e4 Mon Sep 17 00:00:00 2001
 From: Eric Dumazet <edumazet@google.com>
 Date: Thu, 25 Nov 2021 06:18:17 -0800
-Subject: [PATCH 12/27] x86/csum: Fix initial seed for odd buffers
+Subject: [PATCH 12/26] x86/csum: Fix initial seed for odd buffers
 
 When I folded do_csum() into csum_partial(), I missed that we
 had to swap odd/even bytes from @sum argument.
@@ -1857,10 +1857,10 @@ index 1eb8f2d11..40b527ba1 100644
 2.35.1.354.g715d08a9e5
 
 
-From a8d5ab35f9d8d99bb6ded9b27153b5436b715347 Mon Sep 17 00:00:00 2001
+From 7a14c3a79015abcd579b876e4db521abb27b7ab7 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Dec 2021 11:17:09 +1100
-Subject: [PATCH 13/27] xfs: check sb_meta_uuid for dabuf buffer recovery
+Subject: [PATCH 13/26] xfs: check sb_meta_uuid for dabuf buffer recovery
 
 Got a report that a repeated crash test of a container host would
 eventually fail with a log recovery error preventing the system from
@@ -1936,10 +1936,10 @@ index 70ca5751b..e484251dc 100644
 2.35.1.354.g715d08a9e5
 
 
-From 4924009aa6b7ba903454ef3fcf5627f258cf10d2 Mon Sep 17 00:00:00 2001
+From 32d161ecc16a35083acf046b3e03ed86febafb99 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 14/27] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+Subject: [PATCH 14/26] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
  SMBUS
 
 In the original OpenRGB patches, the initialization code for CZ
@@ -1975,10 +1975,10 @@ index 9131e4004..0b1b36fa0 100644
 2.35.1.354.g715d08a9e5
 
 
-From 797ca1617a407b242e7b27090c462c6c804c6cbf Mon Sep 17 00:00:00 2001
+From 63e976150717688575723c3f78c40e9465f84c51 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <david@fromorbit.com>
 Date: Tue, 11 Jan 2022 10:37:46 +1100
-Subject: [PATCH 15/27] iomap: Address soft lockup in iomap_finish_ioend()
+Subject: [PATCH 15/26] iomap: Address soft lockup in iomap_finish_ioend()
 
 [V4] xfs: limit individual ioend chain length in writeback
 
@@ -2255,10 +2255,10 @@ index 6d1b08d0a..378bfc401 100644
 2.35.1.354.g715d08a9e5
 
 
-From 4517cc78a07b9e05f57e3a3f336c01a7a5ac06c0 Mon Sep 17 00:00:00 2001
+From dc561fd6283b90fd0facdbffb08310540c155544 Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Sun, 30 Jan 2022 17:46:48 -0800
-Subject: [PATCH 16/27] kernel/cpu.c: fix init_cpu_online
+Subject: [PATCH 16/26] kernel/cpu.c: fix init_cpu_online
 
 cpu_online_mask has an associate counter of online cpus, which must be
 initialized in init_cpu_online().
@@ -2285,10 +2285,10 @@ index 407a2568f..cd7605204 100644
 2.35.1.354.g715d08a9e5
 
 
-From 3d82a527f043439a3fbb47480ad9b34e816b75a6 Mon Sep 17 00:00:00 2001
+From ffefcfe999c2dee8233c6fd2a04f6696acfcbb8f Mon Sep 17 00:00:00 2001
 From: Jessica Clarke <jrtc27@jrtc27.com>
 Date: Wed, 22 Dec 2021 17:23:28 +0100
-Subject: [PATCH 17/27] ACPICA: Macros: Remove ACPI_PHYSADDR_TO_PTR
+Subject: [PATCH 17/26] ACPICA: Macros: Remove ACPI_PHYSADDR_TO_PTR
 
 ACPICA commit 52abebd410945ec55afb4dd8b7150e8a39b5c960
 
@@ -2321,10 +2321,10 @@ index 248242dca..b14ecb41d 100644
 2.35.1.354.g715d08a9e5
 
 
-From a5bdb09e26c6347f966b8e41c3f550c05834d4b5 Mon Sep 17 00:00:00 2001
+From c39c1dffb6c85f82d91ceeff8668b141e23f7733 Mon Sep 17 00:00:00 2001
 From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 Date: Tue, 11 Jan 2022 16:55:25 +0100
-Subject: [PATCH 18/27] ACPICA: Use uintptr_t and offsetof() in Linux kernel
+Subject: [PATCH 18/26] ACPICA: Use uintptr_t and offsetof() in Linux kernel
  builds
 
 To avoid "performing pointer subtraction with a null pointer has
@@ -2378,10 +2378,10 @@ index b3ffb9bbf..cec41e004 100644
 2.35.1.354.g715d08a9e5
 
 
-From 245a20aea278f3241b94609d878f6946771aa71f Mon Sep 17 00:00:00 2001
+From 762e43bcbca97235ca2780e17eb2bbfa8fbdce75 Mon Sep 17 00:00:00 2001
 From: Jessica Clarke <jrtc27@jrtc27.com>
 Date: Wed, 22 Dec 2021 17:21:25 +0100
-Subject: [PATCH 19/27] ACPICA: Use original data_table_region pointer for
+Subject: [PATCH 19/26] ACPICA: Use original data_table_region pointer for
  accesses
 
 ACPICA commit d9eb82bd7515989f0b29d79deeeb758db4d6529c
@@ -2605,10 +2605,10 @@ index 6d0c5f8e9..a77adf5ed 100644
 2.35.1.354.g715d08a9e5
 
 
-From b71a0cd7bd5bff130671013d85e8a3fb092d359e Mon Sep 17 00:00:00 2001
+From dc7a08aaa3e41644cfefd33b041457c67c8d9253 Mon Sep 17 00:00:00 2001
 From: Jessica Clarke <jrtc27@jrtc27.com>
 Date: Wed, 22 Dec 2021 17:22:28 +0100
-Subject: [PATCH 20/27] ACPICA: Use original pointer for virtual origin tables
+Subject: [PATCH 20/26] ACPICA: Use original pointer for virtual origin tables
 
 ACPICA commit dfa3feffa8f760b686207d09dc880cd2f26c72af
 
@@ -3122,10 +3122,10 @@ index 73ba13914..987bb0aa0 100644
 2.35.1.354.g715d08a9e5
 
 
-From f2f4b1a3a4f28d8701a61e56f1bb8d4ba41e13ff Mon Sep 17 00:00:00 2001
+From d2bf0bea49611ef378ea19827c0b026720ba721a Mon Sep 17 00:00:00 2001
 From: Jessica Clarke <jrtc27@jrtc27.com>
 Date: Wed, 22 Dec 2021 17:24:44 +0100
-Subject: [PATCH 21/27] ACPICA: Avoid subobject buffer overflow when validating
+Subject: [PATCH 21/26] ACPICA: Avoid subobject buffer overflow when validating
  RSDP signature
 
 ACPICA commit 6bb72909c1e3d415aee214104a01bc9834b2d4ce
@@ -3167,10 +3167,10 @@ index 254823d49..4dac16bd6 100644
 2.35.1.354.g715d08a9e5
 
 
-From b7c5f7d7d1b73d628ac52dc9fc013434d6fc9f41 Mon Sep 17 00:00:00 2001
+From 56276b08551443b21821d2fdee164fe1338cf36b Mon Sep 17 00:00:00 2001
 From: Xin Xiong <xiongx18@fudan.edu.cn>
 Date: Fri, 21 Jan 2022 13:28:28 +0800
-Subject: [PATCH 22/27] drm/amd/amdgpu/amdgpu_cs: fix refcount leak of a
+Subject: [PATCH 22/26] drm/amd/amdgpu/amdgpu_cs: fix refcount leak of a
  dma_fence obj
 
 This issue takes place in an error path in
@@ -3205,10 +3205,10 @@ index 0311d799a..894869789 100644
 2.35.1.354.g715d08a9e5
 
 
-From adfdaf3dccf57787a3afd7b99aa495e606f9c16f Mon Sep 17 00:00:00 2001
+From c331bfaee169e33185a265dc89469179172cdbde Mon Sep 17 00:00:00 2001
 From: Yongzhi Liu <lyz_cs@pku.edu.cn>
 Date: Fri, 21 Jan 2022 11:26:13 +0000
-Subject: [PATCH 23/27] drm/amd/display: Fix memory leak
+Subject: [PATCH 23/26] drm/amd/display: Fix memory leak
 
 [why]
 Resource release is needed on the error handling path
@@ -3472,97 +3472,10 @@ index f4e829ec8..ab58bcb11 100644
 2.35.1.354.g715d08a9e5
 
 
-From b75875cbbae080178eeb543e431f49024163b2a0 Mon Sep 17 00:00:00 2001
-From: Alex Deucher <alexander.deucher@amd.com>
-Date: Tue, 22 Feb 2022 11:08:01 -0500
-Subject: [PATCH 24/27] PCI: Mark all AMD Navi10 and Navi14 GPU ATS as broken
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-There are enough VBIOS escapes without the proper workaround that some
-users still hit this.  Microsoft never productized ATS on Windows so OEM
-platforms that were Windows-only didn't always validate ATS.
-
-The advantages of ATS are not worth it compared to the potential
-instabilities on harvested boards.  Disable ATS on all Navi10 and Navi14
-boards.
-
-Symptoms include:
-
-  amdgpu 0000:07:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0007 address=0xffffc02000 flags=0x0000]
-  AMD-Vi: Event logged [IO_PAGE_FAULT device=07:00.0 domain=0x0007 address=0xffffc02000 flags=0x0000]
-  [drm:amdgpu_job_timedout [amdgpu]] *ERROR* ring sdma0 timeout, signaled seq=6047, emitted seq=6049
-  amdgpu 0000:07:00.0: amdgpu: GPU reset begin!
-  amdgpu 0000:07:00.0: amdgpu: GPU reset succeeded, trying to resume
-  amdgpu 0000:07:00.0: [drm:amdgpu_ring_test_helper [amdgpu]] *ERROR* ring sdma0 test failed (-110)
-  [drm:amdgpu_device_ip_resume_phase2 [amdgpu]] *ERROR* resume of IP block <sdma_v4_0> failed -110
-  amdgpu 0000:07:00.0: amdgpu: GPU reset(1) failed
-
-Related commits:
-
-  e8946a53e2a6 ("PCI: Mark AMD Navi14 GPU ATS as broken")
-  a2da5d8cc0b0 ("PCI: Mark AMD Raven iGPU ATS as broken in some platforms")
-  45beb31d3afb ("PCI: Mark AMD Navi10 GPU rev 0x00 ATS as broken")
-  5e89cd303e3a ("PCI: Mark AMD Navi14 GPU rev 0xc5 ATS as broken")
-  d28ca864c493 ("PCI: Mark AMD Stoney Radeon R7 GPU ATS as broken")
-  9b44b0b09dec ("PCI: Mark AMD Stoney GPU ATS as broken")
-
-[bhelgaas: add symptoms and related commits]
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/1760
-Link: https://lore.kernel.org/r/20220222160801.841643-1-alexander.deucher@amd.com
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Guchun Chen <guchun.chen@amd.com>
----
- drivers/pci/quirks.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 6c363df1e..966354d7d 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5446,11 +5446,6 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0422, quirk_no_ext_tags);
-  */
- static void quirk_amd_harvest_no_ats(struct pci_dev *pdev)
- {
--	if ((pdev->device == 0x7312 && pdev->revision != 0x00) ||
--	    (pdev->device == 0x7340 && pdev->revision != 0xc5) ||
--	    (pdev->device == 0x7341 && pdev->revision != 0x00))
--		return;
--
- 	if (pdev->device == 0x15d8) {
- 		if (pdev->revision == 0xcf &&
- 		    pdev->subsystem_vendor == 0xea50 &&
-@@ -5472,10 +5467,19 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x98e4, quirk_amd_harvest_no_ats);
- /* AMD Iceland dGPU */
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x6900, quirk_amd_harvest_no_ats);
- /* AMD Navi10 dGPU */
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7310, quirk_amd_harvest_no_ats);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7312, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7318, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7319, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x731a, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x731b, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x731e, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x731f, quirk_amd_harvest_no_ats);
- /* AMD Navi14 dGPU */
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7340, quirk_amd_harvest_no_ats);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7341, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7347, quirk_amd_harvest_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x734f, quirk_amd_harvest_no_ats);
- /* AMD Raven platform iGPU */
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x15d8, quirk_amd_harvest_no_ats);
- #endif /* CONFIG_PCI_ATS */
--- 
-2.35.1.354.g715d08a9e5
-
-
-From 546ba15c2f3e68a36fe6f92c766f0621b0757aa7 Mon Sep 17 00:00:00 2001
+From b035fd318e7910d18b22fea7cc4233f6617f4a92 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Fri, 16 Jul 2021 23:35:47 -0700
-Subject: [PATCH 25/27] mm: Increment kswapd_waiters for throttled direct
+Subject: [PATCH 24/26] mm: Increment kswapd_waiters for throttled direct
  reclaimers
 
 Throttled direct reclaimers will wake up kswapd and wait for kswapd to
@@ -3641,10 +3554,10 @@ index 7c217d2b0..171ef1b08 100644
 2.35.1.354.g715d08a9e5
 
 
-From de92d3dd780266c74ca5d750e09b427a4a864343 Mon Sep 17 00:00:00 2001
+From 9acf560b9de43dd8fddabe8711b9899f8ad0beb1 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 26/27] mm: Lower the non-hugetlbpage pageblock size to reduce
+Subject: [PATCH 25/26] mm: Lower the non-hugetlbpage pageblock size to reduce
  scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -3690,10 +3603,10 @@ index 973fd731a..4fd8f2589 100644
 2.35.1.354.g715d08a9e5
 
 
-From 918515a73cd1baded53e7104ba06ccabed165db0 Mon Sep 17 00:00:00 2001
+From ec41372dd8c4f9e63a824a2556a8feda97c8aadc Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:32 -0700
-Subject: [PATCH 27/27] mm: Don't hog the CPU and zone lock in rmqueue_bulk()
+Subject: [PATCH 26/26] mm: Don't hog the CPU and zone lock in rmqueue_bulk()
 
 There is noticeable scheduling latency and heavy zone lock contention
 stemming from rmqueue_bulk's single hold of the zone lock while doing

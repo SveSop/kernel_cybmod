@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.16.14  
+0000 : Patch 5.16.15  
 0000 : ProjectC v5.16-r0  
 0002 : 5.16 Graysky's CPU optimization patches  
 0003 : v5.16-fsync1_futex_waitv  
@@ -12,6 +12,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0006 : zstd kernel settings  
 0007 : Block config settings  
+0008 : ProjectC Scheduler fixes  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
 0020 : Clearlinux patches  
