@@ -1,7 +1,7 @@
-From a2fb6b1764bbcd7473eb67c23161d23090d81f4d Mon Sep 17 00:00:00 2001
+From 043b77e17da24468cbdd66120464e317bfd418da Mon Sep 17 00:00:00 2001
 From: Torge Matthies <openglfreak@googlemail.com>
 Date: Sun, 21 Nov 2021 23:58:50 +0100
-Subject: [PATCH 1/9] sched/alt: Optimize loops in update_sched_rq_watermark.
+Subject: [PATCH 01/10] sched/alt: Optimize loops in update_sched_rq_watermark.
 
 With the old code, gcc misses an optimization opportunity and compiles
 the loops to five instructions each:
@@ -36,7 +36,7 @@ Signed-off-by: Torge Matthies <openglfreak@googlemail.com>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index b348f014f..601086d40 100644
+index aae8fd401..5c1c73371 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -185,8 +185,8 @@ static inline void update_sched_rq_watermark(struct rq *rq)
@@ -65,10 +65,10 @@ index b348f014f..601086d40 100644
 2.35.1.354.g715d08a9e5
 
 
-From dd2e7eedce2b8ee59da3782fbf5022e4f0a1ce36 Mon Sep 17 00:00:00 2001
+From e5042099589469677c73984a3ea8f9cffcdc7ed2 Mon Sep 17 00:00:00 2001
 From: Juuso Alasuutari <juuso.alasuutari@gmail.com>
 Date: Sat, 16 Oct 2021 17:01:28 +0300
-Subject: [PATCH 2/9] sched/alt: Alfred Chen's PoC sched_preferred_cpumask
+Subject: [PATCH 02/10] sched/alt: Alfred Chen's PoC sched_preferred_cpumask
  patch
 
 The hard-coded cpumask value is based on torturing my R9 3950X and
@@ -97,7 +97,7 @@ index 9ff480e94..d1ea2d0c0 100644
  		int smt_prio;
  
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index 601086d40..9b648c949 100644
+index 5c1c73371..ee545e53a 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -120,6 +120,8 @@ DEFINE_PER_CPU(cpumask_t [NR_CPU_AFFINITY_LEVELS], sched_cpu_topo_masks);
@@ -109,7 +109,7 @@ index 601086d40..9b648c949 100644
  #ifdef CONFIG_SCHED_SMT
  DEFINE_STATIC_KEY_FALSE(sched_smt_present);
  EXPORT_SYMBOL_GPL(sched_smt_present);
-@@ -7075,11 +7077,14 @@ static void sched_init_topology_cpumask_early(void)
+@@ -7078,11 +7080,14 @@ static void sched_init_topology_cpumask_early(void)
  	}
  }
  
@@ -127,7 +127,7 @@ index 601086d40..9b648c949 100644
  	}									\
  	if (!last)								\
  		cpumask_complement(topo, mask)
-@@ -7089,6 +7094,8 @@ static void sched_init_topology_cpumask(void)
+@@ -7092,6 +7097,8 @@ static void sched_init_topology_cpumask(void)
  	int cpu;
  	cpumask_t *topo;
  
@@ -136,7 +136,7 @@ index 601086d40..9b648c949 100644
  	for_each_online_cpu(cpu) {
  		/* take chance to reset time slice for idle tasks */
  		cpu_rq(cpu)->idle->time_slice = sched_timeslice_ns;
-@@ -7097,21 +7104,21 @@ static void sched_init_topology_cpumask(void)
+@@ -7100,21 +7107,21 @@ static void sched_init_topology_cpumask(void)
  
  		cpumask_complement(topo, cpumask_of(cpu));
  #ifdef CONFIG_SCHED_SMT
@@ -192,10 +192,10 @@ index 6ff979a29..1e42ce057 100644
 2.35.1.354.g715d08a9e5
 
 
-From 4cfd621e5aa7acbf0ffb4ec79aee2fb91d001489 Mon Sep 17 00:00:00 2001
+From fb05528cf10e125f84d4c0db4a98df5a252cbd31 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 18 Jan 2022 12:45:15 +0100
-Subject: [PATCH 3/9] Revert "sched/alt: Alfred Chen's PoC
+Subject: [PATCH 03/10] Revert "sched/alt: Alfred Chen's PoC
  sched_preferred_cpumask patch"
 
 This reverts commit 442ee3a94443b440b3d44ef71de51ae03cd07108.
@@ -220,7 +220,7 @@ index d1ea2d0c0..9ff480e94 100644
  		int smt_prio;
  
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index 9b648c949..601086d40 100644
+index ee545e53a..5c1c73371 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -120,8 +120,6 @@ DEFINE_PER_CPU(cpumask_t [NR_CPU_AFFINITY_LEVELS], sched_cpu_topo_masks);
@@ -232,7 +232,7 @@ index 9b648c949..601086d40 100644
  #ifdef CONFIG_SCHED_SMT
  DEFINE_STATIC_KEY_FALSE(sched_smt_present);
  EXPORT_SYMBOL_GPL(sched_smt_present);
-@@ -7077,14 +7075,11 @@ static void sched_init_topology_cpumask_early(void)
+@@ -7080,14 +7078,11 @@ static void sched_init_topology_cpumask_early(void)
  	}
  }
  
@@ -250,7 +250,7 @@ index 9b648c949..601086d40 100644
  	}									\
  	if (!last)								\
  		cpumask_complement(topo, mask)
-@@ -7094,8 +7089,6 @@ static void sched_init_topology_cpumask(void)
+@@ -7097,8 +7092,6 @@ static void sched_init_topology_cpumask(void)
  	int cpu;
  	cpumask_t *topo;
  
@@ -259,7 +259,7 @@ index 9b648c949..601086d40 100644
  	for_each_online_cpu(cpu) {
  		/* take chance to reset time slice for idle tasks */
  		cpu_rq(cpu)->idle->time_slice = sched_timeslice_ns;
-@@ -7104,21 +7097,21 @@ static void sched_init_topology_cpumask(void)
+@@ -7107,21 +7100,21 @@ static void sched_init_topology_cpumask(void)
  
  		cpumask_complement(topo, cpumask_of(cpu));
  #ifdef CONFIG_SCHED_SMT
@@ -315,10 +315,10 @@ index 1e42ce057..6ff979a29 100644
 2.35.1.354.g715d08a9e5
 
 
-From b7068c6c8ae58c08a6ec499302d0469a482ef063 Mon Sep 17 00:00:00 2001
+From 55ea4f14c95c0f70807a5790d2e80c2a42ee0a6f Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Sun, 13 Mar 2022 23:29:08 +0100
-Subject: [PATCH 4/9] Revert "sched/alt: Optimize loops in
+Subject: [PATCH 04/10] Revert "sched/alt: Optimize loops in
  update_sched_rq_watermark."
 
 This reverts commit 88adfd0b1372e2db6b31bdae6eee98fc3f1602c7.
@@ -329,7 +329,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index 601086d40..b348f014f 100644
+index 5c1c73371..aae8fd401 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -185,8 +185,8 @@ static inline void update_sched_rq_watermark(struct rq *rq)
@@ -358,17 +358,17 @@ index 601086d40..b348f014f 100644
 2.35.1.354.g715d08a9e5
 
 
-From cfb6ec2b236c1c502cab46ed9fe2c49baee2d354 Mon Sep 17 00:00:00 2001
+From ef66245535e47f7e692847566f21308daee52f7b Mon Sep 17 00:00:00 2001
 From: Torge Matthies <openglfreak@googlemail.com>
 Date: Fri, 11 Mar 2022 02:52:30 +0100
-Subject: [PATCH 5/9] sched/alt: Transpose the sched_rq_watermark array.
+Subject: [PATCH 05/10] sched/alt: Transpose the sched_rq_watermark array.
 
 ---
  kernel/sched/alt_core.c | 124 +++++++++++++++++++++++++++++++++-------
  1 file changed, 104 insertions(+), 20 deletions(-)
 
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index b348f014f..f7d8604e1 100644
+index aae8fd401..72097c5dc 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -147,7 +147,87 @@ DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
@@ -517,7 +517,7 @@ index b348f014f..f7d8604e1 100644
  		return best_mask_cpu(task_cpu(p), &tmp);
  
  	return best_mask_cpu(task_cpu(p), &chk_mask);
-@@ -3955,7 +4031,7 @@ static inline void sg_balance_check(struct rq *rq)
+@@ -3950,7 +4026,7 @@ static inline void sg_balance_check(struct rq *rq)
  	 * find potential cpus which can migrate the current running task
  	 */
  	if (cpumask_test_cpu(cpu, &sched_sg_idle_mask) &&
@@ -526,7 +526,7 @@ index b348f014f..f7d8604e1 100644
  	    cpumask_andnot(&chk, &chk, &sched_rq_pending_mask)) {
  		int i;
  
-@@ -4263,9 +4339,8 @@ static inline void schedule_debug(struct task_struct *prev, bool preempt)
+@@ -4258,9 +4334,8 @@ static inline void schedule_debug(struct task_struct *prev, bool preempt)
  #ifdef ALT_SCHED_DEBUG
  void alt_sched_debug(void)
  {
@@ -537,7 +537,7 @@ index b348f014f..f7d8604e1 100644
  	       sched_sg_idle_mask.bits[0]);
  }
  #else
-@@ -7178,8 +7253,17 @@ void __init sched_init(void)
+@@ -7181,8 +7256,17 @@ void __init sched_init(void)
  	wait_bit_init();
  
  #ifdef CONFIG_SMP
@@ -561,10 +561,10 @@ index b348f014f..f7d8604e1 100644
 2.35.1.354.g715d08a9e5
 
 
-From 0e0a856e6bf2994484053277cb6e38284e98213d Mon Sep 17 00:00:00 2001
+From 1bb6a46e48c619b3f3400207cac92725b4c908c1 Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Wed, 9 Mar 2022 14:03:08 +0100
-Subject: [PATCH 6/9] alt_core.c: Add potentially missing assignment of
+Subject: [PATCH 06/10] alt_core.c: Add potentially missing assignment of
  p->on_cpu in sched_fork
 
 ---
@@ -572,7 +572,7 @@ Subject: [PATCH 6/9] alt_core.c: Add potentially missing assignment of
  1 file changed, 3 insertions(+)
 
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index f7d8604e1..5e47ebfec 100644
+index 72097c5dc..752680282 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -3052,6 +3052,9 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
@@ -589,17 +589,17 @@ index f7d8604e1..5e47ebfec 100644
 2.35.1.354.g715d08a9e5
 
 
-From 04f43c8f85b0c6d9f392d1956ac1259d25dfb64c Mon Sep 17 00:00:00 2001
+From bcf1af03d02ea73d97b9a07045561625082494a7 Mon Sep 17 00:00:00 2001
 From: Torge Matthies <openglfreak@googlemail.com>
 Date: Tue, 15 Mar 2022 23:08:54 +0100
-Subject: [PATCH 7/9] sched/alt: Add memory barriers around atomics.
+Subject: [PATCH 07/10] sched/alt: Add memory barriers around atomics.
 
 ---
  kernel/sched/alt_core.c | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index 5e47ebfec..4d7a4e1e5 100644
+index 752680282..2eade9854 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -156,10 +156,12 @@ static sched_bitmask_t sched_rq_watermark[NR_CPUS] ____cacheline_aligned_in_smp;
@@ -629,11 +629,11 @@ index 5e47ebfec..4d7a4e1e5 100644
 2.35.1.354.g715d08a9e5
 
 
-From 99aed1cccdb8a5b26b9287e6e60c65d4d56c7f8e Mon Sep 17 00:00:00 2001
+From b5296443595622ffb2d8ed9bee25ef9f01c2c1d7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 16 Mar 2022 16:26:06 +0100
-Subject: [PATCH 8/9] Revert "alt_core.c: Add potentially missing assignment of
- p->on_cpu in sched_fork"
+Subject: [PATCH 08/10] Revert "alt_core.c: Add potentially missing assignment
+ of p->on_cpu in sched_fork"
 
 This reverts commit f6e10a04d0eab1ad33ac82ef36dd772baeb0a34c.
 
@@ -643,7 +643,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index 4d7a4e1e5..43aece4db 100644
+index 2eade9854..ef599106a 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
 @@ -3056,9 +3056,6 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
@@ -660,20 +660,20 @@ index 4d7a4e1e5..43aece4db 100644
 2.35.1.354.g715d08a9e5
 
 
-From 0d249a82022d95166961cd56addd41a8e402520b Mon Sep 17 00:00:00 2001
+From 1feb9cd8d87d57a91dc3f240f12df9a7b881b3ca Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Wed, 16 Mar 2022 11:03:49 +0100
-Subject: [PATCH 9/9] Add potentially missing assignment
+Subject: [PATCH 09/10] Add potentially missing assignment
 
 ---
  kernel/sched/alt_core.c | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
-index 43aece4db..42c6f3910 100644
+index ef599106a..175c9344f 100644
 --- a/kernel/sched/alt_core.c
 +++ b/kernel/sched/alt_core.c
-@@ -6689,6 +6689,7 @@ void __init init_idle(struct task_struct *idle, int cpu)
+@@ -6692,6 +6692,7 @@ void __init init_idle(struct task_struct *idle, int cpu)
  
  	rq->idle = idle;
  	rcu_assign_pointer(rq->curr, idle);
@@ -681,6 +681,37 @@ index 43aece4db..42c6f3910 100644
  	idle->on_cpu = 1;
  
  	raw_spin_unlock(&rq->lock);
+-- 
+2.35.1.354.g715d08a9e5
+
+
+From 67e7023d34fbd425932a9f53cc50665b9de9916f Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Thu, 17 Mar 2022 17:32:43 +0100
+Subject: [PATCH 10/10] Revert "Revert "alt_core.c: Add potentially missing
+ assignment of p->on_cpu in sched_fork""
+
+This reverts commit bd3050b86966f0df3eaaf001f1ddd7fc5e228f49.
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ kernel/sched/alt_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
+index 175c9344f..eda09ee3e 100644
+--- a/kernel/sched/alt_core.c
++++ b/kernel/sched/alt_core.c
+@@ -3056,6 +3056,9 @@ int sched_fork(unsigned long clone_flags, struct task_struct *p)
+ #ifdef CONFIG_SCHED_INFO
+ 	if (unlikely(sched_info_on()))
+ 		memset(&p->sched_info, 0, sizeof(p->sched_info));
++#endif
++#if defined(CONFIG_SMP)
++	p->on_cpu = 0;
+ #endif
+ 	init_task_preempt_count(p);
+ 
 -- 
 2.35.1.354.g715d08a9e5
 

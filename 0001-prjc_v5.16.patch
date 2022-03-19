@@ -1,6 +1,6 @@
-From 9e029ee904b973128ddae4b22e0bb73794c16743 Mon Sep 17 00:00:00 2001
+From 8012149fc395cd25ed287c1d9d40ba6187e0b45f Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Wed, 16 Mar 2022 17:19:11 +0100
+Date: Thu, 17 Mar 2022 17:30:49 +0100
 Subject: [PATCH] PRJC for 5.16
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -23,7 +23,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  kernel/exit.c                                 |    4 +-
  kernel/locking/rtmutex.c                      |   16 +-
  kernel/sched/Makefile                         |   19 +-
- kernel/sched/alt_core.c                       | 7676 +++++++++++++++++
+ kernel/sched/alt_core.c                       | 7671 +++++++++++++++++
  kernel/sched/alt_debug.c                      |   31 +
  kernel/sched/alt_sched.h                      |  662 ++
  kernel/sched/bmq.h                            |  111 +
@@ -42,7 +42,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  kernel/time/hrtimer.c                         |    2 +
  kernel/time/posix-cpu-timers.c                |   10 +-
  kernel/trace/trace_selftest.c                 |    5 +
- 37 files changed, 9020 insertions(+), 27 deletions(-)
+ 37 files changed, 9015 insertions(+), 27 deletions(-)
  create mode 100644 Documentation/scheduler/sched-BMQ.txt
  create mode 100644 kernel/sched/alt_core.c
  create mode 100644 kernel/sched/alt_debug.c
@@ -695,10 +695,10 @@ index c7421f2d0..9b32442ff 100644
  obj-$(CONFIG_CPU_FREQ_GOV_SCHEDUTIL) += cpufreq_schedutil.o
 diff --git a/kernel/sched/alt_core.c b/kernel/sched/alt_core.c
 new file mode 100644
-index 000000000..29f0c4c63
+index 000000000..aae8fd401
 --- /dev/null
 +++ b/kernel/sched/alt_core.c
-@@ -0,0 +1,7676 @@
+@@ -0,0 +1,7671 @@
 +/*
 + *  kernel/sched/alt_core.c
 + *
@@ -3726,12 +3726,7 @@ index 000000000..29f0c4c63
 +	raw_spin_unlock_irqrestore(&p->pi_lock, flags);
 +}
 +
-+void sched_post_fork(struct task_struct *p)
-+{
-+#ifdef CONFIG_UCLAMP_TASK
-+       uclamp_post_fork(p);
-+#endif
-+}
++void sched_post_fork(struct task_struct *p) { }
 +
 +#ifdef CONFIG_SCHEDSTATS
 +
