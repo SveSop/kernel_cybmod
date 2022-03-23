@@ -1,27 +1,43 @@
-From ff377184d5c52297f33c2a1f97cb9e51188d952c Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 19 Mar 2022 13:34:57 +0000
+From 259c74c0c8486f5c917990b86c3904e01e908499 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 23 Mar 2022 09:43:19 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 14701 +-------------------------------------
- 1 file changed, 3 insertions(+), 14698 deletions(-)
+ debian.master/changelog | 14717 +-------------------------------------
+ 1 file changed, 3 insertions(+), 14714 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 757e612997eb..0458329d45f2 100644
+index 4bc11409254c..f4ddf0ab13b3 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,14701 +1,6 @@
+@@ -1,14717 +1,6 @@
+-linux-unstable (5.17.0-6.6) jammy; urgency=medium
++linux (5.16.17-051617.202203230943) jammy; urgency=low
+ 
+-  * jammy/linux-unstable: 5.17.0-6.6 -proposed tracker (LP: #1965731)
++  Mainline build at commit: v5.16.17
+ 
+-  * dependency on crda obsolete according to Debian (LP: #1958918)
+-    - [Packaging] switch dependency from crda to wireless-regdb
++ -- Mainline Build <kernel@kathleen>  Wed, 23 Mar 2022 09:43:19 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Config] disable CONFIG_SYSFB_SIMPLEFB on amd64
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.17
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 21 Mar 2022 09:46:03 +0100
+-
 -linux-unstable (5.17.0-5.5) jammy; urgency=medium
-+linux (5.16.16-051616.202203191334) jammy; urgency=low
- 
+-
 -  * jammy/linux-unstable: 5.17.0-5.5 -proposed tracker (LP: #1964766)
-+  Mainline build at commit: v5.16.16
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] resync dkms-build{,--nvidia-N} from LRMv5
-+ -- Mainline Build <kernel@sita>  Sat, 19 Mar 2022 13:34:57 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Config] update configs and annotations after rebase to v5.17-rc8
 -
