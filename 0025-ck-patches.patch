@@ -1305,28 +1305,26 @@ Subject: [PATCH 8/8] clockevents, hrtimer: Make hrtimer granularity and
 
 Rebased-by: Alexandre Frade <kernel@xanmod.org>
 ---
- kernel/sysctl.c           | 22 ++++++++++++++++--
+ kernel/sysctl.c           | 21 +++++++++++++++++
  kernel/time/clockevents.c |  3 ++-
  kernel/time/hrtimer.c     | 49 +++++++++++++++++++++++++++++++++++----
- 3 files changed, 67 insertions(+), 7 deletions(-)
+ 3 files changed, 68 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 0667e6272..a81b52c06 100644
+index bedb7afed..ebd7bd713 100644
 --- a/kernel/sysctl.c
 +++ b/kernel/sysctl.c
-@@ -126,9 +126,9 @@ static int one_thousand = 1000;
- static int __maybe_unused zero = 0;
+@@ -100,6 +100,9 @@
  extern int sched_yield_type;
  #endif
--#ifdef CONFIG_PRINTK
- static int ten_thousand = 10000;
--#endif
+ 
 +extern int hrtimer_granularity_us;
 +extern int hrtimeout_min_us;
++
  #ifdef CONFIG_PERF_EVENTS
- static int six_hundred_forty_kb = 640 * 1024;
+ static const int six_hundred_forty_kb = 640 * 1024;
  #endif
-@@ -1789,6 +1789,24 @@ static struct ctl_table kern_table[] = {
+@@ -1677,6 +1680,24 @@ static struct ctl_table kern_table[] = {
  		.extra1		= SYSCTL_ZERO,
  		.extra2		= SYSCTL_ONE,
  	},

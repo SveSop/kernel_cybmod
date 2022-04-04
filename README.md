@@ -1,18 +1,19 @@
-## Cybmod patches for 5.16 kernel  
+## Cybmod patches for 5.17 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.16.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.16.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.17.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.17.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.16.18  
-0000 : ProjectC v5.16-r0  
-0002 : 5.16 Graysky's CPU optimization patches  
-0003 : v5.16-fsync1_futex_waitv  
+0000 : Patch 5.17.1  
+0000 : ProjectC v5.17-r0  
+0002 : 5.17 Graysky's CPU optimization patches  
+0003 : v5.17-fsync1_futex_waitv  
 0004 : hwmon driver for Asus (WMI) motherboards  
 0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0006 : zstd kernel settings  
 0007 : Block config settings  
 0008 : ProjectC Scheduler fixes  
+0009 : Add MG LRU patch  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
 0020 : Clearlinux patches  
@@ -21,10 +22,8 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0023 : mm: LRU patchset  
 0024 : zstd upstream patches  
 0025 : -ck picked patches  
-0026 : various net/TCP patches  
-0027 : LRNG kernel patches  
-0028 : BBR2 patchset  
-0029 : Bitmap patches  
+0026 : LRNG kernel patches  
+0027 : BBR2 patchset  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
@@ -33,13 +32,11 @@ ubuntu : Ubuntu mainline kernel patchset
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
 **This config has default Project C - PDS scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE + Fsync_waitv (backwards compatible)**  
 
-**OBS! If using nVidia proprietary driver you need 455.45.01 (or newer), or 455.46.02 (or newer vulkan beta)**  
-
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.16.tar.xz    
-cd linux-5.16  
+tar xf linux-5.17.tar.xz    
+cd linux-5.17  
 /path/to/patches/and/cybmod_patch.sh  
 make -j12 deb-pkg # -j depending on your processor cores  
 ```

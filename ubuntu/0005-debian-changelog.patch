@@ -1,6 +1,6 @@
-From 62771311fe421c39b73c45c1713d1da98916bcbb Mon Sep 17 00:00:00 2001
+From a9631f6653e9fc474bde074592fb3de9b4e0cef4 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Mon, 28 Mar 2022 09:52:30 +0000
+Date: Mon, 28 Mar 2022 09:50:40 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 14714 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 4bc11409254c..df3a8f62a891 100644
+index 4bc11409254c..4c247874d015 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,14717 +1,6 @@
 -linux-unstable (5.17.0-6.6) jammy; urgency=medium
-+linux (5.16.18-051618.202203280952) jammy; urgency=low
++linux (5.17.1-051701.202203280950) jammy; urgency=low
  
 -  * jammy/linux-unstable: 5.17.0-6.6 -proposed tracker (LP: #1965731)
-+  Mainline build at commit: v5.16.18
++  Mainline build at commit: v5.17.1
  
 -  * dependency on crda obsolete according to Debian (LP: #1958918)
 -    - [Packaging] switch dependency from crda to wireless-regdb
-+ -- Mainline Build <kernel@kathleen>  Mon, 28 Mar 2022 09:52:30 +0000
++ -- Mainline Build <kernel@kathleen>  Mon, 28 Mar 2022 09:50:40 +0000
  
 -  * Miscellaneous Ubuntu changes
 -    - [Config] disable CONFIG_SYSFB_SIMPLEFB on amd64

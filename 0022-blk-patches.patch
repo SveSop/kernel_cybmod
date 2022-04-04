@@ -1,4 +1,4 @@
-From 0222ed7356247a9c375c7000cc189731fe1daf91 Mon Sep 17 00:00:00 2001
+From 29c2b5926b833d58d825294f94613dbe6a3b5c33 Mon Sep 17 00:00:00 2001
 From: "Wang Jianchao (Kuaishou)" <jianchao.wan9 () gmail ! com>
 Date: Thu, 17 Feb 2022 03:13:44 +0000
 Subject: [PATCH 1/6] blk: prepare to make blk-rq-qos pluggable and modular
@@ -34,10 +34,10 @@ Signed-off-by: Wang Jianchao (Kuaishou) <jianchao.wan9@gmail.com>
  4 files changed, 348 insertions(+), 5 deletions(-)
 
 diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index 4f2cf8399..956ffab68 100644
+index 3a790eb49..8b6d557e1 100644
 --- a/block/blk-mq-debugfs.c
 +++ b/block/blk-mq-debugfs.c
-@@ -726,7 +726,10 @@ void blk_mq_debugfs_register(struct request_queue *q)
+@@ -729,7 +729,10 @@ void blk_mq_debugfs_register(struct request_queue *q)
  
  	if (q->rq_qos) {
  		struct rq_qos *rqos = q->rq_qos;
@@ -49,7 +49,7 @@ index 4f2cf8399..956ffab68 100644
  		while (rqos) {
  			blk_mq_debugfs_register_rqos(rqos);
  			rqos = rqos->next;
-@@ -841,7 +844,9 @@ void blk_mq_debugfs_unregister_rqos(struct rq_qos *rqos)
+@@ -844,7 +847,9 @@ void blk_mq_debugfs_unregister_rqos(struct rq_qos *rqos)
  void blk_mq_debugfs_register_rqos(struct rq_qos *rqos)
  {
  	struct request_queue *q = rqos->q;
@@ -463,10 +463,10 @@ index 3cfbc8668..586c3f5ec 100644
  typedef void (cleanup_cb_t)(struct rq_wait *rqw, void *private_data);
  
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index d73887c80..60b0db0f0 100644
+index 16b47035e..ab7ecc9e3 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
-@@ -43,6 +43,10 @@ struct blk_crypto_profile;
+@@ -44,6 +44,10 @@ struct blk_crypto_profile;
   * Defined here to simplify include dependency.
   */
  #define BLKCG_MAX_POLS		6
@@ -475,13 +475,13 @@ index d73887c80..60b0db0f0 100644
 + */
 +#define BLKCG_NON_RQOS_POLS		2
  
- static inline int blk_validate_block_size(unsigned int bsize)
+ static inline int blk_validate_block_size(unsigned long bsize)
  {
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From 6de3ab05a1b3eb1e56c6473e5ed54e0acd106313 Mon Sep 17 00:00:00 2001
+From 81ea92efda99371e1eba74575ff1f96d41a20956 Mon Sep 17 00:00:00 2001
 From: "Wang Jianchao (Kuaishou)" <jianchao.wan9 () gmail ! com>
 Date: Thu, 17 Feb 2022 03:13:45 +0000
 Subject: [PATCH 2/6] blk-wbt: make wbt pluggable
@@ -500,10 +500,10 @@ Signed-off-by: Wang Jianchao (Kuaishou) <jianchao.wan9@gmail.com>
  4 files changed, 49 insertions(+), 16 deletions(-)
 
 diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index 956ffab68..4473cde4c 100644
+index 8b6d557e1..a5d78b094 100644
 --- a/block/blk-mq-debugfs.c
 +++ b/block/blk-mq-debugfs.c
-@@ -823,8 +823,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
+@@ -826,8 +826,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
  static const char *rq_qos_id_to_name(enum rq_qos_id id)
  {
  	switch (id) {
@@ -699,10 +699,10 @@ index 2eb01becd..e0d051cb0 100644
  {
  }
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From b25c3621b629d15fdc37d1acc0426e93b1ba3caa Mon Sep 17 00:00:00 2001
+From dc642280b3a5581c96b3129090a38de94785dfb0 Mon Sep 17 00:00:00 2001
 From: "Wang Jianchao (Kuaishou)" <jianchao.wan9 () gmail ! com>
 Date: Thu, 17 Feb 2022 03:13:46 +0000
 Subject: [PATCH 3/6] blk-iolatency: make iolatency pluggable
@@ -720,10 +720,10 @@ Signed-off-by: Wang Jianchao (Kuaishou) <jianchao.wan9@gmail.com>
  5 files changed, 26 insertions(+), 28 deletions(-)
 
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 663aabfeb..9739107d0 100644
+index 650f7e279..3ae2aa557 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -1202,12 +1202,6 @@ int blkcg_init_queue(struct request_queue *q)
+@@ -1203,12 +1203,6 @@ int blkcg_init_queue(struct request_queue *q)
  	if (ret)
  		goto err_destroy_all;
  
@@ -817,10 +817,10 @@ index 6593c7123..a8a201d6d 100644
  
  module_init(iolatency_init);
 diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index 4473cde4c..d43adc2e9 100644
+index a5d78b094..918870b8d 100644
 --- a/block/blk-mq-debugfs.c
 +++ b/block/blk-mq-debugfs.c
-@@ -823,8 +823,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
+@@ -826,8 +826,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
  static const char *rq_qos_id_to_name(enum rq_qos_id id)
  {
  	switch (id) {
@@ -854,10 +854,10 @@ index 171a83d6d..2a919db52 100644
  {
  	atomic_set(&rq_wait->inflight, 0);
 diff --git a/block/blk.h b/block/blk.h
-index ccde6e6f1..e2e4fbb9a 100644
+index 8bd43b3ad..1a314257b 100644
 --- a/block/blk.h
 +++ b/block/blk.h
-@@ -436,12 +436,6 @@ static inline void blk_queue_bounce(struct request_queue *q, struct bio **bio)
+@@ -400,12 +400,6 @@ static inline void blk_queue_bounce(struct request_queue *q, struct bio **bio)
  		__blk_queue_bounce(q, bio);	
  }
  
@@ -871,10 +871,10 @@ index ccde6e6f1..e2e4fbb9a 100644
  
  #ifdef CONFIG_BLK_DEV_ZONED
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From 93e03c74bc1840f3d4b97ce00e4d71e4abb20c3f Mon Sep 17 00:00:00 2001
+From 0b30f12fc3ac45500ed5ae8b584e8b8155e7b4f2 Mon Sep 17 00:00:00 2001
 From: "Wang Jianchao (Kuaishou)" <jianchao.wan9 () gmail ! com>
 Date: Thu, 17 Feb 2022 03:13:47 +0000
 Subject: [PATCH 4/6] blk-iocost: make iocost pluggable
@@ -1032,10 +1032,10 @@ index 769b64394..5a3a45985 100644
  
  module_init(ioc_init);
 diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index d43adc2e9..921fd4bc0 100644
+index 918870b8d..45da42e9e 100644
 --- a/block/blk-mq-debugfs.c
 +++ b/block/blk-mq-debugfs.c
-@@ -823,8 +823,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
+@@ -826,8 +826,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
  static const char *rq_qos_id_to_name(enum rq_qos_id id)
  {
  	switch (id) {
@@ -1057,10 +1057,10 @@ index 2a919db52..6d691527c 100644
  };
  
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From 049193f6bbc8bc04be40ae69611ae320e479968e Mon Sep 17 00:00:00 2001
+From 80bf4f835b89a96e34eb017cac32172754bf7239 Mon Sep 17 00:00:00 2001
 From: "Wang Jianchao (Kuaishou)" <jianchao.wan9 () gmail ! com>
 Date: Thu, 17 Feb 2022 03:13:48 +0000
 Subject: [PATCH 5/6] blk-ioprio: make ioprio pluggable and modular
@@ -1083,10 +1083,10 @@ Signed-off-by: Wang Jianchao (Kuaishou) <jianchao.wan9@gmail.com>
  delete mode 100644 block/blk-ioprio.h
 
 diff --git a/block/Kconfig b/block/Kconfig
-index c6ce41a5e..f6b964172 100644
+index d5d4197b7..9cc8e4688 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
-@@ -142,7 +142,7 @@ config BLK_CGROUP_IOCOST
+@@ -145,7 +145,7 @@ config BLK_CGROUP_IOCOST
  	their share of the overall weight distribution.
  
  config BLK_CGROUP_IOPRIO
@@ -1096,18 +1096,18 @@ index c6ce41a5e..f6b964172 100644
  	help
  	Enable the .prio interface for assigning an I/O priority class to
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 9739107d0..c157d8a13 100644
+index 3ae2aa557..f617f7ba3 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -31,7 +31,6 @@
- #include <linux/tracehook.h>
+@@ -32,7 +32,6 @@
  #include <linux/psi.h>
+ #include <linux/part_stat.h>
  #include "blk.h"
 -#include "blk-ioprio.h"
  #include "blk-throttle.h"
  
  /*
-@@ -1194,10 +1193,6 @@ int blkcg_init_queue(struct request_queue *q)
+@@ -1195,10 +1194,6 @@ int blkcg_init_queue(struct request_queue *q)
  	if (preloaded)
  		radix_tree_preload_end();
  
@@ -1119,7 +1119,7 @@ index 9739107d0..c157d8a13 100644
  	if (ret)
  		goto err_destroy_all;
 diff --git a/block/blk-ioprio.c b/block/blk-ioprio.c
-index 332a07761..c19e179cf 100644
+index 2e7f10e1c..1ec56f617 100644
 --- a/block/blk-ioprio.c
 +++ b/block/blk-ioprio.c
 @@ -17,7 +17,6 @@
@@ -1130,7 +1130,7 @@ index 332a07761..c19e179cf 100644
  #include "blk-rq-qos.h"
  
  /**
-@@ -209,15 +208,24 @@ static void blkcg_ioprio_exit(struct rq_qos *rqos)
+@@ -216,15 +215,24 @@ static void blkcg_ioprio_exit(struct rq_qos *rqos)
  		container_of(rqos, typeof(*blkioprio_blkg), rqos);
  
  	blkcg_deactivate_policy(rqos->q, &ioprio_policy);
@@ -1156,7 +1156,7 @@ index 332a07761..c19e179cf 100644
  {
  	struct blk_ioprio *blkioprio_blkg;
  	struct rq_qos *rqos;
-@@ -227,36 +235,45 @@ int blk_ioprio_init(struct request_queue *q)
+@@ -234,36 +242,45 @@ int blk_ioprio_init(struct request_queue *q)
  	if (!blkioprio_blkg)
  		return -ENOMEM;
  
@@ -1243,10 +1243,10 @@ index a7785c2f1..000000000
 -
 -#endif /* _BLK_IOPRIO_H_ */
 diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index 921fd4bc0..a209572fc 100644
+index 45da42e9e..cbbd66802 100644
 --- a/block/blk-mq-debugfs.c
 +++ b/block/blk-mq-debugfs.c
-@@ -822,10 +822,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
+@@ -825,10 +825,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
  
  static const char *rq_qos_id_to_name(enum rq_qos_id id)
  {
@@ -1284,10 +1284,10 @@ index 6d691527c..bba829bbb 100644
  
  struct rq_wait {
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 
 
-From 589756e8495cbde0346fc1a544e92e41f3001da5 Mon Sep 17 00:00:00 2001
+From 2b3b42f5bf0622a2b843d97b46717653b3c626e9 Mon Sep 17 00:00:00 2001
 From: "Wang Jianchao (Kuaishou)" <jianchao.wan9 () gmail ! com>
 Date: Thu, 17 Feb 2022 03:13:49 +0000
 Subject: [PATCH 6/6] blk: export the sysfs for switching qos
@@ -1304,10 +1304,10 @@ Signed-off-by: Wang Jianchao (Kuaishou) <jianchao.wan9@gmail.com>
  3 files changed, 4 insertions(+), 71 deletions(-)
 
 diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index a209572fc..6fb20b24f 100644
+index cbbd66802..3defd5cb1 100644
 --- a/block/blk-mq-debugfs.c
 +++ b/block/blk-mq-debugfs.c
-@@ -820,11 +820,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
+@@ -823,11 +823,6 @@ void blk_mq_debugfs_unregister_sched(struct request_queue *q)
  	q->sched_debugfs_dir = NULL;
  }
  
@@ -1319,7 +1319,7 @@ index a209572fc..6fb20b24f 100644
  void blk_mq_debugfs_unregister_rqos(struct rq_qos *rqos)
  {
  	debugfs_remove_recursive(rqos->debugfs_dir);
-@@ -834,9 +829,6 @@ void blk_mq_debugfs_unregister_rqos(struct rq_qos *rqos)
+@@ -837,9 +832,6 @@ void blk_mq_debugfs_unregister_rqos(struct rq_qos *rqos)
  void blk_mq_debugfs_register_rqos(struct rq_qos *rqos)
  {
  	struct request_queue *q = rqos->q;
@@ -1329,7 +1329,7 @@ index a209572fc..6fb20b24f 100644
  
  	if (rqos->debugfs_dir || !rqos->ops->debugfs_attrs)
  		return;
-@@ -845,7 +837,7 @@ void blk_mq_debugfs_register_rqos(struct rq_qos *rqos)
+@@ -848,7 +840,7 @@ void blk_mq_debugfs_register_rqos(struct rq_qos *rqos)
  		q->rqos_debugfs_dir = debugfs_create_dir("rqos",
  							 q->debugfs_dir);
  
@@ -1434,10 +1434,10 @@ index bba829bbb..262d22179 100644
  void rq_qos_unregister(struct rq_qos_ops *ops);
  void rq_qos_activate(struct request_queue *q,
 diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index cd75b0f73..91f980985 100644
+index 9f32882ce..c02747db4 100644
 --- a/block/blk-sysfs.c
 +++ b/block/blk-sysfs.c
-@@ -573,6 +573,7 @@ QUEUE_RO_ENTRY(queue_max_segments, "max_segments");
+@@ -574,6 +574,7 @@ QUEUE_RO_ENTRY(queue_max_segments, "max_segments");
  QUEUE_RO_ENTRY(queue_max_integrity_segments, "max_integrity_segments");
  QUEUE_RO_ENTRY(queue_max_segment_size, "max_segment_size");
  QUEUE_RW_ENTRY(elv_iosched, "scheduler");
@@ -1445,7 +1445,7 @@ index cd75b0f73..91f980985 100644
  
  QUEUE_RO_ENTRY(queue_logical_block_size, "logical_block_size");
  QUEUE_RO_ENTRY(queue_physical_block_size, "physical_block_size");
-@@ -632,6 +633,7 @@ static struct attribute *queue_attrs[] = {
+@@ -633,6 +634,7 @@ static struct attribute *queue_attrs[] = {
  	&queue_max_integrity_segments_entry.attr,
  	&queue_max_segment_size_entry.attr,
  	&elv_iosched_entry.attr,
@@ -1454,5 +1454,5 @@ index cd75b0f73..91f980985 100644
  	&queue_logical_block_size_entry.attr,
  	&queue_physical_block_size_entry.attr,
 -- 
-2.35.1.129.gb80121027d
+2.35.1.354.g715d08a9e5
 

@@ -1,6 +1,6 @@
-From b65ad57ce36714d9dcfdf7ff3424bce236fa96a9 Mon Sep 17 00:00:00 2001
+From 553c29f02eb8d11d5fa55ce797dca3611c77368e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Tue, 18 Jan 2022 16:14:37 +0100
+Date: Mon, 4 Apr 2022 16:10:29 +0200
 Subject: [PATCH] Tweaks
 
 ---
@@ -26,10 +26,10 @@ Subject: [PATCH] Tweaks
  19 files changed, 37 insertions(+), 55 deletions(-)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index a83fb04e9..e90a0a9d7 100644
+index 359c1b8ab..7ac17826c 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -1990,6 +1990,9 @@
+@@ -1999,6 +1999,9 @@
  			disable
  			  Do not enable intel_pstate as the default
  			  scaling driver for the supported processors
@@ -60,7 +60,7 @@ index c3038cdc6..ac0db6b81 100644
  	select CPU_FREQ_GOV_PERFORMANCE
  	help
 diff --git a/drivers/cpufreq/cpufreq_conservative.c b/drivers/cpufreq/cpufreq_conservative.c
-index 0879ec3c1..73c152fa3 100644
+index 08515f7e5..30b3ca360 100644
 --- a/drivers/cpufreq/cpufreq_conservative.c
 +++ b/drivers/cpufreq/cpufreq_conservative.c
 @@ -28,8 +28,8 @@ struct cs_dbs_tuners {
@@ -87,7 +87,7 @@ index 0879ec3c1..73c152fa3 100644
   *
   * Frequency updates happen at minimum steps of 5% (default) of maximum
 diff --git a/drivers/cpufreq/cpufreq_ondemand.c b/drivers/cpufreq/cpufreq_ondemand.c
-index 3b8f92477..3440b6e25 100644
+index 6a41ea472..ef8e32929 100644
 --- a/drivers/cpufreq/cpufreq_ondemand.c
 +++ b/drivers/cpufreq/cpufreq_ondemand.c
 @@ -18,10 +18,10 @@
@@ -114,10 +114,10 @@ index 3b8f92477..3440b6e25 100644
   * proportional to load.
   */
 diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index dec2a5649..0a0806676 100644
+index bc7f7e675..bcef5a16b 100644
 --- a/drivers/cpufreq/intel_pstate.c
 +++ b/drivers/cpufreq/intel_pstate.c
-@@ -3479,6 +3479,8 @@ static int __init intel_pstate_setup(char *str)
+@@ -3520,6 +3520,8 @@ static int __init intel_pstate_setup(char *str)
  	if (!strcmp(str, "no_hwp"))
  		no_hwp = 1;
  
@@ -151,7 +151,7 @@ index 812116d48..cc30ff93e 100644
  	bool
  	depends on VT
 diff --git a/fs/dcache.c b/fs/dcache.c
-index cf871a81f..38ec53b50 100644
+index c84269c6e..13f00e293 100644
 --- a/fs/dcache.c
 +++ b/fs/dcache.c
 @@ -71,7 +71,7 @@
@@ -164,7 +164,7 @@ index cf871a81f..38ec53b50 100644
  
  __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
 diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 18d6b15f0..ca00449e8 100644
+index 1d30f8e19..e474d26d7 100644
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
 @@ -195,8 +195,7 @@ static inline void __mm_zero_struct_page(struct page *page)
@@ -178,10 +178,10 @@ index 18d6b15f0..ca00449e8 100644
  extern int sysctl_max_map_count;
  
 diff --git a/include/linux/pagemap.h b/include/linux/pagemap.h
-index d150a9082..7425d1949 100644
+index 270bf5136..dd5ae5624 100644
 --- a/include/linux/pagemap.h
 +++ b/include/linux/pagemap.h
-@@ -996,7 +996,7 @@ struct readahead_control {
+@@ -1024,7 +1024,7 @@ struct readahead_control {
  		._index = i,						\
  	}
  
@@ -222,10 +222,10 @@ index 3bceead8d..f249cb66a 100644
  		   consoles 16 and higher (since it returns a short) */
  
 diff --git a/init/Kconfig b/init/Kconfig
-index fdd5074b6..022d4b655 100644
+index 17a309c65..f162e6515 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -843,7 +843,7 @@ if SCHED_ALT
+@@ -887,7 +887,7 @@ if SCHED_ALT
  
  choice
  	prompt "Alternative CPU Scheduler"
@@ -234,7 +234,7 @@ index fdd5074b6..022d4b655 100644
  
  config SCHED_BMQ
  	bool "BMQ CPU scheduler"
-@@ -856,7 +856,9 @@ config SCHED_PDS
+@@ -900,7 +900,9 @@ config SCHED_PDS
  	bool "PDS CPU scheduler"
  	help
  	  The Priority and Deadline based Skip list multiple queue CPU
@@ -272,10 +272,10 @@ index 3cccf8caa..050d86a15 100644
  config PREEMPT_NONE
  	bool "No Forced Preemption (Server)"
 diff --git a/kernel/rcu/Kconfig b/kernel/rcu/Kconfig
-index 3128b7cf8..abfae9afb 100644
+index bf8e341e7..ee57e7865 100644
 --- a/kernel/rcu/Kconfig
 +++ b/kernel/rcu/Kconfig
-@@ -189,8 +189,8 @@ config RCU_FAST_NO_HZ
+@@ -171,8 +171,8 @@ config RCU_FANOUT_LEAF
  
  config RCU_BOOST
  	bool "Enable RCU priority boosting"
@@ -286,7 +286,7 @@ index 3128b7cf8..abfae9afb 100644
  	help
  	  This option boosts the priority of preempted RCU readers that
  	  block the current preemptible RCU grace period for too long.
-@@ -204,7 +204,7 @@ config RCU_BOOST_DELAY
+@@ -186,7 +186,7 @@ config RCU_BOOST_DELAY
  	int "Milliseconds to delay boosting after RCU grace-period start"
  	range 0 3000
  	depends on RCU_BOOST
@@ -296,7 +296,7 @@ index 3128b7cf8..abfae9afb 100644
  	  This option specifies the time to wait after the beginning of
  	  a given grace period before priority-boosting preempted RCU
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 268b869d3..6872b74c1 100644
+index ecf0cdce8..829ff77d6 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -77,7 +77,7 @@ __read_mostly int sysctl_resched_latency_warn_once = 1;
@@ -308,7 +308,7 @@ index 268b869d3..6872b74c1 100644
  #endif
  
  /*
-@@ -370,9 +370,9 @@ static inline void sched_core_dequeue(struct rq *rq, struct task_struct *p) { }
+@@ -381,9 +381,9 @@ sched_core_dequeue(struct rq *rq, struct task_struct *p, int flags) { }
  
  /*
   * part of the period that we allow rt tasks to run in us.
@@ -321,7 +321,7 @@ index 268b869d3..6872b74c1 100644
  
  /*
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 5e14e3205..137ba5da1 100644
+index 14b89aa37..d0935f939 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -190,7 +190,7 @@ config DYNAMIC_DEBUG_CORE
@@ -343,10 +343,10 @@ index 5e14e3205..137ba5da1 100644
  	  Say Y here to make BUG() panics output the file name and line number
  	  of the BUG call as well as the EIP and oops trace.  This aids
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 4e63cd9ff..8c695b915 100644
+index ba517c3f0..8b8598563 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -341,7 +341,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
+@@ -344,7 +344,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {
  int min_free_kbytes = 1024;
  int user_min_free_kbytes = -1;
  int watermark_boost_factor __read_mostly;
@@ -356,10 +356,10 @@ index 4e63cd9ff..8c695b915 100644
  static unsigned long nr_kernel_pages __initdata;
  static unsigned long nr_all_pages __initdata;
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 352d7a261..5a0589ca2 100644
+index 5a3f2dd5d..bb5ff45f5 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -199,7 +199,7 @@ unsigned long sysctl_clean_min_kbytes __read_mostly = CONFIG_CLEAN_MIN_KBYTES;
+@@ -198,7 +198,7 @@ unsigned long sysctl_clean_min_kbytes __read_mostly = CONFIG_CLEAN_MIN_KBYTES;
  /*
   * From 0 .. 200.  Higher means more swappy.
   */
