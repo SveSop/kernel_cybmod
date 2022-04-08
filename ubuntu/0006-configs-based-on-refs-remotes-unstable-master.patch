@@ -1,6 +1,6 @@
-From b7f06eda229a5547a3a12cc533dfda4701b5f77c Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Mon, 28 Mar 2022 09:51:18 +0000
+From 1910460d2a594827025a904629eac191eeafbd1f Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Fri, 8 Apr 2022 13:39:27 +0000
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
 
 ---
@@ -8,13 +8,13 @@ Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
  .../config/arm64/config.common.arm64          |  2 +-
  .../config/arm64/config.flavour.generic       |  2 +-
  .../config/armhf/config.common.armhf          |  2 +-
- debian.master/config/config.common.ubuntu     | 27 +++++--------------
+ debian.master/config/config.common.ubuntu     | 28 +++++--------------
  .../config/ppc64el/config.common.ppc64el      |  2 +-
  .../config/s390x/config.common.s390x          |  2 +-
- 7 files changed, 12 insertions(+), 27 deletions(-)
+ 7 files changed, 13 insertions(+), 27 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 2c885fe163cc..8e01716a30e7 100644
+index 2c885fe163cc..cbd9e9bfb83c 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -57,7 +57,7 @@ CONFIG_CADENCE_WATCHDOG=m
@@ -22,7 +22,7 @@ index 2c885fe163cc..8e01716a30e7 100644
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
 -CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-18ubuntu1) 11.2.0"
++CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CMA is not set
  CONFIG_CMDLINE_PARTITION=y
@@ -64,7 +64,7 @@ index 6d830cccd8e6..aafef697e520 100644
  CONFIG_CMA=y
  CONFIG_CMDLINE=""
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index c709acfc6e17..4c4651d1cfb5 100644
+index c709acfc6e17..95bf98c836d1 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -307,10 +307,7 @@ CONFIG_AMD_XGBE_HAVE_ECC=y
@@ -156,7 +156,15 @@ index c709acfc6e17..4c4651d1cfb5 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
-@@ -7586,7 +7578,6 @@ CONFIG_PAGE_SIZE_LESS_THAN_64KB=y
+@@ -7001,6 +6993,7 @@ CONFIG_NET_DSA_MV88E6060=m
+ CONFIG_NET_DSA_MV88E6XXX=m
+ CONFIG_NET_DSA_MV88E6XXX_PTP=y
+ CONFIG_NET_DSA_QCA8K=m
++CONFIG_NET_DSA_REALTEK=m
+ CONFIG_NET_DSA_REALTEK_SMI=m
+ CONFIG_NET_DSA_SJA1105=m
+ CONFIG_NET_DSA_SJA1105_PTP=y
+@@ -7586,7 +7579,6 @@ CONFIG_PAGE_SIZE_LESS_THAN_64KB=y
  # CONFIG_PAGE_TABLE_CHECK is not set
  CONFIG_PAGE_TABLE_ISOLATION=y
  CONFIG_PAHOLE_HAS_SPLIT_BTF=y
@@ -164,7 +172,7 @@ index c709acfc6e17..4c4651d1cfb5 100644
  CONFIG_PALMAS_GPADC=m
  CONFIG_PANASONIC_LAPTOP=m
  CONFIG_PANEL=m
-@@ -9496,7 +9487,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+@@ -9496,7 +9488,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
  CONFIG_SECURITY_PATH=y
@@ -172,7 +180,7 @@ index c709acfc6e17..4c4651d1cfb5 100644
  CONFIG_SECURITY_SAFESETID=y
  CONFIG_SECURITY_SELINUX=y
  CONFIG_SECURITY_SELINUX_AVC_STATS=y
-@@ -9521,7 +9511,6 @@ CONFIG_SELECT_MEMORY_MODEL=y
+@@ -9521,7 +9512,6 @@ CONFIG_SELECT_MEMORY_MODEL=y
  CONFIG_SENSEAIR_SUNRISE_CO2=m
  CONFIG_SENSIRION_SGP30=m
  CONFIG_SENSIRION_SGP40=m
@@ -180,7 +188,7 @@ index c709acfc6e17..4c4651d1cfb5 100644
  CONFIG_SENSORS_ABITUGURU=m
  CONFIG_SENSORS_ABITUGURU3=m
  CONFIG_SENSORS_ACPI_POWER=m
-@@ -9895,8 +9884,6 @@ CONFIG_SGI_XP=m
+@@ -9895,8 +9885,6 @@ CONFIG_SGI_XP=m
  CONFIG_SGL_ALLOC=y
  CONFIG_SG_POOL=y
  CONFIG_SG_SPLIT=y
@@ -189,7 +197,7 @@ index c709acfc6e17..4c4651d1cfb5 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -9938,6 +9925,7 @@ CONFIG_SLIP_COMPRESSED=y
+@@ -9938,6 +9926,7 @@ CONFIG_SLIP_COMPRESSED=y
  CONFIG_SLIP_MODE_SLIP6=y
  CONFIG_SLIP_SMART=y
  # CONFIG_SLOB is not set
@@ -197,7 +205,7 @@ index c709acfc6e17..4c4651d1cfb5 100644
  CONFIG_SLUB=y
  CONFIG_SLUB_CPU_PARTIAL=y
  CONFIG_SLUB_DEBUG=y
-@@ -11609,8 +11597,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
+@@ -11609,8 +11598,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
  CONFIG_UBSAN_SHIFT=y
  # CONFIG_UBSAN_TRAP is not set
  # CONFIG_UBSAN_UNREACHABLE is not set
@@ -206,7 +214,7 @@ index c709acfc6e17..4c4651d1cfb5 100644
  CONFIG_UCB1400_CORE=m
  CONFIG_UCC=y
  CONFIG_UCC_FAST=y
-@@ -12184,7 +12170,6 @@ CONFIG_VDSO=y
+@@ -12184,7 +12171,6 @@ CONFIG_VDSO=y
  CONFIG_VDSO32=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m

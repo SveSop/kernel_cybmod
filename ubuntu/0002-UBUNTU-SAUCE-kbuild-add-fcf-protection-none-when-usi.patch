@@ -1,4 +1,4 @@
-From b1c9ac7cf90353afd72074be33f9a675755f25ee Mon Sep 17 00:00:00 2001
+From 6e665a9a53a6530771a313bd99ec911471d2d0ce Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Sun, 7 Jul 2019 21:37:43 -0500
 Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
@@ -19,7 +19,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 34f9f5a9457a..a7d83673d4c9 100644
+index 06d852cad74f..fc57d3f54fed 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -899,6 +899,12 @@ KBUILD_LDFLAGS += -mllvm -import-instr-limit=5
