@@ -1,6 +1,6 @@
-From 1910460d2a594827025a904629eac191eeafbd1f Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 8 Apr 2022 13:39:27 +0000
+From f6a218ea3564d2c2e53199577929e02e173a499c Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 13 Apr 2022 18:54:00 +0000
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
 
 ---
