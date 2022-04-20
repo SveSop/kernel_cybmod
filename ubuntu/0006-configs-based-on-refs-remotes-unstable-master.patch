@@ -1,44 +1,27 @@
-From f6a218ea3564d2c2e53199577929e02e173a499c Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 13 Apr 2022 18:54:00 +0000
+From afac96bf394af5f85b7390268c9f8d2263e4f1b9 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 20 Apr 2022 08:43:11 +0000
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
 
 ---
  .../config/amd64/config.common.amd64          |  2 +-
- .../config/arm64/config.common.arm64          |  2 +-
  .../config/arm64/config.flavour.generic       |  2 +-
- .../config/armhf/config.common.armhf          |  2 +-
- debian.master/config/config.common.ubuntu     | 28 +++++--------------
- .../config/ppc64el/config.common.ppc64el      |  2 +-
- .../config/s390x/config.common.s390x          |  2 +-
- 7 files changed, 13 insertions(+), 27 deletions(-)
+ debian.master/config/config.common.ubuntu     | 21 ++-----------------
+ 3 files changed, 4 insertions(+), 21 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 2c885fe163cc..cbd9e9bfb83c 100644
+index 8e01716a30e7..cbd9e9bfb83c 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -57,7 +57,7 @@ CONFIG_CADENCE_WATCHDOG=m
  CONFIG_CAIF=m
  CONFIG_CAN=m
  CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
+-CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-18ubuntu1) 11.2.0"
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.2.0-19ubuntu1) 11.2.0"
  CONFIG_CDROM_PKTCDVD=m
  # CONFIG_CMA is not set
  CONFIG_CMDLINE_PARTITION=y
-diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index 11eb91570b19..7ec56b65af30 100644
---- a/debian.master/config/arm64/config.common.arm64
-+++ b/debian.master/config/arm64/config.common.arm64
-@@ -58,7 +58,7 @@ CONFIG_CADENCE_WATCHDOG=m
- CONFIG_CAIF=m
- CONFIG_CAN=m
- CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 11.2.0-17ubuntu1) 11.2.0"
- CONFIG_CDROM_PKTCDVD=m
- CONFIG_CMA=y
- CONFIG_CMDLINE="console=ttyAMA0"
 diff --git a/debian.master/config/arm64/config.flavour.generic b/debian.master/config/arm64/config.flavour.generic
 index d6e3ffa1d269..b7e35f458cc2 100644
 --- a/debian.master/config/arm64/config.flavour.generic
@@ -50,21 +33,8 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 -CONFIG_FORCE_MAX_ZONEORDER=13
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
-diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index 6d830cccd8e6..aafef697e520 100644
---- a/debian.master/config/armhf/config.common.armhf
-+++ b/debian.master/config/armhf/config.common.armhf
-@@ -54,7 +54,7 @@ CONFIG_CADENCE_WATCHDOG=m
- CONFIG_CAIF=m
- CONFIG_CAN=m
- CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 11.2.0-17ubuntu1) 11.2.0"
- CONFIG_CDROM_PKTCDVD=m
- CONFIG_CMA=y
- CONFIG_CMDLINE=""
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index c709acfc6e17..95bf98c836d1 100644
+index 7f6c86aa69e6..fab4fe9e7b84 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -307,10 +307,7 @@ CONFIG_AMD_XGBE_HAVE_ECC=y
@@ -88,24 +58,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_ASM_MODVERSIONS=y
  CONFIG_ASN1=y
  CONFIG_ASN1_ENCODER=y
-@@ -903,7 +900,7 @@ CONFIG_AS_IS_GNU=y
- CONFIG_AS_SHA1_NI=y
- CONFIG_AS_SHA256_NI=y
- CONFIG_AS_TPAUSE=y
--CONFIG_AS_VERSION=23790
-+CONFIG_AS_VERSION=23800
- CONFIG_AS_VFP_VMRS_FPINST=y
- CONFIG_AT76C50X_USB=m
- CONFIG_AT803X_PHY=m
-@@ -1559,6 +1556,7 @@ CONFIG_CC_HAS_NO_PROFILE_FN_ATTR=y
- CONFIG_CC_HAS_SANCOV_TRACE_PC=y
- CONFIG_CC_HAS_SANE_STACKPROTECTOR=y
- CONFIG_CC_HAS_SIGN_RETURN_ADDRESS=y
-+CONFIG_CC_HAS_SLS=y
- CONFIG_CC_HAS_UBSAN_BOUNDS=y
- CONFIG_CC_HAS_WORKING_NOSANITIZE_ADDRESS=y
- CONFIG_CC_HAS_ZERO_CALL_USED_REGS=y
-@@ -2721,7 +2719,6 @@ CONFIG_DELL_SMBIOS=m
+@@ -2722,7 +2719,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
  CONFIG_DELL_SMO8800=m
@@ -113,7 +66,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_DELL_WMI=m
  CONFIG_DELL_WMI_AIO=m
  CONFIG_DELL_WMI_DESCRIPTOR=m
-@@ -4008,7 +4005,6 @@ CONFIG_GPIO_104_IDIO_16=m
+@@ -4009,7 +4005,6 @@ CONFIG_GPIO_104_IDIO_16=m
  CONFIG_GPIO_104_IDI_48=m
  CONFIG_GPIO_74X164=m
  CONFIG_GPIO_74XX_MMIO=m
@@ -121,7 +74,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_GPIO_ACPI=y
  CONFIG_GPIO_ADNP=m
  CONFIG_GPIO_ADP5520=m
-@@ -4490,7 +4486,6 @@ CONFIG_HIGHMEM=y
+@@ -4491,7 +4486,6 @@ CONFIG_HIGHMEM=y
  CONFIG_HIGHPTE=y
  CONFIG_HIGH_RES_TIMERS=y
  CONFIG_HINIC=m
@@ -129,18 +82,15 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_HIP04_ETH=m
  # CONFIG_HIPPI is not set
  CONFIG_HISILICON_ERRATUM_161010101=y
-@@ -5714,9 +5709,8 @@ CONFIG_LDISC_AUTOLOAD=y
- # CONFIG_LD_HEAD_STUB_CATCH is not set
- CONFIG_LD_IS_BFD=y
+@@ -5717,7 +5711,6 @@ CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
--CONFIG_LD_VERSION=23790
-+CONFIG_LD_VERSION=23800
+ CONFIG_LD_VERSION=23800
  CONFIG_LEDS_88PM860X=m
 -CONFIG_LEDS_AAEON=m
  CONFIG_LEDS_AAT1290=m
  CONFIG_LEDS_ACER_A500=m
  CONFIG_LEDS_ADP5520=m
-@@ -5871,7 +5865,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -5872,7 +5865,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -148,7 +98,7 @@ index c709acfc6e17..95bf98c836d1 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -6167,7 +6160,6 @@ CONFIG_MESON_SM=y
+@@ -6168,7 +6160,6 @@ CONFIG_MESON_SM=y
  CONFIG_MESON_WATCHDOG=m
  CONFIG_MESSAGE_LOGLEVEL_DEFAULT=4
  CONFIG_MFD_88PM860X=y
@@ -156,15 +106,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
-@@ -7001,6 +6993,7 @@ CONFIG_NET_DSA_MV88E6060=m
- CONFIG_NET_DSA_MV88E6XXX=m
- CONFIG_NET_DSA_MV88E6XXX_PTP=y
- CONFIG_NET_DSA_QCA8K=m
-+CONFIG_NET_DSA_REALTEK=m
- CONFIG_NET_DSA_REALTEK_SMI=m
- CONFIG_NET_DSA_SJA1105=m
- CONFIG_NET_DSA_SJA1105_PTP=y
-@@ -7586,7 +7579,6 @@ CONFIG_PAGE_SIZE_LESS_THAN_64KB=y
+@@ -7588,7 +7579,6 @@ CONFIG_PAGE_SIZE_LESS_THAN_64KB=y
  # CONFIG_PAGE_TABLE_CHECK is not set
  CONFIG_PAGE_TABLE_ISOLATION=y
  CONFIG_PAHOLE_HAS_SPLIT_BTF=y
@@ -172,7 +114,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_PALMAS_GPADC=m
  CONFIG_PANASONIC_LAPTOP=m
  CONFIG_PANEL=m
-@@ -9496,7 +9488,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+@@ -9498,7 +9488,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
  CONFIG_SECURITY_PATH=y
@@ -180,7 +122,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_SECURITY_SAFESETID=y
  CONFIG_SECURITY_SELINUX=y
  CONFIG_SECURITY_SELINUX_AVC_STATS=y
-@@ -9521,7 +9512,6 @@ CONFIG_SELECT_MEMORY_MODEL=y
+@@ -9523,7 +9512,6 @@ CONFIG_SELECT_MEMORY_MODEL=y
  CONFIG_SENSEAIR_SUNRISE_CO2=m
  CONFIG_SENSIRION_SGP30=m
  CONFIG_SENSIRION_SGP40=m
@@ -188,7 +130,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_SENSORS_ABITUGURU=m
  CONFIG_SENSORS_ABITUGURU3=m
  CONFIG_SENSORS_ACPI_POWER=m
-@@ -9895,8 +9885,6 @@ CONFIG_SGI_XP=m
+@@ -9897,8 +9885,6 @@ CONFIG_SGI_XP=m
  CONFIG_SGL_ALLOC=y
  CONFIG_SG_POOL=y
  CONFIG_SG_SPLIT=y
@@ -197,15 +139,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -9938,6 +9926,7 @@ CONFIG_SLIP_COMPRESSED=y
- CONFIG_SLIP_MODE_SLIP6=y
- CONFIG_SLIP_SMART=y
- # CONFIG_SLOB is not set
-+# CONFIG_SLS is not set
- CONFIG_SLUB=y
- CONFIG_SLUB_CPU_PARTIAL=y
- CONFIG_SLUB_DEBUG=y
-@@ -11609,8 +11598,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
+@@ -11612,8 +11598,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
  CONFIG_UBSAN_SHIFT=y
  # CONFIG_UBSAN_TRAP is not set
  # CONFIG_UBSAN_UNREACHABLE is not set
@@ -214,7 +148,7 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_UCB1400_CORE=m
  CONFIG_UCC=y
  CONFIG_UCC_FAST=y
-@@ -12184,7 +12171,6 @@ CONFIG_VDSO=y
+@@ -12187,7 +12171,6 @@ CONFIG_VDSO=y
  CONFIG_VDSO32=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m
@@ -222,32 +156,6 @@ index c709acfc6e17..95bf98c836d1 100644
  CONFIG_VETH=m
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
-diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index 1f1e61576888..621d22405a0c 100644
---- a/debian.master/config/ppc64el/config.common.ppc64el
-+++ b/debian.master/config/ppc64el/config.common.ppc64el
-@@ -53,7 +53,7 @@ CONFIG_CADENCE_WATCHDOG=m
- CONFIG_CAIF=m
- CONFIG_CAN=m
- CONFIG_CB710_CORE=m
--CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 11.2.0-17ubuntu1) 11.2.0"
- CONFIG_CDROM_PKTCDVD=m
- CONFIG_CMA=y
- CONFIG_CMDLINE=""
-diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index 7aafb3d5b6a4..3a814dcd40c2 100644
---- a/debian.master/config/s390x/config.common.s390x
-+++ b/debian.master/config/s390x/config.common.s390x
-@@ -43,7 +43,7 @@ CONFIG_AUTOFS_FS=y
- # CONFIG_CAIF is not set
- # CONFIG_CAN is not set
- # CONFIG_CB710_CORE is not set
--CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-16ubuntu1) 11.2.0"
-+CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 11.2.0-17ubuntu1) 11.2.0"
- # CONFIG_CDROM_PKTCDVD is not set
- CONFIG_CMA=y
- # CONFIG_CMDLINE_PARTITION is not set
 -- 
 2.25.1
 
