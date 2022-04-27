@@ -1,6 +1,6 @@
-From 158b4dcadd00628757b61bf95da05e385253f6c4 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 20 Apr 2022 08:42:33 +0000
+From d3e02521dd3ca099dff249e97e83cb3045c37845 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 27 Apr 2022 14:06:58 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 16307 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 803b635bbca6..d340772969e6 100644
+index 803b635bbca6..5ef31277dacb 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,16310 +1,6 @@
 -linux-unstable (5.17.0-8.8) jammy; urgency=medium
-+linux (5.17.4-051704.202204200842) jammy; urgency=low
++linux (5.17.5-051705.202204271406) jammy; urgency=low
  
 -  * jammy/linux-unstable: 5.17.0-8.8 -proposed tracker (LP: #1969016)
-+  Mainline build at commit: v5.17.4
++  Mainline build at commit: v5.17.5
  
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@sita>  Wed, 20 Apr 2022 08:42:33 +0000
++ -- Mainline Build <kernel@kathleen>  Wed, 27 Apr 2022 14:06:58 +0000
  
 - -- Andrea Righi <andrea.righi@canonical.com>  Thu, 14 Apr 2022 10:30:39 +0200
 -
