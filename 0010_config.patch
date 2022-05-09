@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11395 @@
+@@ -0,0 +1,11399 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.17.5-cybmod5 Kernel Configuration
++# Linux/x86 5.17.6-cybmod6 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -2298,6 +2298,7 @@ new file mode 100644
 +#
 +CONFIG_FW_LOADER=y
 +CONFIG_FW_LOADER_PAGED_BUF=y
++CONFIG_FW_LOADER_SYSFS=y
 +CONFIG_EXTRA_FIRMWARE=""
 +CONFIG_FW_LOADER_USER_HELPER=y
 +# CONFIG_FW_LOADER_USER_HELPER_FALLBACK is not set
@@ -2305,6 +2306,7 @@ new file mode 100644
 +# CONFIG_FW_LOADER_COMPRESS_XZ is not set
 +CONFIG_FW_LOADER_COMPRESS_ZSTD=y
 +CONFIG_FW_CACHE=y
++CONFIG_FW_UPLOAD=y
 +# end of Firmware loader
 +
 +CONFIG_WANT_DEV_COREDUMP=y
@@ -2598,6 +2600,7 @@ new file mode 100644
 +CONFIG_BLK_DEV=y
 +CONFIG_BLK_DEV_NULL_BLK=m
 +CONFIG_BLK_DEV_FD=m
++# CONFIG_BLK_DEV_FD_RAWCMD is not set
 +CONFIG_CDROM=y
 +CONFIG_PARIDE=m
 +
@@ -5257,6 +5260,7 @@ new file mode 100644
 +CONFIG_SENSORS_PC87427=m
 +CONFIG_SENSORS_NTC_THERMISTOR=m
 +CONFIG_SENSORS_NCT6683=m
++CONFIG_SENSORS_NCT6775_CORE=m
 +CONFIG_SENSORS_NCT6775=m
 +CONFIG_SENSORS_NCT7802=m
 +CONFIG_SENSORS_NCT7904=m

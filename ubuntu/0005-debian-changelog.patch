@@ -1,27 +1,70 @@
-From d3e02521dd3ca099dff249e97e83cb3045c37845 Mon Sep 17 00:00:00 2001
+From c3602a19eed61088191ab18f0eee6e982cc68fe0 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 27 Apr 2022 14:06:58 +0000
+Date: Mon, 9 May 2022 08:41:48 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16310 +-------------------------------------
- 1 file changed, 3 insertions(+), 16307 deletions(-)
+ debian.master/changelog | 16353 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16350 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 803b635bbca6..5ef31277dacb 100644
+index 5fcb1940b166..1926458fa9d0 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16310 +1,6 @@
--linux-unstable (5.17.0-8.8) jammy; urgency=medium
-+linux (5.17.5-051705.202204271406) jammy; urgency=low
+@@ -1,16353 +1,6 @@
+-linux-unstable (5.18.0-2.2) kinetic; urgency=medium
++linux (5.17.6-051706.202205090841) kinetic; urgency=low
  
--  * jammy/linux-unstable: 5.17.0-8.8 -proposed tracker (LP: #1969016)
-+  Mainline build at commit: v5.17.5
+-  * kinetic/linux-unstable: 5.18.0-2.2 -proposed tracker (LP: #1971340)
++  Mainline build at commit: v5.17.6
  
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@kathleen>  Wed, 27 Apr 2022 14:06:58 +0000
++ -- Mainline Build <kernel@kathleen>  Mon, 09 May 2022 08:41:48 +0000
  
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update configs after rebase
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.18-rc5
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 03 May 2022 12:24:49 +0200
+-
+-linux-unstable (5.18.0-1.1) kinetic; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 03 May 2022 09:38:06 +0200
+-
+-linux-unstable (5.18.0-1.1) jammy; urgency=medium
+-
+-  * kinetic/linux-unstable: 5.18.0-1.1 -proposed tracker (LP: #1969476)
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update configs and annotations after rebase to 5.18
+-    - [Packaging] temporarily disable zfs
+-    - [Packaging] temporarily disable v4l2loopback
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.18-rc3
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 27 Apr 2022 20:26:42 +0200
+-
+-linux-unstable (5.18.0-0.0) jammy; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 19 Apr 2022 16:20:00 +0200
+-
+-linux-unstable (5.17.0-8.8) jammy; urgency=medium
+-
+-  * jammy/linux-unstable: 5.17.0-8.8 -proposed tracker (LP: #1969016)
+-
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
 - -- Andrea Righi <andrea.righi@canonical.com>  Thu, 14 Apr 2022 10:30:39 +0200
 -
 -linux-unstable (5.17.0-7.7) jammy; urgency=medium
