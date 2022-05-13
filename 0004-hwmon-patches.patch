@@ -1,27 +1,92 @@
+diff --git a/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml b/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+new file mode 100644
+index 000000000..358b26243
+--- /dev/null
++++ b/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+@@ -0,0 +1,57 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++
++$id: http://devicetree.org/schemas/hwmon/nuvoton,nct6775.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Nuvoton NCT6775 and compatible Super I/O chips
++
++maintainers:
++  - Zev Weiss <zev@bewilderbeest.net>
++
++properties:
++  compatible:
++    enum:
++      - nuvoton,nct6106
++      - nuvoton,nct6116
++      - nuvoton,nct6775
++      - nuvoton,nct6776
++      - nuvoton,nct6779
++      - nuvoton,nct6791
++      - nuvoton,nct6792
++      - nuvoton,nct6793
++      - nuvoton,nct6795
++      - nuvoton,nct6796
++      - nuvoton,nct6797
++      - nuvoton,nct6798
++
++  reg:
++    maxItems: 1
++
++  nuvoton,tsi-channel-mask:
++    description:
++      Bitmask indicating which TSI temperature sensor channels are
++      active.  LSB is TSI0, bit 1 is TSI1, etc.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    maximum: 0xff
++    default: 0
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++examples:
++  - |
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        superio@4d {
++            compatible = "nuvoton,nct6779";
++            reg = <0x4d>;
++            nuvoton,tsi-channel-mask = <0x03>;
++        };
++    };
 diff --git a/Documentation/hwmon/asus_ec_sensors.rst b/Documentation/hwmon/asus_ec_sensors.rst
 new file mode 100644
-index 000000000..36ca531d3
+index 000000000..78ca69eda
 --- /dev/null
 +++ b/Documentation/hwmon/asus_ec_sensors.rst
-@@ -0,0 +1,57 @@
+@@ -0,0 +1,59 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +
 +Kernel driver asus_ec_sensors
 +=================================
 +
 +Supported boards:
-+ * PRIME X570-PRO,
-+ * Pro WS X570-ACE,
++ * PRIME X470-PRO
++ * PRIME X570-PRO
++ * Pro WS X570-ACE
 + * ProArt X570-CREATOR WIFI
-+ * ROG CROSSHAIR VIII DARK HERO,
++ * ROG CROSSHAIR VIII DARK HERO
 + * ROG CROSSHAIR VIII HERO (WI-FI)
-+ * ROG CROSSHAIR VIII FORMULA,
-+ * ROG CROSSHAIR VIII HERO,
-+ * ROG CROSSHAIR VIII IMPACT,
-+ * ROG STRIX B550-E GAMING,
-+ * ROG STRIX B550-I GAMING,
-+ * ROG STRIX X570-E GAMING,
-+ * ROG STRIX X570-F GAMING,
++ * ROG CROSSHAIR VIII FORMULA
++ * ROG CROSSHAIR VIII HERO
++ * ROG CROSSHAIR VIII IMPACT
++ * ROG STRIX B550-E GAMING
++ * ROG STRIX B550-I GAMING
++ * ROG STRIX X570-E GAMING
++ * ROG STRIX X570-E GAMING WIFI II
++ * ROG STRIX X570-F GAMING
 + * ROG STRIX X570-I GAMING
 +
 +Authors:
@@ -106,7 +171,7 @@ index 1b287f229..000000000
 -9. Readings from the "Water In" and "Water Out" temperature headers
 -10. CPU current
 diff --git a/MAINTAINERS b/MAINTAINERS
-index d9b2f1731..38f3b65fe 100644
+index d9b2f1731..050d1ea00 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -3056,6 +3056,12 @@ L:	linux-hwmon@vger.kernel.org
@@ -122,7 +187,7 @@ index d9b2f1731..38f3b65fe 100644
  ASUS WIRELESS RADIO CONTROL DRIVER
  M:	João Paulo Rechi Vita <jprvita@gmail.com>
  L:	platform-driver-x86@vger.kernel.org
-@@ -13280,12 +13286,14 @@ M:	Samuel Mendoza-Jonas <sam@mendozajonas.com>
+@@ -13280,12 +13286,21 @@ M:	Samuel Mendoza-Jonas <sam@mendozajonas.com>
  S:	Maintained
  F:	net/ncsi/
  
@@ -136,11 +201,18 @@ index d9b2f1731..38f3b65fe 100644
 +F:	drivers/hwmon/nct6775-core.c
 +F:	drivers/hwmon/nct6775-platform.c
 +F:	drivers/hwmon/nct6775.h
++
++NCT6775 HARDWARE MONITOR DRIVER - I2C DRIVER
++M:	Zev Weiss <zev@bewilderbeest.net>
++L:	linux-hwmon@vger.kernel.org
++S:	Maintained
++F:	Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
++F:	drivers/hwmon/nct6775-i2c.c
  
  NETDEVSIM
  M:	Jakub Kicinski <kuba@kernel.org>
 diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index 8df25f107..45011e182 100644
+index 8df25f107..32fe7bff6 100644
 --- a/drivers/hwmon/Kconfig
 +++ b/drivers/hwmon/Kconfig
 @@ -1440,11 +1440,23 @@ config SENSORS_NCT6683
@@ -168,7 +240,31 @@ index 8df25f107..45011e182 100644
  	help
  	  If you say yes here you get support for the hardware monitoring
  	  functionality of the Nuvoton NCT6106D, NCT6775F, NCT6776F, NCT6779D,
-@@ -2252,16 +2264,31 @@ config SENSORS_ASUS_WMI
+@@ -1455,6 +1467,23 @@ config SENSORS_NCT6775
+ 	  This driver can also be built as a module. If so, the module
+ 	  will be called nct6775.
+ 
++config SENSORS_NCT6775_I2C
++	tristate "I2C driver for Nuvoton NCT6775F and compatibles"
++	depends on I2C
++	select REGMAP_I2C
++	select SENSORS_NCT6775_CORE
++	help
++	  If you say yes here you get support for the hardware monitoring
++	  functionality of the Nuvoton NCT6106D, NCT6775F, NCT6776F, NCT6779D,
++	  NCT6791D, NCT6792D, NCT6793D, NCT6795D, NCT6796D, and compatible
++	  Super-I/O chips via their I2C interface.
++
++	  If you're not building a kernel for a BMC, this is probably
++	  not the driver you want (see CONFIG_SENSORS_NCT6775).
++
++	  This driver can also be built as a module. If so, the module
++	  will be called nct6775-i2c.
++
+ config SENSORS_NCT7802
+ 	tristate "Nuvoton NCT7802Y"
+ 	depends on I2C
+@@ -2252,16 +2281,31 @@ config SENSORS_ASUS_WMI
  
  config SENSORS_ASUS_WMI_EC
  	tristate "ASUS WMI B550/X570"
@@ -202,7 +298,7 @@ index 8df25f107..45011e182 100644
  
  endif # HWMON
 diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-index 185f946d6..441918be5 100644
+index 185f946d6..012db1655 100644
 --- a/drivers/hwmon/Makefile
 +++ b/drivers/hwmon/Makefile
 @@ -9,6 +9,7 @@ obj-$(CONFIG_HWMON_VID)		+= hwmon-vid.o
@@ -213,21 +309,23 @@ index 185f946d6..441918be5 100644
  obj-$(CONFIG_SENSORS_ASUS_WMI)	+= asus_wmi_sensors.o
  obj-$(CONFIG_SENSORS_ASUS_WMI_EC)	+= asus_wmi_ec_sensors.o
  
-@@ -153,6 +154,8 @@ obj-$(CONFIG_SENSORS_MLXREG_FAN) += mlxreg-fan.o
+@@ -153,7 +154,10 @@ obj-$(CONFIG_SENSORS_MLXREG_FAN) += mlxreg-fan.o
  obj-$(CONFIG_SENSORS_MENF21BMC_HWMON) += menf21bmc_hwmon.o
  obj-$(CONFIG_SENSORS_MR75203)	+= mr75203.o
  obj-$(CONFIG_SENSORS_NCT6683)	+= nct6683.o
 +obj-$(CONFIG_SENSORS_NCT6775_CORE) += nct6775-core.o
 +nct6775-objs			:= nct6775-platform.o
  obj-$(CONFIG_SENSORS_NCT6775)	+= nct6775.o
++obj-$(CONFIG_SENSORS_NCT6775_I2C) += nct6775-i2c.o
  obj-$(CONFIG_SENSORS_NCT7802)	+= nct7802.o
  obj-$(CONFIG_SENSORS_NCT7904)	+= nct7904.o
+ obj-$(CONFIG_SENSORS_NPCM7XX)	+= npcm750-pwm-fan.o
 diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
 new file mode 100644
-index 000000000..998d49d6b
+index 000000000..611e89742
 --- /dev/null
 +++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -0,0 +1,902 @@
+@@ -0,0 +1,910 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * HWMON driver for ASUS motherboards that publish some sensor values
@@ -541,6 +639,14 @@ index 000000000..998d49d6b
 +		.sensors = SENSOR_SET_TEMP_CHIPSET_CPU_MB |
 +			SENSOR_TEMP_T_SENSOR | SENSOR_TEMP_VRM |
 +			SENSOR_FAN_CHIPSET | SENSOR_CURR_CPU |
++			SENSOR_IN_CPU_CORE,
++		.mutex_path = ASUS_HW_ACCESS_MUTEX_ASMX,
++		.family = family_amd_500_series,
++	},
++	{
++		.board_names = {"ROG STRIX X570-E GAMING WIFI II"},
++		.sensors = SENSOR_SET_TEMP_CHIPSET_CPU_MB |
++			SENSOR_TEMP_T_SENSOR | SENSOR_CURR_CPU |
 +			SENSOR_IN_CPU_CORE,
 +		.mutex_path = ASUS_HW_ACCESS_MUTEX_ASMX,
 +		.family = family_amd_500_series,
@@ -4838,12 +4944,213 @@ index 098d12b9e..446964cba 100644
 -
 -module_init(sensors_nct6775_init);
 -module_exit(sensors_nct6775_exit);
+diff --git a/drivers/hwmon/nct6775-i2c.c b/drivers/hwmon/nct6775-i2c.c
+new file mode 100644
+index 000000000..e1bcd1146
+--- /dev/null
++++ b/drivers/hwmon/nct6775-i2c.c
+@@ -0,0 +1,195 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * nct6775-i2c - I2C driver for the hardware monitoring functionality of
++ *	         Nuvoton NCT677x Super-I/O chips
++ *
++ * Copyright (C) 2022 Zev Weiss <zev@bewilderbeest.net>
++ *
++ * This driver interacts with the chip via it's "back door" i2c interface, as
++ * is often exposed to a BMC.  Because the host may still be operating the
++ * chip via the ("front door") LPC interface, this driver cannot assume that
++ * it actually has full control of the chip, and in particular must avoid
++ * making any changes that could confuse the host's LPC usage of it.  It thus
++ * operates in a strictly read-only fashion, with the only exception being the
++ * bank-select register (which seems, thankfully, to be replicated for the i2c
++ * interface so it doesn't affect the LPC interface).
++ */
++
++#include <linux/module.h>
++#include <linux/init.h>
++#include <linux/i2c.h>
++#include <linux/hwmon.h>
++#include <linux/hwmon-sysfs.h>
++#include <linux/err.h>
++#include <linux/of_device.h>
++#include <linux/regmap.h>
++#include "nct6775.h"
++
++static int nct6775_i2c_read(void *ctx, unsigned int reg, unsigned int *val)
++{
++	int ret;
++	u32 tmp;
++	u8 bank = reg >> 8;
++	struct nct6775_data *data = ctx;
++	struct i2c_client *client = data->driver_data;
++
++	if (bank != data->bank) {
++		ret = i2c_smbus_write_byte_data(client, NCT6775_REG_BANK, bank);
++		if (ret)
++			return ret;
++		data->bank = bank;
++	}
++
++	ret = i2c_smbus_read_byte_data(client, reg & 0xff);
++	if (ret < 0)
++		return ret;
++	tmp = ret;
++
++	if (nct6775_reg_is_word_sized(data, reg)) {
++		ret = i2c_smbus_read_byte_data(client, (reg & 0xff) + 1);
++		if (ret < 0)
++			return ret;
++		tmp = (tmp << 8) | ret;
++	}
++
++	*val = tmp;
++	return 0;
++}
++
++/*
++ * The write operation is a dummy so as not to disturb anything being done
++ * with the chip via LPC.
++ */
++static int nct6775_i2c_write(void *ctx, unsigned int reg, unsigned int value)
++{
++	struct nct6775_data *data = ctx;
++	struct i2c_client *client = data->driver_data;
++
++	dev_dbg(&client->dev, "skipping attempted write: %02x -> %03x\n", value, reg);
++
++	/*
++	 * This is a lie, but writing anything but the bank-select register is
++	 * something this driver shouldn't be doing.
++	 */
++	return 0;
++}
++
++static const struct of_device_id __maybe_unused nct6775_i2c_of_match[] = {
++	{ .compatible = "nuvoton,nct6106", .data = (void *)nct6106, },
++	{ .compatible = "nuvoton,nct6116", .data = (void *)nct6116, },
++	{ .compatible = "nuvoton,nct6775", .data = (void *)nct6775, },
++	{ .compatible = "nuvoton,nct6776", .data = (void *)nct6776, },
++	{ .compatible = "nuvoton,nct6779", .data = (void *)nct6779, },
++	{ .compatible = "nuvoton,nct6791", .data = (void *)nct6791, },
++	{ .compatible = "nuvoton,nct6792", .data = (void *)nct6792, },
++	{ .compatible = "nuvoton,nct6793", .data = (void *)nct6793, },
++	{ .compatible = "nuvoton,nct6795", .data = (void *)nct6795, },
++	{ .compatible = "nuvoton,nct6796", .data = (void *)nct6796, },
++	{ .compatible = "nuvoton,nct6797", .data = (void *)nct6797, },
++	{ .compatible = "nuvoton,nct6798", .data = (void *)nct6798, },
++	{ },
++};
++MODULE_DEVICE_TABLE(of, nct6775_i2c_of_match);
++
++static const struct i2c_device_id nct6775_i2c_id[] = {
++	{ "nct6106", nct6106 },
++	{ "nct6116", nct6116 },
++	{ "nct6775", nct6775 },
++	{ "nct6776", nct6776 },
++	{ "nct6779", nct6779 },
++	{ "nct6791", nct6791 },
++	{ "nct6792", nct6792 },
++	{ "nct6793", nct6793 },
++	{ "nct6795", nct6795 },
++	{ "nct6796", nct6796 },
++	{ "nct6797", nct6797 },
++	{ "nct6798", nct6798 },
++	{ }
++};
++MODULE_DEVICE_TABLE(i2c, nct6775_i2c_id);
++
++static int nct6775_i2c_probe_init(struct nct6775_data *data)
++{
++	u32 tsi_channel_mask;
++	struct i2c_client *client = data->driver_data;
++
++	/*
++	 * The i2c interface doesn't provide access to the control registers
++	 * needed to determine the presence of other fans, but fans 1 and 2
++	 * are (in principle) always there.
++	 *
++	 * In practice this is perhaps a little silly, because the system
++	 * using this driver is mostly likely a BMC, and hence probably has
++	 * totally separate fan tachs & pwms of its own that are actually
++	 * controlling/monitoring the fans -- these are thus unlikely to be
++	 * doing anything actually useful.
++	 */
++	data->has_fan = 0x03;
++	data->has_fan_min = 0x03;
++	data->has_pwm = 0x03;
++
++	/*
++	 * Because on a BMC this driver may be bound very shortly after power
++	 * is first applied to the device, the automatic TSI channel detection
++	 * in nct6775_probe() (which has already been run at this point) may
++	 * not find anything if a channel hasn't yet produced a temperature
++	 * reading.  Augment whatever was found via autodetection (if
++	 * anything) with the channels DT says should be active.
++	 */
++	if (!of_property_read_u32(client->dev.of_node, "nuvoton,tsi-channel-mask",
++				  &tsi_channel_mask))
++		data->have_tsi_temp |= tsi_channel_mask & GENMASK(NUM_TSI_TEMP - 1, 0);
++
++	return 0;
++}
++
++static const struct regmap_config nct6775_i2c_regmap_config = {
++	.reg_bits = 16,
++	.val_bits = 16,
++	.reg_read = nct6775_i2c_read,
++	.reg_write = nct6775_i2c_write,
++};
++
++static int nct6775_i2c_probe(struct i2c_client *client)
++{
++	struct nct6775_data *data;
++	const struct of_device_id *of_id;
++	const struct i2c_device_id *i2c_id;
++	struct device *dev = &client->dev;
++
++	of_id = of_match_device(nct6775_i2c_of_match, dev);
++	i2c_id = i2c_match_id(nct6775_i2c_id, client);
++
++	if (of_id && (unsigned long)of_id->data != i2c_id->driver_data)
++		dev_notice(dev, "Device mismatch: %s in device tree, %s detected\n",
++			   of_id->name, i2c_id->name);
++
++	data = devm_kzalloc(&client->dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	data->kind = i2c_id->driver_data;
++
++	data->read_only = true;
++	data->driver_data = client;
++	data->driver_init = nct6775_i2c_probe_init;
++
++	return nct6775_probe(dev, data, &nct6775_i2c_regmap_config);
++}
++
++static struct i2c_driver nct6775_i2c_driver = {
++	.class = I2C_CLASS_HWMON,
++	.driver = {
++		.name = "nct6775-i2c",
++		.of_match_table = of_match_ptr(nct6775_i2c_of_match),
++	},
++	.probe_new = nct6775_i2c_probe,
++	.id_table = nct6775_i2c_id,
++};
++
++module_i2c_driver(nct6775_i2c_driver);
++
++MODULE_AUTHOR("Zev Weiss <zev@bewilderbeest.net>");
++MODULE_DESCRIPTION("I2C driver for NCT6775F and compatible chips");
++MODULE_LICENSE("GPL");
++MODULE_IMPORT_NS(HWMON_NCT6775);
 diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
 new file mode 100644
-index 000000000..c2f76af73
+index 000000000..6d46c9401
 --- /dev/null
 +++ b/drivers/hwmon/nct6775-platform.c
-@@ -0,0 +1,1226 @@
+@@ -0,0 +1,1229 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * nct6775 - Platform driver for the hardware monitoring
@@ -5888,6 +6195,7 @@ index 000000000..c2f76af73
 +static struct platform_device *pdev[2];
 +
 +static const char * const asus_wmi_boards[] = {
++	"PRO H410T",
 +	"ProArt X570-CREATOR WIFI",
 +	"Pro B550M-C",
 +	"Pro WS X570-ACE",
@@ -5896,6 +6204,7 @@ index 000000000..c2f76af73
 +	"PRIME B550-PLUS",
 +	"PRIME B550M-A",
 +	"PRIME B550M-A (WI-FI)",
++	"PRIME H410M-R",
 +	"PRIME X570-P",
 +	"PRIME X570-PRO",
 +	"ROG CROSSHAIR VIII DARK HERO",
@@ -5910,6 +6219,7 @@ index 000000000..c2f76af73
 +	"ROG STRIX B550-I GAMING",
 +	"ROG STRIX B550-XE GAMING (WI-FI)",
 +	"ROG STRIX X570-E GAMING",
++	"ROG STRIX X570-E GAMING WIFI II",
 +	"ROG STRIX X570-F GAMING",
 +	"ROG STRIX X570-I GAMING",
 +	"ROG STRIX Z390-E GAMING",

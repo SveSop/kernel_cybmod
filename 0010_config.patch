@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11399 @@
+@@ -0,0 +1,11400 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.17.6-cybmod6 Kernel Configuration
++# Linux/x86 5.17.7-cybmod7 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -5262,6 +5262,7 @@ new file mode 100644
 +CONFIG_SENSORS_NCT6683=m
 +CONFIG_SENSORS_NCT6775_CORE=m
 +CONFIG_SENSORS_NCT6775=m
++CONFIG_SENSORS_NCT6775_I2C=m
 +CONFIG_SENSORS_NCT7802=m
 +CONFIG_SENSORS_NCT7904=m
 +CONFIG_SENSORS_NPCM7XX=m

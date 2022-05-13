@@ -1,27 +1,40 @@
-From c3602a19eed61088191ab18f0eee6e982cc68fe0 Mon Sep 17 00:00:00 2001
+From d2776e9b1f0ac2694e4dfd2cfe7ef63706597749 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Mon, 9 May 2022 08:41:48 +0000
+Date: Thu, 12 May 2022 11:46:47 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16353 +-------------------------------------
- 1 file changed, 3 insertions(+), 16350 deletions(-)
+ debian.master/changelog | 16366 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16363 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 5fcb1940b166..1926458fa9d0 100644
+index d53fad57a912..0dc3f385c984 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16353 +1,6 @@
+@@ -1,16366 +1,6 @@
+-linux-unstable (5.18.0-3.3) kinetic; urgency=medium
++linux (5.17.7-051707.202205121146) kinetic; urgency=low
+ 
+-  * kinetic/linux-unstable: 5.18.0-3.3 -proposed tracker (LP: #1972162)
++  Mainline build at commit: v5.17.7
+ 
+-  * disable Intel DMA remapping by default (LP: #1971699)
+-    - Revert "UBUNTU: [Config] enable Intel DMA remapping options by default"
++ -- Mainline Build <kernel@kathleen>  Thu, 12 May 2022 11:46:47 +0000
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.18-rc6
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 09 May 2022 12:15:39 +0200
+-
 -linux-unstable (5.18.0-2.2) kinetic; urgency=medium
-+linux (5.17.6-051706.202205090841) kinetic; urgency=low
- 
+-
 -  * kinetic/linux-unstable: 5.18.0-2.2 -proposed tracker (LP: #1971340)
-+  Mainline build at commit: v5.17.6
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@kathleen>  Mon, 09 May 2022 08:41:48 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Config] update configs after rebase
 -
