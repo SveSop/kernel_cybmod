@@ -1,6 +1,6 @@
-From d2776e9b1f0ac2694e4dfd2cfe7ef63706597749 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 12 May 2022 11:46:47 +0000
+From a568eb2404a2c3ed52a5230d80aa7864019883d8 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Sun, 15 May 2022 19:40:49 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 16363 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index d53fad57a912..0dc3f385c984 100644
+index d53fad57a912..ca497271357b 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,16366 +1,6 @@
 -linux-unstable (5.18.0-3.3) kinetic; urgency=medium
-+linux (5.17.7-051707.202205121146) kinetic; urgency=low
++linux (5.17.8-051708.202205151940) kinetic; urgency=low
  
 -  * kinetic/linux-unstable: 5.18.0-3.3 -proposed tracker (LP: #1972162)
-+  Mainline build at commit: v5.17.7
++  Mainline build at commit: v5.17.8
  
 -  * disable Intel DMA remapping by default (LP: #1971699)
 -    - Revert "UBUNTU: [Config] enable Intel DMA remapping options by default"
-+ -- Mainline Build <kernel@kathleen>  Thu, 12 May 2022 11:46:47 +0000
++ -- Mainline Build <kernel@sita>  Sun, 15 May 2022 19:40:48 +0000
  
 -  [ Upstream Kernel Changes ]
 -

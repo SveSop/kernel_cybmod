@@ -1,7 +1,7 @@
-From b11042c52d101484f40240cbbb487e03b0081d4c Mon Sep 17 00:00:00 2001
+From 3d9d29ee19b748f1c39c913d6d0ba58be27f4cc0 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:41:53 -0800
-Subject: [PATCH 01/30] lib: zstd: Remove large inline functions in zstd_lazy.c
+Subject: [PATCH 01/27] lib: zstd: Remove large inline functions in zstd_lazy.c
 
 Backport of upstream PR #2828 [0].
 
@@ -318,13 +318,13 @@ index fb54d4e28..1db22db5b 100644
      U32 offset_1 = rep[0], offset_2 = rep[1];
  
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From aec2afda4277c35d8a9fdbc8bb03ff55c52f8755 Mon Sep 17 00:00:00 2001
+From 6c2cb429d4db5463ae0fd26ff805ba808968ebb0 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:56:42 -0800
-Subject: [PATCH 02/30] lib: zstd: Remove large inline functions from
+Subject: [PATCH 02/27] lib: zstd: Remove large inline functions from
  zstd_{double_,}fast.c
 
 Backport of upstream PR #2863 [0].
@@ -598,13 +598,13 @@ index 96b7d48e2..e0652e31d 100644
      }
  }
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 8ee43315513499aa5dc6853e0523a2fe8c693d9a Mon Sep 17 00:00:00 2001
+From f34de168f7c693af09d4381b807129fda337d27c Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Wed, 27 Jan 2021 16:22:48 +0100
-Subject: [PATCH 03/30] firmware: Add the support for ZSTD-compressed firmware
+Subject: [PATCH 03/27] firmware: Add the support for ZSTD-compressed firmware
  files
 
 Due to the popular demands on ZSTD, here is a patch to add a support
@@ -660,7 +660,7 @@ index 5b24f3959..581bfe2c9 100644
  config FW_CACHE
  	bool "Enable firmware caching during suspend"
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 94d1789a2..6e94f7e8c 100644
+index 406a907a4..b1171a273 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -35,6 +35,7 @@
@@ -754,7 +754,7 @@ index 94d1789a2..6e94f7e8c 100644
  
  /* direct firmware loading support */
  static char fw_path_para[256];
-@@ -757,7 +820,12 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
+@@ -771,7 +834,12 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
  	if (!(opt_flags & FW_OPT_PARTIAL))
  		nondirect = true;
  
@@ -769,13 +769,13 @@ index 94d1789a2..6e94f7e8c 100644
  		ret = fw_get_filesystem_firmware(device, fw->priv, ".xz",
  						 fw_decompress_xz);
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 1da8d89ef435861192d7b0e9d1582afb63136ae3 Mon Sep 17 00:00:00 2001
+From a44dc5944e415711f78b08029c67003594af075a Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Wed, 27 Jan 2021 16:32:55 +0100
-Subject: [PATCH 04/30] selftests: firmware: Simplify test patterns
+Subject: [PATCH 04/27] selftests: firmware: Simplify test patterns
 
 The test patterns are almost same in three sequential tests.
 Make the unified helper function for improving the readability.
@@ -929,13 +929,13 @@ index c2a2a1001..2424a97da 100755
  
  exit 0
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 2caaac9a5cae84fc15e3a621ac1eff6d7fb0ea05 Mon Sep 17 00:00:00 2001
+From 697bfacafb783d2a62bc821ab986515b295a9584 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Wed, 27 Jan 2021 16:34:53 +0100
-Subject: [PATCH 05/30] selftest: firmware: Fix the request_firmware_into_buf()
+Subject: [PATCH 05/27] selftest: firmware: Fix the request_firmware_into_buf()
  test for XZ format
 
 The test uses a different firmware name, and we forgot to adapt for
@@ -949,7 +949,7 @@ Signed-off-by: Takashi Iwai <tiwai@suse.de>
  2 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 6e94f7e8c..771387976 100644
+index b1171a273..ddf01bc5f 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -321,12 +321,14 @@ static int fw_decompress_zstd(struct device *dev, struct fw_priv *fw_priv,
@@ -992,13 +992,13 @@ index 2424a97da..f1976e650 100755
  echo "Testing with only xz file present..."
  do_tests xzonly
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 9028f245043206542e9cca54a54199c3c4e1fc5c Mon Sep 17 00:00:00 2001
+From 2f64e41acfbecc95f6bb251b7aa93f00fca0c365 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai () suse ! de>
 Date: Wed, 27 Jan 2021 15:49:39 +0000
-Subject: [PATCH 06/30] selftest: firmware: Add ZSTD compressed file tests
+Subject: [PATCH 06/27] selftest: firmware: Add ZSTD compressed file tests
 
 It's similar like XZ compressed files.  For the simplicity, both XZ
 and ZSTD tests are done in a single function.  The format is specified
@@ -1150,13 +1150,13 @@ index 5b8c0fede..3fa8282b0 100755
  	fi
  }
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 7ff233eef256567218dda93aca033050380f9e6a Mon Sep 17 00:00:00 2001
+From 0a175da95c106d12c5e640063e672852b43cbda6 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:13 +0200
-Subject: [PATCH 07/30] Revert "selftest: firmware: Add ZSTD compressed file
+Subject: [PATCH 07/27] Revert "selftest: firmware: Add ZSTD compressed file
  tests"
 
 This reverts commit cbb1f2dd0a657f9335a97cb46d24b5d850379831.
@@ -1307,13 +1307,13 @@ index 3fa8282b0..5b8c0fede 100755
  	fi
  }
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 4e629c5df09f62759e4ed1eebdb763ec1f7e695e Mon Sep 17 00:00:00 2001
+From 81fee0798ba0adeeeb5f0cb0717dc39187dc7283 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:14 +0200
-Subject: [PATCH 08/30] Revert "selftest: firmware: Fix the
+Subject: [PATCH 08/27] Revert "selftest: firmware: Fix the
  request_firmware_into_buf() test for XZ format"
 
 This reverts commit ef30878940b7ec93a25244c1b7e672360742f268.
@@ -1325,7 +1325,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 4 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 771387976..6e94f7e8c 100644
+index ddf01bc5f..b1171a273 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -321,14 +321,12 @@ static int fw_decompress_zstd(struct device *dev, struct fw_priv *fw_priv,
@@ -1368,13 +1368,13 @@ index f1976e650..2424a97da 100755
  echo "Testing with only xz file present..."
  do_tests xzonly
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 8d0caa5d2fe33f7ed76048f7a489211f1aeb72a0 Mon Sep 17 00:00:00 2001
+From f54e92077a6bfe45edf25b0eb4996fcbcc8ff7c2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:15 +0200
-Subject: [PATCH 09/30] Revert "selftests: firmware: Simplify test patterns"
+Subject: [PATCH 09/27] Revert "selftests: firmware: Simplify test patterns"
 
 This reverts commit 4f2108e0646a3051cc22dc50a606c5311b1e09eb.
 
@@ -1526,13 +1526,13 @@ index 2424a97da..c2a2a1001 100755
  
  exit 0
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 8e72cd6d5f2821fb67503722892ab2ae7a44c18f Mon Sep 17 00:00:00 2001
+From a80b1534ead9c8d49943d78079f3baf32ba9c43a Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:16 +0200
-Subject: [PATCH 10/30] Revert "firmware: Add the support for ZSTD-compressed
+Subject: [PATCH 10/27] Revert "firmware: Add the support for ZSTD-compressed
  firmware files"
 
 This reverts commit fcbb6a7509654d369d8bd82a47934a3ba5993f16.
@@ -1583,7 +1583,7 @@ index 581bfe2c9..5b24f3959 100644
  config FW_CACHE
  	bool "Enable firmware caching during suspend"
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 6e94f7e8c..94d1789a2 100644
+index b1171a273..406a907a4 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -35,7 +35,6 @@
@@ -1677,7 +1677,7 @@ index 6e94f7e8c..94d1789a2 100644
  
  /* direct firmware loading support */
  static char fw_path_para[256];
-@@ -820,12 +757,7 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
+@@ -834,12 +771,7 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
  	if (!(opt_flags & FW_OPT_PARTIAL))
  		nondirect = true;
  
@@ -1692,13 +1692,13 @@ index 6e94f7e8c..94d1789a2 100644
  		ret = fw_get_filesystem_firmware(device, fw->priv, ".xz",
  						 fw_decompress_xz);
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 96e59d397b9083c892a3c460bff77c641aca3bd6 Mon Sep 17 00:00:00 2001
+From 0f763d1cdea6b2247b8d91dc1f5b6d1426ac1639 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap@infradead.org>
 Date: Mon, 14 Feb 2022 14:23:11 -0800
-Subject: [PATCH 11/30] firmware_loader: EXTRA_FIRMWARE does not support
+Subject: [PATCH 11/27] firmware_loader: EXTRA_FIRMWARE does not support
  compressed files
 
 Document in the firmware loader Kconfig help text that firmware image
@@ -1740,13 +1740,13 @@ index 5b24f3959..38f3b66bf 100644
  	bool "Enable firmware caching during suspend"
  	depends on PM_SLEEP
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 4fef84ee3d79430d1b55ec776113aa970f3f66dc Mon Sep 17 00:00:00 2001
+From 8a3b0a85d7aaf81703017215933454f3b5a71460 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:04 +0200
-Subject: [PATCH 12/30] firmware: Add the support for ZSTD-compressed firmware
+Subject: [PATCH 12/27] firmware: Add the support for ZSTD-compressed firmware
  files
 
 As the growing demand on ZSTD compressions, there have been requests
@@ -1812,7 +1812,7 @@ index 38f3b66bf..08bb50451 100644
  	bool "Enable firmware caching during suspend"
  	depends on PM_SLEEP
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 94d1789a2..74830aeec 100644
+index 406a907a4..57e632fd1 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -35,6 +35,7 @@
@@ -1908,7 +1908,7 @@ index 94d1789a2..74830aeec 100644
  
  /* direct firmware loading support */
  static char fw_path_para[256];
-@@ -757,7 +822,12 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
+@@ -771,7 +836,12 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
  	if (!(opt_flags & FW_OPT_PARTIAL))
  		nondirect = true;
  
@@ -1923,13 +1923,13 @@ index 94d1789a2..74830aeec 100644
  		ret = fw_get_filesystem_firmware(device, fw->priv, ".xz",
  						 fw_decompress_xz);
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 7e9a70a808657ec3446a83dafa5f7b50362eb49e Mon Sep 17 00:00:00 2001
+From e71ecfef9f71486568181af78972b413ef696023 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:05 +0200
-Subject: [PATCH 13/30] selftests: firmware: Use smaller dictionary for XZ
+Subject: [PATCH 13/27] selftests: firmware: Use smaller dictionary for XZ
  compression
 
 The xz -9 option leads to an unnecessarily too large dictionary that
@@ -1982,13 +1982,13 @@ index c2a2a1001..731f011de 100755
  echo
  echo "Testing with both plain and xz files present..."
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From a7f302356c40f064783cbfe282bee510a30dc47e Mon Sep 17 00:00:00 2001
+From 185ea6e4d4638da6b724fc7adb60da207102c6bd Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:06 +0200
-Subject: [PATCH 14/30] selftests: firmware: Fix the
+Subject: [PATCH 14/27] selftests: firmware: Fix the
  request_firmware_into_buf() test for XZ format
 
 The test uses a different firmware name, and we forgot to adapt for
@@ -2025,13 +2025,13 @@ index 731f011de..3ac09b401 100755
  echo "Testing with only xz file present..."
  for i in $(seq 1 5); do
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 2c8937a138878594de70d3aed204a7ea3dfcd91e Mon Sep 17 00:00:00 2001
+From 5dff2ad67a6badf15080d29d18933f7a6d296aef Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:07 +0200
-Subject: [PATCH 15/30] selftests: firmware: Simplify test patterns
+Subject: [PATCH 15/27] selftests: firmware: Simplify test patterns
 
 The test patterns are almost same in three sequential tests.
 Make the unified helper function for improving the readability.
@@ -2188,13 +2188,13 @@ index 3ac09b401..4a574be8b 100755
  
  exit 0
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 0800430eefba22d21db9a47b2924ccd1e1db32a3 Mon Sep 17 00:00:00 2001
+From 9b931089b8e4e0cbadba3aed778c1d9c41f3a9e6 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:08 +0200
-Subject: [PATCH 16/30] selftests: firmware: Add ZSTD compressed file tests
+Subject: [PATCH 16/27] selftests: firmware: Add ZSTD compressed file tests
 
 It's similar like XZ compressed files.  For the simplicity, both XZ
 and ZSTD tests are done in a single function.  The format is specified
@@ -2357,13 +2357,13 @@ index 5b8c0fede..3fa8282b0 100755
  	fi
  }
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 8f3dad42dc89b73cc847c73b731dab6aeade4e02 Mon Sep 17 00:00:00 2001
+From fe95d1e5c631ab03c60832a60d86a681f0c5fea4 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:21:57 -0700
-Subject: [PATCH 17/30] firmware_loader: Clear data and size in
+Subject: [PATCH 17/27] firmware_loader: Clear data and size in
  fw_free_paged_buf
 
 The fw_free_paged_buf() function resets the paged buffer information in
@@ -2383,7 +2383,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 74830aeec..3d9b20749 100644
+index 57e632fd1..85f52ec64 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -254,6 +254,8 @@ void fw_free_paged_buf(struct fw_priv *fw_priv)
@@ -2396,13 +2396,13 @@ index 74830aeec..3d9b20749 100644
  
  int fw_grow_paged_buf(struct fw_priv *fw_priv, int pages_needed)
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From c4d80c8365637e4918aca0c71407aeef88e77539 Mon Sep 17 00:00:00 2001
+From e3764a2fd65215eaf93b932e4b6234ae4c77c4a6 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:21:58 -0700
-Subject: [PATCH 18/30] firmware_loader: Check fw_state_is_done in
+Subject: [PATCH 18/27] firmware_loader: Check fw_state_is_done in
  loading_store
 
 Rename fw_sysfs_done() and fw_sysfs_loading() to fw_state_is_done() and
@@ -2529,98 +2529,13 @@ index 2889f446a..d5ff32a1b 100644
  
  #ifdef CONFIG_FW_LOADER
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From f42cf65abf2cb46147eed4dc887abb785dcdcc85 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>
-Date: Fri, 22 Apr 2022 11:32:15 +1000
-Subject: [PATCH 19/30] firmware_loader: use kernel credentials when reading
- firmware
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Device drivers may decide to not load firmware when probed to avoid
-slowing down the boot process should the firmware filesystem not be
-available yet. In this case, the firmware loading request may be done
-when a device file associated with the driver is first accessed. The
-credentials of the userspace process accessing the device file may be
-used to validate access to the firmware files requested by the driver.
-Ensure that the kernel assumes the responsibility of reading the
-firmware.
-
-This was observed on Android for a graphic driver loading their firmware
-when the device file (e.g. /dev/mali0) was first opened by userspace
-(i.e. surfaceflinger). The security context of surfaceflinger was used
-to validate the access to the firmware file (e.g.
-/vendor/firmware/mali.bin).
-
-Because previous configurations were relying on the userspace fallback
-mechanism, the security context of the userspace daemon (i.e. ueventd)
-was consistently used to read firmware files. More devices are found to
-use the command line argument firmware_class.path which gives the kernel
-the opportunity to read the firmware directly, hence surfacing this
-misattribution.
-
-Signed-off-by: Thiébaud Weksteen <tweek@google.com>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Tested-by: John Stultz <jstultz@google.com>
-Link: https://lore.kernel.org/r/20220422013215.2301793-1-tweek@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/base/firmware_loader/main.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
-
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 3d9b20749..6ac6c7753 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -802,6 +802,8 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 		  size_t offset, u32 opt_flags)
- {
- 	struct firmware *fw = NULL;
-+	struct cred *kern_cred = NULL;
-+	const struct cred *old_cred;
- 	bool nondirect = false;
- 	int ret;
- 
-@@ -818,6 +820,18 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 	if (ret <= 0) /* error or already assigned */
- 		goto out;
- 
-+	/*
-+	 * We are about to try to access the firmware file. Because we may have been
-+	 * called by a driver when serving an unrelated request from userland, we use
-+	 * the kernel credentials to read the file.
-+	 */
-+	kern_cred = prepare_kernel_cred(NULL);
-+	if (!kern_cred) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	old_cred = override_creds(kern_cred);
-+
- 	ret = fw_get_filesystem_firmware(device, fw->priv, "", NULL);
- 
- 	/* Only full reads can support decompression, platform, and sysfs. */
-@@ -848,6 +862,8 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 	} else
- 		ret = assign_fw(fw, device);
- 
-+	revert_creds(old_cred);
-+
-  out:
- 	if (ret < 0) {
- 		fw_abort_batch_reqs(fw);
--- 
-2.36.0.44.g0f828332d5
-
-
-From f41bc4ffb9a19c679e6056fd83994ea9912549d6 Mon Sep 17 00:00:00 2001
+From f33543dc0a638bf9b1c0133f129c9d0947eab52f Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:21:59 -0700
-Subject: [PATCH 20/30] firmware_loader: Split sysfs support from fallback
+Subject: [PATCH 19/27] firmware_loader: Split sysfs support from fallback
 
 In preparation for sharing the "loading" and "data" sysfs nodes with the
 new firmware upload support, split out sysfs functionality from fallback.c
@@ -3721,13 +3636,13 @@ index 000000000..b7b5c1766
 +
 +#endif /* __FIRMWARE_SYSFS_H */
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From dae53a0fe63d18259d79ca303bd751520641483a Mon Sep 17 00:00:00 2001
+From 3146f54f645fb5f481794239e62624af83f9667b Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:00 -0700
-Subject: [PATCH 21/30] firmware_loader: Add firmware-upload support
+Subject: [PATCH 20/27] firmware_loader: Add firmware-upload support
 
 Extend the firmware subsystem to support a persistent sysfs interface that
 userspace may use to initiate a firmware update. For example, FPGA based
@@ -3991,7 +3906,7 @@ index d5ff32a1b..fe77e91c3 100644
  #ifdef CONFIG_FW_LOADER
  bool firmware_is_builtin(const struct firmware *fw);
 diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 6ac6c7753..9a8579e56 100644
+index 85f52ec64..ac3f34e80 100644
 --- a/drivers/base/firmware_loader/main.c
 +++ b/drivers/base/firmware_loader/main.c
 @@ -92,9 +92,9 @@ static inline struct fw_priv *to_fw_priv(struct kref *ref)
@@ -4554,13 +4469,13 @@ index 3b057dfc8..5a10184a1 100644
  
  #endif
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 401edbf8728873d11dfb2567d3d75102e29306ba Mon Sep 17 00:00:00 2001
+From 9375a6964adc97a422a1932330be0fffe732fb41 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:01 -0700
-Subject: [PATCH 22/30] firmware_loader: Add sysfs nodes to monitor fw_upload
+Subject: [PATCH 21/27] firmware_loader: Add sysfs nodes to monitor fw_upload
 
 Add additional sysfs nodes to monitor the transfer of firmware upload data
 to the target device:
@@ -4868,13 +4783,13 @@ index 18bd4d99f..9edd47d3f 100644
  umode_t fw_upload_is_visible(struct kobject *kobj, struct attribute *attr, int n);
  #else
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From b55b6ec0cd9bcb3e8d9761c35f1aea9b094035da Mon Sep 17 00:00:00 2001
+From 733e4c08909eb37a013b3c22cb976284966369fc Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:02 -0700
-Subject: [PATCH 23/30] test_firmware: Add test support for firmware upload
+Subject: [PATCH 22/27] test_firmware: Add test support for firmware upload
 
 Add support for testing the firmware upload driver. There are four sysfs
 nodes added:
@@ -5283,13 +5198,13 @@ index 1bccd6cd5..2b8c56d7b 100644
  	kfree(test_fw_config);
  	mutex_unlock(&test_fw_mutex);
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From fb9d85ccd99a10c874149434831f3dcd859e00c0 Mon Sep 17 00:00:00 2001
+From af24369130aa2f02cdd66c9d7b6b1c97371dee0b Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:03 -0700
-Subject: [PATCH 24/30] test_firmware: Error injection for firmware upload
+Subject: [PATCH 23/27] test_firmware: Error injection for firmware upload
 
 Add error injection capability to the test_firmware module specifically
 for firmware upload testing. Error injection instructions are transferred
@@ -5529,80 +5444,13 @@ index 2b8c56d7b..76115c1a2 100644
  
  static ssize_t upload_register_store(struct device *dev,
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From da7522b64b9766472250aa9271e97fd720e27b50 Mon Sep 17 00:00:00 2001
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Date: Wed, 27 Apr 2022 16:19:05 +0200
-Subject: [PATCH 25/30] Revert "firmware_loader: use kernel credentials when
- reading firmware"
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-This reverts commit 3677563eb8731e1ad5970e3e57f74e5f9d63502a as it leaks
-memory :(
-
-Reported-by: Qian Cai <quic_qiancai@quicinc.com>
-Link: https://lore.kernel.org/r/20220427135823.GD71@qian
-Cc: Thiébaud Weksteen <tweek@google.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: John Stultz <jstultz@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/base/firmware_loader/main.c | 16 ----------------
- 1 file changed, 16 deletions(-)
-
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 9a8579e56..921d955b7 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -798,8 +798,6 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 		  size_t offset, u32 opt_flags)
- {
- 	struct firmware *fw = NULL;
--	struct cred *kern_cred = NULL;
--	const struct cred *old_cred;
- 	bool nondirect = false;
- 	int ret;
- 
-@@ -816,18 +814,6 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 	if (ret <= 0) /* error or already assigned */
- 		goto out;
- 
--	/*
--	 * We are about to try to access the firmware file. Because we may have been
--	 * called by a driver when serving an unrelated request from userland, we use
--	 * the kernel credentials to read the file.
--	 */
--	kern_cred = prepare_kernel_cred(NULL);
--	if (!kern_cred) {
--		ret = -ENOMEM;
--		goto out;
--	}
--	old_cred = override_creds(kern_cred);
--
- 	ret = fw_get_filesystem_firmware(device, fw->priv, "", NULL);
- 
- 	/* Only full reads can support decompression, platform, and sysfs. */
-@@ -858,8 +844,6 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 	} else
- 		ret = assign_fw(fw, device);
- 
--	revert_creds(old_cred);
--
-  out:
- 	if (ret < 0) {
- 		fw_abort_batch_reqs(fw);
--- 
-2.36.0.44.g0f828332d5
-
-
-From 2cb1156bd383154676d9313389d60aa6c4e4b076 Mon Sep 17 00:00:00 2001
+From 27a64770d9c8fd0d224d4ce7ddbcbb316942ae01 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Tue, 26 Apr 2022 09:35:32 -0700
-Subject: [PATCH 26/30] selftests: firmware: Add firmware upload selftests
+Subject: [PATCH 24/27] selftests: firmware: Add firmware upload selftests
 
 Add selftests to verify the firmware upload mechanism. These test
 include simple firmware uploads as well as upload cancellation and
@@ -5907,13 +5755,13 @@ index 000000000..c7a6f06c9
 +
 +exit 0
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 877fd70b9a5373bab47b93e7bac829d647a2ceab Mon Sep 17 00:00:00 2001
+From ae3b6ec1ba124dcbf0c7d4589992948ae6210abf Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Tue, 26 Apr 2022 13:03:55 -0700
-Subject: [PATCH 27/30] firmware_loader: Fix configs for sysfs split
+Subject: [PATCH 25/27] firmware_loader: Fix configs for sysfs split
 
 Fix the CONFIGs around register_sysfs_loader(),
 unregister_sysfs_loader(), register_firmware_config_sysctl(), and
@@ -5991,13 +5839,13 @@ index c21bcfe37..e6c487937 100644
  struct fw_sysfs {
  	bool nowait;
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From dceeba60abe1043d469e3ba4ff0fa3446a62be42 Mon Sep 17 00:00:00 2001
+From 48f744901c0b16a70b2d69574f08aa190c0ca584 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Tue, 26 Apr 2022 13:03:56 -0700
-Subject: [PATCH 28/30] firmware_loader: Move definitions from sysfs_upload.h
+Subject: [PATCH 26/27] firmware_loader: Move definitions from sysfs_upload.h
  to sysfs.h
 
 Move definitions required by sysfs.c from sysfs_upload.h to sysfs.h so
@@ -6101,13 +5949,13 @@ index 9edd47d3f..31931ff78 100644
 -#endif /* __FIRMWARE_UPLOAD_H */
 +#endif /* __SYSFS_UPLOAD_H */
 -- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
 
-From 918dbf116094fcce9620c8e54fc3e0a2b4a97010 Mon Sep 17 00:00:00 2001
+From 21e8e2c51b38a5af729ec719eb475f864cbcb6bd Mon Sep 17 00:00:00 2001
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 Date: Mon, 2 May 2022 12:14:56 +0700
-Subject: [PATCH 29/30] firmware_loader: describe 'module' parameter of
+Subject: [PATCH 27/27] firmware_loader: describe 'module' parameter of
  firmware_upload_register()
 
 Stephen Rothwell reported kernel-doc warning:
@@ -6146,95 +5994,5 @@ index 8cdcf3516..87044d523 100644
   * @name: firmware name to be associated with this device
   * @ops: pointer to structure of firmware upload ops
 -- 
-2.36.0.44.g0f828332d5
-
-
-From 488cdd46675f1a69102b47820771bd4dd7a598a2 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>
-Date: Mon, 2 May 2022 10:49:52 +1000
-Subject: [PATCH 30/30] firmware_loader: use kernel credentials when reading
- firmware
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Device drivers may decide to not load firmware when probed to avoid
-slowing down the boot process should the firmware filesystem not be
-available yet. In this case, the firmware loading request may be done
-when a device file associated with the driver is first accessed. The
-credentials of the userspace process accessing the device file may be
-used to validate access to the firmware files requested by the driver.
-Ensure that the kernel assumes the responsibility of reading the
-firmware.
-
-This was observed on Android for a graphic driver loading their firmware
-when the device file (e.g. /dev/mali0) was first opened by userspace
-(i.e. surfaceflinger). The security context of surfaceflinger was used
-to validate the access to the firmware file (e.g.
-/vendor/firmware/mali.bin).
-
-Previously, Android configurations were not setting up the
-firmware_class.path command line argument and were relying on the
-userspace fallback mechanism. In this case, the security context of the
-userspace daemon (i.e. ueventd) was consistently used to read firmware
-files. More Android devices are now found to set firmware_class.path
-which gives the kernel the opportunity to read the firmware directly
-(via kernel_read_file_from_path_initns). In this scenario, the current
-process credentials were used, even if unrelated to the loading of the
-firmware file.
-
-Signed-off-by: Thiébaud Weksteen <tweek@google.com>
-Cc: <stable@vger.kernel.org> # 5.10
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Acked-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20220502004952.3970800-1-tweek@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/base/firmware_loader/main.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 921d955b7..ac3f34e80 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -798,6 +798,8 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 		  size_t offset, u32 opt_flags)
- {
- 	struct firmware *fw = NULL;
-+	struct cred *kern_cred = NULL;
-+	const struct cred *old_cred;
- 	bool nondirect = false;
- 	int ret;
- 
-@@ -814,6 +816,18 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 	if (ret <= 0) /* error or already assigned */
- 		goto out;
- 
-+	/*
-+	 * We are about to try to access the firmware file. Because we may have been
-+	 * called by a driver when serving an unrelated request from userland, we use
-+	 * the kernel credentials to read the file.
-+	 */
-+	kern_cred = prepare_kernel_cred(NULL);
-+	if (!kern_cred) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	old_cred = override_creds(kern_cred);
-+
- 	ret = fw_get_filesystem_firmware(device, fw->priv, "", NULL);
- 
- 	/* Only full reads can support decompression, platform, and sysfs. */
-@@ -844,6 +858,9 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
- 	} else
- 		ret = assign_fw(fw, device);
- 
-+	revert_creds(old_cred);
-+	put_cred(kern_cred);
-+
-  out:
- 	if (ret < 0) {
- 		fw_abort_batch_reqs(fw);
--- 
-2.36.0.44.g0f828332d5
+2.36.1.74.g277cf0bc36
 
