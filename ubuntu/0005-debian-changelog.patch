@@ -1,27 +1,51 @@
-From a568eb2404a2c3ed52a5230d80aa7864019883d8 Mon Sep 17 00:00:00 2001
+From 4e2e3fb9f53f6a43d3be44bb27d292812bb623fe Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 15 May 2022 19:40:49 +0000
+Date: Wed, 18 May 2022 09:47:07 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16366 +-------------------------------------
- 1 file changed, 3 insertions(+), 16363 deletions(-)
+ debian.master/changelog | 16390 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16387 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index d53fad57a912..ca497271357b 100644
+index 919cbba2eabf..4a00cc6eb6b2 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16366 +1,6 @@
+@@ -1,16390 +1,6 @@
+-linux-unstable (5.18.0-4.4) kinetic; urgency=medium
++linux (5.17.9-051709.202205180947) kinetic; urgency=low
+ 
+-  * kinetic/linux-unstable: 5.18.0-4.4 -proposed tracker (LP: #1973587)
++  Mainline build at commit: v5.17.9
+ 
+-  * build backport-iwlwifi-dkms as linux-modules-iwlwifi-ABI (LP: #1969434)
+-    - [Packaging] support standalone dkms module builds
++ -- Mainline Build <kernel@sita>  Wed, 18 May 2022 09:47:07 +0000
+ 
+-  * Enable speakup kernel modules to allow the speakup screen reader to function
+-    (LP: #1967702)
+-    - [Config] CONFIG_SPEAKUP=m for all but s390x
+-
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Packaging] temporarily disable v4l2loopback"
+-    - Revert "UBUNTU: [Packaging] temporarily disable zfs"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.18-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 16 May 2022 14:15:35 +0200
+-
 -linux-unstable (5.18.0-3.3) kinetic; urgency=medium
-+linux (5.17.8-051708.202205151940) kinetic; urgency=low
- 
+-
 -  * kinetic/linux-unstable: 5.18.0-3.3 -proposed tracker (LP: #1972162)
-+  Mainline build at commit: v5.17.8
- 
+-
 -  * disable Intel DMA remapping by default (LP: #1971699)
 -    - Revert "UBUNTU: [Config] enable Intel DMA remapping options by default"
-+ -- Mainline Build <kernel@sita>  Sun, 15 May 2022 19:40:48 +0000
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v5.18-rc6

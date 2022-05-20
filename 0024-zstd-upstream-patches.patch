@@ -1,7 +1,7 @@
-From 3d9d29ee19b748f1c39c913d6d0ba58be27f4cc0 Mon Sep 17 00:00:00 2001
+From ae1ec518e8c107f3b1ab6959d6a64598a143b08b Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:41:53 -0800
-Subject: [PATCH 01/27] lib: zstd: Remove large inline functions in zstd_lazy.c
+Subject: [PATCH 01/28] lib: zstd: Remove large inline functions in zstd_lazy.c
 
 Backport of upstream PR #2828 [0].
 
@@ -321,10 +321,10 @@ index fb54d4e28..1db22db5b 100644
 2.36.1.74.g277cf0bc36
 
 
-From 6c2cb429d4db5463ae0fd26ff805ba808968ebb0 Mon Sep 17 00:00:00 2001
+From 8cfe8c06b2ca1f2f8608890e644db79b216476f4 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:56:42 -0800
-Subject: [PATCH 02/27] lib: zstd: Remove large inline functions from
+Subject: [PATCH 02/28] lib: zstd: Remove large inline functions from
  zstd_{double_,}fast.c
 
 Backport of upstream PR #2863 [0].
@@ -601,10 +601,10 @@ index 96b7d48e2..e0652e31d 100644
 2.36.1.74.g277cf0bc36
 
 
-From f34de168f7c693af09d4381b807129fda337d27c Mon Sep 17 00:00:00 2001
+From 865647845b8d4679080bac13344dd60c60d5080c Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Wed, 27 Jan 2021 16:22:48 +0100
-Subject: [PATCH 03/27] firmware: Add the support for ZSTD-compressed firmware
+Subject: [PATCH 03/28] firmware: Add the support for ZSTD-compressed firmware
  files
 
 Due to the popular demands on ZSTD, here is a patch to add a support
@@ -772,10 +772,10 @@ index 406a907a4..b1171a273 100644
 2.36.1.74.g277cf0bc36
 
 
-From a44dc5944e415711f78b08029c67003594af075a Mon Sep 17 00:00:00 2001
+From 40ce283ba20f4a14c14f89c94dd2d252d4ea2258 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Wed, 27 Jan 2021 16:32:55 +0100
-Subject: [PATCH 04/27] selftests: firmware: Simplify test patterns
+Subject: [PATCH 04/28] selftests: firmware: Simplify test patterns
 
 The test patterns are almost same in three sequential tests.
 Make the unified helper function for improving the readability.
@@ -932,10 +932,10 @@ index c2a2a1001..2424a97da 100755
 2.36.1.74.g277cf0bc36
 
 
-From 697bfacafb783d2a62bc821ab986515b295a9584 Mon Sep 17 00:00:00 2001
+From 63fe2b7440b4bdb3588d65b2f5376f11bfb44945 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Wed, 27 Jan 2021 16:34:53 +0100
-Subject: [PATCH 05/27] selftest: firmware: Fix the request_firmware_into_buf()
+Subject: [PATCH 05/28] selftest: firmware: Fix the request_firmware_into_buf()
  test for XZ format
 
 The test uses a different firmware name, and we forgot to adapt for
@@ -995,10 +995,10 @@ index 2424a97da..f1976e650 100755
 2.36.1.74.g277cf0bc36
 
 
-From 2f64e41acfbecc95f6bb251b7aa93f00fca0c365 Mon Sep 17 00:00:00 2001
+From 201e0e549a1108e259ce2dec13b28f82764703ac Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai () suse ! de>
 Date: Wed, 27 Jan 2021 15:49:39 +0000
-Subject: [PATCH 06/27] selftest: firmware: Add ZSTD compressed file tests
+Subject: [PATCH 06/28] selftest: firmware: Add ZSTD compressed file tests
 
 It's similar like XZ compressed files.  For the simplicity, both XZ
 and ZSTD tests are done in a single function.  The format is specified
@@ -1153,10 +1153,10 @@ index 5b8c0fede..3fa8282b0 100755
 2.36.1.74.g277cf0bc36
 
 
-From 0a175da95c106d12c5e640063e672852b43cbda6 Mon Sep 17 00:00:00 2001
+From df172b3e6b21e8a4d248e80def9c62ff9831b74e Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:13 +0200
-Subject: [PATCH 07/27] Revert "selftest: firmware: Add ZSTD compressed file
+Subject: [PATCH 07/28] Revert "selftest: firmware: Add ZSTD compressed file
  tests"
 
 This reverts commit cbb1f2dd0a657f9335a97cb46d24b5d850379831.
@@ -1310,10 +1310,10 @@ index 3fa8282b0..5b8c0fede 100755
 2.36.1.74.g277cf0bc36
 
 
-From 81fee0798ba0adeeeb5f0cb0717dc39187dc7283 Mon Sep 17 00:00:00 2001
+From ab624e5c1b661ba3b887c6b689344baa5d3e6ae3 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:14 +0200
-Subject: [PATCH 08/27] Revert "selftest: firmware: Fix the
+Subject: [PATCH 08/28] Revert "selftest: firmware: Fix the
  request_firmware_into_buf() test for XZ format"
 
 This reverts commit ef30878940b7ec93a25244c1b7e672360742f268.
@@ -1371,10 +1371,10 @@ index f1976e650..2424a97da 100755
 2.36.1.74.g277cf0bc36
 
 
-From f54e92077a6bfe45edf25b0eb4996fcbcc8ff7c2 Mon Sep 17 00:00:00 2001
+From 32dcf4d7e8c8bc38961a667557010bcb21117ec2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:15 +0200
-Subject: [PATCH 09/27] Revert "selftests: firmware: Simplify test patterns"
+Subject: [PATCH 09/28] Revert "selftests: firmware: Simplify test patterns"
 
 This reverts commit 4f2108e0646a3051cc22dc50a606c5311b1e09eb.
 
@@ -1529,10 +1529,10 @@ index 2424a97da..c2a2a1001 100755
 2.36.1.74.g277cf0bc36
 
 
-From a80b1534ead9c8d49943d78079f3baf32ba9c43a Mon Sep 17 00:00:00 2001
+From 3c98482bbe579fc46db250b7a9dda49cc505a150 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 22 Apr 2022 10:46:16 +0200
-Subject: [PATCH 10/27] Revert "firmware: Add the support for ZSTD-compressed
+Subject: [PATCH 10/28] Revert "firmware: Add the support for ZSTD-compressed
  firmware files"
 
 This reverts commit fcbb6a7509654d369d8bd82a47934a3ba5993f16.
@@ -1695,10 +1695,10 @@ index b1171a273..406a907a4 100644
 2.36.1.74.g277cf0bc36
 
 
-From 0f763d1cdea6b2247b8d91dc1f5b6d1426ac1639 Mon Sep 17 00:00:00 2001
+From 336187911a28e800c68dcf0d557d98c013abe716 Mon Sep 17 00:00:00 2001
 From: Randy Dunlap <rdunlap@infradead.org>
 Date: Mon, 14 Feb 2022 14:23:11 -0800
-Subject: [PATCH 11/27] firmware_loader: EXTRA_FIRMWARE does not support
+Subject: [PATCH 11/28] firmware_loader: EXTRA_FIRMWARE does not support
  compressed files
 
 Document in the firmware loader Kconfig help text that firmware image
@@ -1743,10 +1743,10 @@ index 5b24f3959..38f3b66bf 100644
 2.36.1.74.g277cf0bc36
 
 
-From 8a3b0a85d7aaf81703017215933454f3b5a71460 Mon Sep 17 00:00:00 2001
+From 84b058bca0d2cd2e3fb73881c7db78089daadddc Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:04 +0200
-Subject: [PATCH 12/27] firmware: Add the support for ZSTD-compressed firmware
+Subject: [PATCH 12/28] firmware: Add the support for ZSTD-compressed firmware
  files
 
 As the growing demand on ZSTD compressions, there have been requests
@@ -1926,10 +1926,10 @@ index 406a907a4..57e632fd1 100644
 2.36.1.74.g277cf0bc36
 
 
-From e71ecfef9f71486568181af78972b413ef696023 Mon Sep 17 00:00:00 2001
+From b65753e6dd66a6e9725f36b5039d5087156ea56c Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:05 +0200
-Subject: [PATCH 13/27] selftests: firmware: Use smaller dictionary for XZ
+Subject: [PATCH 13/28] selftests: firmware: Use smaller dictionary for XZ
  compression
 
 The xz -9 option leads to an unnecessarily too large dictionary that
@@ -1985,10 +1985,10 @@ index c2a2a1001..731f011de 100755
 2.36.1.74.g277cf0bc36
 
 
-From 185ea6e4d4638da6b724fc7adb60da207102c6bd Mon Sep 17 00:00:00 2001
+From 69f9c81b8f446914981d5aea2f92d89c9cef9c64 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:06 +0200
-Subject: [PATCH 14/27] selftests: firmware: Fix the
+Subject: [PATCH 14/28] selftests: firmware: Fix the
  request_firmware_into_buf() test for XZ format
 
 The test uses a different firmware name, and we forgot to adapt for
@@ -2028,10 +2028,10 @@ index 731f011de..3ac09b401 100755
 2.36.1.74.g277cf0bc36
 
 
-From 5dff2ad67a6badf15080d29d18933f7a6d296aef Mon Sep 17 00:00:00 2001
+From 60bb757cd7b7210dc7630ac53fd349f735285fce Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:07 +0200
-Subject: [PATCH 15/27] selftests: firmware: Simplify test patterns
+Subject: [PATCH 15/28] selftests: firmware: Simplify test patterns
 
 The test patterns are almost same in three sequential tests.
 Make the unified helper function for improving the readability.
@@ -2191,10 +2191,10 @@ index 3ac09b401..4a574be8b 100755
 2.36.1.74.g277cf0bc36
 
 
-From 9b931089b8e4e0cbadba3aed778c1d9c41f3a9e6 Mon Sep 17 00:00:00 2001
+From 98813f7241a136024164aff1a90120beae020fc4 Mon Sep 17 00:00:00 2001
 From: Takashi Iwai <tiwai@suse.de>
 Date: Thu, 21 Apr 2022 17:29:08 +0200
-Subject: [PATCH 16/27] selftests: firmware: Add ZSTD compressed file tests
+Subject: [PATCH 16/28] selftests: firmware: Add ZSTD compressed file tests
 
 It's similar like XZ compressed files.  For the simplicity, both XZ
 and ZSTD tests are done in a single function.  The format is specified
@@ -2360,10 +2360,10 @@ index 5b8c0fede..3fa8282b0 100755
 2.36.1.74.g277cf0bc36
 
 
-From fe95d1e5c631ab03c60832a60d86a681f0c5fea4 Mon Sep 17 00:00:00 2001
+From 2a92c75359e9083c1c8c7160470bc86172c30704 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:21:57 -0700
-Subject: [PATCH 17/27] firmware_loader: Clear data and size in
+Subject: [PATCH 17/28] firmware_loader: Clear data and size in
  fw_free_paged_buf
 
 The fw_free_paged_buf() function resets the paged buffer information in
@@ -2399,10 +2399,10 @@ index 57e632fd1..85f52ec64 100644
 2.36.1.74.g277cf0bc36
 
 
-From e3764a2fd65215eaf93b932e4b6234ae4c77c4a6 Mon Sep 17 00:00:00 2001
+From 7411304feddea39a8380ee412150b9308a7eccb6 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:21:58 -0700
-Subject: [PATCH 18/27] firmware_loader: Check fw_state_is_done in
+Subject: [PATCH 18/28] firmware_loader: Check fw_state_is_done in
  loading_store
 
 Rename fw_sysfs_done() and fw_sysfs_loading() to fw_state_is_done() and
@@ -2532,10 +2532,10 @@ index 2889f446a..d5ff32a1b 100644
 2.36.1.74.g277cf0bc36
 
 
-From f33543dc0a638bf9b1c0133f129c9d0947eab52f Mon Sep 17 00:00:00 2001
+From 7a38c2ee33641db2796a3b61348ac3684e2c13c2 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:21:59 -0700
-Subject: [PATCH 19/27] firmware_loader: Split sysfs support from fallback
+Subject: [PATCH 19/28] firmware_loader: Split sysfs support from fallback
 
 In preparation for sharing the "loading" and "data" sysfs nodes with the
 new firmware upload support, split out sysfs functionality from fallback.c
@@ -3639,10 +3639,10 @@ index 000000000..b7b5c1766
 2.36.1.74.g277cf0bc36
 
 
-From 3146f54f645fb5f481794239e62624af83f9667b Mon Sep 17 00:00:00 2001
+From ec678b242496cf472d90370ab9be2abc4cbb0e36 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:00 -0700
-Subject: [PATCH 20/27] firmware_loader: Add firmware-upload support
+Subject: [PATCH 20/28] firmware_loader: Add firmware-upload support
 
 Extend the firmware subsystem to support a persistent sysfs interface that
 userspace may use to initiate a firmware update. For example, FPGA based
@@ -4472,10 +4472,10 @@ index 3b057dfc8..5a10184a1 100644
 2.36.1.74.g277cf0bc36
 
 
-From 9375a6964adc97a422a1932330be0fffe732fb41 Mon Sep 17 00:00:00 2001
+From 89cb7359af75fcbb15c9355cd56666960cf730c8 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:01 -0700
-Subject: [PATCH 21/27] firmware_loader: Add sysfs nodes to monitor fw_upload
+Subject: [PATCH 21/28] firmware_loader: Add sysfs nodes to monitor fw_upload
 
 Add additional sysfs nodes to monitor the transfer of firmware upload data
 to the target device:
@@ -4786,10 +4786,10 @@ index 18bd4d99f..9edd47d3f 100644
 2.36.1.74.g277cf0bc36
 
 
-From 733e4c08909eb37a013b3c22cb976284966369fc Mon Sep 17 00:00:00 2001
+From e5387ab5482878abcb4581f5e800835752d842a5 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:02 -0700
-Subject: [PATCH 22/27] test_firmware: Add test support for firmware upload
+Subject: [PATCH 22/28] test_firmware: Add test support for firmware upload
 
 Add support for testing the firmware upload driver. There are four sysfs
 nodes added:
@@ -5201,10 +5201,10 @@ index 1bccd6cd5..2b8c56d7b 100644
 2.36.1.74.g277cf0bc36
 
 
-From af24369130aa2f02cdd66c9d7b6b1c97371dee0b Mon Sep 17 00:00:00 2001
+From 48a02aec608970f007a19bbc730148eaef128734 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Thu, 21 Apr 2022 14:22:03 -0700
-Subject: [PATCH 23/27] test_firmware: Error injection for firmware upload
+Subject: [PATCH 23/28] test_firmware: Error injection for firmware upload
 
 Add error injection capability to the test_firmware module specifically
 for firmware upload testing. Error injection instructions are transferred
@@ -5447,10 +5447,10 @@ index 2b8c56d7b..76115c1a2 100644
 2.36.1.74.g277cf0bc36
 
 
-From 27a64770d9c8fd0d224d4ce7ddbcbb316942ae01 Mon Sep 17 00:00:00 2001
+From 5842376f980ef61962fa2759eb4edc76e6e11486 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Tue, 26 Apr 2022 09:35:32 -0700
-Subject: [PATCH 24/27] selftests: firmware: Add firmware upload selftests
+Subject: [PATCH 24/28] selftests: firmware: Add firmware upload selftests
 
 Add selftests to verify the firmware upload mechanism. These test
 include simple firmware uploads as well as upload cancellation and
@@ -5758,10 +5758,10 @@ index 000000000..c7a6f06c9
 2.36.1.74.g277cf0bc36
 
 
-From ae3b6ec1ba124dcbf0c7d4589992948ae6210abf Mon Sep 17 00:00:00 2001
+From 57a980a1280e08f64ca85485db9f66766b9fd120 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Tue, 26 Apr 2022 13:03:55 -0700
-Subject: [PATCH 25/27] firmware_loader: Fix configs for sysfs split
+Subject: [PATCH 25/28] firmware_loader: Fix configs for sysfs split
 
 Fix the CONFIGs around register_sysfs_loader(),
 unregister_sysfs_loader(), register_firmware_config_sysctl(), and
@@ -5842,10 +5842,10 @@ index c21bcfe37..e6c487937 100644
 2.36.1.74.g277cf0bc36
 
 
-From 48f744901c0b16a70b2d69574f08aa190c0ca584 Mon Sep 17 00:00:00 2001
+From 399b19f784d17f8f0bf8ce06164a8764627a3c63 Mon Sep 17 00:00:00 2001
 From: Russ Weight <russell.h.weight@intel.com>
 Date: Tue, 26 Apr 2022 13:03:56 -0700
-Subject: [PATCH 26/27] firmware_loader: Move definitions from sysfs_upload.h
+Subject: [PATCH 26/28] firmware_loader: Move definitions from sysfs_upload.h
  to sysfs.h
 
 Move definitions required by sysfs.c from sysfs_upload.h to sysfs.h so
@@ -5952,10 +5952,10 @@ index 9edd47d3f..31931ff78 100644
 2.36.1.74.g277cf0bc36
 
 
-From 21e8e2c51b38a5af729ec719eb475f864cbcb6bd Mon Sep 17 00:00:00 2001
+From fb5910eeed141f5c13285fdb236537e1381d8757 Mon Sep 17 00:00:00 2001
 From: Bagas Sanjaya <bagasdotme@gmail.com>
 Date: Mon, 2 May 2022 12:14:56 +0700
-Subject: [PATCH 27/27] firmware_loader: describe 'module' parameter of
+Subject: [PATCH 27/28] firmware_loader: describe 'module' parameter of
  firmware_upload_register()
 
 Stephen Rothwell reported kernel-doc warning:
@@ -5993,6 +5993,70 @@ index 8cdcf3516..87044d523 100644
   * @parent: parent device instantiating firmware upload
   * @name: firmware name to be associated with this device
   * @ops: pointer to structure of firmware upload ops
+-- 
+2.36.1.74.g277cf0bc36
+
+
+From 330f3b6379e50d22703a3f25a95f4849e762f3b4 Mon Sep 17 00:00:00 2001
+From: Dan Carpenter <dan.carpenter@oracle.com>
+Date: Fri, 6 May 2022 09:55:15 +0300
+Subject: [PATCH 28/28] test_firmware: fix end of loop test in
+ upload_read_show()
+
+If a list_for_each_entry() loop exits without hitting a break statement
+then the iterator points to invalid memory.  So in this code the
+"tst->name" dereference is an out bounds read.  It's an offset from the
+&test_upload_list pointer and it will likely work fine most of the time
+but it's not correct.
+
+One alternative is to fix this this by changing the test to:
+
+	if (list_entry_is_head(tst, &test_upload_list, node)) {
+
+But the simpler, trendy new way is just create a new variable and test
+for NULL.
+
+Fixes: a31ad463b72d ("test_firmware: Add test support for firmware upload")
+Reviewed-by: Russ Weight <russell.h.weight@intel.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Link: https://lore.kernel.org/r/YnTGU3UJOIA09I7e@kili
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ lib/test_firmware.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 76115c1a2..c82b65947 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -1392,7 +1392,8 @@ static ssize_t upload_read_show(struct device *dev,
+ 				struct device_attribute *attr,
+ 				char *buf)
+ {
+-	struct test_firmware_upload *tst;
++	struct test_firmware_upload *tst = NULL;
++	struct test_firmware_upload *tst_iter;
+ 	int ret = -EINVAL;
+ 
+ 	if (!test_fw_config->upload_name) {
+@@ -1401,11 +1402,13 @@ static ssize_t upload_read_show(struct device *dev,
+ 	}
+ 
+ 	mutex_lock(&test_fw_mutex);
+-	list_for_each_entry(tst, &test_upload_list, node)
+-		if (tst->name == test_fw_config->upload_name)
++	list_for_each_entry(tst_iter, &test_upload_list, node)
++		if (tst_iter->name == test_fw_config->upload_name) {
++			tst = tst_iter;
+ 			break;
++		}
+ 
+-	if (tst->name != test_fw_config->upload_name) {
++	if (!tst) {
+ 		pr_err("Firmware name not found: %s\n",
+ 		       test_fw_config->upload_name);
+ 		goto out;
 -- 
 2.36.1.74.g277cf0bc36
 
