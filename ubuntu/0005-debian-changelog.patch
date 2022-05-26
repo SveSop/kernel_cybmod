@@ -1,27 +1,50 @@
-From 4e2e3fb9f53f6a43d3be44bb27d292812bb623fe Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 18 May 2022 09:47:07 +0000
+From a214eb295dbbff0d540a7a5e6784c4e340030db2 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 25 May 2022 13:31:15 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16390 +-------------------------------------
- 1 file changed, 3 insertions(+), 16387 deletions(-)
+ debian.master/changelog | 16413 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16410 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 919cbba2eabf..4a00cc6eb6b2 100644
+index 7a0f50830566..22a16fc0030a 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16390 +1,6 @@
--linux-unstable (5.18.0-4.4) kinetic; urgency=medium
-+linux (5.17.9-051709.202205180947) kinetic; urgency=low
+@@ -1,16413 +1,6 @@
+-linux-unstable (5.18.0-5.5) kinetic; urgency=medium
++linux (5.17.11-051711.202205251331) kinetic; urgency=low
  
--  * kinetic/linux-unstable: 5.18.0-4.4 -proposed tracker (LP: #1973587)
-+  Mainline build at commit: v5.17.9
+-  * kinetic/linux-unstable: 5.18.0-5.5 -proposed tracker (LP: #1975458)
++  Mainline build at commit: v5.17.11
+ 
+-  * enable CONFIG_DEVTMPFS_SAFE (LP: #1974442)
+-    - [Config] enable CONFIG_DEVTMPFS_SAFE
++ -- Mainline Build <kernel@kathleen>  Wed, 25 May 2022 13:31:15 +0000
  
 -  * build backport-iwlwifi-dkms as linux-modules-iwlwifi-ABI (LP: #1969434)
+-    - [Packaging] drop do_<mod> arch specific configs
+-
+-  * prevent kernel panic with overlayfs + shiftfs (LP: #1973620)
+-    - SAUCE: overlayfs: prevent dereferencing struct file in ovl_vm_prfile_set()
+-
+-  * linux-image-5.0.0-35-generic breaks checkpointing of container
+-    (LP: #1857257) // re-apply missing overlayfs SAUCE patch (LP: #1967924)
+-    - SAUCE: overlayfs: fix incorrect mnt_id of files opened from map_files
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.18
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 23 May 2022 11:21:38 +0200
+-
+-linux-unstable (5.18.0-4.4) kinetic; urgency=medium
+-
+-  * kinetic/linux-unstable: 5.18.0-4.4 -proposed tracker (LP: #1973587)
+-
+-  * build backport-iwlwifi-dkms as linux-modules-iwlwifi-ABI (LP: #1969434)
 -    - [Packaging] support standalone dkms module builds
-+ -- Mainline Build <kernel@sita>  Wed, 18 May 2022 09:47:07 +0000
- 
+-
 -  * Enable speakup kernel modules to allow the speakup screen reader to function
 -    (LP: #1967702)
 -    - [Config] CONFIG_SPEAKUP=m for all but s390x
