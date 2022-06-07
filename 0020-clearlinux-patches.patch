@@ -1,17 +1,17 @@
-From fd9027f848c2c8fc0dfdb274c2456040ed34858d Mon Sep 17 00:00:00 2001
+From 8ab4691f0f7ed66723aba9a973561bcf1f4caa17 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Sun, 22 Sep 2019 11:12:35 -0300
-Subject: [PATCH 1/5] intel_rapl: Silence rapl trace debug
+Date: Mon, 14 Mar 2016 11:22:09 -0600
+Subject: [PATCH 03/29] silence rapl
 
 ---
  drivers/powercap/intel_rapl_common.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/powercap/intel_rapl_common.c b/drivers/powercap/intel_rapl_common.c
-index 7c0099e7a6d7..f0d65382806a 100644
+index 07611a00b..4031d810d 100644
 --- a/drivers/powercap/intel_rapl_common.c
 +++ b/drivers/powercap/intel_rapl_common.c
-@@ -1455,7 +1455,7 @@ static int __init rapl_init(void)
+@@ -1512,7 +1512,7 @@ static int __init rapl_init(void)
  
  	id = x86_match_cpu(rapl_ids);
  	if (!id) {
@@ -21,87 +21,20 @@ index 7c0099e7a6d7..f0d65382806a 100644
  
  		return -ENODEV;
 -- 
-2.33.1
+2.36.1.74.g277cf0bc36
 
-From 4a803e2a4454bad8ee8344e40df75a721437b1c5 Mon Sep 17 00:00:00 2001
-From: William Douglas <william.douglas@intel.com>
-Date: Wed, 20 Jun 2018 17:23:21 +0000
-Subject: [PATCH 2/5] firmware: Enable stateless firmware loading
+From e3d5addd91b387bb5fd6218e8ea9edb1a68f9187 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Mon, 1 Nov 2021 13:07:50 +0100
+Subject: [PATCH 10/29] port: initialize ata before graphics
 
-Prefer the order of specific version before generic and /etc before
-/lib to enable the user to give specific overrides for generic
-firmware and distribution firmware.
----
- drivers/base/firmware_loader/main.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
-index 94d1789a233e..678b81768bd9 100644
---- a/drivers/base/firmware_loader/main.c
-+++ b/drivers/base/firmware_loader/main.c
-@@ -407,6 +407,8 @@ static int fw_decompress_xz(struct device *dev, struct fw_priv *fw_priv,
- static char fw_path_para[256];
- static const char * const fw_path[] = {
- 	fw_path_para,
-+	"/etc/firmware/" UTS_RELEASE,
-+	"/etc/firmware",
- 	"/lib/firmware/updates/" UTS_RELEASE,
- 	"/lib/firmware/updates",
- 	"/lib/firmware/" UTS_RELEASE,
--- 
-2.33.1
-
-From 55ab5bd835188090f64e2e77f8d039d9774e026e Mon Sep 17 00:00:00 2001
-From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Sun, 18 Feb 2018 23:35:41 +0000
-Subject: [PATCH 3/5] locking: rwsem: spin faster
-
-tweak rwsem owner spinning a bit
-
-Signed-off-by: Alexandre Frade <kernel@xanmod.org>
----
- kernel/locking/rwsem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
-index 04a74d040a6d..cb416cbd6650 100644
---- a/kernel/locking/rwsem.c
-+++ b/kernel/locking/rwsem.c
-@@ -716,6 +716,7 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
- 	struct task_struct *new, *owner;
- 	unsigned long flags, new_flags;
- 	enum owner_state state;
-+	int i = 0;
- 
- 	lockdep_assert_preemption_disabled();
- 
-@@ -752,7 +753,8 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
- 			break;
- 		}
- 
--		cpu_relax();
-+		if (i++ > 1000)
-+			cpu_relax();
- 	}
- 
- 	return state;
--- 
-2.33.1
-
-From 950a7341bec76d4a71172013a34d9c2901797cc4 Mon Sep 17 00:00:00 2001
-From: Arjan van de Ven <arjan@linux.intel.com>
-Date: Thu, 2 Jun 2016 23:36:32 -0500
-Subject: [PATCH 4/5] drivers: initialize ata before graphics
-
-ATA init is the long pole in the boot process, and its asynchronous.
-move the graphics init after it so that ata and graphics initialize
-in parallel
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  drivers/Makefile | 15 ++++++++-------
  1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/Makefile b/drivers/Makefile
-index a110338c860c..f91099276a78 100644
+index 020780b6b..9cf43ac81 100644
 --- a/drivers/Makefile
 +++ b/drivers/Makefile
 @@ -59,15 +59,8 @@ obj-y				+= char/
@@ -136,12 +69,217 @@ index a110338c860c..f91099276a78 100644
  obj-$(CONFIG_MTD)		+= mtd/
  obj-$(CONFIG_SPI)		+= spi/
 -- 
-2.33.1
+2.36.1.74.g277cf0bc36
 
-From 03a38e0397c0d54f3d80a853843c731af546a3f0 Mon Sep 17 00:00:00 2001
+From c517f801925ebcf49b46b4e989dd72f8ef810739 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Fri, 6 Jan 2017 15:34:09 +0000
+Subject: [PATCH 11/29] ipv4/tcp: allow the memory tuning for tcp to go a
+ little bigger than default
+
+---
+ net/ipv4/tcp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index cf18fbcbf..8691792c0 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -4671,8 +4671,8 @@ void __init tcp_init(void)
+ 	tcp_init_mem();
+ 	/* Set per-socket limits to no more than 1/128 the pressure threshold */
+ 	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
+-	max_wshare = min(4UL*1024*1024, limit);
+-	max_rshare = min(6UL*1024*1024, limit);
++	max_wshare = min(16UL*1024*1024, limit);
++	max_rshare = min(16UL*1024*1024, limit);
+ 
+ 	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
+ 	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
+-- 
+2.36.1.74.g277cf0bc36
+
+From 4ef1619b0e82031705d2a2e569273a85dfb86031 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Wed, 20 Jun 2018 17:23:21 +0000
+Subject: [PATCH 14/29] enable stateless firmware loading
+
+Prefer the order of specific version before generic and /etc before
+/lib to enable the user to give specific overrides for generic
+firmware and distribution firmware.
+---
+ drivers/base/firmware_loader/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/base/firmware_loader/main.c b/drivers/base/firmware_loader/main.c
+index 406a907a4..89890e085 100644
+--- a/drivers/base/firmware_loader/main.c
++++ b/drivers/base/firmware_loader/main.c
+@@ -407,6 +407,8 @@ static int fw_decompress_xz(struct device *dev, struct fw_priv *fw_priv,
+ static char fw_path_para[256];
+ static const char * const fw_path[] = {
+ 	fw_path_para,
++	"/etc/firmware/" UTS_RELEASE,
++	"/etc/firmware",
+ 	"/lib/firmware/updates/" UTS_RELEASE,
+ 	"/lib/firmware/updates",
+ 	"/lib/firmware/" UTS_RELEASE,
+-- 
+2.36.1.74.g277cf0bc36
+
+From a90776f8bd637bc2e41fd80c96af3fe5e5c9a029 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Sat, 8 Dec 2018 18:21:32 +0000
+Subject: [PATCH 17/29] use lfence instead of rep and nop
+
+---
+ arch/x86/include/asm/vdso/processor.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/x86/include/asm/vdso/processor.h b/arch/x86/include/asm/vdso/processor.h
+index 57b1a7034..e2c45674f 100644
+--- a/arch/x86/include/asm/vdso/processor.h
++++ b/arch/x86/include/asm/vdso/processor.h
+@@ -10,7 +10,7 @@
+ /* REP NOP (PAUSE) is a good thing to insert into busy-wait loops. */
+ static __always_inline void rep_nop(void)
+ {
+-	asm volatile("rep; nop" ::: "memory");
++	asm volatile("lfence" ::: "memory");
+ }
+ 
+ static __always_inline void cpu_relax(void)
+-- 
+2.36.1.74.g277cf0bc36
+
+From 5ca0abbf52db83e8566492a1eb0cb4d89bca2330 Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Thu, 13 Dec 2018 01:00:49 +0000
+Subject: [PATCH 18/29] do accept() in LIFO order for cache efficiency
+
+---
+ include/linux/wait.h            |  2 ++
+ kernel/sched/wait.c             | 24 ++++++++++++++++++++++++
+ net/ipv4/inet_connection_sock.c |  2 +-
+ 3 files changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/include/linux/wait.h b/include/linux/wait.h
+index 851e07da2..85653fc33 100644
+--- a/include/linux/wait.h
++++ b/include/linux/wait.h
+@@ -165,6 +165,7 @@ static inline bool wq_has_sleeper(struct wait_queue_head *wq_head)
+ 
+ extern void add_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
+ extern void add_wait_queue_exclusive(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
++extern void add_wait_queue_exclusive_lifo(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
+ extern void add_wait_queue_priority(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
+ extern void remove_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
+ 
+@@ -1163,6 +1164,7 @@ do {										\
+  */
+ void prepare_to_wait(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
+ bool prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
++void prepare_to_wait_exclusive_lifo(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
+ long prepare_to_wait_event(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state);
+ void finish_wait(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry);
+ long wait_woken(struct wait_queue_entry *wq_entry, unsigned mode, long timeout);
+diff --git a/kernel/sched/wait.c b/kernel/sched/wait.c
+index 9860bb9a8..c7f045873 100644
+--- a/kernel/sched/wait.c
++++ b/kernel/sched/wait.c
+@@ -47,6 +47,17 @@ void add_wait_queue_priority(struct wait_queue_head *wq_head, struct wait_queue_
+ }
+ EXPORT_SYMBOL_GPL(add_wait_queue_priority);
+ 
++void add_wait_queue_exclusive_lifo(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry)
++{
++	unsigned long flags;
++
++	wq_entry->flags |= WQ_FLAG_EXCLUSIVE;
++	spin_lock_irqsave(&wq_head->lock, flags);
++	__add_wait_queue(wq_head, wq_entry);
++	spin_unlock_irqrestore(&wq_head->lock, flags);
++}
++EXPORT_SYMBOL(add_wait_queue_exclusive_lifo);
++
+ void remove_wait_queue(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry)
+ {
+ 	unsigned long flags;
+@@ -289,6 +300,19 @@ prepare_to_wait_exclusive(struct wait_queue_head *wq_head, struct wait_queue_ent
+ }
+ EXPORT_SYMBOL(prepare_to_wait_exclusive);
+ 
++void prepare_to_wait_exclusive_lifo(struct wait_queue_head *wq_head, struct wait_queue_entry *wq_entry, int state)
++{
++	unsigned long flags;
++
++	wq_entry->flags |= WQ_FLAG_EXCLUSIVE;
++	spin_lock_irqsave(&wq_head->lock, flags);
++	if (list_empty(&wq_entry->entry))
++		__add_wait_queue(wq_head, wq_entry);
++	set_current_state(state);
++	spin_unlock_irqrestore(&wq_head->lock, flags);
++}
++EXPORT_SYMBOL(prepare_to_wait_exclusive_lifo);
++
+ void init_wait_entry(struct wait_queue_entry *wq_entry, int flags)
+ {
+ 	wq_entry->flags = flags;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 1e5b53c2b..f1c86ceac 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -441,7 +441,7 @@ static int inet_csk_wait_for_connect(struct sock *sk, long timeo)
+ 	 * having to remove and re-insert us on the wait queue.
+ 	 */
+ 	for (;;) {
+-		prepare_to_wait_exclusive(sk_sleep(sk), &wait,
++		prepare_to_wait_exclusive_lifo(sk_sleep(sk), &wait,
+ 					  TASK_INTERRUPTIBLE);
+ 		release_sock(sk);
+ 		if (reqsk_queue_empty(&icsk->icsk_accept_queue))
+-- 
+2.36.1.74.g277cf0bc36
+
+From 6e3471fdca03df396c42e4bd15c3d13a1eee4319 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Mon, 10 Jan 2022 18:44:19 +0100
+Subject: [PATCH 19/29] port: locking: rwsem: spin faster
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ kernel/locking/rwsem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
+index acde5d6f1..557f683fd 100644
+--- a/kernel/locking/rwsem.c
++++ b/kernel/locking/rwsem.c
+@@ -707,6 +707,7 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+ 	struct task_struct *new, *owner;
+ 	unsigned long flags, new_flags;
+ 	enum owner_state state;
++	int i = 0;
+ 
+ 	lockdep_assert_preemption_disabled();
+ 
+@@ -743,7 +744,8 @@ rwsem_spin_on_owner(struct rw_semaphore *sem)
+ 			break;
+ 		}
+ 
+-		cpu_relax();
++		if (i++ > 1000)
++			cpu_relax();
+ 	}
+ 
+ 	return state;
+-- 
+2.36.1.74.g277cf0bc36
+
+From 87eb950cc4ccffbe6b231971b2ceab30800ca013 Mon Sep 17 00:00:00 2001
 From: Arjan van de Ven <arjan@linux.intel.com>
 Date: Wed, 17 May 2017 01:52:11 +0000
-Subject: [PATCH 5/5] init: wait for partition and retry scan
+Subject: [PATCH 12/29] init: wait for partition and retry scan
 
 As Clear Linux boots fast the device is not ready when
 the mounting code is reached, so a retry device scan will
@@ -154,10 +292,10 @@ Signed-off-by: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
  1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/init/do_mounts.c b/init/do_mounts.c
-index 762b534978d9..107b96927049 100644
+index 7058e14ad..ce4e841ea 100644
 --- a/init/do_mounts.c
 +++ b/init/do_mounts.c
-@@ -284,8 +284,18 @@ dev_t name_to_dev_t(const char *name)
+@@ -283,8 +283,18 @@ dev_t name_to_dev_t(const char *name)
  	if (strcmp(name, "/dev/ram") == 0)
  		return Root_RAM0;
  #ifdef CONFIG_BLOCK
@@ -178,7 +316,7 @@ index 762b534978d9..107b96927049 100644
  	if (strncmp(name, "PARTLABEL=", 10) == 0)
  		return devt_from_partlabel(name + 10);
  	if (strncmp(name, "/dev/", 5) == 0)
-@@ -613,7 +623,9 @@ void __init prepare_namespace(void)
+@@ -612,7 +622,9 @@ void __init prepare_namespace(void)
  	 * For example, it is not atypical to wait 5 seconds here
  	 * for the touchpad of a laptop to initialize.
  	 */
@@ -189,5 +327,5 @@ index 762b534978d9..107b96927049 100644
  	md_run_setup();
  
 -- 
-2.33.1
+2.36.1.74.g277cf0bc36
 

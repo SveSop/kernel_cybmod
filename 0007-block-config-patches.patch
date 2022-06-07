@@ -1,4 +1,4 @@
-From 31f80dbf699502923dda2a61b34db6c3d57feb98 Mon Sep 17 00:00:00 2001
+From 7b5c72f975ad3c6aebf1c76d598a659eaa9b5a17 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 21 Mar 2022 13:20:27 +0100
 Subject: [PATCH 1/4] block, Kconfig.iosched: set default value of IOSCHED_BFQ
@@ -36,10 +36,10 @@ index 615516146..480468ab2 100644
  	BFQ I/O scheduler for BLK-MQ. BFQ distributes the bandwidth of
  	of the device among all processes according to their weights,
 -- 
-2.35.1.354.g715d08a9e5
+2.36.1.74.g277cf0bc36
 
 
-From 6dad6b2fb25b84c5a20743a7c5a75ea337f38c1a Mon Sep 17 00:00:00 2001
+From 23dfff001d490a72abc0da80c4cb8d9031793c3c Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jul 2020 19:26:24 +0200
 Subject: [PATCH 2/4] block: Fix depends for BLK_DEV_ZONED
@@ -50,10 +50,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/Kconfig b/block/Kconfig
-index d5d4197b7..982445f2a 100644
+index 50b17e260..b14e1af7b 100644
 --- a/block/Kconfig
 +++ b/block/Kconfig
-@@ -66,7 +66,7 @@ config BLK_DEV_INTEGRITY_T10
+@@ -77,7 +77,7 @@ config BLK_DEV_INTEGRITY_T10
  
  config BLK_DEV_ZONED
  	bool "Zoned block device support"
@@ -63,10 +63,10 @@ index d5d4197b7..982445f2a 100644
  	Block layer zoned block device support. This option enables
  	support for ZAC/ZBC/ZNS host-managed and host-aware zoned block
 -- 
-2.35.1.354.g715d08a9e5
+2.36.1.74.g277cf0bc36
 
 
-From d52af1680438595a2ef6e312f4d08d09dad1d3a2 Mon Sep 17 00:00:00 2001
+From 74149b287c5f59b45e3bc8683a49bc1fe3a1684a Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 22 Oct 2020 23:54:33 +0200
 Subject: [PATCH 3/4] block: set rq_affinity = 2 for full multithreading I/O
@@ -77,10 +77,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 16b47035e..b17d11b90 100644
+index 60d016138..19e1cf186 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
-@@ -415,6 +415,7 @@ struct request_queue {
+@@ -563,6 +563,7 @@ struct request_queue {
  
  #define QUEUE_FLAG_MQ_DEFAULT	((1 << QUEUE_FLAG_IO_STAT) |		\
  				 (1 << QUEUE_FLAG_SAME_COMP) |		\
@@ -89,10 +89,10 @@ index 16b47035e..b17d11b90 100644
  
  void blk_queue_flag_set(unsigned int flag, struct request_queue *q);
 -- 
-2.35.1.354.g715d08a9e5
+2.36.1.74.g277cf0bc36
 
 
-From 8af8f93cd04d8920fff722d3894ac5bd369a72d7 Mon Sep 17 00:00:00 2001
+From de650ece4a31f2217ec617140035694c080fea70 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 10 Jan 2022 18:51:40 +0100
 Subject: [PATCH 4/4] block: Add CONFIG to rename the mq-deadline scheduler
@@ -126,7 +126,7 @@ index 480468ab2..436279f3c 100644
  	tristate "Kyber I/O scheduler"
  	help
 diff --git a/block/elevator.c b/block/elevator.c
-index 482df2a35..b18f38f7e 100644
+index c31976589..1f14fda75 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -642,7 +642,11 @@ static struct elevator_type *elevator_get_default(struct request_queue *q)
@@ -181,5 +181,5 @@ index 3ed5eaf34..32a6c35de 100644
  static int __init deadline_init(void)
  {
 -- 
-2.35.1.354.g715d08a9e5
+2.36.1.74.g277cf0bc36
 

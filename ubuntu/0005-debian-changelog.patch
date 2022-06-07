@@ -1,27 +1,44 @@
-From a214eb295dbbff0d540a7a5e6784c4e340030db2 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 25 May 2022 13:31:15 +0000
+From 1fceb2f1d1072bad34136814ae7db8b534a9aab7 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Mon, 6 Jun 2022 07:40:32 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16413 +-------------------------------------
- 1 file changed, 3 insertions(+), 16410 deletions(-)
+ debian.master/changelog | 16430 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16427 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 7a0f50830566..22a16fc0030a 100644
+index d1f22a0af6b1..b370fb9b662c 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16413 +1,6 @@
+@@ -1,16430 +1,6 @@
+-linux (5.18.0-6.6) kinetic; urgency=medium
++linux (5.18.2-051802.202206060740) kinetic; urgency=low
+ 
+-  * kinetic/linux: 5.18.0-6.6 -proposed tracker (LP: #1976327)
++  Mainline build at commit: v5.18.2
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] temporarily disable signing for ppc64el and s390x
+-    - [Config] update toolchain versions
+-    - [Config] enable CONFIG_X86_KERNEL_IBT
++ -- Mainline Build <kernel@sita>  Mon, 06 Jun 2022 07:40:32 +0000
+ 
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 31 May 2022 11:05:51 +0200
+-
+-linux (5.18.0-5.5) kinetic; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 23 May 2022 16:59:47 +0200
+-
 -linux-unstable (5.18.0-5.5) kinetic; urgency=medium
-+linux (5.17.11-051711.202205251331) kinetic; urgency=low
- 
+-
 -  * kinetic/linux-unstable: 5.18.0-5.5 -proposed tracker (LP: #1975458)
-+  Mainline build at commit: v5.17.11
- 
+-
 -  * enable CONFIG_DEVTMPFS_SAFE (LP: #1974442)
 -    - [Config] enable CONFIG_DEVTMPFS_SAFE
-+ -- Mainline Build <kernel@kathleen>  Wed, 25 May 2022 13:31:15 +0000
- 
+-
 -  * build backport-iwlwifi-dkms as linux-modules-iwlwifi-ABI (LP: #1969434)
 -    - [Packaging] drop do_<mod> arch specific configs
 -
@@ -16429,5 +16446,5 @@ index 7a0f50830566..22a16fc0030a 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.25.1
+2.36.1
 

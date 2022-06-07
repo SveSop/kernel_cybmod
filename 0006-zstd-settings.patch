@@ -1,4 +1,4 @@
-From 696e5e4e9beadf50cd00ebda934445f4c6607381 Mon Sep 17 00:00:00 2001
+From 94e18cfe9b43d58e4eb3e58c8c68dc18a20655da Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Mon, 7 Feb 2022 13:54:13 +0100
 Subject: [PATCH 1/5] kbuild, zstd: allow users to choose a compression level
@@ -14,10 +14,10 @@ Also enable multithreading which is already enabled for module compression.
  2 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index e9119bf54..b66edef5b 100644
+index ddcbefe53..fc5b6cc58 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -329,6 +329,19 @@ config KERNEL_UNCOMPRESSED
+@@ -333,6 +333,19 @@ config KERNEL_UNCOMPRESSED
  
  endchoice
  
@@ -38,10 +38,10 @@ index e9119bf54..b66edef5b 100644
  	string "Default init path"
  	default ""
 diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
-index 79be57fdd..5ba6cd6d8 100644
+index 9f69ecdd7..8e075bef8 100644
 --- a/scripts/Makefile.lib
 +++ b/scripts/Makefile.lib
-@@ -495,14 +495,21 @@ quiet_cmd_xzmisc = XZMISC  $@
+@@ -484,14 +484,21 @@ quiet_cmd_xzmisc = XZMISC  $@
  # decompression is used, like initramfs decompression, zstd22 should likely not
  # be used because it would require zstd to allocate a 128 MB buffer.
  
@@ -67,10 +67,10 @@ index 79be57fdd..5ba6cd6d8 100644
  # ASM offsets
  # ---------------------------------------------------------------------------
 -- 
-2.36.0.rc1
+2.36.1.74.g277cf0bc36
 
 
-From 94dc0658b3141bd98314cc87de2ab53b7ab534d3 Mon Sep 17 00:00:00 2001
+From 987af9c5b1524dd8b277be2e98bd257d17b4b4bc Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 21 Mar 2022 11:57:43 +0100
 Subject: [PATCH 2/5] kbuild: allow setting zstd compression level for modules
@@ -82,10 +82,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index b66edef5b..c31bb985f 100644
+index fc5b6cc58..1d19a7556 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -2290,6 +2290,14 @@ config MODULE_COMPRESS_ZSTD
+@@ -2295,6 +2295,14 @@ config MODULE_COMPRESS_ZSTD
  
  endchoice
  
@@ -114,10 +114,10 @@ index c2c43a0ec..666f0ccb3 100644
  $(dst)/%.ko.gz: $(dst)/%.ko FORCE
  	$(call cmd,gzip)
 -- 
-2.36.0.rc1
+2.36.1.74.g277cf0bc36
 
 
-From 21c696a7a0ca97a40bd6826fa347ba1f5af24971 Mon Sep 17 00:00:00 2001
+From 7cdffe28e988d009a41fe295bceebe514b34099f Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 9 Apr 2021 15:39:11 +0200
 Subject: [PATCH 3/5] kbuild: optimize zstd compression settings
@@ -132,15 +132,15 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index c31bb985f..536d8f592 100644
+index 1d19a7556..3588b5b4b 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -2294,7 +2294,7 @@ config MODULE_COMPRESS_ZSTD_LEVEL
+@@ -2299,7 +2299,7 @@ config MODULE_COMPRESS_ZSTD_LEVEL
      int "Compression level (1-19)"
      depends on MODULE_COMPRESS_ZSTD
      range 1 19
 -    default 3
-+    default 19
++    default 9
      help
          Compression level used by zstd for compressing modules.
  
@@ -158,10 +158,10 @@ index 666f0ccb3..2f3ef805d 100644
  $(dst)/%.ko.gz: $(dst)/%.ko FORCE
  	$(call cmd,gzip)
 -- 
-2.36.0.rc1
+2.36.1.74.g277cf0bc36
 
 
-From 1a6b86c0d6a7ed6153fb94fd9a3b87cc64e99453 Mon Sep 17 00:00:00 2001
+From a145699f2cd09d4edb1cd13c905f341e9e0c432d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 30 Jun 2021 17:22:44 +0200
 Subject: [PATCH 4/5] kbuild: allow setting ultra zstd compression level for
@@ -177,10 +177,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 19 insertions(+)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index 536d8f592..7a3b36a0a 100644
+index 3588b5b4b..68c0083f3 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -2290,6 +2290,12 @@ config MODULE_COMPRESS_ZSTD
+@@ -2295,6 +2295,12 @@ config MODULE_COMPRESS_ZSTD
  
  endchoice
  
@@ -193,7 +193,7 @@ index 536d8f592..7a3b36a0a 100644
  config MODULE_COMPRESS_ZSTD_LEVEL
      int "Compression level (1-19)"
      depends on MODULE_COMPRESS_ZSTD
-@@ -2298,6 +2304,14 @@ config MODULE_COMPRESS_ZSTD_LEVEL
+@@ -2303,6 +2309,14 @@ config MODULE_COMPRESS_ZSTD_LEVEL
      help
          Compression level used by zstd for compressing modules.
  
@@ -201,7 +201,7 @@ index 536d8f592..7a3b36a0a 100644
 +    int "Compression level (20-22)"
 +    depends on MODULE_COMPRESS_ZSTD_ULTRA
 +    range 20 22
-+    default 22
++    default 20
 +    help
 +        Ultra compression level used by zstd for compressing modules.
 +
@@ -227,10 +227,10 @@ index 2f3ef805d..c15e5395f 100644
  $(dst)/%.ko.gz: $(dst)/%.ko FORCE
  	$(call cmd,gzip)
 -- 
-2.36.0.rc1
+2.36.1.74.g277cf0bc36
 
 
-From aea0415511b77074f13709889cb2cdbea2e5bd06 Mon Sep 17 00:00:00 2001
+From c7f7f594918e0b05e50c304eb4ea33494510b4f4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 27 Jul 2021 19:56:35 +0200
 Subject: [PATCH 5/5] kbuild: add menu for ZSTD module compression options
@@ -241,10 +241,10 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 18 insertions(+), 15 deletions(-)
 
 diff --git a/init/Kconfig b/init/Kconfig
-index 7a3b36a0a..64d925f1a 100644
+index 68c0083f3..089532308 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -2290,27 +2290,30 @@ config MODULE_COMPRESS_ZSTD
+@@ -2295,27 +2295,30 @@ config MODULE_COMPRESS_ZSTD
  
  endchoice
  
@@ -254,7 +254,7 @@ index 7a3b36a0a..64d925f1a 100644
 +config MODULE_COMPRESS_ZSTD_LEVEL
 +	int "Compression level (1-19)"
 +	range 1 19
-+	default 19
++	default 9
 +	help
 +	  Compression level used by zstd for compressing modules.
 +
@@ -268,7 +268,7 @@ index 7a3b36a0a..64d925f1a 100644
 -    int "Compression level (1-19)"
 -    depends on MODULE_COMPRESS_ZSTD
 -    range 1 19
--    default 19
+-    default 9
 -    help
 -        Compression level used by zstd for compressing modules.
 -
@@ -276,13 +276,13 @@ index 7a3b36a0a..64d925f1a 100644
 -    int "Compression level (20-22)"
 -    depends on MODULE_COMPRESS_ZSTD_ULTRA
 -    range 20 22
--    default 22
+-    default 20
 -    help
 -        Ultra compression level used by zstd for compressing modules.
 +	int "Compression level (20-22)"
 +	depends on MODULE_COMPRESS_ZSTD_ULTRA
 +	range 20 22
-+	default 22
++	default 20
 +	help
 +	  Ultra compression level used by zstd for compressing modules.
 +
@@ -291,5 +291,5 @@ index 7a3b36a0a..64d925f1a 100644
  config MODULE_DECOMPRESS
  	bool "Support in-kernel module decompression"
 -- 
-2.36.0.rc1
+2.36.1.74.g277cf0bc36
 
