@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11593 @@
+@@ -0,0 +1,11592 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.18.2-cybmod2 Kernel Configuration
++# Linux/x86 5.18.3-cybmod3 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -480,7 +480,6 @@ new file mode 100644
 +CONFIG_X86_IOPL_IOPERM=y
 +CONFIG_MICROCODE=y
 +CONFIG_MICROCODE_INTEL=y
-+# CONFIG_MICROCODE_AMD is not set
 +# CONFIG_MICROCODE_OLD_INTERFACE is not set
 +CONFIG_X86_MSR=m
 +CONFIG_X86_CPUID=m
@@ -2406,6 +2405,7 @@ new file mode 100644
 +CONFIG_EFI_DEV_PATH_PARSER=y
 +CONFIG_EFI_EARLYCON=y
 +CONFIG_EFI_CUSTOM_SSDT_OVERLAYS=y
++# CONFIG_EFI_DISABLE_RUNTIME is not set
 +
 +#
 +# Tegra firmware driver
@@ -6190,7 +6190,7 @@ new file mode 100644
 +# CONFIG_VIDEO_PCI_SKELETON is not set
 +CONFIG_VIDEO_IPU3_CIO2=m
 +CONFIG_CIO2_BRIDGE=y
-+CONFIG_RADIO_ADAPTERS=y
++CONFIG_RADIO_ADAPTERS=m
 +CONFIG_RADIO_MAXIRADIO=m
 +CONFIG_RADIO_SAA7706H=m
 +CONFIG_RADIO_SHARK=m
@@ -10805,7 +10805,6 @@ new file mode 100644
 +CONFIG_IMA=y
 +CONFIG_IMA_MEASURE_PCR_IDX=10
 +CONFIG_IMA_LSM_RULES=y
-+# CONFIG_IMA_TEMPLATE is not set
 +CONFIG_IMA_NG_TEMPLATE=y
 +# CONFIG_IMA_SIG_TEMPLATE is not set
 +CONFIG_IMA_DEFAULT_TEMPLATE="ima-ng"

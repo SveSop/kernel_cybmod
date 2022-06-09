@@ -1,7 +1,7 @@
-From 570afeb0876454718925ad144e840a33bdb4716f Mon Sep 17 00:00:00 2001
+From d137b9e969ae06239ff8cd430ca1acf36268b0f5 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/36] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/34] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.36.1.203.g1bcf4f6271
 
 
-From c56a75114d717f88aad25187dd1d9ceb27a48527 Mon Sep 17 00:00:00 2001
+From 82f28b66d45bead375e1be9bf0bdde3260f24478 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/36] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/34] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index f25329579..e74d36cfe 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 493814fcf60a750ed5655f248da188d65d218d48 Mon Sep 17 00:00:00 2001
+From 2ccaa08b1812c0002d49cf5dd19fee830e5a7043 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/36] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/34] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -258,10 +258,10 @@ index 41aeaa235..fcbfd845b 100644
 2.36.1.203.g1bcf4f6271
 
 
-From a00c783b11e930f42e5e7f9c3ad879b3c2863124 Mon Sep 17 00:00:00 2001
+From fceabdf8732a041e42490ae09b1042c87ee2c63d Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/36] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/34] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -288,7 +288,7 @@ Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
  2 files changed, 40 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index dc6e55761..e7d38c3eb 100644
+index 8a16cbf77..73e4529bf 100644
 --- a/drivers/scsi/sd.c
 +++ b/drivers/scsi/sd.c
 @@ -2843,7 +2843,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
@@ -392,10 +392,10 @@ index 0a33a4b68..d45b901cc 100644
 2.36.1.203.g1bcf4f6271
 
 
-From d92109beae62a569e6dd378463aca1dc4e42dd67 Mon Sep 17 00:00:00 2001
+From e047285063324d1a4ed6350e319ab7a4612bb4c1 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 05/36] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 05/34] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -462,10 +462,10 @@ index e9d39c485..3bceead8d 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 96f07392086304f7e5cc887599537a83a75fbdaf Mon Sep 17 00:00:00 2001
+From 31d74c19b0cd7329f9b3fedc5139762b8b26f7ae Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 06/36] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 06/34] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -1196,10 +1196,10 @@ index ac8e7d606..317c3e88b 100644
 2.36.1.203.g1bcf4f6271
 
 
-From d2b62102b312b3fd43329b4063de67c006ee76ae Mon Sep 17 00:00:00 2001
+From 548ef82e074553b9ed7060dc17c202062e2da3b5 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 16 May 2022 17:24:08 +0200
-Subject: [PATCH 07/36] fm-5.18: port mm kswapd patches
+Subject: [PATCH 07/34] fm-5.18: port mm kswapd patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1429,10 +1429,10 @@ index 1678802e0..f8c20a80a 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 40a9f66a263b66027c1ce1927d320ae6c8d86742 Mon Sep 17 00:00:00 2001
+From eb0919ea38e8abe8dbab16ca1c427bd77d20a6d4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 21 Mar 2022 14:08:29 +0100
-Subject: [PATCH 08/36] Disable stack conservation for GCC
+Subject: [PATCH 08/34] Disable stack conservation for GCC
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1440,7 +1440,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 6b1d606a9..3def836db 100644
+index eb3adfec0..da309e991 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -987,11 +987,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -1459,10 +1459,10 @@ index 6b1d606a9..3def836db 100644
 2.36.1.203.g1bcf4f6271
 
 
-From c9e679587cb98058147cf29417da695940b9d51d Mon Sep 17 00:00:00 2001
+From 6f177712c079b204bd35384e769329bd1bc5c451 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 09/36] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+Subject: [PATCH 09/34] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
  SMBUS
 
 In the original OpenRGB patches, the initialization code for CZ
@@ -1498,10 +1498,10 @@ index 317c3e88b..790579034 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 65e7cd320f63f563da4e2915e5181af81b83c118 Mon Sep 17 00:00:00 2001
+From 03af6e68201556acf76dce6ae318f0e4cac4e70c Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Sun, 30 Jan 2022 17:46:48 -0800
-Subject: [PATCH 10/36] kernel/cpu.c: fix init_cpu_online
+Subject: [PATCH 10/34] kernel/cpu.c: fix init_cpu_online
 
 cpu_online_mask has an associate counter of online cpus, which must be
 initialized in init_cpu_online().
@@ -1528,10 +1528,10 @@ index d0a9aa0b4..abfa31a85 100644
 2.36.1.203.g1bcf4f6271
 
 
-From e029f349f65c2898d0ead6316ec259797493c1aa Mon Sep 17 00:00:00 2001
+From e53ac0a133befb3ab1971f5407a3b875a0745afe Mon Sep 17 00:00:00 2001
 From: Chen Yu <yu.c.chen@intel.com>
 Date: Fri, 8 Apr 2022 07:42:58 +0800
-Subject: [PATCH 11/36] cpufreq: intel_pstate: Handle no_turbo in frequency
+Subject: [PATCH 11/34] cpufreq: intel_pstate: Handle no_turbo in frequency
  invariance
 
 Problem statement:
@@ -1637,10 +1637,10 @@ index 846bb3a78..2216b24b6 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 9a81f5619f96e14513fd076bda7d2cae5529f406 Mon Sep 17 00:00:00 2001
+From e7b006ad11fe7c4a19740930bd85746d3b0e4cbc Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:01 +0000
-Subject: [PATCH 12/36] preempt/dynamic: Introduce preemption model accessors
+Subject: [PATCH 12/34] preempt/dynamic: Introduce preemption model accessors
 
 CONFIG_PREEMPT{_NONE, _VOLUNTARY} designate either:
 o The build-time preemption model when !PREEMPT_DYNAMIC
@@ -1743,10 +1743,10 @@ index e58d894df..c04b68a53 100644
 2.36.1.203.g1bcf4f6271
 
 
-From d2ffbc3c9f4332ca235d3ee9dcd32922a6e769ae Mon Sep 17 00:00:00 2001
+From e1727039e34171215ad4dcc9b1b1c915376bd9e5 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:02 +0000
-Subject: [PATCH 13/36] kcsan: Use preemption model accessors
+Subject: [PATCH 13/34] kcsan: Use preemption model accessors
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
 preemption model of the live kernel. Use the newly-introduced accessors
@@ -1786,10 +1786,10 @@ index a36fca063..767dfacd6 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 884c72db47bd954fbfa1aa0d1faa91f491b6f2ec Mon Sep 17 00:00:00 2001
+From ceb71f789e4257e5ec3e4cb4b709fd79c0d48054 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:03 +0000
-Subject: [PATCH 14/36] ftrace: Use preemption model accessors for trace header
+Subject: [PATCH 14/34] ftrace: Use preemption model accessors for trace header
  printout
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
@@ -1835,10 +1835,10 @@ index f6fb04d79..a8bef684e 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 30f9bf44aa2c5531b70c78ed28b693bd6dd856d4 Mon Sep 17 00:00:00 2001
+From 4bc33e4dacf24735338309f3bc965180c1195dfe Mon Sep 17 00:00:00 2001
 From: Alaa Mohamed <eng.alaamohamedsoliman.am@gmail.com>
 Date: Wed, 20 Apr 2022 01:43:13 +0200
-Subject: [PATCH 15/36] igb: Convert kmap() to kmap_local_page()
+Subject: [PATCH 15/34] igb: Convert kmap() to kmap_local_page()
 
 kmap() is being deprecated and these usages are all local to the thread
 so there is no reason kmap_local_page() can't be used.
@@ -1877,10 +1877,10 @@ index 2a5782063..c14fc871d 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 644f4f22f3efeee2734d22ec6d5bd97957e95bc2 Mon Sep 17 00:00:00 2001
+From a7ee878fc229162298ce83941ebe7a181e06eccf Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 11 Apr 2022 20:56:15 +0200
-Subject: [PATCH 16/36] ACPICA: Headers: Replace zero-length array with
+Subject: [PATCH 16/34] ACPICA: Headers: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -1925,10 +1925,10 @@ index 16847c8d9..9ee4d1b39 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 145b0450898b9ee7e2eb47e20e73e2302d736f54 Mon Sep 17 00:00:00 2001
+From d9753ee7cae5cc6fea0eee1c7c887d1fb84cd207 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:15 -0600
-Subject: [PATCH 17/36] iwlwifi: fw: Replace zero-length arrays with
+Subject: [PATCH 17/34] iwlwifi: fw: Replace zero-length arrays with
  flexible-array members
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2130,10 +2130,10 @@ index 5679a7875..a7817d952 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 5acfec1a5f1bfc19dddcfe68e2a49220159690f0 Mon Sep 17 00:00:00 2001
+From 2075104e82326a5368e731b7e34b527fc8deb7a5 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:30 -0600
-Subject: [PATCH 18/36] iwlwifi: mei: Replace zero-length array with
+Subject: [PATCH 18/34] iwlwifi: mei: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2175,10 +2175,10 @@ index 11e300912..be1456dea 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 2e542ef7d0f83df594bd4eda779579725fcde4f3 Mon Sep 17 00:00:00 2001
+From 26029022e1e454813e3769965c0c6011efdf208b Mon Sep 17 00:00:00 2001
 From: Zqiang <qiang1.zhang@intel.com>
 Date: Thu, 31 Mar 2022 13:57:17 +0800
-Subject: [PATCH 19/36] workqueue: Restrict kworker in the offline CPU pool
+Subject: [PATCH 19/34] workqueue: Restrict kworker in the offline CPU pool
  running on housekeeping CPUs
 
 When a CPU is going offline, all workers on the CPU's pool will have their
@@ -2209,10 +2209,10 @@ index 0d2514b4f..4056f2a3f 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 0594fe056fc7cdc83224e8273d8493191d9fe80c Mon Sep 17 00:00:00 2001
+From c0917c3a9c7a24cb4ee7de88b72f082969788c8f Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 17 May 2022 13:46:54 +0200
-Subject: [PATCH 20/36] sched: Reverse sched_class layout
+Subject: [PATCH 20/34] sched: Reverse sched_class layout
 
 Because GCC-12 is fully stupid about array bounds and it's just really
 hard to get a solid array definition from a linker script, flip the
@@ -2333,10 +2333,10 @@ index 0d2b6b758..64b1df081 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 7031db81715cf0a37d16812511ff4eb40ad6b458 Mon Sep 17 00:00:00 2001
+From fdf016c001034945a85e9a7667e2fa54d2219fb5 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Sun, 27 Feb 2022 11:59:18 -0800
-Subject: [PATCH 21/36] x86/boot: Wrap literal addresses in absolute_pointer()
+Subject: [PATCH 21/34] x86/boot: Wrap literal addresses in absolute_pointer()
 
 GCC 11 (incorrectly[1]) assumes that literal values cast to (void *)
 should be treated like a NULL pointer with an offset, and raises
@@ -2477,10 +2477,10 @@ index e3add857c..c421af5a3 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 00d52f4f7973eb618b0f76f02a17e133749417f1 Mon Sep 17 00:00:00 2001
+From 694fc5d5a2f2878a740e5e98da2c6bc4e2780178 Mon Sep 17 00:00:00 2001
 From: Murilo Opsfelder Araujo <muriloo@linux.ibm.com>
 Date: Thu, 14 Apr 2022 23:30:02 -0300
-Subject: [PATCH 22/36] virtio-pci: Remove wrong address verification in
+Subject: [PATCH 22/34] virtio-pci: Remove wrong address verification in
  vp_del_vqs()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2530,10 +2530,10 @@ index d724f6766..5046efcff 100644
 2.36.1.203.g1bcf4f6271
 
 
-From a829103bf6617f6b0ff91763870fd047ff9bcab2 Mon Sep 17 00:00:00 2001
+From c85a60c3f09e2eba8ae03745590ac3a15664dc98 Mon Sep 17 00:00:00 2001
 From: Nikolaus Vladutescu-Zopp <nikolaus@vladutescu-zopp.com>
 Date: Thu, 19 May 2022 03:09:50 +0200
-Subject: [PATCH 23/36] net: atlantic: Avoid out-of-bounds indexing
+Subject: [PATCH 23/34] net: atlantic: Avoid out-of-bounds indexing
 
 A UBSAN warning is observed on atlantic driver:
 
@@ -2605,10 +2605,10 @@ index 24d715c28..f49645d24 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 8ddf5b46a2c84500db208853d7d23e359f40d3ed Mon Sep 17 00:00:00 2001
+From 8077e1fe61fe773757aca2bb2e91d6c99dc57462 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 22 Apr 2022 10:12:26 -0400
-Subject: [PATCH 24/36] xfs: fix soft lockup via spinning in filestream ag
+Subject: [PATCH 24/34] xfs: fix soft lockup via spinning in filestream ag
  selection loop
 
 The filestream AG selection loop uses pagf data to aid in AG
@@ -2658,10 +2658,10 @@ index 6a3ce0f6d..be9bcf8a1 100644
 2.36.1.203.g1bcf4f6271
 
 
-From a4a51ce6ec399ffae2c91cf487219c9aa8c29af1 Mon Sep 17 00:00:00 2001
+From e53a6caf27186127400927360aa95236834d3183 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 17 May 2022 14:44:20 -0700
-Subject: [PATCH 25/36] lkdtm/heap: Hide allocation size from -Warray-bounds
+Subject: [PATCH 25/34] lkdtm/heap: Hide allocation size from -Warray-bounds
 
 With the kmalloc() size annotations, GCC is smart enough to realize that
 LKDTM is intentionally writing past the end of the buffer. This is on
@@ -2705,10 +2705,10 @@ index 8a92f5a80..7c0e812b5 100644
 2.36.1.203.g1bcf4f6271
 
 
-From b8505ee7aa265ad2583d2a08211e9cecef5dc0ab Mon Sep 17 00:00:00 2001
+From a6f4837814f748c83e73b5f0f26502b28cdb9d6c Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 22:51:49 +0200
-Subject: [PATCH 26/36] Revert "pci: Enable overrides for missing ACS
+Subject: [PATCH 26/34] Revert "pci: Enable overrides for missing ACS
  capabilities"
 
 This reverts commit e9ee9452cbe37ca024638aa79293a95019efde42.
@@ -2863,10 +2863,10 @@ index fcbfd845b..41aeaa235 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 8d7e1e85d368037e652607aa1cea71849afb9174 Mon Sep 17 00:00:00 2001
+From 4a20de216e13ad165fdc7d0781a0265423844531 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:35 +0200
-Subject: [PATCH 27/36] Revert "openrgb: Deduplicate piix4 setup for
+Subject: [PATCH 27/34] Revert "openrgb: Deduplicate piix4 setup for
  HUDSON2/KERNCZ SMBUS"
 
 This reverts commit 897077b6851bd02c5f706c9964d08a2a638f9b3e.
@@ -2896,10 +2896,10 @@ index 790579034..317c3e88b 100644
 2.36.1.203.g1bcf4f6271
 
 
-From d8458fc8110ea60602142cf2347427292c8165c7 Mon Sep 17 00:00:00 2001
+From 027b3b874e31ad994c70eb6e7ad6e37fb07ac970 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:50 +0200
-Subject: [PATCH 28/36] Revert "i2c: busses: Add SMBus capability to work with
+Subject: [PATCH 28/34] Revert "i2c: busses: Add SMBus capability to work with
  OpenRGB driver control"
 
 This reverts commit 6f9e4855641e67381e089c912a860911258b6423.
@@ -3632,145 +3632,10 @@ index 317c3e88b..ac8e7d606 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 24c709bb35a042dffd087603ed4d892ca5fed531 Mon Sep 17 00:00:00 2001
-From: Vincent Ray <vray@kalrayinc.com>
-Date: Wed, 25 May 2022 17:17:46 -0700
-Subject: [PATCH 29/36] net: sched: fixed barrier to prevent skbuff sticking in
- qdisc backlog
-
-In qdisc_run_begin(), smp_mb__before_atomic() used before test_bit()
-does not provide any ordering guarantee as test_bit() is not an atomic
-operation. This, added to the fact that the spin_trylock() call at
-the beginning of qdisc_run_begin() does not guarantee acquire
-semantics if it does not grab the lock, makes it possible for the
-following statement :
-
-if (test_bit(__QDISC_STATE_MISSED, &qdisc->state))
-
-to be executed before an enqueue operation called before
-qdisc_run_begin().
-
-As a result the following race can happen :
-
-           CPU 1                             CPU 2
-
-      qdisc_run_begin()               qdisc_run_begin() /* true */
-        set(MISSED)                            .
-      /* returns false */                      .
-          .                            /* sees MISSED = 1 */
-          .                            /* so qdisc not empty */
-          .                            __qdisc_run()
-          .                                    .
-          .                              pfifo_fast_dequeue()
- ----> /* may be done here */                  .
-|         .                                clear(MISSED)
-|         .                                    .
-|         .                                smp_mb __after_atomic();
-|         .                                    .
-|         .                                /* recheck the queue */
-|         .                                /* nothing => exit   */
-|   enqueue(skb1)
-|         .
-|   qdisc_run_begin()
-|         .
-|     spin_trylock() /* fail */
-|         .
-|     smp_mb__before_atomic() /* not enough */
-|         .
- ---- if (test_bit(MISSED))
-        return false;   /* exit */
-
-In the above scenario, CPU 1 and CPU 2 both try to grab the
-qdisc->seqlock at the same time. Only CPU 2 succeeds and enters the
-bypass code path, where it emits its skb then calls __qdisc_run().
-
-CPU1 fails, sets MISSED and goes down the traditionnal enqueue() +
-dequeue() code path. But when executing qdisc_run_begin() for the
-second time, after enqueuing its skbuff, it sees the MISSED bit still
-set (by itself) and consequently chooses to exit early without setting
-it again nor trying to grab the spinlock again.
-
-Meanwhile CPU2 has seen MISSED = 1, cleared it, checked the queue
-and found it empty, so it returned.
-
-At the end of the sequence, we end up with skb1 enqueued in the
-backlog, both CPUs out of __dev_xmit_skb(), the MISSED bit not set,
-and no __netif_schedule() called made. skb1 will now linger in the
-qdisc until somebody later performs a full __qdisc_run(). Associated
-to the bypass capacity of the qdisc, and the ability of the TCP layer
-to avoid resending packets which it knows are still in the qdisc, this
-can lead to serious traffic "holes" in a TCP connection.
-
-We fix this by replacing the smp_mb__before_atomic() / test_bit() /
-set_bit() / smp_mb__after_atomic() sequence inside qdisc_run_begin()
-by a single test_and_set_bit() call, which is more concise and
-enforces the needed memory barriers.
-
-Fixes: 89837eb4b246 ("net: sched: add barrier to ensure correct ordering for lockless qdisc")
-Signed-off-by: Vincent Ray <vray@kalrayinc.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
----
- include/net/sch_generic.h | 36 ++++++++----------------------------
- 1 file changed, 8 insertions(+), 28 deletions(-)
-
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 9bab396c1..80973ce82 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -187,37 +187,17 @@ static inline bool qdisc_run_begin(struct Qdisc *qdisc)
- 		if (spin_trylock(&qdisc->seqlock))
- 			return true;
- 
--		/* Paired with smp_mb__after_atomic() to make sure
--		 * STATE_MISSED checking is synchronized with clearing
--		 * in pfifo_fast_dequeue().
-+		/* No need to insist if the MISSED flag was already set.
-+		 * Note that test_and_set_bit() also gives us memory ordering
-+		 * guarantees wrt potential earlier enqueue() and below
-+		 * spin_trylock(), both of which are necessary to prevent races
- 		 */
--		smp_mb__before_atomic();
--
--		/* If the MISSED flag is set, it means other thread has
--		 * set the MISSED flag before second spin_trylock(), so
--		 * we can return false here to avoid multi cpus doing
--		 * the set_bit() and second spin_trylock() concurrently.
--		 */
--		if (test_bit(__QDISC_STATE_MISSED, &qdisc->state))
-+		if (test_and_set_bit(__QDISC_STATE_MISSED, &qdisc->state))
- 			return false;
- 
--		/* Set the MISSED flag before the second spin_trylock(),
--		 * if the second spin_trylock() return false, it means
--		 * other cpu holding the lock will do dequeuing for us
--		 * or it will see the MISSED flag set after releasing
--		 * lock and reschedule the net_tx_action() to do the
--		 * dequeuing.
--		 */
--		set_bit(__QDISC_STATE_MISSED, &qdisc->state);
--
--		/* spin_trylock() only has load-acquire semantic, so use
--		 * smp_mb__after_atomic() to ensure STATE_MISSED is set
--		 * before doing the second spin_trylock().
--		 */
--		smp_mb__after_atomic();
--
--		/* Retry again in case other CPU may not see the new flag
--		 * after it releases the lock at the end of qdisc_run_end().
-+		/* Try to take the lock again to make sure that we will either
-+		 * grab it or the CPU that still has it will see MISSED set
-+		 * when testing it in qdisc_run_end()
- 		 */
- 		return spin_trylock(&qdisc->seqlock);
- 	}
--- 
-2.36.1.203.g1bcf4f6271
-
-
-From 80bb82b1537b7240af591c2beac2107622bbe6d5 Mon Sep 17 00:00:00 2001
+From 1efa81c3f310a2d9a0cfad4d8f7c506cd26fa54e Mon Sep 17 00:00:00 2001
 From: Jchao Sun <sunjunchao2870@gmail.com>
 Date: Tue, 24 May 2022 08:05:40 -0700
-Subject: [PATCH 30/36] writeback: Fix inode->i_io_list not be protected by
+Subject: [PATCH 29/34] writeback: Fix inode->i_io_list not be protected by
  inode->i_lock error
 
 Commit b35250c0816c ("writeback: Protect inode->i_io_list with
@@ -3930,10 +3795,10 @@ index 9d9b42250..bd4da9c52 100644
 2.36.1.203.g1bcf4f6271
 
 
-From f1c729b796f6332327d7421fbc6bd23e58d5f8c4 Mon Sep 17 00:00:00 2001
+From 094735e5bbc8e61cf157a3f6485654ef8a7c2aaa Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 27 May 2022 09:34:28 -0400
-Subject: [PATCH 31/36] xfs: fix xfs_ifree() error handling to not leak perag
+Subject: [PATCH 30/34] xfs: fix xfs_ifree() error handling to not leak perag
  ref
 
 For some reason commit 9a5280b312e2e ("xfs: reorder iunlink remove
@@ -3965,54 +3830,10 @@ index 39ae53efb..e099f9f94 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 811ed72f5404afc7fc2a33eb3ff064e34bd3d015 Mon Sep 17 00:00:00 2001
-From: Peter Zijlstra <peterz@infradead.org>
-Date: Mon, 30 May 2022 09:45:38 +0200
-Subject: [PATCH 32/36] sched/autogroup: Fix sysctl move
-
-Ivan reported /proc/sys/kernel/sched_autogroup_enabled went walk-about
-and using the noautogroup command line parameter would result in a
-boot error message.
-
-Turns out the sysctl move placed the init function wrong.
-
-Fixes: c8eaf6ac76f4 ("sched: move autogroup sysctls into its own file")
-Reported-by: Ivan Kozik <ivan@ludios.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Ivan Kozik <ivan@ludios.org>
-Link: https://lkml.kernel.org/r/YpR2IqndgsyMzN00@worktop.programming.kicks-ass.net
----
- kernel/sched/autogroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/kernel/sched/autogroup.c b/kernel/sched/autogroup.c
-index 16092b49f..4ebaf97f7 100644
---- a/kernel/sched/autogroup.c
-+++ b/kernel/sched/autogroup.c
-@@ -36,6 +36,7 @@ void __init autogroup_init(struct task_struct *init_task)
- 	kref_init(&autogroup_default.kref);
- 	init_rwsem(&autogroup_default.lock);
- 	init_task->signal->autogroup = &autogroup_default;
-+	sched_autogroup_sysctl_init();
- }
- 
- void autogroup_free(struct task_group *tg)
-@@ -219,7 +220,6 @@ void sched_autogroup_exit(struct signal_struct *sig)
- static int __init setup_autogroup(char *str)
- {
- 	sysctl_sched_autogroup_enabled = 0;
--	sched_autogroup_sysctl_init();
- 
- 	return 1;
- }
--- 
-2.36.1.203.g1bcf4f6271
-
-
-From cc1eaf2ff4f1babe8d6d407e1a96e8b55d7472a8 Mon Sep 17 00:00:00 2001
+From 836b746177bd3498afa389f129c612a494dca740 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:44 +0800
-Subject: [PATCH 33/36] sched: Fix the check of nr_running at queue wakelist
+Subject: [PATCH 31/34] sched: Fix the check of nr_running at queue wakelist
 
 The commit 2ebb17717550 ("sched/core: Offload wakee task activation if it
 the wakee is descheduling") checked nr_running <= 1 to avoid task
@@ -4043,10 +3864,10 @@ index 899980f2a..17e1c028a 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 34a360a501b257f84e025f71741d54aa6c321fb9 Mon Sep 17 00:00:00 2001
+From 2d69f5cfbac0d84a9c1159958c77ea15286d6175 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:45 +0800
-Subject: [PATCH 34/36] sched: Remove the limitation of WF_ON_CPU on wakelist
+Subject: [PATCH 32/34] sched: Remove the limitation of WF_ON_CPU on wakelist
  if wakee cpu is idle
 
 Wakelist can help avoid cache bouncing and offload the overhead of waker
@@ -4262,10 +4083,10 @@ index 64b1df081..98df4e72d 100644
 2.36.1.203.g1bcf4f6271
 
 
-From cc143315cca18959620815e061779d81470c2ea0 Mon Sep 17 00:00:00 2001
+From 322d4a01cbb835a631e275df006b6518b7537422 Mon Sep 17 00:00:00 2001
 From: Marcelo Tosatti <mtosatti@redhat.com>
 Date: Mon, 30 May 2022 12:51:56 -0300
-Subject: [PATCH 35/36] mm: lru_cache_disable: use synchronize_rcu_expedited
+Subject: [PATCH 33/34] mm: lru_cache_disable: use synchronize_rcu_expedited
 
 commit ff042f4a9b050 ("mm: lru_cache_disable: replace work queue
 synchronization with synchronize_rcu") replaced lru_cache_disable's usage
@@ -4315,69 +4136,47 @@ index 7e320ec08..8a98d21d2 100644
 2.36.1.203.g1bcf4f6271
 
 
-From f526fa3921f6cbb4b0e324ff39b55e3ad86d4314 Mon Sep 17 00:00:00 2001
-From: Guoju Fang <gjfang@linux.alibaba.com>
-Date: Sat, 28 May 2022 18:16:28 +0800
-Subject: [PATCH 36/36] net: sched: add barrier to fix packet stuck problem for
- lockless qdisc
+From 45c6f080d85bad56a7fdc109fc7f452fb6e4e1b4 Mon Sep 17 00:00:00 2001
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Date: Thu, 9 Jun 2022 10:40:51 +0200
+Subject: [PATCH 34/34] Revert "nvme-pci: add quirks for Samsung X5 SSDs"
 
-In qdisc_run_end(), the spin_unlock() only has store-release semantic,
-which guarantees all earlier memory access are visible before it. But
-the subsequent test_bit() has no barrier semantics so may be reordered
-ahead of the spin_unlock(). The store-load reordering may cause a packet
-stuck problem.
+This reverts commit bc360b0b1611566e1bd47384daf49af6a1c51837.
 
-The concurrent operations can be described as below,
-         CPU 0                      |          CPU 1
-   qdisc_run_end()                  |     qdisc_run_begin()
-          .                         |           .
- ----> /* may be reorderd here */   |           .
-|         .                         |           .
-|     spin_unlock()                 |         set_bit()
-|         .                         |         smp_mb__after_atomic()
- ---- test_bit()                    |         spin_trylock()
-          .                         |          .
+This matches the hardware identifier of the Samsung 970 EVO Plus, a very
+popular internal laptop NVMe drive, which is not the Samsung X5, an
+external thunderbolt drive. In particular, this causes:
 
-Consider the following sequence of events:
-    CPU 0 reorder test_bit() ahead and see MISSED = 0
-    CPU 1 calls set_bit()
-    CPU 1 calls spin_trylock() and return fail
-    CPU 0 executes spin_unlock()
+1) a 2.3 second boot time delay; and
+2) disabling of deep power saving states.
 
-At the end of the sequence, CPU 0 calls spin_unlock() and does nothing
-because it see MISSED = 0. The skb on CPU 1 has beed enqueued but no one
-take it, until the next cpu pushing to the qdisc (if ever ...) will
-notice and dequeue it.
+So just revert this until whatever funny business can be worked out
+regarding Samsung's PCI IDs.
 
-This patch fix this by adding one explicit barrier. As spin_unlock() and
-test_bit() ordering is a store-load ordering, a full memory barrier
-smp_mb() is needed here.
-
-Fixes: a90c57f2cedd ("net: sched: fix packet stuck problem for lockless qdisc")
-Signed-off-by: Guoju Fang <gjfang@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20220528101628.120193-1-gjfang@linux.alibaba.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bc360b0b1611 ("nvme-pci: add quirks for Samsung X5 SSDs")
+Cc: stable@vger.kernel.org
+Cc: Monish Kumar R <monish.kumar.r@intel.com>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 ---
- include/net/sch_generic.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/pci.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 80973ce82..d6cf5116b 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -209,6 +209,12 @@ static inline void qdisc_run_end(struct Qdisc *qdisc)
- 	if (qdisc->flags & TCQ_F_NOLOCK) {
- 		spin_unlock(&qdisc->seqlock);
- 
-+		/* spin_unlock() only has store-release semantic. The unlock
-+		 * and test_bit() ordering is a store-load ordering, so a full
-+		 * memory barrier is needed here.
-+		 */
-+		smp_mb();
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 17aeb7d5c..1c9b3e9d4 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3475,10 +3475,7 @@ static const struct pci_device_id nvme_id_table[] = {
+ 				NVME_QUIRK_128_BYTES_SQES |
+ 				NVME_QUIRK_SHARED_TAGS |
+ 				NVME_QUIRK_SKIP_CID_GEN },
+-	{ PCI_DEVICE(0x144d, 0xa808),   /* Samsung X5 */
+-		.driver_data =  NVME_QUIRK_DELAY_BEFORE_CHK_RDY|
+-				NVME_QUIRK_NO_DEEPEST_PS |
+-				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
 +
- 		if (unlikely(test_bit(__QDISC_STATE_MISSED,
- 				      &qdisc->state)))
- 			__netif_schedule(qdisc);
+ 	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
+ 	{ 0, }
+ };
 -- 
 2.36.1.203.g1bcf4f6271
 
