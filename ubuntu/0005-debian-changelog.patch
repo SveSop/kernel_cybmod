@@ -1,6 +1,6 @@
-From 0d75c7ce89a003d0df790a8f15632c185e2b57bd Mon Sep 17 00:00:00 2001
+From efa6b9e1dd7c594947841f4bcb185e0ccfdd6959 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 9 Jun 2022 09:34:10 +0000
+Date: Thu, 16 Jun 2022 12:32:11 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,21 +8,21 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 16427 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index d1f22a0af6b1..ab715752a13f 100644
+index d1f22a0af6b1..9fd98add8b12 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,16430 +1,6 @@
 -linux (5.18.0-6.6) kinetic; urgency=medium
-+linux (5.18.3-051803.202206090934) kinetic; urgency=low
++linux (5.18.5-051805.202206161232) kinetic; urgency=low
  
 -  * kinetic/linux: 5.18.0-6.6 -proposed tracker (LP: #1976327)
-+  Mainline build at commit: v5.18.3
++  Mainline build at commit: v5.18.5
  
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] temporarily disable signing for ppc64el and s390x
 -    - [Config] update toolchain versions
 -    - [Config] enable CONFIG_X86_KERNEL_IBT
-+ -- Mainline Build <kernel@sita>  Thu, 09 Jun 2022 09:34:09 +0000
++ -- Mainline Build <kernel@sita>  Thu, 16 Jun 2022 12:32:11 +0000
  
 - -- Andrea Righi <andrea.righi@canonical.com>  Tue, 31 May 2022 11:05:51 +0200
 -

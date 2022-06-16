@@ -201,7 +201,7 @@ index 8a03289e2..004ab87c9 100644
  obj-$(CONFIG_SENSORS_NCT7904)	+= nct7904.o
  obj-$(CONFIG_SENSORS_NPCM7XX)	+= npcm750-pwm-fan.o
 diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index b5cf01363..886a71b4c 100644
+index b5cf01363..19d3ca71b 100644
 --- a/drivers/hwmon/asus-ec-sensors.c
 +++ b/drivers/hwmon/asus-ec-sensors.c
 @@ -54,8 +54,12 @@ static char *mutex_path_override;
@@ -399,7 +399,7 @@ index b5cf01363..886a71b4c 100644
 +	},
 +	{
 +		.board_names = {
-+			"ROG CROSSHAIR VIII FORMULA"
++			"ROG CROSSHAIR VIII FORMULA",
 +			"ROG CROSSHAIR VIII HERO",
 +			"ROG CROSSHAIR VIII HERO (WI-FI)",
 +		},
@@ -4500,10 +4500,10 @@ index 000000000..e1bcd1146
 +MODULE_IMPORT_NS(HWMON_NCT6775);
 diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
 new file mode 100644
-index 000000000..6d46c9401
+index 000000000..3a4862741
 --- /dev/null
 +++ b/drivers/hwmon/nct6775-platform.c
-@@ -0,0 +1,1229 @@
+@@ -0,0 +1,1225 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * nct6775 - Platform driver for the hardware monitoring
@@ -5706,10 +5706,8 @@ index 000000000..6d46c9401
 +exit_device_put:
 +	platform_device_put(pdev[i]);
 +exit_device_unregister:
-+	while (--i >= 0) {
-+		if (pdev[i])
-+			platform_device_unregister(pdev[i]);
-+	}
++	while (i--)
++		platform_device_unregister(pdev[i]);
 +exit_unregister:
 +	platform_driver_unregister(&nct6775_driver);
 +	return err;
@@ -5719,10 +5717,8 @@ index 000000000..6d46c9401
 +{
 +	int i;
 +
-+	for (i = 0; i < ARRAY_SIZE(pdev); i++) {
-+		if (pdev[i])
-+			platform_device_unregister(pdev[i]);
-+	}
++	for (i = 0; i < ARRAY_SIZE(pdev); i++)
++		platform_device_unregister(pdev[i]);
 +	platform_driver_unregister(&nct6775_driver);
 +}
 +

@@ -1,6 +1,6 @@
-From e4b12cf6da96403ce3e0209d0c8a269cd3581f20 Mon Sep 17 00:00:00 2001
+From ce3814cf02c954caee67ff853854b36d1859cb98 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 9 Jun 2022 09:34:47 +0000
+Date: Thu, 16 Jun 2022 12:32:50 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.18.0-6.6)
 
 ---

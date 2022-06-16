@@ -1,7 +1,7 @@
-From d137b9e969ae06239ff8cd430ca1acf36268b0f5 Mon Sep 17 00:00:00 2001
+From b566998e0eadc5e8c34b4fabc42699d89b04fc03 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/34] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/36] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 82f28b66d45bead375e1be9bf0bdde3260f24478 Mon Sep 17 00:00:00 2001
+From 7407ba2f650acbc77091da63f9c77dfabc8c6288 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/34] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/36] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index f25329579..e74d36cfe 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 2ccaa08b1812c0002d49cf5dd19fee830e5a7043 Mon Sep 17 00:00:00 2001
+From d90eaf639215293874b7d493d1ce5698851a4428 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/34] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/36] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -258,10 +258,10 @@ index 41aeaa235..fcbfd845b 100644
 2.36.1.203.g1bcf4f6271
 
 
-From fceabdf8732a041e42490ae09b1042c87ee2c63d Mon Sep 17 00:00:00 2001
+From e0ea5bf13693f51d92239dcfe6eb84e405ce612a Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/34] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/36] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -288,7 +288,7 @@ Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
  2 files changed, 40 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 8a16cbf77..73e4529bf 100644
+index edc27a88a..30777f9b8 100644
 --- a/drivers/scsi/sd.c
 +++ b/drivers/scsi/sd.c
 @@ -2843,7 +2843,6 @@ static void sd_read_app_tag_own(struct scsi_disk *sdkp, unsigned char *buffer)
@@ -392,10 +392,10 @@ index 0a33a4b68..d45b901cc 100644
 2.36.1.203.g1bcf4f6271
 
 
-From e047285063324d1a4ed6350e319ab7a4612bb4c1 Mon Sep 17 00:00:00 2001
+From cca5a18384f26eac8bc6ea8f82837427f09d48a2 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 05/34] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 05/36] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -462,10 +462,10 @@ index e9d39c485..3bceead8d 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 31d74c19b0cd7329f9b3fedc5139762b8b26f7ae Mon Sep 17 00:00:00 2001
+From 4dc2ca8a8ca284885f6c63792819d953a86a4ce3 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 06/34] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 06/36] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -1196,10 +1196,10 @@ index ac8e7d606..317c3e88b 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 548ef82e074553b9ed7060dc17c202062e2da3b5 Mon Sep 17 00:00:00 2001
+From b3ed7818e44b0274199999c6b5bd5694a82426ee Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 16 May 2022 17:24:08 +0200
-Subject: [PATCH 07/34] fm-5.18: port mm kswapd patches
+Subject: [PATCH 07/36] fm-5.18: port mm kswapd patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1429,10 +1429,10 @@ index 1678802e0..f8c20a80a 100644
 2.36.1.203.g1bcf4f6271
 
 
-From eb0919ea38e8abe8dbab16ca1c427bd77d20a6d4 Mon Sep 17 00:00:00 2001
+From 589cb5c78e1211a8e6b7ac318280cf89fb5c4fc0 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 21 Mar 2022 14:08:29 +0100
-Subject: [PATCH 08/34] Disable stack conservation for GCC
+Subject: [PATCH 08/36] Disable stack conservation for GCC
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1440,7 +1440,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index eb3adfec0..da309e991 100644
+index 7578eff6b..7119f7500 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -987,11 +987,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -1459,10 +1459,10 @@ index eb3adfec0..da309e991 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 6f177712c079b204bd35384e769329bd1bc5c451 Mon Sep 17 00:00:00 2001
+From 84baa0ed8a994a78824fe0e234cf5223b7c38e11 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 09/34] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+Subject: [PATCH 09/36] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
  SMBUS
 
 In the original OpenRGB patches, the initialization code for CZ
@@ -1498,10 +1498,10 @@ index 317c3e88b..790579034 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 03af6e68201556acf76dce6ae318f0e4cac4e70c Mon Sep 17 00:00:00 2001
+From 9daaec4b5b30fb952d9b4d8900ad975520d70787 Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Sun, 30 Jan 2022 17:46:48 -0800
-Subject: [PATCH 10/34] kernel/cpu.c: fix init_cpu_online
+Subject: [PATCH 10/36] kernel/cpu.c: fix init_cpu_online
 
 cpu_online_mask has an associate counter of online cpus, which must be
 initialized in init_cpu_online().
@@ -1528,10 +1528,10 @@ index d0a9aa0b4..abfa31a85 100644
 2.36.1.203.g1bcf4f6271
 
 
-From e53ac0a133befb3ab1971f5407a3b875a0745afe Mon Sep 17 00:00:00 2001
+From de182bc271d5b62b29a0565ab9e013c500240fa2 Mon Sep 17 00:00:00 2001
 From: Chen Yu <yu.c.chen@intel.com>
 Date: Fri, 8 Apr 2022 07:42:58 +0800
-Subject: [PATCH 11/34] cpufreq: intel_pstate: Handle no_turbo in frequency
+Subject: [PATCH 11/36] cpufreq: intel_pstate: Handle no_turbo in frequency
  invariance
 
 Problem statement:
@@ -1637,10 +1637,10 @@ index 846bb3a78..2216b24b6 100644
 2.36.1.203.g1bcf4f6271
 
 
-From e7b006ad11fe7c4a19740930bd85746d3b0e4cbc Mon Sep 17 00:00:00 2001
+From 821a4d5c347b07ff8731752ff0e23ed4880b3932 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:01 +0000
-Subject: [PATCH 12/34] preempt/dynamic: Introduce preemption model accessors
+Subject: [PATCH 12/36] preempt/dynamic: Introduce preemption model accessors
 
 CONFIG_PREEMPT{_NONE, _VOLUNTARY} designate either:
 o The build-time preemption model when !PREEMPT_DYNAMIC
@@ -1743,10 +1743,10 @@ index e58d894df..c04b68a53 100644
 2.36.1.203.g1bcf4f6271
 
 
-From e1727039e34171215ad4dcc9b1b1c915376bd9e5 Mon Sep 17 00:00:00 2001
+From 7b856875fe3236f85468c5e8bacf62ce1b5cb775 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:02 +0000
-Subject: [PATCH 13/34] kcsan: Use preemption model accessors
+Subject: [PATCH 13/36] kcsan: Use preemption model accessors
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
 preemption model of the live kernel. Use the newly-introduced accessors
@@ -1786,10 +1786,10 @@ index a36fca063..767dfacd6 100644
 2.36.1.203.g1bcf4f6271
 
 
-From ceb71f789e4257e5ec3e4cb4b709fd79c0d48054 Mon Sep 17 00:00:00 2001
+From 42e5ba2c31234fdcbe87f550d21c78cbd8a433e7 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:03 +0000
-Subject: [PATCH 14/34] ftrace: Use preemption model accessors for trace header
+Subject: [PATCH 14/36] ftrace: Use preemption model accessors for trace header
  printout
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
@@ -1806,7 +1806,7 @@ Link: https://lore.kernel.org/r/20211112185203.280040-5-valentin.schneider@arm.c
  1 file changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index f6fb04d79..a8bef684e 100644
+index 114c31bdf..4b0354a89 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
 @@ -4291,17 +4291,11 @@ print_trace_header(struct seq_file *m, struct trace_iterator *iter)
@@ -1835,10 +1835,10 @@ index f6fb04d79..a8bef684e 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 4bc33e4dacf24735338309f3bc965180c1195dfe Mon Sep 17 00:00:00 2001
+From 59e6076b27a02b31daa695b2bc9be748534fa232 Mon Sep 17 00:00:00 2001
 From: Alaa Mohamed <eng.alaamohamedsoliman.am@gmail.com>
 Date: Wed, 20 Apr 2022 01:43:13 +0200
-Subject: [PATCH 15/34] igb: Convert kmap() to kmap_local_page()
+Subject: [PATCH 15/36] igb: Convert kmap() to kmap_local_page()
 
 kmap() is being deprecated and these usages are all local to the thread
 so there is no reason kmap_local_page() can't be used.
@@ -1877,10 +1877,10 @@ index 2a5782063..c14fc871d 100644
 2.36.1.203.g1bcf4f6271
 
 
-From a7ee878fc229162298ce83941ebe7a181e06eccf Mon Sep 17 00:00:00 2001
+From 56ba161936646a6ff9931b9bb93141d46d324825 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 11 Apr 2022 20:56:15 +0200
-Subject: [PATCH 16/34] ACPICA: Headers: Replace zero-length array with
+Subject: [PATCH 16/36] ACPICA: Headers: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -1925,10 +1925,10 @@ index 16847c8d9..9ee4d1b39 100644
 2.36.1.203.g1bcf4f6271
 
 
-From d9753ee7cae5cc6fea0eee1c7c887d1fb84cd207 Mon Sep 17 00:00:00 2001
+From b619d416e2243bb16397c85ec9427c91e4db1f2c Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:15 -0600
-Subject: [PATCH 17/34] iwlwifi: fw: Replace zero-length arrays with
+Subject: [PATCH 17/36] iwlwifi: fw: Replace zero-length arrays with
  flexible-array members
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2130,10 +2130,10 @@ index 5679a7875..a7817d952 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 2075104e82326a5368e731b7e34b527fc8deb7a5 Mon Sep 17 00:00:00 2001
+From dce0a61b4931a12ed23fc6261c424a642d8d3f7d Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:30 -0600
-Subject: [PATCH 18/34] iwlwifi: mei: Replace zero-length array with
+Subject: [PATCH 18/36] iwlwifi: mei: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2175,10 +2175,10 @@ index 11e300912..be1456dea 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 26029022e1e454813e3769965c0c6011efdf208b Mon Sep 17 00:00:00 2001
+From bca3d6aa3f1f61f5571ff459d1ce6b7b3b00fe0d Mon Sep 17 00:00:00 2001
 From: Zqiang <qiang1.zhang@intel.com>
 Date: Thu, 31 Mar 2022 13:57:17 +0800
-Subject: [PATCH 19/34] workqueue: Restrict kworker in the offline CPU pool
+Subject: [PATCH 19/36] workqueue: Restrict kworker in the offline CPU pool
  running on housekeeping CPUs
 
 When a CPU is going offline, all workers on the CPU's pool will have their
@@ -2209,10 +2209,10 @@ index 0d2514b4f..4056f2a3f 100644
 2.36.1.203.g1bcf4f6271
 
 
-From c0917c3a9c7a24cb4ee7de88b72f082969788c8f Mon Sep 17 00:00:00 2001
+From 2470affaae852964201b483c33f8ecb178ca5d2a Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 17 May 2022 13:46:54 +0200
-Subject: [PATCH 20/34] sched: Reverse sched_class layout
+Subject: [PATCH 20/36] sched: Reverse sched_class layout
 
 Because GCC-12 is fully stupid about array bounds and it's just really
 hard to get a solid array definition from a linker script, flip the
@@ -2333,10 +2333,10 @@ index 0d2b6b758..64b1df081 100644
 2.36.1.203.g1bcf4f6271
 
 
-From fdf016c001034945a85e9a7667e2fa54d2219fb5 Mon Sep 17 00:00:00 2001
+From eaefb03c651e7c10dc3b152f3f2652e736ca8425 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Sun, 27 Feb 2022 11:59:18 -0800
-Subject: [PATCH 21/34] x86/boot: Wrap literal addresses in absolute_pointer()
+Subject: [PATCH 21/36] x86/boot: Wrap literal addresses in absolute_pointer()
 
 GCC 11 (incorrectly[1]) assumes that literal values cast to (void *)
 should be treated like a NULL pointer with an offset, and raises
@@ -2477,10 +2477,10 @@ index e3add857c..c421af5a3 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 694fc5d5a2f2878a740e5e98da2c6bc4e2780178 Mon Sep 17 00:00:00 2001
+From 8983eea8fb546c420515e5ac974abe3791323d94 Mon Sep 17 00:00:00 2001
 From: Murilo Opsfelder Araujo <muriloo@linux.ibm.com>
 Date: Thu, 14 Apr 2022 23:30:02 -0300
-Subject: [PATCH 22/34] virtio-pci: Remove wrong address verification in
+Subject: [PATCH 22/36] virtio-pci: Remove wrong address verification in
  vp_del_vqs()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2530,10 +2530,10 @@ index d724f6766..5046efcff 100644
 2.36.1.203.g1bcf4f6271
 
 
-From c85a60c3f09e2eba8ae03745590ac3a15664dc98 Mon Sep 17 00:00:00 2001
+From e6b2e8de9261a97eb5da5a5d2cd5059598e8da65 Mon Sep 17 00:00:00 2001
 From: Nikolaus Vladutescu-Zopp <nikolaus@vladutescu-zopp.com>
 Date: Thu, 19 May 2022 03:09:50 +0200
-Subject: [PATCH 23/34] net: atlantic: Avoid out-of-bounds indexing
+Subject: [PATCH 23/36] net: atlantic: Avoid out-of-bounds indexing
 
 A UBSAN warning is observed on atlantic driver:
 
@@ -2605,10 +2605,10 @@ index 24d715c28..f49645d24 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 8077e1fe61fe773757aca2bb2e91d6c99dc57462 Mon Sep 17 00:00:00 2001
+From 966c6950d2f2f45504c3c12e434128e6ac5dbd3f Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 22 Apr 2022 10:12:26 -0400
-Subject: [PATCH 24/34] xfs: fix soft lockup via spinning in filestream ag
+Subject: [PATCH 24/36] xfs: fix soft lockup via spinning in filestream ag
  selection loop
 
 The filestream AG selection loop uses pagf data to aid in AG
@@ -2658,10 +2658,10 @@ index 6a3ce0f6d..be9bcf8a1 100644
 2.36.1.203.g1bcf4f6271
 
 
-From e53a6caf27186127400927360aa95236834d3183 Mon Sep 17 00:00:00 2001
+From 6158c7b9f55136700c3e1f9df62ba00d604cff26 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 17 May 2022 14:44:20 -0700
-Subject: [PATCH 25/34] lkdtm/heap: Hide allocation size from -Warray-bounds
+Subject: [PATCH 25/36] lkdtm/heap: Hide allocation size from -Warray-bounds
 
 With the kmalloc() size annotations, GCC is smart enough to realize that
 LKDTM is intentionally writing past the end of the buffer. This is on
@@ -2705,10 +2705,10 @@ index 8a92f5a80..7c0e812b5 100644
 2.36.1.203.g1bcf4f6271
 
 
-From a6f4837814f748c83e73b5f0f26502b28cdb9d6c Mon Sep 17 00:00:00 2001
+From 62ca1a8602af4026bbabf1af678faf1c22653bf9 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 22:51:49 +0200
-Subject: [PATCH 26/34] Revert "pci: Enable overrides for missing ACS
+Subject: [PATCH 26/36] Revert "pci: Enable overrides for missing ACS
  capabilities"
 
 This reverts commit e9ee9452cbe37ca024638aa79293a95019efde42.
@@ -2863,10 +2863,10 @@ index fcbfd845b..41aeaa235 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 4a20de216e13ad165fdc7d0781a0265423844531 Mon Sep 17 00:00:00 2001
+From 98027f418fa612e965252485474eb11810f3b350 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:35 +0200
-Subject: [PATCH 27/34] Revert "openrgb: Deduplicate piix4 setup for
+Subject: [PATCH 27/36] Revert "openrgb: Deduplicate piix4 setup for
  HUDSON2/KERNCZ SMBUS"
 
 This reverts commit 897077b6851bd02c5f706c9964d08a2a638f9b3e.
@@ -2896,10 +2896,10 @@ index 790579034..317c3e88b 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 027b3b874e31ad994c70eb6e7ad6e37fb07ac970 Mon Sep 17 00:00:00 2001
+From 8602713767bf9720f1653b0ba7bd818ef3e784be Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:50 +0200
-Subject: [PATCH 28/34] Revert "i2c: busses: Add SMBus capability to work with
+Subject: [PATCH 28/36] Revert "i2c: busses: Add SMBus capability to work with
  OpenRGB driver control"
 
 This reverts commit 6f9e4855641e67381e089c912a860911258b6423.
@@ -3632,173 +3632,10 @@ index 317c3e88b..ac8e7d606 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 1efa81c3f310a2d9a0cfad4d8f7c506cd26fa54e Mon Sep 17 00:00:00 2001
-From: Jchao Sun <sunjunchao2870@gmail.com>
-Date: Tue, 24 May 2022 08:05:40 -0700
-Subject: [PATCH 29/34] writeback: Fix inode->i_io_list not be protected by
- inode->i_lock error
-
-Commit b35250c0816c ("writeback: Protect inode->i_io_list with
-inode->i_lock") made inode->i_io_list not only protected by
-wb->list_lock but also inode->i_lock, but inode_io_list_move_locked()
-was missed. Add lock there and also update comment describing
-things protected by inode->i_lock. This also fixes a race where
-__mark_inode_dirty() could move inode under flush worker's hands
-and thus sync(2) could miss writing some inodes.
-
-Fixes: b35250c0816c ("writeback: Protect inode->i_io_list with inode->i_lock")
-Signed-off-by: Jchao Sun <sunjunchao2870@gmail.com>
----
- fs/fs-writeback.c | 37 ++++++++++++++++++++++++++++---------
- fs/inode.c        |  2 +-
- 2 files changed, 29 insertions(+), 10 deletions(-)
-
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index a1074a26e..90050b4ad 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -120,6 +120,7 @@ static bool inode_io_list_move_locked(struct inode *inode,
- 				      struct list_head *head)
- {
- 	assert_spin_locked(&wb->list_lock);
-+	assert_spin_locked(&inode->i_lock);
- 
- 	list_move(&inode->i_io_list, head);
- 
-@@ -1365,9 +1366,9 @@ static int move_expired_inodes(struct list_head *delaying_queue,
- 		inode = wb_inode(delaying_queue->prev);
- 		if (inode_dirtied_after(inode, dirtied_before))
- 			break;
-+		spin_lock(&inode->i_lock);
- 		list_move(&inode->i_io_list, &tmp);
- 		moved++;
--		spin_lock(&inode->i_lock);
- 		inode->i_state |= I_SYNC_QUEUED;
- 		spin_unlock(&inode->i_lock);
- 		if (sb_is_blkdev_sb(inode->i_sb))
-@@ -1383,7 +1384,12 @@ static int move_expired_inodes(struct list_head *delaying_queue,
- 		goto out;
- 	}
- 
--	/* Move inodes from one superblock together */
-+	/*
-+	 * Although inode's i_io_list is moved from 'tmp' to 'dispatch_queue',
-+	 * we don't take inode->i_lock here because it is just a pointless overhead.
-+	 * Inode is already marked as I_SYNC_QUEUED so writeback list handling is
-+	 * fully under our control.
-+	 */
- 	while (!list_empty(&tmp)) {
- 		sb = wb_inode(tmp.prev)->i_sb;
- 		list_for_each_prev_safe(pos, node, &tmp) {
-@@ -1826,8 +1832,8 @@ static long writeback_sb_inodes(struct super_block *sb,
- 			 * We'll have another go at writing back this inode
- 			 * when we completed a full scan of b_io.
- 			 */
--			spin_unlock(&inode->i_lock);
- 			requeue_io(inode, wb);
-+			spin_unlock(&inode->i_lock);
- 			trace_writeback_sb_inodes_requeue(inode);
- 			continue;
- 		}
-@@ -2358,6 +2364,7 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- {
- 	struct super_block *sb = inode->i_sb;
- 	int dirtytime = 0;
-+	struct bdi_writeback *wb = NULL;
- 
- 	trace_writeback_mark_inode_dirty(inode, flags);
- 
-@@ -2409,6 +2416,17 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 			inode->i_state &= ~I_DIRTY_TIME;
- 		inode->i_state |= flags;
- 
-+		/*
-+		 * Grab inode's wb early because it requires dropping i_lock and we
-+		 * need to make sure following checks happen atomically with dirty
-+		 * list handling so that we don't move inodes under flush worker's
-+		 * hands.
-+		 */
-+		if (!was_dirty) {
-+			wb = locked_inode_to_wb_and_lock_list(inode);
-+			spin_lock(&inode->i_lock);
-+		}
-+
- 		/*
- 		 * If the inode is queued for writeback by flush worker, just
- 		 * update its dirty state. Once the flush worker is done with
-@@ -2416,7 +2434,7 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 		 * list, based upon its state.
- 		 */
- 		if (inode->i_state & I_SYNC_QUEUED)
--			goto out_unlock_inode;
-+			goto out_unlock;
- 
- 		/*
- 		 * Only add valid (hashed) inodes to the superblock's
-@@ -2424,22 +2442,19 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 		 */
- 		if (!S_ISBLK(inode->i_mode)) {
- 			if (inode_unhashed(inode))
--				goto out_unlock_inode;
-+				goto out_unlock;
- 		}
- 		if (inode->i_state & I_FREEING)
--			goto out_unlock_inode;
-+			goto out_unlock;
- 
- 		/*
- 		 * If the inode was already on b_dirty/b_io/b_more_io, don't
- 		 * reposition it (that would break b_dirty time-ordering).
- 		 */
- 		if (!was_dirty) {
--			struct bdi_writeback *wb;
- 			struct list_head *dirty_list;
- 			bool wakeup_bdi = false;
- 
--			wb = locked_inode_to_wb_and_lock_list(inode);
--
- 			inode->dirtied_when = jiffies;
- 			if (dirtytime)
- 				inode->dirtied_time_when = jiffies;
-@@ -2453,6 +2468,7 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 							       dirty_list);
- 
- 			spin_unlock(&wb->list_lock);
-+			spin_unlock(&inode->i_lock);
- 			trace_writeback_dirty_inode_enqueue(inode);
- 
- 			/*
-@@ -2467,6 +2483,9 @@ void __mark_inode_dirty(struct inode *inode, int flags)
- 			return;
- 		}
- 	}
-+out_unlock:
-+	if (wb)
-+		spin_unlock(&wb->list_lock);
- out_unlock_inode:
- 	spin_unlock(&inode->i_lock);
- }
-diff --git a/fs/inode.c b/fs/inode.c
-index 9d9b42250..bd4da9c52 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -27,7 +27,7 @@
-  * Inode locking rules:
-  *
-  * inode->i_lock protects:
-- *   inode->i_state, inode->i_hash, __iget()
-+ *   inode->i_state, inode->i_hash, __iget(), inode->i_io_list
-  * Inode LRU list locks protect:
-  *   inode->i_sb->s_inode_lru, inode->i_lru
-  * inode->i_sb->s_inode_list_lock protects:
--- 
-2.36.1.203.g1bcf4f6271
-
-
-From 094735e5bbc8e61cf157a3f6485654ef8a7c2aaa Mon Sep 17 00:00:00 2001
+From ce44ce4ab8a6acd70558f5c3d209795e9a2e052a Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 27 May 2022 09:34:28 -0400
-Subject: [PATCH 30/34] xfs: fix xfs_ifree() error handling to not leak perag
+Subject: [PATCH 29/36] xfs: fix xfs_ifree() error handling to not leak perag
  ref
 
 For some reason commit 9a5280b312e2e ("xfs: reorder iunlink remove
@@ -3830,10 +3667,10 @@ index 39ae53efb..e099f9f94 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 836b746177bd3498afa389f129c612a494dca740 Mon Sep 17 00:00:00 2001
+From 9af6012d7075c03dfc53dfb6875cded9049d462e Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:44 +0800
-Subject: [PATCH 31/34] sched: Fix the check of nr_running at queue wakelist
+Subject: [PATCH 30/36] sched: Fix the check of nr_running at queue wakelist
 
 The commit 2ebb17717550 ("sched/core: Offload wakee task activation if it
 the wakee is descheduling") checked nr_running <= 1 to avoid task
@@ -3864,10 +3701,10 @@ index 899980f2a..17e1c028a 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 2d69f5cfbac0d84a9c1159958c77ea15286d6175 Mon Sep 17 00:00:00 2001
+From f5486a31880d8995a811419626b1837395ed6e27 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:45 +0800
-Subject: [PATCH 32/34] sched: Remove the limitation of WF_ON_CPU on wakelist
+Subject: [PATCH 31/36] sched: Remove the limitation of WF_ON_CPU on wakelist
  if wakee cpu is idle
 
 Wakelist can help avoid cache bouncing and offload the overhead of waker
@@ -4083,10 +3920,10 @@ index 64b1df081..98df4e72d 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 322d4a01cbb835a631e275df006b6518b7537422 Mon Sep 17 00:00:00 2001
+From d0e1b618fc8f624a5a5222d491b2be5570ecb61d Mon Sep 17 00:00:00 2001
 From: Marcelo Tosatti <mtosatti@redhat.com>
 Date: Mon, 30 May 2022 12:51:56 -0300
-Subject: [PATCH 33/34] mm: lru_cache_disable: use synchronize_rcu_expedited
+Subject: [PATCH 32/36] mm: lru_cache_disable: use synchronize_rcu_expedited
 
 commit ff042f4a9b050 ("mm: lru_cache_disable: replace work queue
 synchronization with synchronize_rcu") replaced lru_cache_disable's usage
@@ -4136,10 +3973,10 @@ index 7e320ec08..8a98d21d2 100644
 2.36.1.203.g1bcf4f6271
 
 
-From 45c6f080d85bad56a7fdc109fc7f452fb6e4e1b4 Mon Sep 17 00:00:00 2001
+From 9790f82cedbfe26b9f5a1b0fedbeb19e71fd9024 Mon Sep 17 00:00:00 2001
 From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Date: Thu, 9 Jun 2022 10:40:51 +0200
-Subject: [PATCH 34/34] Revert "nvme-pci: add quirks for Samsung X5 SSDs"
+Subject: [PATCH 33/36] Revert "nvme-pci: add quirks for Samsung X5 SSDs"
 
 This reverts commit bc360b0b1611566e1bd47384daf49af6a1c51837.
 
@@ -4177,6 +4014,241 @@ index 17aeb7d5c..1c9b3e9d4 100644
  	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
  	{ 0, }
  };
+-- 
+2.36.1.203.g1bcf4f6271
+
+
+From 4ffe4ccda694da96e893e0945ef1d5432c92a467 Mon Sep 17 00:00:00 2001
+From: Peter Zijlstra <peterz@infradead.org>
+Date: Tue, 7 Jun 2022 22:41:55 +0200
+Subject: [PATCH 34/36] sched: Fix balance_push() vs __sched_setscheduler()
+
+The purpose of balance_push() is to act as a filter on task selection
+in the case of CPU hotplug, specifically when taking the CPU out.
+
+It does this by (ab)using the balance callback infrastructure, with
+the express purpose of keeping all the unlikely/odd cases in a single
+place.
+
+In order to serve its purpose, the balance_push_callback needs to be
+(exclusively) on the callback list at all times (noting that the
+callback always places itself back on the list the moment it runs,
+also noting that when the CPU goes down, regular balancing concerns
+are moot, so ignoring them is fine).
+
+And here-in lies the problem, __sched_setscheduler()'s use of
+splice_balance_callbacks() takes the callbacks off the list across a
+lock-break, making it possible for, an interleaving, __schedule() to
+see an empty list and not get filtered.
+
+Fixes: ae7927023243 ("sched: Optimize finish_lock_switch()")
+Reported-by: Jing-Ting Wu <jing-ting.wu@mediatek.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Jing-Ting Wu <jing-ting.wu@mediatek.com>
+Link: https://lkml.kernel.org/r/20220519134706.GH2578@worktop.programming.kicks-ass.net
+---
+ kernel/sched/core.c  | 36 +++++++++++++++++++++++++++++++++---
+ kernel/sched/sched.h |  5 +++++
+ 2 files changed, 38 insertions(+), 3 deletions(-)
+
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 5536e4acb..89255d252 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -4760,25 +4760,55 @@ static void do_balance_callbacks(struct rq *rq, struct callback_head *head)
+ 
+ static void balance_push(struct rq *rq);
+ 
++/*
++ * balance_push_callback is a right abuse of the callback interface and plays
++ * by significantly different rules.
++ *
++ * Where the normal balance_callback's purpose is to be ran in the same context
++ * that queued it (only later, when it's safe to drop rq->lock again),
++ * balance_push_callback is specifically targeted at __schedule().
++ *
++ * This abuse is tolerated because it places all the unlikely/odd cases behind
++ * a single test, namely: rq->balance_callback == NULL.
++ */
+ struct callback_head balance_push_callback = {
+ 	.next = NULL,
+ 	.func = (void (*)(struct callback_head *))balance_push,
+ };
+ 
+-static inline struct callback_head *splice_balance_callbacks(struct rq *rq)
++static inline struct callback_head *
++__splice_balance_callbacks(struct rq *rq, bool split)
+ {
+ 	struct callback_head *head = rq->balance_callback;
+ 
++	if (likely(!head))
++		return NULL;
++
+ 	lockdep_assert_rq_held(rq);
+-	if (head)
++	/*
++	 * Must not take balance_push_callback off the list when
++	 * splice_balance_callbacks() and balance_callbacks() are not
++	 * in the same rq->lock section.
++	 *
++	 * In that case it would be possible for __schedule() to interleave
++	 * and observe the list empty.
++	 */
++	if (split && head == &balance_push_callback)
++		head = NULL;
++	else
+ 		rq->balance_callback = NULL;
+ 
+ 	return head;
+ }
+ 
++static inline struct callback_head *splice_balance_callbacks(struct rq *rq)
++{
++	return __splice_balance_callbacks(rq, true);
++}
++
+ static void __balance_callbacks(struct rq *rq)
+ {
+-	do_balance_callbacks(rq, splice_balance_callbacks(rq));
++	do_balance_callbacks(rq, __splice_balance_callbacks(rq, false));
+ }
+ 
+ static inline void balance_callbacks(struct rq *rq, struct callback_head *head)
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 98df4e72d..870d3d730 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1686,6 +1686,11 @@ queue_balance_callback(struct rq *rq,
+ {
+ 	lockdep_assert_rq_held(rq);
+ 
++	/*
++	 * Don't (re)queue an already queued item; nor queue anything when
++	 * balance_push() is active, see the comment with
++	 * balance_push_callback.
++	 */
+ 	if (unlikely(head->next || rq->balance_callback == &balance_push_callback))
+ 		return;
+ 
+-- 
+2.36.1.203.g1bcf4f6271
+
+
+From f2482b48024135cdb886080e6462b2af1f99eb78 Mon Sep 17 00:00:00 2001
+From: Sean Christopherson <seanjc@google.com>
+Date: Thu, 26 May 2022 21:08:10 +0000
+Subject: [PATCH 35/36] KVM: x86: Grab regs_dirty in local 'unsigned long'
+
+Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
+to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
+really do read the entire 'unsigned long', even though the walking of the
+read value is capped at the specified size.  I.e. 64-bit KVM is reading
+memory beyond ctxt->regs_dirty, which is a u32 and thus 4 bytes, whereas
+an unsigned long is 8 bytes.  Functionally it's not an issue because
+regs_dirty is in the middle of x86_emulate_ctxt, i.e. KVM is just reading
+its own memory, but relying on that coincidence is gross and unsafe.
+
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20220526210817.3428868-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ arch/x86/kvm/emulate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
+index 89b11e7dc..7226a127c 100644
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -269,9 +269,10 @@ static ulong *reg_rmw(struct x86_emulate_ctxt *ctxt, unsigned nr)
+ 
+ static void writeback_registers(struct x86_emulate_ctxt *ctxt)
+ {
++	unsigned long dirty = ctxt->regs_dirty;
+ 	unsigned reg;
+ 
+-	for_each_set_bit(reg, (ulong *)&ctxt->regs_dirty, 16)
++	for_each_set_bit(reg, &dirty, 16)
+ 		ctxt->ops->write_gpr(ctxt, reg, ctxt->_regs[reg]);
+ }
+ 
+-- 
+2.36.1.203.g1bcf4f6271
+
+
+From 6cd3d71672eada892bc03578cc00ebd1e5652da4 Mon Sep 17 00:00:00 2001
+From: Sean Christopherson <seanjc@google.com>
+Date: Thu, 26 May 2022 21:08:11 +0000
+Subject: [PATCH 36/36] KVM: x86: Harden _regs accesses to guard against buggy
+ input
+
+WARN and truncate the incoming GPR number/index when reading/writing GPRs
+in the emulator to guard against KVM bugs, e.g. to avoid out-of-bounds
+accesses to ctxt->_regs[] if KVM generates a bogus index.  Truncate the
+index instead of returning e.g. zero, as reg_write() returns a pointer
+to the register, i.e. returning zero would result in a NULL pointer
+dereference.  KVM could also force the index to any arbitrary GPR, but
+that's no better or worse, just different.
+
+Open code the restriction to 16 registers; RIP is handled via _eip and
+should never be accessed through reg_read() or reg_write().  See the
+comments above the declarations of reg_read() and reg_write(), and the
+behavior of writeback_registers().  The horrific open coded mess will be
+cleaned up in a future commit.
+
+There are no such bugs known to exist in the emulator, but determining
+that KVM is bug-free is not at all simple and requires a deep dive into
+the emulator.  The code is so convoluted that GCC-12 with the recently
+enable -Warray-bounds spits out a false-positive due to a GCC bug:
+
+  arch/x86/kvm/emulate.c:254:27: warning: array subscript 32 is above array
+                                 bounds of 'long unsigned int[17]' [-Warray-bounds]
+    254 |         return ctxt->_regs[nr];
+        |                ~~~~~~~~~~~^~~~
+  In file included from arch/x86/kvm/emulate.c:23:
+  arch/x86/kvm/kvm_emulate.h: In function 'reg_rmw':
+  arch/x86/kvm/kvm_emulate.h:366:23: note: while referencing '_regs'
+    366 |         unsigned long _regs[NR_VCPU_REGS];
+        |                       ^~~~~
+
+Link: https://lore.kernel.org/all/YofQlBrlx18J7h9Y@google.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216026
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=105679
+Reported-and-tested-by: Robert Dinse <nanook@eskimo.com>
+Reported-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20220526210817.3428868-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ arch/x86/kvm/emulate.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
+index 7226a127c..c58366ae4 100644
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -247,6 +247,9 @@ enum x86_transfer_type {
+ 
+ static ulong reg_read(struct x86_emulate_ctxt *ctxt, unsigned nr)
+ {
++	if (WARN_ON_ONCE(nr >= 16))
++		nr &= 16 - 1;
++
+ 	if (!(ctxt->regs_valid & (1 << nr))) {
+ 		ctxt->regs_valid |= 1 << nr;
+ 		ctxt->_regs[nr] = ctxt->ops->read_gpr(ctxt, nr);
+@@ -256,6 +259,9 @@ static ulong reg_read(struct x86_emulate_ctxt *ctxt, unsigned nr)
+ 
+ static ulong *reg_write(struct x86_emulate_ctxt *ctxt, unsigned nr)
+ {
++	if (WARN_ON_ONCE(nr >= 16))
++		nr &= 16 - 1;
++
+ 	ctxt->regs_valid |= 1 << nr;
+ 	ctxt->regs_dirty |= 1 << nr;
+ 	return &ctxt->_regs[nr];
 -- 
 2.36.1.203.g1bcf4f6271
 
