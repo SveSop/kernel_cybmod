@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.18.5  
+0000 : Patch 5.18.6  
 0000 : ProjectC v5.18-r1  
 0002 : 5.18 Graysky's CPU optimization patches  
 0003 : v5.18-fsync1_futex_waitv  
@@ -13,6 +13,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0006 : zstd kernel settings  
 0007 : Block config settings  
 0008 : Add MG LRU patch  
+0009 : ProjectC fixes  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
 0020 : Clearlinux patches  

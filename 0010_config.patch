@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11592 @@
+@@ -0,0 +1,11594 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.18.5-cybmod5 Kernel Configuration
++# Linux/x86 5.18.6-cybmod6 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -198,6 +198,7 @@ new file mode 100644
 +CONFIG_ARCH_WANT_BATCHED_UNMAP_TLB_FLUSH=y
 +CONFIG_CC_HAS_INT128=y
 +CONFIG_CC_IMPLICIT_FALLTHROUGH="-Wimplicit-fallthrough=5"
++CONFIG_GCC12_NO_ARRAY_BOUNDS=y
 +CONFIG_ARCH_SUPPORTS_INT128=y
 +CONFIG_CGROUPS=y
 +CONFIG_PAGE_COUNTER=y
@@ -11142,6 +11143,7 @@ new file mode 100644
 +CONFIG_CRYPTO_LIB_SM4=m
 +# end of Crypto library routines
 +
++CONFIG_LIB_MEMNEQ=y
 +CONFIG_CRC_CCITT=y
 +CONFIG_CRC16=y
 +CONFIG_CRC_T10DIF=y
