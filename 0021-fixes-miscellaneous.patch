@@ -1,7 +1,7 @@
-From 4afb5e6177d2dcce3148b3c031937907da38f9c6 Mon Sep 17 00:00:00 2001
+From 1e4bffdc27f7136b98f8636c7c550e355d8eeb41 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/38] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/36] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 6397bbd1e4dad8aa23adc1d88025fdee8a7160ec Mon Sep 17 00:00:00 2001
+From 04eda39a7a040920c48727dc0f1358f402139e40 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/38] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/36] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index f25329579..e74d36cfe 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From ad21790bcd1f799c64466a2d1b2cda798636b829 Mon Sep 17 00:00:00 2001
+From a5fb58cf0bf8758d50ca5f131df9c517205610eb Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/38] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/36] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -258,10 +258,10 @@ index 41aeaa235..fcbfd845b 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 379914a91028d7b8a1d7303c3b9212ae7472431c Mon Sep 17 00:00:00 2001
+From eccb846cf5cb8ce59155e9e5cabaa99e8bafa841 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/38] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/36] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -392,10 +392,10 @@ index 0a33a4b68..d45b901cc 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 65ffbd99b3a0ca8420519f68c5530e1298dbc47c Mon Sep 17 00:00:00 2001
+From 9f38e648b84018830f8cee82fbdf5cfab25350f1 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 05/38] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 05/36] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -462,10 +462,10 @@ index e9d39c485..3bceead8d 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 0b91265bebd31d5127aaa30ce784b1493afcdf12 Mon Sep 17 00:00:00 2001
+From dda18330e8808f80a463800315a4b321f787eea7 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 06/38] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 06/36] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -1196,10 +1196,10 @@ index ac8e7d606..317c3e88b 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 7017a68d3380073b29aaec811a90eacc578cb367 Mon Sep 17 00:00:00 2001
+From 374c5b96046a11ed1bf1dfd9a19c210edabe6b1d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 16 May 2022 17:24:08 +0200
-Subject: [PATCH 07/38] fm-5.18: port mm kswapd patches
+Subject: [PATCH 07/36] fm-5.18: port mm kswapd patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1429,10 +1429,10 @@ index 1678802e0..f8c20a80a 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 1e7aed69b9b35b152904c4523f668ea6ae5b3b33 Mon Sep 17 00:00:00 2001
+From aed5cead06be3222e5856f7456367aa40647b73e Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 21 Mar 2022 14:08:29 +0100
-Subject: [PATCH 08/38] Disable stack conservation for GCC
+Subject: [PATCH 08/36] Disable stack conservation for GCC
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1440,7 +1440,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 27850d452..31b677d24 100644
+index 61d630685..5362de6e7 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -991,11 +991,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -1459,10 +1459,10 @@ index 27850d452..31b677d24 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From a4b1b88ddb9e23238a9ebebce41e56b76d5176f7 Mon Sep 17 00:00:00 2001
+From 9718aa6afaa95e5eb7599a643ddd6830caf34cbb Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 09/38] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+Subject: [PATCH 09/36] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
  SMBUS
 
 In the original OpenRGB patches, the initialization code for CZ
@@ -1498,10 +1498,10 @@ index 317c3e88b..790579034 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 2682fa9f99621054d60a9b9b6d3f1a8089ce98b5 Mon Sep 17 00:00:00 2001
+From ebe5b4866504e2187c727242c1cc545cf7eae275 Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Sun, 30 Jan 2022 17:46:48 -0800
-Subject: [PATCH 10/38] kernel/cpu.c: fix init_cpu_online
+Subject: [PATCH 10/36] kernel/cpu.c: fix init_cpu_online
 
 cpu_online_mask has an associate counter of online cpus, which must be
 initialized in init_cpu_online().
@@ -1528,10 +1528,10 @@ index d0a9aa0b4..abfa31a85 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 402c9fc5d4b7119864d6817063ae6f7a1a9af9c3 Mon Sep 17 00:00:00 2001
+From 7cc7e1832984ec007a652d4c2e4add1775fc437d Mon Sep 17 00:00:00 2001
 From: Chen Yu <yu.c.chen@intel.com>
 Date: Fri, 8 Apr 2022 07:42:58 +0800
-Subject: [PATCH 11/38] cpufreq: intel_pstate: Handle no_turbo in frequency
+Subject: [PATCH 11/36] cpufreq: intel_pstate: Handle no_turbo in frequency
  invariance
 
 Problem statement:
@@ -1637,10 +1637,10 @@ index 846bb3a78..2216b24b6 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From a781ab7cf476e2e1e91c96ef012e47c8060cb494 Mon Sep 17 00:00:00 2001
+From 42ece272a64d91d8d718030fc9c44025b40015f6 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:01 +0000
-Subject: [PATCH 12/38] preempt/dynamic: Introduce preemption model accessors
+Subject: [PATCH 12/36] preempt/dynamic: Introduce preemption model accessors
 
 CONFIG_PREEMPT{_NONE, _VOLUNTARY} designate either:
 o The build-time preemption model when !PREEMPT_DYNAMIC
@@ -1743,10 +1743,10 @@ index dd11daa7a..0372605c6 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 8754ccab71d6cec6d747032ff81738aa0583f14f Mon Sep 17 00:00:00 2001
+From 1c03e076092ade2041b39c7eb3c08ddb7a5dd3ca Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:02 +0000
-Subject: [PATCH 13/38] kcsan: Use preemption model accessors
+Subject: [PATCH 13/36] kcsan: Use preemption model accessors
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
 preemption model of the live kernel. Use the newly-introduced accessors
@@ -1786,10 +1786,10 @@ index a36fca063..767dfacd6 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From b43dc50358eecab064f681983c122fe4fc1b0c71 Mon Sep 17 00:00:00 2001
+From da56dd0631fb0c9098b68766714b738866827cd8 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:03 +0000
-Subject: [PATCH 14/38] ftrace: Use preemption model accessors for trace header
+Subject: [PATCH 14/36] ftrace: Use preemption model accessors for trace header
  printout
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
@@ -1835,10 +1835,10 @@ index 114c31bdf..4b0354a89 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 7a8fbce479ab41a4b4c70852be996c826624d5c9 Mon Sep 17 00:00:00 2001
+From 7ee1f1ff41e0c8f69c1db928f515c02598af3867 Mon Sep 17 00:00:00 2001
 From: Alaa Mohamed <eng.alaamohamedsoliman.am@gmail.com>
 Date: Wed, 20 Apr 2022 01:43:13 +0200
-Subject: [PATCH 15/38] igb: Convert kmap() to kmap_local_page()
+Subject: [PATCH 15/36] igb: Convert kmap() to kmap_local_page()
 
 kmap() is being deprecated and these usages are all local to the thread
 so there is no reason kmap_local_page() can't be used.
@@ -1877,10 +1877,10 @@ index 2a5782063..c14fc871d 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 668e05fb08550274ef530ea92fd7d31b604ec0ef Mon Sep 17 00:00:00 2001
+From 48467a5fcbbe6651459ae6db3d28cbd0d2c5f236 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 11 Apr 2022 20:56:15 +0200
-Subject: [PATCH 16/38] ACPICA: Headers: Replace zero-length array with
+Subject: [PATCH 16/36] ACPICA: Headers: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -1925,10 +1925,10 @@ index 16847c8d9..9ee4d1b39 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 0abaf784270a1e160ab8ee3202c776bfc5f091a7 Mon Sep 17 00:00:00 2001
+From dc2110d6b8a2cfb8133532d41e9024fd06dfca05 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:15 -0600
-Subject: [PATCH 17/38] iwlwifi: fw: Replace zero-length arrays with
+Subject: [PATCH 17/36] iwlwifi: fw: Replace zero-length arrays with
  flexible-array members
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2130,10 +2130,10 @@ index 5679a7875..a7817d952 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From c65c5688504c2fb00fa7beadc5f5796c973682b2 Mon Sep 17 00:00:00 2001
+From f2929d98bdfde1dabe46910ac7c795b1d3346af8 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:30 -0600
-Subject: [PATCH 18/38] iwlwifi: mei: Replace zero-length array with
+Subject: [PATCH 18/36] iwlwifi: mei: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2175,10 +2175,10 @@ index 11e300912..be1456dea 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 5e670c04a35b2df17ba05b35bd2baaa8a07f07fd Mon Sep 17 00:00:00 2001
+From 1404b0db55166e1ba86531e9a2c36862e4e293f7 Mon Sep 17 00:00:00 2001
 From: Zqiang <qiang1.zhang@intel.com>
 Date: Thu, 31 Mar 2022 13:57:17 +0800
-Subject: [PATCH 19/38] workqueue: Restrict kworker in the offline CPU pool
+Subject: [PATCH 19/36] workqueue: Restrict kworker in the offline CPU pool
  running on housekeeping CPUs
 
 When a CPU is going offline, all workers on the CPU's pool will have their
@@ -2209,10 +2209,10 @@ index 0d2514b4f..4056f2a3f 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From cd9379e819d93077ec9cd330e80be894dacf370d Mon Sep 17 00:00:00 2001
+From f88cb6e72068fdcc3ffdb2f2ecea53b5d0c7208b Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 17 May 2022 13:46:54 +0200
-Subject: [PATCH 20/38] sched: Reverse sched_class layout
+Subject: [PATCH 20/36] sched: Reverse sched_class layout
 
 Because GCC-12 is fully stupid about array bounds and it's just really
 hard to get a solid array definition from a linker script, flip the
@@ -2333,10 +2333,10 @@ index 84bba67c9..624ae9171 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From da5cd1693f9813588cd014720b11669f0cac24e9 Mon Sep 17 00:00:00 2001
+From db9a653d368afb207722bc39379cc683d9fdf3fa Mon Sep 17 00:00:00 2001
 From: Nikolaus Vladutescu-Zopp <nikolaus@vladutescu-zopp.com>
 Date: Thu, 19 May 2022 03:09:50 +0200
-Subject: [PATCH 21/38] net: atlantic: Avoid out-of-bounds indexing
+Subject: [PATCH 21/36] net: atlantic: Avoid out-of-bounds indexing
 
 A UBSAN warning is observed on atlantic driver:
 
@@ -2408,10 +2408,10 @@ index 24d715c28..f49645d24 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From d4b9bc5a9fa776c9497ab80dfed6a6f4a2ce5540 Mon Sep 17 00:00:00 2001
+From cc5432c8de5afda386e8afdf25b25dd4eaedf870 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 22 Apr 2022 10:12:26 -0400
-Subject: [PATCH 22/38] xfs: fix soft lockup via spinning in filestream ag
+Subject: [PATCH 22/36] xfs: fix soft lockup via spinning in filestream ag
  selection loop
 
 The filestream AG selection loop uses pagf data to aid in AG
@@ -2461,10 +2461,10 @@ index 6a3ce0f6d..be9bcf8a1 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From d3090a7951ea98a6dcb1901a1b9240a9787e3291 Mon Sep 17 00:00:00 2001
+From 81f1494b1c04117e90a183b7e72e9f042d316b8d Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 17 May 2022 14:44:20 -0700
-Subject: [PATCH 23/38] lkdtm/heap: Hide allocation size from -Warray-bounds
+Subject: [PATCH 23/36] lkdtm/heap: Hide allocation size from -Warray-bounds
 
 With the kmalloc() size annotations, GCC is smart enough to realize that
 LKDTM is intentionally writing past the end of the buffer. This is on
@@ -2508,10 +2508,10 @@ index 8a92f5a80..7c0e812b5 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 9de48761da6d5135c0c6f6336310bcb5c4878c86 Mon Sep 17 00:00:00 2001
+From a4bad7d12b6a37513d91fcea635836a3a4b290bf Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 22:51:49 +0200
-Subject: [PATCH 24/38] Revert "pci: Enable overrides for missing ACS
+Subject: [PATCH 24/36] Revert "pci: Enable overrides for missing ACS
  capabilities"
 
 This reverts commit e9ee9452cbe37ca024638aa79293a95019efde42.
@@ -2666,10 +2666,10 @@ index fcbfd845b..41aeaa235 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 31e3abefa67771807c20f9e63a91c210f094ac2b Mon Sep 17 00:00:00 2001
+From 1ae3b2ffb45589216dd47207a1a83b79328c03d0 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:35 +0200
-Subject: [PATCH 25/38] Revert "openrgb: Deduplicate piix4 setup for
+Subject: [PATCH 25/36] Revert "openrgb: Deduplicate piix4 setup for
  HUDSON2/KERNCZ SMBUS"
 
 This reverts commit 897077b6851bd02c5f706c9964d08a2a638f9b3e.
@@ -2699,10 +2699,10 @@ index 790579034..317c3e88b 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 5a95962be0002a608c1fb54a1a6cc8c7413ca3e5 Mon Sep 17 00:00:00 2001
+From 56aedcd0c062e472768d650340ac0c7bcf1db32a Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:50 +0200
-Subject: [PATCH 26/38] Revert "i2c: busses: Add SMBus capability to work with
+Subject: [PATCH 26/36] Revert "i2c: busses: Add SMBus capability to work with
  OpenRGB driver control"
 
 This reverts commit 6f9e4855641e67381e089c912a860911258b6423.
@@ -3435,10 +3435,10 @@ index 317c3e88b..ac8e7d606 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From df2e2279af59e94cd3e0f0275aacf921cb43f0ba Mon Sep 17 00:00:00 2001
+From 898bee369793020956c3b78f1315d2173bcdc8c3 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 27 May 2022 09:34:28 -0400
-Subject: [PATCH 27/38] xfs: fix xfs_ifree() error handling to not leak perag
+Subject: [PATCH 27/36] xfs: fix xfs_ifree() error handling to not leak perag
  ref
 
 For some reason commit 9a5280b312e2e ("xfs: reorder iunlink remove
@@ -3470,10 +3470,10 @@ index 39ae53efb..e099f9f94 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 175df61b1046cd81415d44cbe4dcce8f2d8d2e1f Mon Sep 17 00:00:00 2001
+From e3ece79ec66b8524ffb90b777914aca026f6e438 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:44 +0800
-Subject: [PATCH 28/38] sched: Fix the check of nr_running at queue wakelist
+Subject: [PATCH 28/36] sched: Fix the check of nr_running at queue wakelist
 
 The commit 2ebb17717550 ("sched/core: Offload wakee task activation if it
 the wakee is descheduling") checked nr_running <= 1 to avoid task
@@ -3504,10 +3504,10 @@ index 7ede93384..526d34277 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 0b6c505fe2282950cc24e6ca0b532f91cd8abd39 Mon Sep 17 00:00:00 2001
+From c2b25c4f87c3d30c85b21b89c4742501b0129313 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:45 +0800
-Subject: [PATCH 29/38] sched: Remove the limitation of WF_ON_CPU on wakelist
+Subject: [PATCH 29/36] sched: Remove the limitation of WF_ON_CPU on wakelist
  if wakee cpu is idle
 
 Wakelist can help avoid cache bouncing and offload the overhead of waker
@@ -3723,108 +3723,10 @@ index 624ae9171..870d3d730 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 931f354847f0a8b30ad568e7c322e8cd62e558de Mon Sep 17 00:00:00 2001
-From: Marcelo Tosatti <mtosatti@redhat.com>
-Date: Mon, 30 May 2022 12:51:56 -0300
-Subject: [PATCH 30/38] mm: lru_cache_disable: use synchronize_rcu_expedited
-
-commit ff042f4a9b050 ("mm: lru_cache_disable: replace work queue
-synchronization with synchronize_rcu") replaced lru_cache_disable's usage
-of work queues with synchronize_rcu.
-
-Some users reported large performance regressions due to this commit, for
-example:
-https://lore.kernel.org/all/20220521234616.GO1790663@paulmck-ThinkPad-P17-Gen-1/T/
-
-Switching to synchronize_rcu_expedited fixes the problem.
-
-Link: https://lkml.kernel.org/r/YpToHCmnx/HEcVyR@fuller.cnet
-Fixes: ff042f4a9b050 ("mm: lru_cache_disable: replace work queue synchronization with synchronize_rcu")
-Signed-off-by: Marcelo Tosatti <mtosatti@redhat.com>
-Tested-by: Stefan Wahren <stefan.wahren@i2se.com>
-Tested-by: Michael Larabel <Michael@MichaelLarabel.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Nicolas Saenz Julienne <nsaenzju@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Cc: Phil Elwell <phil@raspberrypi.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
- mm/swap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mm/swap.c b/mm/swap.c
-index 7e320ec08..8a98d21d2 100644
---- a/mm/swap.c
-+++ b/mm/swap.c
-@@ -881,7 +881,7 @@ void lru_cache_disable(void)
- 	 * lru_disable_count = 0 will have exited the critical
- 	 * section when synchronize_rcu() returns.
- 	 */
--	synchronize_rcu();
-+	synchronize_rcu_expedited();
- #ifdef CONFIG_SMP
- 	__lru_add_drain_all(true);
- #else
--- 
-2.37.0.rc0.15.g3b9a5a33c2
-
-
-From 62059befe127eb147ba6bc518305b620981212b3 Mon Sep 17 00:00:00 2001
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 9 Jun 2022 10:40:51 +0200
-Subject: [PATCH 31/38] Revert "nvme-pci: add quirks for Samsung X5 SSDs"
-
-This reverts commit bc360b0b1611566e1bd47384daf49af6a1c51837.
-
-This matches the hardware identifier of the Samsung 970 EVO Plus, a very
-popular internal laptop NVMe drive, which is not the Samsung X5, an
-external thunderbolt drive. In particular, this causes:
-
-1) a 2.3 second boot time delay; and
-2) disabling of deep power saving states.
-
-So just revert this until whatever funny business can be worked out
-regarding Samsung's PCI IDs.
-
-Fixes: bc360b0b1611 ("nvme-pci: add quirks for Samsung X5 SSDs")
-Cc: stable@vger.kernel.org
-Cc: Monish Kumar R <monish.kumar.r@intel.com>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/nvme/host/pci.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 17aeb7d5c..1c9b3e9d4 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3475,10 +3475,7 @@ static const struct pci_device_id nvme_id_table[] = {
- 				NVME_QUIRK_128_BYTES_SQES |
- 				NVME_QUIRK_SHARED_TAGS |
- 				NVME_QUIRK_SKIP_CID_GEN },
--	{ PCI_DEVICE(0x144d, 0xa808),   /* Samsung X5 */
--		.driver_data =  NVME_QUIRK_DELAY_BEFORE_CHK_RDY|
--				NVME_QUIRK_NO_DEEPEST_PS |
--				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
-+
- 	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
- 	{ 0, }
- };
--- 
-2.37.0.rc0.15.g3b9a5a33c2
-
-
-From 383eb6d2078f14dd39b008307f327956e87eebca Mon Sep 17 00:00:00 2001
+From 0d6a0d9350d8649bde42b9c54c7a8777e6c94d74 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 32/38] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 30/36] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -3864,10 +3766,10 @@ index 89b11e7dc..7226a127c 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 279c3ae48d118c5cf2c908b342d9a9befddb265f Mon Sep 17 00:00:00 2001
+From 3868f531c282cefd1247e3277c506b9ea5914a22 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 33/38] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 31/36] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -3940,10 +3842,10 @@ index 7226a127c..c58366ae4 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 68501e8ae322afa950a1dc20061727d24fcd4800 Mon Sep 17 00:00:00 2001
+From 5841b32d26bc5c8a9800696c61bdad899774a011 Mon Sep 17 00:00:00 2001
 From: Jean Delvare <jdelvare@suse.de>
 Date: Tue, 21 Jun 2022 15:55:11 +0200
-Subject: [PATCH 34/38] platform/x86: thinkpad_acpi: Fix a memory leak of EFCH
+Subject: [PATCH 32/36] platform/x86: thinkpad_acpi: Fix a memory leak of EFCH
  MMIO resource
 
 Unlike release_mem_region(), a call to release_resource() does not
@@ -3976,10 +3878,10 @@ index e6cb4a14c..aa6ffeaa3 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From d106c27e221bd6bfe9141852d12462a0800a7a12 Mon Sep 17 00:00:00 2001
+From 615c51a81bce9f8d296ffd634de72654422be5cb Mon Sep 17 00:00:00 2001
 From: Jean Delvare <jdelvare@suse.de>
 Date: Wed, 22 Jun 2022 08:37:43 +0200
-Subject: [PATCH 35/38] i2c: piix4: Fix a memory leak in the EFCH MMIO support
+Subject: [PATCH 33/36] i2c: piix4: Fix a memory leak in the EFCH MMIO support
 
 The recently added support for EFCH MMIO regions introduced a memory
 leak in that code path. The leak is caused by the fact that
@@ -4055,10 +3957,10 @@ index ac8e7d606..39cb1b7bb 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From ccf0125df289e091fd7e54cdcffe8ec95fd0b82c Mon Sep 17 00:00:00 2001
+From 7f0ddba2bdfdafb10e47fda5ef9f22c161cd8b85 Mon Sep 17 00:00:00 2001
 From: Jean Delvare <jdelvare@suse.de>
 Date: Tue, 21 Jun 2022 15:28:40 +0200
-Subject: [PATCH 36/38] watchdog: sp5100_tco: Fix a memory leak of EFCH MMIO
+Subject: [PATCH 34/36] watchdog: sp5100_tco: Fix a memory leak of EFCH MMIO
  resource
 
 Unlike release_mem_region(), a call to release_resource() does not
@@ -4090,10 +3992,10 @@ index 86ffb58fb..ae54dd33e 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 6618878e663c2d3376d1aa37a378b99542010936 Mon Sep 17 00:00:00 2001
+From f3b868c9a975ef9e6802e3625c66e33b06ded5fb Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Jun 2022 08:04:15 +1000
-Subject: [PATCH 37/38] xfs: bound maximum wait time for inodegc work
+Subject: [PATCH 35/36] xfs: bound maximum wait time for inodegc work
 
 Currently inodegc work can sit queued on the per-cpu queue until
 the workqueue is either flushed of the queue reaches a depth that
@@ -4243,10 +4145,10 @@ index 54be9d640..b07e1280a 100644
 2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 312990e36f8dcc9db1b2e3bbaaf43737516a67bd Mon Sep 17 00:00:00 2001
+From a55562c85835d7571c31fbb37fcd52a9ce520f7d Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Jun 2022 08:04:16 +1000
-Subject: [PATCH 38/38] xfs: introduce xfs_inodegc_push()
+Subject: [PATCH 36/36] xfs: introduce xfs_inodegc_push()
 
 The current blocking mechanism for pushing the inodegc queue out to
 disk can result in systems becoming unusable when there is a long

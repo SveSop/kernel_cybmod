@@ -1,4 +1,4 @@
-From 725567d1ece1333c6be4a101d466661bb09cd97f Mon Sep 17 00:00:00 2001
+From 4d66d7e340c7279e1592419c65ff772b086a2b40 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Sun, 7 Jul 2019 21:37:43 -0500
 Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
@@ -19,22 +19,22 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 34bfb76d6333..09a239c54c9c 100644
+index 61d63068553c..5e6c7c74d9aa 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -899,6 +899,12 @@ CC_FLAGS_LTO	+= -fvisibility=hidden
- # Limit inlining across translation units to reduce binary size
- KBUILD_LDFLAGS += -mllvm -import-instr-limit=5
- 
+@@ -899,6 +899,12 @@ else
+ CC_FLAGS_LTO	:= -flto
+ endif
+ CC_FLAGS_LTO	+= -fvisibility=hidden
 +# ensure -fcf-protection is disabled when using retpoline as it is
 +# incompatible with -mindirect-branch=thunk-extern
 +ifdef CONFIG_RETPOLINE
 +KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none,)
 +endif
 +
- # Check for frame size exceeding threshold during prolog/epilog insertion
- # when using lld < 13.0.0.
- ifneq ($(CONFIG_FRAME_WARN),0)
+ 
+ # Limit inlining across translation units to reduce binary size
+ KBUILD_LDFLAGS += -mllvm -import-instr-limit=5
 -- 
 2.36.1
 

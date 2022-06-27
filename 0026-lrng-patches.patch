@@ -1,7 +1,7 @@
-From a0861d197a21befbcab4218ef348c1e89d060344 Mon Sep 17 00:00:00 2001
+From 9e33905ff988e21e60e444f37be36ed76f20f0c9 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 15:33:28 +0200
-Subject: [PATCH 01/32] crypto: Entropy Source and DRNG Manager
+Subject: [PATCH 01/35] crypto: Entropy Source and DRNG Manager
 
 The kernel crypto API contains deterministic random number generators
 (DRNG) which a caller must seed and reseed. The task of seeding a DRNG
@@ -202,12 +202,12 @@ Signed-off-by: Stephan Mueller <smueller@chronox.de>
  create mode 100644 include/linux/lrng.h
 
 diff --git a/drivers/char/Kconfig b/drivers/char/Kconfig
-index 55f48375e..93d52a419 100644
+index d454428f4..a75dee1e5 100644
 --- a/drivers/char/Kconfig
 +++ b/drivers/char/Kconfig
-@@ -452,4 +452,6 @@ config RANDOM_TRUST_BOOTLOADER
- 	only mixes the entropy pool. This can also be configured at boot with
- 	"random.trust_bootloader=on/off".
+@@ -464,4 +464,6 @@ config RANDOM_TRUST_BOOTLOADER
+ 	  believe its RNG facilities may be faulty. This may also be configured
+ 	  at boot time with "random.trust_bootloader=on/off".
  
 +source "drivers/char/lrng/Kconfig"
 +
@@ -3861,13 +3861,13 @@ index 000000000..32873352c
 +
 +#endif /* _LRNG_H */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 3c46a1c36e2d178edb3a33795dcfadf0a3f75695 Mon Sep 17 00:00:00 2001
+From 34d2f385f4a3fdeb63701f18d488044c9e24745a Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 15:40:46 +0200
-Subject: [PATCH 02/32] LRNG - allocate one DRNG instance per NUMA node
+Subject: [PATCH 02/35] LRNG - allocate one DRNG instance per NUMA node
 
 In order to improve NUMA-locality when serving getrandom(2) requests,
 allocate one DRNG instance per node.
@@ -4069,13 +4069,13 @@ index 000000000..e8097abe7
 +
 +#endif /* _LRNG_PROC_H */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 3362e0ac8f0a22468ef18d1ed09cd288001a9930 Mon Sep 17 00:00:00 2001
+From a03a24853e9ff772133b3b428c31c9585d10d543 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 15:44:04 +0200
-Subject: [PATCH 03/32] LRNG - /proc interface
+Subject: [PATCH 03/35] LRNG - /proc interface
 
 The patch adds the file lrng_type which provides details about
 the LRNG:
@@ -4212,13 +4212,13 @@ index e8097abe7..c653274f1 100644
  
  #endif /* _LRNG_PROC_H */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 3f9764cd592ec6e7a7327e695289dc982d3b9be8 Mon Sep 17 00:00:00 2001
+From f32e93e25a491b2d1e176d781de441c9966fdc88 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:47:50 +0200
-Subject: [PATCH 04/32] LRNG - add switchable DRNG support
+Subject: [PATCH 04/35] LRNG - add switchable DRNG support
 
 The DRNG switch support allows replacing the DRNG mechanism of the
 LRNG. The switching support rests on the interface definition of
@@ -4571,13 +4571,13 @@ index 000000000..5ffc0286a
 +}
 +EXPORT_SYMBOL(lrng_set_hash_cb);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 070fdd951a6b969e02313a4d35fff43e1b7466cf Mon Sep 17 00:00:00 2001
+From 9c96ca65e4b4e2c14a5c561424f1a2c3c30a60f4 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:01:44 +0200
-Subject: [PATCH 05/32] LRNG - add common generic hash support
+Subject: [PATCH 05/35] LRNG - add common generic hash support
 
 The LRNG switchable DRNG support also allows the replacement of the hash
 implementation used as conditioning component. The common generic hash
@@ -4803,13 +4803,13 @@ index 000000000..13e62db9b
 +MODULE_AUTHOR("Stephan Mueller <smueller@chronox.de>");
 +MODULE_DESCRIPTION("Entropy Source and DRNG Manager - Kernel crypto API hash backend");
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 6caf4f166f40d3b59284f70462cfc8ecaf185e1d Mon Sep 17 00:00:00 2001
+From 9890192233392a6a16d90fc1e37f23299c5cb7a5 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Tue, 15 Sep 2020 22:17:43 +0200
-Subject: [PATCH 06/32] crypto: DRBG - externalize DRBG functions for LRNG
+Subject: [PATCH 06/35] crypto: DRBG - externalize DRBG functions for LRNG
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -4953,13 +4953,13 @@ index af5ad51d3..b12ae9bde 100644
 +
  #endif /* _DRBG_H */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From fa9ad68dd8eb2d55d9f084c59d5af9e02bdbfe7d Mon Sep 17 00:00:00 2001
+From 9ad3b649a3058877b5c91425191d1230eb623335 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:09:02 +0200
-Subject: [PATCH 07/32] LRNG - add SP800-90A DRBG extension
+Subject: [PATCH 07/35] LRNG - add SP800-90A DRBG extension
 
 Using the LRNG switchable DRNG support, the SP800-90A DRBG extension is
 implemented.
@@ -5289,13 +5289,13 @@ index 000000000..1feec2c09
 +MODULE_DESCRIPTION("Entropy Source and DRNG Manager - SP800-90A DRBG backend");
 +#endif /* CONFIG_LRNG_DFLT_DRNG_DRBG */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From d1cad73b71c664a352762a38952682d21d5dfc93 Mon Sep 17 00:00:00 2001
+From eb8ded4c26cda954b48cbf28e80ef20b155386c5 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:13:37 +0200
-Subject: [PATCH 08/32] LRNG - add kernel crypto API PRNG extension
+Subject: [PATCH 08/35] LRNG - add kernel crypto API PRNG extension
 
 Add runtime-pluggable support for all PRNGs that are accessible via
 the kernel crypto API, including hardware PRNGs. The PRNG is selected
@@ -5603,13 +5603,13 @@ index 000000000..a204bcf52
 +MODULE_DESCRIPTION("Entropy Source and DRNG Manager - kernel crypto API DRNG backend");
 +#endif /* CONFIG_LRNG_DFLT_DRNG_KCAPI */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 7101e5eaae4cc6db6a87a969d016bfe5f22e10de Mon Sep 17 00:00:00 2001
+From 6a8ba265a704b5f69f1ecdbba57620e71fe7879b Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:17:59 +0200
-Subject: [PATCH 09/32] LRNG - add atomic DRNG implementation
+Subject: [PATCH 09/35] LRNG - add atomic DRNG implementation
 
 The atomic DRNG implementation supports the in-kernel use cases which
 request random numbers in atomic contexts. It uses the ChaCha20 DRNG
@@ -5811,13 +5811,13 @@ index 000000000..e3a8fece9
 +}
 +EXPORT_SYMBOL(lrng_get_random_bytes);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 2d12afb923769d66bdf107e705b5419864ec9084 Mon Sep 17 00:00:00 2001
+From 8c91736bfbd938f74eb575b6ad7d2b0d15285563 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:21:44 +0200
-Subject: [PATCH 10/32] LRNG - add common timer-based entropy source code
+Subject: [PATCH 10/35] LRNG - add common timer-based entropy source code
 
 The code shared for timer-based entropy sources offers the following
 support:
@@ -6019,13 +6019,13 @@ index 000000000..70f3ff074
 +}
 +core_initcall(lrng_init_time_source);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 47344ed8caf55b3dc28cfe95855d19bb2acb39f4 Mon Sep 17 00:00:00 2001
+From 56a15f084e2b21809ba72394e5dcbf034828382e Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:51:02 +0200
-Subject: [PATCH 11/32] LRNG - add interrupt entropy source
+Subject: [PATCH 11/35] LRNG - add interrupt entropy source
 
 The interrupt entropy source (ES) consumes the events triggered by the
 kernel invoked with the add_interrupt_randomness. Its main goal is:
@@ -7246,13 +7246,13 @@ index 000000000..9336d0045
 +	.switch_hash		= lrng_irq_switch_hash,
 +};
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 033dadb9021e76ffe879306a36536006bb58d9d6 Mon Sep 17 00:00:00 2001
+From b0bc347274d19ddcf1dda5d59edd5e5adbe78e17 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:39:02 +0200
-Subject: [PATCH 12/32] scheduler - add entropy sampling hook
+Subject: [PATCH 12/35] scheduler - add entropy sampling hook
 
 The scheduler can be used as a source of entropy. This requires the
 presence of a hook that invokes the entropy source implementation.
@@ -7266,7 +7266,7 @@ Signed-off-by: Stephan Mueller <smueller@chronox.de>
  1 file changed, 3 insertions(+)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index e58d894df..5d42f8eef 100644
+index dd11daa7a..636be1aae 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -6,6 +6,7 @@
@@ -7287,13 +7287,13 @@ index e58d894df..5d42f8eef 100644
  		return;
  
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 3dc9a41f605935e587d713778a8be10a0b99ad49 Mon Sep 17 00:00:00 2001
+From cf1a84196d607b1d393c198f988775cd3dba9324 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:56:10 +0200
-Subject: [PATCH 13/32] LRNG - add scheduler-based entropy source
+Subject: [PATCH 13/35] LRNG - add scheduler-based entropy source
 
 The scheduler-based entropy source (ES) consumes the events triggered by
 the kernel invoked with the add_sched_randomness. Its main goal is:
@@ -8058,13 +8058,13 @@ index 000000000..672a7fca4
 +
 +#endif /* _LRNG_TESTING_H */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 48b0789d77c40f1c281d405fc5d0edf2032f7e11 Mon Sep 17 00:00:00 2001
+From 119eb359c630d125a7f68cd84632e29ce52431ab Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:07:49 +0200
-Subject: [PATCH 14/32] LRNG - add SP800-90B compliant health tests
+Subject: [PATCH 14/35] LRNG - add SP800-90B compliant health tests
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -8753,13 +8753,13 @@ index 000000000..a60c8378e
 +	return lrng_health_pass;
 +}
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From dd43fe93b575c27900973037bf00b4da92e3d54f Mon Sep 17 00:00:00 2001
+From a4de79e1581bb82683a1a27a5c64d8731475352b Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:32:29 +0200
-Subject: [PATCH 15/32] LRNG - add random.c entropy source support
+Subject: [PATCH 15/35] LRNG - add random.c entropy source support
 
 The random.c implementation can be used as an entropy source by the
 LRNG. This support can be enabled at compile time.
@@ -8992,13 +8992,13 @@ index 000000000..0ef88e6c8
 +	.switch_hash		= NULL,
 +};
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 034f3bbeca178d203c293c15fd2bcdd146745797 Mon Sep 17 00:00:00 2001
+From 19641c613ad27fffdd781cf6751723248662ed6e Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:45:45 +0200
-Subject: [PATCH 16/32] LRNG - CPU entropy source
+Subject: [PATCH 16/35] LRNG - CPU entropy source
 
 Certain CPUs provide instructions giving access to an entropy source
 (e.g. RDSEED on Intel/AMD, DARN on POWER, etc.). The LRNG can utilize
@@ -9398,13 +9398,13 @@ index 000000000..3910108cf
 +	.switch_hash		= lrng_cpu_switch_hash,
 +};
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 24c9f6ce6a815b7161ba9e130ad456a1a5b88952 Mon Sep 17 00:00:00 2001
+From 46ef6aabafe7fcbdd309a20804d5142b37eb38a4 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:47:58 +0200
-Subject: [PATCH 17/32] crypto: move Jitter RNG header include dir
+Subject: [PATCH 17/35] crypto: move Jitter RNG header include dir
 
 To support the LRNG operation which uses the Jitter RNG separately
 from the kernel crypto API, the header file must be accessible to
@@ -9450,13 +9450,13 @@ similarity index 100%
 rename from crypto/jitterentropy.h
 rename to include/crypto/internal/jitterentropy.h
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 6315de5b1abaf2cbab529a5302bf8403ce6ba23a Mon Sep 17 00:00:00 2001
+From 143c8ff07006ba23ce71ae8df5883868f8ff8e82 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:51:58 +0200
-Subject: [PATCH 18/32] LRNG - add Jitter RNG fast noise source
+Subject: [PATCH 18/35] LRNG - add Jitter RNG fast noise source
 
 The Jitter RNG fast noise source implemented as part of the kernel
 crypto API is queried for 256 bits of entropy at the time the seed
@@ -9698,13 +9698,13 @@ index 000000000..dbb2fce59
 +	.switch_hash		= NULL,
 +};
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From ffe73771b7167540b7deac73b36d75a4ac25e709 Mon Sep 17 00:00:00 2001
+From fe2270c8b6184c76979f29ffbbc547a15b00b76c Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:56:56 +0200
-Subject: [PATCH 19/32] LRNG - add option to enable runtime entropy rate
+Subject: [PATCH 19/35] LRNG - add option to enable runtime entropy rate
  configuration
 
 The entropy rate for the different entropy sources is configured at
@@ -9764,13 +9764,13 @@ index 797f6001f..d7e87dc26 100644
  comment "Common Timer-based Entropy Source Configuration"
  
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From f1d9a7b2f91bdb05a9e2cdef6e9a562894b4c831 Mon Sep 17 00:00:00 2001
+From 280d7ba7ec78c84ba5fe371146cafceeecaddaf3 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:05:58 +0200
-Subject: [PATCH 20/32] LRNG - add interface for gathering of raw entropy
+Subject: [PATCH 20/35] LRNG - add interface for gathering of raw entropy
 
 The test interface allows a privileged process to capture the raw
 unconditioned noise that is collected by the LRNG for statistical
@@ -11294,13 +11294,13 @@ index 000000000..101140085
 +
 +module_init(lrng_raw_init);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 6518243d31b45671e2019725b1bca43f7a9e973a Mon Sep 17 00:00:00 2001
+From 64a5eb1b8e2f5b357377be2914bc13bb2d3e089a Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:13:56 +0200
-Subject: [PATCH 21/32] LRNG - add power-on and runtime self-tests
+Subject: [PATCH 21/35] LRNG - add power-on and runtime self-tests
 
 Parts of the LRNG are already covered by self-tests, including:
 
@@ -11828,13 +11828,13 @@ index 000000000..15f1e4a2a
 +
 +module_init(lrng_selftest_init);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From fcf78a773d23cf3f92a7b9a70eedd47b0459fd0c Mon Sep 17 00:00:00 2001
+From 1067290475a52efbd61cbdf0e594d3403d1e2c0e Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:17:03 +0200
-Subject: [PATCH 22/32] LRNG - sysctls and /proc interface
+Subject: [PATCH 22/35] LRNG - sysctls and /proc interface
 
 The LRNG sysctl interface provides the same controls as the existing
 /dev/random implementation. These sysctls behave identically and are
@@ -12019,13 +12019,13 @@ index 000000000..0f657d01b
 +}
 +device_initcall(random_sysctls_init);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 16b878bd7f1f20415ff7421567c4caaec90ffcc5 Mon Sep 17 00:00:00 2001
+From a539ba3acbdca73b9a207bd661c4141fe40b6211 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:29:08 +0200
-Subject: [PATCH 23/32] LRMG - add drop-in replacement random(4) API
+Subject: [PATCH 23/35] LRMG - add drop-in replacement random(4) API
 
 The LRNG is intended to be a full replacement of the existing random.c.
 This also includes the providing of a full API and ABI compliant drop-in
@@ -12948,13 +12948,13 @@ index 000000000..7e45f41b7
 +	return lrng_read_common_block(flags & GRND_NONBLOCK, buf, count);
 +}
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From d4e993201183c399cf4fb25807d8ed5a1137019f Mon Sep 17 00:00:00 2001
+From c2452efab1473e182c7cbe915164999905bd7f2c Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:35:14 +0200
-Subject: [PATCH 24/32] LRNG - add kernel crypto API interface
+Subject: [PATCH 24/35] LRNG - add kernel crypto API interface
 
 The LRNG can be registered with the kernel crypto API's random number
 generator framework. This offers a random number generator with the name
@@ -13158,13 +13158,13 @@ index 000000000..4cb511f80
 +MODULE_ALIAS_CRYPTO("lrng_atomic");
 +MODULE_ALIAS_CRYPTO("stdrng");
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From bea005d8fa2142d99a16b72dec64366ff4d6a683 Mon Sep 17 00:00:00 2001
+From fb8287e5fde1d1db33d1d6e0357fa3cde8335193 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:39:30 +0200
-Subject: [PATCH 25/32] LRNG - add /dev/lrng device file support
+Subject: [PATCH 25/35] LRNG - add /dev/lrng device file support
 
 The LRNG can create a character device file that operates identically
 to /dev/random including IOCTL, read and write operations.
@@ -13257,13 +13257,13 @@ index 000000000..e60060d40
 +}
 +device_initcall(lrng_dev_if_mod_init);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 30d476e1e1e154110f888dfa625611a8488db5e4 Mon Sep 17 00:00:00 2001
+From a835c947ddf120122f92bd54ed9d586b962b0ced Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:43:30 +0200
-Subject: [PATCH 26/32] LRNG - add hwrand framework interface
+Subject: [PATCH 26/35] LRNG - add hwrand framework interface
 
 The LRNG can be registered with the hardware random number generator
 framework. This offers a random number generator with the name "lrng"
@@ -13393,13 +13393,13 @@ index 000000000..e841eea13
 +MODULE_AUTHOR("Stephan Mueller <smueller@chronox.de>");
 +MODULE_DESCRIPTION("Entropy Source and DRNG Manager HW-Random Interface");
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 581207f497e780e11f454dfe77266415e0a0aeff Mon Sep 17 00:00:00 2001
+From 6245ba107e0e2df4bfba10464dc7533fff9fd23d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 May 2022 22:11:11 +0200
-Subject: [PATCH 27/32] lrng-5.18: update to the latest git HEAD
+Subject: [PATCH 27/35] lrng-5.18: update to the latest git HEAD
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -13467,13 +13467,13 @@ index 4dae08e06..81060ba98 100644
  
  bool lrng_ready_chain_has_sleeper(void)
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 8d33eb44e3e16cb9688abe9002c0a386bcbcd16f Mon Sep 17 00:00:00 2001
+From 9d5d58577c8bdfaa75b27914377ac0721d6bc58e Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 31 May 2022 20:51:56 +0200
-Subject: [PATCH 28/32] lrng-5.18: merge full ABI compliance branch
+Subject: [PATCH 28/35] lrng-5.18: merge full ABI compliance branch
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -13586,13 +13586,13 @@ index 0f657d01b..ecdd96a84 100644
  	fake_table.data = &entropy_count;
  	fake_table.maxlen = sizeof(entropy_count);
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 92f29da376fdef1eb0559ed93868a7c45120c153 Mon Sep 17 00:00:00 2001
+From b74db09b99ca1d72a049115a35e7d7a77b236dc9 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 2 Jun 2022 22:44:34 +0200
-Subject: [PATCH 29/32] MAINTAINERS: add Stephan Mueller as a LRNG maintainer
+Subject: [PATCH 29/35] MAINTAINERS: add Stephan Mueller as a LRNG maintainer
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -13618,13 +13618,13 @@ index f468864fd..38a932d43 100644
  M:	Eric Piel <eric.piel@tremplin-utc.net>
  S:	Maintained
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 678e32d2d74c0927acdb189fe4326653e8116b36 Mon Sep 17 00:00:00 2001
+From 17b23b9851720b61447811f4deb3743dc5db7462 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 13 Jun 2022 11:32:48 +0200
-Subject: [PATCH 30/32] lrng-5.18: drop
+Subject: [PATCH 30/35] lrng-5.18: drop
  EXPORT_SYMBOL_GPL(add_bootloader_randomness)
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -13645,13 +13645,13 @@ index 81060ba98..ca2efefb1 100644
  /*
   * Callback for HID layer -- use the HID event values to stir the entropy pool
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 134d9bff83e4248781b7dac72f1706dce76df086 Mon Sep 17 00:00:00 2001
+From b2392aa2cecce7eb27b273adcc7a6d98c4789904 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 13 Jun 2022 18:25:06 +0200
-Subject: [PATCH 31/32] Revert "lrng-5.18: drop
+Subject: [PATCH 31/35] Revert "lrng-5.18: drop
  EXPORT_SYMBOL_GPL(add_bootloader_randomness)"
 
 This reverts commit 00d3722e57a8e11140375153e9c64178401ab481.
@@ -13674,13 +13674,13 @@ index ca2efefb1..81060ba98 100644
  /*
   * Callback for HID layer -- use the HID event values to stir the entropy pool
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
 
 
-From 32af55bb896ed6b1bf08c6eadbb950c28bd07747 Mon Sep 17 00:00:00 2001
+From 40542f38af5d6a15a7a2aa7637b194fc9f5627c3 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 15 Jun 2022 21:21:42 +0200
-Subject: [PATCH 32/32] lrng-5.18: update to the latest git HEAD
+Subject: [PATCH 32/35] lrng-5.18: update to the latest git HEAD
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -14109,5 +14109,211 @@ index 32873352c..8ec50ac7d 100644
 +
  #endif /* _LRNG_H */
 -- 
-2.36.1.203.g1bcf4f6271
+2.37.0.rc0.15.g3b9a5a33c2
+
+
+From d0112f2d1496fd9668158727016cadb36be7678f Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 24 Jun 2022 09:31:06 +0200
+Subject: [PATCH 33/35] lrng-5.18: update to the latest git HEAD
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ drivers/char/lrng/lrng_es_mgr.c | 5 ++---
+ drivers/char/lrng/lrng_switch.c | 3 +--
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/char/lrng/lrng_es_mgr.c b/drivers/char/lrng/lrng_es_mgr.c
+index 510c35a02..8cf80fa9e 100644
+--- a/drivers/char/lrng/lrng_es_mgr.c
++++ b/drivers/char/lrng/lrng_es_mgr.c
+@@ -330,14 +330,13 @@ int __init lrng_rand_initialize(void)
+ {
+ 	struct seed {
+ 		ktime_t time;
+-		unsigned long data[(LRNG_MAX_DIGESTSIZE /
++		unsigned long data[((LRNG_MAX_DIGESTSIZE +
++				     sizeof(unsigned long) - 1) /
+ 				    sizeof(unsigned long))];
+ 		struct new_utsname utsname;
+ 	} seed __aligned(LRNG_KCAPI_ALIGN);
+ 	unsigned int i;
+ 
+-	BUILD_BUG_ON(LRNG_MAX_DIGESTSIZE % sizeof(unsigned long));
+-
+ 	seed.time = ktime_get_real();
+ 
+ 	for (i = 0; i < ARRAY_SIZE(seed.data); i++) {
+diff --git a/drivers/char/lrng/lrng_switch.c b/drivers/char/lrng/lrng_switch.c
+index 2efffcb5f..c5870aefd 100644
+--- a/drivers/char/lrng/lrng_switch.c
++++ b/drivers/char/lrng/lrng_switch.c
+@@ -215,7 +215,6 @@ static DECLARE_WORK(lrng_set_drng_cb_work, lrng_set_drng_cb_workfn);
+ int lrng_set_drng_cb(const struct lrng_drng_cb *drng_cb)
+ {
+ 	struct lrng_drng *lrng_drng_init = lrng_drng_init_instance();
+-	int ret;
+ 
+ 	if (!IS_ENABLED(CONFIG_LRNG_SWITCH_DRNG))
+ 		return -EOPNOTSUPP;
+@@ -243,7 +242,7 @@ int lrng_set_drng_cb(const struct lrng_drng_cb *drng_cb)
+ 
+ 	lrng_drng_cb = drng_cb;
+ 	schedule_work(&lrng_set_drng_cb_work);
+-	return ret;
++	return 0;
+ }
+ EXPORT_SYMBOL(lrng_set_drng_cb);
+ 
+-- 
+2.37.0.rc0.15.g3b9a5a33c2
+
+
+From dd56f947a19a4e47d7179517fde452c5f8fdc23f Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Sat, 25 Jun 2022 00:22:05 +0200
+Subject: [PATCH 34/35] lrng-5.18: merge changes from dev tree
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ drivers/char/lrng/lrng_switch.c | 42 +++++++++------------------------
+ 1 file changed, 11 insertions(+), 31 deletions(-)
+
+diff --git a/drivers/char/lrng/lrng_switch.c b/drivers/char/lrng/lrng_switch.c
+index c5870aefd..5ffc0286a 100644
+--- a/drivers/char/lrng/lrng_switch.c
++++ b/drivers/char/lrng/lrng_switch.c
+@@ -174,32 +174,6 @@ static int lrng_switch(const void *cb,
+ 	return 0;
+ }
+ 
+-/* Reset LRNG such that all existing entropy is gone */
+-static const struct lrng_drng_cb *lrng_drng_cb = NULL;
+-static void lrng_set_drng_cb_workfn(struct work_struct *work)
+-{
+-	if (!lrng_drng_cb)
+-		return;
+-
+-	/*
+-	 * Wait until the LRNG becomes operational. The reason is that
+-	 * an SP800-90A DRBG shall be fully initialized with full entropy.
+-	 * This is only present when the LRNG is fully initialized.
+-	 */
+-	lrng_drng_sleep_while_nonoperational(0);
+-	lrng_switch(lrng_drng_cb, lrng_drng_switch);
+-
+-	/* The swtich may imply new entropy due to larger DRNG sec strength. */
+-	if (!lrng_switch(lrng_drng_cb, lrng_drng_switch))
+-		lrng_es_add_entropy();
+-
+-	lrng_drng_cb = NULL;
+-
+-	mutex_unlock(&lrng_crypto_cb_update);
+-}
+-
+-static DECLARE_WORK(lrng_set_drng_cb_work, lrng_set_drng_cb_workfn);
+-
+ /*
+  * lrng_set_drng_cb - Register new cryptographic callback functions for DRNG
+  * The registering implies that all old DRNG states are replaced with new
+@@ -215,6 +189,7 @@ static DECLARE_WORK(lrng_set_drng_cb_work, lrng_set_drng_cb_workfn);
+ int lrng_set_drng_cb(const struct lrng_drng_cb *drng_cb)
+ {
+ 	struct lrng_drng *lrng_drng_init = lrng_drng_init_instance();
++	int ret;
+ 
+ 	if (!IS_ENABLED(CONFIG_LRNG_SWITCH_DRNG))
+ 		return -EOPNOTSUPP;
+@@ -236,13 +211,18 @@ int lrng_set_drng_cb(const struct lrng_drng_cb *drng_cb)
+ 	if ((drng_cb != lrng_default_drng_cb) &&
+ 	    (lrng_drng_init->drng_cb != lrng_default_drng_cb)) {
+ 		pr_warn("disallow setting new DRNG callbacks, unload the old callbacks first!\n");
+-		mutex_unlock(&lrng_crypto_cb_update);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 
+-	lrng_drng_cb = drng_cb;
+-	schedule_work(&lrng_set_drng_cb_work);
+-	return 0;
++	ret = lrng_switch(drng_cb, lrng_drng_switch);
++	/* The swtich may imply new entropy due to larger DRNG sec strength. */
++	if (!ret)
++		lrng_es_add_entropy();
++
++out:
++	mutex_unlock(&lrng_crypto_cb_update);
++	return ret;
+ }
+ EXPORT_SYMBOL(lrng_set_drng_cb);
+ 
+-- 
+2.37.0.rc0.15.g3b9a5a33c2
+
+
+From b150b9280685b88c58d25b3c569020ae3c1b9f6a Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Sat, 25 Jun 2022 17:51:16 +0200
+Subject: [PATCH 35/35] lrng-5.18: merge changes from 5.18 tree
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ drivers/char/lrng/lrng_drng_mgr.c | 6 ++++++
+ drivers/char/lrng/lrng_drng_mgr.h | 1 +
+ drivers/char/lrng/lrng_proc.c     | 3 ++-
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/char/lrng/lrng_drng_mgr.c b/drivers/char/lrng/lrng_drng_mgr.c
+index d92559177..f0c0f91c9 100644
+--- a/drivers/char/lrng/lrng_drng_mgr.c
++++ b/drivers/char/lrng/lrng_drng_mgr.c
+@@ -178,6 +178,12 @@ bool lrng_sp80090c_compliant(void)
+ 	return fips_enabled;
+ }
+ 
++bool lrng_ntg1_compliant(void)
++{
++	/* Implies using of /dev/random with O_SYNC */
++	return true;
++}
++
+ /************************* Random Number Generation ***************************/
+ 
+ /* Inject a data buffer into the DRNG - caller must hold its lock */
+diff --git a/drivers/char/lrng/lrng_drng_mgr.h b/drivers/char/lrng/lrng_drng_mgr.h
+index 3eb20e705..ed3fac184 100644
+--- a/drivers/char/lrng/lrng_drng_mgr.h
++++ b/drivers/char/lrng/lrng_drng_mgr.h
+@@ -58,6 +58,7 @@ int lrng_drng_alloc_common(struct lrng_drng *drng,
+ 			   const struct lrng_drng_cb *crypto_cb);
+ int lrng_drng_initalize(void);
+ bool lrng_sp80090c_compliant(void);
++bool lrng_ntg1_compliant(void);
+ bool lrng_get_available(void);
+ void lrng_drng_reset(struct lrng_drng *drng);
+ void lrng_drng_inject(struct lrng_drng *drng, const u8 *inbuf, u32 inbuflen,
+diff --git a/drivers/char/lrng/lrng_proc.c b/drivers/char/lrng/lrng_proc.c
+index 0be848c6d..92329cc6e 100644
+--- a/drivers/char/lrng/lrng_proc.c
++++ b/drivers/char/lrng/lrng_proc.c
+@@ -34,7 +34,7 @@ static int lrng_proc_type_show(struct seq_file *m, void *v)
+ 		 "DRNG name: %s\n"
+ 		 "LRNG security strength in bits: %d\n"
+ 		 "Number of DRNG instances: %u\n"
+-		 "Standards compliance: %s\n"
++		 "Standards compliance: %s%s\n"
+ 		 "LRNG minimally seeded: %s\n"
+ 		 "LRNG fully seeded: %s\n"
+ 		 "LRNG entropy level: %u\n",
+@@ -42,6 +42,7 @@ static int lrng_proc_type_show(struct seq_file *m, void *v)
+ 		 lrng_security_strength(),
+ 		 numa_drngs,
+ 		 lrng_sp80090c_compliant() ? "SP800-90C " : "",
++		 lrng_ntg1_compliant() ? "NTG.1 " : "",
+ 		 lrng_state_min_seeded() ? "true" : "false",
+ 		 lrng_state_fully_seeded() ? "true" : "false",
+ 		 lrng_avail_entropy());
+-- 
+2.37.0.rc0.15.g3b9a5a33c2
 
