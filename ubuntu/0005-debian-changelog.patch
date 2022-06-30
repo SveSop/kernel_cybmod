@@ -1,29 +1,137 @@
-From 5c4c120e653d0176bacc3379a9b4c93c8b7cf6f0 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 25 Jun 2022 14:48:50 +0000
+From d7ba8990ed50efbcc6ec3ae1b3251a8047345d55 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 29 Jun 2022 08:50:14 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16430 +-------------------------------------
- 1 file changed, 3 insertions(+), 16427 deletions(-)
+ debian.master/changelog | 16538 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16535 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index d1f22a0af6b1..9edfb6bc26e7 100644
+index 6e6868cb1e61..df7ddac1e50c 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16430 +1,6 @@
+@@ -1,16538 +1,6 @@
+-linux (5.19.0-7.7) kinetic; urgency=medium
++linux (5.18.8-051808.202206290850) kinetic; urgency=low
+ 
+-  * kinetic/linux: 5.19.0-7.7 -proposed tracker (LP: #1980056)
++  Mainline build at commit: v5.18.8
+ 
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update variants
++ -- Mainline Build <kernel@kathleen>  Wed, 29 Jun 2022 08:50:14 +0000
+ 
+-  * RISC-V enables CONFIG_COMPAT in the unstable branch (LP: #1980061)
+-    - [Config] Disable CONFIG_COMPAT on RISC-V
+-
+-  * No RISC-V configuration in the unstable tree (LP: #1979647)
+-    - [Config] Merge riscv64 config and annotations
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 28 Jun 2022 12:25:48 +0200
+-
+-linux (5.19.0-6.6) kinetic; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 28 Jun 2022 07:50:17 +0200
+-
+-linux-unstable (5.19.0-6.6) kinetic; urgency=medium
+-
+-  * kinetic/linux-unstable: 5.19.0-6.6 -proposed tracker (LP: #1979948)
+-
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Remove 'family=ubuntu' concept
+-    - [Packaging] final-checks: Remove useless sourcing of kernelconfig
+-    - [Config] update config after rebase to 5.19-rc4
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.19-rc4
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 27 Jun 2022 09:16:40 +0200
+-
+-linux-unstable (5.19.0-5.5) kinetic; urgency=medium
+-
+-  * kinetic/linux-unstable: 5.19.0-5.5 -proposed tracker (LP: #1979611)
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Packaging] temporarily disable signing for ppc64el and
+-      s390x"
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 23 Jun 2022 11:13:32 +0200
+-
+-linux-unstable (5.19.0-4.4) kinetic; urgency=medium
+-
+-  * kinetic/linux-unstable: 5.19.0-4.4 -proposed tracker (LP: #1979177)
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update configs after rebase to 5.19-rc3
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.19-rc3
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 20 Jun 2022 09:02:58 +0200
+-
+-linux-unstable (5.19.0-3.3) kinetic; urgency=medium
+-
+-  * kinetic/linux-unstable: 5.19.0-3.3 -proposed tracker (LP: #1978439)
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update annotations for 5.19
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.19-rc2
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 13 Jun 2022 07:16:32 +0200
+-
+-linux-unstable (5.19.0-2.2) kinetic; urgency=medium
+-
+-  * kinetic/linux-unstable: 5.19.0-2.2 -proposed tracker (LP: #1978313)
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Fri, 10 Jun 2022 15:17:20 +0200
+-
+-linux-unstable (5.19.0-1.1) kinetic; urgency=medium
+-
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
+-  * linux: Staging modules should be unsigned (LP: #1642368)
+-    - [Packaging] Move and update signature inclusion list
+-    - [Packaging] Strip signatures from untrusted staging modules
+-    - [Packaging] Add module-signature-check
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update configs and annotations after rebase to 5.19-rc1
+-    - [Packaging] move to kernel 5.19
+-    - [Packaging] workaround missing python3-dev dependency
+-    - SAUCE: Revert "perf tools: Use Python devtools for version autodetection
+-      rather than runtime"
+-    - SAUCE: watchdog: gxp: Add missing MODULE_LICENSE
+-    - [Packaging] add python3-dev as build dependency
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Fri, 10 Jun 2022 14:43:46 +0200
+-
+-linux-unstable (5.19.0-0.0) kinetic; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 09 Jun 2022 12:13:06 +0200
+-
 -linux (5.18.0-6.6) kinetic; urgency=medium
-+linux (5.18.7-051807.202206251448) kinetic; urgency=low
- 
+-
 -  * kinetic/linux: 5.18.0-6.6 -proposed tracker (LP: #1976327)
-+  Mainline build at commit: v5.18.7
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] temporarily disable signing for ppc64el and s390x
 -    - [Config] update toolchain versions
 -    - [Config] enable CONFIG_X86_KERNEL_IBT
-+ -- Mainline Build <kernel@sita>  Sat, 25 Jun 2022 14:48:50 +0000
- 
+-
 - -- Andrea Righi <andrea.righi@canonical.com>  Tue, 31 May 2022 11:05:51 +0200
 -
 -linux (5.18.0-5.5) kinetic; urgency=medium
@@ -16446,5 +16554,5 @@ index d1f22a0af6b1..9edfb6bc26e7 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.36.1
+2.37.0
 
