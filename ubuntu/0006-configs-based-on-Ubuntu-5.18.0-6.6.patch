@@ -1,19 +1,19 @@
-From d322701e02a0acf7c8342dd0c4f191e28f6b806d Mon Sep 17 00:00:00 2001
+From 71d993b71f2f683f763e99e82aca402ca041d784 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 29 Jun 2022 08:50:58 +0000
+Date: Thu, 7 Jul 2022 16:40:43 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.18.0-6.6)
 
 ---
  .../config/amd64/config.common.amd64          |    12 +-
- debian.master/config/annotations              | 14742 ++++++++--------
+ debian.master/config/annotations              | 14748 ++++++++--------
  .../config/arm64/config.common.arm64          |    15 +-
  .../config/arm64/config.flavour.generic       |     2 +-
  .../config/armhf/config.common.armhf          |    13 +-
- debian.master/config/config.common.ubuntu     |   274 +-
+ debian.master/config/config.common.ubuntu     |   283 +-
  .../config/ppc64el/config.common.ppc64el      |    12 +-
  .../config/riscv64/config.common.riscv64      |    15 +-
  .../config/s390x/config.common.s390x          |    12 +-
- 9 files changed, 7447 insertions(+), 7650 deletions(-)
+ 9 files changed, 7453 insertions(+), 7659 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
 index 73abfdd0a295..9bd55b8f4d64 100644
@@ -100,7 +100,7 @@ index 73abfdd0a295..9bd55b8f4d64 100644
  CONFIG_SLIP=m
  CONFIG_SND=m
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 0fdb2c6a89a9..a89cd109d599 100644
+index 00683d2efa9e..a89cd109d599 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
 @@ -1,6 +1,6 @@
@@ -10368,8 +10368,12 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_PARPORT_PC_SUPERIO                       policy<{'amd64': 'n', 'armhf': 'n', 'ppc64el': 'n'}>
  CONFIG_PARPORT_PC_PCMCIA                        policy<{'amd64': 'm'}>
  
-@@ -7302,26 +7302,26 @@ CONFIG_ARM_DMC620_PMU                           policy<{'arm64': 'm'}>
- CONFIG_HISI_PMU                                 policy<{'arm64': 'y'}>
+@@ -7299,29 +7299,29 @@ CONFIG_THUNDERX2_PMU                            policy<{'arm64': 'm'}>
+ CONFIG_XGENE_PMU                                policy<{'arm64': 'y'}>
+ CONFIG_ARM_SPE_PMU                              policy<{'arm64': 'm'}>
+ CONFIG_ARM_DMC620_PMU                           policy<{'arm64': 'm'}>
+-CONFIG_HISI_PMU                                 policy<{'arm64': 'm'}>
++CONFIG_HISI_PMU                                 policy<{'arm64': 'y'}>
  
  # Menu: Device Drivers >> Pin controllers
 -CONFIG_PINCTRL                                  policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 'riscv64': 'y', 's390x': 'n'}>
@@ -14234,7 +14238,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Dump support
  #
-@@ -10519,560 +10522,558 @@ CONFIG_VP_VDPA                                  policy<{'amd64': 'm', 'arm64': '
+@@ -10519,561 +10522,558 @@ CONFIG_VP_VDPA                                  policy<{'amd64': 'm', 'arm64': '
  # Menu: Dump support >> Architecture: s390
  
  # Menu: Enable loadable module support
@@ -14456,6 +14460,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
 -CONFIG_FUSE_FS                                  policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 'riscv64': 'y', 's390x': 'y'}>
 -CONFIG_CUSE                                     policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm', 's390x': 'm'}>
 -CONFIG_VIRTIO_FS                                policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm', 's390x': 'm'}>
+-CONFIG_VIRTIO_HARDEN_NOTIFICATION               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 'riscv64': 'n', 's390x': 'n'}>
 +CONFIG_EXPORTFS_BLOCK_OPS                       policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
 +CONFIG_FILE_LOCKING                             policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
 +CONFIG_FS_ENCRYPTION                            policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'y'}>
@@ -15199,7 +15204,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Firmware Drivers
  CONFIG_ARM_SCPI_PROTOCOL                        policy<{'arm64': 'm', 'armhf': 'm'}>
-@@ -11080,7 +11081,7 @@ CONFIG_ARM_SCPI_POWER_DOMAIN                    policy<{'arm64': 'm', 'armhf': '
+@@ -11081,7 +11081,7 @@ CONFIG_ARM_SCPI_POWER_DOMAIN                    policy<{'arm64': 'm', 'armhf': '
  CONFIG_ARM_SDE_INTERFACE                        policy<{'arm64': 'y'}>
  CONFIG_EDD                                      policy<{'amd64': 'y'}>
  CONFIG_EDD_OFF                                  policy<{'amd64': 'y'}>
@@ -15208,7 +15213,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_DMIID                                    policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y'}>
  CONFIG_DMI_SYSFS                                policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm'}>
  CONFIG_ISCSI_IBFT_FIND                          policy<{'amd64': 'y'}>
-@@ -11092,7 +11093,7 @@ CONFIG_INTEL_STRATIX10_SERVICE                  policy<{'arm64': 'm'}>
+@@ -11093,7 +11093,7 @@ CONFIG_INTEL_STRATIX10_SERVICE                  policy<{'arm64': 'm'}>
  CONFIG_INTEL_STRATIX10_RSU                      policy<{'arm64': 'm'}>
  CONFIG_QCOM_SCM                                 policy<{'arm64': 'y', 'armhf': 'y'}>
  CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT           policy<{'arm64': 'n', 'armhf': 'n'}>
@@ -15217,7 +15222,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_TI_SCI_PROTOCOL                          policy<{'arm64': 'y'}>
  CONFIG_TRUSTED_FOUNDATIONS                      policy<{'armhf': 'y'}>
  CONFIG_TURRIS_MOX_RWTM                          policy<{'arm64': 'm', 'armhf': 'm'}>
-@@ -11119,25 +11120,25 @@ CONFIG_ARM_SCMI_POWER_DOMAIN                    policy<{'arm64': 'm', 'armhf': '
+@@ -11120,25 +11120,25 @@ CONFIG_ARM_SCMI_POWER_DOMAIN                    policy<{'arm64': 'm', 'armhf': '
  
  # Menu: Firmware Drivers >> EFI (Extensible Firmware Interface) Support
  CONFIG_EFI_VARS                                 policy<{'amd64': 'y'}>
@@ -15251,7 +15256,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Firmware Drivers >> Google Firmware Drivers >> Coreboot Table Access
  
-@@ -11155,22 +11156,22 @@ CONFIG_NEON                                     policy<{'armhf': 'y'}>
+@@ -11156,22 +11156,22 @@ CONFIG_NEON                                     policy<{'armhf': 'y'}>
  CONFIG_KERNEL_MODE_NEON                         policy<{'arm64': 'y', 'armhf': 'y'}>
  
  # Menu: General architecture-dependent options
@@ -15287,7 +15292,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_FPROBE                                   policy<{'amd64': 'y'}>
  #
  CONFIG_SECCOMP                                  mark<ENFORCED>
-@@ -11191,10 +11192,10 @@ CONFIG_STRICT_MODULE_RWX                        mark<ENFORCED>
+@@ -11192,10 +11192,10 @@ CONFIG_STRICT_MODULE_RWX                        mark<ENFORCED>
  # Menu: General architecture-dependent options >> GCC plugins
  
  # Menu: General architecture-dependent options >> GCOV-based kernel profiling
@@ -15300,7 +15305,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: General architecture-dependent options >> Link Time Optimization (LTO) >> Architecture: arm
  
-@@ -11207,46 +11208,46 @@ CONFIG_LTO_NONE                                 policy<{'amd64': 'y', 'arm64': '
+@@ -11208,46 +11208,46 @@ CONFIG_LTO_NONE                                 policy<{'amd64': 'y', 'arm64': '
  # Menu: General architecture-dependent options >> Link Time Optimization (LTO) >> Architecture: x86
  
  # Menu: General setup
@@ -15384,7 +15389,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_SYSFS_DEPRECATED                         mark<ENFORCED> note<ensure nothing is using these deprecated interfaces>
  CONFIG_COMPAT_BRK                               mark<ENFORCED> note<disables brk ASLR>
-@@ -11254,128 +11255,127 @@ CONFIG_NUMA_BALANCING_DEFAULT_ENABLED           note<LP:1557690>
+@@ -11255,128 +11255,127 @@ CONFIG_NUMA_BALANCING_DEFAULT_ENABLED           note<LP:1557690>
  CONFIG_LOCALVERSION_AUTO                        mark<ENFORCED> note<triggers packaging failures>
  
  # Menu: General setup >> BPF subsystem
@@ -15595,7 +15600,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: General setup >> Kernel compression mode
  CONFIG_KERNEL_GZIP                              policy<{'amd64': 'n', 'armhf': 'y', 'ppc64el': 'y', 's390x': 'n'}>
-@@ -11390,18 +11390,18 @@ CONFIG_KERNEL_UNCOMPRESSED                      policy<{'s390x': 'n'}>
+@@ -11391,18 +11390,18 @@ CONFIG_KERNEL_UNCOMPRESSED                      policy<{'s390x': 'n'}>
  CONFIG_KERNEL_ZSTD                              mark<ENFORCED> note<LP:#1931725>
  
  # Menu: General setup >> Namespaces support
@@ -15624,7 +15629,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_PREEMPT_NONE                             note<LP:1543165>
  
-@@ -11409,7 +11409,7 @@ CONFIG_PREEMPT_NONE                             note<LP:1543165>
+@@ -11410,7 +11409,7 @@ CONFIG_PREEMPT_NONE                             note<LP:1543165>
  # XXX
  
  # Menu: General setup >> RCU Subsystem >> Make expert-level adjustments to RCU configuration
@@ -15633,7 +15638,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_RCU_EXPERT                               flag<REVIEW>
  
-@@ -11420,16 +11420,16 @@ CONFIG_UCLAMP_BUCKETS_COUNT                     policy<{'amd64': '5', 'arm64': '
+@@ -11421,16 +11420,16 @@ CONFIG_UCLAMP_BUCKETS_COUNT                     policy<{'amd64': '5', 'arm64': '
  CONFIG_UCLAMP_TASK                              flag<REVIEW>
  
  # Menu: General setup >> Timers subsystem
@@ -15656,7 +15661,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_NO_HZ_IDLE                               note<LP:1413968>
  
-@@ -11444,16 +11444,13 @@ CONFIG_PCI_NR_FUNCTIONS                         policy<{'s390x': '512'}>
+@@ -11445,16 +11444,13 @@ CONFIG_PCI_NR_FUNCTIONS                         policy<{'s390x': '512'}>
  #
  CONFIG_PCI_NR_FUNCTIONS                         mark<ENFORCED> note<LP:1866056>
  
@@ -15678,7 +15683,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_IO_STRICT_DEVMEM                         policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
  #
  CONFIG_STRICT_DEVMEM                            mark<ENFORCED>
-@@ -11462,7 +11459,7 @@ CONFIG_STRICT_DEVMEM                            mark<ENFORCED>
+@@ -11463,7 +11459,7 @@ CONFIG_STRICT_DEVMEM                            mark<ENFORCED>
  CONFIG_DEBUG_ENTRY                              policy<{'amd64': 'n', 's390x': 'n'}>
  CONFIG_PID_IN_CONTEXTIDR                        policy<{'arm64': 'n', 'armhf': 'n'}>
  CONFIG_EARLY_PRINTK                             policy<{'amd64': 'y', 'ppc64el': 'y', 's390x': 'y'}>
@@ -15687,7 +15692,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Kernel hacking >> $(SRCARCH) Debugging >> Architecture: arm
  CONFIG_DEBUG_USER                               policy<{'armhf': 'n'}>
-@@ -11522,6 +11519,7 @@ CONFIG_UNWINDER_FRAME_POINTER                   mark<ENFORCED> note<needed for l
+@@ -11523,6 +11519,7 @@ CONFIG_UNWINDER_FRAME_POINTER                   mark<ENFORCED> note<needed for l
  
  # Menu: Kernel hacking >> $(SRCARCH) Debugging >> Choose kernel unwinder >> Architecture: x86
  CONFIG_UNWINDER_ORC                             policy<{'amd64': 'n'}>
@@ -15695,7 +15700,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Kernel hacking >> $(SRCARCH) Debugging >> CoreSight Tracing Support
  CONFIG_CORESIGHT                                policy<{'arm64': 'n', 'armhf': 'n'}>
-@@ -11550,166 +11548,166 @@ CONFIG_DEBUG_LL                                 policy<{'armhf': 'n'}>
+@@ -11551,166 +11548,166 @@ CONFIG_DEBUG_LL                                 policy<{'armhf': 'n'}>
  # Menu: Kernel hacking >> $(SRCARCH) Debugging >> Kernel low-level debugging functions (read help!) >> Kernel low-level debugging port >> Architecture: arm
  
  # Menu: Kernel hacking >> Compile-time checks and compiler options
@@ -15959,7 +15964,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_RUNTIME_TESTING_MENU                     flag<TESTING>
  CONFIG_LKDTM                                    flag<TESTING> flag<REVIEW>
-@@ -11755,51 +11753,51 @@ CONFIG_TEST_HMM                                 flag<TESTING>
+@@ -11756,51 +11753,51 @@ CONFIG_TEST_HMM                                 flag<TESTING>
  CONFIG_TEST_FPU                                 flag<TESTING>
  
  # Menu: Kernel hacking >> Kernel debugging
@@ -16048,7 +16053,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_DEBUG_KMAP_LOCAL                         policy<{'armhf': 'n'}>
  CONFIG_DEBUG_HIGHMEM                            policy<{'armhf': 'n'}>
  CONFIG_DEBUG_STACKOVERFLOW                      policy<{'ppc64el': 'n'}>
-@@ -11807,101 +11805,101 @@ CONFIG_DEBUG_STACKOVERFLOW                      policy<{'ppc64el': 'n'}>
+@@ -11808,101 +11805,101 @@ CONFIG_DEBUG_STACKOVERFLOW                      policy<{'ppc64el': 'n'}>
  CONFIG_PAGE_POISONING                           mark<ENFORCED> note<LP:1783651>
  
  # Menu: Kernel hacking >> Memory Debugging >> Debug VM
@@ -16211,7 +16216,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_HIST_TRIGGERS_DEBUG                      policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 's390x': 'n'}>
  #
  CONFIG_FTRACE_STARTUP_TEST                      flag<TESTING>
-@@ -11911,140 +11909,139 @@ CONFIG_RING_BUFFER_STARTUP_TEST                 flag<TESTING>
+@@ -11912,140 +11909,139 @@ CONFIG_RING_BUFFER_STARTUP_TEST                 flag<TESTING>
  CONFIG_TRACE_EVAL_MAP_FILE                      flag<DEBUG>
  
  # Menu: Kernel hacking >> Tracers >> Branch Profiling
@@ -16447,7 +16452,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_ZONE_DMA                                 note<LP:1628523>
  CONFIG_DEFAULT_MMAP_MIN_ADDR                    mark<ENFORCED> note<LP:1418140 LP:1531327>
-@@ -12055,1038 +12052,1038 @@ CONFIG_PERCPU_STATS                             flag<REVIEW>
+@@ -12056,1038 +12052,1038 @@ CONFIG_PERCPU_STATS                             flag<REVIEW>
  CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE            mark<ENFORCED> note<LP:1709171 LP:1848492>
  
  # Menu: Memory Management options >> Compressed cache for swap pages (EXPERIMENTAL)
@@ -18283,7 +18288,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Platform selection
  CONFIG_ARCH_ACTIONS                             policy<{'arm64': 'y', 'armhf': 'y'}>
-@@ -13132,15 +13129,6 @@ CONFIG_ARCH_VISCONTI                            policy<{'arm64': 'y'}>
+@@ -13133,15 +13129,6 @@ CONFIG_ARCH_VISCONTI                            policy<{'arm64': 'y'}>
  CONFIG_ARCH_XGENE                               policy<{'arm64': 'y'}>
  CONFIG_ARCH_ZYNQMP                              policy<{'arm64': 'y'}>
  
@@ -18299,7 +18304,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  # Menu: Power management and ACPI options
  CONFIG_SUSPEND                                  policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
  CONFIG_SUSPEND_FREEZER                          policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
-@@ -13152,7 +13140,7 @@ CONFIG_PM_AUTOSLEEP                             policy<{'amd64': 'n', 'arm64': '
+@@ -13153,7 +13140,7 @@ CONFIG_PM_AUTOSLEEP                             policy<{'amd64': 'n', 'arm64': '
  CONFIG_PM_WAKELOCKS                             policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
  CONFIG_PM_WAKELOCKS_LIMIT                       policy<{'amd64': '100', 'arm64': '100', 'armhf': '100', 'ppc64el': '100'}>
  CONFIG_PM_WAKELOCKS_GC                          policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
@@ -18308,7 +18313,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_PM_TRACE_RTC                             policy<{'amd64': 'y'}>
  CONFIG_APM_EMULATION                            policy<{'armhf': 'n'}>
  CONFIG_WQ_POWER_EFFICIENT_DEFAULT               policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y'}>
-@@ -13293,10 +13281,10 @@ CONFIG_CPUFREQ_DT                               note<not autoloadable>
+@@ -13294,10 +13281,10 @@ CONFIG_CPUFREQ_DT                               note<not autoloadable>
  # Menu: Power management and ACPI options >> CPU Idle
  
  # Menu: Power management and ACPI options >> CPU Idle >> CPU idle PM support
@@ -18323,7 +18328,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_CPU_IDLE_GOV_HALTPOLL                    policy<{'amd64': 'y', 'ppc64el': 'y'}>
  CONFIG_HALTPOLL_CPUIDLE                         policy<{'amd64': 'm'}>
  
-@@ -13382,8 +13370,8 @@ CONFIG_PM_DEBUG                                 flag<REVIEW>
+@@ -13383,8 +13370,8 @@ CONFIG_PM_DEBUG                                 flag<REVIEW>
  # Menu: Power management and ACPI options >> Support for 47x variant >> Architecture: powerpc
  
  # Menu: Processor support
@@ -18334,7 +18339,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_NR_CPUS                                  note<LP:1864198>
  
-@@ -13411,16 +13399,16 @@ CONFIG_PPC_BOOK3S_64                            policy<{'ppc64el': 'y'}>
+@@ -13412,16 +13399,16 @@ CONFIG_PPC_BOOK3S_64                            policy<{'ppc64el': 'y'}>
  CONFIG_PPC_BOOK3E_64                            policy<{'ppc64el': 'n'}>
  
  # Menu: Processor type and features
@@ -18355,13 +18360,14 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_PARAVIRT                                 policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'n'}>
  CONFIG_PARAVIRT_TIME_ACCOUNTING                 policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n'}>
  CONFIG_XEN                                      policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'n'}>
-@@ -13591,12 +13579,13 @@ CONFIG_MTRR_SANITIZER                           policy<{'amd64': 'y'}>
+@@ -13592,12 +13579,13 @@ CONFIG_MTRR_SANITIZER                           policy<{'amd64': 'y'}>
  CONFIG_MTRR_SANITIZER_ENABLE_DEFAULT            policy<{'amd64': '1'}>
  CONFIG_MTRR_SANITIZER_SPARE_REG_NR_DEFAULT      policy<{'amd64': '1'}>
  CONFIG_X86_PAT                                  policy<{'amd64': 'y'}>
 +CONFIG_X86_SMAP                                 policy<{'amd64': 'y'}>
  CONFIG_X86_UMIP                                 policy<{'amd64': 'y'}>
- CONFIG_X86_KERNEL_IBT                           policy<{'amd64': 'y'}>
+-CONFIG_X86_KERNEL_IBT                           policy<{'amd64': 'n'}>
++CONFIG_X86_KERNEL_IBT                           policy<{'amd64': 'y'}>
  CONFIG_X86_X32_ABI                              policy<{'amd64': 'n'}>
  CONFIG_X86_INTEL_MEMORY_PROTECTION_KEYS         policy<{'amd64': 'y'}>
  CONFIG_X86_SGX                                  policy<{'amd64': 'y'}>
@@ -18370,7 +18376,15 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_EFI_MIXED                                policy<{'amd64': 'y'}>
  CONFIG_KEXEC_SIG_FORCE                          policy<{'amd64': 'n'}>
  CONFIG_KEXEC_BZIMAGE_VERIFY_SIG                 policy<{'amd64': 'y'}>
-@@ -13617,6 +13606,9 @@ CONFIG_MODIFY_LDT_SYSCALL                       flag<REVIEW> note<Q: check this
+@@ -13610,7 +13598,6 @@ CONFIG_DEBUG_HOTPLUG_CPU0                       policy<{'amd64': 'n'}>
+ CONFIG_CMDLINE_BOOL                             policy<{'amd64': 'n'}>
+ CONFIG_MODIFY_LDT_SYSCALL                       policy<{'amd64': 'y'}>
+ #
+-CONFIG_X86_KERNEL_IBT                           mark<ENFORCED> note<LP:1980484>
+ CONFIG_X86_LEGACY_VM86                          note<LP:1499089>
+ CONFIG_KEXEC_BZIMAGE_VERIFY_SIG                 flag<REVIEW> note<Q: check this is in sync with the kexec/kdump userspace>
+ CONFIG_MODIFY_LDT_SYSCALL                       flag<REVIEW> note<Q: check this with security>
+@@ -13619,6 +13606,9 @@ CONFIG_MODIFY_LDT_SYSCALL                       flag<REVIEW> note<Q: check this
  CONFIG_MICROCODE                                policy<{'amd64': 'y'}>
  CONFIG_MICROCODE_INTEL                          policy<{'amd64': 'y'}>
  CONFIG_MICROCODE_AMD                            policy<{'amd64': 'y'}>
@@ -18380,7 +18394,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Processor type and features >> Endianness
  
-@@ -13760,7 +13752,7 @@ CONFIG_MCPM                                     policy<{'armhf': 'y'}>
+@@ -13762,7 +13752,7 @@ CONFIG_MCPM                                     policy<{'armhf': 'y'}>
  CONFIG_BIG_LITTLE                               policy<{'armhf': 'y'}>
  CONFIG_BL_SWITCHER                              policy<{'armhf': 'y'}>
  CONFIG_BL_SWITCHER_DUMMY_IF                     policy<{'armhf': 'm'}>
@@ -18389,7 +18403,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Processor type and features >> Symmetric multi-processing support
  #
-@@ -13786,10 +13778,10 @@ CONFIG_X86_INTEL_TSX_MODE_ON                    policy<{'amd64': 'n'}>
+@@ -13788,10 +13778,10 @@ CONFIG_X86_INTEL_TSX_MODE_ON                    policy<{'amd64': 'n'}>
  CONFIG_X86_INTEL_TSX_MODE_AUTO                  policy<{'amd64': 'n'}>
  
  # Menu: Processor type and features >> Timer frequency
@@ -18404,7 +18418,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: Processor type and features >> Timer frequency >> Architecture: arm
  CONFIG_HZ_200                                   policy<{'armhf': 'n'}>
-@@ -13813,6 +13805,7 @@ CONFIG_ARM64_VA_BITS_52                         policy<{'arm64-generic-64k': 'n'
+@@ -13815,6 +13805,7 @@ CONFIG_ARM64_VA_BITS_52                         policy<{'arm64-generic-64k': 'n'
  CONFIG_ARM64_VA_BITS_48                         mark<ENFORCED> note<Cavium ThunderX 2-socket needs a minimum of 41 bits of VA>
  
  # Menu: Processor type and features >> vsyscall table for legacy applications >> Architecture: x86
@@ -18412,7 +18426,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_LEGACY_VSYSCALL_XONLY                    policy<{'amd64': 'y'}>
  CONFIG_LEGACY_VSYSCALL_NONE                     policy<{'amd64': 'n'}>
  #
-@@ -13820,44 +13813,44 @@ CONFIG_LEGACY_VSYSCALL_XONLY                    flag<REVIEW>
+@@ -13822,44 +13813,44 @@ CONFIG_LEGACY_VSYSCALL_XONLY                    flag<REVIEW>
  
  # Menu: Security options
  CONFIG_SLS                                      policy<{'amd64': 'y'}>
@@ -18484,7 +18498,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_SECURITY                                 mark<ENFORCED>
  CONFIG_LSM_MMAP_MIN_ADDR                        mark<ENFORCED> flag<REVIEW>
-@@ -13868,22 +13861,22 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY              mark<ENFORCED>
+@@ -13870,22 +13861,22 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY              mark<ENFORCED>
  CONFIG_LOCK_DOWN_IN_SECURE_BOOT                 mark<ENFORCED>
  
  # Menu: Security options >> Enable different security models >> AppArmor support
@@ -18519,7 +18533,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_EVM_X509_PATH                            policy<{'ppc64el': '"/etc/keys/x509_evm.der"'}>
  #
  CONFIG_EVM                                      note<LP:1643652>
-@@ -13892,22 +13885,22 @@ CONFIG_EVM_LOAD_X509                            note<LP:1643652>
+@@ -13894,22 +13885,22 @@ CONFIG_EVM_LOAD_X509                            note<LP:1643652>
  CONFIG_EVM_X509_PATH                            note<LP:1643652>
  
  # Menu: Security options >> Enable different security models >> Integrity subsystem >> Enable asymmetric keys support
@@ -18550,7 +18564,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_IMA                                      mark<ENFORCED> note<LP:1643652>
  CONFIG_IMA_KEXEC                                mark<ENFORCED> note<LP:1643652>
-@@ -13915,14 +13908,14 @@ CONFIG_IMA_WRITE_POLICY                         mark<ENFORCED> note<LP:1667490>
+@@ -13917,14 +13908,14 @@ CONFIG_IMA_WRITE_POLICY                         mark<ENFORCED> note<LP:1667490>
  CONFIG_IMA_READ_POLICY                          mark<ENFORCED> note<LP:1667490> note<LP:1866909>
  
  # Menu: Security options >> Enable different security models >> Integrity subsystem >> Integrity Measurement Architecture(IMA) >> Appraise integrity measurements
@@ -18572,7 +18586,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_IMA_X509_PATH                            policy<{'ppc64el': '"/etc/keys/x509_ima.der"'}>
  #
  CONFIG_IMA_APPRAISE                             mark<ENFORCED> note<LP:1643652>
-@@ -13934,80 +13927,77 @@ CONFIG_IMA_APPRAISE_SIGNED_INIT                 mark<ENFORCED> note<LP:1667490>
+@@ -13936,80 +13927,77 @@ CONFIG_IMA_APPRAISE_SIGNED_INIT                 mark<ENFORCED> note<LP:1667490>
  CONFIG_IMA_ARCH_POLICY                          mark<ENFORCED> note<LP:1866909>
  
  # Menu: Security options >> Enable different security models >> Integrity subsystem >> Integrity Measurement Architecture(IMA) >> Appraise integrity measurements >> IMA build time configured policy rules
@@ -18690,7 +18704,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  # Menu: System Type
  #
  
-@@ -14032,10 +14022,16 @@ CONFIG_ARCH_VEXPRESS_TC2_PM                     policy<{'armhf': 'y'}>
+@@ -14034,10 +14022,16 @@ CONFIG_ARCH_VEXPRESS_TC2_PM                     policy<{'armhf': 'y'}>
  
  # Menu: System Type >> ARM system type >> Architecture: arm
  CONFIG_ARCH_MULTIPLATFORM                       policy<{'armhf': 'y'}>
@@ -18707,7 +18721,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  
  # Menu: System Type >> AT91/Microchip SoCs >> Architecture: arm
  CONFIG_ARCH_AT91                                policy<{'armhf': 'n'}>
-@@ -14175,7 +14171,7 @@ CONFIG_ARCH_HIX5HD2                             policy<{'armhf': 'y'}>
+@@ -14177,7 +14171,7 @@ CONFIG_ARCH_HIX5HD2                             policy<{'armhf': 'y'}>
  # Menu: System Type >> MMU-based Paged Memory Management Support
  
  # Menu: System Type >> MMU-based Paged Memory Management Support >> Architecture: arm
@@ -18716,7 +18730,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_ARM_LPAE                                 policy<{'armhf-generic': 'n', 'armhf-generic-lpae': 'y'}>
  CONFIG_VDSO                                     policy<{'armhf': 'y'}>
  
-@@ -14315,6 +14311,8 @@ CONFIG_ARCH_MILBEAUT_M10V                       policy<{'armhf': 'y'}>
+@@ -14317,6 +14311,8 @@ CONFIG_ARCH_MILBEAUT_M10V                       policy<{'armhf': 'y'}>
  # Menu: System Type >> TI OMAP Common Features >> Architecture: arm
  CONFIG_POWER_AVS_OMAP                           policy<{'armhf-generic': 'y'}>
  CONFIG_POWER_AVS_OMAP_CLASS3                    policy<{'armhf-generic': 'y'}>
@@ -18725,7 +18739,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  CONFIG_OMAP3_L2_AUX_SECURE_SAVE_RESTORE         policy<{'armhf-generic': 'n'}>
  
  # Menu: System Type >> TI OMAP/AM/DM/DRA Family >> Architecture: arm
-@@ -14342,13 +14340,13 @@ CONFIG_OMAP3_SDRC_AC_TIMING                     policy<{'armhf-generic': 'n'}>
+@@ -14344,13 +14340,13 @@ CONFIG_OMAP3_SDRC_AC_TIMING                     policy<{'armhf-generic': 'n'}>
  CONFIG_MACH_OMAP_GENERIC                        policy<{'armhf': 'y'}>
  
  # Menu: Ubuntu Supplied Third-Party Device Drivers
@@ -18742,7 +18756,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  
  # Menu: Virtualization >> Architecture: powerpc
-@@ -14366,7 +14364,7 @@ CONFIG_S390_HYPFS_FS                            policy<{'s390x': 'y'}>
+@@ -14368,7 +14364,7 @@ CONFIG_S390_HYPFS_FS                            policy<{'s390x': 'y'}>
  CONFIG_S390_GUEST                               policy<{'s390x': 'y'}>
  
  # Menu: Virtualization >> KVM
@@ -18751,7 +18765,7 @@ index 0fdb2c6a89a9..a89cd109d599 100644
  #
  CONFIG_KVM                                      note<LP:1532886>
  
-@@ -14393,15 +14391,3 @@ CONFIG_APPLDATA_BASE                            policy<{'s390x': 'y'}>
+@@ -14395,15 +14391,3 @@ CONFIG_APPLDATA_BASE                            policy<{'s390x': 'y'}>
  CONFIG_APPLDATA_MEM                             policy<{'s390x': 'm'}>
  CONFIG_APPLDATA_OS                              policy<{'s390x': 'm'}>
  CONFIG_APPLDATA_NET_SUM                         policy<{'s390x': 'm'}>
@@ -18965,7 +18979,7 @@ index be6fe67009b8..132a30bd03e5 100644
  CONFIG_SLIP=m
  CONFIG_SND=y
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index d6b1957e57a0..4e53339062bc 100644
+index ff7b6fa6d27d..015081f12d8c 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -316,10 +316,7 @@ CONFIG_AMD_XGBE_HAVE_ECC=y
@@ -19131,6 +19145,15 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_ARM_VIRT_EXT=y
  CONFIG_AS3935=m
  CONFIG_AS73211=m
+@@ -928,7 +919,7 @@ CONFIG_AS_IS_GNU=y
+ CONFIG_AS_SHA1_NI=y
+ CONFIG_AS_SHA256_NI=y
+ CONFIG_AS_TPAUSE=y
+-CONFIG_AS_VERSION=23800
++CONFIG_AS_VERSION=23850
+ CONFIG_AS_VFP_VMRS_FPINST=y
+ CONFIG_AT76C50X_USB=m
+ CONFIG_AT803X_PHY=m
 @@ -994,6 +985,8 @@ CONFIG_ATL2=m
  CONFIG_ATLAS_EZO_SENSOR=m
  CONFIG_ATLAS_PH_SENSOR=m
@@ -19536,6 +19559,15 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_HIP04_ETH=m
  # CONFIG_HIPPI is not set
  CONFIG_HISILICON_ERRATUM_161010101=y
+@@ -4598,7 +4546,7 @@ CONFIG_HISI_ACC_VFIO_PCI=m
+ # CONFIG_HISI_DMA is not set
+ CONFIG_HISI_FEMAC=m
+ CONFIG_HISI_PCIE_PMU=m
+-CONFIG_HISI_PMU=m
++CONFIG_HISI_PMU=y
+ CONFIG_HISI_THERMAL=m
+ CONFIG_HIST_TRIGGERS=y
+ # CONFIG_HIST_TRIGGERS_DEBUG is not set
 @@ -4656,8 +4604,6 @@ CONFIG_HSU_DMA=m
  CONFIG_HT16K33=m
  CONFIG_HTC_EGPIO=y
@@ -19640,9 +19672,12 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_LAPBETHER=m
  # CONFIG_LATENCYTOP is not set
  CONFIG_LATTICE_ECP3_CONFIG=m
-@@ -5830,7 +5769,6 @@ CONFIG_LD_IS_BFD=y
+@@ -5828,9 +5767,8 @@ CONFIG_LDISC_AUTOLOAD=y
+ # CONFIG_LD_HEAD_STUB_CATCH is not set
+ CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
- CONFIG_LD_VERSION=23800
+-CONFIG_LD_VERSION=23800
++CONFIG_LD_VERSION=23850
  CONFIG_LEDS_88PM860X=m
 -CONFIG_LEDS_AAEON=m
  CONFIG_LEDS_AAT1290=m
@@ -20402,7 +20437,15 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_VIPERBOARD_ADC=m
  CONFIG_VIRTIO=y
  CONFIG_VIRTIO_BALLOON=y
-@@ -12946,7 +12817,6 @@ CONFIG_WILCO_EC_TELEMETRY=m
+@@ -12808,7 +12679,6 @@ CONFIG_VIRTIO_BLK=m
+ CONFIG_VIRTIO_CONSOLE=y
+ CONFIG_VIRTIO_DMA_SHARED_BUFFER=m
+ CONFIG_VIRTIO_FS=m
+-# CONFIG_VIRTIO_HARDEN_NOTIFICATION is not set
+ CONFIG_VIRTIO_INPUT=m
+ CONFIG_VIRTIO_IOMMU=y
+ CONFIG_VIRTIO_MEM=m
+@@ -12947,7 +12817,6 @@ CONFIG_WILCO_EC_TELEMETRY=m
  CONFIG_WILINK_PLATFORM_DATA=y
  CONFIG_WINBOND_840=m
  CONFIG_WINDFARM=m
@@ -20410,7 +20453,7 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_WIREGUARD=m
  # CONFIG_WIREGUARD_DEBUG is not set
  CONFIG_WIRELESS=y
-@@ -12975,12 +12845,10 @@ CONFIG_WLAN_VENDOR_INTEL=y
+@@ -12976,12 +12845,10 @@ CONFIG_WLAN_VENDOR_INTEL=y
  CONFIG_WLAN_VENDOR_INTERSIL=y
  CONFIG_WLAN_VENDOR_MARVELL=y
  CONFIG_WLAN_VENDOR_MEDIATEK=y
@@ -20423,7 +20466,16 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_WLAN_VENDOR_ST=y
  CONFIG_WLAN_VENDOR_TI=y
  CONFIG_WLAN_VENDOR_ZYDAS=y
-@@ -13065,6 +12933,7 @@ CONFIG_X86_POWERNOW_K8=y
+@@ -13038,7 +12905,7 @@ CONFIG_X86_INTEL_TSX_MODE_OFF=y
+ CONFIG_X86_INTERNODE_CACHE_SHIFT=6
+ CONFIG_X86_IOPL_IOPERM=y
+ CONFIG_X86_IO_APIC=y
+-# CONFIG_X86_KERNEL_IBT is not set
++CONFIG_X86_KERNEL_IBT=y
+ CONFIG_X86_L1_CACHE_SHIFT=6
+ CONFIG_X86_LOCAL_APIC=y
+ CONFIG_X86_MCE=y
+@@ -13066,6 +12933,7 @@ CONFIG_X86_POWERNOW_K8=y
  CONFIG_X86_REROUTE_FOR_BROKEN_BOOT_IRQS=y
  CONFIG_X86_SGX=y
  CONFIG_X86_SGX_KVM=y
@@ -20431,7 +20483,7 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_X86_SPEEDSTEP_CENTRINO=y
  CONFIG_X86_SPEEDSTEP_LIB=m
  CONFIG_X86_SUPPORTS_MEMORY_FAILURE=y
-@@ -13102,8 +12971,6 @@ CONFIG_XEN_GNTDEV=m
+@@ -13103,8 +12971,6 @@ CONFIG_XEN_GNTDEV=m
  CONFIG_XEN_GNTDEV_DMABUF=y
  CONFIG_XEN_GRANT_DEV_ALLOC=m
  CONFIG_XEN_GRANT_DMA_ALLOC=y
@@ -20440,7 +20492,7 @@ index d6b1957e57a0..4e53339062bc 100644
  CONFIG_XEN_HAVE_PVMMU=y
  CONFIG_XEN_HAVE_VPMU=y
  CONFIG_XEN_MCE_LOG=y
-@@ -13131,7 +12998,6 @@ CONFIG_XEN_SCSI_FRONTEND=m
+@@ -13132,7 +12998,6 @@ CONFIG_XEN_SCSI_FRONTEND=m
  CONFIG_XEN_SYMS=y
  CONFIG_XEN_SYS_HYPERVISOR=y
  CONFIG_XEN_UNPOPULATED_ALLOC=y

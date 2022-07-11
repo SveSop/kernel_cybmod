@@ -1,27 +1,49 @@
-From d7ba8990ed50efbcc6ec3ae1b3251a8047345d55 Mon Sep 17 00:00:00 2001
+From b2837c4d42b2fa7b1af4942dac58e1a595527f39 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 29 Jun 2022 08:50:14 +0000
+Date: Thu, 7 Jul 2022 16:39:59 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16538 +-------------------------------------
- 1 file changed, 3 insertions(+), 16535 deletions(-)
+ debian.master/changelog | 16560 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16557 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 6e6868cb1e61..df7ddac1e50c 100644
+index 46b1aa38fdb1..9f85654f16aa 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16538 +1,6 @@
+@@ -1,16560 +1,6 @@
+-linux (5.19.0-9.9) kinetic; urgency=medium
++linux (5.18.10-051810.202207071639) kinetic; urgency=low
+ 
+-  * kinetic/linux: 5.19.0-9.9 -proposed tracker (LP: #1980622)
++  Mainline build at commit: v5.18.10
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update config after rebase to 5.19-rc5
++ -- Mainline Build <kernel@kathleen>  Thu, 07 Jul 2022 16:39:59 +0000
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.19-rc5
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 04 Jul 2022 12:05:04 +0200
+-
+-linux (5.19.0-8.8) kinetic; urgency=medium
+-
+-  * kinetic/linux: 5.19.0-8.8 -proposed tracker (LP: #1980482)
+-
+-  * temporarily disable CONFIG_X86_KERNEL_IBT (LP: #1980484)
+-    - [Config] temporarily disable CONFIG_X86_KERNEL_IBT
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Fri, 01 Jul 2022 11:58:56 +0200
+-
 -linux (5.19.0-7.7) kinetic; urgency=medium
-+linux (5.18.8-051808.202206290850) kinetic; urgency=low
- 
+-
 -  * kinetic/linux: 5.19.0-7.7 -proposed tracker (LP: #1980056)
-+  Mainline build at commit: v5.18.8
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - [Packaging] update variants
-+ -- Mainline Build <kernel@kathleen>  Wed, 29 Jun 2022 08:50:14 +0000
- 
+-
 -  * RISC-V enables CONFIG_COMPAT in the unstable branch (LP: #1980061)
 -    - [Config] Disable CONFIG_COMPAT on RISC-V
 -
