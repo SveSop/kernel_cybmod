@@ -1,7 +1,7 @@
-From e6be6c62aee0578e7ad79364db99165c2ea5e3ba Mon Sep 17 00:00:00 2001
+From b8534afcde0df8134cb80d2bd89b95471a45bf3b Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/35] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/40] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 8c680de8ffa6c0708c0e28f04266fc38118de066 Mon Sep 17 00:00:00 2001
+From 74e8ae9c1abd7a1c7cac2305ab4fc29a9a121d59 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/35] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/40] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index f25329579..e74d36cfe 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 237ed9d495a37b2ea110d36f07b3508c0c8e44bd Mon Sep 17 00:00:00 2001
+From 53b5fdf4f615eb8ac8fb80e63882a2c40949fb37 Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/35] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/40] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -258,10 +258,10 @@ index 41aeaa235..fcbfd845b 100644
 2.37.0.3.g30cc8d0f14
 
 
-From ce04b32d978529ae72b0dc97f90eda442c354c18 Mon Sep 17 00:00:00 2001
+From dcd4fa083eb5137fb2f30cc9b261c9e3de0aa073 Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/35] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/40] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -392,10 +392,10 @@ index 0a33a4b68..d45b901cc 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 0e270a48622b0be1a9ecd8aae01c397cf0b771e8 Mon Sep 17 00:00:00 2001
+From 4f6536ef7fd3e1433cb35c8fd9821ee7c2af2ccc Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 05/35] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 05/40] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -462,10 +462,10 @@ index e9d39c485..3bceead8d 100644
 2.37.0.3.g30cc8d0f14
 
 
-From b6b7d1bf069433b1f4095f3ae2492755552bcdf3 Mon Sep 17 00:00:00 2001
+From 6dbb17c043fa9ca055a5c2953bab138023e3e143 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 06/35] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 06/40] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -1196,10 +1196,10 @@ index 39cb1b7bb..2e69d7af2 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 1ff535833f1bc59e62ddf1955aa765303c90a96a Mon Sep 17 00:00:00 2001
+From a3ba6896179ef1026f4f392233e2e7361cab6225 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 16 May 2022 17:24:08 +0200
-Subject: [PATCH 07/35] fm-5.18: port mm kswapd patches
+Subject: [PATCH 07/40] fm-5.18: port mm kswapd patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1429,10 +1429,10 @@ index 1678802e0..f8c20a80a 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 59121ad19f9fe7ee921132d7ddc51ba8998e6b63 Mon Sep 17 00:00:00 2001
+From fdac381971a19412344c570148f8bc322d710767 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 21 Mar 2022 14:08:29 +0100
-Subject: [PATCH 08/35] Disable stack conservation for GCC
+Subject: [PATCH 08/40] Disable stack conservation for GCC
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1440,7 +1440,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 088b84f99..f112e85be 100644
+index 323032d60..80b0c0662 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -991,11 +991,6 @@ KBUILD_CFLAGS	+= -fno-strict-overflow
@@ -1459,10 +1459,10 @@ index 088b84f99..f112e85be 100644
 2.37.0.3.g30cc8d0f14
 
 
-From e25cc50207281d743a1e9eb9ad255337e6295750 Mon Sep 17 00:00:00 2001
+From dbb831ea005c7f2eb4589f4fe84091acfee7bbb6 Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 09/35] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+Subject: [PATCH 09/40] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
  SMBUS
 
 In the original OpenRGB patches, the initialization code for CZ
@@ -1498,10 +1498,10 @@ index 2e69d7af2..9d0b0c24b 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 481ab5f0b9fffe43d54e229a453c0223dd2aebd3 Mon Sep 17 00:00:00 2001
+From 2852d47de2e366f9b8c58cd8b4e4cbc7dbf376a3 Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Sun, 30 Jan 2022 17:46:48 -0800
-Subject: [PATCH 10/35] kernel/cpu.c: fix init_cpu_online
+Subject: [PATCH 10/40] kernel/cpu.c: fix init_cpu_online
 
 cpu_online_mask has an associate counter of online cpus, which must be
 initialized in init_cpu_online().
@@ -1528,10 +1528,10 @@ index d0a9aa0b4..abfa31a85 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 8ee5f1c5aa2143cb0b07bbc3c90ec4db4460fb5f Mon Sep 17 00:00:00 2001
+From 1617a16743fb853fb2e67f5096b47c9f68edeb17 Mon Sep 17 00:00:00 2001
 From: Chen Yu <yu.c.chen@intel.com>
 Date: Fri, 8 Apr 2022 07:42:58 +0800
-Subject: [PATCH 11/35] cpufreq: intel_pstate: Handle no_turbo in frequency
+Subject: [PATCH 11/40] cpufreq: intel_pstate: Handle no_turbo in frequency
  invariance
 
 Problem statement:
@@ -1637,10 +1637,10 @@ index 846bb3a78..2216b24b6 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 24bf0a4037f2b23706f2826db32a8084ce04d23c Mon Sep 17 00:00:00 2001
+From 6d48a6778cb99ab070f40f77b405ef42ade35e5d Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:01 +0000
-Subject: [PATCH 12/35] preempt/dynamic: Introduce preemption model accessors
+Subject: [PATCH 12/40] preempt/dynamic: Introduce preemption model accessors
 
 CONFIG_PREEMPT{_NONE, _VOLUNTARY} designate either:
 o The build-time preemption model when !PREEMPT_DYNAMIC
@@ -1743,10 +1743,10 @@ index dd11daa7a..0372605c6 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 033217e877f9f808ecc20c9f4145641e33e6eaa7 Mon Sep 17 00:00:00 2001
+From 0d8e4d384b016c73b62847980b72d0f56903a7cb Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:02 +0000
-Subject: [PATCH 13/35] kcsan: Use preemption model accessors
+Subject: [PATCH 13/40] kcsan: Use preemption model accessors
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
 preemption model of the live kernel. Use the newly-introduced accessors
@@ -1786,10 +1786,10 @@ index a36fca063..767dfacd6 100644
 2.37.0.3.g30cc8d0f14
 
 
-From ca09dd5c68f61b557dcb4b6aef7066de783bff82 Mon Sep 17 00:00:00 2001
+From f402909216e338780c8364d52b8171f47dad6b26 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:03 +0000
-Subject: [PATCH 14/35] ftrace: Use preemption model accessors for trace header
+Subject: [PATCH 14/40] ftrace: Use preemption model accessors for trace header
  printout
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
@@ -1835,10 +1835,10 @@ index 114c31bdf..4b0354a89 100644
 2.37.0.3.g30cc8d0f14
 
 
-From ba54c9835bd5ed093263a30c0db00b462797415e Mon Sep 17 00:00:00 2001
+From 2b2adfceab5333126f28817b97bf5b11b0291477 Mon Sep 17 00:00:00 2001
 From: Alaa Mohamed <eng.alaamohamedsoliman.am@gmail.com>
 Date: Wed, 20 Apr 2022 01:43:13 +0200
-Subject: [PATCH 15/35] igb: Convert kmap() to kmap_local_page()
+Subject: [PATCH 15/40] igb: Convert kmap() to kmap_local_page()
 
 kmap() is being deprecated and these usages are all local to the thread
 so there is no reason kmap_local_page() can't be used.
@@ -1877,10 +1877,10 @@ index 2a5782063..c14fc871d 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 12d80b78195ef001cb823f8a0a910ae26a63cf6a Mon Sep 17 00:00:00 2001
+From accf841e30eb7bc34548447503e9231e10ccc400 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 11 Apr 2022 20:56:15 +0200
-Subject: [PATCH 16/35] ACPICA: Headers: Replace zero-length array with
+Subject: [PATCH 16/40] ACPICA: Headers: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -1925,10 +1925,10 @@ index 16847c8d9..9ee4d1b39 100644
 2.37.0.3.g30cc8d0f14
 
 
-From ee15d9bff743c4c3be48b1278c681d73c4403a07 Mon Sep 17 00:00:00 2001
+From fb387f74a46465f5c41ceff73ed0e377580416d9 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:15 -0600
-Subject: [PATCH 17/35] iwlwifi: fw: Replace zero-length arrays with
+Subject: [PATCH 17/40] iwlwifi: fw: Replace zero-length arrays with
  flexible-array members
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2130,10 +2130,10 @@ index 5679a7875..a7817d952 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 2980eb53ec4559e977378a3fc0c583616752872e Mon Sep 17 00:00:00 2001
+From ef51c2b58bd988d63d6292be3f40c9294ef33245 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:30 -0600
-Subject: [PATCH 18/35] iwlwifi: mei: Replace zero-length array with
+Subject: [PATCH 18/40] iwlwifi: mei: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2175,10 +2175,10 @@ index 11e300912..be1456dea 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 40d342059601ccde54fd9292d0e70bba97b3c36a Mon Sep 17 00:00:00 2001
+From 89a39a0fee1fe27fe68b5fd073139a438672d795 Mon Sep 17 00:00:00 2001
 From: Zqiang <qiang1.zhang@intel.com>
 Date: Thu, 31 Mar 2022 13:57:17 +0800
-Subject: [PATCH 19/35] workqueue: Restrict kworker in the offline CPU pool
+Subject: [PATCH 19/40] workqueue: Restrict kworker in the offline CPU pool
  running on housekeeping CPUs
 
 When a CPU is going offline, all workers on the CPU's pool will have their
@@ -2209,10 +2209,10 @@ index 0d2514b4f..4056f2a3f 100644
 2.37.0.3.g30cc8d0f14
 
 
-From e62f5ba789e760dd0068d3dac4bab7ef40ef75d5 Mon Sep 17 00:00:00 2001
+From f9621db4d73dfceda2920f62e186cd087aaa6383 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 17 May 2022 13:46:54 +0200
-Subject: [PATCH 20/35] sched: Reverse sched_class layout
+Subject: [PATCH 20/40] sched: Reverse sched_class layout
 
 Because GCC-12 is fully stupid about array bounds and it's just really
 hard to get a solid array definition from a linker script, flip the
@@ -2333,10 +2333,10 @@ index 84bba67c9..624ae9171 100644
 2.37.0.3.g30cc8d0f14
 
 
-From bc26e575a4afd331daed3cccc18bf12c4c36ba0f Mon Sep 17 00:00:00 2001
+From 58e1f272f02486c30658c4c92edbe13cce37a6f1 Mon Sep 17 00:00:00 2001
 From: Nikolaus Vladutescu-Zopp <nikolaus@vladutescu-zopp.com>
 Date: Thu, 19 May 2022 03:09:50 +0200
-Subject: [PATCH 21/35] net: atlantic: Avoid out-of-bounds indexing
+Subject: [PATCH 21/40] net: atlantic: Avoid out-of-bounds indexing
 
 A UBSAN warning is observed on atlantic driver:
 
@@ -2408,10 +2408,10 @@ index 24d715c28..f49645d24 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 81e7852d54c6f00230c91af755aeb38de952a6b0 Mon Sep 17 00:00:00 2001
+From 8654c57c63f17e732df946af605adbb175665dc1 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 22 Apr 2022 10:12:26 -0400
-Subject: [PATCH 22/35] xfs: fix soft lockup via spinning in filestream ag
+Subject: [PATCH 22/40] xfs: fix soft lockup via spinning in filestream ag
  selection loop
 
 The filestream AG selection loop uses pagf data to aid in AG
@@ -2461,10 +2461,10 @@ index 6a3ce0f6d..be9bcf8a1 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 3147d65e606964e54446af9d5ba46dde5034041a Mon Sep 17 00:00:00 2001
+From b702e3701fafa8b0b71e0577a13b6d2160d461c5 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 17 May 2022 14:44:20 -0700
-Subject: [PATCH 23/35] lkdtm/heap: Hide allocation size from -Warray-bounds
+Subject: [PATCH 23/40] lkdtm/heap: Hide allocation size from -Warray-bounds
 
 With the kmalloc() size annotations, GCC is smart enough to realize that
 LKDTM is intentionally writing past the end of the buffer. This is on
@@ -2508,10 +2508,10 @@ index 8a92f5a80..7c0e812b5 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 5b78b4f48e247c1196b0a5963b289f43c0befc2d Mon Sep 17 00:00:00 2001
+From b56c418e64fa6d0500b3470e4fddd0c164e43162 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 22:51:49 +0200
-Subject: [PATCH 24/35] Revert "pci: Enable overrides for missing ACS
+Subject: [PATCH 24/40] Revert "pci: Enable overrides for missing ACS
  capabilities"
 
 This reverts commit e9ee9452cbe37ca024638aa79293a95019efde42.
@@ -2666,10 +2666,10 @@ index fcbfd845b..41aeaa235 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 4df43d608373a88d81fb64889742c2e49375be62 Mon Sep 17 00:00:00 2001
+From bcf0915aacb2788c65856726c10225c34f2db9c8 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:35 +0200
-Subject: [PATCH 25/35] Revert "openrgb: Deduplicate piix4 setup for
+Subject: [PATCH 25/40] Revert "openrgb: Deduplicate piix4 setup for
  HUDSON2/KERNCZ SMBUS"
 
 This reverts commit 897077b6851bd02c5f706c9964d08a2a638f9b3e.
@@ -2699,10 +2699,10 @@ index 9d0b0c24b..2e69d7af2 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 5d5d710da334c01dd3e478f690639fce2ccc7bc7 Mon Sep 17 00:00:00 2001
+From 9493d9aef6cf4b030331bc5c898dd5b61c184ab0 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:50 +0200
-Subject: [PATCH 26/35] Revert "i2c: busses: Add SMBus capability to work with
+Subject: [PATCH 26/40] Revert "i2c: busses: Add SMBus capability to work with
  OpenRGB driver control"
 
 This reverts commit 6f9e4855641e67381e089c912a860911258b6423.
@@ -3435,10 +3435,10 @@ index 2e69d7af2..39cb1b7bb 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 11ec161108d5a3332fd0f299b762701d0c1eb3bf Mon Sep 17 00:00:00 2001
+From 4455da6d1d741258e0e76fe4bc5edfb35a7022c7 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 27 May 2022 09:34:28 -0400
-Subject: [PATCH 27/35] xfs: fix xfs_ifree() error handling to not leak perag
+Subject: [PATCH 27/40] xfs: fix xfs_ifree() error handling to not leak perag
  ref
 
 For some reason commit 9a5280b312e2e ("xfs: reorder iunlink remove
@@ -3470,10 +3470,10 @@ index 39ae53efb..e099f9f94 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 63e8691ade2aa2999cdfcd5254dc2dfa66af6e37 Mon Sep 17 00:00:00 2001
+From 450b63a980c6553efedfa3c88e2cfaf85c739813 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:44 +0800
-Subject: [PATCH 28/35] sched: Fix the check of nr_running at queue wakelist
+Subject: [PATCH 28/40] sched: Fix the check of nr_running at queue wakelist
 
 The commit 2ebb17717550 ("sched/core: Offload wakee task activation if it
 the wakee is descheduling") checked nr_running <= 1 to avoid task
@@ -3504,10 +3504,10 @@ index 7ede93384..526d34277 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 09ef9a53a143f6196d0ef9aa3a32612d043fcb97 Mon Sep 17 00:00:00 2001
+From b391eabaf6b0dcd910111d48032e8223ad5fc10c Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:45 +0800
-Subject: [PATCH 29/35] sched: Remove the limitation of WF_ON_CPU on wakelist
+Subject: [PATCH 29/40] sched: Remove the limitation of WF_ON_CPU on wakelist
  if wakee cpu is idle
 
 Wakelist can help avoid cache bouncing and offload the overhead of waker
@@ -3723,10 +3723,10 @@ index 624ae9171..870d3d730 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 313530774236bbec537c2f86c33af55c606d3ce6 Mon Sep 17 00:00:00 2001
+From f68155992da132037c1af181e6bf7327173dc99f Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 30/35] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 30/40] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -3766,10 +3766,10 @@ index 89b11e7dc..7226a127c 100644
 2.37.0.3.g30cc8d0f14
 
 
-From a847abec080eb9c9a76af88249ac8362130f913e Mon Sep 17 00:00:00 2001
+From 31e1855a2a81c62a0c7fce2829f330fd1e71def1 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 31/35] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 31/40] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -3842,10 +3842,10 @@ index 7226a127c..c58366ae4 100644
 2.37.0.3.g30cc8d0f14
 
 
-From cc53c1723f2e8fd9e6501558e746a399a7185806 Mon Sep 17 00:00:00 2001
+From 57b379b4e1d1e305738568687b601477432706b0 Mon Sep 17 00:00:00 2001
 From: Jean Delvare <jdelvare@suse.de>
 Date: Tue, 21 Jun 2022 15:28:40 +0200
-Subject: [PATCH 32/35] watchdog: sp5100_tco: Fix a memory leak of EFCH MMIO
+Subject: [PATCH 32/40] watchdog: sp5100_tco: Fix a memory leak of EFCH MMIO
  resource
 
 Unlike release_mem_region(), a call to release_resource() does not
@@ -3877,10 +3877,10 @@ index 86ffb58fb..ae54dd33e 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 3d0759969b0bfe163d9a0ee5bf58312104fef386 Mon Sep 17 00:00:00 2001
+From a128d8cf3b7936049237d1636bde8ffdf2c4d75a Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Jun 2022 08:04:15 +1000
-Subject: [PATCH 33/35] xfs: bound maximum wait time for inodegc work
+Subject: [PATCH 33/40] xfs: bound maximum wait time for inodegc work
 
 Currently inodegc work can sit queued on the per-cpu queue until
 the workqueue is either flushed of the queue reaches a depth that
@@ -4030,10 +4030,10 @@ index 54be9d640..b07e1280a 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 8dd65d34d58082105ebb884b37420cdf888c2d7f Mon Sep 17 00:00:00 2001
+From 0af229c18c6c627a862be49185b791065b4cca21 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Jun 2022 08:04:16 +1000
-Subject: [PATCH 34/35] xfs: introduce xfs_inodegc_push()
+Subject: [PATCH 34/40] xfs: introduce xfs_inodegc_push()
 
 The current blocking mechanism for pushing the inodegc queue out to
 disk can result in systems becoming unusable when there is a long
@@ -4169,10 +4169,10 @@ index b141ef78c..38dd74cc4 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 6a6f951def8e625a39c5274e6f2cec4e615c15bd Mon Sep 17 00:00:00 2001
+From 5e6be9578f8c49eae51e122796c5af8e3f71837c Mon Sep 17 00:00:00 2001
 From: Yiqing Yao <yiqing.yao@amd.com>
 Date: Thu, 5 May 2022 18:12:33 +0800
-Subject: [PATCH 35/35] drm/amdgpu: flush delete wq after wait fence
+Subject: [PATCH 35/40] drm/amdgpu: flush delete wq after wait fence
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -4220,6 +4220,274 @@ index 66e40cac5..23e01801c 100644
  	if (adev->pm_sysfs_en)
  		amdgpu_pm_sysfs_fini(adev);
  	if (adev->ucode_sysfs_en)
+-- 
+2.37.0.3.g30cc8d0f14
+
+
+From 0683660fcacee3826177d2c11682a467be8591a5 Mon Sep 17 00:00:00 2001
+From: Mario Limonciello <mario.limonciello@amd.com>
+Date: Tue, 12 Jul 2022 15:07:15 -0500
+Subject: [PATCH 36/40] ACPI: CPPC: unbreak amd-pstate for shared memory
+ designs
+
+Fixes: 8b356e536e69 ("ACPI: CPPC: Don't require _OSC if X86_FEATURE_CPPC is supported")
+Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+---
+ arch/x86/kernel/acpi/cppc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
+index 3677df836..ca8828268 100644
+--- a/arch/x86/kernel/acpi/cppc.c
++++ b/arch/x86/kernel/acpi/cppc.c
+@@ -16,6 +16,13 @@ bool cpc_supported_by_cpu(void)
+ 	switch (boot_cpu_data.x86_vendor) {
+ 	case X86_VENDOR_AMD:
+ 	case X86_VENDOR_HYGON:
++		if (boot_cpu_data.x86 == 0x19 &&
++		    ((boot_cpu_data.x86_model >= 0x00 && boot_cpu_data.x86_model <= 0x0f) ||
++		     (boot_cpu_data.x86_model >= 0x20 && boot_cpu_data.x86_model <= 0x2f)))
++		    return true;
++		else if (boot_cpu_data.x86 == 0x17 &&
++			 boot_cpu_data.x86_model >= 0x70 && boot_cpu_data.x86_model <= 0x7f)
++		    return true;
+ 		return boot_cpu_has(X86_FEATURE_CPPC);
+ 	}
+ 	return false;
+-- 
+2.37.0.3.g30cc8d0f14
+
+
+From 00bd31df34f036800408116ae45e6192c16a4b70 Mon Sep 17 00:00:00 2001
+From: Oleksandr Natalenko <oleksandr@natalenko.name>
+Date: Wed, 13 Jul 2022 20:35:53 +0200
+Subject: [PATCH 37/40] Revert "ACPI: CPPC: unbreak amd-pstate for shared
+ memory designs"
+
+This reverts commit cc5c57b8c349c85b81b44cf5fe2d2577b947a7de.
+---
+ arch/x86/kernel/acpi/cppc.c | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
+index ca8828268..3677df836 100644
+--- a/arch/x86/kernel/acpi/cppc.c
++++ b/arch/x86/kernel/acpi/cppc.c
+@@ -16,13 +16,6 @@ bool cpc_supported_by_cpu(void)
+ 	switch (boot_cpu_data.x86_vendor) {
+ 	case X86_VENDOR_AMD:
+ 	case X86_VENDOR_HYGON:
+-		if (boot_cpu_data.x86 == 0x19 &&
+-		    ((boot_cpu_data.x86_model >= 0x00 && boot_cpu_data.x86_model <= 0x0f) ||
+-		     (boot_cpu_data.x86_model >= 0x20 && boot_cpu_data.x86_model <= 0x2f)))
+-		    return true;
+-		else if (boot_cpu_data.x86 == 0x17 &&
+-			 boot_cpu_data.x86_model >= 0x70 && boot_cpu_data.x86_model <= 0x7f)
+-		    return true;
+ 		return boot_cpu_has(X86_FEATURE_CPPC);
+ 	}
+ 	return false;
+-- 
+2.37.0.3.g30cc8d0f14
+
+
+From d95573de6b1da034be383a88f615fa14654b1255 Mon Sep 17 00:00:00 2001
+From: Mario Limonciello <mario.limonciello@amd.com>
+Date: Wed, 13 Jul 2022 12:53:46 -0500
+Subject: [PATCH 38/40] ACPI: CPPC: Fix enabling CPPC on AMD systems with
+ shared memory
+
+When commit 72f2ecb7ece7 ("ACPI: bus: Set CPPC _OSC bits for all
+and when CPPC_LIB is supported") was introduced, we found collateral
+damage that a number of AMD systems that supported CPPC but
+didn't advertise support in _OSC stopped having a functional
+amd-pstate driver. The _OSC was only enforced on Intel systems at that
+time.
+
+This was fixed for the MSR based designs by commit 8b356e536e69f
+("ACPI: CPPC: Don't require _OSC if X86_FEATURE_CPPC is supported")
+but some shared memory based designs also support CPPC but haven't
+advertised support in the _OSC.  Add support for those designs as well by
+hardcoding the list of systems.
+
+Fixes: 72f2ecb7ece7 ("ACPI: bus: Set CPPC _OSC bits for all and when CPPC_LIB is supported")
+Fixes: 8b356e536e69f ("ACPI: CPPC: Don't require _OSC if X86_FEATURE_CPPC is supported")
+Link: https://lore.kernel.org/all/3559249.JlDtxWtqDm@natalenko.name/
+Cc: stable@vger.kernel.org # 5.18
+Reported-and-tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+---
+ arch/x86/kernel/acpi/cppc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
+index 3677df836..0961bf38b 100644
+--- a/arch/x86/kernel/acpi/cppc.c
++++ b/arch/x86/kernel/acpi/cppc.c
+@@ -16,6 +16,12 @@ bool cpc_supported_by_cpu(void)
+ 	switch (boot_cpu_data.x86_vendor) {
+ 	case X86_VENDOR_AMD:
+ 	case X86_VENDOR_HYGON:
++		if (boot_cpu_data.x86 == 0x19 && ((boot_cpu_data.x86_model <= 0x0f) ||
++		    (boot_cpu_data.x86_model >= 0x20 && boot_cpu_data.x86_model <= 0x2f)))
++			return true;
++		else if (boot_cpu_data.x86 == 0x17 &&
++			 boot_cpu_data.x86_model >= 0x70 && boot_cpu_data.x86_model <= 0x7f)
++			return true;
+ 		return boot_cpu_has(X86_FEATURE_CPPC);
+ 	}
+ 	return false;
+-- 
+2.37.0.3.g30cc8d0f14
+
+
+From 09fc1e756ef3dcf0aa41b222f1789ee4844ec784 Mon Sep 17 00:00:00 2001
+From: "Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>
+Date: Wed, 13 Jul 2022 19:12:23 +0800
+Subject: [PATCH 39/40] net: atlantic: remove deep parameter on suspend/resume
+ functions
+
+Below commit claims that atlantic NIC requires to reset the device on pm
+op, and had set the deep to true for all suspend/resume functions.
+commit 1809c30b6e5a ("net: atlantic: always deep reset on pm op, fixing up my null deref regression")
+So, we could remove deep parameter on suspend/resume functions without
+any functional change.
+
+Fixes: 1809c30b6e5a ("net: atlantic: always deep reset on pm op, fixing up my null deref regression")
+Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+---
+ .../ethernet/aquantia/atlantic/aq_pci_func.c  | 24 ++++++++-----------
+ 1 file changed, 10 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+index 831833911..dbd526313 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+@@ -379,7 +379,7 @@ static void aq_pci_shutdown(struct pci_dev *pdev)
+ 	}
+ }
+ 
+-static int aq_suspend_common(struct device *dev, bool deep)
++static int aq_suspend_common(struct device *dev)
+ {
+ 	struct aq_nic_s *nic = pci_get_drvdata(to_pci_dev(dev));
+ 
+@@ -392,17 +392,15 @@ static int aq_suspend_common(struct device *dev, bool deep)
+ 	if (netif_running(nic->ndev))
+ 		aq_nic_stop(nic);
+ 
+-	if (deep) {
+-		aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
+-		aq_nic_set_power(nic);
+-	}
++	aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
++	aq_nic_set_power(nic);
+ 
+ 	rtnl_unlock();
+ 
+ 	return 0;
+ }
+ 
+-static int atl_resume_common(struct device *dev, bool deep)
++static int atl_resume_common(struct device *dev)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev);
+ 	struct aq_nic_s *nic;
+@@ -415,10 +413,8 @@ static int atl_resume_common(struct device *dev, bool deep)
+ 	pci_set_power_state(pdev, PCI_D0);
+ 	pci_restore_state(pdev);
+ 
+-	if (deep) {
+-		/* Reinitialize Nic/Vecs objects */
+-		aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
+-	}
++	/* Reinitialize Nic/Vecs objects */
++	aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
+ 
+ 	if (netif_running(nic->ndev)) {
+ 		ret = aq_nic_init(nic);
+@@ -444,22 +440,22 @@ static int atl_resume_common(struct device *dev, bool deep)
+ 
+ static int aq_pm_freeze(struct device *dev)
+ {
+-	return aq_suspend_common(dev, true);
++	return aq_suspend_common(dev);
+ }
+ 
+ static int aq_pm_suspend_poweroff(struct device *dev)
+ {
+-	return aq_suspend_common(dev, true);
++	return aq_suspend_common(dev);
+ }
+ 
+ static int aq_pm_thaw(struct device *dev)
+ {
+-	return atl_resume_common(dev, true);
++	return atl_resume_common(dev);
+ }
+ 
+ static int aq_pm_resume_restore(struct device *dev)
+ {
+-	return atl_resume_common(dev, true);
++	return atl_resume_common(dev);
+ }
+ 
+ static const struct dev_pm_ops aq_pm_ops = {
+-- 
+2.37.0.3.g30cc8d0f14
+
+
+From 31e493209d896b16db7539186d7313705a1a5d8b Mon Sep 17 00:00:00 2001
+From: "Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>
+Date: Wed, 13 Jul 2022 19:12:24 +0800
+Subject: [PATCH 40/40] net: atlantic: remove aq_nic_deinit() when resume
+
+aq_nic_deinit() has been called while suspending, so we don't have to call
+it again on resume.
+Actually, call it again leads to another hang issue when resuming from
+S3.
+
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992345] Call Trace:
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992346] <TASK>
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992348] aq_nic_deinit+0xb4/0xd0 [atlantic]
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992356] aq_pm_thaw+0x7f/0x100 [atlantic]
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992362] pci_pm_resume+0x5c/0x90
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992366] ? pci_pm_thaw+0x80/0x80
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992368] dpm_run_callback+0x4e/0x120
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992371] device_resume+0xad/0x200
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992373] async_resume+0x1e/0x40
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992374] async_run_entry_fn+0x33/0x120
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992377] process_one_work+0x220/0x3c0
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992380] worker_thread+0x4d/0x3f0
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992382] ? process_one_work+0x3c0/0x3c0
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992384] kthread+0x12a/0x150
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992386] ? set_kthread_struct+0x40/0x40
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992387] ret_from_fork+0x22/0x30
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992391] </TASK>
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992392] ---[ end trace 1ec8c79604ed5e0d ]---
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992394] PM: dpm_run_callback(): pci_pm_resume+0x0/0x90 returns -110
+Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992397] atlantic 0000:02:00.0: PM: failed to resume async: error -110
+
+Fixes: 1809c30b6e5a ("net: atlantic: always deep reset on pm op, fixing up my null deref regression")
+Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+---
+ drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+index dbd526313..8647125d6 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+@@ -413,9 +413,6 @@ static int atl_resume_common(struct device *dev)
+ 	pci_set_power_state(pdev, PCI_D0);
+ 	pci_restore_state(pdev);
+ 
+-	/* Reinitialize Nic/Vecs objects */
+-	aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
+-
+ 	if (netif_running(nic->ndev)) {
+ 		ret = aq_nic_init(nic);
+ 		if (ret)
 -- 
 2.37.0.3.g30cc8d0f14
 
