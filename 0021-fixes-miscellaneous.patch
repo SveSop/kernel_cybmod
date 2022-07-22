@@ -1,7 +1,7 @@
-From b8534afcde0df8134cb80d2bd89b95471a45bf3b Mon Sep 17 00:00:00 2001
+From ce251e59c67deb2f2518839a24169f401180012e Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 17 Aug 2020 22:48:47 +0200
-Subject: [PATCH 01/40] net/sched: allow configuring cake qdisc as default
+Subject: [PATCH 01/36] net/sched: allow configuring cake qdisc as default
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -34,10 +34,10 @@ index 1e8ab4749..75122fd65 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 74e8ae9c1abd7a1c7cac2305ab4fc29a9a121d59 Mon Sep 17 00:00:00 2001
+From 674633bc53e3559bbdaaa8f158bb3074b8bca01d Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Fri, 26 Oct 2018 11:22:33 +0100
-Subject: [PATCH 02/40] infiniband: Fix __read_overflow2 error with -O3
+Subject: [PATCH 02/36] infiniband: Fix __read_overflow2 error with -O3
  inlining
 
 ---
@@ -60,10 +60,10 @@ index f25329579..e74d36cfe 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 53b5fdf4f615eb8ac8fb80e63882a2c40949fb37 Mon Sep 17 00:00:00 2001
+From fd848b79a1acbe986bcf604826c2fa5fab06566e Mon Sep 17 00:00:00 2001
 From: Mark Weiman <mark.weiman@markzz.com>
 Date: Sun, 12 Aug 2018 11:36:21 -0400
-Subject: [PATCH 03/40] pci: Enable overrides for missing ACS capabilities
+Subject: [PATCH 03/36] pci: Enable overrides for missing ACS capabilities
 
 This an updated version of Alex Williamson's patch from:
 https://lkml.org/lkml/2013/5/30/513
@@ -258,10 +258,10 @@ index 41aeaa235..fcbfd845b 100644
 2.37.0.3.g30cc8d0f14
 
 
-From dcd4fa083eb5137fb2f30cc9b261c9e3de0aa073 Mon Sep 17 00:00:00 2001
+From 453b5b3b832fdd47e767e6a83312384ef439f8fd Mon Sep 17 00:00:00 2001
 From: "Martin K. Petersen" <martin.petersen@oracle.com>
 Date: Sun, 22 Mar 2020 16:57:06 -0400
-Subject: [PATCH 04/40] scsi: sd: Optimal I/O size should be a multiple of
+Subject: [PATCH 04/36] scsi: sd: Optimal I/O size should be a multiple of
  reported granularity
 
 Commit a83da8a4509d ("scsi: sd: Optimal I/O size should be a multiple of
@@ -392,10 +392,10 @@ index 0a33a4b68..d45b901cc 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 4f6536ef7fd3e1433cb35c8fd9821ee7c2af2ccc Mon Sep 17 00:00:00 2001
+From f4bb05e493e2c94ed4930030aa32f33524ad95f8 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 30 Aug 2021 13:28:51 +0200
-Subject: [PATCH 05/40] tty: Allow setting the number of available virtual TTYs
+Subject: [PATCH 05/36] tty: Allow setting the number of available virtual TTYs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -462,10 +462,10 @@ index e9d39c485..3bceead8d 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 6dbb17c043fa9ca055a5c2953bab138023e3e143 Mon Sep 17 00:00:00 2001
+From 2fed83da6139015b5db4fb511bc9858b66263d26 Mon Sep 17 00:00:00 2001
 From: Alexandre Frade <kernel@xanmod.org>
 Date: Thu, 7 Oct 2021 14:09:55 +0000
-Subject: [PATCH 06/40] i2c: busses: Add SMBus capability to work with OpenRGB
+Subject: [PATCH 06/36] i2c: busses: Add SMBus capability to work with OpenRGB
  driver control
 
 Signed-off-by: Alexandre Frade <kernel@xanmod.org>
@@ -1196,10 +1196,10 @@ index 39cb1b7bb..2e69d7af2 100644
 2.37.0.3.g30cc8d0f14
 
 
-From a3ba6896179ef1026f4f392233e2e7361cab6225 Mon Sep 17 00:00:00 2001
+From 72b5c0934ecebbb9e2fdfee8e98ba289aa7e55b5 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 16 May 2022 17:24:08 +0200
-Subject: [PATCH 07/40] fm-5.18: port mm kswapd patches
+Subject: [PATCH 07/36] fm-5.18: port mm kswapd patches
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1429,10 +1429,10 @@ index 1678802e0..f8c20a80a 100644
 2.37.0.3.g30cc8d0f14
 
 
-From fdac381971a19412344c570148f8bc322d710767 Mon Sep 17 00:00:00 2001
+From d6a20940be5b69a11b2f6dae460837c5d309a92b Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 21 Mar 2022 14:08:29 +0100
-Subject: [PATCH 08/40] Disable stack conservation for GCC
+Subject: [PATCH 08/36] Disable stack conservation for GCC
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -1459,10 +1459,10 @@ index 323032d60..80b0c0662 100644
 2.37.0.3.g30cc8d0f14
 
 
-From dbb831ea005c7f2eb4589f4fe84091acfee7bbb6 Mon Sep 17 00:00:00 2001
+From dfadd1d38fce857366471ee5d5c47ba31534ca5d Mon Sep 17 00:00:00 2001
 From: Steven Barrett <steven@liquorix.net>
 Date: Sat, 4 Jul 2020 21:28:54 -0500
-Subject: [PATCH 09/40] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
+Subject: [PATCH 09/36] openrgb: Deduplicate piix4 setup for HUDSON2/KERNCZ
  SMBUS
 
 In the original OpenRGB patches, the initialization code for CZ
@@ -1498,10 +1498,10 @@ index 2e69d7af2..9d0b0c24b 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 2852d47de2e366f9b8c58cd8b4e4cbc7dbf376a3 Mon Sep 17 00:00:00 2001
+From 56c103ba749ca069694dce948e4c543748b86b4e Mon Sep 17 00:00:00 2001
 From: Yury Norov <yury.norov@gmail.com>
 Date: Sun, 30 Jan 2022 17:46:48 -0800
-Subject: [PATCH 10/40] kernel/cpu.c: fix init_cpu_online
+Subject: [PATCH 10/36] kernel/cpu.c: fix init_cpu_online
 
 cpu_online_mask has an associate counter of online cpus, which must be
 initialized in init_cpu_online().
@@ -1528,10 +1528,10 @@ index d0a9aa0b4..abfa31a85 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 1617a16743fb853fb2e67f5096b47c9f68edeb17 Mon Sep 17 00:00:00 2001
+From cf498b6425535b20bcb94e9538c573c662f1fd13 Mon Sep 17 00:00:00 2001
 From: Chen Yu <yu.c.chen@intel.com>
 Date: Fri, 8 Apr 2022 07:42:58 +0800
-Subject: [PATCH 11/40] cpufreq: intel_pstate: Handle no_turbo in frequency
+Subject: [PATCH 11/36] cpufreq: intel_pstate: Handle no_turbo in frequency
  invariance
 
 Problem statement:
@@ -1637,10 +1637,10 @@ index 846bb3a78..2216b24b6 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 6d48a6778cb99ab070f40f77b405ef42ade35e5d Mon Sep 17 00:00:00 2001
+From bdcf5bdee46f65cd19dd6c01f368bd0c9c59e28e Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:01 +0000
-Subject: [PATCH 12/40] preempt/dynamic: Introduce preemption model accessors
+Subject: [PATCH 12/36] preempt/dynamic: Introduce preemption model accessors
 
 CONFIG_PREEMPT{_NONE, _VOLUNTARY} designate either:
 o The build-time preemption model when !PREEMPT_DYNAMIC
@@ -1743,10 +1743,10 @@ index dd11daa7a..0372605c6 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 0d8e4d384b016c73b62847980b72d0f56903a7cb Mon Sep 17 00:00:00 2001
+From 2b87ae7f87242213851b6e4150a5fa9f5d7dbe30 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:02 +0000
-Subject: [PATCH 13/40] kcsan: Use preemption model accessors
+Subject: [PATCH 13/36] kcsan: Use preemption model accessors
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
 preemption model of the live kernel. Use the newly-introduced accessors
@@ -1786,10 +1786,10 @@ index a36fca063..767dfacd6 100644
 2.37.0.3.g30cc8d0f14
 
 
-From f402909216e338780c8364d52b8171f47dad6b26 Mon Sep 17 00:00:00 2001
+From 535a5c55bb393dfe4b69395d0896d764d7d4d9a3 Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 12 Nov 2021 18:52:03 +0000
-Subject: [PATCH 14/40] ftrace: Use preemption model accessors for trace header
+Subject: [PATCH 14/36] ftrace: Use preemption model accessors for trace header
  printout
 
 Per PREEMPT_DYNAMIC, checking CONFIG_PREEMPT doesn't tell you the actual
@@ -1806,7 +1806,7 @@ Link: https://lore.kernel.org/r/20211112185203.280040-5-valentin.schneider@arm.c
  1 file changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 114c31bdf..4b0354a89 100644
+index c0c98b0c8..a2e44354b 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
 @@ -4291,17 +4291,11 @@ print_trace_header(struct seq_file *m, struct trace_iterator *iter)
@@ -1835,10 +1835,10 @@ index 114c31bdf..4b0354a89 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 2b2adfceab5333126f28817b97bf5b11b0291477 Mon Sep 17 00:00:00 2001
+From dc8822a676d4c3a9c7f93790d0b99c128c1c92f6 Mon Sep 17 00:00:00 2001
 From: Alaa Mohamed <eng.alaamohamedsoliman.am@gmail.com>
 Date: Wed, 20 Apr 2022 01:43:13 +0200
-Subject: [PATCH 15/40] igb: Convert kmap() to kmap_local_page()
+Subject: [PATCH 15/36] igb: Convert kmap() to kmap_local_page()
 
 kmap() is being deprecated and these usages are all local to the thread
 so there is no reason kmap_local_page() can't be used.
@@ -1877,10 +1877,10 @@ index 2a5782063..c14fc871d 100644
 2.37.0.3.g30cc8d0f14
 
 
-From accf841e30eb7bc34548447503e9231e10ccc400 Mon Sep 17 00:00:00 2001
+From 524da8c9388f5bc39eaec2bb6048e15ce02a9573 Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Mon, 11 Apr 2022 20:56:15 +0200
-Subject: [PATCH 16/40] ACPICA: Headers: Replace zero-length array with
+Subject: [PATCH 16/36] ACPICA: Headers: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -1925,10 +1925,10 @@ index 16847c8d9..9ee4d1b39 100644
 2.37.0.3.g30cc8d0f14
 
 
-From fb387f74a46465f5c41ceff73ed0e377580416d9 Mon Sep 17 00:00:00 2001
+From c2c153ebd736bb44a8b31080f96151766440b86a Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:15 -0600
-Subject: [PATCH 17/40] iwlwifi: fw: Replace zero-length arrays with
+Subject: [PATCH 17/36] iwlwifi: fw: Replace zero-length arrays with
  flexible-array members
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2130,10 +2130,10 @@ index 5679a7875..a7817d952 100644
 2.37.0.3.g30cc8d0f14
 
 
-From ef51c2b58bd988d63d6292be3f40c9294ef33245 Mon Sep 17 00:00:00 2001
+From 00ad41ae94022995ab0cef3e9b1633970816d01c Mon Sep 17 00:00:00 2001
 From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Date: Wed, 16 Feb 2022 13:50:30 -0600
-Subject: [PATCH 18/40] iwlwifi: mei: Replace zero-length array with
+Subject: [PATCH 18/36] iwlwifi: mei: Replace zero-length array with
  flexible-array member
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2175,10 +2175,10 @@ index 11e300912..be1456dea 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 89a39a0fee1fe27fe68b5fd073139a438672d795 Mon Sep 17 00:00:00 2001
+From ff2c3f4737ff9eae6da3223d58b7611ba01d3fbb Mon Sep 17 00:00:00 2001
 From: Zqiang <qiang1.zhang@intel.com>
 Date: Thu, 31 Mar 2022 13:57:17 +0800
-Subject: [PATCH 19/40] workqueue: Restrict kworker in the offline CPU pool
+Subject: [PATCH 19/36] workqueue: Restrict kworker in the offline CPU pool
  running on housekeeping CPUs
 
 When a CPU is going offline, all workers on the CPU's pool will have their
@@ -2209,10 +2209,10 @@ index 0d2514b4f..4056f2a3f 100644
 2.37.0.3.g30cc8d0f14
 
 
-From f9621db4d73dfceda2920f62e186cd087aaa6383 Mon Sep 17 00:00:00 2001
+From 6328d8c1d12c0b272b77aa403b1d3c7a028d1950 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 17 May 2022 13:46:54 +0200
-Subject: [PATCH 20/40] sched: Reverse sched_class layout
+Subject: [PATCH 20/36] sched: Reverse sched_class layout
 
 Because GCC-12 is fully stupid about array bounds and it's just really
 hard to get a solid array definition from a linker script, flip the
@@ -2333,10 +2333,10 @@ index 84bba67c9..624ae9171 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 58e1f272f02486c30658c4c92edbe13cce37a6f1 Mon Sep 17 00:00:00 2001
+From a259f265239c7d991ce0e5b4a1257bb0ee8a1133 Mon Sep 17 00:00:00 2001
 From: Nikolaus Vladutescu-Zopp <nikolaus@vladutescu-zopp.com>
 Date: Thu, 19 May 2022 03:09:50 +0200
-Subject: [PATCH 21/40] net: atlantic: Avoid out-of-bounds indexing
+Subject: [PATCH 21/36] net: atlantic: Avoid out-of-bounds indexing
 
 A UBSAN warning is observed on atlantic driver:
 
@@ -2408,10 +2408,10 @@ index 24d715c28..f49645d24 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 8654c57c63f17e732df946af605adbb175665dc1 Mon Sep 17 00:00:00 2001
+From 079253f33229663c8c9016366c09c89aed9cc4a4 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 22 Apr 2022 10:12:26 -0400
-Subject: [PATCH 22/40] xfs: fix soft lockup via spinning in filestream ag
+Subject: [PATCH 22/36] xfs: fix soft lockup via spinning in filestream ag
  selection loop
 
 The filestream AG selection loop uses pagf data to aid in AG
@@ -2461,10 +2461,10 @@ index 6a3ce0f6d..be9bcf8a1 100644
 2.37.0.3.g30cc8d0f14
 
 
-From b702e3701fafa8b0b71e0577a13b6d2160d461c5 Mon Sep 17 00:00:00 2001
+From fb24ba6f9e066aa079622ef79ca06d9c3c458f30 Mon Sep 17 00:00:00 2001
 From: Kees Cook <keescook@chromium.org>
 Date: Tue, 17 May 2022 14:44:20 -0700
-Subject: [PATCH 23/40] lkdtm/heap: Hide allocation size from -Warray-bounds
+Subject: [PATCH 23/36] lkdtm/heap: Hide allocation size from -Warray-bounds
 
 With the kmalloc() size annotations, GCC is smart enough to realize that
 LKDTM is intentionally writing past the end of the buffer. This is on
@@ -2508,10 +2508,10 @@ index 8a92f5a80..7c0e812b5 100644
 2.37.0.3.g30cc8d0f14
 
 
-From b56c418e64fa6d0500b3470e4fddd0c164e43162 Mon Sep 17 00:00:00 2001
+From fc390e200630f9838eebb35de2ca6e254c899a7b Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 22:51:49 +0200
-Subject: [PATCH 24/40] Revert "pci: Enable overrides for missing ACS
+Subject: [PATCH 24/36] Revert "pci: Enable overrides for missing ACS
  capabilities"
 
 This reverts commit e9ee9452cbe37ca024638aa79293a95019efde42.
@@ -2666,10 +2666,10 @@ index fcbfd845b..41aeaa235 100644
 2.37.0.3.g30cc8d0f14
 
 
-From bcf0915aacb2788c65856726c10225c34f2db9c8 Mon Sep 17 00:00:00 2001
+From 9f09401e006d673f5ae6a466bca7e41a9f8b25a8 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:35 +0200
-Subject: [PATCH 25/40] Revert "openrgb: Deduplicate piix4 setup for
+Subject: [PATCH 25/36] Revert "openrgb: Deduplicate piix4 setup for
  HUDSON2/KERNCZ SMBUS"
 
 This reverts commit 897077b6851bd02c5f706c9964d08a2a638f9b3e.
@@ -2699,10 +2699,10 @@ index 9d0b0c24b..2e69d7af2 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 9493d9aef6cf4b030331bc5c898dd5b61c184ab0 Mon Sep 17 00:00:00 2001
+From 60f2bf0123f20b67c50a7636ad09e057f3368283 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 24 May 2022 23:01:50 +0200
-Subject: [PATCH 26/40] Revert "i2c: busses: Add SMBus capability to work with
+Subject: [PATCH 26/36] Revert "i2c: busses: Add SMBus capability to work with
  OpenRGB driver control"
 
 This reverts commit 6f9e4855641e67381e089c912a860911258b6423.
@@ -3435,10 +3435,10 @@ index 2e69d7af2..39cb1b7bb 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 4455da6d1d741258e0e76fe4bc5edfb35a7022c7 Mon Sep 17 00:00:00 2001
+From 1ebef94d86c2d0cbbccd475d5011f023aba446c1 Mon Sep 17 00:00:00 2001
 From: Brian Foster <bfoster@redhat.com>
 Date: Fri, 27 May 2022 09:34:28 -0400
-Subject: [PATCH 27/40] xfs: fix xfs_ifree() error handling to not leak perag
+Subject: [PATCH 27/36] xfs: fix xfs_ifree() error handling to not leak perag
  ref
 
 For some reason commit 9a5280b312e2e ("xfs: reorder iunlink remove
@@ -3470,10 +3470,10 @@ index 39ae53efb..e099f9f94 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 450b63a980c6553efedfa3c88e2cfaf85c739813 Mon Sep 17 00:00:00 2001
+From 67bc7a93b42a356d0faae6246f3b68bd699b6b39 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:44 +0800
-Subject: [PATCH 28/40] sched: Fix the check of nr_running at queue wakelist
+Subject: [PATCH 28/36] sched: Fix the check of nr_running at queue wakelist
 
 The commit 2ebb17717550 ("sched/core: Offload wakee task activation if it
 the wakee is descheduling") checked nr_running <= 1 to avoid task
@@ -3504,10 +3504,10 @@ index 7ede93384..526d34277 100644
 2.37.0.3.g30cc8d0f14
 
 
-From b391eabaf6b0dcd910111d48032e8223ad5fc10c Mon Sep 17 00:00:00 2001
+From 202ab34a158d42e7338c0081dbcfe850cdec5017 Mon Sep 17 00:00:00 2001
 From: Tianchen Ding <dtcccc@linux.alibaba.com>
 Date: Thu, 2 Jun 2022 12:06:45 +0800
-Subject: [PATCH 29/40] sched: Remove the limitation of WF_ON_CPU on wakelist
+Subject: [PATCH 29/36] sched: Remove the limitation of WF_ON_CPU on wakelist
  if wakee cpu is idle
 
 Wakelist can help avoid cache bouncing and offload the overhead of waker
@@ -3723,10 +3723,10 @@ index 624ae9171..870d3d730 100644
 2.37.0.3.g30cc8d0f14
 
 
-From f68155992da132037c1af181e6bf7327173dc99f Mon Sep 17 00:00:00 2001
+From c83673cdcf2d24461044effc1408525bbf1e77f1 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 30/40] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 30/36] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -3747,7 +3747,7 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index 89b11e7dc..7226a127c 100644
+index b01437015..b58ddd61c 100644
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
 @@ -269,9 +269,10 @@ static ulong *reg_rmw(struct x86_emulate_ctxt *ctxt, unsigned nr)
@@ -3766,10 +3766,10 @@ index 89b11e7dc..7226a127c 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 31e1855a2a81c62a0c7fce2829f330fd1e71def1 Mon Sep 17 00:00:00 2001
+From 8769a2c1db5637193ded90dae20ec48d3bcd87fa Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 31/40] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 31/36] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -3815,7 +3815,7 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index 7226a127c..c58366ae4 100644
+index b58ddd61c..d2d7511ea 100644
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
 @@ -247,6 +247,9 @@ enum x86_transfer_type {
@@ -3842,10 +3842,10 @@ index 7226a127c..c58366ae4 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 57b379b4e1d1e305738568687b601477432706b0 Mon Sep 17 00:00:00 2001
+From 01d2c7fa6746c1ff7fc15ed395ce0e8dfc0b2e39 Mon Sep 17 00:00:00 2001
 From: Jean Delvare <jdelvare@suse.de>
 Date: Tue, 21 Jun 2022 15:28:40 +0200
-Subject: [PATCH 32/40] watchdog: sp5100_tco: Fix a memory leak of EFCH MMIO
+Subject: [PATCH 32/36] watchdog: sp5100_tco: Fix a memory leak of EFCH MMIO
  resource
 
 Unlike release_mem_region(), a call to release_resource() does not
@@ -3877,10 +3877,10 @@ index 86ffb58fb..ae54dd33e 100644
 2.37.0.3.g30cc8d0f14
 
 
-From a128d8cf3b7936049237d1636bde8ffdf2c4d75a Mon Sep 17 00:00:00 2001
+From c8b044e1bf8f44931b20ec6de84770580821c4bf Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Jun 2022 08:04:15 +1000
-Subject: [PATCH 33/40] xfs: bound maximum wait time for inodegc work
+Subject: [PATCH 33/36] xfs: bound maximum wait time for inodegc work
 
 Currently inodegc work can sit queued on the per-cpu queue until
 the workqueue is either flushed of the queue reaches a depth that
@@ -4030,10 +4030,10 @@ index 54be9d640..b07e1280a 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 0af229c18c6c627a862be49185b791065b4cca21 Mon Sep 17 00:00:00 2001
+From 0b8f587217ee4c6c68af17fe69e6d33e6fbb4bc0 Mon Sep 17 00:00:00 2001
 From: Dave Chinner <dchinner@redhat.com>
 Date: Thu, 16 Jun 2022 08:04:16 +1000
-Subject: [PATCH 34/40] xfs: introduce xfs_inodegc_push()
+Subject: [PATCH 34/36] xfs: introduce xfs_inodegc_push()
 
 The current blocking mechanism for pushing the inodegc queue out to
 disk can result in systems becoming unusable when there is a long
@@ -4169,10 +4169,10 @@ index b141ef78c..38dd74cc4 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 5e6be9578f8c49eae51e122796c5af8e3f71837c Mon Sep 17 00:00:00 2001
+From 3cf8ea6281c737df3f1a0e9e76d38f77cb79d57f Mon Sep 17 00:00:00 2001
 From: Yiqing Yao <yiqing.yao@amd.com>
 Date: Thu, 5 May 2022 18:12:33 +0800
-Subject: [PATCH 35/40] drm/amdgpu: flush delete wq after wait fence
+Subject: [PATCH 35/36] drm/amdgpu: flush delete wq after wait fence
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -4224,270 +4224,115 @@ index 66e40cac5..23e01801c 100644
 2.37.0.3.g30cc8d0f14
 
 
-From 0683660fcacee3826177d2c11682a467be8591a5 Mon Sep 17 00:00:00 2001
-From: Mario Limonciello <mario.limonciello@amd.com>
-Date: Tue, 12 Jul 2022 15:07:15 -0500
-Subject: [PATCH 36/40] ACPI: CPPC: unbreak amd-pstate for shared memory
- designs
+From 862bc307a11db7b0aa1445a99c4cd8679abcc217 Mon Sep 17 00:00:00 2001
+From: Keith Busch <kbusch@kernel.org>
+Date: Tue, 7 Jun 2022 08:30:29 -0700
+Subject: [PATCH 36/36] nvme: add bug report info for global duplicate id
 
-Fixes: 8b356e536e69 ("ACPI: CPPC: Don't require _OSC if X86_FEATURE_CPPC is supported")
-Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
+The recent global id check is finding poorly implemented devices in the
+wild. Include relavant device information in the output to help quicken
+an appropriate quirk patch.
+
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 ---
- arch/x86/kernel/acpi/cppc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nvme/host/core.c |  1 +
+ drivers/nvme/host/nvme.h | 28 ++++++++++++++++++++++++++++
+ drivers/nvme/host/pci.c  | 16 ++++++++++++++++
+ 3 files changed, 45 insertions(+)
 
-diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
-index 3677df836..ca8828268 100644
---- a/arch/x86/kernel/acpi/cppc.c
-+++ b/arch/x86/kernel/acpi/cppc.c
-@@ -16,6 +16,13 @@ bool cpc_supported_by_cpu(void)
- 	switch (boot_cpu_data.x86_vendor) {
- 	case X86_VENDOR_AMD:
- 	case X86_VENDOR_HYGON:
-+		if (boot_cpu_data.x86 == 0x19 &&
-+		    ((boot_cpu_data.x86_model >= 0x00 && boot_cpu_data.x86_model <= 0x0f) ||
-+		     (boot_cpu_data.x86_model >= 0x20 && boot_cpu_data.x86_model <= 0x2f)))
-+		    return true;
-+		else if (boot_cpu_data.x86 == 0x17 &&
-+			 boot_cpu_data.x86_model >= 0x70 && boot_cpu_data.x86_model <= 0x7f)
-+		    return true;
- 		return boot_cpu_has(X86_FEATURE_CPPC);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index c9831daaf..b47b38c95 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3818,6 +3818,7 @@ static int nvme_init_ns_head(struct nvme_ns *ns, unsigned nsid,
+ 	if (ret) {
+ 		dev_err(ctrl->device,
+ 			"globally duplicate IDs for nsid %d\n", nsid);
++		nvme_print_device_info(ctrl);
+ 		return ret;
  	}
- 	return false;
--- 
-2.37.0.3.g30cc8d0f14
-
-
-From 00bd31df34f036800408116ae45e6192c16a4b70 Mon Sep 17 00:00:00 2001
-From: Oleksandr Natalenko <oleksandr@natalenko.name>
-Date: Wed, 13 Jul 2022 20:35:53 +0200
-Subject: [PATCH 37/40] Revert "ACPI: CPPC: unbreak amd-pstate for shared
- memory designs"
-
-This reverts commit cc5c57b8c349c85b81b44cf5fe2d2577b947a7de.
----
- arch/x86/kernel/acpi/cppc.c | 7 -------
- 1 file changed, 7 deletions(-)
-
-diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
-index ca8828268..3677df836 100644
---- a/arch/x86/kernel/acpi/cppc.c
-+++ b/arch/x86/kernel/acpi/cppc.c
-@@ -16,13 +16,6 @@ bool cpc_supported_by_cpu(void)
- 	switch (boot_cpu_data.x86_vendor) {
- 	case X86_VENDOR_AMD:
- 	case X86_VENDOR_HYGON:
--		if (boot_cpu_data.x86 == 0x19 &&
--		    ((boot_cpu_data.x86_model >= 0x00 && boot_cpu_data.x86_model <= 0x0f) ||
--		     (boot_cpu_data.x86_model >= 0x20 && boot_cpu_data.x86_model <= 0x2f)))
--		    return true;
--		else if (boot_cpu_data.x86 == 0x17 &&
--			 boot_cpu_data.x86_model >= 0x70 && boot_cpu_data.x86_model <= 0x7f)
--		    return true;
- 		return boot_cpu_has(X86_FEATURE_CPPC);
- 	}
- 	return false;
--- 
-2.37.0.3.g30cc8d0f14
-
-
-From d95573de6b1da034be383a88f615fa14654b1255 Mon Sep 17 00:00:00 2001
-From: Mario Limonciello <mario.limonciello@amd.com>
-Date: Wed, 13 Jul 2022 12:53:46 -0500
-Subject: [PATCH 38/40] ACPI: CPPC: Fix enabling CPPC on AMD systems with
- shared memory
-
-When commit 72f2ecb7ece7 ("ACPI: bus: Set CPPC _OSC bits for all
-and when CPPC_LIB is supported") was introduced, we found collateral
-damage that a number of AMD systems that supported CPPC but
-didn't advertise support in _OSC stopped having a functional
-amd-pstate driver. The _OSC was only enforced on Intel systems at that
-time.
-
-This was fixed for the MSR based designs by commit 8b356e536e69f
-("ACPI: CPPC: Don't require _OSC if X86_FEATURE_CPPC is supported")
-but some shared memory based designs also support CPPC but haven't
-advertised support in the _OSC.  Add support for those designs as well by
-hardcoding the list of systems.
-
-Fixes: 72f2ecb7ece7 ("ACPI: bus: Set CPPC _OSC bits for all and when CPPC_LIB is supported")
-Fixes: 8b356e536e69f ("ACPI: CPPC: Don't require _OSC if X86_FEATURE_CPPC is supported")
-Link: https://lore.kernel.org/all/3559249.JlDtxWtqDm@natalenko.name/
-Cc: stable@vger.kernel.org # 5.18
-Reported-and-tested-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
----
- arch/x86/kernel/acpi/cppc.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
-index 3677df836..0961bf38b 100644
---- a/arch/x86/kernel/acpi/cppc.c
-+++ b/arch/x86/kernel/acpi/cppc.c
-@@ -16,6 +16,12 @@ bool cpc_supported_by_cpu(void)
- 	switch (boot_cpu_data.x86_vendor) {
- 	case X86_VENDOR_AMD:
- 	case X86_VENDOR_HYGON:
-+		if (boot_cpu_data.x86 == 0x19 && ((boot_cpu_data.x86_model <= 0x0f) ||
-+		    (boot_cpu_data.x86_model >= 0x20 && boot_cpu_data.x86_model <= 0x2f)))
-+			return true;
-+		else if (boot_cpu_data.x86 == 0x17 &&
-+			 boot_cpu_data.x86_model >= 0x70 && boot_cpu_data.x86_model <= 0x7f)
-+			return true;
- 		return boot_cpu_has(X86_FEATURE_CPPC);
- 	}
- 	return false;
--- 
-2.37.0.3.g30cc8d0f14
-
-
-From 09fc1e756ef3dcf0aa41b222f1789ee4844ec784 Mon Sep 17 00:00:00 2001
-From: "Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>
-Date: Wed, 13 Jul 2022 19:12:23 +0800
-Subject: [PATCH 39/40] net: atlantic: remove deep parameter on suspend/resume
- functions
-
-Below commit claims that atlantic NIC requires to reset the device on pm
-op, and had set the deep to true for all suspend/resume functions.
-commit 1809c30b6e5a ("net: atlantic: always deep reset on pm op, fixing up my null deref regression")
-So, we could remove deep parameter on suspend/resume functions without
-any functional change.
-
-Fixes: 1809c30b6e5a ("net: atlantic: always deep reset on pm op, fixing up my null deref regression")
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
----
- .../ethernet/aquantia/atlantic/aq_pci_func.c  | 24 ++++++++-----------
- 1 file changed, 10 insertions(+), 14 deletions(-)
-
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-index 831833911..dbd526313 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-@@ -379,7 +379,7 @@ static void aq_pci_shutdown(struct pci_dev *pdev)
- 	}
+ 
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 337ae1e3a..fcc85ff9f 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -503,6 +503,7 @@ struct nvme_ctrl_ops {
+ 	void (*delete_ctrl)(struct nvme_ctrl *ctrl);
+ 	void (*stop_ctrl)(struct nvme_ctrl *ctrl);
+ 	int (*get_address)(struct nvme_ctrl *ctrl, char *buf, int size);
++	void (*print_device_info)(struct nvme_ctrl *ctrl);
+ };
+ 
+ /*
+@@ -548,6 +549,33 @@ static inline struct request *nvme_cid_to_rq(struct blk_mq_tags *tags,
+ 	return blk_mq_tag_to_rq(tags, nvme_tag_from_cid(command_id));
  }
  
--static int aq_suspend_common(struct device *dev, bool deep)
-+static int aq_suspend_common(struct device *dev)
- {
- 	struct aq_nic_s *nic = pci_get_drvdata(to_pci_dev(dev));
- 
-@@ -392,17 +392,15 @@ static int aq_suspend_common(struct device *dev, bool deep)
- 	if (netif_running(nic->ndev))
- 		aq_nic_stop(nic);
- 
--	if (deep) {
--		aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
--		aq_nic_set_power(nic);
--	}
-+	aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
-+	aq_nic_set_power(nic);
- 
- 	rtnl_unlock();
- 
- 	return 0;
++/*
++ * Return the length of the string without the space padding
++ */
++static inline int nvme_strlen(char *s, int len)
++{
++	while (s[len - 1] == ' ')
++		len--;
++	return len;
++}
++
++static inline void nvme_print_device_info(struct nvme_ctrl *ctrl)
++{
++	struct nvme_subsystem *subsys = ctrl->subsys;
++
++	if (ctrl->ops->print_device_info) {
++		ctrl->ops->print_device_info(ctrl);
++		return;
++	}
++
++	dev_err(ctrl->device,
++		"VID:%04x model:%.*s firmware:%.*s\n", subsys->vendor_id,
++		nvme_strlen(subsys->model, sizeof(subsys->model)),
++		subsys->model, nvme_strlen(subsys->firmware_rev,
++					   sizeof(subsys->firmware_rev)),
++		subsys->firmware_rev);
++}
++
+ #ifdef CONFIG_FAULT_INJECTION_DEBUG_FS
+ void nvme_fault_inject_init(struct nvme_fault_inject *fault_inj,
+ 			    const char *dev_name);
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index ab575fdd8..ecfaaad11 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2970,6 +2970,21 @@ static int nvme_pci_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
+ 	return snprintf(buf, size, "%s\n", dev_name(&pdev->dev));
  }
  
--static int atl_resume_common(struct device *dev, bool deep)
-+static int atl_resume_common(struct device *dev)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
- 	struct aq_nic_s *nic;
-@@ -415,10 +413,8 @@ static int atl_resume_common(struct device *dev, bool deep)
- 	pci_set_power_state(pdev, PCI_D0);
- 	pci_restore_state(pdev);
++
++static void nvme_pci_print_device_info(struct nvme_ctrl *ctrl)
++{
++	struct pci_dev *pdev = to_pci_dev(to_nvme_dev(ctrl)->dev);
++	struct nvme_subsystem *subsys = ctrl->subsys;
++
++	dev_err(ctrl->device,
++		"VID:DID %04x:%04x model:%.*s firmware:%.*s\n",
++		pdev->vendor, pdev->device,
++		nvme_strlen(subsys->model, sizeof(subsys->model)),
++		subsys->model, nvme_strlen(subsys->firmware_rev,
++					   sizeof(subsys->firmware_rev)),
++		subsys->firmware_rev);
++}
++
+ static const struct nvme_ctrl_ops nvme_pci_ctrl_ops = {
+ 	.name			= "pcie",
+ 	.module			= THIS_MODULE,
+@@ -2981,6 +2996,7 @@ static const struct nvme_ctrl_ops nvme_pci_ctrl_ops = {
+ 	.free_ctrl		= nvme_pci_free_ctrl,
+ 	.submit_async_event	= nvme_pci_submit_async_event,
+ 	.get_address		= nvme_pci_get_address,
++	.print_device_info	= nvme_pci_print_device_info,
+ };
  
--	if (deep) {
--		/* Reinitialize Nic/Vecs objects */
--		aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
--	}
-+	/* Reinitialize Nic/Vecs objects */
-+	aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
- 
- 	if (netif_running(nic->ndev)) {
- 		ret = aq_nic_init(nic);
-@@ -444,22 +440,22 @@ static int atl_resume_common(struct device *dev, bool deep)
- 
- static int aq_pm_freeze(struct device *dev)
- {
--	return aq_suspend_common(dev, true);
-+	return aq_suspend_common(dev);
- }
- 
- static int aq_pm_suspend_poweroff(struct device *dev)
- {
--	return aq_suspend_common(dev, true);
-+	return aq_suspend_common(dev);
- }
- 
- static int aq_pm_thaw(struct device *dev)
- {
--	return atl_resume_common(dev, true);
-+	return atl_resume_common(dev);
- }
- 
- static int aq_pm_resume_restore(struct device *dev)
- {
--	return atl_resume_common(dev, true);
-+	return atl_resume_common(dev);
- }
- 
- static const struct dev_pm_ops aq_pm_ops = {
--- 
-2.37.0.3.g30cc8d0f14
-
-
-From 31e493209d896b16db7539186d7313705a1a5d8b Mon Sep 17 00:00:00 2001
-From: "Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>
-Date: Wed, 13 Jul 2022 19:12:24 +0800
-Subject: [PATCH 40/40] net: atlantic: remove aq_nic_deinit() when resume
-
-aq_nic_deinit() has been called while suspending, so we don't have to call
-it again on resume.
-Actually, call it again leads to another hang issue when resuming from
-S3.
-
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992345] Call Trace:
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992346] <TASK>
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992348] aq_nic_deinit+0xb4/0xd0 [atlantic]
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992356] aq_pm_thaw+0x7f/0x100 [atlantic]
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992362] pci_pm_resume+0x5c/0x90
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992366] ? pci_pm_thaw+0x80/0x80
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992368] dpm_run_callback+0x4e/0x120
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992371] device_resume+0xad/0x200
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992373] async_resume+0x1e/0x40
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992374] async_run_entry_fn+0x33/0x120
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992377] process_one_work+0x220/0x3c0
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992380] worker_thread+0x4d/0x3f0
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992382] ? process_one_work+0x3c0/0x3c0
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992384] kthread+0x12a/0x150
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992386] ? set_kthread_struct+0x40/0x40
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992387] ret_from_fork+0x22/0x30
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992391] </TASK>
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992392] ---[ end trace 1ec8c79604ed5e0d ]---
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992394] PM: dpm_run_callback(): pci_pm_resume+0x0/0x90 returns -110
-Jul 8 03:09:44 u-Precision-7865-Tower kernel: [ 5910.992397] atlantic 0000:02:00.0: PM: failed to resume async: error -110
-
-Fixes: 1809c30b6e5a ("net: atlantic: always deep reset on pm op, fixing up my null deref regression")
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
----
- drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-index dbd526313..8647125d6 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
-@@ -413,9 +413,6 @@ static int atl_resume_common(struct device *dev)
- 	pci_set_power_state(pdev, PCI_D0);
- 	pci_restore_state(pdev);
- 
--	/* Reinitialize Nic/Vecs objects */
--	aq_nic_deinit(nic, !nic->aq_hw->aq_nic_cfg->wol);
--
- 	if (netif_running(nic->ndev)) {
- 		ret = aq_nic_init(nic);
- 		if (ret)
+ static int nvme_dev_map(struct nvme_dev *dev)
 -- 
 2.37.0.3.g30cc8d0f14
 
