@@ -1,6 +1,6 @@
-From 6825e8ee718e6a760d537c308c8dbc1e46d87bf4 Mon Sep 17 00:00:00 2001
+From 4a7636692411fa87fc0242cbdafb20bf48c6aac6 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 22 Jul 2022 09:40:45 +0000
+Date: Sat, 23 Jul 2022 11:31:24 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 16615 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 3f0ffaa35d90..aa6e6ee6f39c 100644
+index 3f0ffaa35d90..983d84394896 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,16618 +1,6 @@
 -linux (5.19.0-10.10) kinetic; urgency=medium
-+linux (5.18.13-051813.202207220940) kinetic; urgency=low
++linux (5.18.14-051814.202207231131) kinetic; urgency=low
  
 -  * kinetic/linux: 5.19.0-10.10 -proposed tracker (LP: #1982013)
-+  Mainline build at commit: v5.18.13
++  Mainline build at commit: v5.18.14
  
 -  * enable config for fixing 5.17 kernel won't load mok (LP: #1972802)
 -    - [Config] enable configs for fixing kernel won't load mok
-+ -- Mainline Build <kernel@kathleen>  Fri, 22 Jul 2022 09:40:45 +0000
++ -- Mainline Build <kernel@kathleen>  Sat, 23 Jul 2022 11:31:24 +0000
  
 -  * RISC-V kernel config is out of sync with other archs (LP: #1981437)
 -    - [Config] Disable CONFIG_CXL_MEM_RAW_COMMANDS on riscv64
