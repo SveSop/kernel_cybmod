@@ -4597,10 +4597,10 @@ index 000000000..e1bcd1146
 +MODULE_IMPORT_NS(HWMON_NCT6775);
 diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
 new file mode 100644
-index 000000000..3a4862741
+index 000000000..ab3043722
 --- /dev/null
 +++ b/drivers/hwmon/nct6775-platform.c
-@@ -0,0 +1,1225 @@
+@@ -0,0 +1,1226 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * nct6775 - Platform driver for the hardware monitoring
@@ -5686,6 +5686,7 @@ index 000000000..3a4862741
 +	"TUF GAMING B550M-PLUS",
 +	"TUF GAMING B550M-PLUS (WI-FI)",
 +	"TUF GAMING B550-PLUS",
++	"TUF GAMING B550-PLUS WIFI II",
 +	"TUF GAMING B550-PRO",
 +	"TUF GAMING X570-PLUS",
 +	"TUF GAMING X570-PLUS (WI-FI)",

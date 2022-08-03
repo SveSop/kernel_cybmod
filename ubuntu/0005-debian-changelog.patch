@@ -1,27 +1,123 @@
-From 4a7636692411fa87fc0242cbdafb20bf48c6aac6 Mon Sep 17 00:00:00 2001
+From 3124f2b16ab315dbca2ca7207da91df6427346fb Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 23 Jul 2022 11:31:24 +0000
+Date: Wed, 3 Aug 2022 11:40:33 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16618 +-------------------------------------
- 1 file changed, 3 insertions(+), 16615 deletions(-)
+ debian.master/changelog | 16714 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16711 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 3f0ffaa35d90..983d84394896 100644
+index b5af8170cec3..187394cb0af3 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16618 +1,6 @@
+@@ -1,16714 +1,6 @@
+-linux (5.19.0-15.15) kinetic; urgency=medium
++linux (5.18.16-051816.202208031140) kinetic; urgency=low
+ 
+-  * kinetic/linux: 5.19.0-15.15 -proposed tracker (LP: #1983335)
++  Mainline build at commit: v5.18.16
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update annotations to support both gcc-11 and gcc-12
++ -- Mainline Build <kernel@kathleen>  Wed, 03 Aug 2022 11:40:33 +0000
+ 
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 02 Aug 2022 09:23:01 +0200
+-
+-linux (5.19.0-14.14) kinetic; urgency=medium
+-
+-  * kinetic/linux: 5.19.0-14.14 -proposed tracker (LP: #1983273)
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] module-signature-check: Check debian.<foo>/signature-inclusion
+-    - [Packaging] Introduce debian/scripts/sign-module
+-    - SAUCE: Switch to using debian/scripts/sign-module
+-    - [Config] update configs/annotations after rebase to 5.19
+-    - [Config] update configs after moving to gcc-12
+-
+-  * Miscellaneous upstream changes
+-    - Revert "UBUNTU: [Packaging]: always use fully qualified <triplet>-gcc-VER
+-      toolchain"
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.19
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 01 Aug 2022 17:19:01 +0200
+-
+-linux (5.19.0-13.13) kinetic; urgency=medium
+-
+-  * kinetic/linux: 5.19.0-13.13 -proposed tracker (LP: #1983033)
+-
+-  * network-manager/1.36.4-2ubuntu1 ADT test failure with linux/5.15.0-28.29
+-    (LP: #1971418)
+-    - Revert "rfkill: make new event layout opt-in"
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] Tighten up LP bug links in annotations
+-    - [Config] Use mark<ENFORCED> for CONFIG_DEVTMPFS
+-    - [Config] Use flag<DEPRECATED> for CONFIG_HIPPI
+-    - [Config] Use note<> for CONFIG_XEN_ACPI_PROCESSOR
+-    - [Config] Fix DM_VERITY_VERIFY_ROOTHASH_SIG_SECONDARY_KEYRING annotation
+-    - [Config] Fix CONFIG_CPU_LITTLE_ENDIAN annotation
+-    - SAUCE: x86/bugs: Do not enable IBPB at firmware entry when IBPB is not
+-      available
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Thu, 28 Jul 2022 17:04:33 +0200
+-
+-linux (5.19.0-12.12) kinetic; urgency=medium
+-
+-  * kinetic/linux: 5.19.0-12.12 -proposed tracker (LP: #1982741)
+-
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging]: always use fully qualified <triplet>-gcc-VER toolchain
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 26 Jul 2022 15:07:13 +0200
+-
+-linux (5.19.0-11.11) kinetic; urgency=medium
+-
+-  * kinetic/linux: 5.19.0-11.11 -proposed tracker (LP: #1982726)
+-
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update variants
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
+-
+-  * GPIO character device v1 API not enabled in kernel (LP: #1953613)
+-    - [Config] Enable CONFIG_GPIO_CDEV_V1
+-
+-  * Use kernel-testing repo from launchpad for ADT tests (LP: #1968016)
+-    - [Debian] Use kernel-testing repo from launchpad
+-
+-  * Support AMD P-State cpufreq control mechanism (LP: #1956509)
+-    - [Config] enable X86_AMD_PSTATE as built-in on amd64
+-
+-  * PCIE LnkCtl ASPM not enabled under VMD mode for Alder Lake platforms
+-    (LP: #1942160)
+-    - SAUCE: PCI/ASPM: Enable ASPM for links under VMD domain
+-    - SAUCE: PCI/ASPM: Enable LTR for endpoints behind VMD
+-    - SAUCE: vmd: fixup bridge ASPM by driver name instead
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Double the speed of updateconfigs
+-    - Remove ubuntu/hio driver
+-    - [Config] update config after rebase to 5.19-rc8
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v5.19-rc8
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 25 Jul 2022 08:54:21 +0200
+-
 -linux (5.19.0-10.10) kinetic; urgency=medium
-+linux (5.18.14-051814.202207231131) kinetic; urgency=low
- 
+-
 -  * kinetic/linux: 5.19.0-10.10 -proposed tracker (LP: #1982013)
-+  Mainline build at commit: v5.18.14
- 
+-
 -  * enable config for fixing 5.17 kernel won't load mok (LP: #1972802)
 -    - [Config] enable configs for fixing kernel won't load mok
-+ -- Mainline Build <kernel@kathleen>  Sat, 23 Jul 2022 11:31:24 +0000
- 
+-
 -  * RISC-V kernel config is out of sync with other archs (LP: #1981437)
 -    - [Config] Disable CONFIG_CXL_MEM_RAW_COMMANDS on riscv64
 -    - [Config] Disable CONFIG_EROFS_FS_ZIP_LZMA on riscv64
