@@ -1,30 +1,25 @@
-## Cybmod patches for 5.18 kernel  
+## Cybmod patches for 5.19 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.18.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.18.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.18.16  
-0000 : ProjectC v5.18-r1  
-0002 : 5.18 Graysky's CPU optimization patches  
-0003 : v5.18-fsync1_futex_waitv  
-0004 : hwmon driver for Asus (WMI) motherboards  
-0005 : Revert ACPI change for NCT6775 chips(Asus MB)  
-0006 : zstd kernel settings  
-0007 : Block config settings  
-0008 : Add MG LRU patch  
-0009 : ProjectC fixes  
+0000 : Patch 5.19.1  
+0000 : ProjectC v5.19-r0  
+0002 : 5.19 Graysky's CPU optimization patches  
+0003 : v5.19-fsync1_futex_waitv  
+0004 : Revert ACPI change for NCT6775 chips(Asus MB)  
+0005 : zstd kernel settings  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
 0020 : Clearlinux patches  
 0021 : Misc fixes  
-0022 : Block patchset  
+0022 : BFQ patchset  
 0023 : mm: LRU patchset  
 0024 : zstd upstream patches  
-0025 : -ck picked patches  
-0026 : LRNG kernel patches  
-0027 : BBR2 patchset  
-0028 : Winesync kernel module  
+0025 : LRNG kernel patches  
+0026 : BBR2 patchset  
+0027 : Winesync kernel module  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
@@ -36,8 +31,8 @@ ubuntu : Ubuntu mainline kernel patchset
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.18.tar.xz    
-cd linux-5.18  
+tar xf linux-5.19.tar.xz    
+cd linux-5.19  
 /path/to/patches/and/cybmod_patch.sh  
 make -j12 deb-pkg # -j depending on your processor cores  
 ```
