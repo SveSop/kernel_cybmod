@@ -1,7 +1,7 @@
-From 52ff12a7fa8a68e8f7c461aa921d0f9c62384ba2 Mon Sep 17 00:00:00 2001
+From 4de40f20247f6280164d73d0d8709c5c0fb89a1b Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 01/13] ZEN: mm: Lower the non-hugetlbpage pageblock size to
+Subject: [PATCH 01/14] ZEN: mm: Lower the non-hugetlbpage pageblock size to
  reduce scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -47,10 +47,10 @@ index 83c724805..d2b8741ea 100644
 2.37.1.377.g679aad9e82
 
 
-From 6b625aabf01ec840d2ff4ad24d7cf10e5f72c4d1 Mon Sep 17 00:00:00 2001
+From d3d3fabc81804902d8c975687937840af769e4c0 Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Wed, 25 May 2022 16:25:14 +0200
-Subject: [PATCH 02/13] ZEN: dm-crypt: Disable workqueues for crypto operations
+Subject: [PATCH 02/14] ZEN: dm-crypt: Disable workqueues for crypto operations
 
 Queueing in dm-crypt for crypto operations reduces performance on modern
 systems.  As discussed in an article from Cloudflare, they discovered
@@ -86,10 +86,10 @@ index 159c6806c..8b4e8f934 100644
 2.37.1.377.g679aad9e82
 
 
-From d31eac645bd91979479009a0561e57cfdd605b8a Mon Sep 17 00:00:00 2001
+From f8c0b004224e8d4f6df0537be5de7aaacd73454b Mon Sep 17 00:00:00 2001
 From: Guenter Roeck <linux@roeck-us.net>
 Date: Tue, 31 May 2022 15:29:51 -0700
-Subject: [PATCH 03/13] lib/list_debug.c: Detect uninitialized lists
+Subject: [PATCH 03/14] lib/list_debug.c: Detect uninitialized lists
 
 In some circumstances, attempts are made to add entries to or to remove
 entries from an uninitialized list.  A prime example is
@@ -162,10 +162,10 @@ index 9daa3fb9d..d98d43f80 100644
 2.37.1.377.g679aad9e82
 
 
-From 679d5438f969d90ac5844fa177cc366f80c4980f Mon Sep 17 00:00:00 2001
+From 4d66faf657c3eaf04f8b3dcf7e69f9a00fe167ba Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 04/13] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 04/14] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -205,10 +205,10 @@ index aa907cec0..28e6a538c 100644
 2.37.1.377.g679aad9e82
 
 
-From ef4f74b815fa15008fe874fb6f9aa43a61400da5 Mon Sep 17 00:00:00 2001
+From d6a60169ddd57cd45da389001500ec09b37b3e96 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 05/13] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 05/14] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -281,10 +281,10 @@ index 28e6a538c..3799980aa 100644
 2.37.1.377.g679aad9e82
 
 
-From b146aa1ba84d65c4cdd0214ebf384222b9f3418e Mon Sep 17 00:00:00 2001
+From 4ebf9e56375e2bf2db8169d37c9951903725d995 Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Fri, 24 Jun 2022 16:14:12 +0200
-Subject: [PATCH 06/13] compiler-gcc.h: remove ancient workaround for gcc PR
+Subject: [PATCH 06/14] compiler-gcc.h: remove ancient workaround for gcc PR
  58670
 
 The workaround for 'asm goto' miscompilation introduces a compiler barrier
@@ -355,10 +355,10 @@ index a0c55eeae..9b157b710 100644
 2.37.1.377.g679aad9e82
 
 
-From f0fc0c1d5524e37cbee4d9715b38f2998eda0d3c Mon Sep 17 00:00:00 2001
+From 485551ba6d816379e3636912960e86310ecc800f Mon Sep 17 00:00:00 2001
 From: Chuanhong Guo <gch981213@gmail.com>
 Date: Tue, 12 Jul 2022 10:00:58 +0800
-Subject: [PATCH 07/13] ACPI: skip IRQ override on AMD Zen platforms
+Subject: [PATCH 07/14] ACPI: skip IRQ override on AMD Zen platforms
 
 IRQ override isn't needed on modern AMD Zen systems.
 There's an active low keyboard IRQ on AMD Ryzen 6000 and it will stay
@@ -402,10 +402,10 @@ index c2d494784..510cdec37 100644
 2.37.1.377.g679aad9e82
 
 
-From 667854002de1413103fb6c0898d9ebdd802df384 Mon Sep 17 00:00:00 2001
+From 58ded7d0f5b9821a942dcf6f51d91c58600edfba Mon Sep 17 00:00:00 2001
 From: Yosry Ahmed <yosryahmed@google.com>
 Date: Thu, 14 Jul 2022 06:49:18 +0000
-Subject: [PATCH 08/13] mm: vmpressure: don't count proactive reclaim in
+Subject: [PATCH 08/14] mm: vmpressure: don't count proactive reclaim in
  vmpressure
 
 vmpressure is used in cgroup v1 to notify userspace of reclaim
@@ -626,10 +626,10 @@ index f7d9a683e..0969e6408 100644
 2.37.1.377.g679aad9e82
 
 
-From 2c7ae956d5a7d8dea062921d0813e6fde5b1c8d3 Mon Sep 17 00:00:00 2001
+From 6f99a2a38661135d3f22a68e7a95aa09f354c9e5 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:23 -0500
-Subject: [PATCH 09/13] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 09/14] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -929,10 +929,10 @@ index 000000000..ae92aa559
 2.37.1.377.g679aad9e82
 
 
-From 5d7fe8e8f36173c5beffad46078cb5c12525c10d Mon Sep 17 00:00:00 2001
+From f2b95a4780e776aad135714306824f77faba43c0 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:24 -0500
-Subject: [PATCH 10/13] leds: trigger: Add block device LED trigger
+Subject: [PATCH 10/14] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -2124,10 +2124,10 @@ index 000000000..999c48a7a
 2.37.1.377.g679aad9e82
 
 
-From a712d48d7bc49a5ed9e50db7359ec64d8925f2f8 Mon Sep 17 00:00:00 2001
+From 2c51bbce91bafeac311655ffd0b89172758a19de Mon Sep 17 00:00:00 2001
 From: Philip Yang <Philip.Yang@amd.com>
 Date: Fri, 22 Jul 2022 15:07:00 -0400
-Subject: [PATCH 11/13] drm/amdgpu: Allow TTM to evict svm bo from same process
+Subject: [PATCH 11/14] drm/amdgpu: Allow TTM to evict svm bo from same process
 
 To support SVM range VRAM overcommitment, TTM should be able to evict
 svm bo of same process to system memory, to get space to alloc new svm
@@ -2174,10 +2174,10 @@ index 1d0dbff87..469785d33 100644
 2.37.1.377.g679aad9e82
 
 
-From d133116ea31d6a2494681259fb1afd1d2b173946 Mon Sep 17 00:00:00 2001
+From 5dd21b23b26d4ccbf76590b7531b35ddb79134c7 Mon Sep 17 00:00:00 2001
 From: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
 Date: Sun, 17 Jul 2022 10:36:13 +0200
-Subject: [PATCH 12/13] f2fs: Delete f2fs_copy_page() and replace with
+Subject: [PATCH 12/14] f2fs: Delete f2fs_copy_page() and replace with
  memcpy_page()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2250,10 +2250,10 @@ index fc0f30738..3ed1a1c0f 100644
 2.37.1.377.g679aad9e82
 
 
-From c666e448f6ae74cd83b6c252c68718d00a898b73 Mon Sep 17 00:00:00 2001
+From f7de1b44136132abd96d7967f43b5b9de0bd8968 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>
 Date: Mon, 15 Aug 2022 08:39:31 -0300
-Subject: [PATCH 13/13] drm/amdgpu: Fix use-after-free on amdgpu_bo_list mutex
+Subject: [PATCH 13/14] drm/amdgpu: Fix use-after-free on amdgpu_bo_list mutex
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -2360,6 +2360,145 @@ index d8f1335bc..b7bae833c 100644
  	}
  
  	r = amdgpu_vm_handle_moved(adev, vm);
+-- 
+2.37.1.377.g679aad9e82
+
+
+From 248abacc40dac25775d4502a95708a8af8dfc9a5 Mon Sep 17 00:00:00 2001
+From: Borislav Petkov <bp@suse.de>
+Date: Sun, 14 Aug 2022 12:37:49 +0200
+Subject: [PATCH 14/14] x86/microcode/AMD: Attempt applying on every logical
+ thread
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Currently, the patch application logic checks whether patch application
+is needed on each CPU. Therefore, on SMT designs where the microcode
+engine is shared between the two threads, the application happens only
+on one of them.
+
+However, there are microcode patches which do per-thread modification,
+see Link tag below.
+
+Therefore, drop the revision check and try applying on each thread. This
+is what the BIOS does too so this method is very much tested.
+
+Reported-by:  Ștefan Talpalaru <stefantalpalaru@yahoo.com>
+Tested-by:  Ștefan Talpalaru <stefantalpalaru@yahoo.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216211
+---
+ arch/x86/kernel/cpu/microcode/amd.c | 39 +++++++----------------------
+ 1 file changed, 9 insertions(+), 30 deletions(-)
+
+diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
+index 8b2fcdfa6..a575dbb4d 100644
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -420,8 +420,8 @@ apply_microcode_early_amd(u32 cpuid_1_eax, void *ucode, size_t size, bool save_p
+ 	struct cont_desc desc = { 0 };
+ 	u8 (*patch)[PATCH_MAX_SIZE];
+ 	struct microcode_amd *mc;
+-	u32 rev, dummy, *new_rev;
+ 	bool ret = false;
++	u32 *new_rev;
+ 
+ #ifdef CONFIG_X86_32
+ 	new_rev = (u32 *)__pa_nodebug(&ucode_new_rev);
+@@ -439,10 +439,6 @@ apply_microcode_early_amd(u32 cpuid_1_eax, void *ucode, size_t size, bool save_p
+ 	if (!mc)
+ 		return ret;
+ 
+-	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+-	if (rev >= mc->hdr.patch_id)
+-		return ret;
+-
+ 	if (!__apply_microcode_amd(mc)) {
+ 		*new_rev = mc->hdr.patch_id;
+ 		ret      = true;
+@@ -516,7 +512,7 @@ void load_ucode_amd_ap(unsigned int cpuid_1_eax)
+ {
+ 	struct microcode_amd *mc;
+ 	struct cpio_data cp;
+-	u32 *new_rev, rev, dummy;
++	u32 *new_rev;
+ 
+ 	if (IS_ENABLED(CONFIG_X86_32)) {
+ 		mc	= (struct microcode_amd *)__pa_nodebug(amd_ucode_patch);
+@@ -526,10 +522,8 @@ void load_ucode_amd_ap(unsigned int cpuid_1_eax)
+ 		new_rev = &ucode_new_rev;
+ 	}
+ 
+-	native_rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+-
+ 	/* Check whether we have saved a new patch already: */
+-	if (*new_rev && rev < mc->hdr.patch_id) {
++	if (*new_rev) {
+ 		if (!__apply_microcode_amd(mc)) {
+ 			*new_rev = mc->hdr.patch_id;
+ 			return;
+@@ -571,23 +565,17 @@ int __init save_microcode_in_initrd_amd(unsigned int cpuid_1_eax)
+ 
+ void reload_ucode_amd(void)
+ {
+-	struct microcode_amd *mc;
+-	u32 rev, dummy __always_unused;
+-
+-	mc = (struct microcode_amd *)amd_ucode_patch;
++	struct microcode_amd *mc = (struct microcode_amd *)amd_ucode_patch;
+ 
+-	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+-
+-	if (rev < mc->hdr.patch_id) {
+-		if (!__apply_microcode_amd(mc)) {
+-			ucode_new_rev = mc->hdr.patch_id;
+-			pr_info("reload patch_level=0x%08x\n", ucode_new_rev);
+-		}
++	if (!__apply_microcode_amd(mc)) {
++		ucode_new_rev = mc->hdr.patch_id;
++		pr_info("reload patch_level=0x%08x\n", ucode_new_rev);
+ 	}
+ }
+ static u16 __find_equiv_id(unsigned int cpu)
+ {
+ 	struct ucode_cpu_info *uci = ucode_cpu_info + cpu;
++
+ 	return find_equiv_id(&equiv_table, uci->cpu_sig.sig);
+ }
+ 
+@@ -678,7 +666,7 @@ static enum ucode_state apply_microcode_amd(int cpu)
+ 	struct ucode_cpu_info *uci;
+ 	struct ucode_patch *p;
+ 	enum ucode_state ret;
+-	u32 rev, dummy __always_unused;
++	u32 rev;
+ 
+ 	BUG_ON(raw_smp_processor_id() != cpu);
+ 
+@@ -691,14 +679,6 @@ static enum ucode_state apply_microcode_amd(int cpu)
+ 	mc_amd  = p->data;
+ 	uci->mc = p->data;
+ 
+-	rdmsr(MSR_AMD64_PATCH_LEVEL, rev, dummy);
+-
+-	/* need to apply patch? */
+-	if (rev >= mc_amd->hdr.patch_id) {
+-		ret = UCODE_OK;
+-		goto out;
+-	}
+-
+ 	if (__apply_microcode_amd(mc_amd)) {
+ 		pr_err("CPU%d: update failed for patch_level=0x%08x\n",
+ 			cpu, mc_amd->hdr.patch_id);
+@@ -710,7 +690,6 @@ static enum ucode_state apply_microcode_amd(int cpu)
+ 
+ 	pr_info("CPU%d: new patch_level=0x%08x\n", cpu, rev);
+ 
+-out:
+ 	uci->cpu_sig.rev = rev;
+ 	c->microcode	 = rev;
+ 
 -- 
 2.37.1.377.g679aad9e82
 

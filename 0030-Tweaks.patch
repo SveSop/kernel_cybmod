@@ -1,6 +1,6 @@
-From f573287c9e8bce66528449a39db2367656870cd0 Mon Sep 17 00:00:00 2001
+From 16f074004722f76ae1890952285e717a8f2b2008 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
-Date: Tue, 16 Aug 2022 18:00:45 +0200
+Date: Thu, 18 Aug 2022 17:49:06 +0200
 Subject: [PATCH] Tweaks
 
 ---
@@ -30,7 +30,7 @@ Subject: [PATCH] Tweaks
  23 files changed, 46 insertions(+), 34 deletions(-)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index ab4c5a35b..8eba80cc1 100644
+index e5e241221..31fb0bb6b 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -2057,6 +2057,9 @@
@@ -44,10 +44,10 @@ index ab4c5a35b..8eba80cc1 100644
  			  Use intel_pstate as a scaling driver, but configure it
  			  to work with generic cpufreq governors (instead of
 diff --git a/Makefile b/Makefile
-index 3acb32903..83fc613e5 100644
+index 29e076f83..36d549093 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -757,6 +757,7 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+@@ -761,6 +761,7 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
  KBUILD_CFLAGS += -O2
  else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
  KBUILD_CFLAGS += -O3
@@ -195,7 +195,7 @@ index 93f4f5ee0..0c29a4bde 100644
  
  __cacheline_aligned_in_smp DEFINE_SEQLOCK(rename_lock);
 diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 2f7b43444..651d1227d 100644
+index 62e3ff52a..b7f76e2ec 100644
 --- a/include/linux/blkdev.h
 +++ b/include/linux/blkdev.h
 @@ -578,6 +578,7 @@ struct request_queue {
@@ -316,18 +316,18 @@ index 1c630e573..a72bc6102 100644
  	  This option specifies the time to wait after the beginning of
  	  a given grace period before priority-boosting preempted RCU
 diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 7120165a9..ec492e541 100644
+index 7c72ee974..aaa2e1d2a 100644
 --- a/kernel/rcu/rcutorture.c
 +++ b/kernel/rcu/rcutorture.c
-@@ -3341,7 +3341,7 @@ rcu_torture_init(void)
- 				t = per_cpu(ksoftirqd, cpu);
- 				WARN_ON_ONCE(!t);
- 				sp.sched_priority = 2;
--				sched_setscheduler_nocheck(t, SCHED_FIFO, &sp);
-+				sched_setscheduler_nocheck(t, SCHED_RR, &sp);
- 			}
- 		}
+@@ -2085,7 +2085,7 @@ static int rcutorture_booster_init(unsigned int cpu)
+ 		t = per_cpu(ksoftirqd, cpu);
+ 		WARN_ON_ONCE(!t);
+ 		sp.sched_priority = 2;
+-		sched_setscheduler_nocheck(t, SCHED_FIFO, &sp);
++		sched_setscheduler_nocheck(t, SCHED_RR, &sp);
  	}
+ 
+ 	/* Don't allow time recalculation while creating a new task. */
 diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
 index c25ba4420..fc993202d 100644
 --- a/kernel/rcu/tree.c
@@ -364,7 +364,7 @@ index c8ba0fe17..271a23bd5 100644
  
   out:
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 5a3e4fc8b..89a9e352c 100644
+index 0ae357712..89d665cb8 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -146,7 +146,7 @@ __read_mostly int sysctl_resched_latency_warn_once = 1;
@@ -399,7 +399,7 @@ index 2e24db4bf..c4f716fcc 100644
  	  Say Y here to make BUG() panics output the file name and line number
  	  of the BUG call as well as the EIP and oops trace.  This aids
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index b5b14b78c..5bf219280 100644
+index cdf0e7d70..0f57b4bb7 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -343,7 +343,7 @@ compound_page_dtor * const compound_page_dtors[NR_COMPOUND_DTORS] = {

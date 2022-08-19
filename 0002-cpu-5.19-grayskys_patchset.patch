@@ -1,113 +1,75 @@
-From 4ce3c1e32d42003132bdffc327911684cee38e0d Mon Sep 17 00:00:00 2001
-From: graysky <graysky@archlinux.us>
-Date: Tue, 15 Mar 2022 05:58:43 -0400
-Subject: [PATCH] x86/kconfig: more uarches for kernel 5.17+
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From 590e6e40d55a38f5c2967832e5820e0806315e24 Mon Sep 17 00:00:00 2001
+From: "torvic9@mailbox.org" <torvic9@mailbox.org>
+Date: Wed, 17 Aug 2022 10:40:59 +0200
+Subject: [PATCH 1/2] arch/x86: Makefile: Move CPU-specific tuning for x86_64
+ to Makefile.cpu
 
-FEATURES
-This patch adds additional CPU options to the Linux kernel accessible under:
- Processor type and features  --->
-  Processor family --->
+The Makefile has a 'FIXME', according to which the CPU-specific tuning
+options for 64-bit CPUs should be integrated into a separate file.
 
-With the release of gcc 11.1 and clang 12.0, several generic 64-bit levels are
-offered which are good for supported Intel or AMD CPUs:
-• x86-64-v2
-• x86-64-v3
-• x86-64-v4
+Move these cflags to a new file named Makefile.cpu in the same way as for
+the 32-bit cflags.
 
-Users of glibc 2.33 and above can see which level is supported by current
-hardware by running:
-  /lib/ld-linux-x86-64.so.2 --help | grep supported
+There should be no functional change.
 
-Alternatively, compare the flags from /proc/cpuinfo to this list.[1]
+Signed-off-by: Tor Vic <torvic9@mailbox.org>
+---
+ arch/x86/Makefile     | 8 ++------
+ arch/x86/Makefile.cpu | 8 ++++++++
+ 2 files changed, 10 insertions(+), 6 deletions(-)
+ create mode 100644 arch/x86/Makefile.cpu
 
-CPU-specific microarchitectures include:
-• AMD Improved K8-family
-• AMD K10-family
-• AMD Family 10h (Barcelona)
-• AMD Family 14h (Bobcat)
-• AMD Family 16h (Jaguar)
-• AMD Family 15h (Bulldozer)
-• AMD Family 15h (Piledriver)
-• AMD Family 15h (Steamroller)
-• AMD Family 15h (Excavator)
-• AMD Family 17h (Zen)
-• AMD Family 17h (Zen 2)
-• AMD Family 19h (Zen 3)†
-• Intel Silvermont low-power processors
-• Intel Goldmont low-power processors (Apollo Lake and Denverton)
-• Intel Goldmont Plus low-power processors (Gemini Lake)
-• Intel 1st Gen Core i3/i5/i7 (Nehalem)
-• Intel 1.5 Gen Core i3/i5/i7 (Westmere)
-• Intel 2nd Gen Core i3/i5/i7 (Sandybridge)
-• Intel 3rd Gen Core i3/i5/i7 (Ivybridge)
-• Intel 4th Gen Core i3/i5/i7 (Haswell)
-• Intel 5th Gen Core i3/i5/i7 (Broadwell)
-• Intel 6th Gen Core i3/i5/i7 (Skylake)
-• Intel 6th Gen Core i7/i9 (Skylake X)
-• Intel 8th Gen Core i3/i5/i7 (Cannon Lake)
-• Intel 10th Gen Core i7/i9 (Ice Lake)
-• Intel Xeon (Cascade Lake)
-• Intel Xeon (Cooper Lake)*
-• Intel 3rd Gen 10nm++ i3/i5/i7/i9-family (Tiger Lake)*
-• Intel 3rd Gen 10nm++ Xeon (Sapphire Rapids)‡
-• Intel 11th Gen i3/i5/i7/i9-family (Rocket Lake)‡
-• Intel 12th Gen i3/i5/i7/i9-family (Alder Lake)‡
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index 7854685c5..c0b4db692 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -147,12 +147,8 @@ else
+ 	# Use -mskip-rax-setup if supported.
+ 	KBUILD_CFLAGS += $(call cc-option,-mskip-rax-setup)
+ 
+-        # FIXME - should be integrated in Makefile.cpu (Makefile_32.cpu)
+-        cflags-$(CONFIG_MK8)		+= -march=k8
+-        cflags-$(CONFIG_MPSC)		+= -march=nocona
+-        cflags-$(CONFIG_MCORE2)		+= -march=core2
+-        cflags-$(CONFIG_MATOM)		+= -march=atom
+-        cflags-$(CONFIG_GENERIC_CPU)	+= -mtune=generic
++        # CPU-specific tuning for x86_64
++        include $(srctree)/arch/x86/Makefile.cpu
+         KBUILD_CFLAGS += $(cflags-y)
+ 
+         KBUILD_CFLAGS += -mno-red-zone
+diff --git a/arch/x86/Makefile.cpu b/arch/x86/Makefile.cpu
+new file mode 100644
+index 000000000..6995353f8
+--- /dev/null
++++ b/arch/x86/Makefile.cpu
+@@ -0,0 +1,8 @@
++# SPDX-License-Identifier: GPL-2.0
++# CPU tuning section for x86_64
++
++cflags-$(CONFIG_MK8)		+= -march=k8
++cflags-$(CONFIG_MPSC)		+= -march=nocona
++cflags-$(CONFIG_MCORE2)		+= -march=core2
++cflags-$(CONFIG_MATOM)		+= -march=atom
++cflags-$(CONFIG_GENERIC_CPU)	+= -mtune=generic
+-- 
+2.37.1.377.g679aad9e82
 
-Notes: If not otherwise noted, gcc >=9.1 is required for support.
-       *Requires gcc >=10.1 or clang >=10.0
-       †Required gcc >=10.3 or clang >=12.0
-       ‡Required gcc >=11.1 or clang >=12.0
 
-It also offers to compile passing the 'native' option which, "selects the CPU
-to generate code for at compilation time by determining the processor type of
-the compiling machine. Using -march=native enables all instruction subsets
-supported by the local machine and will produce code optimized for the local
-machine under the constraints of the selected instruction set."[2]
+From c1020ee14425666af7c98b7dba1d957a31a523e4 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Wed, 17 Aug 2022 13:49:19 +0200
+Subject: [PATCH 2/2] cpu-5.19: merge graysky's patchset
 
-Users of Intel CPUs should select the 'Intel-Native' option and users of AMD
-CPUs should select the 'AMD-Native' option.
-
-MINOR NOTES RELATING TO INTEL ATOM PROCESSORS
-This patch also changes -march=atom to -march=bonnell in accordance with the
-gcc v4.9 changes. Upstream is using the deprecated -match=atom flags when I
-believe it should use the newer -march=bonnell flag for atom processors.[3]
-
-It is not recommended to compile on Atom-CPUs with the 'native' option.[4] The
-recommendation is to use the 'atom' option instead.
-
-BENEFITS
-Small but real speed increases are measurable using a make endpoint comparing
-a generic kernel to one built with one of the respective microarchs.
-
-See the following experimental evidence supporting this statement:
-https://github.com/graysky2/kernel_gcc_patch
-
-REQUIREMENTS
-linux version 5.17+
-gcc version >=9.0 or clang version >=9.0
-
-ACKNOWLEDGMENTS
-This patch builds on the seminal work by Jeroen.[5]
-
-REFERENCES
-1.  https://gitlab.com/x86-psABIs/x86-64-ABI/-/commit/77566eb03bc6a326811cb7e9
-2.  https://gcc.gnu.org/onlinedocs/gcc/x86-Options.html#index-x86-Options
-3.  https://bugzilla.kernel.org/show_bug.cgi?id=77461
-4.  https://github.com/graysky2/kernel_gcc_patch/issues/15
-5.  http://www.linuxforge.net/docs/linux/linux-gcc.php
-
-Signed-off-by: graysky <graysky@archlinux.us>
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  arch/x86/Kconfig.cpu            | 332 ++++++++++++++++++++++++++++++--
- arch/x86/Makefile               |  40 +++-
+ arch/x86/Makefile.cpu           |  40 +++-
  arch/x86/include/asm/vermagic.h |  66 +++++++
  3 files changed, 424 insertions(+), 14 deletions(-)
 
 diff --git a/arch/x86/Kconfig.cpu b/arch/x86/Kconfig.cpu
-index 542377cd419d..22b919cdb6d1 100644
+index 542377cd4..22b919cdb 100644
 --- a/arch/x86/Kconfig.cpu
 +++ b/arch/x86/Kconfig.cpu
 @@ -157,7 +157,7 @@ config MPENTIUM4
@@ -535,59 +497,57 @@ index 542377cd419d..22b919cdb6d1 100644
  	default "5" if X86_32 && X86_CMPXCHG64
  	default "4"
  
-diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index e84cdd409b64..7d3bbf060079 100644
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -131,8 +131,44 @@ else
-         # FIXME - should be integrated in Makefile.cpu (Makefile_32.cpu)
-         cflags-$(CONFIG_MK8)		+= -march=k8
-         cflags-$(CONFIG_MPSC)		+= -march=nocona
--        cflags-$(CONFIG_MCORE2)		+= -march=core2
--        cflags-$(CONFIG_MATOM)		+= -march=atom
-+        cflags-$(CONFIG_MK8SSE3)	+= -march=k8-sse3
-+        cflags-$(CONFIG_MK10) 		+= -march=amdfam10
-+        cflags-$(CONFIG_MBARCELONA) 	+= -march=barcelona
-+        cflags-$(CONFIG_MBOBCAT) 	+= -march=btver1
-+        cflags-$(CONFIG_MJAGUAR) 	+= -march=btver2
-+        cflags-$(CONFIG_MBULLDOZER) 	+= -march=bdver1
-+        cflags-$(CONFIG_MPILEDRIVER)	+= -march=bdver2 -mno-tbm
-+        cflags-$(CONFIG_MSTEAMROLLER) 	+= -march=bdver3 -mno-tbm
-+        cflags-$(CONFIG_MEXCAVATOR) 	+= -march=bdver4 -mno-tbm
-+        cflags-$(CONFIG_MZEN) 		+= -march=znver1
-+        cflags-$(CONFIG_MZEN2) 	+= -march=znver2
-+        cflags-$(CONFIG_MZEN3) 	+= -march=znver3
-+        cflags-$(CONFIG_MNATIVE_INTEL) += -march=native
-+        cflags-$(CONFIG_MNATIVE_AMD) 	+= -march=native
-+        cflags-$(CONFIG_MATOM) 	+= -march=bonnell
-+        cflags-$(CONFIG_MCORE2) 	+= -march=core2
-+        cflags-$(CONFIG_MNEHALEM) 	+= -march=nehalem
-+        cflags-$(CONFIG_MWESTMERE) 	+= -march=westmere
-+        cflags-$(CONFIG_MSILVERMONT) 	+= -march=silvermont
-+        cflags-$(CONFIG_MGOLDMONT) 	+= -march=goldmont
-+        cflags-$(CONFIG_MGOLDMONTPLUS) += -march=goldmont-plus
-+        cflags-$(CONFIG_MSANDYBRIDGE) 	+= -march=sandybridge
-+        cflags-$(CONFIG_MIVYBRIDGE) 	+= -march=ivybridge
-+        cflags-$(CONFIG_MHASWELL) 	+= -march=haswell
-+        cflags-$(CONFIG_MBROADWELL) 	+= -march=broadwell
-+        cflags-$(CONFIG_MSKYLAKE) 	+= -march=skylake
-+        cflags-$(CONFIG_MSKYLAKEX) 	+= -march=skylake-avx512
-+        cflags-$(CONFIG_MCANNONLAKE) 	+= -march=cannonlake
-+        cflags-$(CONFIG_MICELAKE) 	+= -march=icelake-client
-+        cflags-$(CONFIG_MCASCADELAKE) 	+= -march=cascadelake
-+        cflags-$(CONFIG_MCOOPERLAKE) 	+= -march=cooperlake
-+        cflags-$(CONFIG_MTIGERLAKE) 	+= -march=tigerlake
-+        cflags-$(CONFIG_MSAPPHIRERAPIDS) += -march=sapphirerapids
-+        cflags-$(CONFIG_MROCKETLAKE) 	+= -march=rocketlake
-+        cflags-$(CONFIG_MALDERLAKE) 	+= -march=alderlake
-+        cflags-$(CONFIG_GENERIC_CPU2) 	+= -march=x86-64-v2
-+        cflags-$(CONFIG_GENERIC_CPU3) 	+= -march=x86-64-v3
-+        cflags-$(CONFIG_GENERIC_CPU4) 	+= -march=x86-64-v4
-         cflags-$(CONFIG_GENERIC_CPU)	+= -mtune=generic
-         KBUILD_CFLAGS += $(cflags-y)
+diff --git a/arch/x86/Makefile.cpu b/arch/x86/Makefile.cpu
+index 6995353f8..db282c961 100644
+--- a/arch/x86/Makefile.cpu
++++ b/arch/x86/Makefile.cpu
+@@ -3,6 +3,42 @@
  
+ cflags-$(CONFIG_MK8)		+= -march=k8
+ cflags-$(CONFIG_MPSC)		+= -march=nocona
+-cflags-$(CONFIG_MCORE2)		+= -march=core2
+-cflags-$(CONFIG_MATOM)		+= -march=atom
++cflags-$(CONFIG_MK8SSE3)	+= -march=k8-sse3
++cflags-$(CONFIG_MK10) 		+= -march=amdfam10
++cflags-$(CONFIG_MBARCELONA) 	+= -march=barcelona
++cflags-$(CONFIG_MBOBCAT) 	+= -march=btver1
++cflags-$(CONFIG_MJAGUAR) 	+= -march=btver2
++cflags-$(CONFIG_MBULLDOZER) 	+= -march=bdver1
++cflags-$(CONFIG_MPILEDRIVER)	+= -march=bdver2 -mno-tbm
++cflags-$(CONFIG_MSTEAMROLLER) 	+= -march=bdver3 -mno-tbm
++cflags-$(CONFIG_MEXCAVATOR) 	+= -march=bdver4 -mno-tbm
++cflags-$(CONFIG_MZEN) 		+= -march=znver1
++cflags-$(CONFIG_MZEN2) 	+= -march=znver2
++cflags-$(CONFIG_MZEN3) 	+= -march=znver3
++cflags-$(CONFIG_MNATIVE_INTEL) += -march=native
++cflags-$(CONFIG_MNATIVE_AMD) 	+= -march=native
++cflags-$(CONFIG_MATOM) 	+= -march=bonnell
++cflags-$(CONFIG_MCORE2) 	+= -march=core2
++cflags-$(CONFIG_MNEHALEM) 	+= -march=nehalem
++cflags-$(CONFIG_MWESTMERE) 	+= -march=westmere
++cflags-$(CONFIG_MSILVERMONT) 	+= -march=silvermont
++cflags-$(CONFIG_MGOLDMONT) 	+= -march=goldmont
++cflags-$(CONFIG_MGOLDMONTPLUS) += -march=goldmont-plus
++cflags-$(CONFIG_MSANDYBRIDGE) 	+= -march=sandybridge
++cflags-$(CONFIG_MIVYBRIDGE) 	+= -march=ivybridge
++cflags-$(CONFIG_MHASWELL) 	+= -march=haswell
++cflags-$(CONFIG_MBROADWELL) 	+= -march=broadwell
++cflags-$(CONFIG_MSKYLAKE) 	+= -march=skylake
++cflags-$(CONFIG_MSKYLAKEX) 	+= -march=skylake-avx512
++cflags-$(CONFIG_MCANNONLAKE) 	+= -march=cannonlake
++cflags-$(CONFIG_MICELAKE) 	+= -march=icelake-client
++cflags-$(CONFIG_MCASCADELAKE) 	+= -march=cascadelake
++cflags-$(CONFIG_MCOOPERLAKE) 	+= -march=cooperlake
++cflags-$(CONFIG_MTIGERLAKE) 	+= -march=tigerlake
++cflags-$(CONFIG_MSAPPHIRERAPIDS) += -march=sapphirerapids
++cflags-$(CONFIG_MROCKETLAKE) 	+= -march=rocketlake
++cflags-$(CONFIG_MALDERLAKE) 	+= -march=alderlake
++cflags-$(CONFIG_GENERIC_CPU2) 	+= -march=x86-64-v2
++cflags-$(CONFIG_GENERIC_CPU3) 	+= -march=x86-64-v3
++cflags-$(CONFIG_GENERIC_CPU4) 	+= -march=x86-64-v4
+ cflags-$(CONFIG_GENERIC_CPU)	+= -mtune=generic
 diff --git a/arch/x86/include/asm/vermagic.h b/arch/x86/include/asm/vermagic.h
-index 75884d2cdec3..4e6a08d4c7e5 100644
+index 75884d2cd..4e6a08d4c 100644
 --- a/arch/x86/include/asm/vermagic.h
 +++ b/arch/x86/include/asm/vermagic.h
 @@ -17,6 +17,48 @@
@@ -671,5 +631,5 @@ index 75884d2cdec3..4e6a08d4c7e5 100644
  #define MODULE_PROC_FAMILY "ELAN "
  #elif defined CONFIG_MCRUSOE
 -- 
-2.33.1
+2.37.1.377.g679aad9e82
 
