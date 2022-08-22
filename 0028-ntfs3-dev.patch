@@ -1,25 +1,26 @@
-From 37ad726392440c116e024caef148427f7067847e Mon Sep 17 00:00:00 2001
+From 79d0399b31dc1dcc04463c0b5d6cc5727b91db3b Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Thu, 18 Aug 2022 09:21:27 +0200
+Date: Mon, 22 Aug 2022 14:53:37 +0200
 Subject: [PATCH] ntfs3-5.19: merge changes from dev tree
 
+Modified: Git changes for 5.19.3
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
  fs/ntfs3/attrib.c  | 557 +++++++++++++++++++++++++++++++++++++--------
  fs/ntfs3/bitmap.c  |  12 +-
  fs/ntfs3/file.c    | 110 +++++----
  fs/ntfs3/frecord.c | 128 ++++++++---
- fs/ntfs3/fslog.c   |   4 +-
+ fs/ntfs3/fslog.c   |   2 +
  fs/ntfs3/fsntfs.c  |  92 +++++---
- fs/ntfs3/index.c   |  33 ++-
- fs/ntfs3/inode.c   |  19 +-
+ fs/ntfs3/index.c   |  31 +--
+ fs/ntfs3/inode.c   |  18 +-
  fs/ntfs3/namei.c   |   6 +-
  fs/ntfs3/ntfs_fs.h |  16 +-
  fs/ntfs3/record.c  |  27 +--
  fs/ntfs3/run.c     | 108 +++++++--
- fs/ntfs3/super.c   |  17 +-
- fs/ntfs3/xattr.c   |  35 +--
- 14 files changed, 835 insertions(+), 329 deletions(-)
+ fs/ntfs3/super.c   |   9 +-
+ fs/ntfs3/xattr.c   |  13 +-
+ 14 files changed, 817 insertions(+), 312 deletions(-)
 
 diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
 index e8c00dda4..71f870d49 100644
@@ -1549,7 +1550,7 @@ index 18842998c..381a38a06 100644
  			mi_put(mi);
  		}
 diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 49b7df616..e7c494005 100644
+index 49b7df616..5486f7476 100644
 --- a/fs/ntfs3/fslog.c
 +++ b/fs/ntfs3/fslog.c
 @@ -3843,6 +3843,8 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
@@ -1561,17 +1562,8 @@ index 49b7df616..e7c494005 100644
  
  	/* Determine which restart area to use. */
  	if (!rst_info2.restart || rst_info2.last_lsn <= rst_info.last_lsn)
-@@ -5057,7 +5059,7 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
- 		goto add_allocated_vcns;
- 
- 	vcn = le64_to_cpu(lrh->target_vcn);
--	vcn &= ~(log->clst_per_page - 1);
-+	vcn &= ~(u64)(log->clst_per_page - 1);
- 
- add_allocated_vcns:
- 	for (i = 0, vcn = le64_to_cpu(lrh->target_vcn),
 diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 3de5700a9..209ca71c3 100644
+index 3de5700a9..ab3b0a017 100644
 --- a/fs/ntfs3/fsntfs.c
 +++ b/fs/ntfs3/fsntfs.c
 @@ -703,12 +703,14 @@ int ntfs_look_free_mft(struct ntfs_sb_info *sbi, CLST *rno, bool mft,
@@ -1656,10 +1648,10 @@ index 3de5700a9..209ca71c3 100644
  	sector_t block1, block2;
  	u32 bytes;
  
-+	if (!sb)
-+		return;
++        if (!sb)
++            return;
 +
-+	blocksize = sb->s_blocksize;
++        blocksize = sb->s_blocksize;
 +
  	if (!(sbi->flags & NTFS_FLAGS_MFTMIRR))
 -		return 0;
@@ -1763,7 +1755,7 @@ index 3de5700a9..209ca71c3 100644
  	up_write(&wnd->rw_lock);
  }
 diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index 6f81e3a49..440328147 100644
+index 6f81e3a49..d2eb86219 100644
 --- a/fs/ntfs3/index.c
 +++ b/fs/ntfs3/index.c
 @@ -1042,19 +1042,16 @@ int indx_find(struct ntfs_index *indx, struct ntfs_inode *ni,
@@ -1855,28 +1847,11 @@ index 6f81e3a49..440328147 100644
  	struct indx_node *n1 = fnd->nodes[level];
  	struct INDEX_HDR *hdr1 = &n1->index->ihdr;
  	struct INDEX_HDR *hdr2;
-@@ -1994,7 +1987,7 @@ static int indx_free_children(struct ntfs_index *indx, struct ntfs_inode *ni,
- 			      const struct NTFS_DE *e, bool trim)
- {
- 	int err;
--	struct indx_node *n;
-+	struct indx_node *n = NULL;
- 	struct INDEX_HDR *hdr;
- 	CLST vbn = de_get_vbn(e);
- 	size_t i;
 diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index be4ebdd80..a587a0555 100644
+index be4ebdd80..8f7b9e152 100644
 --- a/fs/ntfs3/inode.c
 +++ b/fs/ntfs3/inode.c
-@@ -430,6 +430,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 	} else if (fname && fname->home.low == cpu_to_le32(MFT_REC_EXTEND) &&
- 		   fname->home.seq == cpu_to_le16(MFT_REC_EXTEND)) {
- 		/* Records in $Extend are not a files or general directories. */
-+		inode->i_op = &ntfs_file_inode_operations;
- 	} else {
- 		err = -EINVAL;
- 		goto out;
-@@ -500,7 +501,7 @@ struct inode *ntfs_iget5(struct super_block *sb, const struct MFT_REF *ref,
+@@ -500,7 +500,7 @@ struct inode *ntfs_iget5(struct super_block *sb, const struct MFT_REF *ref,
  		inode = ntfs_read_mft(inode, name, ref);
  	else if (ref->seq != ntfs_i(inode)->mi.mrec->seq) {
  		/* Inode overlaps? */
@@ -1885,7 +1860,7 @@ index be4ebdd80..a587a0555 100644
  	}
  
  	return inode;
-@@ -1634,7 +1635,7 @@ struct inode *ntfs_create_inode(struct user_namespace *mnt_userns,
+@@ -1634,7 +1634,7 @@ struct inode *ntfs_create_inode(struct user_namespace *mnt_userns,
  	ni->mi.dirty = false;
  	discard_new_inode(inode);
  out3:
@@ -1894,7 +1869,7 @@ index be4ebdd80..a587a0555 100644
  
  out2:
  	__putname(new_de);
-@@ -1657,7 +1658,6 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+@@ -1657,7 +1657,6 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
  	struct ntfs_inode *ni = ntfs_i(inode);
  	struct ntfs_sb_info *sbi = inode->i_sb->s_fs_info;
  	struct NTFS_DE *de;
@@ -1902,7 +1877,7 @@ index be4ebdd80..a587a0555 100644
  
  	/* Allocate PATH_MAX bytes. */
  	de = __getname();
-@@ -1672,15 +1672,6 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+@@ -1672,15 +1671,6 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
  	if (err)
  		goto out;
  
@@ -1918,7 +1893,7 @@ index be4ebdd80..a587a0555 100644
  	err = ni_add_name(ntfs_i(d_inode(dentry->d_parent)), ni, de);
  out:
  	__putname(de);
-@@ -1733,9 +1724,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+@@ -1733,9 +1723,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
  		if (inode->i_nlink)
  			mark_inode_dirty(inode);
  	} else if (!ni_remove_name_undo(dir_ni, ni, de, de2, undo_remove)) {
@@ -2246,27 +2221,10 @@ index a8fec651f..aaaa0d3d3 100644
 +	return 0;
 +}
 diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 0c6de6287..47012c9bf 100644
+index 0c6de6287..3d097f438 100644
 --- a/fs/ntfs3/super.c
 +++ b/fs/ntfs3/super.c
-@@ -30,6 +30,7 @@
- #include <linux/fs_context.h>
- #include <linux/fs_parser.h>
- #include <linux/log2.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/nls.h>
- #include <linux/seq_file.h>
-@@ -390,7 +391,7 @@ static int ntfs_fs_reconfigure(struct fs_context *fc)
- 		return -EINVAL;
- 	}
- 
--	memcpy(sbi->options, new_opts, sizeof(*new_opts));
-+	swap(sbi->options, fc->fs_private);
- 
- 	return 0;
- }
-@@ -870,6 +871,13 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+@@ -870,6 +870,13 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
  	sb->s_maxbytes = 0xFFFFFFFFull << sbi->cluster_bits;
  #endif
  
@@ -2280,25 +2238,7 @@ index 0c6de6287..47012c9bf 100644
  	err = 0;
  
  out:
-@@ -900,6 +908,8 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 	ref.high = 0;
- 
- 	sbi->sb = sb;
-+	sbi->options = fc->fs_private;
-+	fc->fs_private = NULL;
- 	sb->s_flags |= SB_NODIRATIME;
- 	sb->s_magic = 0x7366746e; // "ntfs"
- 	sb->s_op = &ntfs_sops;
-@@ -1262,8 +1272,6 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 		goto put_inode_out;
- 	}
- 
--	fc->fs_private = NULL;
--
- 	return 0;
- 
- put_inode_out:
-@@ -1378,7 +1386,7 @@ static const struct fs_context_operations ntfs_context_ops = {
+@@ -1378,7 +1385,7 @@ static const struct fs_context_operations ntfs_context_ops = {
  /*
   * ntfs_init_fs_context - Initialize spi and opts
   *
@@ -2307,16 +2247,8 @@ index 0c6de6287..47012c9bf 100644
   * options so that if remount we can use just that.
   */
  static int ntfs_init_fs_context(struct fs_context *fc)
-@@ -1416,7 +1424,6 @@ static int ntfs_init_fs_context(struct fs_context *fc)
- 	mutex_init(&sbi->compress.mtx_lzx);
- #endif
- 
--	sbi->options = opts;
- 	fc->s_fs_info = sbi;
- ok:
- 	fc->fs_private = opts;
 diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index 5e0e0280e..5bdff12a1 100644
+index 5e0e0280e..f0139f8f3 100644
 --- a/fs/ntfs3/xattr.c
 +++ b/fs/ntfs3/xattr.c
 @@ -118,7 +118,7 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
@@ -2340,55 +2272,6 @@ index 5e0e0280e..5bdff12a1 100644
  		err = ntfs_sb_write_run(sbi, &ea_run, 0, ea_all, size, 0);
  		if (err)
  			goto out;
-@@ -547,28 +552,23 @@ static noinline int ntfs_set_acl_ex(struct user_namespace *mnt_userns,
- {
- 	const char *name;
- 	size_t size, name_len;
--	void *value = NULL;
--	int err = 0;
-+	void *value;
-+	int err;
- 	int flags;
-+	umode_t mode;
- 
- 	if (S_ISLNK(inode->i_mode))
- 		return -EOPNOTSUPP;
- 
-+	mode = inode->i_mode;
- 	switch (type) {
- 	case ACL_TYPE_ACCESS:
- 		/* Do not change i_mode if we are in init_acl */
- 		if (acl && !init_acl) {
--			umode_t mode;
--
- 			err = posix_acl_update_mode(mnt_userns, inode, &mode,
- 						    &acl);
- 			if (err)
--				goto out;
--
--			if (inode->i_mode != mode) {
--				inode->i_mode = mode;
--				mark_inode_dirty(inode);
--			}
-+				return err;
- 		}
- 		name = XATTR_NAME_POSIX_ACL_ACCESS;
- 		name_len = sizeof(XATTR_NAME_POSIX_ACL_ACCESS) - 1;
-@@ -604,8 +604,13 @@ static noinline int ntfs_set_acl_ex(struct user_namespace *mnt_userns,
- 	err = ntfs_set_ea(inode, name, name_len, value, size, flags, 0);
- 	if (err == -ENODATA && !size)
- 		err = 0; /* Removing non existed xattr. */
--	if (!err)
-+	if (!err) {
- 		set_cached_acl(inode, type, acl);
-+		if (inode->i_mode != mode) {
-+			inode->i_mode = mode;
-+			mark_inode_dirty(inode);
-+		}
-+	}
- 
- out:
- 	kfree(value);
 @@ -706,13 +711,13 @@ int ntfs_init_acl(struct user_namespace *mnt_userns, struct inode *inode,
  		inode->i_default_acl = NULL;
  	}
@@ -2407,5 +2290,5 @@ index 5e0e0280e..5bdff12a1 100644
  
  	return err;
 -- 
-2.37.1.377.g679aad9e82
+2.37.2
 

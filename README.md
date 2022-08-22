@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.19.1  
+0000 : Patch 5.19.3  
 0000 : ProjectC v5.19-r0  
 0002 : 5.19 Graysky's CPU optimization patches  
 0003 : v5.19-fsync1_futex_waitv  
@@ -27,7 +27,7 @@ ubuntu : Ubuntu mainline kernel patchset
 
 **AMD support is disabled in the example config (patch 0010), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default Project C - PDS scheduler and CONFIG_HZ=1000 + NO_HZ_IDLE + Fsync_waitv (backwards compatible)**  
+**This config has default Project C - PDS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Fsync_waitv (backwards compatible)**  
 
 To build on Ubuntu:  
 ```

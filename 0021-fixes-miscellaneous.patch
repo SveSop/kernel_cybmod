@@ -1,4 +1,4 @@
-From 4de40f20247f6280164d73d0d8709c5c0fb89a1b Mon Sep 17 00:00:00 2001
+From 384ffa88ed9e4050c50a0b1dbc6e915c8477e7cf Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
 Subject: [PATCH 01/14] ZEN: mm: Lower the non-hugetlbpage pageblock size to
@@ -47,7 +47,7 @@ index 83c724805..d2b8741ea 100644
 2.37.1.377.g679aad9e82
 
 
-From d3d3fabc81804902d8c975687937840af769e4c0 Mon Sep 17 00:00:00 2001
+From 66cc86b9aaca3739ccff1085435d889665120dd9 Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Wed, 25 May 2022 16:25:14 +0200
 Subject: [PATCH 02/14] ZEN: dm-crypt: Disable workqueues for crypto operations
@@ -86,86 +86,10 @@ index 159c6806c..8b4e8f934 100644
 2.37.1.377.g679aad9e82
 
 
-From f8c0b004224e8d4f6df0537be5de7aaacd73454b Mon Sep 17 00:00:00 2001
-From: Guenter Roeck <linux@roeck-us.net>
-Date: Tue, 31 May 2022 15:29:51 -0700
-Subject: [PATCH 03/14] lib/list_debug.c: Detect uninitialized lists
-
-In some circumstances, attempts are made to add entries to or to remove
-entries from an uninitialized list.  A prime example is
-amdgpu_bo_vm_destroy(): It is indirectly called from
-ttm_bo_init_reserved() if that function fails, and tries to remove an
-entry from a list.  However, that list is only initialized in
-amdgpu_bo_create_vm() after the call to ttm_bo_init_reserved() returned
-success.  This results in crashes such as
-
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 1 PID: 1479 Comm: chrome Not tainted 5.10.110-15768-g29a72e65dae5
- Hardware name: Google Grunt/Grunt, BIOS Google_Grunt.11031.149.0 07/15/2020
- RIP: 0010:__list_del_entry_valid+0x26/0x7d
- ...
- Call Trace:
-  amdgpu_bo_vm_destroy+0x48/0x8b
-  ttm_bo_init_reserved+0x1d7/0x1e0
-  amdgpu_bo_create+0x212/0x476
-  ? amdgpu_bo_user_destroy+0x23/0x23
-  ? kmem_cache_alloc+0x60/0x271
-  amdgpu_bo_create_vm+0x40/0x7d
-  amdgpu_vm_pt_create+0xe8/0x24b
- ...
-
-Check if the list's prev and next pointers are NULL to catch such problems.
-
-Link: https://lkml.kernel.org/r/20220531222951.92073-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
- lib/list_debug.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/lib/list_debug.c b/lib/list_debug.c
-index 9daa3fb9d..d98d43f80 100644
---- a/lib/list_debug.c
-+++ b/lib/list_debug.c
-@@ -20,7 +20,11 @@
- bool __list_add_valid(struct list_head *new, struct list_head *prev,
- 		      struct list_head *next)
- {
--	if (CHECK_DATA_CORRUPTION(next->prev != prev,
-+	if (CHECK_DATA_CORRUPTION(prev == NULL,
-+			"list_add corruption. prev is NULL.\n") ||
-+	    CHECK_DATA_CORRUPTION(next == NULL,
-+			"list_add corruption. next is NULL.\n") ||
-+	    CHECK_DATA_CORRUPTION(next->prev != prev,
- 			"list_add corruption. next->prev should be prev (%px), but was %px. (next=%px).\n",
- 			prev, next->prev, next) ||
- 	    CHECK_DATA_CORRUPTION(prev->next != next,
-@@ -42,7 +46,11 @@ bool __list_del_entry_valid(struct list_head *entry)
- 	prev = entry->prev;
- 	next = entry->next;
- 
--	if (CHECK_DATA_CORRUPTION(next == LIST_POISON1,
-+	if (CHECK_DATA_CORRUPTION(next == NULL,
-+			"list_del corruption, %px->next is NULL\n", entry) ||
-+	    CHECK_DATA_CORRUPTION(prev == NULL,
-+			"list_del corruption, %px->prev is NULL\n", entry) ||
-+	    CHECK_DATA_CORRUPTION(next == LIST_POISON1,
- 			"list_del corruption, %px->next is LIST_POISON1 (%px)\n",
- 			entry, LIST_POISON1) ||
- 	    CHECK_DATA_CORRUPTION(prev == LIST_POISON2,
--- 
-2.37.1.377.g679aad9e82
-
-
-From 4d66faf657c3eaf04f8b3dcf7e69f9a00fe167ba Mon Sep 17 00:00:00 2001
+From f9addc5c2af6bfa5e2ddb0c7d9a1105f9863db9f Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 04/14] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 03/14] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -186,7 +110,7 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index aa907cec0..28e6a538c 100644
+index 09fa8a948..102187cda 100644
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
 @@ -266,9 +266,10 @@ static ulong *reg_rmw(struct x86_emulate_ctxt *ctxt, unsigned nr)
@@ -205,10 +129,10 @@ index aa907cec0..28e6a538c 100644
 2.37.1.377.g679aad9e82
 
 
-From d6a60169ddd57cd45da389001500ec09b37b3e96 Mon Sep 17 00:00:00 2001
+From a4af168f80926641bfa49318b227995588d20fa1 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 05/14] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 04/14] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -254,7 +178,7 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index 28e6a538c..3799980aa 100644
+index 102187cda..b1904f5ec 100644
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
 @@ -244,6 +244,9 @@ enum x86_transfer_type {
@@ -281,10 +205,10 @@ index 28e6a538c..3799980aa 100644
 2.37.1.377.g679aad9e82
 
 
-From 4ebf9e56375e2bf2db8169d37c9951903725d995 Mon Sep 17 00:00:00 2001
+From 0e103672a19a488aac6846d4ddf98ddcc0e2f919 Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Fri, 24 Jun 2022 16:14:12 +0200
-Subject: [PATCH 06/14] compiler-gcc.h: remove ancient workaround for gcc PR
+Subject: [PATCH 05/14] compiler-gcc.h: remove ancient workaround for gcc PR
  58670
 
 The workaround for 'asm goto' miscompilation introduces a compiler barrier
@@ -355,10 +279,10 @@ index a0c55eeae..9b157b710 100644
 2.37.1.377.g679aad9e82
 
 
-From 485551ba6d816379e3636912960e86310ecc800f Mon Sep 17 00:00:00 2001
+From fe424103086e217d1d7470b59c26bb86a3b7b662 Mon Sep 17 00:00:00 2001
 From: Chuanhong Guo <gch981213@gmail.com>
 Date: Tue, 12 Jul 2022 10:00:58 +0800
-Subject: [PATCH 07/14] ACPI: skip IRQ override on AMD Zen platforms
+Subject: [PATCH 06/14] ACPI: skip IRQ override on AMD Zen platforms
 
 IRQ override isn't needed on modern AMD Zen systems.
 There's an active low keyboard IRQ on AMD Ryzen 6000 and it will stay
@@ -402,10 +326,10 @@ index c2d494784..510cdec37 100644
 2.37.1.377.g679aad9e82
 
 
-From 58ded7d0f5b9821a942dcf6f51d91c58600edfba Mon Sep 17 00:00:00 2001
+From 7514c9577ca1d11768cf54bd106cafa4d7a5b82c Mon Sep 17 00:00:00 2001
 From: Yosry Ahmed <yosryahmed@google.com>
 Date: Thu, 14 Jul 2022 06:49:18 +0000
-Subject: [PATCH 08/14] mm: vmpressure: don't count proactive reclaim in
+Subject: [PATCH 07/14] mm: vmpressure: don't count proactive reclaim in
  vmpressure
 
 vmpressure is used in cgroup v1 to notify userspace of reclaim
@@ -626,10 +550,10 @@ index f7d9a683e..0969e6408 100644
 2.37.1.377.g679aad9e82
 
 
-From 6f99a2a38661135d3f22a68e7a95aa09f354c9e5 Mon Sep 17 00:00:00 2001
+From 30c6b4c58d47dc4cb00104e4d368de101519caf4 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:23 -0500
-Subject: [PATCH 09/14] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 08/14] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -929,10 +853,10 @@ index 000000000..ae92aa559
 2.37.1.377.g679aad9e82
 
 
-From f2b95a4780e776aad135714306824f77faba43c0 Mon Sep 17 00:00:00 2001
+From e39ead59298e3b8859bfa73553e26e60541fa1fb Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:24 -0500
-Subject: [PATCH 10/14] leds: trigger: Add block device LED trigger
+Subject: [PATCH 09/14] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -2124,10 +2048,10 @@ index 000000000..999c48a7a
 2.37.1.377.g679aad9e82
 
 
-From 2c51bbce91bafeac311655ffd0b89172758a19de Mon Sep 17 00:00:00 2001
+From ab30616bebea4ff7a411ba75ade5d5c0c10f27de Mon Sep 17 00:00:00 2001
 From: Philip Yang <Philip.Yang@amd.com>
 Date: Fri, 22 Jul 2022 15:07:00 -0400
-Subject: [PATCH 11/14] drm/amdgpu: Allow TTM to evict svm bo from same process
+Subject: [PATCH 10/14] drm/amdgpu: Allow TTM to evict svm bo from same process
 
 To support SVM range VRAM overcommitment, TTM should be able to evict
 svm bo of same process to system memory, to get space to alloc new svm
@@ -2174,10 +2098,10 @@ index 1d0dbff87..469785d33 100644
 2.37.1.377.g679aad9e82
 
 
-From 5dd21b23b26d4ccbf76590b7531b35ddb79134c7 Mon Sep 17 00:00:00 2001
+From df7b4e150cb324f2b5e44b5102b00bafbbf9eb75 Mon Sep 17 00:00:00 2001
 From: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
 Date: Sun, 17 Jul 2022 10:36:13 +0200
-Subject: [PATCH 12/14] f2fs: Delete f2fs_copy_page() and replace with
+Subject: [PATCH 11/14] f2fs: Delete f2fs_copy_page() and replace with
  memcpy_page()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2213,10 +2137,10 @@ Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
  2 files changed, 1 insertion(+), 11 deletions(-)
 
 diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 5c9502988..873770483 100644
+index 7006fa7dd..357c4b955 100644
 --- a/fs/f2fs/f2fs.h
 +++ b/fs/f2fs/f2fs.h
-@@ -2696,16 +2696,6 @@ static inline struct page *f2fs_pagecache_get_page(
+@@ -2697,16 +2697,6 @@ static inline struct page *f2fs_pagecache_get_page(
  	return pagecache_get_page(mapping, index, fgp_flags, gfp_mask);
  }
  
@@ -2234,7 +2158,7 @@ index 5c9502988..873770483 100644
  {
  	if (!page)
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index fc0f30738..3ed1a1c0f 100644
+index ecd833ba3..dd2d291d1 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
 @@ -1278,7 +1278,7 @@ static int __clone_blkaddrs(struct inode *src_inode, struct inode *dst_inode,
@@ -2250,124 +2174,10 @@ index fc0f30738..3ed1a1c0f 100644
 2.37.1.377.g679aad9e82
 
 
-From f7de1b44136132abd96d7967f43b5b9de0bd8968 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>
-Date: Mon, 15 Aug 2022 08:39:31 -0300
-Subject: [PATCH 13/14] drm/amdgpu: Fix use-after-free on amdgpu_bo_list mutex
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-If amdgpu_cs_vm_handling returns r != 0, then it will unlock the
-bo_list_mutex inside the function amdgpu_cs_vm_handling and again on
-amdgpu_cs_parser_fini. This problem results in the following
-use-after-free problem:
-
-[ 220.280990] ------------[ cut here ]------------
-[ 220.281000] refcount_t: underflow; use-after-free.
-[ 220.281019] WARNING: CPU: 1 PID: 3746 at lib/refcount.c:28 refcount_warn_saturate+0xba/0x110
-[ 220.281029] ------------[ cut here ]------------
-[ 220.281415] CPU: 1 PID: 3746 Comm: chrome:cs0 Tainted: G W L ------- --- 5.20.0-0.rc0.20220812git7ebfc85e2cd7.10.fc38.x86_64 #1
-[ 220.281421] Hardware name: System manufacturer System Product Name/ROG STRIX X570-I GAMING, BIOS 4403 04/27/2022
-[ 220.281426] RIP: 0010:refcount_warn_saturate+0xba/0x110
-[ 220.281431] Code: 01 01 e8 79 4a 6f 00 0f 0b e9 42 47 a5 00 80 3d de
-7e be 01 00 75 85 48 c7 c7 f8 98 8e 98 c6 05 ce 7e be 01 01 e8 56 4a
-6f 00 <0f> 0b e9 1f 47 a5 00 80 3d b9 7e be 01 00 0f 85 5e ff ff ff 48
-c7
-[ 220.281437] RSP: 0018:ffffb4b0d18d7a80 EFLAGS: 00010282
-[ 220.281443] RAX: 0000000000000026 RBX: 0000000000000003 RCX: 0000000000000000
-[ 220.281448] RDX: 0000000000000001 RSI: ffffffff988d06dc RDI: 00000000ffffffff
-[ 220.281452] RBP: 00000000ffffffff R08: 0000000000000000 R09: ffffb4b0d18d7930
-[ 220.281457] R10: 0000000000000003 R11: ffffa0672e2fffe8 R12: ffffa058ca360400
-[ 220.281461] R13: ffffa05846c50a18 R14: 00000000fffffe00 R15: 0000000000000003
-[ 220.281465] FS: 00007f82683e06c0(0000) GS:ffffa066e2e00000(0000) knlGS:0000000000000000
-[ 220.281470] CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 220.281475] CR2: 00003590005cc000 CR3: 00000001fca46000 CR4: 0000000000350ee0
-[ 220.281480] Call Trace:
-[ 220.281485] <TASK>
-[ 220.281490] amdgpu_cs_ioctl+0x4e2/0x2070 [amdgpu]
-[ 220.281806] ? amdgpu_cs_find_mapping+0xe0/0xe0 [amdgpu]
-[ 220.282028] drm_ioctl_kernel+0xa4/0x150
-[ 220.282043] drm_ioctl+0x21f/0x420
-[ 220.282053] ? amdgpu_cs_find_mapping+0xe0/0xe0 [amdgpu]
-[ 220.282275] ? lock_release+0x14f/0x460
-[ 220.282282] ? _raw_spin_unlock_irqrestore+0x30/0x60
-[ 220.282290] ? _raw_spin_unlock_irqrestore+0x30/0x60
-[ 220.282297] ? lockdep_hardirqs_on+0x7d/0x100
-[ 220.282305] ? _raw_spin_unlock_irqrestore+0x40/0x60
-[ 220.282317] amdgpu_drm_ioctl+0x4a/0x80 [amdgpu]
-[ 220.282534] __x64_sys_ioctl+0x90/0xd0
-[ 220.282545] do_syscall_64+0x5b/0x80
-[ 220.282551] ? futex_wake+0x6c/0x150
-[ 220.282568] ? lock_is_held_type+0xe8/0x140
-[ 220.282580] ? do_syscall_64+0x67/0x80
-[ 220.282585] ? lockdep_hardirqs_on+0x7d/0x100
-[ 220.282592] ? do_syscall_64+0x67/0x80
-[ 220.282597] ? do_syscall_64+0x67/0x80
-[ 220.282602] ? lockdep_hardirqs_on+0x7d/0x100
-[ 220.282609] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[ 220.282616] RIP: 0033:0x7f8282a4f8bf
-[ 220.282639] Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10
-00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00
-0f 05 <89> c2 3d 00 f0 ff ff 77 18 48 8b 44 24 18 64 48 2b 04 25 28 00
-00
-[ 220.282644] RSP: 002b:00007f82683df410 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-[ 220.282651] RAX: ffffffffffffffda RBX: 00007f82683df588 RCX: 00007f8282a4f8bf
-[ 220.282655] RDX: 00007f82683df4d0 RSI: 00000000c0186444 RDI: 0000000000000018
-[ 220.282659] RBP: 00007f82683df4d0 R08: 00007f82683df5e0 R09: 00007f82683df4b0
-[ 220.282663] R10: 00001d04000a0600 R11: 0000000000000246 R12: 00000000c0186444
-[ 220.282667] R13: 0000000000000018 R14: 00007f82683df588 R15: 0000000000000003
-[ 220.282689] </TASK>
-[ 220.282693] irq event stamp: 6232311
-[ 220.282697] hardirqs last enabled at (6232319): [<ffffffff9718cd7e>] __up_console_sem+0x5e/0x70
-[ 220.282704] hardirqs last disabled at (6232326): [<ffffffff9718cd63>] __up_console_sem+0x43/0x70
-[ 220.282709] softirqs last enabled at (6232072): [<ffffffff970ff669>] __irq_exit_rcu+0xf9/0x170
-[ 220.282716] softirqs last disabled at (6232061): [<ffffffff970ff669>] __irq_exit_rcu+0xf9/0x170
-[ 220.282722] ---[ end trace 0000000000000000 ]---
-
-Therefore, remove the mutex_unlock from the amdgpu_cs_vm_handling
-function, so that amdgpu_cs_submit and amdgpu_cs_parser_fini can handle
-the unlock.
-
-Fixes: 90af0ca047f3 ("drm/amdgpu: Protect the amdgpu_bo_list list with a mutex v2")
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Maíra Canal <mairacanal@riseup.net>
-Reviewed-by: Christian König <christian.koenig@amd.com>
----
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index d8f1335bc..b7bae833c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -837,16 +837,12 @@ static int amdgpu_cs_vm_handling(struct amdgpu_cs_parser *p)
- 			continue;
- 
- 		r = amdgpu_vm_bo_update(adev, bo_va, false);
--		if (r) {
--			mutex_unlock(&p->bo_list->bo_list_mutex);
-+		if (r)
- 			return r;
--		}
- 
- 		r = amdgpu_sync_fence(&p->job->sync, bo_va->last_pt_update);
--		if (r) {
--			mutex_unlock(&p->bo_list->bo_list_mutex);
-+		if (r)
- 			return r;
--		}
- 	}
- 
- 	r = amdgpu_vm_handle_moved(adev, vm);
--- 
-2.37.1.377.g679aad9e82
-
-
-From 248abacc40dac25775d4502a95708a8af8dfc9a5 Mon Sep 17 00:00:00 2001
+From 4b3d40fde6227253be532c9ee37bfd09a0348241 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Sun, 14 Aug 2022 12:37:49 +0200
-Subject: [PATCH 14/14] x86/microcode/AMD: Attempt applying on every logical
+Subject: [PATCH 12/14] x86/microcode/AMD: Attempt applying on every logical
  thread
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2498,6 +2308,107 @@ index 8b2fcdfa6..a575dbb4d 100644
 -out:
  	uci->cpu_sig.rev = rev;
  	c->microcode	 = rev;
+ 
+-- 
+2.37.1.377.g679aad9e82
+
+
+From 961a2acaa581a95084ff352a3c0a7a41e234c958 Mon Sep 17 00:00:00 2001
+From: Josh Poimboeuf <jpoimboe@kernel.org>
+Date: Thu, 18 Aug 2022 08:53:42 -0700
+Subject: [PATCH 13/14] x86/kvm: Simplify FOP_SETCC()
+
+SETCC_ALIGN and FOP_ALIGN are both 16.  Remove the special casing for
+FOP_SETCC() and just make it a normal fastop.
+
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+---
+ arch/x86/kvm/emulate.c | 23 ++++-------------------
+ 1 file changed, 4 insertions(+), 19 deletions(-)
+
+diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
+index b1904f5ec..40b34758a 100644
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -444,27 +444,12 @@ static int fastop(struct x86_emulate_ctxt *ctxt, fastop_t fop);
+ 	FOP_END
+ 
+ /* Special case for SETcc - 1 instruction per cc */
+-
+-/*
+- * Depending on .config the SETcc functions look like:
+- *
+- * ENDBR			[4 bytes; CONFIG_X86_KERNEL_IBT]
+- * SETcc %al			[3 bytes]
+- * RET | JMP __x86_return_thunk	[1,5 bytes; CONFIG_RETHUNK]
+- * INT3				[1 byte; CONFIG_SLS]
+- */
+-#define SETCC_ALIGN	16
+-
+ #define FOP_SETCC(op) \
+-	".align " __stringify(SETCC_ALIGN) " \n\t" \
+-	".type " #op ", @function \n\t" \
+-	#op ": \n\t" \
+-	ASM_ENDBR \
++	FOP_FUNC(op) \
+ 	#op " %al \n\t" \
+-	__FOP_RET(#op) \
+-	".skip " __stringify(SETCC_ALIGN) " - (.-" #op "), 0xcc \n\t"
++	FOP_RET(op)
+ 
+-__FOP_START(setcc, SETCC_ALIGN)
++FOP_START(setcc)
+ FOP_SETCC(seto)
+ FOP_SETCC(setno)
+ FOP_SETCC(setc)
+@@ -1075,7 +1060,7 @@ static int em_bsr_c(struct x86_emulate_ctxt *ctxt)
+ static __always_inline u8 test_cc(unsigned int condition, unsigned long flags)
+ {
+ 	u8 rc;
+-	void (*fop)(void) = (void *)em_setcc + SETCC_ALIGN * (condition & 0xf);
++	void (*fop)(void) = (void *)em_setcc + FASTOP_SIZE * (condition & 0xf);
+ 
+ 	flags = (flags & EFLAGS_MASK) | X86_EFLAGS_IF;
+ 	asm("push %[flags]; popf; " CALL_NOSPEC
+-- 
+2.37.1.377.g679aad9e82
+
+
+From dd69b06ad0c02c07476e072895a162bfc2ebb197 Mon Sep 17 00:00:00 2001
+From: Josh Poimboeuf <jpoimboe@kernel.org>
+Date: Thu, 18 Aug 2022 09:26:57 -0700
+Subject: [PATCH 14/14] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
+
+This warning isn't very useful: why would you put ANNOTATE_NOENDBR on
+ENDBR, and if you did, what's the harm?
+
+And thus far it's only found one non-bug, where the
+'__end_entry_SYSENTER_compat' label happens to land on the ENDBR from
+entry_SYSCALL_compat:
+
+  vmlinux.o: warning: objtool: entry_SYSCALL_compat+0x0: ANNOTATE_NOENDBR on ENDBR
+
+.. which is fine.  Just remove the warning.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+---
+ tools/objtool/check.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 31c719f99..93f4444bb 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -2102,9 +2102,6 @@ static int read_noendbr_hints(struct objtool_file *file)
+ 			return -1;
+ 		}
+ 
+-		if (insn->type == INSN_ENDBR)
+-			WARN_FUNC("ANNOTATE_NOENDBR on ENDBR", insn->sec, insn->offset);
+-
+ 		insn->noendbr = 1;
+ 	}
  
 -- 
 2.37.1.377.g679aad9e82
