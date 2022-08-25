@@ -1,7 +1,7 @@
-From 384ffa88ed9e4050c50a0b1dbc6e915c8477e7cf Mon Sep 17 00:00:00 2001
+From 903982db69dda71d5ec8d9e264ac64022d3fd7d9 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 01/14] ZEN: mm: Lower the non-hugetlbpage pageblock size to
+Subject: [PATCH 01/16] ZEN: mm: Lower the non-hugetlbpage pageblock size to
  reduce scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -47,10 +47,10 @@ index 83c724805..d2b8741ea 100644
 2.37.1.377.g679aad9e82
 
 
-From 66cc86b9aaca3739ccff1085435d889665120dd9 Mon Sep 17 00:00:00 2001
+From 1e74bdc22e28e2730855924cd4269dcd4ab5de11 Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Wed, 25 May 2022 16:25:14 +0200
-Subject: [PATCH 02/14] ZEN: dm-crypt: Disable workqueues for crypto operations
+Subject: [PATCH 02/16] ZEN: dm-crypt: Disable workqueues for crypto operations
 
 Queueing in dm-crypt for crypto operations reduces performance on modern
 systems.  As discussed in an article from Cloudflare, they discovered
@@ -86,10 +86,10 @@ index 159c6806c..8b4e8f934 100644
 2.37.1.377.g679aad9e82
 
 
-From f9addc5c2af6bfa5e2ddb0c7d9a1105f9863db9f Mon Sep 17 00:00:00 2001
+From d236876cfff8e055e0738324974c1bfc93858820 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 03/14] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 03/16] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -129,10 +129,10 @@ index 09fa8a948..102187cda 100644
 2.37.1.377.g679aad9e82
 
 
-From a4af168f80926641bfa49318b227995588d20fa1 Mon Sep 17 00:00:00 2001
+From 80a02d559767e17652e95732831bfbcf9721fa5c Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 04/14] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 04/16] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -205,10 +205,10 @@ index 102187cda..b1904f5ec 100644
 2.37.1.377.g679aad9e82
 
 
-From 0e103672a19a488aac6846d4ddf98ddcc0e2f919 Mon Sep 17 00:00:00 2001
+From 82d68825684ea54d85832506201d5cf9db94920a Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Fri, 24 Jun 2022 16:14:12 +0200
-Subject: [PATCH 05/14] compiler-gcc.h: remove ancient workaround for gcc PR
+Subject: [PATCH 05/16] compiler-gcc.h: remove ancient workaround for gcc PR
  58670
 
 The workaround for 'asm goto' miscompilation introduces a compiler barrier
@@ -279,10 +279,10 @@ index a0c55eeae..9b157b710 100644
 2.37.1.377.g679aad9e82
 
 
-From fe424103086e217d1d7470b59c26bb86a3b7b662 Mon Sep 17 00:00:00 2001
+From f474130524ba65b61e2010cd56091ba7d7f7a493 Mon Sep 17 00:00:00 2001
 From: Chuanhong Guo <gch981213@gmail.com>
 Date: Tue, 12 Jul 2022 10:00:58 +0800
-Subject: [PATCH 06/14] ACPI: skip IRQ override on AMD Zen platforms
+Subject: [PATCH 06/16] ACPI: skip IRQ override on AMD Zen platforms
 
 IRQ override isn't needed on modern AMD Zen systems.
 There's an active low keyboard IRQ on AMD Ryzen 6000 and it will stay
@@ -326,10 +326,10 @@ index c2d494784..510cdec37 100644
 2.37.1.377.g679aad9e82
 
 
-From 7514c9577ca1d11768cf54bd106cafa4d7a5b82c Mon Sep 17 00:00:00 2001
+From eae38bb09c9a697b32aee5a2e731b367a65c11c9 Mon Sep 17 00:00:00 2001
 From: Yosry Ahmed <yosryahmed@google.com>
 Date: Thu, 14 Jul 2022 06:49:18 +0000
-Subject: [PATCH 07/14] mm: vmpressure: don't count proactive reclaim in
+Subject: [PATCH 07/16] mm: vmpressure: don't count proactive reclaim in
  vmpressure
 
 vmpressure is used in cgroup v1 to notify userspace of reclaim
@@ -550,10 +550,10 @@ index f7d9a683e..0969e6408 100644
 2.37.1.377.g679aad9e82
 
 
-From 30c6b4c58d47dc4cb00104e4d368de101519caf4 Mon Sep 17 00:00:00 2001
+From 673564abcc88371acd8526b4c3ca3bbd33a53fe9 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:23 -0500
-Subject: [PATCH 08/14] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 08/16] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -853,10 +853,10 @@ index 000000000..ae92aa559
 2.37.1.377.g679aad9e82
 
 
-From e39ead59298e3b8859bfa73553e26e60541fa1fb Mon Sep 17 00:00:00 2001
+From bb15321d34f173e5c6f14a1c63c2ed137bf39906 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:24 -0500
-Subject: [PATCH 09/14] leds: trigger: Add block device LED trigger
+Subject: [PATCH 09/16] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -2048,10 +2048,10 @@ index 000000000..999c48a7a
 2.37.1.377.g679aad9e82
 
 
-From ab30616bebea4ff7a411ba75ade5d5c0c10f27de Mon Sep 17 00:00:00 2001
+From eb35a92dbeb53375d7b21d49683e0114fadbf1ef Mon Sep 17 00:00:00 2001
 From: Philip Yang <Philip.Yang@amd.com>
 Date: Fri, 22 Jul 2022 15:07:00 -0400
-Subject: [PATCH 10/14] drm/amdgpu: Allow TTM to evict svm bo from same process
+Subject: [PATCH 10/16] drm/amdgpu: Allow TTM to evict svm bo from same process
 
 To support SVM range VRAM overcommitment, TTM should be able to evict
 svm bo of same process to system memory, to get space to alloc new svm
@@ -2098,10 +2098,10 @@ index 1d0dbff87..469785d33 100644
 2.37.1.377.g679aad9e82
 
 
-From df7b4e150cb324f2b5e44b5102b00bafbbf9eb75 Mon Sep 17 00:00:00 2001
+From 8aaa9b1d3619a7ff588e5e2fc545a3626f7bc2df Mon Sep 17 00:00:00 2001
 From: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
 Date: Sun, 17 Jul 2022 10:36:13 +0200
-Subject: [PATCH 11/14] f2fs: Delete f2fs_copy_page() and replace with
+Subject: [PATCH 11/16] f2fs: Delete f2fs_copy_page() and replace with
  memcpy_page()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2174,10 +2174,10 @@ index ecd833ba3..dd2d291d1 100644
 2.37.1.377.g679aad9e82
 
 
-From 4b3d40fde6227253be532c9ee37bfd09a0348241 Mon Sep 17 00:00:00 2001
+From 5253c48fadb15e92bbda0f5b06d27cb5b03eeb9b Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Sun, 14 Aug 2022 12:37:49 +0200
-Subject: [PATCH 12/14] x86/microcode/AMD: Attempt applying on every logical
+Subject: [PATCH 12/16] x86/microcode/AMD: Attempt applying on every logical
  thread
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2313,10 +2313,10 @@ index 8b2fcdfa6..a575dbb4d 100644
 2.37.1.377.g679aad9e82
 
 
-From 961a2acaa581a95084ff352a3c0a7a41e234c958 Mon Sep 17 00:00:00 2001
+From 90352aa537444bce2cfe29734c32c10988146b82 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 08:53:42 -0700
-Subject: [PATCH 13/14] x86/kvm: Simplify FOP_SETCC()
+Subject: [PATCH 13/16] x86/kvm: Simplify FOP_SETCC()
 
 SETCC_ALIGN and FOP_ALIGN are both 16.  Remove the special casing for
 FOP_SETCC() and just make it a normal fastop.
@@ -2374,10 +2374,10 @@ index b1904f5ec..40b34758a 100644
 2.37.1.377.g679aad9e82
 
 
-From dd69b06ad0c02c07476e072895a162bfc2ebb197 Mon Sep 17 00:00:00 2001
+From 816afb962142d205fb988d6665946c8cfe0b2afc Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 09:26:57 -0700
-Subject: [PATCH 14/14] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
+Subject: [PATCH 14/16] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
 
 This warning isn't very useful: why would you put ANNOTATE_NOENDBR on
 ENDBR, and if you did, what's the harm?
@@ -2410,6 +2410,213 @@ index 31c719f99..93f4444bb 100644
  		insn->noendbr = 1;
  	}
  
+-- 
+2.37.1.377.g679aad9e82
+
+
+From 42f48e572e993b75744bc1e29bd77dbbba105f6a Mon Sep 17 00:00:00 2001
+From: Tom Lendacky <thomas.lendacky@amd.com>
+Date: Tue, 23 Aug 2022 16:55:51 -0500
+Subject: [PATCH 15/16] x86/sev: Don't use cc_platform_has() for early SEV-SNP
+ calls
+
+When running identity-mapped and depending on the kernel configuration,
+it is possible that the compiler uses jump tables when generating code
+for cc_platform_has().
+
+This causes a boot failure because the jump table uses un-mapped kernel
+virtual addresses, not identity-mapped addresses. This has been seen
+with CONFIG_RETPOLINE=n.
+
+Similar to sme_encrypt_kernel(), use an open-coded direct check for the
+status of SNP rather than trying to eliminate the jump table. This
+preserves any code optimization in cc_platform_has() that can be useful
+post boot. It also limits the changes to SEV-specific files so that
+future compiler features won't necessarily require possible build changes
+just because they are not compatible with running identity-mapped.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 5e5ccff60a29 ("x86/sev: Add helper for validating pages in early enc attribute changes")
+Reported-by: Sean Christopherson <seanjc@google.com>
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Cc: <stable@vger.kernel.org> # 5.19.x
+Link: https://lore.kernel.org/all/YqfabnTRxFSM+LoX@google.com/
+---
+ arch/x86/kernel/sev.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/arch/x86/kernel/sev.c b/arch/x86/kernel/sev.c
+index 63dc62662..4f84c3f11 100644
+--- a/arch/x86/kernel/sev.c
++++ b/arch/x86/kernel/sev.c
+@@ -701,7 +701,13 @@ static void __init early_set_pages_state(unsigned long paddr, unsigned int npage
+ void __init early_snp_set_memory_private(unsigned long vaddr, unsigned long paddr,
+ 					 unsigned int npages)
+ {
+-	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
++	/*
++	 * This can be invoked in early boot while running identity mapped, so
++	 * use an open coded check for SNP instead of using cc_platform_has().
++	 * This eliminates worries about jump tables or checking boot_cpu_data
++	 * in the cc_platform_has() function.
++	 */
++	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
+ 		return;
+ 
+ 	 /*
+@@ -717,7 +723,13 @@ void __init early_snp_set_memory_private(unsigned long vaddr, unsigned long padd
+ void __init early_snp_set_memory_shared(unsigned long vaddr, unsigned long paddr,
+ 					unsigned int npages)
+ {
+-	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
++	/*
++	 * This can be invoked in early boot while running identity mapped, so
++	 * use an open coded check for SNP instead of using cc_platform_has().
++	 * This eliminates worries about jump tables or checking boot_cpu_data
++	 * in the cc_platform_has() function.
++	 */
++	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
+ 		return;
+ 
+ 	/* Invalidate the memory pages before they are marked shared in the RMP table. */
+-- 
+2.37.1.377.g679aad9e82
+
+
+From b634d64185979d07dcaa144fbe846f0ca4916041 Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3@huawei.com>
+Date: Wed, 3 Aug 2022 20:15:04 +0800
+Subject: [PATCH 16/16] sbitmap: fix possible io hung due to lost wakeup
+
+There are two problems can lead to lost wakeup:
+
+1) invalid wakeup on the wrong waitqueue:
+
+For example, 2 * wake_batch tags are put, while only wake_batch threads
+are woken:
+
+__sbq_wake_up
+ atomic_cmpxchg -> reset wait_cnt
+			__sbq_wake_up -> decrease wait_cnt
+			...
+			__sbq_wake_up -> wait_cnt is decreased to 0 again
+			 atomic_cmpxchg
+			 sbq_index_atomic_inc -> increase wake_index
+			 wake_up_nr -> wake up and waitqueue might be empty
+ sbq_index_atomic_inc -> increase again, one waitqueue is skipped
+ wake_up_nr -> invalid wake up because old wakequeue might be empty
+
+To fix the problem, increasing 'wake_index' before resetting 'wait_cnt'.
+
+2) 'wait_cnt' can be decreased while waitqueue is empty
+
+As pointed out by Jan Kara, following race is possible:
+
+CPU1				CPU2
+__sbq_wake_up			 __sbq_wake_up
+ sbq_wake_ptr()			 sbq_wake_ptr() -> the same
+ wait_cnt = atomic_dec_return()
+ /* decreased to 0 */
+ sbq_index_atomic_inc()
+ /* move to next waitqueue */
+ atomic_set()
+ /* reset wait_cnt */
+ wake_up_nr()
+ /* wake up on the old waitqueue */
+				 wait_cnt = atomic_dec_return()
+				 /*
+				  * decrease wait_cnt in the old
+				  * waitqueue, while it can be
+				  * empty.
+				  */
+
+Fix the problem by waking up before updating 'wake_index' and
+'wait_cnt'.
+
+With this patch, noted that 'wait_cnt' is still decreased in the old
+empty waitqueue, however, the wakeup is redirected to a active waitqueue,
+and the extra decrement on the old empty waitqueue is not handled.
+
+Fixes: 88459642cba4 ("blk-mq: abstract tag allocation out into sbitmap library")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+---
+ lib/sbitmap.c | 55 ++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 33 insertions(+), 22 deletions(-)
+
+diff --git a/lib/sbitmap.c b/lib/sbitmap.c
+index 29eb04842..1f3114787 100644
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -611,32 +611,43 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
+ 		return false;
+ 
+ 	wait_cnt = atomic_dec_return(&ws->wait_cnt);
+-	if (wait_cnt <= 0) {
+-		int ret;
++	/*
++	 * For concurrent callers of this, callers should call this function
++	 * again to wakeup a new batch on a different 'ws'.
++	 */
++	if (wait_cnt < 0 || !waitqueue_active(&ws->wait))
++		return true;
+ 
+-		wake_batch = READ_ONCE(sbq->wake_batch);
++	if (wait_cnt > 0)
++		return false;
+ 
+-		/*
+-		 * Pairs with the memory barrier in sbitmap_queue_resize() to
+-		 * ensure that we see the batch size update before the wait
+-		 * count is reset.
+-		 */
+-		smp_mb__before_atomic();
++	wake_batch = READ_ONCE(sbq->wake_batch);
+ 
+-		/*
+-		 * For concurrent callers of this, the one that failed the
+-		 * atomic_cmpxhcg() race should call this function again
+-		 * to wakeup a new batch on a different 'ws'.
+-		 */
+-		ret = atomic_cmpxchg(&ws->wait_cnt, wait_cnt, wake_batch);
+-		if (ret == wait_cnt) {
+-			sbq_index_atomic_inc(&sbq->wake_index);
+-			wake_up_nr(&ws->wait, wake_batch);
+-			return false;
+-		}
++	/*
++	 * Wake up first in case that concurrent callers decrease wait_cnt
++	 * while waitqueue is empty.
++	 */
++	wake_up_nr(&ws->wait, wake_batch);
+ 
+-		return true;
+-	}
++	/*
++	 * Pairs with the memory barrier in sbitmap_queue_resize() to
++	 * ensure that we see the batch size update before the wait
++	 * count is reset.
++	 *
++	 * Also pairs with the implicit barrier between decrementing wait_cnt
++	 * and checking for waitqueue_active() to make sure waitqueue_active()
++	 * sees result of the wakeup if atomic_dec_return() has seen the result
++	 * of atomic_set().
++	 */
++	smp_mb__before_atomic();
++
++	/*
++	 * Increase wake_index before updating wait_cnt, otherwise concurrent
++	 * callers can see valid wait_cnt in old waitqueue, which can cause
++	 * invalid wakeup on the old waitqueue.
++	 */
++	sbq_index_atomic_inc(&sbq->wake_index);
++	atomic_set(&ws->wait_cnt, wake_batch);
+ 
+ 	return false;
+ }
 -- 
 2.37.1.377.g679aad9e82
 

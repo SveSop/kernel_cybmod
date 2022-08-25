@@ -1,16 +1,16 @@
-From 73c5d8b214a2b7d60b9324921348c13acf8d5649 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Sun, 21 Aug 2022 14:42:39 +0000
+From 9c698136ddc598c38a72f8789eec9ff1ae0f5e5c Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 25 Aug 2022 11:21:29 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.19.0-15.15)
 
 ---
- debian.master/config/annotations              |  5 +++--
+ debian.master/config/annotations              |  9 ++++-----
  .../config/arm64/config.flavour.generic       |  2 +-
- debian.master/config/config.common.ubuntu     | 21 +++----------------
- 3 files changed, 7 insertions(+), 21 deletions(-)
+ debian.master/config/config.common.ubuntu     | 20 ++-----------------
+ 3 files changed, 7 insertions(+), 24 deletions(-)
 
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index c4b48078e2bf..701c98ed2f6d 100644
+index 6d3b9b25eef8..701c98ed2f6d 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
 @@ -80,7 +80,7 @@ CONFIG_CRYPTO_SHA1_ARM_CE                       policy<{'armhf': 'm'}>
@@ -32,6 +32,17 @@ index c4b48078e2bf..701c98ed2f6d 100644
  CONFIG_CRYPTO_CRCT10DIF                         policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 'riscv64': 'y', 's390x': 'y'}>
  CONFIG_CRYPTO_CRCT10DIF_PCLMUL                  policy<{'amd64': 'm'}>
  CONFIG_CRYPTO_CRCT10DIF_VPMSUM                  policy<{'ppc64el': 'm'}>
+@@ -6529,9 +6530,7 @@ CONFIG_ISM                                      mark<ENFORCED> note<LP: #1789934
+ CONFIG_QETH                                     policy<{'s390x': 'm'}>
+ CONFIG_QETH_L2                                  policy<{'s390x': 'm'}>
+ CONFIG_QETH_L3                                  policy<{'s390x': 'm'}>
+-CONFIG_QETH_OSX                                 policy<{'s390x': 'n'}>
+-#
+-CONFIG_QETH_OSX                                 mark<ENFORCED> note<LP: #1959890>
++CONFIG_QETH_OSX                                 policy<{'s390x': 'y'}>
+ 
+ # Menu: Device Drivers >> Network device support >> SLIP (serial line) support
+ CONFIG_SLIP                                     policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm', 's390x': 'n'}>
 diff --git a/debian.master/config/arm64/config.flavour.generic b/debian.master/config/arm64/config.flavour.generic
 index d6e3ffa1d269..b7e35f458cc2 100644
 --- a/debian.master/config/arm64/config.flavour.generic
@@ -44,7 +55,7 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index cd9369f51790..681d7f008edd 100644
+index b5468a28802d..fd15dc147b1b 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -316,10 +316,7 @@ CONFIG_AMD_XGBE_HAVE_ECC=y
@@ -59,15 +70,6 @@ index cd9369f51790..681d7f008edd 100644
  CONFIG_ANON_VMA_NAME=y
  CONFIG_APDS9300=m
  CONFIG_APDS9960=m
-@@ -929,7 +926,7 @@ CONFIG_AS_IS_GNU=y
- CONFIG_AS_SHA1_NI=y
- CONFIG_AS_SHA256_NI=y
- CONFIG_AS_TPAUSE=y
--CONFIG_AS_VERSION=23890
-+CONFIG_AS_VERSION=23900
- CONFIG_AS_VFP_VMRS_FPINST=y
- CONFIG_AT76C50X_USB=m
- CONFIG_AT803X_PHY=m
 @@ -2777,7 +2774,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
@@ -84,12 +86,9 @@ index cd9369f51790..681d7f008edd 100644
  CONFIG_GPIO_ACPI=y
  CONFIG_GPIO_ADNP=m
  CONFIG_GPIO_ADP5520=m
-@@ -5841,9 +5836,8 @@ CONFIG_LDISC_AUTOLOAD=y
- # CONFIG_LD_HEAD_STUB_CATCH is not set
- CONFIG_LD_IS_BFD=y
+@@ -5843,7 +5838,6 @@ CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
--CONFIG_LD_VERSION=23890
-+CONFIG_LD_VERSION=23900
+ CONFIG_LD_VERSION=23900
  CONFIG_LEDS_88PM860X=m
 -CONFIG_LEDS_AAEON=m
  CONFIG_LEDS_AAT1290=m
@@ -111,6 +110,15 @@ index cd9369f51790..681d7f008edd 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
+@@ -8783,7 +8775,7 @@ CONFIG_QED_SRIOV=y
+ CONFIG_QETH=m
+ CONFIG_QETH_L2=m
+ CONFIG_QETH_L3=m
+-# CONFIG_QETH_OSX is not set
++CONFIG_QETH_OSX=y
+ CONFIG_QE_GPIO=y
+ CONFIG_QE_TDM=y
+ CONFIG_QE_USB=y
 @@ -9701,7 +9693,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
@@ -153,6 +161,14 @@ index cd9369f51790..681d7f008edd 100644
  CONFIG_VETH=m
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
+@@ -12831,7 +12816,6 @@ CONFIG_VIRTIO_BLK=m
+ CONFIG_VIRTIO_CONSOLE=y
+ CONFIG_VIRTIO_DMA_SHARED_BUFFER=m
+ CONFIG_VIRTIO_FS=m
+-# CONFIG_VIRTIO_HARDEN_NOTIFICATION is not set
+ CONFIG_VIRTIO_INPUT=m
+ CONFIG_VIRTIO_IOMMU=y
+ CONFIG_VIRTIO_MEM=m
 -- 
 2.37.2
 
