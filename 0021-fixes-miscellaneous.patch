@@ -1,4 +1,4 @@
-From 903982db69dda71d5ec8d9e264ac64022d3fd7d9 Mon Sep 17 00:00:00 2001
+From e068e37b542ffec620d3ea6b7e557d30990f9846 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
 Subject: [PATCH 01/16] ZEN: mm: Lower the non-hugetlbpage pageblock size to
@@ -31,7 +31,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/pageblock-flags.h b/include/linux/pageblock-flags.h
-index 83c724805..d2b8741ea 100644
+index 83c7248..d2b8741 100644
 --- a/include/linux/pageblock-flags.h
 +++ b/include/linux/pageblock-flags.h
 @@ -48,7 +48,7 @@ extern unsigned int pageblock_order;
@@ -47,7 +47,7 @@ index 83c724805..d2b8741ea 100644
 2.37.1.377.g679aad9e82
 
 
-From 1e74bdc22e28e2730855924cd4269dcd4ab5de11 Mon Sep 17 00:00:00 2001
+From 3e362485658d93b70bd8e07a2c61d4dcd20119c6 Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Wed, 25 May 2022 16:25:14 +0200
 Subject: [PATCH 02/16] ZEN: dm-crypt: Disable workqueues for crypto operations
@@ -69,7 +69,7 @@ Fixes: https://github.com/zen-kernel/zen-kernel/issues/282
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/md/dm-crypt.c b/drivers/md/dm-crypt.c
-index 159c6806c..8b4e8f934 100644
+index 159c680..8b4e8f9 100644
 --- a/drivers/md/dm-crypt.c
 +++ b/drivers/md/dm-crypt.c
 @@ -3137,6 +3137,9 @@ static int crypt_ctr_optional(struct dm_target *ti, unsigned int argc, char **ar
@@ -86,7 +86,7 @@ index 159c6806c..8b4e8f934 100644
 2.37.1.377.g679aad9e82
 
 
-From d236876cfff8e055e0738324974c1bfc93858820 Mon Sep 17 00:00:00 2001
+From 590386f3f0a82cc742cb3f3557fcc00244fe8dc8 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
 Subject: [PATCH 03/16] KVM: x86: Grab regs_dirty in local 'unsigned long'
@@ -110,7 +110,7 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index 09fa8a948..102187cda 100644
+index 09fa8a9..102187c 100644
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
 @@ -266,9 +266,10 @@ static ulong *reg_rmw(struct x86_emulate_ctxt *ctxt, unsigned nr)
@@ -129,7 +129,7 @@ index 09fa8a948..102187cda 100644
 2.37.1.377.g679aad9e82
 
 
-From 80a02d559767e17652e95732831bfbcf9721fa5c Mon Sep 17 00:00:00 2001
+From 223880d3c55354a1fa54c65003c71c928eb67235 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
 Subject: [PATCH 04/16] KVM: x86: Harden _regs accesses to guard against buggy
@@ -178,7 +178,7 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index 102187cda..b1904f5ec 100644
+index 102187c..b1904f5 100644
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
 @@ -244,6 +244,9 @@ enum x86_transfer_type {
@@ -205,7 +205,7 @@ index 102187cda..b1904f5ec 100644
 2.37.1.377.g679aad9e82
 
 
-From 82d68825684ea54d85832506201d5cf9db94920a Mon Sep 17 00:00:00 2001
+From 27d962322c86864d799cdac17fbff2c06f4d0d8e Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Fri, 24 Jun 2022 16:14:12 +0200
 Subject: [PATCH 05/16] compiler-gcc.h: remove ancient workaround for gcc PR
@@ -254,7 +254,7 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
  1 file changed, 11 deletions(-)
 
 diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
-index a0c55eeae..9b157b710 100644
+index a0c55ee..9b157b7 100644
 --- a/include/linux/compiler-gcc.h
 +++ b/include/linux/compiler-gcc.h
 @@ -66,17 +66,6 @@
@@ -279,7 +279,7 @@ index a0c55eeae..9b157b710 100644
 2.37.1.377.g679aad9e82
 
 
-From f474130524ba65b61e2010cd56091ba7d7f7a493 Mon Sep 17 00:00:00 2001
+From 9b3e0aa6a9500a80afd015fa56128c6c3796a1d1 Mon Sep 17 00:00:00 2001
 From: Chuanhong Guo <gch981213@gmail.com>
 Date: Tue, 12 Jul 2022 10:00:58 +0800
 Subject: [PATCH 06/16] ACPI: skip IRQ override on AMD Zen platforms
@@ -302,7 +302,7 @@ Signed-off-by: Chuanhong Guo <gch981213@gmail.com>
  1 file changed, 10 insertions(+)
 
 diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index c2d494784..510cdec37 100644
+index c2d4947..510cdec 100644
 --- a/drivers/acpi/resource.c
 +++ b/drivers/acpi/resource.c
 @@ -416,6 +416,16 @@ static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
@@ -326,7 +326,7 @@ index c2d494784..510cdec37 100644
 2.37.1.377.g679aad9e82
 
 
-From eae38bb09c9a697b32aee5a2e731b367a65c11c9 Mon Sep 17 00:00:00 2001
+From 7bf21341a7872776cf6638309e1d1f1da6c88668 Mon Sep 17 00:00:00 2001
 From: Yosry Ahmed <yosryahmed@google.com>
 Date: Thu, 14 Jul 2022 06:49:18 +0000
 Subject: [PATCH 07/16] mm: vmpressure: don't count proactive reclaim in
@@ -350,7 +350,7 @@ Acked-by: Shakeel Butt <shakeelb@google.com>
  3 files changed, 35 insertions(+), 21 deletions(-)
 
 diff --git a/include/linux/swap.h b/include/linux/swap.h
-index 0c0fed1b3..f6e9eaa23 100644
+index 0c0fed1..f6e9eaa 100644
 --- a/include/linux/swap.h
 +++ b/include/linux/swap.h
 @@ -411,10 +411,13 @@ extern void lru_cache_add_inactive_or_unevictable(struct page *page,
@@ -369,7 +369,7 @@ index 0c0fed1b3..f6e9eaa23 100644
  						gfp_t gfp_mask, bool noswap,
  						pg_data_t *pgdat,
 diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 618c366a2..504c01c34 100644
+index 618c366..504c01c 100644
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
 @@ -2331,7 +2331,8 @@ static unsigned long reclaim_high(struct mem_cgroup *memcg,
@@ -474,7 +474,7 @@ index 618c366a2..504c01c34 100644
  		if (!reclaimed && !nr_retries--)
  			return -EAGAIN;
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index f7d9a683e..0969e6408 100644
+index f7d9a68..0969e64 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -102,6 +102,9 @@ struct scan_control {
@@ -550,7 +550,7 @@ index f7d9a683e..0969e6408 100644
 2.37.1.377.g679aad9e82
 
 
-From 673564abcc88371acd8526b4c3ca3bbd33a53fe9 Mon Sep 17 00:00:00 2001
+From 83c8273e636223314107e9ecf47e90977716aee8 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:23 -0500
 Subject: [PATCH 08/16] docs: Add block device (blkdev) LED trigger
@@ -582,7 +582,7 @@ Signed-off-by: Ian Pilcher <arequipeno@gmail.com>
  create mode 100644 Documentation/leds/ledtrig-blkdev.rst
 
 diff --git a/Documentation/ABI/stable/sysfs-block b/Documentation/ABI/stable/sysfs-block
-index e8797cd09..289c2447f 100644
+index e8797cd..289c244 100644
 --- a/Documentation/ABI/stable/sysfs-block
 +++ b/Documentation/ABI/stable/sysfs-block
 @@ -101,6 +101,16 @@ Description:
@@ -604,7 +604,7 @@ index e8797cd09..289c2447f 100644
  Contact:	Martin K. Petersen <martin.petersen@oracle.com>
 diff --git a/Documentation/ABI/testing/sysfs-class-led-trigger-blkdev b/Documentation/ABI/testing/sysfs-class-led-trigger-blkdev
 new file mode 100644
-index 000000000..9214439b0
+index 0000000..9214439
 --- /dev/null
 +++ b/Documentation/ABI/testing/sysfs-class-led-trigger-blkdev
 @@ -0,0 +1,68 @@
@@ -677,7 +677,7 @@ index 000000000..9214439b0
 +		may not match the device special file paths written to
 +		link_device and unlink_device.)
 diff --git a/Documentation/leds/index.rst b/Documentation/leds/index.rst
-index e5d63b940..e3c24e468 100644
+index e5d63b9..e3c24e4 100644
 --- a/Documentation/leds/index.rst
 +++ b/Documentation/leds/index.rst
 @@ -10,6 +10,7 @@ LEDs
@@ -690,7 +690,7 @@ index e5d63b940..e3c24e468 100644
     ledtrig-usbport
 diff --git a/Documentation/leds/ledtrig-blkdev.rst b/Documentation/leds/ledtrig-blkdev.rst
 new file mode 100644
-index 000000000..ae92aa559
+index 0000000..ae92aa5
 --- /dev/null
 +++ b/Documentation/leds/ledtrig-blkdev.rst
 @@ -0,0 +1,155 @@
@@ -853,7 +853,7 @@ index 000000000..ae92aa559
 2.37.1.377.g679aad9e82
 
 
-From bb15321d34f173e5c6f14a1c63c2ed137bf39906 Mon Sep 17 00:00:00 2001
+From 3e6331f0894e1bfd059fb354ce17067d1906c1f0 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:24 -0500
 Subject: [PATCH 09/16] leds: trigger: Add block device LED trigger
@@ -873,7 +873,7 @@ Signed-off-by: Ian Pilcher <arequipeno@gmail.com>
  create mode 100644 drivers/leds/trigger/ledtrig-blkdev.c
 
 diff --git a/drivers/leds/trigger/Kconfig b/drivers/leds/trigger/Kconfig
-index dc6816d36..bda249068 100644
+index dc6816d..bda2490 100644
 --- a/drivers/leds/trigger/Kconfig
 +++ b/drivers/leds/trigger/Kconfig
 @@ -154,4 +154,13 @@ config LEDS_TRIGGER_TTY
@@ -891,7 +891,7 @@ index dc6816d36..bda249068 100644
 +
  endif # LEDS_TRIGGERS
 diff --git a/drivers/leds/trigger/Makefile b/drivers/leds/trigger/Makefile
-index 25c4db97c..d53bab5d9 100644
+index 25c4db9..d53bab5 100644
 --- a/drivers/leds/trigger/Makefile
 +++ b/drivers/leds/trigger/Makefile
 @@ -16,3 +16,4 @@ obj-$(CONFIG_LEDS_TRIGGER_NETDEV)	+= ledtrig-netdev.o
@@ -901,7 +901,7 @@ index 25c4db97c..d53bab5d9 100644
 +obj-$(CONFIG_LEDS_TRIGGER_BLKDEV)	+= ledtrig-blkdev.o
 diff --git a/drivers/leds/trigger/ledtrig-blkdev.c b/drivers/leds/trigger/ledtrig-blkdev.c
 new file mode 100644
-index 000000000..999c48a7a
+index 0000000..999c48a
 --- /dev/null
 +++ b/drivers/leds/trigger/ledtrig-blkdev.c
 @@ -0,0 +1,1139 @@
@@ -2048,7 +2048,7 @@ index 000000000..999c48a7a
 2.37.1.377.g679aad9e82
 
 
-From eb35a92dbeb53375d7b21d49683e0114fadbf1ef Mon Sep 17 00:00:00 2001
+From cdff9f9c73288a01a21da260bcf7e31e0721bc98 Mon Sep 17 00:00:00 2001
 From: Philip Yang <Philip.Yang@amd.com>
 Date: Fri, 22 Jul 2022 15:07:00 -0400
 Subject: [PATCH 10/16] drm/amdgpu: Allow TTM to evict svm bo from same process
@@ -2065,7 +2065,7 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
  1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-index 1d0dbff87..469785d33 100644
+index 1d0dbff..469785d 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
 @@ -159,11 +159,14 @@ static void amdkfd_fence_release(struct dma_fence *f)
@@ -2098,7 +2098,7 @@ index 1d0dbff87..469785d33 100644
 2.37.1.377.g679aad9e82
 
 
-From 8aaa9b1d3619a7ff588e5e2fc545a3626f7bc2df Mon Sep 17 00:00:00 2001
+From 0a1c570e422cd5dc37e7033d8f66c8cf4bce092c Mon Sep 17 00:00:00 2001
 From: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
 Date: Sun, 17 Jul 2022 10:36:13 +0200
 Subject: [PATCH 11/16] f2fs: Delete f2fs_copy_page() and replace with
@@ -2137,7 +2137,7 @@ Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
  2 files changed, 1 insertion(+), 11 deletions(-)
 
 diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 7006fa7dd..357c4b955 100644
+index 7006fa7..357c4b9 100644
 --- a/fs/f2fs/f2fs.h
 +++ b/fs/f2fs/f2fs.h
 @@ -2697,16 +2697,6 @@ static inline struct page *f2fs_pagecache_get_page(
@@ -2158,7 +2158,7 @@ index 7006fa7dd..357c4b955 100644
  {
  	if (!page)
 diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index ecd833ba3..dd2d291d1 100644
+index ecd833b..dd2d291 100644
 --- a/fs/f2fs/file.c
 +++ b/fs/f2fs/file.c
 @@ -1278,7 +1278,7 @@ static int __clone_blkaddrs(struct inode *src_inode, struct inode *dst_inode,
@@ -2174,7 +2174,7 @@ index ecd833ba3..dd2d291d1 100644
 2.37.1.377.g679aad9e82
 
 
-From 5253c48fadb15e92bbda0f5b06d27cb5b03eeb9b Mon Sep 17 00:00:00 2001
+From 651645da502d12288567b4c16da9462ddc28d529 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Sun, 14 Aug 2022 12:37:49 +0200
 Subject: [PATCH 12/16] x86/microcode/AMD: Attempt applying on every logical
@@ -2203,7 +2203,7 @@ Link: https://bugzilla.kernel.org/show_bug.cgi?id=216211
  1 file changed, 9 insertions(+), 30 deletions(-)
 
 diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
-index 8b2fcdfa6..a575dbb4d 100644
+index 8b2fcdf..a575dbb 100644
 --- a/arch/x86/kernel/cpu/microcode/amd.c
 +++ b/arch/x86/kernel/cpu/microcode/amd.c
 @@ -420,8 +420,8 @@ apply_microcode_early_amd(u32 cpuid_1_eax, void *ucode, size_t size, bool save_p
@@ -2313,7 +2313,7 @@ index 8b2fcdfa6..a575dbb4d 100644
 2.37.1.377.g679aad9e82
 
 
-From 90352aa537444bce2cfe29734c32c10988146b82 Mon Sep 17 00:00:00 2001
+From d6a23c79f195e1b2550984f082a5055cce919178 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 08:53:42 -0700
 Subject: [PATCH 13/16] x86/kvm: Simplify FOP_SETCC()
@@ -2327,7 +2327,7 @@ Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
  1 file changed, 4 insertions(+), 19 deletions(-)
 
 diff --git a/arch/x86/kvm/emulate.c b/arch/x86/kvm/emulate.c
-index b1904f5ec..40b34758a 100644
+index b1904f5..40b3475 100644
 --- a/arch/x86/kvm/emulate.c
 +++ b/arch/x86/kvm/emulate.c
 @@ -444,27 +444,12 @@ static int fastop(struct x86_emulate_ctxt *ctxt, fastop_t fop);
@@ -2374,7 +2374,7 @@ index b1904f5ec..40b34758a 100644
 2.37.1.377.g679aad9e82
 
 
-From 816afb962142d205fb988d6665946c8cfe0b2afc Mon Sep 17 00:00:00 2001
+From 726e5186b528b67719f3d17ee1a8649fb55d2956 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 09:26:57 -0700
 Subject: [PATCH 14/16] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
@@ -2397,7 +2397,7 @@ Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
  1 file changed, 3 deletions(-)
 
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 31c719f99..93f4444bb 100644
+index 31c719f..93f4444 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
 @@ -2102,9 +2102,6 @@ static int read_noendbr_hints(struct objtool_file *file)
@@ -2414,82 +2414,10 @@ index 31c719f99..93f4444bb 100644
 2.37.1.377.g679aad9e82
 
 
-From 42f48e572e993b75744bc1e29bd77dbbba105f6a Mon Sep 17 00:00:00 2001
-From: Tom Lendacky <thomas.lendacky@amd.com>
-Date: Tue, 23 Aug 2022 16:55:51 -0500
-Subject: [PATCH 15/16] x86/sev: Don't use cc_platform_has() for early SEV-SNP
- calls
-
-When running identity-mapped and depending on the kernel configuration,
-it is possible that the compiler uses jump tables when generating code
-for cc_platform_has().
-
-This causes a boot failure because the jump table uses un-mapped kernel
-virtual addresses, not identity-mapped addresses. This has been seen
-with CONFIG_RETPOLINE=n.
-
-Similar to sme_encrypt_kernel(), use an open-coded direct check for the
-status of SNP rather than trying to eliminate the jump table. This
-preserves any code optimization in cc_platform_has() that can be useful
-post boot. It also limits the changes to SEV-specific files so that
-future compiler features won't necessarily require possible build changes
-just because they are not compatible with running identity-mapped.
-
-  [ bp: Massage commit message. ]
-
-Fixes: 5e5ccff60a29 ("x86/sev: Add helper for validating pages in early enc attribute changes")
-Reported-by: Sean Christopherson <seanjc@google.com>
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Cc: <stable@vger.kernel.org> # 5.19.x
-Link: https://lore.kernel.org/all/YqfabnTRxFSM+LoX@google.com/
----
- arch/x86/kernel/sev.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/arch/x86/kernel/sev.c b/arch/x86/kernel/sev.c
-index 63dc62662..4f84c3f11 100644
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -701,7 +701,13 @@ static void __init early_set_pages_state(unsigned long paddr, unsigned int npage
- void __init early_snp_set_memory_private(unsigned long vaddr, unsigned long paddr,
- 					 unsigned int npages)
- {
--	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
-+	/*
-+	 * This can be invoked in early boot while running identity mapped, so
-+	 * use an open coded check for SNP instead of using cc_platform_has().
-+	 * This eliminates worries about jump tables or checking boot_cpu_data
-+	 * in the cc_platform_has() function.
-+	 */
-+	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
- 		return;
- 
- 	 /*
-@@ -717,7 +723,13 @@ void __init early_snp_set_memory_private(unsigned long vaddr, unsigned long padd
- void __init early_snp_set_memory_shared(unsigned long vaddr, unsigned long paddr,
- 					unsigned int npages)
- {
--	if (!cc_platform_has(CC_ATTR_GUEST_SEV_SNP))
-+	/*
-+	 * This can be invoked in early boot while running identity mapped, so
-+	 * use an open coded check for SNP instead of using cc_platform_has().
-+	 * This eliminates worries about jump tables or checking boot_cpu_data
-+	 * in the cc_platform_has() function.
-+	 */
-+	if (!(sev_status & MSR_AMD64_SEV_SNP_ENABLED))
- 		return;
- 
- 	/* Invalidate the memory pages before they are marked shared in the RMP table. */
--- 
-2.37.1.377.g679aad9e82
-
-
-From b634d64185979d07dcaa144fbe846f0ca4916041 Mon Sep 17 00:00:00 2001
+From 13a006e7337b03ae51ff580b3b38a7eeffab1d73 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 3 Aug 2022 20:15:04 +0800
-Subject: [PATCH 16/16] sbitmap: fix possible io hung due to lost wakeup
+Subject: [PATCH 15/16] sbitmap: fix possible io hung due to lost wakeup
 
 There are two problems can lead to lost wakeup:
 
@@ -2548,7 +2476,7 @@ Reviewed-by: Jan Kara <jack@suse.cz>
  1 file changed, 33 insertions(+), 22 deletions(-)
 
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 29eb04842..1f3114787 100644
+index 29eb048..1f31147 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
 @@ -611,32 +611,43 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
@@ -2617,6 +2545,117 @@ index 29eb04842..1f3114787 100644
  
  	return false;
  }
+-- 
+2.37.1.377.g679aad9e82
+
+
+From 83d2ca7126642fd5861b0d6cd4eb29397672da01 Mon Sep 17 00:00:00 2001
+From: Borislav Petkov <bp@suse.de>
+Date: Wed, 24 Aug 2022 17:13:26 +0200
+Subject: [PATCH 16/16] x86/sev: Mark snp_abort() noreturn
+
+Mark both the function prototype and definition as noreturn in order to
+prevent the compiler from doing transformations which confuse objtool
+like so:
+
+  vmlinux.o: warning: objtool: sme_enable+0x71: unreachable instruction
+
+This triggers with gcc-12.
+
+Add it and sev_es_terminate() to the objtool noreturn tracking array
+too. Sort it while at it.
+
+Suggested-by: Michael Matz <matz@suse.de>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Acked-by: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220824152420.20547-1-bp@alien8.de
+---
+ arch/x86/include/asm/sev.h |  2 +-
+ arch/x86/kernel/sev.c      |  2 +-
+ tools/objtool/check.c      | 34 ++++++++++++++++++----------------
+ 3 files changed, 20 insertions(+), 18 deletions(-)
+
+diff --git a/arch/x86/include/asm/sev.h b/arch/x86/include/asm/sev.h
+index 4a23e52..ebc271b 100644
+--- a/arch/x86/include/asm/sev.h
++++ b/arch/x86/include/asm/sev.h
+@@ -195,7 +195,7 @@ void snp_set_memory_shared(unsigned long vaddr, unsigned int npages);
+ void snp_set_memory_private(unsigned long vaddr, unsigned int npages);
+ void snp_set_wakeup_secondary_cpu(void);
+ bool snp_init(struct boot_params *bp);
+-void snp_abort(void);
++void __init __noreturn snp_abort(void);
+ int snp_issue_guest_request(u64 exit_code, struct snp_req_data *input, unsigned long *fw_err);
+ #else
+ static inline void sev_es_ist_enter(struct pt_regs *regs) { }
+diff --git a/arch/x86/kernel/sev.c b/arch/x86/kernel/sev.c
+index 4f84c3f..a428c62 100644
+--- a/arch/x86/kernel/sev.c
++++ b/arch/x86/kernel/sev.c
+@@ -2112,7 +2112,7 @@ bool __init snp_init(struct boot_params *bp)
+ 	return true;
+ }
+ 
+-void __init snp_abort(void)
++void __init __noreturn snp_abort(void)
+ {
+ 	sev_es_terminate(SEV_TERM_SET_GEN, GHCB_SNP_UNSUPPORTED);
+ }
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 93f4444..beec8cf 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -162,32 +162,34 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
+ 
+ 	/*
+ 	 * Unfortunately these have to be hard coded because the noreturn
+-	 * attribute isn't provided in ELF data.
++	 * attribute isn't provided in ELF data. Keep 'em sorted.
+ 	 */
+ 	static const char * const global_noreturns[] = {
++		"__invalid_creds",
++		"__module_put_and_kthread_exit",
++		"__reiserfs_panic",
+ 		"__stack_chk_fail",
+-		"panic",
++		"__ubsan_handle_builtin_unreachable",
++		"cpu_bringup_and_idle",
++		"cpu_startup_entry",
+ 		"do_exit",
++		"do_group_exit",
+ 		"do_task_dead",
+-		"kthread_exit",
+-		"make_task_dead",
+-		"__module_put_and_kthread_exit",
++		"ex_handler_msr_mce",
++		"fortify_panic",
+ 		"kthread_complete_and_exit",
+-		"__reiserfs_panic",
++		"kthread_exit",
++		"kunit_try_catch_throw",
+ 		"lbug_with_loc",
+-		"fortify_panic",
+-		"usercopy_abort",
+ 		"machine_real_restart",
++		"make_task_dead",
++		"panic",
+ 		"rewind_stack_and_make_dead",
+-		"kunit_try_catch_throw",
+-		"xen_start_kernel",
+-		"cpu_bringup_and_idle",
+-		"do_group_exit",
++		"sev_es_terminate",
++		"snp_abort",
+ 		"stop_this_cpu",
+-		"__invalid_creds",
+-		"cpu_startup_entry",
+-		"__ubsan_handle_builtin_unreachable",
+-		"ex_handler_msr_mce",
++		"usercopy_abort",
++		"xen_start_kernel",
+ 	};
+ 
+ 	if (!func)
 -- 
 2.37.1.377.g679aad9e82
 

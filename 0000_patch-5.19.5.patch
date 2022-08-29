@@ -1060,7 +1060,7 @@ index 64379c699903b..08620b9a44fc7 100644
  F:	include/uapi/linux/io_uring.h
  F:	tools/io_uring/
 diff --git a/Makefile b/Makefile
-index df92892325ae0..65dc4f93ffdbf 100644
+index df92892325ae0..1c4f1ecb93488 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -1,7 +1,7 @@
@@ -1068,7 +1068,7 @@ index df92892325ae0..65dc4f93ffdbf 100644
  VERSION = 5
  PATCHLEVEL = 19
 -SUBLEVEL = 0
-+SUBLEVEL = 4
++SUBLEVEL = 5
  EXTRAVERSION =
  NAME = Superb Owl
  
@@ -97721,6 +97721,9 @@ index 692d64a70542a..e4deaf5fa571d 100644
  endif
  export DISABLE_LATENT_ENTROPY_PLUGIN
  
+diff --git a/scripts/dummy-tools/dummy-plugin-dir/include/plugin-version.h b/scripts/dummy-tools/dummy-plugin-dir/include/plugin-version.h
+new file mode 100644
+index 0000000000000..e69de29bb2d1d
 diff --git a/scripts/dummy-tools/gcc b/scripts/dummy-tools/gcc
 index b2483149bbe55..7db8258434355 100755
 --- a/scripts/dummy-tools/gcc

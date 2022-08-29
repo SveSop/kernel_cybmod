@@ -1,4 +1,4 @@
-From a1ad8530267d6036b9fd51b828355b6ea4d96b8a Mon Sep 17 00:00:00 2001
+From 28d0f621369d699627c6ac39bb901fea130018a4 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Sun, 7 Jul 2019 21:37:43 -0500
 Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
@@ -19,7 +19,7 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index 65dc4f93ffdb..5ef8eecad54f 100644
+index 1c4f1ecb9348..5fce623c205e 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -899,6 +899,12 @@ KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache

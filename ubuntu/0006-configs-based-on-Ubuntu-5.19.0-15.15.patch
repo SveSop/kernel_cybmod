@@ -1,16 +1,59 @@
-From 9c698136ddc598c38a72f8789eec9ff1ae0f5e5c Mon Sep 17 00:00:00 2001
+From 21fb85c705e2ffa0a11fd0048bfad15605be513b Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 25 Aug 2022 11:21:29 +0000
+Date: Mon, 29 Aug 2022 10:37:36 +0000
 Subject: [PATCH 6/6] configs (based on Ubuntu-5.19.0-15.15)
 
 ---
- debian.master/config/annotations              |  9 ++++-----
+ .../config/amd64/config.common.amd64          |  5 ++-
+ debian.master/config/annotations              | 44 +++++++++----------
+ .../config/arm64/config.common.arm64          |  9 ++--
  .../config/arm64/config.flavour.generic       |  2 +-
- debian.master/config/config.common.ubuntu     | 20 ++-----------------
- 3 files changed, 7 insertions(+), 24 deletions(-)
+ .../config/armhf/config.common.armhf          |  9 ++--
+ debian.master/config/config.common.ubuntu     | 34 ++++++--------
+ .../config/ppc64el/config.common.ppc64el      |  7 ++-
+ .../config/riscv64/config.common.riscv64      |  7 ++-
+ .../config/s390x/config.common.s390x          |  4 +-
+ 9 files changed, 62 insertions(+), 59 deletions(-)
 
+diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
+index b518c7fcd821..302c732b2740 100644
+--- a/debian.master/config/amd64/config.common.amd64
++++ b/debian.master/config/amd64/config.common.amd64
+@@ -59,7 +59,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="x86_64-linux-gnu-gcc-11 (Ubuntu 11.3.0-5ubuntu1) 11.3.0"
++CONFIG_CC_VERSION_TEXT="x86_64-linux-gnu-gcc (Ubuntu 12.2.0-1ubuntu1) 12.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ # CONFIG_CMA is not set
+ CONFIG_CMDLINE_PARTITION=y
+@@ -173,6 +173,7 @@ CONFIG_FPGA_DFL=m
+ CONFIG_FRAME_WARN=1024
+ CONFIG_FUSION=y
+ CONFIG_GAMEPORT=m
++CONFIG_GCC_VERSION=120200
+ CONFIG_GENERIC_PHY=y
+ CONFIG_GNSS=m
+ # CONFIG_GOLDFISH is not set
+@@ -303,6 +304,7 @@ CONFIG_LLC2=m
+ CONFIG_LOG_BUF_SHIFT=18
+ CONFIG_LPC_ICH=m
+ CONFIG_LPC_SCH=m
++CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
+ CONFIG_MAC_PARTITION=y
+ CONFIG_MAILBOX=y
+ CONFIG_MARVELL_88X2222_PHY=m
+@@ -392,7 +394,6 @@ CONFIG_MTD_BLKDEVS=m
+ CONFIG_MTD_BLOCK=m
+ CONFIG_MTD_CMDLINE_PARTS=m
+ CONFIG_MTD_NAND_CORE=m
+-CONFIG_MTD_RAW_NAND=m
+ CONFIG_NET_DSA=m
+ # CONFIG_NET_DSA_REALTEK_MDIO is not set
+ # CONFIG_NET_DSA_REALTEK_SMI is not set
 diff --git a/debian.master/config/annotations b/debian.master/config/annotations
-index 6d3b9b25eef8..701c98ed2f6d 100644
+index 566c73e4b301..701c98ed2f6d 100644
 --- a/debian.master/config/annotations
 +++ b/debian.master/config/annotations
 @@ -80,7 +80,7 @@ CONFIG_CRYPTO_SHA1_ARM_CE                       policy<{'armhf': 'm'}>
@@ -32,6 +75,56 @@ index 6d3b9b25eef8..701c98ed2f6d 100644
  CONFIG_CRYPTO_CRCT10DIF                         policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 'riscv64': 'y', 's390x': 'y'}>
  CONFIG_CRYPTO_CRCT10DIF_PCLMUL                  policy<{'amd64': 'm'}>
  CONFIG_CRYPTO_CRCT10DIF_VPMSUM                  policy<{'ppc64el': 'm'}>
+@@ -4559,10 +4560,10 @@ CONFIG_MTD_ONENAND_VERIFY_WRITE                 note<writes here are not checked
+ CONFIG_MTD_ONENAND_OTP                          flag<REVIEW>
+ 
+ # Menu: Device Drivers >> Memory Technology Device (MTD) support >> NAND >> Raw/Parallel NAND Device Support
+-CONFIG_MTD_RAW_NAND                             policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'y', 'ppc64el': 'm', 'riscv64': 'm', 's390x': '-'}>
+-CONFIG_MTD_NAND_DENALI_PCI                      policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_DENALI_DT                       policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_CAFE                            policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
++CONFIG_MTD_RAW_NAND                             policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'y', 'ppc64el': 'm', 'riscv64': 'n', 's390x': '-'}>
++CONFIG_MTD_NAND_DENALI_PCI                      policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_DENALI_DT                       policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_CAFE                            policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
+ CONFIG_MTD_NAND_ORION                           policy<{'armhf': 'm'}>
+ CONFIG_MTD_NAND_MARVELL                         policy<{'arm64': 'm', 'armhf': 'm'}>
+ CONFIG_MTD_NAND_TMIO                            policy<{'armhf': 'm'}>
+@@ -4575,22 +4576,22 @@ CONFIG_MTD_NAND_SUNXI                           policy<{'arm64': 'n', 'armhf': '
+ CONFIG_MTD_NAND_HISI504                         policy<{'arm64': 'm', 'armhf': 'm'}>
+ CONFIG_MTD_NAND_QCOM                            policy<{'arm64': 'm', 'armhf': 'm'}>
+ CONFIG_MTD_NAND_MTK                             policy<{'arm64': 'm', 'armhf': 'm'}>
+-CONFIG_MTD_NAND_MXIC                            policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
++CONFIG_MTD_NAND_MXIC                            policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
+ CONFIG_MTD_NAND_TEGRA                           policy<{'arm64': 'm', 'armhf': 'm'}>
+ CONFIG_MTD_NAND_MESON                           policy<{'arm64': 'm', 'armhf': 'm'}>
+-CONFIG_MTD_NAND_GPIO                            policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_PLATFORM                        policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_CADENCE                         policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_ARASAN                          policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_INTEL_LGM                       policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
++CONFIG_MTD_NAND_GPIO                            policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_PLATFORM                        policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_CADENCE                         policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_ARASAN                          policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_INTEL_LGM                       policy<{'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
+ CONFIG_MTD_NAND_ROCKCHIP                        policy<{'arm64': 'm', 'armhf': 'm'}>
+ CONFIG_MTD_NAND_PL35X                           policy<{'armhf': 'm'}>
+-CONFIG_MTD_NAND_NANDSIM                         policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_RICOH                           policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_DISKONCHIP                      policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm'}>
+-CONFIG_MTD_NAND_DISKONCHIP_PROBE_ADVANCED       policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 'riscv64': 'n'}>
+-CONFIG_MTD_NAND_DISKONCHIP_PROBE_ADDRESS        policy<{'amd64': '0', 'arm64': '0', 'armhf': '0', 'ppc64el': '0', 'riscv64': '0'}>
+-CONFIG_MTD_NAND_DISKONCHIP_BBTWRITE             policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 'riscv64': 'n'}>
++CONFIG_MTD_NAND_NANDSIM                         policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_RICOH                           policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_DISKONCHIP                      policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm'}>
++CONFIG_MTD_NAND_DISKONCHIP_PROBE_ADVANCED       policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n'}>
++CONFIG_MTD_NAND_DISKONCHIP_PROBE_ADDRESS        policy<{'amd64': '0', 'arm64': '0', 'armhf': '0', 'ppc64el': '0'}>
++CONFIG_MTD_NAND_DISKONCHIP_BBTWRITE             policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n'}>
+ #
+ CONFIG_MTD_RAW_NAND                             note<boot essential on arm>
+ CONFIG_MTD_NAND_DISKONCHIP_BBTWRITE             note<can be enabled at runtime>
 @@ -6529,9 +6530,7 @@ CONFIG_ISM                                      mark<ENFORCED> note<LP: #1789934
  CONFIG_QETH                                     policy<{'s390x': 'm'}>
  CONFIG_QETH_L2                                  policy<{'s390x': 'm'}>
@@ -43,6 +136,79 @@ index 6d3b9b25eef8..701c98ed2f6d 100644
  
  # Menu: Device Drivers >> Network device support >> SLIP (serial line) support
  CONFIG_SLIP                                     policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm', 's390x': 'n'}>
+@@ -10658,6 +10657,7 @@ CONFIG_AUTOFS_FS                                policy<{'amd64': 'm', 'arm64': '
+ CONFIG_FUSE_FS                                  policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 'riscv64': 'y', 's390x': 'y'}>
+ CONFIG_CUSE                                     policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm', 's390x': 'm'}>
+ CONFIG_VIRTIO_FS                                policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm', 's390x': 'm'}>
++CONFIG_VIRTIO_HARDEN_NOTIFICATION               policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 'riscv64': 'n', 's390x': 'n'}>
+ CONFIG_FUSE_DAX                                 policy<{'amd64': 'y', 'arm64': 'y', 'ppc64el': 'y', 's390x': 'y'}>
+ CONFIG_SHIFT_FS                                 policy<{'amd64': 'm', 'arm64': 'm', 'armhf': 'm', 'ppc64el': 'm', 'riscv64': 'm', 's390x': 'm'}>
+ CONFIG_SHIFT_FS_POSIX_ACL                       policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 'riscv64': 'y', 's390x': 'y'}>
+@@ -13837,7 +13837,7 @@ CONFIG_HARDEN_BRANCH_HISTORY                    policy<{'armhf': 'y'}>
+ CONFIG_MITIGATE_SPECTRE_BRANCH_HISTORY          policy<{'arm64': 'y'}>
+ CONFIG_FORTIFY_SOURCE                           policy<{'amd64': 'y', 'arm64': 'y', 'armhf': 'y', 'ppc64el': 'y', 'riscv64': 'n', 's390x': 'y'}>
+ CONFIG_STATIC_USERMODEHELPER                    policy<{'amd64': 'n', 'arm64': 'n', 'armhf': 'n', 'ppc64el': 'n', 'riscv64': 'n', 's390x': 'n'}>
+-CONFIG_LSM                                      policy<{'amd64': '"landlock,lockdown,yama,integrity,apparmor"', 'arm64': '"landlock,lockdown,yama,integrity,apparmor"', 'armhf': '"landlock,lockdown,yama,integrity,apparmor"', 'ppc64el': '"landlock,lockdown,yama,integrity,apparmor"', 'riscv64': '"landlock,lockdown,yama,integrity,apparmor"', 's390x': '"landlock,lockdown,yama,integrity,apparmor"'}>
++CONFIG_LSM                                      policy<{'amd64': '"landlock,lockdown,yama,integrity,apparmor"', 'arm64': '"landlock,lockdown,yama,integrity,apparmor"', 'armhf': '"landlock,lockdown,yama,integrity,apparmor"', 'ppc64el': '"landlock,lockdown,yama,integrity,apparmor"', 'riscv64': '"lockdown,yama,integrity,apparmor"', 's390x': '"landlock,lockdown,yama,integrity,apparmor"'}>
+ #
+ CONFIG_SECURITY_DMESG_RESTRICT                  mark<ENFORCED>
+ CONFIG_LSM                                      mark<ENFORCED>
+diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
+index ef11d9581718..81cd94c02268 100644
+--- a/debian.master/config/arm64/config.common.arm64
++++ b/debian.master/config/arm64/config.common.arm64
+@@ -61,7 +61,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc-11 (Ubuntu 11.3.0-3ubuntu1) 11.3.0"
++CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc (Ubuntu 12.2.0-1ubuntu1) 12.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE="console=ttyAMA0"
+@@ -111,11 +111,13 @@ CONFIG_DRM_NOUVEAU=m
+ CONFIG_DRM_PANEL_ORIENTATION_QUIRKS=y
+ CONFIG_DRM_QXL=m
+ CONFIG_DRM_RADEON=m
++CONFIG_DRM_RCAR_USE_LVDS=y
+ CONFIG_DRM_SIMPLEDRM=m
+ CONFIG_DRM_SSD130X=m
+ CONFIG_DRM_VGEM=m
+ CONFIG_DRM_VKMS=m
+ CONFIG_DS1682=m
++CONFIG_DTPM=y
+ CONFIG_DUMMY_IRQ=m
+ CONFIG_DWMAC_INTEL_PLAT=m
+ CONFIG_DW_WATCHDOG=m
+@@ -183,6 +185,7 @@ CONFIG_FRAME_WARN=1024
+ CONFIG_FSL_MC_BUS=y
+ CONFIG_FUSION=y
+ CONFIG_GAMEPORT=m
++CONFIG_GCC_VERSION=120200
+ CONFIG_GENERIC_PHY=y
+ CONFIG_GNSS=m
+ # CONFIG_GOLDFISH is not set
+@@ -316,6 +319,7 @@ CONFIG_LLC2=m
+ CONFIG_LOG_BUF_SHIFT=18
+ CONFIG_LPC_ICH=m
+ CONFIG_LPC_SCH=m
++CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
+ CONFIG_MAC_PARTITION=y
+ CONFIG_MAILBOX=y
+ CONFIG_MARVELL_88X2222_PHY=m
+@@ -407,12 +411,9 @@ CONFIG_MTD_BLKDEVS=m
+ CONFIG_MTD_BLOCK=m
+ CONFIG_MTD_CMDLINE_PARTS=m
+ CONFIG_MTD_NAND_CORE=m
+-CONFIG_MTD_NAND_OMAP2=m
+-CONFIG_MTD_NAND_OMAP_BCH_BUILD=m
+ CONFIG_MTD_OF_PARTS=m
+ CONFIG_MTD_PHYSMAP_GEMINI=y
+ CONFIG_MTD_PHYSMAP_VERSATILE=y
+-CONFIG_MTD_RAW_NAND=m
+ CONFIG_NET_DSA=m
+ CONFIG_NET_DSA_MSCC_FELIX=m
+ CONFIG_NET_DSA_REALTEK_MDIO=m
 diff --git a/debian.master/config/arm64/config.flavour.generic b/debian.master/config/arm64/config.flavour.generic
 index d6e3ffa1d269..b7e35f458cc2 100644
 --- a/debian.master/config/arm64/config.flavour.generic
@@ -54,8 +220,64 @@ index d6e3ffa1d269..b7e35f458cc2 100644
 -CONFIG_FORCE_MAX_ZONEORDER=13
 +CONFIG_FORCE_MAX_ZONEORDER=11
  CONFIG_PGTABLE_LEVELS=4
+diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
+index 1664c6fd076a..045207b4ba0b 100644
+--- a/debian.master/config/armhf/config.common.armhf
++++ b/debian.master/config/armhf/config.common.armhf
+@@ -56,7 +56,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc-11 (Ubuntu 11.3.0-3ubuntu1) 11.3.0"
++CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc (Ubuntu 12.2.0-1ubuntu1) 12.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
+@@ -104,11 +104,13 @@ CONFIG_DRM_NOUVEAU=m
+ CONFIG_DRM_PANEL_ORIENTATION_QUIRKS=y
+ CONFIG_DRM_QXL=m
+ CONFIG_DRM_RADEON=m
++CONFIG_DRM_RCAR_USE_LVDS=y
+ CONFIG_DRM_SIMPLEDRM=m
+ CONFIG_DRM_SSD130X=m
+ CONFIG_DRM_VGEM=m
+ CONFIG_DRM_VKMS=m
+ CONFIG_DS1682=m
++CONFIG_DTPM=y
+ CONFIG_DUMMY_IRQ=m
+ CONFIG_DWMAC_INTEL_PLAT=m
+ CONFIG_DW_WATCHDOG=m
+@@ -176,6 +178,7 @@ CONFIG_FRAME_WARN=1024
+ # CONFIG_FSL_MC_BUS is not set
+ CONFIG_FUSION=y
+ CONFIG_GAMEPORT=m
++CONFIG_GCC_VERSION=120200
+ CONFIG_GENERIC_PHY=y
+ CONFIG_GNSS=m
+ # CONFIG_GOLDFISH is not set
+@@ -306,6 +309,7 @@ CONFIG_LLC2=m
+ CONFIG_LOG_BUF_SHIFT=17
+ CONFIG_LPC_ICH=m
+ CONFIG_LPC_SCH=m
++CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
+ CONFIG_MAC_PARTITION=y
+ CONFIG_MAILBOX=y
+ CONFIG_MARVELL_88X2222_PHY=m
+@@ -395,12 +399,9 @@ CONFIG_MTD_BLKDEVS=y
+ CONFIG_MTD_BLOCK=y
+ CONFIG_MTD_CMDLINE_PARTS=y
+ CONFIG_MTD_NAND_CORE=y
+-CONFIG_MTD_NAND_OMAP2=y
+-CONFIG_MTD_NAND_OMAP_BCH_BUILD=y
+ CONFIG_MTD_OF_PARTS=y
+ CONFIG_MTD_PHYSMAP_GEMINI=y
+ CONFIG_MTD_PHYSMAP_VERSATILE=y
+-CONFIG_MTD_RAW_NAND=y
+ CONFIG_NET_DSA=m
+ CONFIG_NET_DSA_MSCC_FELIX=m
+ CONFIG_NET_DSA_REALTEK_MDIO=m
 diff --git a/debian.master/config/config.common.ubuntu b/debian.master/config/config.common.ubuntu
-index b5468a28802d..fd15dc147b1b 100644
+index 989111d2b125..1e36d58ec410 100644
 --- a/debian.master/config/config.common.ubuntu
 +++ b/debian.master/config/config.common.ubuntu
 @@ -316,10 +316,7 @@ CONFIG_AMD_XGBE_HAVE_ECC=y
@@ -70,7 +292,37 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_ANON_VMA_NAME=y
  CONFIG_APDS9300=m
  CONFIG_APDS9960=m
-@@ -2777,7 +2774,6 @@ CONFIG_DELL_SMBIOS=m
+@@ -596,6 +593,7 @@ CONFIG_ARCH_SUPPORTS_LTO_CLANG_THIN=y
+ CONFIG_ARCH_SUPPORTS_MEMORY_FAILURE=y
+ CONFIG_ARCH_SUPPORTS_NUMA_BALANCING=y
+ CONFIG_ARCH_SUPPORTS_PAGE_TABLE_CHECK=y
++CONFIG_ARCH_SUPPORTS_SHADOW_CALL_STACK=y
+ CONFIG_ARCH_SUPPORTS_UPROBES=y
+ CONFIG_ARCH_SUSPEND_NONZERO_CPU=y
+ CONFIG_ARCH_SUSPEND_POSSIBLE=y
+@@ -1576,6 +1574,8 @@ CONFIG_CC_CAN_LINK_STATIC=y
+ CONFIG_CC_HAS_ASM_GOTO=y
+ CONFIG_CC_HAS_ASM_GOTO_OUTPUT=y
+ CONFIG_CC_HAS_ASM_INLINE=y
++CONFIG_CC_HAS_AUTO_VAR_INIT_PATTERN=y
++CONFIG_CC_HAS_AUTO_VAR_INIT_ZERO=y
+ CONFIG_CC_HAS_BRANCH_PROT_PAC_RET=y
+ CONFIG_CC_HAS_BRANCH_PROT_PAC_RET_BTI=y
+ CONFIG_CC_HAS_IBT=y
+@@ -1591,10 +1591,12 @@ CONFIG_CC_HAS_SLS=y
+ CONFIG_CC_HAS_UBSAN_BOUNDS=y
+ CONFIG_CC_HAS_WORKING_NOSANITIZE_ADDRESS=y
+ CONFIG_CC_HAS_ZERO_CALL_USED_REGS=y
++CONFIG_CC_HAVE_SHADOW_CALL_STACK=y
+ CONFIG_CC_HAVE_STACKPROTECTOR_SYSREG=y
+ CONFIG_CC_HAVE_STACKPROTECTOR_TLS=y
+ CONFIG_CC_IMPLICIT_FALLTHROUGH="-Wimplicit-fallthrough=5"
+ CONFIG_CC_IS_GCC=y
++CONFIG_CC_NO_ARRAY_BOUNDS=y
+ CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y
+ # CONFIG_CC_OPTIMIZE_FOR_SIZE is not set
+ CONFIG_CDNS_I3C_MASTER=m
+@@ -2777,7 +2779,6 @@ CONFIG_DELL_SMBIOS=m
  CONFIG_DELL_SMBIOS_SMM=y
  CONFIG_DELL_SMBIOS_WMI=y
  CONFIG_DELL_SMO8800=m
@@ -78,7 +330,31 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_DELL_WMI=m
  CONFIG_DELL_WMI_AIO=m
  CONFIG_DELL_WMI_DESCRIPTOR=m
-@@ -4105,7 +4101,6 @@ CONFIG_GPIO_104_IDIO_16=m
+@@ -3157,7 +3158,6 @@ CONFIG_DRM_RCAR_DW_HDMI=m
+ CONFIG_DRM_RCAR_LVDS=m
+ CONFIG_DRM_RCAR_MIPI_DSI=m
+ CONFIG_DRM_RCAR_USE_CMM=y
+-CONFIG_DRM_RCAR_USE_LVDS=y
+ CONFIG_DRM_RCAR_VSP=y
+ CONFIG_DRM_RCAR_WRITEBACK=y
+ CONFIG_DRM_ROCKCHIP=m
+@@ -3216,7 +3216,6 @@ CONFIG_DS4424=m
+ CONFIG_DST_CACHE=y
+ CONFIG_DTC=y
+ CONFIG_DTL=y
+-CONFIG_DTPM=y
+ CONFIG_DTPM_CPU=y
+ # CONFIG_DTPM_DEVFREQ is not set
+ CONFIG_DT_IDLE_GENPD=y
+@@ -4020,7 +4019,6 @@ CONFIG_GARP=m
+ CONFIG_GART_IOMMU=y
+ CONFIG_GCC12_NO_ARRAY_BOUNDS=y
+ CONFIG_GCC_SUPPORTS_DYNAMIC_FTRACE_WITH_REGS=y
+-CONFIG_GCC_VERSION=110300
+ # CONFIG_GCOV_KERNEL is not set
+ CONFIG_GDB_SCRIPTS=y
+ CONFIG_GEMINI_ETHERNET=m
+@@ -4107,7 +4105,6 @@ CONFIG_GPIO_104_IDIO_16=m
  CONFIG_GPIO_104_IDI_48=m
  CONFIG_GPIO_74X164=m
  CONFIG_GPIO_74XX_MMIO=m
@@ -86,7 +362,16 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_GPIO_ACPI=y
  CONFIG_GPIO_ADNP=m
  CONFIG_GPIO_ADP5520=m
-@@ -5843,7 +5838,6 @@ CONFIG_LD_IS_BFD=y
+@@ -5051,6 +5048,8 @@ CONFIG_INITRAMFS_SOURCE=""
+ CONFIG_INIT_ENV_ARG_LIMIT=32
+ CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y
+ # CONFIG_INIT_ON_FREE_DEFAULT_ON is not set
++# CONFIG_INIT_STACK_ALL_PATTERN is not set
++# CONFIG_INIT_STACK_ALL_ZERO is not set
+ CONFIG_INIT_STACK_NONE=y
+ CONFIG_INLINE_READ_LOCK=y
+ CONFIG_INLINE_READ_LOCK_BH=y
+@@ -5845,7 +5844,6 @@ CONFIG_LD_IS_BFD=y
  CONFIG_LD_ORPHAN_WARN=y
  CONFIG_LD_VERSION=23900
  CONFIG_LEDS_88PM860X=m
@@ -94,7 +379,7 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_LEDS_AAT1290=m
  CONFIG_LEDS_ACER_A500=m
  CONFIG_LEDS_ADP5520=m
-@@ -6001,7 +5995,6 @@ CONFIG_LOCKDEP_SUPPORT=y
+@@ -6003,7 +6001,6 @@ CONFIG_LOCKDEP_SUPPORT=y
  CONFIG_LOCKD_V4=y
  CONFIG_LOCKUP_DETECTOR=y
  CONFIG_LOCK_DEBUGGING_SUPPORT=y
@@ -102,7 +387,15 @@ index b5468a28802d..fd15dc147b1b 100644
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
  # CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY is not set
  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
-@@ -6299,7 +6292,6 @@ CONFIG_MESON_SM=y
+@@ -6023,7 +6020,6 @@ CONFIG_LPARCFG=y
+ # CONFIG_LP_CONSOLE is not set
+ CONFIG_LRU_CACHE=m
+ CONFIG_LSI_ET1011C_PHY=m
+-CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
+ CONFIG_LSM_MMAP_MIN_ADDR=0
+ CONFIG_LS_EXTIRQ=y
+ CONFIG_LS_SCFG_MSI=y
+@@ -6302,7 +6298,6 @@ CONFIG_MESON_SM=y
  CONFIG_MESON_WATCHDOG=m
  CONFIG_MESSAGE_LOGLEVEL_DEFAULT=4
  CONFIG_MFD_88PM860X=y
@@ -110,7 +403,25 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_MFD_AAT2870_CORE=y
  # CONFIG_MFD_AC100 is not set
  CONFIG_MFD_ACER_A500_EC=m
-@@ -8783,7 +8775,7 @@ CONFIG_QED_SRIOV=y
+@@ -6812,7 +6807,9 @@ CONFIG_MTD_NAND_MTK=m
+ CONFIG_MTD_NAND_MXC=m
+ CONFIG_MTD_NAND_MXIC=m
+ CONFIG_MTD_NAND_NANDSIM=m
++CONFIG_MTD_NAND_OMAP2=m
+ CONFIG_MTD_NAND_OMAP_BCH=y
++CONFIG_MTD_NAND_OMAP_BCH_BUILD=m
+ CONFIG_MTD_NAND_ORION=m
+ CONFIG_MTD_NAND_PL35X=m
+ CONFIG_MTD_NAND_PLATFORM=m
+@@ -6854,6 +6851,7 @@ CONFIG_MTD_PSTORE=m
+ CONFIG_MTD_QCOMSMEM_PARTS=m
+ CONFIG_MTD_QINFO_PROBE=m
+ CONFIG_MTD_RAM=m
++CONFIG_MTD_RAW_NAND=m
+ CONFIG_MTD_REDBOOT_DIRECTORY_BLOCK=-1
+ CONFIG_MTD_REDBOOT_PARTS=m
+ # CONFIG_MTD_REDBOOT_PARTS_READONLY is not set
+@@ -8786,7 +8784,7 @@ CONFIG_QED_SRIOV=y
  CONFIG_QETH=m
  CONFIG_QETH_L2=m
  CONFIG_QETH_L3=m
@@ -119,7 +430,7 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_QE_GPIO=y
  CONFIG_QE_TDM=y
  CONFIG_QE_USB=y
-@@ -9701,7 +9693,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
+@@ -9704,7 +9702,6 @@ CONFIG_SECURITY_LOCKDOWN_LSM_EARLY=y
  CONFIG_SECURITY_NETWORK=y
  CONFIG_SECURITY_NETWORK_XFRM=y
  CONFIG_SECURITY_PATH=y
@@ -127,7 +438,7 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_SECURITY_SAFESETID=y
  CONFIG_SECURITY_SELINUX=y
  CONFIG_SECURITY_SELINUX_AVC_STATS=y
-@@ -9726,7 +9717,6 @@ CONFIG_SELECT_MEMORY_MODEL=y
+@@ -9729,7 +9726,6 @@ CONFIG_SELECT_MEMORY_MODEL=y
  CONFIG_SENSEAIR_SUNRISE_CO2=m
  CONFIG_SENSIRION_SGP30=m
  CONFIG_SENSIRION_SGP40=m
@@ -135,16 +446,17 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_SENSORS_ABITUGURU=m
  CONFIG_SENSORS_ABITUGURU3=m
  CONFIG_SENSORS_ACPI_POWER=m
-@@ -10118,8 +10108,6 @@ CONFIG_SGI_XP=m
+@@ -10121,8 +10117,7 @@ CONFIG_SGI_XP=m
  CONFIG_SGL_ALLOC=y
  CONFIG_SG_POOL=y
  CONFIG_SG_SPLIT=y
 -CONFIG_SHIFT_FS=m
 -CONFIG_SHIFT_FS_POSIX_ACL=y
++# CONFIG_SHADOW_CALL_STACK is not set
  CONFIG_SHMEM=y
  CONFIG_SHUFFLE_PAGE_ALLOCATOR=y
  CONFIG_SH_ETH=m
-@@ -11891,8 +11879,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
+@@ -11894,8 +11889,6 @@ CONFIG_UBSAN_SANITIZE_ALL=y
  CONFIG_UBSAN_SHIFT=y
  # CONFIG_UBSAN_TRAP is not set
  # CONFIG_UBSAN_UNREACHABLE is not set
@@ -153,7 +465,7 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_UCB1400_CORE=m
  CONFIG_UCC=y
  CONFIG_UCC_FAST=y
-@@ -12464,7 +12450,6 @@ CONFIG_VDSO=y
+@@ -12467,7 +12460,6 @@ CONFIG_VDSO=y
  CONFIG_VDSO32=y
  CONFIG_VEML6030=m
  CONFIG_VEML6070=m
@@ -161,14 +473,137 @@ index b5468a28802d..fd15dc147b1b 100644
  CONFIG_VETH=m
  CONFIG_VEXPRESS_CONFIG=y
  CONFIG_VF610_ADC=m
-@@ -12831,7 +12816,6 @@ CONFIG_VIRTIO_BLK=m
- CONFIG_VIRTIO_CONSOLE=y
- CONFIG_VIRTIO_DMA_SHARED_BUFFER=m
- CONFIG_VIRTIO_FS=m
--# CONFIG_VIRTIO_HARDEN_NOTIFICATION is not set
- CONFIG_VIRTIO_INPUT=m
- CONFIG_VIRTIO_IOMMU=y
- CONFIG_VIRTIO_MEM=m
+diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
+index 39a684cb934e..b025d9e06b46 100644
+--- a/debian.master/config/ppc64el/config.common.ppc64el
++++ b/debian.master/config/ppc64el/config.common.ppc64el
+@@ -55,7 +55,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc-11 (Ubuntu 11.3.0-3ubuntu1) 11.3.0"
++CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc (Ubuntu 12.2.0-1ubuntu1) 12.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
+@@ -103,11 +103,13 @@ CONFIG_DRM_NOUVEAU=m
+ CONFIG_DRM_PANEL_ORIENTATION_QUIRKS=m
+ CONFIG_DRM_QXL=m
+ CONFIG_DRM_RADEON=m
++CONFIG_DRM_RCAR_USE_LVDS=y
+ CONFIG_DRM_SIMPLEDRM=m
+ CONFIG_DRM_SSD130X=m
+ CONFIG_DRM_VGEM=m
+ CONFIG_DRM_VKMS=m
+ CONFIG_DS1682=m
++CONFIG_DTPM=y
+ CONFIG_DUMMY_IRQ=m
+ CONFIG_DWMAC_INTEL_PLAT=m
+ CONFIG_DW_WATCHDOG=m
+@@ -175,6 +177,7 @@ CONFIG_FPGA_DFL=m
+ CONFIG_FRAME_WARN=2048
+ CONFIG_FUSION=y
+ CONFIG_GAMEPORT=m
++CONFIG_GCC_VERSION=120200
+ CONFIG_GENERIC_PHY=y
+ CONFIG_GNSS=m
+ # CONFIG_GOLDFISH is not set
+@@ -307,6 +310,7 @@ CONFIG_LLC2=m
+ CONFIG_LOG_BUF_SHIFT=18
+ CONFIG_LPC_ICH=m
+ CONFIG_LPC_SCH=m
++CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
+ CONFIG_MAC_PARTITION=y
+ CONFIG_MAILBOX=y
+ CONFIG_MARVELL_88X2222_PHY=m
+@@ -401,7 +405,6 @@ CONFIG_MTD_NAND_CORE=m
+ CONFIG_MTD_OF_PARTS=m
+ # CONFIG_MTD_PHYSMAP_GEMINI is not set
+ # CONFIG_MTD_PHYSMAP_VERSATILE is not set
+-CONFIG_MTD_RAW_NAND=m
+ CONFIG_NET_DSA=m
+ # CONFIG_NET_DSA_MSCC_FELIX is not set
+ CONFIG_NET_DSA_REALTEK_MDIO=m
+diff --git a/debian.master/config/riscv64/config.common.riscv64 b/debian.master/config/riscv64/config.common.riscv64
+index bf3314e789bd..03da28b5bc2b 100644
+--- a/debian.master/config/riscv64/config.common.riscv64
++++ b/debian.master/config/riscv64/config.common.riscv64
+@@ -54,7 +54,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="riscv64-linux-gnu-gcc-11 (Ubuntu 11.3.0-1ubuntu1) 11.3.0"
++CONFIG_CC_VERSION_TEXT="riscv64-linux-gnu-gcc (Ubuntu 11.3.0-1ubuntu1) 11.3.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
+@@ -101,11 +101,13 @@ CONFIG_DRM_NOUVEAU=m
+ CONFIG_DRM_PANEL_ORIENTATION_QUIRKS=y
+ CONFIG_DRM_QXL=m
+ CONFIG_DRM_RADEON=m
++# CONFIG_DRM_RCAR_USE_LVDS is not set
+ CONFIG_DRM_SIMPLEDRM=m
+ CONFIG_DRM_SSD130X=m
+ CONFIG_DRM_VGEM=m
+ CONFIG_DRM_VKMS=m
+ CONFIG_DS1682=m
++# CONFIG_DTPM is not set
+ CONFIG_DUMMY_IRQ=m
+ # CONFIG_DWMAC_INTEL_PLAT is not set
+ CONFIG_DW_WATCHDOG=m
+@@ -172,6 +174,7 @@ CONFIG_FPGA_DFL=m
+ CONFIG_FRAME_WARN=1024
+ CONFIG_FUSION=y
+ CONFIG_GAMEPORT=m
++CONFIG_GCC_VERSION=110300
+ CONFIG_GENERIC_PHY=y
+ CONFIG_GNSS=m
+ CONFIG_GOLDFISH=y
+@@ -301,6 +304,7 @@ CONFIG_LLC2=m
+ CONFIG_LOG_BUF_SHIFT=18
+ CONFIG_LPC_ICH=m
+ CONFIG_LPC_SCH=m
++CONFIG_LSM="lockdown,yama,integrity,apparmor"
+ CONFIG_MAC_PARTITION=y
+ CONFIG_MAILBOX=y
+ CONFIG_MARVELL_88X2222_PHY=m
+@@ -393,7 +397,6 @@ CONFIG_MTD_NAND_CORE=m
+ CONFIG_MTD_OF_PARTS=m
+ # CONFIG_MTD_PHYSMAP_GEMINI is not set
+ # CONFIG_MTD_PHYSMAP_VERSATILE is not set
+-CONFIG_MTD_RAW_NAND=m
+ CONFIG_NET_DSA=m
+ CONFIG_NET_DSA_REALTEK_MDIO=m
+ CONFIG_NET_DSA_REALTEK_SMI=m
+diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
+index 7646748fae68..5a1c86f9712c 100644
+--- a/debian.master/config/s390x/config.common.s390x
++++ b/debian.master/config/s390x/config.common.s390x
+@@ -45,7 +45,7 @@ CONFIG_AUTOFS_FS=y
+ # CONFIG_CAIF is not set
+ # CONFIG_CAN is not set
+ # CONFIG_CB710_CORE is not set
+-CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc-11 (Ubuntu 11.3.0-3ubuntu1) 11.3.0"
++CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc (Ubuntu 12.2.0-1ubuntu1) 12.2.0"
+ # CONFIG_CDROM_PKTCDVD is not set
+ CONFIG_CMA=y
+ # CONFIG_CMDLINE_PARTITION is not set
+@@ -160,6 +160,7 @@ CONFIG_FORTIFY_SOURCE=y
+ CONFIG_FRAME_WARN=1024
+ # CONFIG_FUSION is not set
+ # CONFIG_GAMEPORT is not set
++CONFIG_GCC_VERSION=120200
+ # CONFIG_GENERIC_PHY is not set
+ # CONFIG_GNSS is not set
+ # CONFIG_GOLDFISH is not set
+@@ -284,6 +285,7 @@ CONFIG_KVM=y
+ CONFIG_LOG_BUF_SHIFT=18
+ # CONFIG_LPC_ICH is not set
+ # CONFIG_LPC_SCH is not set
++CONFIG_LSM="landlock,lockdown,yama,integrity,apparmor"
+ # CONFIG_MAC_PARTITION is not set
+ # CONFIG_MAILBOX is not set
+ # CONFIG_MARVELL_88X2222_PHY is not set
 -- 
 2.37.2
 
