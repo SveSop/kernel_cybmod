@@ -1,7 +1,7 @@
-From cc53be1194258899375e45cba3adfd7f07c8c1e4 Mon Sep 17 00:00:00 2001
+From d76dace220cac5d3e48dcfeb1be1686c6d4bcc2e Mon Sep 17 00:00:00 2001
 From: Andy Whitcroft <apw@canonical.com>
 Date: Fri, 9 Sep 2016 14:02:29 +0100
-Subject: [PATCH 3/6] UBUNTU: SAUCE: add vmlinux.strip to BOOT_TARGETS1 on
+Subject: [PATCH 3/5] UBUNTU: SAUCE: add vmlinux.strip to BOOT_TARGETS1 on
  powerpc
 
 Signed-off-by: Andy Whitcroft <apw@canonical.com>
@@ -23,5 +23,5 @@ index d54e1fe03551..426a8d24e5bc 100644
  
  PHONY += $(BOOT_TARGETS1) $(BOOT_TARGETS2)
 -- 
-2.37.2
+2.37.3
 

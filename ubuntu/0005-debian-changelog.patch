@@ -1,26 +1,26 @@
-From 65a3b2bdce4667bc96ac499734e578afc48b5650 Mon Sep 17 00:00:00 2001
+From 85dc3ddcf724ed7c9539ae854ff416a528a02323 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Mon, 29 Aug 2022 10:37:02 +0000
-Subject: [PATCH 5/6] debian changelog
+Date: Wed, 31 Aug 2022 16:33:04 +0000
+Subject: [PATCH 5/5] debian changelog
 
 ---
  debian.master/changelog | 16714 +-------------------------------------
  1 file changed, 3 insertions(+), 16711 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index b5af8170cec3..baead9caa0ed 100644
+index b5af8170cec3..d157919980e5 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,16714 +1,6 @@
 -linux (5.19.0-15.15) kinetic; urgency=medium
-+linux (5.19.5-051905.202208291036) kinetic; urgency=low
++linux (5.19.6-051906.202208311633) kinetic; urgency=low
  
 -  * kinetic/linux: 5.19.0-15.15 -proposed tracker (LP: #1983335)
-+  Mainline build at commit: v5.19.5
++  Mainline build at commit: v5.19.6
  
 -  * Miscellaneous Ubuntu changes
 -    - [Config] update annotations to support both gcc-11 and gcc-12
-+ -- Mainline Build <kernel@kathleen>  Mon, 29 Aug 2022 10:37:02 +0000
++ -- Mainline Build <kernel@kathleen>  Wed, 31 Aug 2022 16:33:04 +0000
  
 - -- Andrea Righi <andrea.righi@canonical.com>  Tue, 02 Aug 2022 09:23:01 +0200
 -
@@ -16730,5 +16730,5 @@ index b5af8170cec3..baead9caa0ed 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.37.2
+2.37.3
 

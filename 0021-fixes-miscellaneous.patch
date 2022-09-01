@@ -1,7 +1,7 @@
-From e068e37b542ffec620d3ea6b7e557d30990f9846 Mon Sep 17 00:00:00 2001
+From 38463234baf5c55039ade644963a33d878479529 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 01/16] ZEN: mm: Lower the non-hugetlbpage pageblock size to
+Subject: [PATCH 01/15] ZEN: mm: Lower the non-hugetlbpage pageblock size to
  reduce scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -47,49 +47,10 @@ index 83c7248..d2b8741 100644
 2.37.1.377.g679aad9e82
 
 
-From 3e362485658d93b70bd8e07a2c61d4dcd20119c6 Mon Sep 17 00:00:00 2001
-From: Tor Vic <torvic9@mailbox.org>
-Date: Wed, 25 May 2022 16:25:14 +0200
-Subject: [PATCH 02/16] ZEN: dm-crypt: Disable workqueues for crypto operations
-
-Queueing in dm-crypt for crypto operations reduces performance on modern
-systems.  As discussed in an article from Cloudflare, they discovered
-that queuing was introduced because the crypto subsystem used to be
-synchronous.  Since it's now asynchronous, we get double queueing when
-using the subsystem through dm-crypt.  This is obviously undesirable and
-reduces throughput and increases latency.
-
-Disable queueing when using our Zen Interactive configuration.
-
-Fixes: https://github.com/zen-kernel/zen-kernel/issues/282
-
-[torvic9: adapted for non-Zen kernels]
----
- drivers/md/dm-crypt.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/drivers/md/dm-crypt.c b/drivers/md/dm-crypt.c
-index 159c680..8b4e8f9 100644
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -3137,6 +3137,9 @@ static int crypt_ctr_optional(struct dm_target *ti, unsigned int argc, char **ar
- 		}
- 	}
- 
-+	set_bit(DM_CRYPT_NO_READ_WORKQUEUE, &cc->flags);
-+	set_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags);
-+
- 	return 0;
- }
- 
--- 
-2.37.1.377.g679aad9e82
-
-
-From 590386f3f0a82cc742cb3f3557fcc00244fe8dc8 Mon Sep 17 00:00:00 2001
+From d5c139ce75874cb1991726449327d00443390d5f Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 03/16] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 02/15] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -129,10 +90,10 @@ index 09fa8a9..102187c 100644
 2.37.1.377.g679aad9e82
 
 
-From 223880d3c55354a1fa54c65003c71c928eb67235 Mon Sep 17 00:00:00 2001
+From 697c802bcf490b0953f77c15552be6a8308fc3da Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 04/16] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 03/15] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -205,10 +166,10 @@ index 102187c..b1904f5 100644
 2.37.1.377.g679aad9e82
 
 
-From 27d962322c86864d799cdac17fbff2c06f4d0d8e Mon Sep 17 00:00:00 2001
+From cf1225bba12b4e2c420f6721eaa610d7ff0ba18a Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Fri, 24 Jun 2022 16:14:12 +0200
-Subject: [PATCH 05/16] compiler-gcc.h: remove ancient workaround for gcc PR
+Subject: [PATCH 04/15] compiler-gcc.h: remove ancient workaround for gcc PR
  58670
 
 The workaround for 'asm goto' miscompilation introduces a compiler barrier
@@ -279,10 +240,10 @@ index a0c55ee..9b157b7 100644
 2.37.1.377.g679aad9e82
 
 
-From 9b3e0aa6a9500a80afd015fa56128c6c3796a1d1 Mon Sep 17 00:00:00 2001
+From f93bd747ad9d5a81efacbb22dbd7882385a93330 Mon Sep 17 00:00:00 2001
 From: Chuanhong Guo <gch981213@gmail.com>
 Date: Tue, 12 Jul 2022 10:00:58 +0800
-Subject: [PATCH 06/16] ACPI: skip IRQ override on AMD Zen platforms
+Subject: [PATCH 05/15] ACPI: skip IRQ override on AMD Zen platforms
 
 IRQ override isn't needed on modern AMD Zen systems.
 There's an active low keyboard IRQ on AMD Ryzen 6000 and it will stay
@@ -326,10 +287,10 @@ index c2d4947..510cdec 100644
 2.37.1.377.g679aad9e82
 
 
-From 7bf21341a7872776cf6638309e1d1f1da6c88668 Mon Sep 17 00:00:00 2001
+From 759a1152695dfd8a6c01c7842e7dff1a666fa139 Mon Sep 17 00:00:00 2001
 From: Yosry Ahmed <yosryahmed@google.com>
 Date: Thu, 14 Jul 2022 06:49:18 +0000
-Subject: [PATCH 07/16] mm: vmpressure: don't count proactive reclaim in
+Subject: [PATCH 06/15] mm: vmpressure: don't count proactive reclaim in
  vmpressure
 
 vmpressure is used in cgroup v1 to notify userspace of reclaim
@@ -550,10 +511,10 @@ index f7d9a68..0969e64 100644
 2.37.1.377.g679aad9e82
 
 
-From 83c8273e636223314107e9ecf47e90977716aee8 Mon Sep 17 00:00:00 2001
+From 4306c6e686a5686af86931b7b4288bcfe3c2c4c9 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:23 -0500
-Subject: [PATCH 08/16] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 07/15] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -853,10 +814,10 @@ index 0000000..ae92aa5
 2.37.1.377.g679aad9e82
 
 
-From 3e6331f0894e1bfd059fb354ce17067d1906c1f0 Mon Sep 17 00:00:00 2001
+From 41be4bbd71cdea70dc401cd51e6f2a1a33cbfde4 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:24 -0500
-Subject: [PATCH 09/16] leds: trigger: Add block device LED trigger
+Subject: [PATCH 08/15] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -2048,10 +2009,10 @@ index 0000000..999c48a
 2.37.1.377.g679aad9e82
 
 
-From cdff9f9c73288a01a21da260bcf7e31e0721bc98 Mon Sep 17 00:00:00 2001
+From 17e3de70f80bb317914b4085a05b560d1e868583 Mon Sep 17 00:00:00 2001
 From: Philip Yang <Philip.Yang@amd.com>
 Date: Fri, 22 Jul 2022 15:07:00 -0400
-Subject: [PATCH 10/16] drm/amdgpu: Allow TTM to evict svm bo from same process
+Subject: [PATCH 09/15] drm/amdgpu: Allow TTM to evict svm bo from same process
 
 To support SVM range VRAM overcommitment, TTM should be able to evict
 svm bo of same process to system memory, to get space to alloc new svm
@@ -2098,10 +2059,10 @@ index 1d0dbff..469785d 100644
 2.37.1.377.g679aad9e82
 
 
-From 0a1c570e422cd5dc37e7033d8f66c8cf4bce092c Mon Sep 17 00:00:00 2001
+From b210422f321514d77cd895c7147b421412897622 Mon Sep 17 00:00:00 2001
 From: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
 Date: Sun, 17 Jul 2022 10:36:13 +0200
-Subject: [PATCH 11/16] f2fs: Delete f2fs_copy_page() and replace with
+Subject: [PATCH 10/15] f2fs: Delete f2fs_copy_page() and replace with
  memcpy_page()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2174,10 +2135,10 @@ index ecd833b..dd2d291 100644
 2.37.1.377.g679aad9e82
 
 
-From 651645da502d12288567b4c16da9462ddc28d529 Mon Sep 17 00:00:00 2001
+From d044dc326a53ece374bcdbdb448617c7ddea1a2c Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Sun, 14 Aug 2022 12:37:49 +0200
-Subject: [PATCH 12/16] x86/microcode/AMD: Attempt applying on every logical
+Subject: [PATCH 11/15] x86/microcode/AMD: Attempt applying on every logical
  thread
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2313,10 +2274,10 @@ index 8b2fcdf..a575dbb 100644
 2.37.1.377.g679aad9e82
 
 
-From d6a23c79f195e1b2550984f082a5055cce919178 Mon Sep 17 00:00:00 2001
+From e665f8632be256f826b1793571a29daf9721d9dd Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 08:53:42 -0700
-Subject: [PATCH 13/16] x86/kvm: Simplify FOP_SETCC()
+Subject: [PATCH 12/15] x86/kvm: Simplify FOP_SETCC()
 
 SETCC_ALIGN and FOP_ALIGN are both 16.  Remove the special casing for
 FOP_SETCC() and just make it a normal fastop.
@@ -2374,10 +2335,10 @@ index b1904f5..40b3475 100644
 2.37.1.377.g679aad9e82
 
 
-From 726e5186b528b67719f3d17ee1a8649fb55d2956 Mon Sep 17 00:00:00 2001
+From b74aae7d5cfc6ea9fce0f75a39de818eace5053a Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 09:26:57 -0700
-Subject: [PATCH 14/16] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
+Subject: [PATCH 13/15] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
 
 This warning isn't very useful: why would you put ANNOTATE_NOENDBR on
 ENDBR, and if you did, what's the harm?
@@ -2414,10 +2375,10 @@ index 31c719f..93f4444 100644
 2.37.1.377.g679aad9e82
 
 
-From 13a006e7337b03ae51ff580b3b38a7eeffab1d73 Mon Sep 17 00:00:00 2001
+From 5ea2bf8f4dff3ec8c690def7d98da0c02463c807 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 3 Aug 2022 20:15:04 +0800
-Subject: [PATCH 15/16] sbitmap: fix possible io hung due to lost wakeup
+Subject: [PATCH 14/15] sbitmap: fix possible io hung due to lost wakeup
 
 There are two problems can lead to lost wakeup:
 
@@ -2549,10 +2510,10 @@ index 29eb048..1f31147 100644
 2.37.1.377.g679aad9e82
 
 
-From 83d2ca7126642fd5861b0d6cd4eb29397672da01 Mon Sep 17 00:00:00 2001
+From 569b11861daacd8866b0d1e8575e5abf3a636cf1 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Wed, 24 Aug 2022 17:13:26 +0200
-Subject: [PATCH 16/16] x86/sev: Mark snp_abort() noreturn
+Subject: [PATCH 15/15] x86/sev: Mark snp_abort() noreturn
 
 Mark both the function prototype and definition as noreturn in order to
 prevent the compiler from doing transformations which confuse objtool
