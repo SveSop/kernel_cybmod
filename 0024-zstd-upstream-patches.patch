@@ -1,7 +1,7 @@
-From dd90f8fbd0d779d5fd5285309d59ce8b6302f5fc Mon Sep 17 00:00:00 2001
+From b638b6865604f8264ba9eed9b908f398b77f16e0 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:41:53 -0800
-Subject: [PATCH 1/2] lib: zstd: Remove large inline functions in zstd_lazy.c
+Subject: [PATCH 1/3] lib: zstd: Remove large inline functions in zstd_lazy.c
 
 Backport of upstream PR #2828 [0].
 
@@ -321,10 +321,10 @@ index fb54d4e28..1db22db5b 100644
 2.37.1.377.g679aad9e82
 
 
-From c0f290a1ad74b43184200fce8141a7773b2dfa60 Mon Sep 17 00:00:00 2001
+From 927658b3ed924fc47f2eaaf08a4ee5795941ad56 Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:56:42 -0800
-Subject: [PATCH 2/2] lib: zstd: Remove large inline functions from
+Subject: [PATCH 2/3] lib: zstd: Remove large inline functions from
  zstd_{double_,}fast.c
 
 Backport of upstream PR #2863 [0].
@@ -597,6 +597,35 @@ index 96b7d48e2..e0652e31d 100644
 +        return ZSTD_compressBlock_fast_extDict_7(ms, seqStore, rep, src, srcSize);
      }
  }
+-- 
+2.37.1.377.g679aad9e82
+
+
+From cd58f8ba9db71c2118776d1da66e80c1c7c3c5da Mon Sep 17 00:00:00 2001
+From: Jilin Yuan <yuanjilin@cdjrlc.com>
+Date: Fri, 2 Sep 2022 09:32:12 +0800
+Subject: [PATCH 3/3] lib: zstd: fix repeated words in comments
+
+Delete the redundant word 'the'.
+
+Signed-off-by: Jilin Yuan <yuanjilin@cdjrlc.com>
+---
+ lib/zstd/compress/zstd_compress.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/zstd/compress/zstd_compress.c b/lib/zstd/compress/zstd_compress.c
+index a4e916008..73fff4c60 100644
+--- a/lib/zstd/compress/zstd_compress.c
++++ b/lib/zstd/compress/zstd_compress.c
+@@ -4441,7 +4441,7 @@ static size_t ZSTD_validateSequence(U32 offCode, U32 matchLength,
+                                     size_t posInSrc, U32 windowLog, size_t dictSize, U32 minMatch) {
+     size_t offsetBound;
+     U32 windowSize = 1 << windowLog;
+-    /* posInSrc represents the amount of data the the decoder would decode up to this point.
++    /* posInSrc represents the amount of data the decoder would decode up to this point.
+      * As long as the amount of data decoded is less than or equal to window size, offsets may be
+      * larger than the total length of output decoded in order to reference the dict, even larger than
+      * window size. After output surpasses windowSize, we're limited to windowSize offsets again.
 -- 
 2.37.1.377.g679aad9e82
 

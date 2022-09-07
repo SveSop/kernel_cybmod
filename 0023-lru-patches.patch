@@ -1,7 +1,7 @@
-From 8b4da8c62b6d996dbc9cfa6fd319c5fd21c63779 Mon Sep 17 00:00:00 2001
+From ec0d343851170fcb495a8762f0a618a64f48aa90 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:10 -0600
-Subject: [PATCH 01/15] mm: x86, arm64: add arch_has_hw_pte_young()
+Subject: [PATCH 01/17] mm: x86, arm64: add arch_has_hw_pte_young()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -152,10 +152,10 @@ index 1c6027adc..a1f6eae8e 100644
 2.37.1.377.g679aad9e82
 
 
-From 83b6dccbb3dc68d72d95e2495a40676e1f2b03bb Mon Sep 17 00:00:00 2001
+From b2784aebf962755da86d80f9bbe52b6dc359f7c6 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:11 -0600
-Subject: [PATCH 02/15] mm: x86: add CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
+Subject: [PATCH 02/17] mm: x86: add CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -297,10 +297,10 @@ index 8eee31bc9..9c57c5cc4 100644
 2.37.1.377.g679aad9e82
 
 
-From be529f9654c68cb70074bc92812e56b24baf310e Mon Sep 17 00:00:00 2001
+From fac5324992f81976c24f9261a2c9170a6cd09c89 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:12 -0600
-Subject: [PATCH 03/15] mm/vmscan.c: refactor shrink_node()
+Subject: [PATCH 03/17] mm/vmscan.c: refactor shrink_node()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -556,10 +556,10 @@ index f7d9a683e..fddb9bd3c 100644
 2.37.1.377.g679aad9e82
 
 
-From 495a23b11c9c20e49128af0b7af0ce8e9bc66f68 Mon Sep 17 00:00:00 2001
+From 8cf59b87e985fc235fce67fbe65734ddfb2d7afb Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:13 -0600
-Subject: [PATCH 04/15] Revert "include/linux/mm_inline.h: fold
+Subject: [PATCH 04/17] Revert "include/linux/mm_inline.h: fold
  __update_lru_size() into its sole caller"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -620,10 +620,10 @@ index 7b25b53c4..fb8aadb81 100644
 2.37.1.377.g679aad9e82
 
 
-From f3ad3f330d5a1d617203de40e495482ad3d101c5 Mon Sep 17 00:00:00 2001
+From cf6f56617ae0d486ed6bcca0f78c0822dd40261d Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:14 -0600
-Subject: [PATCH 05/15] mm: multi-gen LRU: groundwork
+Subject: [PATCH 05/17] mm: multi-gen LRU: groundwork
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -737,7 +737,7 @@ index 0e537e580..5d3601507 100644
  		return 1;
  	}
 diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 7898e29bc..06fddf365 100644
+index 25b8860f4..8e22a55f5 100644
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
 @@ -1060,6 +1060,8 @@ vm_fault_t finish_mkwrite_fault(struct vm_fault *vmf);
@@ -1192,10 +1192,10 @@ index 169e64192..cee109f31 100644
  
  endmenu
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index 159650848..e117033d5 100644
+index 0f465e703..c0d5b1fd6 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2371,7 +2371,8 @@ static void __split_huge_page_tail(struct page *head, int tail,
+@@ -2394,7 +2394,8 @@ static void __split_huge_page_tail(struct page *head, int tail,
  #ifdef CONFIG_64BIT
  			 (1L << PG_arch_2) |
  #endif
@@ -1433,10 +1433,10 @@ index fddb9bd3c..1fcc0feed 100644
 2.37.1.377.g679aad9e82
 
 
-From ea968c73dce46f91db8ece62662131fcadc55105 Mon Sep 17 00:00:00 2001
+From 54e70365c7c91b74323cfe52213c8320958f1002 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:15 -0600
-Subject: [PATCH 06/15] mm: multi-gen LRU: minimal implementation
+Subject: [PATCH 06/17] mm: multi-gen LRU: minimal implementation
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -2896,10 +2896,10 @@ index 592569a89..84a9e0ab0 100644
 2.37.1.377.g679aad9e82
 
 
-From 6f6db205b0173af4cd45e2b47864e7f3e97af90a Mon Sep 17 00:00:00 2001
+From 026c84e80ddb8720c3570d1ad2950ba9011f284f Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:16 -0600
-Subject: [PATCH 07/15] mm: multi-gen LRU: exploit locality in rmap
+Subject: [PATCH 07/17] mm: multi-gen LRU: exploit locality in rmap
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -2985,7 +2985,7 @@ Tested-by: Vaibhav Jain <vaibhav@linux.ibm.com>
  8 files changed, 236 insertions(+), 2 deletions(-)
 
 diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 9ecead104..9d0fea17f 100644
+index c322b9826..13f18a25c 100644
 --- a/include/linux/memcontrol.h
 +++ b/include/linux/memcontrol.h
 @@ -444,6 +444,7 @@ static inline struct obj_cgroup *__folio_objcg(struct folio *folio)
@@ -3028,7 +3028,7 @@ index 9ecead104..9d0fea17f 100644
  /* idx can be of type enum memcg_stat_item or node_stat_item */
  static inline void mod_memcg_state(struct mem_cgroup *memcg,
  				   int idx, int val)
-@@ -1401,6 +1420,18 @@ static inline void folio_memcg_unlock(struct folio *folio)
+@@ -1412,6 +1431,18 @@ static inline void folio_memcg_unlock(struct folio *folio)
  {
  }
  
@@ -3048,7 +3048,7 @@ index 9ecead104..9d0fea17f 100644
  {
  }
 diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 06fddf365..7ee1a5e44 100644
+index 8e22a55f5..43ceffddc 100644
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
 @@ -1527,6 +1527,11 @@ static inline unsigned long folio_pfn(struct folio *folio)
@@ -3119,10 +3119,10 @@ index 7d58e8a73..743f8513f 100644
  	folio->memcg_data = (unsigned long)memcg;
  }
 diff --git a/mm/rmap.c b/mm/rmap.c
-index 746c05aca..301ccb4cf 100644
+index f6dd281df..aee9f4333 100644
 --- a/mm/rmap.c
 +++ b/mm/rmap.c
-@@ -830,6 +830,12 @@ static bool folio_referenced_one(struct folio *folio,
+@@ -833,6 +833,12 @@ static bool folio_referenced_one(struct folio *folio,
  		}
  
  		if (pvmw.pte) {
@@ -3391,10 +3391,10 @@ index f768d61e7..ec786fc55 100644
 2.37.1.377.g679aad9e82
 
 
-From e9d12a734fc58f0dbc595d4886cb0f9025b0a90f Mon Sep 17 00:00:00 2001
+From a0f274bc5efb05b7ae0d49fd9805695b2a82201f Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:17 -0600
-Subject: [PATCH 08/15] mm: multi-gen LRU: support page table walks
+Subject: [PATCH 08/17] mm: multi-gen LRU: support page table walks
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -3537,7 +3537,7 @@ index 1c6b477da..460549696 100644
  		mmap_read_unlock(old_mm);
  		BUG_ON(active_mm != old_mm);
 diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
-index 9d0fea17f..eca62345f 100644
+index 13f18a25c..4c0befe50 100644
 --- a/include/linux/memcontrol.h
 +++ b/include/linux/memcontrol.h
 @@ -350,6 +350,11 @@ struct mem_cgroup {
@@ -5076,10 +5076,10 @@ index ec786fc55..8e55a1ce1 100644
 2.37.1.377.g679aad9e82
 
 
-From f3285af6928a7e420ac4abee547ec1459212ef77 Mon Sep 17 00:00:00 2001
+From fe36c33ea267586fa105415371ef72eab93aa4d6 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:18 -0600
-Subject: [PATCH 09/15] mm: multi-gen LRU: optimize multiple memcgs
+Subject: [PATCH 09/17] mm: multi-gen LRU: optimize multiple memcgs
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -5313,10 +5313,10 @@ index 8e55a1ce1..f469a2740 100644
 2.37.1.377.g679aad9e82
 
 
-From 0d00b4ffba2e1e32b374625c5d8393673e1df0dc Mon Sep 17 00:00:00 2001
+From 7e1971c3429f5f78469ea5e4b0c700130e81b167 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:19 -0600
-Subject: [PATCH 10/15] mm: multi-gen LRU: kill switch
+Subject: [PATCH 10/17] mm: multi-gen LRU: kill switch
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -5806,10 +5806,10 @@ index f469a2740..4c8b47542 100644
 2.37.1.377.g679aad9e82
 
 
-From fcfc18358000d2d309cc94d215a4b3e179c2a7ae Mon Sep 17 00:00:00 2001
+From 4f1acedc9f035ac7ef05f3e488128511aafd1108 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:20 -0600
-Subject: [PATCH 11/15] mm: multi-gen LRU: thrashing prevention
+Subject: [PATCH 11/17] mm: multi-gen LRU: thrashing prevention
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -6016,10 +6016,10 @@ index 4c8b47542..1f2892a0d 100644
 2.37.1.377.g679aad9e82
 
 
-From 458d9d073e54436b74f8ea8abae895d55e5a4da5 Mon Sep 17 00:00:00 2001
+From cccb77da1e35db36979a34eb9864fcc1c7679220 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:21 -0600
-Subject: [PATCH 12/15] mm: multi-gen LRU: debugfs interface
+Subject: [PATCH 12/17] mm: multi-gen LRU: debugfs interface
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -6580,10 +6580,10 @@ index 1f2892a0d..fbcd298ad 100644
 2.37.1.377.g679aad9e82
 
 
-From 1c1c4ad17f734a28c46bc2b66c2b36674d947b73 Mon Sep 17 00:00:00 2001
+From cba32dedb00b3dc88acbf976e57e261117476584 Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:22 -0600
-Subject: [PATCH 13/15] mm: multi-gen LRU: admin guide
+Subject: [PATCH 13/17] mm: multi-gen LRU: admin guide
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -6839,10 +6839,10 @@ index fbcd298ad..7096ff783 100644
 2.37.1.377.g679aad9e82
 
 
-From 70a0adf29f6b0245af54ee1676aa505219840213 Mon Sep 17 00:00:00 2001
+From 8ae6e9a082de2397b259bbe5c9600138a74b50ee Mon Sep 17 00:00:00 2001
 From: Yu Zhao <yuzhao@google.com>
 Date: Wed, 6 Jul 2022 16:00:23 -0600
-Subject: [PATCH 14/15] mm: multi-gen LRU: design doc
+Subject: [PATCH 14/17] mm: multi-gen LRU: design doc
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -7049,29 +7049,263 @@ index 000000000..d7062c6a8
 2.37.1.377.g679aad9e82
 
 
-From b39ac639831816b7beec3ff8fd90b180d4e4bbbe Mon Sep 17 00:00:00 2001
-From: Peter Jung <admin@ptr1337.dev>
-Date: Mon, 8 Aug 2022 22:15:07 +0200
-Subject: [PATCH 15/15] Add Hz min_ttl_ms for thrashing prevention
+From 281e8638f5d743fb1e593357345e44302fc67a6e Mon Sep 17 00:00:00 2001
+From: Johannes Weiner <hannes@cmpxchg.org>
+Date: Tue, 2 Aug 2022 12:28:11 -0400
+Subject: [PATCH 15/17] mm: vmscan: fix extreme overreclaim and swap floods
 
-Signed-off-by: Peter Jung <admin@ptr1337.dev>
+During proactive reclaim, we sometimes observe severe overreclaim, with
+several thousand times more pages reclaimed than requested.
+
+This trace was obtained from shrink_lruvec() during such an instance:
+
+    prio:0 anon_cost:1141521 file_cost:7767
+    nr_reclaimed:4387406 nr_to_reclaim:1047 (or_factor:4190)
+    nr=[7161123 345 578 1111]
+
+While he reclaimer requested 4M, vmscan reclaimed close to 16G, most of it
+by swapping.  These requests take over a minute, during which the write()
+to memory.reclaim is unkillably stuck inside the kernel.
+
+Digging into the source, this is caused by the proportional reclaim
+bailout logic.  This code tries to resolve a fundamental conflict: to
+reclaim roughly what was requested, while also aging all LRUs fairly and
+in accordance to their size, swappiness, refault rates etc.  The way it
+attempts fairness is that once the reclaim goal has been reached, it stops
+scanning the LRUs with the smaller remaining scan targets, and adjusts the
+remainder of the bigger LRUs according to how much of the smaller LRUs was
+scanned.  It then finishes scanning that remainder regardless of the
+reclaim goal.
+
+This works fine if priority levels are low and the LRU lists are
+comparable in size.  However, in this instance, the cgroup that is
+targeted by proactive reclaim has almost no files left - they've already
+been squeezed out by proactive reclaim earlier - and the remaining anon
+pages are hot.  Anon rotations cause the priority level to drop to 0,
+which results in reclaim targeting all of anon (a lot) and all of file
+(almost nothing).  By the time reclaim decides to bail, it has scanned
+most or all of the file target, and therefor must also scan most or all of
+the enormous anon target.  This target is thousands of times larger than
+the reclaim goal, thus causing the overreclaim.
+
+The bailout code hasn't changed in years, why is this failing now?  The
+most likely explanations are two other recent changes in anon reclaim:
+
+1. Before the series starting with commit 5df741963d52 ("mm: fix LRU
+   balancing effect of new transparent huge pages"), the VM was
+   overall relatively reluctant to swap at all, even if swap was
+   configured. This means the LRU balancing code didn't come into play
+   as often as it does now, and mostly in high pressure situations
+   where pronounced swap activity wouldn't be as surprising.
+
+2. For historic reasons, shrink_lruvec() loops on the scan targets of
+   all LRU lists except the active anon one, meaning it would bail if
+   the only remaining pages to scan were active anon - even if there
+   were a lot of them.
+
+   Before the series starting with commit ccc5dc67340c ("mm/vmscan:
+   make active/inactive ratio as 1:1 for anon lru"), most anon pages
+   would live on the active LRU; the inactive one would contain only a
+   handful of preselected reclaim candidates. After the series, anon
+   gets aged similarly to file, and the inactive list is the default
+   for new anon pages as well, making it often the much bigger list.
+
+   As a result, the VM is now more likely to actually finish large
+   anon targets than before.
+
+Change the code such that only one SWAP_CLUSTER_MAX-sized nudge toward the
+larger LRU lists is made before bailing out on a met reclaim goal.
+
+This fixes the extreme overreclaim problem.
+
+Fairness is more subtle and harder to evaluate.  No obvious misbehavior
+was observed on the test workload, in any case.  Conceptually, fairness
+should primarily be a cumulative effect from regular, lower priority
+scans.  Once the VM is in trouble and needs to escalate scan targets to
+make forward progress, fairness needs to take a backseat.  This is also
+acknowledged by the myriad exceptions in get_scan_count().  This patch
+makes fairness decrease gradually, as it keeps fairness work static over
+increasing priority levels with growing scan targets.  This should make
+more sense - although we may have to re-visit the exact values.
+
+Link: https://lkml.kernel.org/r/20220802162811.39216-1-hannes@cmpxchg.org
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 ---
- mm/vmscan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vmscan.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 7096ff783..8d510f9d1 100644
+index 7096ff783..cf045ec16 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
-@@ -4434,7 +4434,7 @@ static bool age_lruvec(struct lruvec *lruvec, struct scan_control *sc, unsigned
+@@ -5727,8 +5727,8 @@ static void shrink_lruvec(struct lruvec *lruvec, struct scan_control *sc)
+ 	enum lru_list lru;
+ 	unsigned long nr_reclaimed = 0;
+ 	unsigned long nr_to_reclaim = sc->nr_to_reclaim;
++	bool proportional_reclaim;
+ 	struct blk_plug plug;
+-	bool scan_adjusted;
+ 
+ 	if (lru_gen_enabled()) {
+ 		lru_gen_shrink_lruvec(lruvec, sc);
+@@ -5751,8 +5751,8 @@ static void shrink_lruvec(struct lruvec *lruvec, struct scan_control *sc)
+ 	 * abort proportional reclaim if either the file or anon lru has already
+ 	 * dropped to zero at the first pass.
+ 	 */
+-	scan_adjusted = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
+-			 sc->priority == DEF_PRIORITY);
++	proportional_reclaim = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
++				sc->priority == DEF_PRIORITY);
+ 
+ 	blk_start_plug(&plug);
+ 	while (nr[LRU_INACTIVE_ANON] || nr[LRU_ACTIVE_FILE] ||
+@@ -5772,7 +5772,7 @@ static void shrink_lruvec(struct lruvec *lruvec, struct scan_control *sc)
+ 
+ 		cond_resched();
+ 
+-		if (nr_reclaimed < nr_to_reclaim || scan_adjusted)
++		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
+ 			continue;
+ 
+ 		/*
+@@ -5823,8 +5823,6 @@ static void shrink_lruvec(struct lruvec *lruvec, struct scan_control *sc)
+ 		nr_scanned = targets[lru] - nr[lru];
+ 		nr[lru] = targets[lru] * (100 - percentage) / 100;
+ 		nr[lru] -= min(nr[lru], nr_scanned);
+-
+-		scan_adjusted = true;
+ 	}
+ 	blk_finish_plug(&plug);
+ 	sc->nr_reclaimed += nr_reclaimed;
+-- 
+2.37.1.377.g679aad9e82
+
+
+From a1c2e4e968d9852e1d0c18c76766bb754a4b2f33 Mon Sep 17 00:00:00 2001
+From: Yang Yang <yang.yang29@zte.com.cn>
+Date: Mon, 8 Aug 2022 00:56:45 +0000
+Subject: [PATCH 16/17] mm/vmscan: define macros for refaults in struct lruvec
+
+The magic number 0 and 1 are used in several places in vmscan.c.
+Define macros for them to improve code readability.
+
+Link: https://lkml.kernel.org/r/20220808005644.1721066-1-yang.yang29@zte.com.cn
+Signed-off-by: Yang Yang <yang.yang29@zte.com.cn>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+---
+ include/linux/mmzone.h | 2 ++
+ mm/vmscan.c            | 8 ++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/include/linux/mmzone.h b/include/linux/mmzone.h
+index 472bd5335..e1b958a98 100644
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -306,6 +306,8 @@ static inline bool is_active_lru(enum lru_list lru)
+ 	return (lru == LRU_ACTIVE_ANON || lru == LRU_ACTIVE_FILE);
  }
  
- /* to protect the working set of the last N jiffies */
--static unsigned long lru_gen_min_ttl __read_mostly;
-+static unsigned long lru_gen_min_ttl __read_mostly = HZ;
++#define WORKINGSET_ANON 0
++#define WORKINGSET_FILE 1
+ #define ANON_AND_FILE 2
  
- static void lru_gen_age_node(struct pglist_data *pgdat, struct scan_control *sc)
- {
+ enum lruvec_flags {
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index cf045ec16..359f8c5ff 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2721,7 +2721,7 @@ static void prepare_scan_count(pg_data_t *pgdat, struct scan_control *sc)
+ 
+ 		refaults = lruvec_page_state(target_lruvec,
+ 				WORKINGSET_ACTIVATE_ANON);
+-		if (refaults != target_lruvec->refaults[0] ||
++		if (refaults != target_lruvec->refaults[WORKINGSET_ANON] ||
+ 			inactive_is_low(target_lruvec, LRU_INACTIVE_ANON))
+ 			sc->may_deactivate |= DEACTIVATE_ANON;
+ 		else
+@@ -2734,7 +2734,7 @@ static void prepare_scan_count(pg_data_t *pgdat, struct scan_control *sc)
+ 		 */
+ 		refaults = lruvec_page_state(target_lruvec,
+ 				WORKINGSET_ACTIVATE_FILE);
+-		if (refaults != target_lruvec->refaults[1] ||
++		if (refaults != target_lruvec->refaults[WORKINGSET_FILE] ||
+ 		    inactive_is_low(target_lruvec, LRU_INACTIVE_FILE))
+ 			sc->may_deactivate |= DEACTIVATE_FILE;
+ 		else
+@@ -6242,9 +6242,9 @@ static void snapshot_refaults(struct mem_cgroup *target_memcg, pg_data_t *pgdat)
+ 
+ 	target_lruvec = mem_cgroup_lruvec(target_memcg, pgdat);
+ 	refaults = lruvec_page_state(target_lruvec, WORKINGSET_ACTIVATE_ANON);
+-	target_lruvec->refaults[0] = refaults;
++	target_lruvec->refaults[WORKINGSET_ANON] = refaults;
+ 	refaults = lruvec_page_state(target_lruvec, WORKINGSET_ACTIVATE_FILE);
+-	target_lruvec->refaults[1] = refaults;
++	target_lruvec->refaults[WORKINGSET_FILE] = refaults;
+ }
+ 
+ /*
+-- 
+2.37.1.377.g679aad9e82
+
+
+From d89b997ef09be8dc0023ddb4fa7faf7012e801db Mon Sep 17 00:00:00 2001
+From: Yang Yang <yang.yang29@zte.com.cn>
+Date: Sat, 13 Aug 2022 08:07:58 +0000
+Subject: [PATCH 17/17] mm/vmscan: make the annotations of refaults code at the
+ right place
+
+After patch "mm/workingset: prepare the workingset detection
+infrastructure for anon LRU", we can handle the refaults of anonymous
+pages too.  So the annotations of refaults should cover both of anonymous
+pages and file pages.
+
+Link: https://lkml.kernel.org/r/20220813080757.59131-1-yang.yang29@zte.com.cn
+Fixes: 170b04b7ae4963 ("mm/workingset: prepare the workingset detection infrastructure for anon LRU")
+Signed-off-by: Yang Yang <yang.yang29@zte.com.cn>
+Signed-off-by: CGEL ZTE <cgel.zte@gmail.com>
+Cc: Joonsoo Kim <iamjoonsoo.kim@lge.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+---
+ mm/vmscan.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 359f8c5ff..f7b6a769a 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -2719,6 +2719,11 @@ static void prepare_scan_count(pg_data_t *pgdat, struct scan_control *sc)
+ 	if (!sc->force_deactivate) {
+ 		unsigned long refaults;
+ 
++		/*
++		 * When refaults are being observed, it means a new
++		 * workingset is being established. Deactivate to get
++		 * rid of any stale active pages quickly.
++		 */
+ 		refaults = lruvec_page_state(target_lruvec,
+ 				WORKINGSET_ACTIVATE_ANON);
+ 		if (refaults != target_lruvec->refaults[WORKINGSET_ANON] ||
+@@ -2727,11 +2732,6 @@ static void prepare_scan_count(pg_data_t *pgdat, struct scan_control *sc)
+ 		else
+ 			sc->may_deactivate &= ~DEACTIVATE_ANON;
+ 
+-		/*
+-		 * When refaults are being observed, it means a new
+-		 * workingset is being established. Deactivate to get
+-		 * rid of any stale active pages quickly.
+-		 */
+ 		refaults = lruvec_page_state(target_lruvec,
+ 				WORKINGSET_ACTIVATE_FILE);
+ 		if (refaults != target_lruvec->refaults[WORKINGSET_FILE] ||
 -- 
 2.37.1.377.g679aad9e82
 

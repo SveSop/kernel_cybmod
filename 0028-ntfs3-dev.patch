@@ -1,6 +1,6 @@
-From 79d0399b31dc1dcc04463c0b5d6cc5727b91db3b Mon Sep 17 00:00:00 2001
+From f030ce9b7f04cd008a96694c9f21f4b3226a931a Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 22 Aug 2022 14:53:37 +0200
+Date: Fri, 2 Sep 2022 10:45:16 +0200
 Subject: [PATCH] ntfs3-5.19: merge changes from dev tree
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -18,8 +18,8 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  fs/ntfs3/record.c  |  27 +--
  fs/ntfs3/run.c     | 108 +++++++--
  fs/ntfs3/super.c   |   9 +-
- fs/ntfs3/xattr.c   |  13 +-
- 14 files changed, 812 insertions(+), 312 deletions(-)
+ fs/ntfs3/xattr.c   |   6 +-
+ 14 files changed, 806 insertions(+), 311 deletions(-)
 
 diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
 index e8c00dda4..71f870d49 100644
@@ -2246,31 +2246,10 @@ index b41d7c824..47012c9bf 100644
   */
  static int ntfs_init_fs_context(struct fs_context *fc)
 diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index 1b8c89dbf..5bdff12a1 100644
+index e3d443ccb..6ae1f56b7 100644
 --- a/fs/ntfs3/xattr.c
 +++ b/fs/ntfs3/xattr.c
-@@ -118,7 +118,7 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 
- 		run_init(&run);
- 
--		err = attr_load_runs(attr_ea, ni, &run, NULL);
-+		err = attr_load_runs_range(ni, ATTR_EA, NULL, 0, &run, 0, size);
- 		if (!err)
- 			err = ntfs_read_run_nb(sbi, &run, 0, ea_p, size, NULL);
- 		run_close(&run);
-@@ -444,6 +444,11 @@ static noinline int ntfs_set_ea(struct inode *inode, const char *name,
- 		/* Delete xattr, ATTR_EA */
- 		ni_remove_attr_le(ni, attr, mi, le);
- 	} else if (attr->non_res) {
-+		err = attr_load_runs_range(ni, ATTR_EA, NULL, 0, &ea_run, 0,
-+					   size);
-+		if (err)
-+			goto out;
-+
- 		err = ntfs_sb_write_run(sbi, &ea_run, 0, ea_all, size, 0);
- 		if (err)
- 			goto out;
-@@ -706,13 +711,13 @@ int ntfs_init_acl(struct user_namespace *mnt_userns, struct inode *inode,
+@@ -709,13 +709,13 @@ int ntfs_init_acl(struct user_namespace *mnt_userns, struct inode *inode,
  		inode->i_default_acl = NULL;
  	}
  
