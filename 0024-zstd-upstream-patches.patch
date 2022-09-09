@@ -1,7 +1,7 @@
-From b638b6865604f8264ba9eed9b908f398b77f16e0 Mon Sep 17 00:00:00 2001
+From 3c0e7a4b452b882e410813bb099ebabef59272aa Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:41:53 -0800
-Subject: [PATCH 1/3] lib: zstd: Remove large inline functions in zstd_lazy.c
+Subject: [PATCH 1/4] lib: zstd: Remove large inline functions in zstd_lazy.c
 
 Backport of upstream PR #2828 [0].
 
@@ -318,13 +318,13 @@ index fb54d4e28..1db22db5b 100644
      U32 offset_1 = rep[0], offset_2 = rep[1];
  
 -- 
-2.37.1.377.g679aad9e82
+2.37.3.485.gbe1a02a17e
 
 
-From 927658b3ed924fc47f2eaaf08a4ee5795941ad56 Mon Sep 17 00:00:00 2001
+From 26ced542f0d3025a5552a8b5562384aad139e5ca Mon Sep 17 00:00:00 2001
 From: Nick Terrell <terrelln@fb.com>
 Date: Mon, 15 Nov 2021 20:56:42 -0800
-Subject: [PATCH 2/3] lib: zstd: Remove large inline functions from
+Subject: [PATCH 2/4] lib: zstd: Remove large inline functions from
  zstd_{double_,}fast.c
 
 Backport of upstream PR #2863 [0].
@@ -598,13 +598,13 @@ index 96b7d48e2..e0652e31d 100644
      }
  }
 -- 
-2.37.1.377.g679aad9e82
+2.37.3.485.gbe1a02a17e
 
 
-From cd58f8ba9db71c2118776d1da66e80c1c7c3c5da Mon Sep 17 00:00:00 2001
+From 73926c803083397a4e0283fd241e8e83b35f1713 Mon Sep 17 00:00:00 2001
 From: Jilin Yuan <yuanjilin@cdjrlc.com>
 Date: Fri, 2 Sep 2022 09:32:12 +0800
-Subject: [PATCH 3/3] lib: zstd: fix repeated words in comments
+Subject: [PATCH 3/4] lib: zstd: fix repeated words in comments
 
 Delete the redundant word 'the'.
 
@@ -627,5 +627,35 @@ index a4e916008..73fff4c60 100644
       * larger than the total length of output decoded in order to reference the dict, even larger than
       * window size. After output surpasses windowSize, we're limited to windowSize offsets again.
 -- 
-2.37.1.377.g679aad9e82
+2.37.3.485.gbe1a02a17e
+
+
+From e0ec8488151be3b5c38e1af5e561e8c14046950c Mon Sep 17 00:00:00 2001
+From: Thitat Auareesuksakul <thitat@flux.ci>
+Date: Thu, 25 Aug 2022 03:03:40 +0700
+Subject: [PATCH 4/4] scripts/extract-ikconfig: add zstd compression support
+
+Add extract-ikconfig support for kernel images compressed with zstd.
+
+Signed-off-by: Thitat Auareesuksakul <thitat@flux.ci>
+Tested-by: Nicolas Schier <n.schier@avm.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+---
+ scripts/extract-ikconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/scripts/extract-ikconfig b/scripts/extract-ikconfig
+index 3b42f255e..8df33e7d6 100755
+--- a/scripts/extract-ikconfig
++++ b/scripts/extract-ikconfig
+@@ -62,6 +62,7 @@ try_decompress 'BZh'          xy    bunzip2
+ try_decompress '\135\0\0\0'   xxx   unlzma
+ try_decompress '\211\114\132' xy    'lzop -d'
+ try_decompress '\002\041\114\030' xyy 'lz4 -d -l'
++try_decompress '\050\265\057\375' xxx unzstd
+ 
+ # Bail out:
+ echo "$me: Cannot find kernel config." >&2
+-- 
+2.37.3.485.gbe1a02a17e
 
