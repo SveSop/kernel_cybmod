@@ -1,6 +1,6 @@
-From 3ae2fb4e02291b9d4bf1492836becce8e1a663e6 Mon Sep 17 00:00:00 2001
+From c91600a04443a3c300ae26bc3ac768031c69c29d Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 8 Sep 2022 10:34:29 +0000
+Date: Thu, 15 Sep 2022 09:38:41 +0000
 Subject: [PATCH 5/5] debian changelog
 
 ---
@@ -8,19 +8,19 @@ Subject: [PATCH 5/5] debian changelog
  1 file changed, 3 insertions(+), 18645 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index b62a63262d6c..741012d35900 100644
+index b62a63262d6c..57483f3e2186 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,18648 +1,6 @@
 -linux (5.19.0-16.16) kinetic; urgency=medium
-+linux (5.19.8-051908.202209081034) kinetic; urgency=low
++linux (5.19.9-051909.202209150938) kinetic; urgency=low
  
 -  * kinetic/linux: 5.19.0-16.16 -proposed tracker (LP: #1988707)
-+  Mainline build at commit: v5.19.8
++  Mainline build at commit: v5.19.9
  
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@kathleen>  Thu, 08 Sep 2022 10:34:29 +0000
++ -- Mainline Build <kernel@kathleen>  Thu, 15 Sep 2022 09:38:41 +0000
  
 -  * Kinetic update: v5.19.7 upstream stable release (LP: #1988733)
 -    - drm/vc4: hdmi: Rework power up

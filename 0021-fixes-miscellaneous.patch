@@ -1,7 +1,7 @@
-From 9c50717a20347e13e382e78515a63179020212b9 Mon Sep 17 00:00:00 2001
+From c77996befd288f217e3518588749391a06a2a667 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 01/19] ZEN: mm: Lower the non-hugetlbpage pageblock size to
+Subject: [PATCH 01/18] ZEN: mm: Lower the non-hugetlbpage pageblock size to
  reduce scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -47,10 +47,10 @@ index 83c724805..d2b8741ea 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 1a27404d171f9eace4dc826a6f310e5aca437986 Mon Sep 17 00:00:00 2001
+From 9143acedb817051f27f22b8e48c6ebac06e5a2e2 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 02/19] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 02/18] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -90,10 +90,10 @@ index 09fa8a948..102187cda 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 9c6dd91364069bc975f39786952aed5eed55bc4f Mon Sep 17 00:00:00 2001
+From fe9c276543ccecec81d6a7e22c4959d2f2d02d2c Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 03/19] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 03/18] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -166,10 +166,10 @@ index 102187cda..b1904f5ec 100644
 2.37.3.485.gbe1a02a17e
 
 
-From f0123c2d843c4d3c61114d0b58036282dfa06ec9 Mon Sep 17 00:00:00 2001
+From 43aae04b90313dfba6f0322cf6b379423db24389 Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Fri, 24 Jun 2022 16:14:12 +0200
-Subject: [PATCH 04/19] compiler-gcc.h: remove ancient workaround for gcc PR
+Subject: [PATCH 04/18] compiler-gcc.h: remove ancient workaround for gcc PR
  58670
 
 The workaround for 'asm goto' miscompilation introduces a compiler barrier
@@ -240,10 +240,10 @@ index a0c55eeae..9b157b710 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 5ff038d1ce8fe811a6d1475959c0a2426e9bc0f1 Mon Sep 17 00:00:00 2001
+From a17f804a3d2f889bb0d53e610e433fcb4a90cca9 Mon Sep 17 00:00:00 2001
 From: Chuanhong Guo <gch981213@gmail.com>
 Date: Tue, 12 Jul 2022 10:00:58 +0800
-Subject: [PATCH 05/19] ACPI: skip IRQ override on AMD Zen platforms
+Subject: [PATCH 05/18] ACPI: skip IRQ override on AMD Zen platforms
 
 IRQ override isn't needed on modern AMD Zen systems.
 There's an active low keyboard IRQ on AMD Ryzen 6000 and it will stay
@@ -287,10 +287,10 @@ index c2d494784..510cdec37 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 192de5cf6836a020eca8ce172c22b7a957775cde Mon Sep 17 00:00:00 2001
+From b7acb62ce08237641921c2273e85659aa028780b Mon Sep 17 00:00:00 2001
 From: Yosry Ahmed <yosryahmed@google.com>
 Date: Thu, 14 Jul 2022 06:49:18 +0000
-Subject: [PATCH 06/19] mm: vmpressure: don't count proactive reclaim in
+Subject: [PATCH 06/18] mm: vmpressure: don't count proactive reclaim in
  vmpressure
 
 vmpressure is used in cgroup v1 to notify userspace of reclaim
@@ -511,10 +511,10 @@ index f7d9a683e..0969e6408 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 3182f0cfd95dd48e9cc5b4897b7e54c070c09a2d Mon Sep 17 00:00:00 2001
+From cb4402ca8729ca8db8814b478f76b29599c905e2 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:23 -0500
-Subject: [PATCH 07/19] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 07/18] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -814,10 +814,10 @@ index 000000000..ae92aa559
 2.37.3.485.gbe1a02a17e
 
 
-From 9b54577181b981c026ce08d1ab6a88ab7fa2e5cc Mon Sep 17 00:00:00 2001
+From 47587b837217a2be55243b11ae49bc03605ea1ec Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:24 -0500
-Subject: [PATCH 08/19] leds: trigger: Add block device LED trigger
+Subject: [PATCH 08/18] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -2009,10 +2009,10 @@ index 000000000..999c48a7a
 2.37.3.485.gbe1a02a17e
 
 
-From c3b08fa75ebac477f92a117d8348b94f0298981b Mon Sep 17 00:00:00 2001
+From 1c4fbfdd5dfeaa4bce7505e7b6fe9e4e2d2846de Mon Sep 17 00:00:00 2001
 From: Philip Yang <Philip.Yang@amd.com>
 Date: Fri, 22 Jul 2022 15:07:00 -0400
-Subject: [PATCH 09/19] drm/amdgpu: Allow TTM to evict svm bo from same process
+Subject: [PATCH 09/18] drm/amdgpu: Allow TTM to evict svm bo from same process
 
 To support SVM range VRAM overcommitment, TTM should be able to evict
 svm bo of same process to system memory, to get space to alloc new svm
@@ -2059,10 +2059,10 @@ index 1d0dbff87..469785d33 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 2d3cdf883bef3ee540a30ec89726d96cda44158c Mon Sep 17 00:00:00 2001
+From 70b916722791dbf20a15fe3c5f4f5799a7fa158e Mon Sep 17 00:00:00 2001
 From: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
 Date: Sun, 17 Jul 2022 10:36:13 +0200
-Subject: [PATCH 10/19] f2fs: Delete f2fs_copy_page() and replace with
+Subject: [PATCH 10/18] f2fs: Delete f2fs_copy_page() and replace with
  memcpy_page()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2135,10 +2135,10 @@ index ecd833ba3..dd2d291d1 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 24897428d581343e5108cfa75b593edb42de41b8 Mon Sep 17 00:00:00 2001
+From 864b06b709475d67ae32276f464cb8aa4a15c7f2 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Sun, 14 Aug 2022 12:37:49 +0200
-Subject: [PATCH 11/19] x86/microcode/AMD: Attempt applying on every logical
+Subject: [PATCH 11/18] x86/microcode/AMD: Attempt applying on every logical
  thread
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2274,10 +2274,10 @@ index 8b2fcdfa6..a575dbb4d 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 15f52940e1dca182330e4db4f5d0caeea5b0c9c1 Mon Sep 17 00:00:00 2001
+From 47275ed3fced8dbcb773657f3d51675504b94edc Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 08:53:42 -0700
-Subject: [PATCH 12/19] x86/kvm: Simplify FOP_SETCC()
+Subject: [PATCH 12/18] x86/kvm: Simplify FOP_SETCC()
 
 SETCC_ALIGN and FOP_ALIGN are both 16.  Remove the special casing for
 FOP_SETCC() and just make it a normal fastop.
@@ -2335,10 +2335,10 @@ index b1904f5ec..40b34758a 100644
 2.37.3.485.gbe1a02a17e
 
 
-From a119174107af716b14b55b56733374813389e11a Mon Sep 17 00:00:00 2001
+From 0f2076a873ade1ba3976e7f25c889eb60ccb4943 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 09:26:57 -0700
-Subject: [PATCH 13/19] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
+Subject: [PATCH 13/18] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
 
 This warning isn't very useful: why would you put ANNOTATE_NOENDBR on
 ENDBR, and if you did, what's the harm?
@@ -2358,10 +2358,10 @@ Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
  1 file changed, 3 deletions(-)
 
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 31c719f99..93f4444bb 100644
+index 5d87e0b0d..beec8cfdb 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
-@@ -2102,9 +2102,6 @@ static int read_noendbr_hints(struct objtool_file *file)
+@@ -2104,9 +2104,6 @@ static int read_noendbr_hints(struct objtool_file *file)
  			return -1;
  		}
  
@@ -2375,10 +2375,10 @@ index 31c719f99..93f4444bb 100644
 2.37.3.485.gbe1a02a17e
 
 
-From ab2e9e5463de74294208eae618cf896ebec96240 Mon Sep 17 00:00:00 2001
+From 8c58dbaaeff0284b6e9d83864252edc90b272b59 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 3 Aug 2022 20:15:04 +0800
-Subject: [PATCH 14/19] sbitmap: fix possible io hung due to lost wakeup
+Subject: [PATCH 14/18] sbitmap: fix possible io hung due to lost wakeup
 
 There are two problems can lead to lost wakeup:
 
@@ -2510,415 +2510,85 @@ index 29eb04842..1f3114787 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 5437d0a1dfae8b8b7918dee45c61ba6dc73c991c Mon Sep 17 00:00:00 2001
-From: Borislav Petkov <bp@suse.de>
-Date: Wed, 24 Aug 2022 17:13:26 +0200
-Subject: [PATCH 15/19] x86/sev: Mark snp_abort() noreturn
+From 7fdda82bad93c0e0f71f9891f6940fdb9280efda Mon Sep 17 00:00:00 2001
+From: Liu Song <liusong@linux.alibaba.com>
+Date: Fri, 26 Aug 2022 11:14:13 +0800
+Subject: [PATCH 15/18] sbitmap: remove unnecessary code in
+ __sbitmap_queue_get_batch
 
-Mark both the function prototype and definition as noreturn in order to
-prevent the compiler from doing transformations which confuse objtool
-like so:
+If "nr + nr_tags <= map_depth", then the value of nr_tags will not be
+greater than map_depth, so no additional comparison is required.
 
-  vmlinux.o: warning: objtool: sme_enable+0x71: unreachable instruction
-
-This triggers with gcc-12.
-
-Add it and sev_es_terminate() to the objtool noreturn tracking array
-too. Sort it while at it.
-
-Suggested-by: Michael Matz <matz@suse.de>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Acked-by: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220824152420.20547-1-bp@alien8.de
+Signed-off-by: Liu Song <liusong@linux.alibaba.com>
+Link: https://lore.kernel.org/r/1661483653-27326-1-git-send-email-liusong@linux.alibaba.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 ---
- arch/x86/include/asm/sev.h |  2 +-
- arch/x86/kernel/sev.c      |  2 +-
- tools/objtool/check.c      | 34 ++++++++++++++++++----------------
- 3 files changed, 20 insertions(+), 18 deletions(-)
+ lib/sbitmap.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/include/asm/sev.h b/arch/x86/include/asm/sev.h
-index 4a23e52fe..ebc271bb6 100644
---- a/arch/x86/include/asm/sev.h
-+++ b/arch/x86/include/asm/sev.h
-@@ -195,7 +195,7 @@ void snp_set_memory_shared(unsigned long vaddr, unsigned int npages);
- void snp_set_memory_private(unsigned long vaddr, unsigned int npages);
- void snp_set_wakeup_secondary_cpu(void);
- bool snp_init(struct boot_params *bp);
--void snp_abort(void);
-+void __init __noreturn snp_abort(void);
- int snp_issue_guest_request(u64 exit_code, struct snp_req_data *input, unsigned long *fw_err);
- #else
- static inline void sev_es_ist_enter(struct pt_regs *regs) { }
-diff --git a/arch/x86/kernel/sev.c b/arch/x86/kernel/sev.c
-index 4f84c3f11..a428c6233 100644
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -2112,7 +2112,7 @@ bool __init snp_init(struct boot_params *bp)
- 	return true;
- }
+diff --git a/lib/sbitmap.c b/lib/sbitmap.c
+index 1f3114787..a39b1a877 100644
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -533,10 +533,9 @@ unsigned long __sbitmap_queue_get_batch(struct sbitmap_queue *sbq, int nr_tags,
+ 		nr = find_first_zero_bit(&map->word, map_depth);
+ 		if (nr + nr_tags <= map_depth) {
+ 			atomic_long_t *ptr = (atomic_long_t *) &map->word;
+-			int map_tags = min_t(int, nr_tags, map_depth);
+ 			unsigned long val, ret;
  
--void __init snp_abort(void)
-+void __init __noreturn snp_abort(void)
- {
- 	sev_es_terminate(SEV_TERM_SET_GEN, GHCB_SNP_UNSUPPORTED);
- }
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 93f4444bb..beec8cfdb 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -162,32 +162,34 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
- 
- 	/*
- 	 * Unfortunately these have to be hard coded because the noreturn
--	 * attribute isn't provided in ELF data.
-+	 * attribute isn't provided in ELF data. Keep 'em sorted.
- 	 */
- 	static const char * const global_noreturns[] = {
-+		"__invalid_creds",
-+		"__module_put_and_kthread_exit",
-+		"__reiserfs_panic",
- 		"__stack_chk_fail",
--		"panic",
-+		"__ubsan_handle_builtin_unreachable",
-+		"cpu_bringup_and_idle",
-+		"cpu_startup_entry",
- 		"do_exit",
-+		"do_group_exit",
- 		"do_task_dead",
--		"kthread_exit",
--		"make_task_dead",
--		"__module_put_and_kthread_exit",
-+		"ex_handler_msr_mce",
-+		"fortify_panic",
- 		"kthread_complete_and_exit",
--		"__reiserfs_panic",
-+		"kthread_exit",
-+		"kunit_try_catch_throw",
- 		"lbug_with_loc",
--		"fortify_panic",
--		"usercopy_abort",
- 		"machine_real_restart",
-+		"make_task_dead",
-+		"panic",
- 		"rewind_stack_and_make_dead",
--		"kunit_try_catch_throw",
--		"xen_start_kernel",
--		"cpu_bringup_and_idle",
--		"do_group_exit",
-+		"sev_es_terminate",
-+		"snp_abort",
- 		"stop_this_cpu",
--		"__invalid_creds",
--		"cpu_startup_entry",
--		"__ubsan_handle_builtin_unreachable",
--		"ex_handler_msr_mce",
-+		"usercopy_abort",
-+		"xen_start_kernel",
- 	};
- 
- 	if (!func)
+-			get_mask = ((1UL << map_tags) - 1) << nr;
++			get_mask = ((1UL << nr_tags) - 1) << nr;
+ 			do {
+ 				val = READ_ONCE(map->word);
+ 				if ((val & ~get_mask) != val)
+@@ -547,7 +546,7 @@ unsigned long __sbitmap_queue_get_batch(struct sbitmap_queue *sbq, int nr_tags,
+ 			if (get_mask) {
+ 				*offset = nr + (index << sb->shift);
+ 				update_alloc_hint_after_get(sb, depth, hint,
+-							*offset + map_tags - 1);
++							*offset + nr_tags - 1);
+ 				return get_mask;
+ 			}
+ 		}
 -- 
 2.37.3.485.gbe1a02a17e
 
 
-From 2aca84b89e5397682ba953e6cdb34811dd018dfe Mon Sep 17 00:00:00 2001
-From: Keith Busch <kbusch@kernel.org>
-Date: Thu, 25 Aug 2022 07:53:12 -0700
-Subject: [PATCH 16/19] sbitmap: fix batched wait_cnt accounting
+From 2ec6ab5a1045df0ed58126dfaba7e8bd45d9469d Mon Sep 17 00:00:00 2001
+From: Jan Kara <jack@suse.cz>
+Date: Thu, 8 Sep 2022 15:09:37 +0200
+Subject: [PATCH 16/18] sbitmap: Avoid leaving waitqueue in invalid state in
+ __sbq_wake_up()
 
-Batched completions can clear multiple bits, but we're only decrementing
-the wait_cnt by one each time. This can cause waiters to never be woken,
-stalling IO. Use the batched count instead.
+When __sbq_wake_up() decrements wait_cnt to 0 but races with someone
+else waking the waiter on the waitqueue (so the waitqueue becomes
+empty), it exits without reseting wait_cnt to wake_batch number. Once
+wait_cnt is 0, nobody will ever reset the wait_cnt or wake the new
+waiters resulting in possible deadlocks or busyloops. Fix the problem by
+making sure we reset wait_cnt even if we didn't wake up anybody in the
+end.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=215679
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 040b83fcecfb ("sbitmap: fix possible io hung due to lost wakeup")
+Reported-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
 ---
- block/blk-mq-tag.c      |  2 +-
- include/linux/sbitmap.h |  3 ++-
- lib/sbitmap.c           | 31 +++++++++++++++++--------------
- 3 files changed, 20 insertions(+), 16 deletions(-)
+ lib/sbitmap.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
-index 2dcd738c6..7aea93047 100644
---- a/block/blk-mq-tag.c
-+++ b/block/blk-mq-tag.c
-@@ -200,7 +200,7 @@ unsigned int blk_mq_get_tag(struct blk_mq_alloc_data *data)
- 		 * other allocations on previous queue won't be starved.
- 		 */
- 		if (bt != bt_prev)
--			sbitmap_queue_wake_up(bt_prev);
-+			sbitmap_queue_wake_up(bt_prev, 1);
- 
- 		ws = bt_wait_ptr(bt, data->hctx);
- 	} while (1);
-diff --git a/include/linux/sbitmap.h b/include/linux/sbitmap.h
-index 8f5a86e21..4d2d5205a 100644
---- a/include/linux/sbitmap.h
-+++ b/include/linux/sbitmap.h
-@@ -575,8 +575,9 @@ void sbitmap_queue_wake_all(struct sbitmap_queue *sbq);
-  * sbitmap_queue_wake_up() - Wake up some of waiters in one waitqueue
-  * on a &struct sbitmap_queue.
-  * @sbq: Bitmap queue to wake up.
-+ * @nr: Number of bits cleared.
-  */
--void sbitmap_queue_wake_up(struct sbitmap_queue *sbq);
-+void sbitmap_queue_wake_up(struct sbitmap_queue *sbq, int nr);
- 
- /**
-  * sbitmap_queue_show() - Dump &struct sbitmap_queue information to a &struct
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 1f3114787..a8aae1fc5 100644
+index a39b1a877..47cd8fb89 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
-@@ -600,34 +600,38 @@ static struct sbq_wait_state *sbq_wake_ptr(struct sbitmap_queue *sbq)
- 	return NULL;
- }
- 
--static bool __sbq_wake_up(struct sbitmap_queue *sbq)
-+static bool __sbq_wake_up(struct sbitmap_queue *sbq, int nr)
- {
+@@ -604,6 +604,7 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
  	struct sbq_wait_state *ws;
--	unsigned int wake_batch;
--	int wait_cnt;
-+	int wake_batch, wait_cnt, cur;
+ 	unsigned int wake_batch;
+ 	int wait_cnt;
++	bool ret;
  
  	ws = sbq_wake_ptr(sbq);
--	if (!ws)
-+	if (!ws || !nr)
- 		return false;
- 
--	wait_cnt = atomic_dec_return(&ws->wait_cnt);
-+	wake_batch = READ_ONCE(sbq->wake_batch);
-+	cur = atomic_read(&ws->wait_cnt);
-+	do {
-+		if (cur <= 0)
-+			return true;
-+		wait_cnt = cur - nr;
-+	} while (!atomic_try_cmpxchg(&ws->wait_cnt, &cur, wait_cnt));
-+
- 	/*
- 	 * For concurrent callers of this, callers should call this function
- 	 * again to wakeup a new batch on a different 'ws'.
- 	 */
--	if (wait_cnt < 0 || !waitqueue_active(&ws->wait))
-+	if (!waitqueue_active(&ws->wait))
- 		return true;
- 
- 	if (wait_cnt > 0)
- 		return false;
- 
--	wake_batch = READ_ONCE(sbq->wake_batch);
--
- 	/*
- 	 * Wake up first in case that concurrent callers decrease wait_cnt
- 	 * while waitqueue is empty.
- 	 */
--	wake_up_nr(&ws->wait, wake_batch);
-+	wake_up_nr(&ws->wait, max(wake_batch, nr));
- 
- 	/*
- 	 * Pairs with the memory barrier in sbitmap_queue_resize() to
-@@ -652,12 +656,11 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
- 	return false;
- }
- 
--void sbitmap_queue_wake_up(struct sbitmap_queue *sbq)
-+void sbitmap_queue_wake_up(struct sbitmap_queue *sbq, int nr)
- {
--	while (__sbq_wake_up(sbq))
-+	while (__sbq_wake_up(sbq, nr))
- 		;
- }
--EXPORT_SYMBOL_GPL(sbitmap_queue_wake_up);
- 
- static inline void sbitmap_update_cpu_hint(struct sbitmap *sb, int cpu, int tag)
- {
-@@ -694,7 +697,7 @@ void sbitmap_queue_clear_batch(struct sbitmap_queue *sbq, int offset,
- 		atomic_long_andnot(mask, (atomic_long_t *) addr);
- 
- 	smp_mb__after_atomic();
--	sbitmap_queue_wake_up(sbq);
-+	sbitmap_queue_wake_up(sbq, nr_tags);
- 	sbitmap_update_cpu_hint(&sbq->sb, raw_smp_processor_id(),
- 					tags[nr_tags - 1] - offset);
- }
-@@ -722,7 +725,7 @@ void sbitmap_queue_clear(struct sbitmap_queue *sbq, unsigned int nr,
- 	 * waiter. See the comment on waitqueue_active().
- 	 */
- 	smp_mb__after_atomic();
--	sbitmap_queue_wake_up(sbq);
-+	sbitmap_queue_wake_up(sbq, 1);
- 	sbitmap_update_cpu_hint(&sbq->sb, cpu, nr);
- }
- EXPORT_SYMBOL_GPL(sbitmap_queue_clear);
--- 
-2.37.3.485.gbe1a02a17e
-
-
-From 0be8fe1813624710ce2a628329f5b35d428e8526 Mon Sep 17 00:00:00 2001
-From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Thu, 8 Sep 2022 13:20:38 +0200
-Subject: [PATCH 17/19] Revert "sbitmap: fix batched wait_cnt accounting"
-
-This reverts commit 4266a37dfa80a0851a9ce13991e67ef144f86f38.
-
-Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
----
- block/blk-mq-tag.c      |  2 +-
- include/linux/sbitmap.h |  3 +--
- lib/sbitmap.c           | 31 ++++++++++++++-----------------
- 3 files changed, 16 insertions(+), 20 deletions(-)
-
-diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
-index 7aea93047..2dcd738c6 100644
---- a/block/blk-mq-tag.c
-+++ b/block/blk-mq-tag.c
-@@ -200,7 +200,7 @@ unsigned int blk_mq_get_tag(struct blk_mq_alloc_data *data)
- 		 * other allocations on previous queue won't be starved.
- 		 */
- 		if (bt != bt_prev)
--			sbitmap_queue_wake_up(bt_prev, 1);
-+			sbitmap_queue_wake_up(bt_prev);
- 
- 		ws = bt_wait_ptr(bt, data->hctx);
- 	} while (1);
-diff --git a/include/linux/sbitmap.h b/include/linux/sbitmap.h
-index 4d2d5205a..8f5a86e21 100644
---- a/include/linux/sbitmap.h
-+++ b/include/linux/sbitmap.h
-@@ -575,9 +575,8 @@ void sbitmap_queue_wake_all(struct sbitmap_queue *sbq);
-  * sbitmap_queue_wake_up() - Wake up some of waiters in one waitqueue
-  * on a &struct sbitmap_queue.
-  * @sbq: Bitmap queue to wake up.
-- * @nr: Number of bits cleared.
-  */
--void sbitmap_queue_wake_up(struct sbitmap_queue *sbq, int nr);
-+void sbitmap_queue_wake_up(struct sbitmap_queue *sbq);
- 
- /**
-  * sbitmap_queue_show() - Dump &struct sbitmap_queue information to a &struct
-diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index a8aae1fc5..1f3114787 100644
---- a/lib/sbitmap.c
-+++ b/lib/sbitmap.c
-@@ -600,38 +600,34 @@ static struct sbq_wait_state *sbq_wake_ptr(struct sbitmap_queue *sbq)
- 	return NULL;
- }
- 
--static bool __sbq_wake_up(struct sbitmap_queue *sbq, int nr)
-+static bool __sbq_wake_up(struct sbitmap_queue *sbq)
- {
- 	struct sbq_wait_state *ws;
--	int wake_batch, wait_cnt, cur;
-+	unsigned int wake_batch;
-+	int wait_cnt;
- 
- 	ws = sbq_wake_ptr(sbq);
--	if (!ws || !nr)
-+	if (!ws)
- 		return false;
- 
--	wake_batch = READ_ONCE(sbq->wake_batch);
--	cur = atomic_read(&ws->wait_cnt);
--	do {
--		if (cur <= 0)
--			return true;
--		wait_cnt = cur - nr;
--	} while (!atomic_try_cmpxchg(&ws->wait_cnt, &cur, wait_cnt));
--
-+	wait_cnt = atomic_dec_return(&ws->wait_cnt);
- 	/*
- 	 * For concurrent callers of this, callers should call this function
- 	 * again to wakeup a new batch on a different 'ws'.
- 	 */
--	if (!waitqueue_active(&ws->wait))
-+	if (wait_cnt < 0 || !waitqueue_active(&ws->wait))
- 		return true;
- 
- 	if (wait_cnt > 0)
- 		return false;
- 
-+	wake_batch = READ_ONCE(sbq->wake_batch);
-+
- 	/*
- 	 * Wake up first in case that concurrent callers decrease wait_cnt
- 	 * while waitqueue is empty.
- 	 */
--	wake_up_nr(&ws->wait, max(wake_batch, nr));
-+	wake_up_nr(&ws->wait, wake_batch);
- 
- 	/*
- 	 * Pairs with the memory barrier in sbitmap_queue_resize() to
-@@ -656,11 +652,12 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq, int nr)
- 	return false;
- }
- 
--void sbitmap_queue_wake_up(struct sbitmap_queue *sbq, int nr)
-+void sbitmap_queue_wake_up(struct sbitmap_queue *sbq)
- {
--	while (__sbq_wake_up(sbq, nr))
-+	while (__sbq_wake_up(sbq))
- 		;
- }
-+EXPORT_SYMBOL_GPL(sbitmap_queue_wake_up);
- 
- static inline void sbitmap_update_cpu_hint(struct sbitmap *sb, int cpu, int tag)
- {
-@@ -697,7 +694,7 @@ void sbitmap_queue_clear_batch(struct sbitmap_queue *sbq, int offset,
- 		atomic_long_andnot(mask, (atomic_long_t *) addr);
- 
- 	smp_mb__after_atomic();
--	sbitmap_queue_wake_up(sbq, nr_tags);
-+	sbitmap_queue_wake_up(sbq);
- 	sbitmap_update_cpu_hint(&sbq->sb, raw_smp_processor_id(),
- 					tags[nr_tags - 1] - offset);
- }
-@@ -725,7 +722,7 @@ void sbitmap_queue_clear(struct sbitmap_queue *sbq, unsigned int nr,
- 	 * waiter. See the comment on waitqueue_active().
- 	 */
- 	smp_mb__after_atomic();
--	sbitmap_queue_wake_up(sbq, 1);
-+	sbitmap_queue_wake_up(sbq);
- 	sbitmap_update_cpu_hint(&sbq->sb, cpu, nr);
- }
- EXPORT_SYMBOL_GPL(sbitmap_queue_clear);
--- 
-2.37.3.485.gbe1a02a17e
-
-
-From 4371c2412ed2aefc16fa552f9313ae933a51b5be Mon Sep 17 00:00:00 2001
-From: Keith Busch <kbusch@kernel.org>
-Date: Tue, 6 Sep 2022 16:00:28 -0700
-Subject: [PATCH 18/19] sbitmap: check waitqueue_active prior to decrement
-
-The bitmap wait state may have set an active count, but doesn't have an
-active waiter due to racing with adding it. If that happens, the state's
-wait_cnt will be set at the wrong value, and could prevent future wakes
-until the atomic_dec wraps back to 0.
-
-Check the waitqueue_active before decrementing so that we don't need to
-account for fixing it up after.
-
-Fixes: 040b83fcecfb8 ("sbitmap: fix possible io hung due to lost wakeup")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
----
- lib/sbitmap.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 1f3114787..cf394b428 100644
---- a/lib/sbitmap.c
-+++ b/lib/sbitmap.c
-@@ -610,12 +610,16 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
  	if (!ws)
- 		return false;
- 
-+	if (!waitqueue_active(&ws->wait))
-+		return true;
-+
- 	wait_cnt = atomic_dec_return(&ws->wait_cnt);
-+
- 	/*
+@@ -614,12 +615,23 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
  	 * For concurrent callers of this, callers should call this function
  	 * again to wakeup a new batch on a different 'ws'.
  	 */
@@ -2926,15 +2596,97 @@ index 1f3114787..cf394b428 100644
 +	if (wait_cnt < 0)
  		return true;
  
++	/*
++	 * If we decremented queue without waiters, retry to avoid lost
++	 * wakeups.
++	 */
  	if (wait_cnt > 0)
+-		return false;
++		return !waitqueue_active(&ws->wait);
+ 
++	/*
++	 * When wait_cnt == 0, we have to be particularly careful as we are
++	 * responsible to reset wait_cnt regardless whether we've actually
++	 * woken up anybody. But in case we didn't wakeup anybody, we still
++	 * need to retry.
++	 */
++	ret = !waitqueue_active(&ws->wait);
+ 	wake_batch = READ_ONCE(sbq->wake_batch);
+ 
+ 	/*
+@@ -648,7 +660,7 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
+ 	sbq_index_atomic_inc(&sbq->wake_index);
+ 	atomic_set(&ws->wait_cnt, wake_batch);
+ 
+-	return false;
++	return ret;
+ }
+ 
+ void sbitmap_queue_wake_up(struct sbitmap_queue *sbq)
 -- 
 2.37.3.485.gbe1a02a17e
 
 
-From 065f1fd05d1c678e9b42ed434ca6e0808c7b1df4 Mon Sep 17 00:00:00 2001
+From 2ad6f30d17904e34b4bf3d953cecde50712aa324 Mon Sep 17 00:00:00 2001
+From: Uros Bizjak <ubizjak@gmail.com>
+Date: Thu, 8 Sep 2022 17:12:00 +0200
+Subject: [PATCH 17/18] sbitmap: Use atomic_long_try_cmpxchg in
+ __sbitmap_queue_get_batch
+
+Use atomic_long_try_cmpxchg instead of
+atomic_long_cmpxchg (*ptr, old, new) == old in __sbitmap_queue_get_batch.
+x86 CMPXCHG instruction returns success in ZF flag, so this change
+saves a compare after cmpxchg (and related move instruction in front
+of cmpxchg).
+
+Also, atomic_long_cmpxchg implicitly assigns old *ptr value to "old"
+when cmpxchg fails, enabling further code simplifications, e.g.
+an extra memory read can be avoided in the loop.
+
+No functional change intended.
+
+Cc: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Link: https://lore.kernel.org/r/20220908151200.9993-1-ubizjak@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+---
+ lib/sbitmap.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/lib/sbitmap.c b/lib/sbitmap.c
+index 47cd8fb89..cbfd2e677 100644
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -533,16 +533,16 @@ unsigned long __sbitmap_queue_get_batch(struct sbitmap_queue *sbq, int nr_tags,
+ 		nr = find_first_zero_bit(&map->word, map_depth);
+ 		if (nr + nr_tags <= map_depth) {
+ 			atomic_long_t *ptr = (atomic_long_t *) &map->word;
+-			unsigned long val, ret;
++			unsigned long val;
+ 
+ 			get_mask = ((1UL << nr_tags) - 1) << nr;
++			val = READ_ONCE(map->word);
+ 			do {
+-				val = READ_ONCE(map->word);
+ 				if ((val & ~get_mask) != val)
+ 					goto next;
+-				ret = atomic_long_cmpxchg(ptr, val, get_mask | val);
+-			} while (ret != val);
+-			get_mask = (get_mask & ~ret) >> nr;
++			} while (!atomic_long_try_cmpxchg(ptr, &val,
++							  get_mask | val));
++			get_mask = (get_mask & ~val) >> nr;
+ 			if (get_mask) {
+ 				*offset = nr + (index << sb->shift);
+ 				update_alloc_hint_after_get(sb, depth, hint,
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 0327b2986c471945136febb85cbbb420d8304e16 Mon Sep 17 00:00:00 2001
 From: Keith Busch <kbusch@kernel.org>
-Date: Tue, 6 Sep 2022 16:00:29 -0700
-Subject: [PATCH 19/19] sbitmap: fix batched wait_cnt accounting
+Date: Fri, 9 Sep 2022 11:40:22 -0700
+Subject: [PATCH 18/18] sbitmap: fix batched wait_cnt accounting
 
 Batched completions can clear multiple bits, but we're only decrementing
 the wait_cnt by one each time. This can cause waiters to never be woken,
@@ -2945,8 +2697,8 @@ Signed-off-by: Keith Busch <kbusch@kernel.org>
 ---
  block/blk-mq-tag.c      |  2 +-
  include/linux/sbitmap.h |  3 ++-
- lib/sbitmap.c           | 36 ++++++++++++++++++------------------
- 3 files changed, 21 insertions(+), 20 deletions(-)
+ lib/sbitmap.c           | 37 +++++++++++++++++++++++--------------
+ 3 files changed, 26 insertions(+), 16 deletions(-)
 
 diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
 index 2dcd738c6..7aea93047 100644
@@ -2977,31 +2729,30 @@ index 8f5a86e21..4d2d5205a 100644
  /**
   * sbitmap_queue_show() - Dump &struct sbitmap_queue information to a &struct
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index cf394b428..3b9c622a4 100644
+index cbfd2e677..624fa7f11 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
-@@ -600,27 +600,28 @@ static struct sbq_wait_state *sbq_wake_ptr(struct sbitmap_queue *sbq)
+@@ -599,24 +599,31 @@ static struct sbq_wait_state *sbq_wake_ptr(struct sbitmap_queue *sbq)
  	return NULL;
  }
  
 -static bool __sbq_wake_up(struct sbitmap_queue *sbq)
-+static bool __sbq_wake_up(struct sbitmap_queue *sbq, int nr)
++static bool __sbq_wake_up(struct sbitmap_queue *sbq, int *nr)
  {
  	struct sbq_wait_state *ws;
--	unsigned int wake_batch;
+ 	unsigned int wake_batch;
 -	int wait_cnt;
-+	int wake_batch, wait_cnt, cur;
++	int wait_cnt, cur, sub;
+ 	bool ret;
  
++	if (*nr <= 0)
++		return false;
++
  	ws = sbq_wake_ptr(sbq);
--	if (!ws)
-+	if (!ws || !nr)
+ 	if (!ws)
  		return false;
  
- 	if (!waitqueue_active(&ws->wait))
- 		return true;
- 
 -	wait_cnt = atomic_dec_return(&ws->wait_cnt);
--
 -	/*
 -	 * For concurrent callers of this, callers should call this function
 -	 * again to wakeup a new batch on a different 'ws'.
@@ -3014,38 +2765,40 @@ index cf394b428..3b9c622a4 100644
 +		 * For concurrent callers of this, callers should call this
 +		 * function again to wakeup a new batch on a different 'ws'.
 +		 */
-+		if (cur <= 0)
++		if (cur == 0)
 +			return true;
-+		wait_cnt = cur - nr;
++		sub = min(*nr, cur);
++		wait_cnt = cur - sub;
 +	} while (!atomic_try_cmpxchg(&ws->wait_cnt, &cur, wait_cnt));
  
- 	if (wait_cnt > 0)
- 		return false;
-@@ -631,7 +632,7 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
- 	 * Wake up first in case that concurrent callers decrease wait_cnt
- 	 * while waitqueue is empty.
- 	 */
--	wake_up_nr(&ws->wait, wake_batch);
-+	wake_up_nr(&ws->wait, wake_batch - wait_cnt);
- 
  	/*
- 	 * Pairs with the memory barrier in sbitmap_queue_resize() to
-@@ -656,12 +657,11 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
- 	return false;
+ 	 * If we decremented queue without waiters, retry to avoid lost
+@@ -625,6 +632,8 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
+ 	if (wait_cnt > 0)
+ 		return !waitqueue_active(&ws->wait);
+ 
++	*nr -= sub;
++
+ 	/*
+ 	 * When wait_cnt == 0, we have to be particularly careful as we are
+ 	 * responsible to reset wait_cnt regardless whether we've actually
+@@ -660,12 +669,12 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
+ 	sbq_index_atomic_inc(&sbq->wake_index);
+ 	atomic_set(&ws->wait_cnt, wake_batch);
+ 
+-	return ret;
++	return ret || *nr;
  }
  
 -void sbitmap_queue_wake_up(struct sbitmap_queue *sbq)
 +void sbitmap_queue_wake_up(struct sbitmap_queue *sbq, int nr)
  {
 -	while (__sbq_wake_up(sbq))
-+	while (__sbq_wake_up(sbq, nr))
++	while (__sbq_wake_up(sbq, &nr))
  		;
  }
--EXPORT_SYMBOL_GPL(sbitmap_queue_wake_up);
- 
- static inline void sbitmap_update_cpu_hint(struct sbitmap *sb, int cpu, int tag)
- {
-@@ -698,7 +698,7 @@ void sbitmap_queue_clear_batch(struct sbitmap_queue *sbq, int offset,
+ EXPORT_SYMBOL_GPL(sbitmap_queue_wake_up);
+@@ -705,7 +714,7 @@ void sbitmap_queue_clear_batch(struct sbitmap_queue *sbq, int offset,
  		atomic_long_andnot(mask, (atomic_long_t *) addr);
  
  	smp_mb__after_atomic();
@@ -3054,7 +2807,7 @@ index cf394b428..3b9c622a4 100644
  	sbitmap_update_cpu_hint(&sbq->sb, raw_smp_processor_id(),
  					tags[nr_tags - 1] - offset);
  }
-@@ -726,7 +726,7 @@ void sbitmap_queue_clear(struct sbitmap_queue *sbq, unsigned int nr,
+@@ -733,7 +742,7 @@ void sbitmap_queue_clear(struct sbitmap_queue *sbq, unsigned int nr,
  	 * waiter. See the comment on waitqueue_active().
  	 */
  	smp_mb__after_atomic();
