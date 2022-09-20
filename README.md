@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.19.9  
+0000 : Patch 5.19.10  
 0000 : ProjectC v5.19-r0  
 0002 : 5.19 Graysky's CPU optimization patches  
 0003 : v5.19-fsync1_futex_waitv  
@@ -12,6 +12,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0005 : zstd kernel settings  
 0010 : Ubuntu based config (See note below!)  
 0011 : Add-cybmod-version.patch  
+0015 : ZRAM entropy calculation patch  
 0020 : Clearlinux patches  
 0021 : Misc fixes  
 0022 : BFQ patchset  

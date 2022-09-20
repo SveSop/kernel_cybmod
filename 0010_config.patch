@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11661 @@
+@@ -0,0 +1,11663 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 5.19.9-cybmod9 Kernel Configuration
++# Linux/x86 5.19.10-cybmod10 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -2671,15 +2671,17 @@ new file mode 100644
 +CONFIG_PARIDE_ON26=m
 +CONFIG_BLK_DEV_PCIESSD_MTIP32XX=m
 +CONFIG_ZRAM=m
-+CONFIG_ZRAM_DEF_COMP_LZORLE=y
-+# CONFIG_ZRAM_DEF_COMP_ZSTD is not set
++# CONFIG_ZRAM_DEF_COMP_LZORLE is not set
++CONFIG_ZRAM_DEF_COMP_ZSTD=y
 +# CONFIG_ZRAM_DEF_COMP_LZ4 is not set
 +# CONFIG_ZRAM_DEF_COMP_LZO is not set
 +# CONFIG_ZRAM_DEF_COMP_LZ4HC is not set
 +# CONFIG_ZRAM_DEF_COMP_842 is not set
-+CONFIG_ZRAM_DEF_COMP="lzo-rle"
++CONFIG_ZRAM_DEF_COMP="zstd"
 +CONFIG_ZRAM_WRITEBACK=y
 +CONFIG_ZRAM_MEMORY_TRACKING=y
++CONFIG_ZRAM_ENTROPY=y
++CONFIG_ZRAM_ENTROPY_THRESHOLD=100000
 +CONFIG_BLK_DEV_LOOP=y
 +CONFIG_BLK_DEV_LOOP_MIN_COUNT=8
 +CONFIG_BLK_DEV_DRBD=m
