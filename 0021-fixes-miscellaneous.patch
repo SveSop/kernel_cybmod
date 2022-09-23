@@ -1,7 +1,7 @@
-From c77996befd288f217e3518588749391a06a2a667 Mon Sep 17 00:00:00 2001
+From af84769a04d8123bf7f5b11aec141c8b2f0564d4 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 01/18] ZEN: mm: Lower the non-hugetlbpage pageblock size to
+Subject: [PATCH 01/28] ZEN: mm: Lower the non-hugetlbpage pageblock size to
  reduce scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -47,10 +47,10 @@ index 83c724805..d2b8741ea 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 9143acedb817051f27f22b8e48c6ebac06e5a2e2 Mon Sep 17 00:00:00 2001
+From 294a37d487cad44470687f6eaa61049062880bd2 Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:10 +0000
-Subject: [PATCH 02/18] KVM: x86: Grab regs_dirty in local 'unsigned long'
+Subject: [PATCH 02/28] KVM: x86: Grab regs_dirty in local 'unsigned long'
 
 Capture ctxt->regs_dirty in a local 'unsigned long' instead of casting it
 to an 'unsigned long *' for use in for_each_set_bit().  The bitops helpers
@@ -90,10 +90,10 @@ index 09fa8a948..102187cda 100644
 2.37.3.485.gbe1a02a17e
 
 
-From fe9c276543ccecec81d6a7e22c4959d2f2d02d2c Mon Sep 17 00:00:00 2001
+From 4829f492b515d92421c267e699770549a062779c Mon Sep 17 00:00:00 2001
 From: Sean Christopherson <seanjc@google.com>
 Date: Thu, 26 May 2022 21:08:11 +0000
-Subject: [PATCH 03/18] KVM: x86: Harden _regs accesses to guard against buggy
+Subject: [PATCH 03/28] KVM: x86: Harden _regs accesses to guard against buggy
  input
 
 WARN and truncate the incoming GPR number/index when reading/writing GPRs
@@ -166,10 +166,10 @@ index 102187cda..b1904f5ec 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 43aae04b90313dfba6f0322cf6b379423db24389 Mon Sep 17 00:00:00 2001
+From 5e2a4f969cec9ecf8f2465e337210d1cc2ee0da8 Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Fri, 24 Jun 2022 16:14:12 +0200
-Subject: [PATCH 04/18] compiler-gcc.h: remove ancient workaround for gcc PR
+Subject: [PATCH 04/28] compiler-gcc.h: remove ancient workaround for gcc PR
  58670
 
 The workaround for 'asm goto' miscompilation introduces a compiler barrier
@@ -240,10 +240,10 @@ index a0c55eeae..9b157b710 100644
 2.37.3.485.gbe1a02a17e
 
 
-From b7acb62ce08237641921c2273e85659aa028780b Mon Sep 17 00:00:00 2001
+From 15a43f83ff0b4ca8a02d294bc68d20a973bec463 Mon Sep 17 00:00:00 2001
 From: Yosry Ahmed <yosryahmed@google.com>
 Date: Thu, 14 Jul 2022 06:49:18 +0000
-Subject: [PATCH 06/18] mm: vmpressure: don't count proactive reclaim in
+Subject: [PATCH 05/28] mm: vmpressure: don't count proactive reclaim in
  vmpressure
 
 vmpressure is used in cgroup v1 to notify userspace of reclaim
@@ -464,10 +464,10 @@ index f7d9a683e..0969e6408 100644
 2.37.3.485.gbe1a02a17e
 
 
-From cb4402ca8729ca8db8814b478f76b29599c905e2 Mon Sep 17 00:00:00 2001
+From 193b8fdc8ffcb7f9234b7221b865976a001f7bac Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:23 -0500
-Subject: [PATCH 07/18] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 06/28] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -767,10 +767,10 @@ index 000000000..ae92aa559
 2.37.3.485.gbe1a02a17e
 
 
-From 47587b837217a2be55243b11ae49bc03605ea1ec Mon Sep 17 00:00:00 2001
+From 803ed9e4698b5963252af0d0b35728740f8bdd7d Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Thu, 2 Jun 2022 11:12:24 -0500
-Subject: [PATCH 08/18] leds: trigger: Add block device LED trigger
+Subject: [PATCH 07/28] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -1962,10 +1962,10 @@ index 000000000..999c48a7a
 2.37.3.485.gbe1a02a17e
 
 
-From 1c4fbfdd5dfeaa4bce7505e7b6fe9e4e2d2846de Mon Sep 17 00:00:00 2001
+From ebc76605685413304392ee6cd52238e72ee1bf34 Mon Sep 17 00:00:00 2001
 From: Philip Yang <Philip.Yang@amd.com>
 Date: Fri, 22 Jul 2022 15:07:00 -0400
-Subject: [PATCH 09/18] drm/amdgpu: Allow TTM to evict svm bo from same process
+Subject: [PATCH 08/28] drm/amdgpu: Allow TTM to evict svm bo from same process
 
 To support SVM range VRAM overcommitment, TTM should be able to evict
 svm bo of same process to system memory, to get space to alloc new svm
@@ -2012,10 +2012,10 @@ index 1d0dbff87..469785d33 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 70b916722791dbf20a15fe3c5f4f5799a7fa158e Mon Sep 17 00:00:00 2001
+From d6877061ff88a0986507d1aaa4432b8d82d1b5ff Mon Sep 17 00:00:00 2001
 From: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
 Date: Sun, 17 Jul 2022 10:36:13 +0200
-Subject: [PATCH 10/18] f2fs: Delete f2fs_copy_page() and replace with
+Subject: [PATCH 09/28] f2fs: Delete f2fs_copy_page() and replace with
  memcpy_page()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2088,10 +2088,10 @@ index ecd833ba3..dd2d291d1 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 864b06b709475d67ae32276f464cb8aa4a15c7f2 Mon Sep 17 00:00:00 2001
+From 24e93d19ab51cfa1b4f32dc728d981a2f4c81d33 Mon Sep 17 00:00:00 2001
 From: Borislav Petkov <bp@suse.de>
 Date: Sun, 14 Aug 2022 12:37:49 +0200
-Subject: [PATCH 11/18] x86/microcode/AMD: Attempt applying on every logical
+Subject: [PATCH 10/28] x86/microcode/AMD: Attempt applying on every logical
  thread
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2227,10 +2227,10 @@ index 8b2fcdfa6..a575dbb4d 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 47275ed3fced8dbcb773657f3d51675504b94edc Mon Sep 17 00:00:00 2001
+From 52381ded37cffc1d95bf63808f136cb158b94e13 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 08:53:42 -0700
-Subject: [PATCH 12/18] x86/kvm: Simplify FOP_SETCC()
+Subject: [PATCH 11/28] x86/kvm: Simplify FOP_SETCC()
 
 SETCC_ALIGN and FOP_ALIGN are both 16.  Remove the special casing for
 FOP_SETCC() and just make it a normal fastop.
@@ -2288,10 +2288,10 @@ index b1904f5ec..40b34758a 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 0f2076a873ade1ba3976e7f25c889eb60ccb4943 Mon Sep 17 00:00:00 2001
+From cfeebfdedb39847bb279e4c9ffbc025c84e05824 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 09:26:57 -0700
-Subject: [PATCH 13/18] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
+Subject: [PATCH 12/28] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
 
 This warning isn't very useful: why would you put ANNOTATE_NOENDBR on
 ENDBR, and if you did, what's the harm?
@@ -2328,10 +2328,10 @@ index 5d87e0b0d..beec8cfdb 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 8c58dbaaeff0284b6e9d83864252edc90b272b59 Mon Sep 17 00:00:00 2001
+From 2bb619a11d81d7d36eb36af932de64c03428bdb5 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 3 Aug 2022 20:15:04 +0800
-Subject: [PATCH 14/18] sbitmap: fix possible io hung due to lost wakeup
+Subject: [PATCH 13/28] sbitmap: fix possible io hung due to lost wakeup
 
 There are two problems can lead to lost wakeup:
 
@@ -2463,10 +2463,10 @@ index 29eb04842..1f3114787 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 7fdda82bad93c0e0f71f9891f6940fdb9280efda Mon Sep 17 00:00:00 2001
+From 420abac2e9d3216ddaf28a7175f317f7a48cd4da Mon Sep 17 00:00:00 2001
 From: Liu Song <liusong@linux.alibaba.com>
 Date: Fri, 26 Aug 2022 11:14:13 +0800
-Subject: [PATCH 15/18] sbitmap: remove unnecessary code in
+Subject: [PATCH 14/28] sbitmap: remove unnecessary code in
  __sbitmap_queue_get_batch
 
 If "nr + nr_tags <= map_depth", then the value of nr_tags will not be
@@ -2508,10 +2508,10 @@ index 1f3114787..a39b1a877 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 2ec6ab5a1045df0ed58126dfaba7e8bd45d9469d Mon Sep 17 00:00:00 2001
+From 81af5be12fa6efa1f396e7a9c8108c04b93b24bd Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Thu, 8 Sep 2022 15:09:37 +0200
-Subject: [PATCH 16/18] sbitmap: Avoid leaving waitqueue in invalid state in
+Subject: [PATCH 15/28] sbitmap: Avoid leaving waitqueue in invalid state in
  __sbq_wake_up()
 
 When __sbq_wake_up() decrements wait_cnt to 0 but races with someone
@@ -2580,10 +2580,10 @@ index a39b1a877..47cd8fb89 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 2ad6f30d17904e34b4bf3d953cecde50712aa324 Mon Sep 17 00:00:00 2001
+From 78e57e5c207b01f550c17cbc41f511bcbac26881 Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Thu, 8 Sep 2022 17:12:00 +0200
-Subject: [PATCH 17/18] sbitmap: Use atomic_long_try_cmpxchg in
+Subject: [PATCH 16/28] sbitmap: Use atomic_long_try_cmpxchg in
  __sbitmap_queue_get_batch
 
 Use atomic_long_try_cmpxchg instead of
@@ -2636,10 +2636,10 @@ index 47cd8fb89..cbfd2e677 100644
 2.37.3.485.gbe1a02a17e
 
 
-From 0327b2986c471945136febb85cbbb420d8304e16 Mon Sep 17 00:00:00 2001
+From fb557bb77dac06b3807cbfe1ab64ae9a6eb24d93 Mon Sep 17 00:00:00 2001
 From: Keith Busch <kbusch@kernel.org>
 Date: Fri, 9 Sep 2022 11:40:22 -0700
-Subject: [PATCH 18/18] sbitmap: fix batched wait_cnt accounting
+Subject: [PATCH 17/28] sbitmap: fix batched wait_cnt accounting
 
 Batched completions can clear multiple bits, but we're only decrementing
 the wait_cnt by one each time. This can cause waiters to never be woken,
@@ -2769,6 +2769,804 @@ index cbfd2e677..624fa7f11 100644
  	sbitmap_update_cpu_hint(&sbq->sb, cpu, nr);
  }
  EXPORT_SYMBOL_GPL(sbitmap_queue_clear);
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 979c7c1dba286c62b16753b9a63299c5ab574764 Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3@huawei.com>
+Date: Mon, 19 Sep 2022 15:09:14 +0800
+Subject: [PATCH 18/28] wbt: don't show valid wbt_lat_usec in sysfs while wbt
+ is disabled
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Currently, if wbt is initialized and then disabled by
+wbt_disable_default(), sysfs will still show valid wbt_lat_usec, which
+will confuse users that wbt is still enabled.
+
+This patch shows wbt_lat_usec as zero and forbid to set it while wbt
+is disabled.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reported-and-tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
+---
+ block/blk-sysfs.c | 9 ++++++++-
+ block/blk-wbt.c   | 7 +++++++
+ block/blk-wbt.h   | 5 +++++
+ 3 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 9b905e944..51572c6a1 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -462,10 +462,14 @@ static ssize_t queue_io_timeout_store(struct request_queue *q, const char *page,
+ 
+ static ssize_t queue_wb_lat_show(struct request_queue *q, char *page)
+ {
++	u64 lat;
++
+ 	if (!wbt_rq_qos(q))
+ 		return -EINVAL;
+ 
+-	return sprintf(page, "%llu\n", div_u64(wbt_get_min_lat(q), 1000));
++	lat = wbt_disabled(q) ? 0 : div_u64(wbt_get_min_lat(q), 1000);
++
++	return sprintf(page, "%llu\n", lat);
+ }
+ 
+ static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
+@@ -488,6 +492,9 @@ static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
+ 			return ret;
+ 	}
+ 
++	if (wbt_disabled(q))
++		return -EINVAL;
++
+ 	if (val == -1)
+ 		val = wbt_default_latency_nsec(q);
+ 	else if (val >= 0)
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index ae6ea0b54..4c9b3b7af 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -422,6 +422,13 @@ static void wbt_update_limits(struct rq_wb *rwb)
+ 	rwb_wake_all(rwb);
+ }
+ 
++bool wbt_disabled(struct request_queue *q)
++{
++	struct rq_qos *rqos = wbt_rq_qos(q);
++
++	return !rqos || RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT;
++}
++
+ u64 wbt_get_min_lat(struct request_queue *q)
+ {
+ 	struct rq_qos *rqos = wbt_rq_qos(q);
+diff --git a/block/blk-wbt.h b/block/blk-wbt.h
+index 7e44eccc6..e42465ddc 100644
+--- a/block/blk-wbt.h
++++ b/block/blk-wbt.h
+@@ -94,6 +94,7 @@ void wbt_enable_default(struct request_queue *);
+ 
+ u64 wbt_get_min_lat(struct request_queue *q);
+ void wbt_set_min_lat(struct request_queue *q, u64 val);
++bool wbt_disabled(struct request_queue *);
+ 
+ void wbt_set_write_cache(struct request_queue *, bool);
+ 
+@@ -125,6 +126,10 @@ static inline u64 wbt_default_latency_nsec(struct request_queue *q)
+ {
+ 	return 0;
+ }
++static inline bool wbt_disabled(struct request_queue *q)
++{
++	return true;
++}
+ 
+ #endif /* CONFIG_BLK_WBT */
+ 
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From f795cf092492728d0fc377aff10c362a78ece4cc Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3@huawei.com>
+Date: Mon, 19 Sep 2022 15:09:15 +0800
+Subject: [PATCH 19/28] block: add a helper to check elevator name
+
+The helper will be used in later patch to make sure wbt is not enabled
+if default io scheduler is bfq.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+---
+ block/elevator.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/block/elevator.h b/block/elevator.h
+index 16cd8bded..3ee0c727d 100644
+--- a/block/elevator.h
++++ b/block/elevator.h
+@@ -104,6 +104,11 @@ struct elevator_queue
+ 	DECLARE_HASHTABLE(hash, ELV_HASH_BITS);
+ };
+ 
++static inline bool check_elevator_name(struct elevator_queue *elevator,
++				       const char *name)
++{
++	return elevator && !strcmp(elevator->type->elevator_name, name);
++}
+ /*
+  * block elevator interface
+  */
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 4c1c37e236d0d9c1323415ce381b535102dbb450 Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3@huawei.com>
+Date: Mon, 19 Sep 2022 15:09:16 +0800
+Subject: [PATCH 20/28] blk-wbt: don't enable throttling if default elevator is
+ bfq
+
+Commit b5dc5d4d1f4f ("block,bfq: Disable writeback throttling") tries to
+disable wbt for bfq, it's done by calling wbt_disable_default() in
+bfq_init_queue(). However, wbt is still enabled if default elevator is
+bfq:
+
+device_add_disk
+ elevator_init_mq
+  bfq_init_queue
+   wbt_disable_default -> done nothing
+
+ blk_register_queue
+  wbt_enable_default -> wbt is enabled
+
+Fix the problem by checking elevator name if wbt_enable_default() is
+called from blk_register_queue().
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+---
+ block/bfq-iosched.c | 2 +-
+ block/blk-sysfs.c   | 2 +-
+ block/blk-wbt.c     | 6 +++++-
+ block/blk-wbt.h     | 5 +++--
+ 4 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index e6d7e6b01..7e1443853 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -7047,7 +7047,7 @@ static void bfq_exit_queue(struct elevator_queue *e)
+ #endif
+ 
+ 	blk_stat_disable_accounting(bfqd->queue);
+-	wbt_enable_default(bfqd->queue);
++	wbt_enable_default(bfqd->queue, false);
+ 
+ 	kfree(bfqd);
+ }
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 51572c6a1..9180e75fb 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -861,7 +861,7 @@ int blk_register_queue(struct gendisk *disk)
+ 		goto put_dev;
+ 
+ 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
+-	wbt_enable_default(q);
++	wbt_enable_default(q, true);
+ 	blk_throtl_register_queue(q);
+ 
+ 	/* Now everything is ready and send out KOBJ_ADD uevent */
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index 4c9b3b7af..5e3c7b0b0 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -27,6 +27,7 @@
+ 
+ #include "blk-wbt.h"
+ #include "blk-rq-qos.h"
++#include "elevator.h"
+ 
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/wbt.h>
+@@ -643,10 +644,13 @@ void wbt_set_write_cache(struct request_queue *q, bool write_cache_on)
+ /*
+  * Enable wbt if defaults are configured that way
+  */
+-void wbt_enable_default(struct request_queue *q)
++void wbt_enable_default(struct request_queue *q, bool check_elevator)
+ {
+ 	struct rq_qos *rqos = wbt_rq_qos(q);
+ 
++	if (check_elevator && check_elevator_name(q->elevator, "bfq"))
++		return;
++
+ 	/* Throttling already enabled? */
+ 	if (rqos) {
+ 		if (RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT)
+diff --git a/block/blk-wbt.h b/block/blk-wbt.h
+index e42465ddc..eb028feba 100644
+--- a/block/blk-wbt.h
++++ b/block/blk-wbt.h
+@@ -90,7 +90,7 @@ static inline unsigned int wbt_inflight(struct rq_wb *rwb)
+ 
+ int wbt_init(struct request_queue *);
+ void wbt_disable_default(struct request_queue *);
+-void wbt_enable_default(struct request_queue *);
++void wbt_enable_default(struct request_queue *, bool);
+ 
+ u64 wbt_get_min_lat(struct request_queue *q);
+ void wbt_set_min_lat(struct request_queue *q, u64 val);
+@@ -109,7 +109,8 @@ static inline int wbt_init(struct request_queue *q)
+ static inline void wbt_disable_default(struct request_queue *q)
+ {
+ }
+-static inline void wbt_enable_default(struct request_queue *q)
++static inline void wbt_enable_default(struct request_queue *q,
++				      bool check_elevator)
+ {
+ }
+ static inline void wbt_set_write_cache(struct request_queue *q, bool wc)
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 1d4b8b520f00154fa2776ee222bb0fa101417dcb Mon Sep 17 00:00:00 2001
+From: Hugh Dickins <hughd@google.com>
+Date: Sun, 18 Sep 2022 14:10:51 -0700
+Subject: [PATCH 21/28] sbitmap: fix lockup while swapping
+
+Commit 4acb83417cad ("sbitmap: fix batched wait_cnt accounting")
+is a big improvement: without it, I had to revert to before commit
+040b83fcecfb ("sbitmap: fix possible io hung due to lost wakeup")
+to avoid the high system time and freezes which that had introduced.
+
+Now okay on the NVME laptop, but 4acb83417cad is a disaster for heavy
+swapping (kernel builds in low memory) on another: soon locking up in
+sbitmap_queue_wake_up() (into which __sbq_wake_up() is inlined), cycling
+around with waitqueue_active() but wait_cnt 0 .  Here is a backtrace,
+showing the common pattern of outer sbitmap_queue_wake_up() interrupted
+before setting wait_cnt 0 back to wake_batch (in some cases other CPUs
+are idle, in other cases they're spinning for a lock in dd_bio_merge()):
+
+sbitmap_queue_wake_up < sbitmap_queue_clear < blk_mq_put_tag <
+__blk_mq_free_request < blk_mq_free_request < __blk_mq_end_request <
+scsi_end_request < scsi_io_completion < scsi_finish_command <
+scsi_complete < blk_complete_reqs < blk_done_softirq < __do_softirq <
+__irq_exit_rcu < irq_exit_rcu < common_interrupt < asm_common_interrupt <
+_raw_spin_unlock_irqrestore < __wake_up_common_lock < __wake_up <
+sbitmap_queue_wake_up < sbitmap_queue_clear < blk_mq_put_tag <
+__blk_mq_free_request < blk_mq_free_request < dd_bio_merge <
+blk_mq_sched_bio_merge < blk_mq_attempt_bio_merge < blk_mq_submit_bio <
+__submit_bio < submit_bio_noacct_nocheck < submit_bio_noacct <
+submit_bio < __swap_writepage < swap_writepage < pageout <
+shrink_folio_list < evict_folios < lru_gen_shrink_lruvec <
+shrink_lruvec < shrink_node < do_try_to_free_pages < try_to_free_pages <
+__alloc_pages_slowpath < __alloc_pages < folio_alloc < vma_alloc_folio <
+do_anonymous_page < __handle_mm_fault < handle_mm_fault <
+do_user_addr_fault < exc_page_fault < asm_exc_page_fault
+
+I have almost no grasp of all the possible sbitmap races, and their
+consequences: but using the same !waitqueue_active() check as used
+elsewhere, fixes the lockup and shows no adverse consequence for me.
+
+Fixes: 4acb83417cad ("sbitmap: fix batched wait_cnt accounting")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+---
+ lib/sbitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/sbitmap.c b/lib/sbitmap.c
+index 624fa7f11..58f6c000b 100644
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -620,7 +620,7 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq, int *nr)
+ 		 * function again to wakeup a new batch on a different 'ws'.
+ 		 */
+ 		if (cur == 0)
+-			return true;
++			return !waitqueue_active(&ws->wait);
+ 		sub = min(*nr, cur);
+ 		wait_cnt = cur - sub;
+ 	} while (!atomic_try_cmpxchg(&ws->wait_cnt, &cur, wait_cnt));
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From ccc2684f2f61c7b33483f9a4793dde3d4dbb8653 Mon Sep 17 00:00:00 2001
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Date: Tue, 20 Sep 2022 19:06:33 +0200
+Subject: [PATCH 22/28] lib/vdso: use "grep -E" instead of "egrep"
+
+The latest version of grep claims the egrep is now obsolete so the build
+now contains warnings that look like:
+	egrep: warning: egrep is obsolescent; using grep -E
+fix this up by moving the vdso Makefile to use "grep -E" instead.
+
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ lib/vdso/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/vdso/Makefile b/lib/vdso/Makefile
+index c415a685d..e814061d6 100644
+--- a/lib/vdso/Makefile
++++ b/lib/vdso/Makefile
+@@ -17,6 +17,6 @@ $(error ARCH_REL_TYPE_ABS is not set)
+ endif
+ 
+ quiet_cmd_vdso_check = VDSOCHK $@
+-      cmd_vdso_check = if $(OBJDUMP) -R $@ | egrep -h "$(ARCH_REL_TYPE_ABS)"; \
++      cmd_vdso_check = if $(OBJDUMP) -R $@ | grep -E -h "$(ARCH_REL_TYPE_ABS)"; \
+ 		       then (echo >&2 "$@: dynamic relocations are not supported"; \
+ 			     rm -f $@; /bin/false); fi
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From fb41358e749cc226777a10902e050a3bafb24513 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 23 Sep 2022 20:24:35 +0200
+Subject: [PATCH 23/28] Revert "blk-wbt: don't enable throttling if default
+ elevator is bfq"
+
+This reverts commit 4c1c37e236d0d9c1323415ce381b535102dbb450.
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ block/bfq-iosched.c | 2 +-
+ block/blk-sysfs.c   | 2 +-
+ block/blk-wbt.c     | 6 +-----
+ block/blk-wbt.h     | 5 ++---
+ 4 files changed, 5 insertions(+), 10 deletions(-)
+
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 7e1443853..e6d7e6b01 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -7047,7 +7047,7 @@ static void bfq_exit_queue(struct elevator_queue *e)
+ #endif
+ 
+ 	blk_stat_disable_accounting(bfqd->queue);
+-	wbt_enable_default(bfqd->queue, false);
++	wbt_enable_default(bfqd->queue);
+ 
+ 	kfree(bfqd);
+ }
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 9180e75fb..51572c6a1 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -861,7 +861,7 @@ int blk_register_queue(struct gendisk *disk)
+ 		goto put_dev;
+ 
+ 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
+-	wbt_enable_default(q, true);
++	wbt_enable_default(q);
+ 	blk_throtl_register_queue(q);
+ 
+ 	/* Now everything is ready and send out KOBJ_ADD uevent */
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index 5e3c7b0b0..4c9b3b7af 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -27,7 +27,6 @@
+ 
+ #include "blk-wbt.h"
+ #include "blk-rq-qos.h"
+-#include "elevator.h"
+ 
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/wbt.h>
+@@ -644,13 +643,10 @@ void wbt_set_write_cache(struct request_queue *q, bool write_cache_on)
+ /*
+  * Enable wbt if defaults are configured that way
+  */
+-void wbt_enable_default(struct request_queue *q, bool check_elevator)
++void wbt_enable_default(struct request_queue *q)
+ {
+ 	struct rq_qos *rqos = wbt_rq_qos(q);
+ 
+-	if (check_elevator && check_elevator_name(q->elevator, "bfq"))
+-		return;
+-
+ 	/* Throttling already enabled? */
+ 	if (rqos) {
+ 		if (RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT)
+diff --git a/block/blk-wbt.h b/block/blk-wbt.h
+index eb028feba..e42465ddc 100644
+--- a/block/blk-wbt.h
++++ b/block/blk-wbt.h
+@@ -90,7 +90,7 @@ static inline unsigned int wbt_inflight(struct rq_wb *rwb)
+ 
+ int wbt_init(struct request_queue *);
+ void wbt_disable_default(struct request_queue *);
+-void wbt_enable_default(struct request_queue *, bool);
++void wbt_enable_default(struct request_queue *);
+ 
+ u64 wbt_get_min_lat(struct request_queue *q);
+ void wbt_set_min_lat(struct request_queue *q, u64 val);
+@@ -109,8 +109,7 @@ static inline int wbt_init(struct request_queue *q)
+ static inline void wbt_disable_default(struct request_queue *q)
+ {
+ }
+-static inline void wbt_enable_default(struct request_queue *q,
+-				      bool check_elevator)
++static inline void wbt_enable_default(struct request_queue *q)
+ {
+ }
+ static inline void wbt_set_write_cache(struct request_queue *q, bool wc)
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 79dbdf97560820cedb739be1c23a49a896fe33dc Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 23 Sep 2022 20:24:36 +0200
+Subject: [PATCH 24/28] Revert "block: add a helper to check elevator name"
+
+This reverts commit f795cf092492728d0fc377aff10c362a78ece4cc.
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ block/elevator.h | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/block/elevator.h b/block/elevator.h
+index 3ee0c727d..16cd8bded 100644
+--- a/block/elevator.h
++++ b/block/elevator.h
+@@ -104,11 +104,6 @@ struct elevator_queue
+ 	DECLARE_HASHTABLE(hash, ELV_HASH_BITS);
+ };
+ 
+-static inline bool check_elevator_name(struct elevator_queue *elevator,
+-				       const char *name)
+-{
+-	return elevator && !strcmp(elevator->type->elevator_name, name);
+-}
+ /*
+  * block elevator interface
+  */
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 8b19129e86f4394d936692334898a9076dcbb737 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 23 Sep 2022 20:24:37 +0200
+Subject: [PATCH 25/28] Revert "wbt: don't show valid wbt_lat_usec in sysfs
+ while wbt is disabled"
+
+This reverts commit 979c7c1dba286c62b16753b9a63299c5ab574764.
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ block/blk-sysfs.c | 9 +--------
+ block/blk-wbt.c   | 7 -------
+ block/blk-wbt.h   | 5 -----
+ 3 files changed, 1 insertion(+), 20 deletions(-)
+
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 51572c6a1..9b905e944 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -462,14 +462,10 @@ static ssize_t queue_io_timeout_store(struct request_queue *q, const char *page,
+ 
+ static ssize_t queue_wb_lat_show(struct request_queue *q, char *page)
+ {
+-	u64 lat;
+-
+ 	if (!wbt_rq_qos(q))
+ 		return -EINVAL;
+ 
+-	lat = wbt_disabled(q) ? 0 : div_u64(wbt_get_min_lat(q), 1000);
+-
+-	return sprintf(page, "%llu\n", lat);
++	return sprintf(page, "%llu\n", div_u64(wbt_get_min_lat(q), 1000));
+ }
+ 
+ static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
+@@ -492,9 +488,6 @@ static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
+ 			return ret;
+ 	}
+ 
+-	if (wbt_disabled(q))
+-		return -EINVAL;
+-
+ 	if (val == -1)
+ 		val = wbt_default_latency_nsec(q);
+ 	else if (val >= 0)
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index 4c9b3b7af..ae6ea0b54 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -422,13 +422,6 @@ static void wbt_update_limits(struct rq_wb *rwb)
+ 	rwb_wake_all(rwb);
+ }
+ 
+-bool wbt_disabled(struct request_queue *q)
+-{
+-	struct rq_qos *rqos = wbt_rq_qos(q);
+-
+-	return !rqos || RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT;
+-}
+-
+ u64 wbt_get_min_lat(struct request_queue *q)
+ {
+ 	struct rq_qos *rqos = wbt_rq_qos(q);
+diff --git a/block/blk-wbt.h b/block/blk-wbt.h
+index e42465ddc..7e44eccc6 100644
+--- a/block/blk-wbt.h
++++ b/block/blk-wbt.h
+@@ -94,7 +94,6 @@ void wbt_enable_default(struct request_queue *);
+ 
+ u64 wbt_get_min_lat(struct request_queue *q);
+ void wbt_set_min_lat(struct request_queue *q, u64 val);
+-bool wbt_disabled(struct request_queue *);
+ 
+ void wbt_set_write_cache(struct request_queue *, bool);
+ 
+@@ -126,10 +125,6 @@ static inline u64 wbt_default_latency_nsec(struct request_queue *q)
+ {
+ 	return 0;
+ }
+-static inline bool wbt_disabled(struct request_queue *q)
+-{
+-	return true;
+-}
+ 
+ #endif /* CONFIG_BLK_WBT */
+ 
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 54c8b2c52d5cb249e502f77fdf031b337404a97f Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3@huawei.com>
+Date: Mon, 19 Sep 2022 15:09:14 +0800
+Subject: [PATCH 26/28] wbt: don't show valid wbt_lat_usec in sysfs while wbt
+ is disabled
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Currently, if wbt is initialized and then disabled by
+wbt_disable_default(), sysfs will still show valid wbt_lat_usec, which
+will confuse users that wbt is still enabled.
+
+This patch shows wbt_lat_usec as zero and forbid to set it while wbt
+is disabled.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reported-and-tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
+---
+ block/blk-sysfs.c | 9 ++++++++-
+ block/blk-wbt.c   | 7 +++++++
+ block/blk-wbt.h   | 5 +++++
+ 3 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 9b905e944..51572c6a1 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -462,10 +462,14 @@ static ssize_t queue_io_timeout_store(struct request_queue *q, const char *page,
+ 
+ static ssize_t queue_wb_lat_show(struct request_queue *q, char *page)
+ {
++	u64 lat;
++
+ 	if (!wbt_rq_qos(q))
+ 		return -EINVAL;
+ 
+-	return sprintf(page, "%llu\n", div_u64(wbt_get_min_lat(q), 1000));
++	lat = wbt_disabled(q) ? 0 : div_u64(wbt_get_min_lat(q), 1000);
++
++	return sprintf(page, "%llu\n", lat);
+ }
+ 
+ static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
+@@ -488,6 +492,9 @@ static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
+ 			return ret;
+ 	}
+ 
++	if (wbt_disabled(q))
++		return -EINVAL;
++
+ 	if (val == -1)
+ 		val = wbt_default_latency_nsec(q);
+ 	else if (val >= 0)
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index ae6ea0b54..4c9b3b7af 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -422,6 +422,13 @@ static void wbt_update_limits(struct rq_wb *rwb)
+ 	rwb_wake_all(rwb);
+ }
+ 
++bool wbt_disabled(struct request_queue *q)
++{
++	struct rq_qos *rqos = wbt_rq_qos(q);
++
++	return !rqos || RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT;
++}
++
+ u64 wbt_get_min_lat(struct request_queue *q)
+ {
+ 	struct rq_qos *rqos = wbt_rq_qos(q);
+diff --git a/block/blk-wbt.h b/block/blk-wbt.h
+index 7e44eccc6..e42465ddc 100644
+--- a/block/blk-wbt.h
++++ b/block/blk-wbt.h
+@@ -94,6 +94,7 @@ void wbt_enable_default(struct request_queue *);
+ 
+ u64 wbt_get_min_lat(struct request_queue *q);
+ void wbt_set_min_lat(struct request_queue *q, u64 val);
++bool wbt_disabled(struct request_queue *);
+ 
+ void wbt_set_write_cache(struct request_queue *, bool);
+ 
+@@ -125,6 +126,10 @@ static inline u64 wbt_default_latency_nsec(struct request_queue *q)
+ {
+ 	return 0;
+ }
++static inline bool wbt_disabled(struct request_queue *q)
++{
++	return true;
++}
+ 
+ #endif /* CONFIG_BLK_WBT */
+ 
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 5bf6ffc7f7f60d67fdd800981f0f5bddb4f5d327 Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3@huawei.com>
+Date: Mon, 19 Sep 2022 15:09:15 +0800
+Subject: [PATCH 27/28] block: add a helper to check elevator name
+
+The helper will be used in later patch to make sure wbt is not enabled
+if default io scheduler is bfq.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+---
+ block/elevator.h | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/block/elevator.h b/block/elevator.h
+index 16cd8bded..3ee0c727d 100644
+--- a/block/elevator.h
++++ b/block/elevator.h
+@@ -104,6 +104,11 @@ struct elevator_queue
+ 	DECLARE_HASHTABLE(hash, ELV_HASH_BITS);
+ };
+ 
++static inline bool check_elevator_name(struct elevator_queue *elevator,
++				       const char *name)
++{
++	return elevator && !strcmp(elevator->type->elevator_name, name);
++}
+ /*
+  * block elevator interface
+  */
+-- 
+2.37.3.485.gbe1a02a17e
+
+
+From 53d9d53aa9d0106fbce5948ede749f4e011e586b Mon Sep 17 00:00:00 2001
+From: Yu Kuai <yukuai3@huawei.com>
+Date: Mon, 19 Sep 2022 15:09:16 +0800
+Subject: [PATCH 28/28] blk-wbt: don't enable throttling if default elevator is
+ bfq
+
+Commit b5dc5d4d1f4f ("block,bfq: Disable writeback throttling") tries to
+disable wbt for bfq, it's done by calling wbt_disable_default() in
+bfq_init_queue(). However, wbt is still enabled if default elevator is
+bfq:
+
+device_add_disk
+ elevator_init_mq
+  bfq_init_queue
+   wbt_disable_default -> done nothing
+
+ blk_register_queue
+  wbt_enable_default -> wbt is enabled
+
+Fix the problem by checking elevator name if wbt_enable_default() is
+called from blk_register_queue().
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+---
+ block/bfq-iosched.c | 2 +-
+ block/blk-sysfs.c   | 2 +-
+ block/blk-wbt.c     | 6 +++++-
+ block/blk-wbt.h     | 5 +++--
+ 4 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index e6d7e6b01..7e1443853 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -7047,7 +7047,7 @@ static void bfq_exit_queue(struct elevator_queue *e)
+ #endif
+ 
+ 	blk_stat_disable_accounting(bfqd->queue);
+-	wbt_enable_default(bfqd->queue);
++	wbt_enable_default(bfqd->queue, false);
+ 
+ 	kfree(bfqd);
+ }
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 51572c6a1..9180e75fb 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -861,7 +861,7 @@ int blk_register_queue(struct gendisk *disk)
+ 		goto put_dev;
+ 
+ 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
+-	wbt_enable_default(q);
++	wbt_enable_default(q, true);
+ 	blk_throtl_register_queue(q);
+ 
+ 	/* Now everything is ready and send out KOBJ_ADD uevent */
+diff --git a/block/blk-wbt.c b/block/blk-wbt.c
+index 4c9b3b7af..5e3c7b0b0 100644
+--- a/block/blk-wbt.c
++++ b/block/blk-wbt.c
+@@ -27,6 +27,7 @@
+ 
+ #include "blk-wbt.h"
+ #include "blk-rq-qos.h"
++#include "elevator.h"
+ 
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/wbt.h>
+@@ -643,10 +644,13 @@ void wbt_set_write_cache(struct request_queue *q, bool write_cache_on)
+ /*
+  * Enable wbt if defaults are configured that way
+  */
+-void wbt_enable_default(struct request_queue *q)
++void wbt_enable_default(struct request_queue *q, bool check_elevator)
+ {
+ 	struct rq_qos *rqos = wbt_rq_qos(q);
+ 
++	if (check_elevator && check_elevator_name(q->elevator, "bfq"))
++		return;
++
+ 	/* Throttling already enabled? */
+ 	if (rqos) {
+ 		if (RQWB(rqos)->enable_state == WBT_STATE_OFF_DEFAULT)
+diff --git a/block/blk-wbt.h b/block/blk-wbt.h
+index e42465ddc..eb028feba 100644
+--- a/block/blk-wbt.h
++++ b/block/blk-wbt.h
+@@ -90,7 +90,7 @@ static inline unsigned int wbt_inflight(struct rq_wb *rwb)
+ 
+ int wbt_init(struct request_queue *);
+ void wbt_disable_default(struct request_queue *);
+-void wbt_enable_default(struct request_queue *);
++void wbt_enable_default(struct request_queue *, bool);
+ 
+ u64 wbt_get_min_lat(struct request_queue *q);
+ void wbt_set_min_lat(struct request_queue *q, u64 val);
+@@ -109,7 +109,8 @@ static inline int wbt_init(struct request_queue *q)
+ static inline void wbt_disable_default(struct request_queue *q)
+ {
+ }
+-static inline void wbt_enable_default(struct request_queue *q)
++static inline void wbt_enable_default(struct request_queue *q,
++				      bool check_elevator)
+ {
+ }
+ static inline void wbt_set_write_cache(struct request_queue *q, bool wc)
 -- 
 2.37.3.485.gbe1a02a17e
 
