@@ -1,23 +1,84 @@
-From a430634b977a0dd1632a70cc936fd6b5ad9e565b Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 28 Sep 2022 10:47:51 +0000
+From 0f8981f6d6609db62505d5cf8c167df56c1bc2d4 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Wed, 12 Oct 2022 08:34:59 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 19530 +-------------------------------------
- 1 file changed, 3 insertions(+), 19527 deletions(-)
+ debian.master/changelog | 19590 +-------------------------------------
+ 1 file changed, 3 insertions(+), 19587 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 2d82019acc18..f7a2b2bedeb2 100644
+index 6ff2da319e48..c84c63c6c00b 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,19530 +1,6 @@
+@@ -1,19590 +1,6 @@
+-linux (5.19.0-20.20) kinetic; urgency=medium
++linux (5.19.15-051915.202210120834) kinetic; urgency=low
+ 
+-  * kinetic/linux: 5.19.0-20.20 -proposed tracker (LP: #1992408)
++  Mainline build at commit: v5.19.15
+ 
+-  * Packaging resync (LP: #1786013)
+-    - debian/dkms-versions -- update from kernel-versions (main/master)
++ -- Mainline Build <kernel@sita>  Wed, 12 Oct 2022 08:34:59 +0000
+ 
+-  * Kinetic kernels 5.19.0-18/19-generic won't boot on Intel 11th/12th gen
+-    (LP: #1991704)
+-    - drm/i915: fix null pointer dereference
+-
+-  * rcu_sched detected stalls on CPUs/tasks (LP: #1967130)
+-    - [Config] Disable VMAP_STACK on riscv64
+-
+-  * Disable sv57 as the userspace is not ready (LP: #1991790)
+-    - SAUCE: riscv: mm: Force disable sv57
+-
+-  * earlyconsole prints question marks on 5.19.0-1002-generic (LP: #1988984)
+-    - [Config] Set CONFIG_PWM_SIFIVE=m for riscv64
+-
+-  * RCU stalls (LP: #1991951)
+-    - [Config] Harmonize RCU_CPU_STALL_TIMEOUT
+-
+-  * backport dkms fixes to build modules correctly for hwe-5.19+ kernels with
+-    custom compiler (LP: #1991664)
+-    - [Packaging] use versioned gcc-12
+-    - [Packaging] Update configs with versioned compiler version
+-
+-  * FTBFS on kinetic (LP: #1990964)
+-    - SAUCE: uapi: Fixup strace compile error
+-
+-  * CVE-2022-40768
+-    - scsi: stex: Properly zero out the passthrough command structure
+-
+-  * [22.10 FEAT] zKVM: Crypto Passthrough Hotplug - kernel part (LP: #1852741)
+-    - s390/vfio-ap: use new AP bus interface to search for queue devices
+-    - s390/vfio-ap: move probe and remove callbacks to vfio_ap_ops.c
+-    - s390/vfio-ap: manage link between queue struct and matrix mdev
+-    - s390/vfio-ap: introduce shadow APCB
+-    - s390/vfio-ap: refresh guest's APCB by filtering AP resources assigned to
+-      mdev
+-    - s390/vfio-ap: allow assignment of unavailable AP queues to mdev device
+-    - s390/vfio-ap: rename matrix_dev->lock mutex to matrix_dev->mdevs_lock
+-    - s390/vfio-ap: introduce new mutex to control access to the KVM pointer
+-    - s390/vfio-ap: use proper locking order when setting/clearing KVM pointer
+-    - s390/vfio-ap: prepare for dynamic update of guest's APCB on assign/unassign
+-    - s390/vfio-ap: prepare for dynamic update of guest's APCB on queue
+-      probe/remove
+-    - s390/vfio-ap: allow hot plug/unplug of AP devices when assigned/unassigned
+-    - s390/vfio-ap: hot plug/unplug of AP devices when probed/removed
+-    - s390/vfio-ap: reset queues after adapter/domain unassignment
+-    - s390/vfio-ap: implement in-use callback for vfio_ap driver
+-    - s390/vfio-ap: sysfs attribute to display the guest's matrix
+-    - s390/vfio-ap: handle config changed and scan complete notification
+-    - s390/vfio-ap: update docs to include dynamic config support
+-    - s390/Docs: new doc describing lock usage by the vfio_ap device driver
+-    - MAINTAINERS: pick up all vfio_ap docs for VFIO AP maintainers
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 11 Oct 2022 09:50:23 +0200
+-
 -linux (5.19.0-19.19) kinetic; urgency=medium
-+linux (5.19.12-051912.202209281047) kinetic; urgency=low
- 
+-
 -  * kinetic/linux: 5.19.0-19.19 -proposed tracker (LP: #1990960)
-+  Mainline build at commit: v5.19.12
- 
+-
 -  * kinetic: apply new apparmor and LSM stacking patch set (LP: #1989983)
 -    - Revert "Revert "Revert "UBUNTU: SAUCE: LSM: Specify which LSM to display
 -      (using struct cred as input)"""
@@ -254,8 +315,7 @@ index 2d82019acc18..f7a2b2bedeb2 100644
 -    - SAUCE: selinux: Implement userns_create hook
 -    - SAUCE: apparmor: add user namespace creation mediation
 -    - [Config] update configs after apply new apparmor patch set
-+ -- Mainline Build <kernel@kathleen>  Wed, 28 Sep 2022 10:47:50 +0000
- 
+-
 -  * kinetic: apply new apparmor and LSM stacking patch set (LP: #1989983) //
 -    5.19.0-17.17: kernel NULL pointer dereference, address: 0000000000000084
 -    (LP: #1990236)
@@ -19546,5 +19606,5 @@ index 2d82019acc18..f7a2b2bedeb2 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.37.3
+2.38.0
 
