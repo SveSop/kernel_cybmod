@@ -1,27 +1,39 @@
-From 0f8981f6d6609db62505d5cf8c167df56c1bc2d4 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 12 Oct 2022 08:34:59 +0000
+From 3fbe76bab031cee6884884a97c8b48a5ab734189 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
+Date: Sat, 15 Oct 2022 07:43:00 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 19590 +-------------------------------------
- 1 file changed, 3 insertions(+), 19587 deletions(-)
+ debian.master/changelog | 19602 +-------------------------------------
+ 1 file changed, 3 insertions(+), 19599 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 6ff2da319e48..c84c63c6c00b 100644
+index 899f7f7e94f2..60c074d32edb 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,19590 +1,6 @@
+@@ -1,19602 +1,6 @@
+-linux (5.19.0-21.21) kinetic; urgency=medium
++linux (5.19.16-051916.202210150742) kinetic; urgency=low
+ 
+-  * kinetic/linux: 5.19.0-21.21 -proposed tracker (LP: #1992639)
++  Mainline build at commit: v5.19.16
+ 
+-  * cannot change mount namespace  (LP: #1991691)
+-    - SAUCE: apparmor: Fix getaatr mediation causing snap failures
++ -- Mainline Build <kernel@kathleen>  Sat, 15 Oct 2022 07:43:00 +0000
+ 
+-  * Kernel regresses openjdk on riscv64 (LP: #1992484)
+-    - SAUCE: Revert "riscv: mmap with PROT_WRITE but no PROT_READ is invalid"
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Wed, 12 Oct 2022 19:53:36 +0200
+-
 -linux (5.19.0-20.20) kinetic; urgency=medium
-+linux (5.19.15-051915.202210120834) kinetic; urgency=low
- 
+-
 -  * kinetic/linux: 5.19.0-20.20 -proposed tracker (LP: #1992408)
-+  Mainline build at commit: v5.19.15
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@sita>  Wed, 12 Oct 2022 08:34:59 +0000
- 
+-
 -  * Kinetic kernels 5.19.0-18/19-generic won't boot on Intel 11th/12th gen
 -    (LP: #1991704)
 -    - drm/i915: fix null pointer dereference
