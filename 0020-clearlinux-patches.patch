@@ -82,10 +82,10 @@ Subject: [PATCH 11/29] ipv4/tcp: allow the memory tuning for tcp to go a
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index cf18fbcbf..8691792c0 100644
+index e373dde1f..3fc8ca6a2 100644
 --- a/net/ipv4/tcp.c
 +++ b/net/ipv4/tcp.c
-@@ -4671,8 +4671,8 @@ void __init tcp_init(void)
+@@ -4789,8 +4789,8 @@ void __init tcp_init(void)
  	tcp_init_mem();
  	/* Set per-socket limits to no more than 1/128 the pressure threshold */
  	limit = nr_free_buffer_pages() << (PAGE_SHIFT - 7);
@@ -94,10 +94,10 @@ index cf18fbcbf..8691792c0 100644
 +	max_wshare = min(16UL*1024*1024, limit);
 +	max_rshare = min(16UL*1024*1024, limit);
  
- 	init_net.ipv4.sysctl_tcp_wmem[0] = SK_MEM_QUANTUM;
+ 	init_net.ipv4.sysctl_tcp_wmem[0] = PAGE_SIZE;
  	init_net.ipv4.sysctl_tcp_wmem[1] = 16*1024;
 -- 
-2.36.1.74.g277cf0bc36
+2.38.0
 
 From 4ef1619b0e82031705d2a2e569273a85dfb86031 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
@@ -548,4 +548,43 @@ index 9515a3146..34d56a111 100644
  	{
 -- 
 2.37.2
+
+From 96f1148248f87374a4c1f35d9a705977a2a11059 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Sveinar=20S=C3=B8pler?= <cybermax@dexter.no>
+Date: Wed, 19 Oct 2022 16:18:23 +0200
+Subject: [PATCH] clear_power_tweaks
+
+---
+ drivers/nvme/host/core.c | 2 +-
+ drivers/pci/pci.c        | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 8d5a7ae19..56d1780d1 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -58,7 +58,7 @@ static u8 nvme_max_retries = 5;
+ module_param_named(max_retries, nvme_max_retries, byte, 0644);
+ MODULE_PARM_DESC(max_retries, "max number of retries a command may have");
+ 
+-static unsigned long default_ps_max_latency_us = 100000;
++static unsigned long default_ps_max_latency_us = 200;
+ module_param(default_ps_max_latency_us, ulong, 0644);
+ MODULE_PARM_DESC(default_ps_max_latency_us,
+ 		 "max power saving latency for new devices; use PM QOS to change per device");
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 95bc329e7..73114509d 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -62,7 +62,7 @@ struct pci_pme_device {
+ 	struct pci_dev *dev;
+ };
+ 
+-#define PME_TIMEOUT 1000 /* How long between PME checks */
++#define PME_TIMEOUT 4000 /* How long between PME checks */
+ 
+ static void pci_dev_d3_sleep(struct pci_dev *dev)
+ {
+-- 
+2.38.0
 

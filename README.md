@@ -1,13 +1,13 @@
-## Cybmod patches for 5.19 kernel  
+## Cybmod patches for 6.0 kernel  
 
-Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz)  
+Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.tar.xz](https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.0.tar.xz)  
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 5.19.16  
-0000 : ProjectC v5.19-r0  
-0002 : 5.19 Graysky's CPU optimization patches  
-0003 : v5.19-fsync1_futex_waitv  
+0000 : Patch 6.0.2  
+0000 : ProjectC v6.0-r0  
+0002 : 6.0 Graysky's CPU optimization patches  
+0003 : v6.0-fsync1_futex_waitv  
 0004 : Revert ACPI change for NCT6775 chips(Asus MB)  
 0005 : zstd kernel settings  
 0010 : Ubuntu based config (See note below!)  
@@ -15,27 +15,25 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v5.x/linux
 0015 : ZRAM entropy calculation patch  
 0020 : Clearlinux patches  
 0021 : Misc fixes  
-0022 : BFQ patchset  
+0022 : Block patchset  
 0023 : mm: LRU patchset  
 0024 : zstd upstream patches  
 0025 : LRNG kernel patches  
 0026 : BBR2 patchset  
 0027 : Winesync kernel module  
-0028 : NTFS3 patches  
-0029 : LRNG dependency patches  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
 
 **AMD support is disabled in the example config (patch 0010), so if you have a AMD processor, you need to enable that**  
 **Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
-**This config has default Project C - PDS scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Fsync_waitv (backwards compatible)**  
+**This config has default Project C - BMQ scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Fsync_waitv (backwards compatible)**  
 
 To build on Ubuntu:  
 ```
 ** Requires lz4lib-tool to compile **
-tar xf linux-5.19.tar.xz    
-cd linux-5.19  
+tar xf linux-6.0.tar.xz    
+cd linux-6.0  
 /path/to/patches/and/cybmod_patch.sh  
 make -j12 deb-pkg # -j depending on your processor cores  
 ```

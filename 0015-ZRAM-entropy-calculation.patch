@@ -1,7 +1,7 @@
-From 0918a4388bfabe7e641c126ea3f91cca91cb509c Mon Sep 17 00:00:00 2001
+From e506489ad5b0ec5c024049d2afd24ed87664e463 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 16 Sep 2022 23:34:17 +0200
-Subject: [PATCH] zram-5.19: introduce ZRAM entropy calculation
+Date: Fri, 16 Sep 2022 23:34:56 +0200
+Subject: [PATCH] zram-6.0: introduce ZRAM entropy calculation
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -36,10 +36,10 @@ index d4100b0c0..8739ea131 100644
 +	  uncompressed. The default value was chosen as a result a lot of
 +	  experiments. You can try set your own value.
 diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index b144be412..bb44abb24 100644
+index 226ea76cc..d02e37e7a 100644
 --- a/drivers/block/zram/zram_drv.c
 +++ b/drivers/block/zram/zram_drv.c
-@@ -1345,6 +1345,35 @@ static int zram_bvec_read(struct zram *zram, struct bio_vec *bvec,
+@@ -1347,6 +1347,35 @@ static int zram_bvec_read(struct zram *zram, struct bio_vec *bvec,
  	return ret;
  }
  
@@ -75,7 +75,7 @@ index b144be412..bb44abb24 100644
  static int __zram_bvec_write(struct zram *zram, struct bio_vec *bvec,
  				u32 index, struct bio *bio)
  {
-@@ -1371,7 +1400,17 @@ static int __zram_bvec_write(struct zram *zram, struct bio_vec *bvec,
+@@ -1373,7 +1402,17 @@ static int __zram_bvec_write(struct zram *zram, struct bio_vec *bvec,
  compress_again:
  	zstrm = zcomp_stream_get(zram->comp);
  	src = kmap_atomic(page);
@@ -94,5 +94,5 @@ index b144be412..bb44abb24 100644
  
  	if (unlikely(ret)) {
 -- 
-2.37.3.485.gbe1a02a17e
+2.38.0.rc1.6.g4fd6c5e444
 

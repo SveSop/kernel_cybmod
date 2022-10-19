@@ -1,4 +1,4 @@
-From 9834ce17771d315aebe4de8437a064e9753794d8 Mon Sep 17 00:00:00 2001
+From 9e57cb4f4ee859add46e6ba572766f078a43e0f6 Mon Sep 17 00:00:00 2001
 From: Seth Forshee <seth.forshee@canonical.com>
 Date: Sun, 7 Jul 2019 21:37:43 -0500
 Subject: [PATCH 2/6] UBUNTU: SAUCE: kbuild: add -fcf-protection=none when
@@ -19,22 +19,22 @@ Signed-off-by: Seth Forshee <seth.forshee@canonical.com>
  1 file changed, 6 insertions(+)
 
 diff --git a/Makefile b/Makefile
-index a1d1978bbd03..5e6baf555dcd 100644
+index aa449693ad09..6576a4ab1763 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -899,6 +899,12 @@ KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
+@@ -899,6 +899,12 @@ CC_FLAGS_LTO	:= -flto=thin -fsplit-lto-unit
+ KBUILD_LDFLAGS	+= --thinlto-cache-dir=$(extmod_prefix).thinlto-cache
  else
  CC_FLAGS_LTO	:= -flto
- endif
 +# ensure -fcf-protection is disabled when using retpoline as it is
 +# incompatible with -mindirect-branch=thunk-extern
 +ifdef CONFIG_RETPOLINE
 +KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none,)
 +endif
 +
+ endif
  CC_FLAGS_LTO	+= -fvisibility=hidden
  
- # Limit inlining across translation units to reduce binary size
 -- 
 2.38.0
 
