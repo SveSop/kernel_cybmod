@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11740 @@
+@@ -0,0 +1,11742 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 6.0.2-cybmod2 Kernel Configuration
++# Linux/x86 6.0.3-cybmod3 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -7974,6 +7974,7 @@ new file mode 100644
 +CONFIG_SMARTJOYPLUS_FF=y
 +CONFIG_HID_TIVO=m
 +CONFIG_HID_TOPSEED=m
++CONFIG_HID_TOPRE=m
 +CONFIG_HID_THINGM=m
 +CONFIG_HID_THRUSTMASTER=m
 +CONFIG_THRUSTMASTER_FF=y
@@ -11435,6 +11436,7 @@ new file mode 100644
 +#
 +# Compile-time checks and compiler options
 +#
++CONFIG_AS_HAS_NON_CONST_LEB128=y
 +CONFIG_DEBUG_INFO_NONE=y
 +# CONFIG_DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT is not set
 +# CONFIG_DEBUG_INFO_DWARF4 is not set

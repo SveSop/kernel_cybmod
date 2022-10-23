@@ -1,27 +1,87 @@
-From a31cff0e140916a11f0d9f660da392806a45beba Mon Sep 17 00:00:00 2001
+From 414ae16f606aa61dde72b1d112b8be6e7429cb00 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 15 Oct 2022 07:39:17 +0000
+Date: Fri, 21 Oct 2022 11:49:18 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16880 +-------------------------------------
- 1 file changed, 3 insertions(+), 16877 deletions(-)
+ debian.master/changelog | 16940 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16937 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index be183693e5dc..f816767cdb27 100644
+index 9563f0e80927..43662d9b4153 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16880 +1,6 @@
+@@ -1,16940 +1,6 @@
+-linux-unstable (6.1.0-2.2) kinetic; urgency=medium
++linux (6.0.3-060003.202210211149) kinetic; urgency=low
+ 
+-  * kinetic/linux-unstable: 6.1.0-2.2 -proposed tracker (LP: #1993350)
++  Mainline build at commit: v6.0.3
+ 
+-  * Populating Hyper-V MSR for Ubuntu 13.10 (LP: #1193172)
+-    - SAUCE: (no-up) hv: Supply vendor ID and package ABI
++ -- Mainline Build <kernel@kathleen>  Fri, 21 Oct 2022 11:49:18 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - SAUCE: perf tools: Fix man page build wrt perf-arm-coresight.txt
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 18 Oct 2022 23:02:31 +0200
+-
+-linux-unstable (6.1.0-1.1) kinetic; urgency=medium
+-
+-  * kinetic/linux-unstable: 6.1.0-1.1 -proposed tracker (LP: #1993118)
+-
+-  * Raise CONFIG_NR_CPUS (LP: #1967889)
+-    - [Config] Raise riscv64 CONFIG_NR_CPUS to 32
+-
+-  * rcu_sched detected stalls on CPUs/tasks (LP: #1967130)
+-    - [Config] Disable VMAP_STACK on riscv64
+-
+-  * Disable sv57 as the userspace is not ready (LP: #1991790)
+-    - SAUCE: riscv: mm: Force disable sv57
+-
+-  * earlyconsole prints question marks on 5.19.0-1002-generic (LP: #1988984)
+-    - [Config] Set CONFIG_PWM_SIFIVE=m for riscv64
+-
+-  * RCU stalls (LP: #1991951)
+-    - [Config] Harmonize RCU_CPU_STALL_TIMEOUT
+-
+-  * backport dkms fixes to build modules correctly for hwe-5.19+ kernels with
+-    custom compiler (LP: #1991664)
+-    - [Packaging] use versioned gcc-12
+-    - [Packaging] Update configs with versioned compiler version
+-
+-  * FTBFS on kinetic (LP: #1990964)
+-    - SAUCE: uapi: Fixup strace compile error
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] sameport -- add support for sameport versioning
+-    - [Packaging] move to kernel 6.1
+-    - SAUCE: platform/x86: dell-uart-backlight: remove
+-      acpi_video_set_dmi_backlight_type()
+-    - SAUCE: shiftfs: support kernel 6.1
+-    - [Config] update configs and annotations after rebase to 6.1-rc1
+-    - debian/dkms-versions -- temporarily disable dkms builds
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v6.1-rc1
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 18 Oct 2022 17:21:43 +0200
+-
+-linux-unstable (6.1.0-0.0) kinetic; urgency=medium
+-
+-  * Empty entry
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 17 Oct 2022 08:57:58 +0200
+-
 -linux-unstable (6.0.0-9.9) kinetic; urgency=medium
-+linux (6.0.2-060002.202210150739) kinetic; urgency=low
- 
+-
 -  * kinetic/linux-unstable: 6.0.0-9.9 -proposed tracker (LP: #1991521)
-+  Mainline build at commit: v6.0.2
- 
+-
 -  * Packaging resync (LP: #1786013)
 -    - debian/dkms-versions -- update from kernel-versions (main/master)
-+ -- Mainline Build <kernel@kathleen>  Sat, 15 Oct 2022 07:39:17 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Config] update toolchain configs after rebase to 6.0
 -
@@ -16896,5 +16956,5 @@ index be183693e5dc..f816767cdb27 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.38.0
+2.38.1
 
