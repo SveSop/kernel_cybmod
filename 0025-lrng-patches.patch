@@ -1,7 +1,7 @@
-From c1f821fd467831b025317acad8fa1f34eb324385 Mon Sep 17 00:00:00 2001
+From 3fa27b05f61966fda0e609e2dab072722e788f46 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 9 Oct 2022 18:30:55 +0200
-Subject: [PATCH 01/29] crypto: Entropy Source and DRNG Manager
+Subject: [PATCH 01/30] crypto: Entropy Source and DRNG Manager
 
 The kernel crypto API contains deterministic random number generators
 (DRNG) which a caller must seed and reseed. The task of seeding a DRNG
@@ -4223,10 +4223,10 @@ index 000000000..c0d31a03d
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 28714abe2e140b2eae597e0921be377d57242bb3 Mon Sep 17 00:00:00 2001
+From 8ae13c16bfe44d0117dae857735d15c9b55ae809 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 15:40:46 +0200
-Subject: [PATCH 02/29] LRNG - allocate one DRNG instance per NUMA node
+Subject: [PATCH 02/30] LRNG - allocate one DRNG instance per NUMA node
 
 In order to improve NUMA-locality when serving getrandom(2) requests,
 allocate one DRNG instance per node.
@@ -4431,10 +4431,10 @@ index 000000000..e8097abe7
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 5c67d8c42cd6944b563e8fe59b3b35e9faabb356 Mon Sep 17 00:00:00 2001
+From 50fff7873e5f861b4f1fcaf6cc748cff1ff006b5 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 9 Oct 2022 10:07:59 +0200
-Subject: [PATCH 03/29] LRNG - /proc interface
+Subject: [PATCH 03/30] LRNG - /proc interface
 
 The patch adds the file lrng_type which provides details about
 the LRNG:
@@ -4577,10 +4577,10 @@ index e8097abe7..c653274f1 100644
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 2df7eaf0389f3a374cd9a7b683454d604d5c5496 Mon Sep 17 00:00:00 2001
+From 6b452f1d05167200d9f02b4e966ed27948ad7135 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 31 Jul 2022 22:18:18 +0200
-Subject: [PATCH 04/29] LRNG - add switchable DRNG support
+Subject: [PATCH 04/30] LRNG - add switchable DRNG support
 
 The DRNG switch support allows replacing the DRNG mechanism of the
 LRNG. The switching support rests on the interface definition of
@@ -4951,10 +4951,10 @@ index 000000000..aae755949
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 29e6cb87405d4c8a34b7a2da6e1e189e50c4266a Mon Sep 17 00:00:00 2001
+From c38dcd5223afa26141595e15fbbb60bcce787cdc Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:01:44 +0200
-Subject: [PATCH 05/29] LRNG - add common generic hash support
+Subject: [PATCH 05/30] LRNG - add common generic hash support
 
 The LRNG switchable DRNG support also allows the replacement of the hash
 implementation used as conditioning component. The common generic hash
@@ -5183,10 +5183,10 @@ index 000000000..13e62db9b
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 11381e8bb9baf71ee6405296acf34d535b9d9b5d Mon Sep 17 00:00:00 2001
+From 487f2b866a7d366d3b87b50de4ee2509d131b19e Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Tue, 15 Sep 2020 22:17:43 +0200
-Subject: [PATCH 06/29] crypto: DRBG - externalize DRBG functions for LRNG
+Subject: [PATCH 06/30] crypto: DRBG - externalize DRBG functions for LRNG
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -5333,10 +5333,10 @@ index af5ad51d3..b12ae9bde 100644
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 39873712493a0ff543577052c54b3d0167a7e91c Mon Sep 17 00:00:00 2001
+From c6288fd86376c020789d9b3ac24c86131120f108 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:09:02 +0200
-Subject: [PATCH 07/29] LRNG - add SP800-90A DRBG extension
+Subject: [PATCH 07/30] LRNG - add SP800-90A DRBG extension
 
 Using the LRNG switchable DRNG support, the SP800-90A DRBG extension is
 implemented.
@@ -5669,10 +5669,10 @@ index 000000000..1feec2c09
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 4b0e50807df712308c91c14da6cffc87e21cc75f Mon Sep 17 00:00:00 2001
+From d20a44ec381dfbf72045218798a52c76711dfb24 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:13:37 +0200
-Subject: [PATCH 08/29] LRNG - add kernel crypto API PRNG extension
+Subject: [PATCH 08/30] LRNG - add kernel crypto API PRNG extension
 
 Add runtime-pluggable support for all PRNGs that are accessible via
 the kernel crypto API, including hardware PRNGs. The PRNG is selected
@@ -5983,10 +5983,10 @@ index 000000000..a204bcf52
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From fe97109179b1cb4ec10b602bf69d248e6085adf6 Mon Sep 17 00:00:00 2001
+From efd0ba32e0cdd8463377442a39df1c3a430688af Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 9 Oct 2022 10:11:56 +0200
-Subject: [PATCH 09/29] LRNG - add atomic DRNG implementation
+Subject: [PATCH 09/30] LRNG - add atomic DRNG implementation
 
 The atomic DRNG implementation supports the in-kernel use cases which
 request random numbers in atomic contexts. It uses the ChaCha20 DRNG
@@ -6193,10 +6193,10 @@ index 000000000..b58a32017
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 38f3d384a8b659aebebef37f40a89df0f57479df Mon Sep 17 00:00:00 2001
+From 17a7b26be219d9bf614a78e40b54b81e28f4239c Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:21:44 +0200
-Subject: [PATCH 10/29] LRNG - add common timer-based entropy source code
+Subject: [PATCH 10/30] LRNG - add common timer-based entropy source code
 
 The code shared for timer-based entropy sources offers the following
 support:
@@ -6401,10 +6401,10 @@ index 000000000..70f3ff074
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 905034fc716d3b3e6b81ba5080fe6ddffc16da4d Mon Sep 17 00:00:00 2001
+From 4f902d3304b40a226d6ffabb414aaeb56dd1c9b1 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 31 Jul 2022 22:25:11 +0200
-Subject: [PATCH 11/29] LRNG - add interrupt entropy source
+Subject: [PATCH 11/30] LRNG - add interrupt entropy source
 
 The interrupt entropy source (ES) consumes the events triggered by the
 kernel invoked with the add_interrupt_randomness. Its main goal is:
@@ -7627,10 +7627,10 @@ index 000000000..97c5c1d26
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 5c73a7c094c9cf8dc6ac47aae8cd0a4e25ddb6b3 Mon Sep 17 00:00:00 2001
+From 37b39ecdcf563f270a05c34d181d1a715ab46aa6 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 16:39:02 +0200
-Subject: [PATCH 12/29] scheduler - add entropy sampling hook
+Subject: [PATCH 12/30] scheduler - add entropy sampling hook
 
 The scheduler can be used as a source of entropy. This requires the
 presence of a hook that invokes the entropy source implementation.
@@ -7668,10 +7668,10 @@ index ee28253c9..36496e198 100644
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From d0335bd899e2aaa4d370b737240cd34a338b2b5e Mon Sep 17 00:00:00 2001
+From d1e818b69d5f7154e83a003ab80cc56f08c67cc5 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 31 Jul 2022 22:27:27 +0200
-Subject: [PATCH 13/29] LRNG - add scheduler-based entropy source
+Subject: [PATCH 13/30] LRNG - add scheduler-based entropy source
 
 The scheduler-based entropy source (ES) consumes the events triggered by
 the kernel invoked with the add_sched_randomness. Its main goal is:
@@ -8595,10 +8595,10 @@ index 000000000..672a7fca4
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From df52b15758e8fd0db9e1148e8a15f151f7cc1015 Mon Sep 17 00:00:00 2001
+From e375518d90a46e9b7c749f3bc802d1152390f96f Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:07:49 +0200
-Subject: [PATCH 14/29] LRNG - add SP800-90B compliant health tests
+Subject: [PATCH 14/30] LRNG - add SP800-90B compliant health tests
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -9290,10 +9290,10 @@ index 000000000..a60c8378e
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From ece75572396bbf58de81372992c56a46763e95af Mon Sep 17 00:00:00 2001
+From 0962add895749ea2f8a7ae6479572bfe40bf87e3 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 9 Oct 2022 10:15:35 +0200
-Subject: [PATCH 15/29] LRNG - add random.c entropy source support
+Subject: [PATCH 15/30] LRNG - add random.c entropy source support
 
 The random.c implementation can be used as an entropy source by the
 LRNG. This support can be enabled at compile time.
@@ -9508,10 +9508,10 @@ index 000000000..519ba640c
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 26575d98fba0d23a0ee6d836346dbc3411bf2b2f Mon Sep 17 00:00:00 2001
+From 0255c5266cb69f3c32e2d8f88871525b348bf7cc Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 9 Oct 2022 10:17:06 +0200
-Subject: [PATCH 16/29] LRNG - CPU entropy source
+Subject: [PATCH 16/30] LRNG - CPU entropy source
 
 Certain CPUs provide instructions giving access to an entropy source
 (e.g. RDSEED on Intel/AMD, DARN on POWER, etc.). The LRNG can utilize
@@ -9919,10 +9919,10 @@ index 000000000..f982cc31d
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From ee4667818906ca424645a3f78f170c7354273007 Mon Sep 17 00:00:00 2001
+From 0b99ab3008a019f0a22ba8ff71cea66a664f7d2c Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:47:58 +0200
-Subject: [PATCH 17/29] crypto: move Jitter RNG header include dir
+Subject: [PATCH 17/30] crypto: move Jitter RNG header include dir
 
 To support the LRNG operation which uses the Jitter RNG separately
 from the kernel crypto API, the header file must be accessible to
@@ -9971,10 +9971,10 @@ rename to include/crypto/internal/jitterentropy.h
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From a3041ae165fe5bff91ecd198c31d7276a15d1f7f Mon Sep 17 00:00:00 2001
+From 4ead2e75492f94eec3fc464e3fad3f423538f523 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:51:58 +0200
-Subject: [PATCH 18/29] LRNG - add Jitter RNG fast noise source
+Subject: [PATCH 18/30] LRNG - add Jitter RNG fast noise source
 
 The Jitter RNG fast noise source implemented as part of the kernel
 crypto API is queried for 256 bits of entropy at the time the seed
@@ -10219,10 +10219,10 @@ index 000000000..dbb2fce59
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From c814a7e2015ef6737c24756686648cd02ca19b73 Mon Sep 17 00:00:00 2001
+From f3c433691affdc716ab5abfefca0e0217051a95a Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 17:56:56 +0200
-Subject: [PATCH 19/29] LRNG - add option to enable runtime entropy rate
+Subject: [PATCH 19/30] LRNG - add option to enable runtime entropy rate
  configuration
 
 The entropy rate for the different entropy sources is configured at
@@ -10285,10 +10285,10 @@ index 464fd8b78..1e182d426 100644
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 9716e92f05085fd5b27f4016ad7ea59ce9e0798c Mon Sep 17 00:00:00 2001
+From cc4430a9abfa24d5271683452e7253b62d25d8cf Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:05:58 +0200
-Subject: [PATCH 20/29] LRNG - add interface for gathering of raw entropy
+Subject: [PATCH 20/30] LRNG - add interface for gathering of raw entropy
 
 The test interface allows a privileged process to capture the raw
 unconditioned noise that is collected by the LRNG for statistical
@@ -11815,10 +11815,10 @@ index 000000000..101140085
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 70c853ae5b6150f13b04b6aa7afb7db378b8e881 Mon Sep 17 00:00:00 2001
+From 27699ed5bb6eb8671bd03eae4156b2cda831f2a7 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:13:56 +0200
-Subject: [PATCH 21/29] LRNG - add power-on and runtime self-tests
+Subject: [PATCH 21/30] LRNG - add power-on and runtime self-tests
 
 Parts of the LRNG are already covered by self-tests, including:
 
@@ -12349,10 +12349,10 @@ index 000000000..15f1e4a2a
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From db97cc7eeaada08a64b3f1a10e2b8f6988372b00 Mon Sep 17 00:00:00 2001
+From d09e8c949c152213798a7bb35b216a7a96813657 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 31 Jul 2022 22:34:51 +0200
-Subject: [PATCH 22/29] LRNG - sysctls and /proc interface
+Subject: [PATCH 22/30] LRNG - sysctls and /proc interface
 
 The LRNG sysctl interface provides the same controls as the existing
 /dev/random implementation. These sysctls behave identically and are
@@ -12533,10 +12533,10 @@ index 000000000..ecdd96a84
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 72a2a52699d8503717305a929ac50abc18b2e3d6 Mon Sep 17 00:00:00 2001
+From 3e922c85745157f44096eb4987486739a6e8cec3 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 9 Oct 2022 10:21:13 +0200
-Subject: [PATCH 23/29] LRMG - add drop-in replacement random(4) API
+Subject: [PATCH 23/30] LRMG - add drop-in replacement random(4) API
 
 The LRNG is intended to be a full replacement of the existing random.c.
 This also includes the providing of a full API and ABI compliant drop-in
@@ -13372,10 +13372,10 @@ index 000000000..d12e88380
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 6ee931e9234499ae8fea13bf435ea9cfb11dbaf9 Mon Sep 17 00:00:00 2001
+From 18b9109f342cc90a9e249dff9b66f51ef1e02a8d Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 9 Oct 2022 10:22:39 +0200
-Subject: [PATCH 24/29] LRNG - add kernel crypto API interface
+Subject: [PATCH 24/30] LRNG - add kernel crypto API interface
 
 The LRNG can be registered with the kernel crypto API's random number
 generator framework. This offers a random number generator with the name
@@ -13582,10 +13582,10 @@ index 000000000..4cb511f80
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 5645749badbe4ba4210492161ecc9e97c49edd45 Mon Sep 17 00:00:00 2001
+From c23455edc1bc63c9142344c21c33609aa5a55a73 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:39:30 +0200
-Subject: [PATCH 25/29] LRNG - add /dev/lrng device file support
+Subject: [PATCH 25/30] LRNG - add /dev/lrng device file support
 
 The LRNG can create a character device file that operates identically
 to /dev/random including IOCTL, read and write operations.
@@ -13681,10 +13681,10 @@ index 000000000..e60060d40
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 1fa880292581e44e87ca7813672ec00285711e6d Mon Sep 17 00:00:00 2001
+From 99044f625597835d7f98de0aef58814eca0bd259 Mon Sep 17 00:00:00 2001
 From: Stephan Mueller <smueller@chronox.de>
 Date: Sun, 15 May 2022 18:43:30 +0200
-Subject: [PATCH 26/29] LRNG - add hwrand framework interface
+Subject: [PATCH 26/30] LRNG - add hwrand framework interface
 
 The LRNG can be registered with the hardware random number generator
 framework. This offers a random number generator with the name "lrng"
@@ -13817,10 +13817,10 @@ index 000000000..e841eea13
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 965f0f9ec5ec769ed3414c6118490dc73cabe6c7 Mon Sep 17 00:00:00 2001
+From 2214f596ea08c631e8b234f1bfc2686bba15be2c Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 10 Oct 2022 14:19:50 +0200
-Subject: [PATCH 27/29] lrng-6.0/MAINTAINERS: add Stephan Mueller as a LRNG
+Subject: [PATCH 27/30] lrng-6.0/MAINTAINERS: add Stephan Mueller as a LRNG
  maintainer
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -13850,10 +13850,10 @@ index 72b9654f7..f5add5ce2 100644
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From e1bfe443d7d1b5568a311096d356dc2ccc91e897 Mon Sep 17 00:00:00 2001
+From 3885de88d3b48b0f262cd780ccd49cc806be389d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 14 Oct 2022 10:31:07 +0200
-Subject: [PATCH 28/29] lrng-6.0: merge changes from dev tree
+Subject: [PATCH 28/30] lrng-6.0: merge changes from dev tree
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -14185,10 +14185,10 @@ index 2818591be..a9c8d90c7 100644
 2.38.0.rc1.6.g4fd6c5e444
 
 
-From 34684d712ffdd561429ed64b7dcf3c127ebd0e2e Mon Sep 17 00:00:00 2001
+From f761b32abe4b69432447f80985fc8b04aefe4e31 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Sun, 16 Oct 2022 12:35:30 +0200
-Subject: [PATCH 29/29] lrng-6.0: merge changes from dev tree
+Subject: [PATCH 29/30] lrng-6.0: merge changes from dev tree
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -14506,6 +14506,37 @@ index 6304728d8..9d4a5599f 100644
  void lrng_debug_report_seedlevel(const char *name);
  int lrng_rand_initialize(void);
  bool lrng_state_operational(void);
+-- 
+2.38.0.rc1.6.g4fd6c5e444
+
+
+From 1438ace877115e53daca7b55a2a20b83228b9634 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Wed, 19 Oct 2022 18:34:43 +0200
+Subject: [PATCH 30/30] lrng-6.0: merge changes from dev tree
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ drivers/char/lrng/Kconfig | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/char/lrng/Kconfig b/drivers/char/lrng/Kconfig
+index 9d74117bc..08ab921a1 100644
+--- a/drivers/char/lrng/Kconfig
++++ b/drivers/char/lrng/Kconfig
+@@ -10,6 +10,12 @@ config RANDOM_DEFAULT_IMPL
+ 	  The default random number generator as provided with
+ 	  drivers/char/random.c is selected with this option.
+ 
++config LRNG_AUTO_SELECTED
++	bool
++	default y if !RANDOM_DEFAULT_IMPL
++	default n if RANDOM_DEFAULT_IMPL
++	select LRNG
++
+ config LRNG
+ 	bool "Linux Random Number Generator"
+ 	default n
 -- 
 2.38.0.rc1.6.g4fd6c5e444
 

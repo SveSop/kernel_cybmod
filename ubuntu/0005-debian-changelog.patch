@@ -1,27 +1,41 @@
-From 414ae16f606aa61dde72b1d112b8be6e7429cb00 Mon Sep 17 00:00:00 2001
+From d89ef1471b2bde8a053162dbbb19ea15f18d9089 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 21 Oct 2022 11:49:18 +0000
+Date: Wed, 26 Oct 2022 11:43:02 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16940 +-------------------------------------
- 1 file changed, 3 insertions(+), 16937 deletions(-)
+ debian.master/changelog | 16954 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16951 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 9563f0e80927..43662d9b4153 100644
+index 3036d83aa733..0cebbb7b50f5 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16940 +1,6 @@
+@@ -1,16954 +1,6 @@
+-linux-unstable (6.1.0-3.3) kinetic; urgency=medium
++linux (6.0.5-060005.202210261142) kinetic; urgency=low
+ 
+-  * kinetic/linux-unstable: 6.1.0-3.3 -proposed tracker (LP: #1994037)
++  Mainline build at commit: v6.0.5
+ 
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] Support skipped dkms modules
+-    - [Config] update configs after rebase to 6.1-rc2
++ -- Mainline Build <kernel@kathleen>  Wed, 26 Oct 2022 11:43:02 +0000
+ 
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v6.1-rc2
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 24 Oct 2022 15:53:11 +0200
+-
 -linux-unstable (6.1.0-2.2) kinetic; urgency=medium
-+linux (6.0.3-060003.202210211149) kinetic; urgency=low
- 
+-
 -  * kinetic/linux-unstable: 6.1.0-2.2 -proposed tracker (LP: #1993350)
-+  Mainline build at commit: v6.0.3
- 
+-
 -  * Populating Hyper-V MSR for Ubuntu 13.10 (LP: #1193172)
 -    - SAUCE: (no-up) hv: Supply vendor ID and package ABI
-+ -- Mainline Build <kernel@kathleen>  Fri, 21 Oct 2022 11:49:18 +0000
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - SAUCE: perf tools: Fix man page build wrt perf-arm-coresight.txt
 -
