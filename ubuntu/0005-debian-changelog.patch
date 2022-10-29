@@ -1,6 +1,6 @@
-From d89ef1471b2bde8a053162dbbb19ea15f18d9089 Mon Sep 17 00:00:00 2001
+From 9a23cf5da917edfd132ad922632768f688d8318c Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 26 Oct 2022 11:43:02 +0000
+Date: Sat, 29 Oct 2022 09:32:53 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
@@ -8,20 +8,20 @@ Subject: [PATCH 5/6] debian changelog
  1 file changed, 3 insertions(+), 16951 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 3036d83aa733..0cebbb7b50f5 100644
+index 3036d83aa733..9d2f1e94454a 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
 @@ -1,16954 +1,6 @@
 -linux-unstable (6.1.0-3.3) kinetic; urgency=medium
-+linux (6.0.5-060005.202210261142) kinetic; urgency=low
++linux (6.0.6-060006.202210290932) kinetic; urgency=low
  
 -  * kinetic/linux-unstable: 6.1.0-3.3 -proposed tracker (LP: #1994037)
-+  Mainline build at commit: v6.0.5
++  Mainline build at commit: v6.0.6
  
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] Support skipped dkms modules
 -    - [Config] update configs after rebase to 6.1-rc2
-+ -- Mainline Build <kernel@kathleen>  Wed, 26 Oct 2022 11:43:02 +0000
++ -- Mainline Build <kernel@kathleen>  Sat, 29 Oct 2022 09:32:53 +0000
  
 -  [ Upstream Kernel Changes ]
 -
