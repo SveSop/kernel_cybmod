@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v6.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 6.0.6  
+0000 : Patch 6.0.7  
 0000 : ProjectC v6.0-r0  
 0002 : 6.0 Graysky's CPU optimization patches  
 0003 : v6.0-fsync1_futex_waitv  
@@ -21,6 +21,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v6.x/linux
 0025 : LRNG kernel patches  
 0026 : BBR2 patchset  
 0027 : Winesync kernel module  
+0028 : V4L2 loopback patches  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  

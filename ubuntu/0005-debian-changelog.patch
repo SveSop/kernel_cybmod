@@ -1,28 +1,51 @@
-From 9a23cf5da917edfd132ad922632768f688d8318c Mon Sep 17 00:00:00 2001
+From b2801f5921f435499106f10507f642ab61add6f3 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Sat, 29 Oct 2022 09:32:53 +0000
+Date: Thu, 3 Nov 2022 16:52:20 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16954 +-------------------------------------
- 1 file changed, 3 insertions(+), 16951 deletions(-)
+ debian.master/changelog | 16977 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16974 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 3036d83aa733..9d2f1e94454a 100644
+index 898b9c0f335d..298118f46e95 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16954 +1,6 @@
+@@ -1,16977 +1,6 @@
+-linux-unstable (6.1.0-4.4) kinetic; urgency=medium
++linux (6.0.7-060007.202211031652) kinetic; urgency=low
+ 
+-  * kinetic/linux-unstable: 6.1.0-4.4 -proposed tracker (LP: #1995500)
++  Mainline build at commit: v6.0.7
+ 
+-  * Fix ath11k deadlock on WCN6855 (LP: #1995041)
+-    - SAUCE: wifi: ath11k: avoid deadlock during regulatory update in
+-      ath11k_regd_update()
++ -- Mainline Build <kernel@kathleen>  Thu, 03 Nov 2022 16:52:20 +0000
+ 
+-  * Bump (kernel) '-mtune' to z16 / arch14 with 23.04 (LP: #1982833)
+-    - [Config] Enable mtune z16
+-
+-  * armhf kernel compiled with gcc-12 fails to boot on pi 3/2 (LP: #1993120)
+-    - [Packaging] Support arch-specific compilers in updateconfigs
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update configs after rebase to 6.1-rc3
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v6.1-rc3
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Thu, 03 Nov 2022 14:00:41 +0100
+-
 -linux-unstable (6.1.0-3.3) kinetic; urgency=medium
-+linux (6.0.6-060006.202210290932) kinetic; urgency=low
- 
+-
 -  * kinetic/linux-unstable: 6.1.0-3.3 -proposed tracker (LP: #1994037)
-+  Mainline build at commit: v6.0.6
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Packaging] Support skipped dkms modules
 -    - [Config] update configs after rebase to 6.1-rc2
-+ -- Mainline Build <kernel@kathleen>  Sat, 29 Oct 2022 09:32:53 +0000
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v6.1-rc2
