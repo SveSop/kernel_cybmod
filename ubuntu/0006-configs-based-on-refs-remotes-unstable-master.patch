@@ -1,24 +1,24 @@
-From 535257f372fe1d1a6b954929a3730b0279d59692 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 3 Nov 2022 16:52:54 +0000
+From 0e7b3d893d95a3cffabed5bb27afe02efd8f4bbe Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 10 Nov 2022 19:02:06 +0000
 Subject: [PATCH 6/6] configs (based on refs/remotes/unstable/master)
 
 ---
  .../config/amd64/config.common.amd64          |   9 +-
- .../config/arm64/config.common.arm64          |  10 +-
+ .../config/arm64/config.common.arm64          |  12 +-
  .../config/arm64/config.flavour.generic       |   2 +-
  .../config/arm64/config.flavour.generic-64k   |   2 +-
- .../config/armhf/config.common.armhf          |   9 +-
+ .../config/armhf/config.common.armhf          |  11 +-
  .../config/armhf/config.flavour.generic       |   2 +-
  .../config/armhf/config.flavour.generic-lpae  |   2 +-
  debian.master/config/config.common.ubuntu     | 218 +++++-------------
- .../config/ppc64el/config.common.ppc64el      |  11 +-
+ .../config/ppc64el/config.common.ppc64el      |  13 +-
  .../config/riscv64/config.common.riscv64      |  10 +-
- .../config/s390x/config.common.s390x          |   9 +-
- 11 files changed, 79 insertions(+), 205 deletions(-)
+ .../config/s390x/config.common.s390x          |  11 +-
+ 11 files changed, 83 insertions(+), 209 deletions(-)
 
 diff --git a/debian.master/config/amd64/config.common.amd64 b/debian.master/config/amd64/config.common.amd64
-index 680c868a8297..0d5092a8cc00 100644
+index ee4ee81e0bc9..55ce05072c37 100644
 --- a/debian.master/config/amd64/config.common.amd64
 +++ b/debian.master/config/amd64/config.common.amd64
 @@ -16,7 +16,6 @@ CONFIG_ALIM7101_WDT=m
@@ -89,7 +89,7 @@ index 680c868a8297..0d5092a8cc00 100644
  CONFIG_REGULATOR_FIXED_VOLTAGE=m
  CONFIG_REGULATOR_TWL4030=m
 diff --git a/debian.master/config/arm64/config.common.arm64 b/debian.master/config/arm64/config.common.arm64
-index 93c70564e3de..db7df445c448 100644
+index 93c70564e3de..7f2d841b7290 100644
 --- a/debian.master/config/arm64/config.common.arm64
 +++ b/debian.master/config/arm64/config.common.arm64
 @@ -16,7 +16,6 @@ CONFIG_ALIM7101_WDT=m
@@ -100,6 +100,15 @@ index 93c70564e3de..db7df445c448 100644
  CONFIG_APDS9802ALS=m
  CONFIG_APPLICOM=m
  CONFIG_AQTION=m
+@@ -61,7 +60,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc-12 (Ubuntu 12.2.0-3ubuntu1) 12.2.0"
++CONFIG_CC_VERSION_TEXT="aarch64-linux-gnu-gcc-12 (Ubuntu 12.2.0-9ubuntu1) 12.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE="console=ttyAMA0"
 @@ -203,7 +202,6 @@ CONFIG_GPIO_TWL4030=m
  CONFIG_GPIO_TWL6040=m
  CONFIG_GPIO_VIRTIO=m
@@ -204,7 +213,7 @@ index a8087da3094b..6d51c6769637 100644
 +CONFIG_FORCE_MAX_ZONEORDER=14
  CONFIG_PGTABLE_LEVELS=3
 diff --git a/debian.master/config/armhf/config.common.armhf b/debian.master/config/armhf/config.common.armhf
-index b49c936353fc..f1959d916e2e 100644
+index b49c936353fc..1b069a9acaa0 100644
 --- a/debian.master/config/armhf/config.common.armhf
 +++ b/debian.master/config/armhf/config.common.armhf
 @@ -13,7 +13,6 @@ CONFIG_ALIM7101_WDT=m
@@ -215,6 +224,15 @@ index b49c936353fc..f1959d916e2e 100644
  CONFIG_APDS9802ALS=m
  CONFIG_APPLICOM=m
  CONFIG_AQTION=m
+@@ -56,7 +55,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc-12 (Ubuntu 12.2.0-3ubuntu1) 12.2.0"
++CONFIG_CC_VERSION_TEXT="arm-linux-gnueabihf-gcc-12 (Ubuntu 12.2.0-9ubuntu1) 12.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
 @@ -196,7 +195,6 @@ CONFIG_GPIO_TWL4030=y
  CONFIG_GPIO_TWL6040=y
  CONFIG_GPIO_VIRTIO=m
@@ -1605,7 +1623,7 @@ index 57469a22d2cc..e8f33ed071e1 100644
  CONFIG_ZSTD_DECOMPRESS=y
  CONFIG_ZSWAP=y
 diff --git a/debian.master/config/ppc64el/config.common.ppc64el b/debian.master/config/ppc64el/config.common.ppc64el
-index dc2fd9facbd3..7498631ffdbd 100644
+index dc2fd9facbd3..86c78352a5bd 100644
 --- a/debian.master/config/ppc64el/config.common.ppc64el
 +++ b/debian.master/config/ppc64el/config.common.ppc64el
 @@ -13,11 +13,9 @@ CONFIG_ALIM7101_WDT=m
@@ -1620,6 +1638,15 @@ index dc2fd9facbd3..7498631ffdbd 100644
  CONFIG_ARCH_MMAP_RND_BITS=28
  CONFIG_ARCH_MMAP_RND_BITS_MAX=29
  CONFIG_ARCH_MMAP_RND_BITS_MIN=14
+@@ -56,7 +54,7 @@ CONFIG_CADENCE_WATCHDOG=m
+ CONFIG_CAIF=m
+ CONFIG_CAN=m
+ CONFIG_CB710_CORE=m
+-CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc-12 (Ubuntu 12.2.0-3ubuntu1) 12.2.0"
++CONFIG_CC_VERSION_TEXT="powerpc64le-linux-gnu-gcc-12 (Ubuntu 12.2.0-9ubuntu1) 12.2.0"
+ CONFIG_CDROM_PKTCDVD=m
+ CONFIG_CMA=y
+ CONFIG_CMDLINE=""
 @@ -169,6 +167,7 @@ CONFIG_FEALNX=m
  CONFIG_FIREWIRE=m
  CONFIG_FIREWIRE_NOSY=m
@@ -1767,7 +1794,7 @@ index 86c2c930be3f..65f9891b52d5 100644
  CONFIG_REGULATOR_FIXED_VOLTAGE=m
  CONFIG_REGULATOR_TWL4030=m
 diff --git a/debian.master/config/s390x/config.common.s390x b/debian.master/config/s390x/config.common.s390x
-index e10204811e4f..3e936e6761e9 100644
+index e10204811e4f..dd6384d983cd 100644
 --- a/debian.master/config/s390x/config.common.s390x
 +++ b/debian.master/config/s390x/config.common.s390x
 @@ -12,7 +12,6 @@
@@ -1778,6 +1805,15 @@ index e10204811e4f..3e936e6761e9 100644
  # CONFIG_APDS9802ALS is not set
  # CONFIG_APPLICOM is not set
  # CONFIG_AQTION is not set
+@@ -45,7 +44,7 @@ CONFIG_AUTOFS_FS=y
+ # CONFIG_CAIF is not set
+ # CONFIG_CAN is not set
+ # CONFIG_CB710_CORE is not set
+-CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc-12 (Ubuntu 12.2.0-3ubuntu1) 12.2.0"
++CONFIG_CC_VERSION_TEXT="s390x-linux-gnu-gcc-12 (Ubuntu 12.2.0-9ubuntu1) 12.2.0"
+ # CONFIG_CDROM_PKTCDVD is not set
+ CONFIG_CMA=y
+ # CONFIG_CMDLINE_PARTITION is not set
 @@ -177,7 +176,6 @@ CONFIG_GPIO_GENERIC_PLATFORM=m
  # CONFIG_GPIO_SIOX is not set
  # CONFIG_GPIO_TPIC2810 is not set

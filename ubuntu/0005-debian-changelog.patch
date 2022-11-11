@@ -1,28 +1,46 @@
-From b2801f5921f435499106f10507f642ab61add6f3 Mon Sep 17 00:00:00 2001
-From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Thu, 3 Nov 2022 16:52:20 +0000
+From e110f573d2b2ce8ac5083978db82f6152dcb2f67 Mon Sep 17 00:00:00 2001
+From: "Kernel Builder (sita)" <ubuntu-kernel-bot@canonical.com>
+Date: Thu, 10 Nov 2022 19:01:32 +0000
 Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 16977 +-------------------------------------
- 1 file changed, 3 insertions(+), 16974 deletions(-)
+ debian.master/changelog | 16995 +-------------------------------------
+ 1 file changed, 3 insertions(+), 16992 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 898b9c0f335d..298118f46e95 100644
+index fe29c90f8152..91c5b9042c76 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,16977 +1,6 @@
--linux-unstable (6.1.0-4.4) kinetic; urgency=medium
-+linux (6.0.7-060007.202211031652) kinetic; urgency=low
+@@ -1,16995 +1,6 @@
+-linux-unstable (6.1.0-5.5) lunar; urgency=medium
++linux (6.0.8-060008.202211101901) lunar; urgency=low
  
+-  * lunar/linux-unstable: 6.1.0-5.5 -proposed tracker (LP: #1995875)
++  Mainline build at commit: v6.0.8
+ 
+-  * Please have linux-tools-common Provide: bpftool (LP: #1981089)
+-    - [Packaging] let linux-tools-common provides bpftool
++ -- Mainline Build <kernel@sita>  Thu, 10 Nov 2022 19:01:32 +0000
+ 
+-  * Miscellaneous Ubuntu changes
+-    - packaging: switch to lunar series
+-    - Rebase to v6.1-rc4
+-    - [Config] toolchian update
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v6.1-rc4
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Mon, 07 Nov 2022 16:43:21 +0100
+-
+-linux-unstable (6.1.0-4.4) lunar; urgency=medium
+-
 -  * kinetic/linux-unstable: 6.1.0-4.4 -proposed tracker (LP: #1995500)
-+  Mainline build at commit: v6.0.7
- 
+-
 -  * Fix ath11k deadlock on WCN6855 (LP: #1995041)
 -    - SAUCE: wifi: ath11k: avoid deadlock during regulatory update in
 -      ath11k_regd_update()
-+ -- Mainline Build <kernel@kathleen>  Thu, 03 Nov 2022 16:52:20 +0000
- 
+-
 -  * Bump (kernel) '-mtune' to z16 / arch14 with 23.04 (LP: #1982833)
 -    - [Config] Enable mtune z16
 -
