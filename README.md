@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v6.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 6.0.8  
+0000 : Patch 6.0.9  
 0000 : ProjectC v6.0-r0  
 0002 : 6.0 Graysky's CPU optimization patches  
 0003 : v6.0-fsync1_futex_waitv  
@@ -16,7 +16,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v6.x/linux
 0020 : Clearlinux patches  
 0021 : Misc fixes  
 0022 : Block patchset  
-0023 : mm: LRU patchset  
+0023 : mm: MGLRU patchset  
 0024 : zstd upstream patches  
 0025 : LRNG kernel patches  
 0026 : BBR2 patchset  
