@@ -1,7 +1,7 @@
-From 6c439cc18393d65015408368f4c0abc51aca97a4 Mon Sep 17 00:00:00 2001
+From 13b4bfff96c6a1b4a7161a51c3f7b0d799e738de Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Mon, 20 Jun 2022 12:40:39 +0200
-Subject: [PATCH 01/38] mm: Change dirty writeback defaults
+Subject: [PATCH 01/37] mm: Change dirty writeback defaults
 
 Use a lower ratio of 5, but a longer period of 10 seconds for dirty writeback.
 ---
@@ -31,13 +31,13 @@ index 032a7bf8d..e829a5a07 100644
  EXPORT_SYMBOL_GPL(dirty_writeback_interval);
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From d4fc00e7c1d1b4690c78a3a2654812b1c71b9b39 Mon Sep 17 00:00:00 2001
+From 57fe065afc4d5ea49066e639293cb5cc0f143cf7 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 02/38] ZEN: mm: Lower the non-hugetlbpage pageblock size to
+Subject: [PATCH 02/37] ZEN: mm: Lower the non-hugetlbpage pageblock size to
  reduce scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -80,13 +80,13 @@ index 83c724805..d2b8741ea 100644
  #endif /* CONFIG_HUGETLB_PAGE */
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 0c2556000129920d29034ebec5eeda36e626d2b3 Mon Sep 17 00:00:00 2001
+From 1ac9b26303a5df43d78979ff00568bb0fe45c0ad Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 09:26:57 -0700
-Subject: [PATCH 04/38] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
+Subject: [PATCH 04/37] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
 
 This warning isn't very useful: why would you put ANNOTATE_NOENDBR on
 ENDBR, and if you did, what's the harm?
@@ -120,13 +120,13 @@ index e55fdf952..445741f36 100644
  	}
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 6a7c19b6d82ff17682314287c4556cbd1abd56ab Mon Sep 17 00:00:00 2001
+From 4db8e734af9a76ba32d2624895bdca335895cf81 Mon Sep 17 00:00:00 2001
 From: Ingo Molnar <mingo@kernel.org>
 Date: Thu, 11 Aug 2022 08:54:52 +0200
-Subject: [PATCH 05/38] sched/all: Change all BUG_ON() instances in the
+Subject: [PATCH 05/37] sched/all: Change all BUG_ON() instances in the
  scheduler to WARN_ON_ONCE()
 
 There's no good reason to crash a user's system with a BUG_ON(),
@@ -358,7 +358,7 @@ index 55f39c8f4..2936fe55c 100644
  		/*
  		 * Disable all the borrow logic by pretending we have inf
 diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index e26688d38..7a44dceeb 100644
+index f34b48963..66c6b07d5 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
 @@ -2709,8 +2709,8 @@ static inline void double_rq_lock(struct rq *rq1, struct rq *rq2)
@@ -382,84 +382,13 @@ index e26688d38..7a44dceeb 100644
  	__release(rq2->lock);
  }
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 20420bfe2ed1a1daf2d4ca83134bcc1d3a646dcf Mon Sep 17 00:00:00 2001
-From: Sandipan Das <sandipan.das@amd.com>
-Date: Thu, 8 Sep 2022 10:33:15 +0530
-Subject: [PATCH 06/38] perf/x86/amd/uncore: Fix memory leak for events array
-
-When a CPU comes online, the per-CPU NB and LLC uncore contexts are
-freed but not the events array within the context structure. This
-causes a memory leak as identified by the kmemleak detector.
-
-  [...]
-  unreferenced object 0xffff8c5944b8e320 (size 32):
-    comm "swapper/0", pid 1, jiffies 4294670387 (age 151.072s)
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<000000000759fb79>] amd_uncore_cpu_up_prepare+0xaf/0x230
-      [<00000000ddc9e126>] cpuhp_invoke_callback+0x2cf/0x470
-      [<0000000093e727d4>] cpuhp_issue_call+0x14d/0x170
-      [<0000000045464d54>] __cpuhp_setup_state_cpuslocked+0x11e/0x330
-      [<0000000069f67cbd>] __cpuhp_setup_state+0x6b/0x110
-      [<0000000015365e0f>] amd_uncore_init+0x260/0x321
-      [<00000000089152d2>] do_one_initcall+0x3f/0x1f0
-      [<000000002d0bd18d>] kernel_init_freeable+0x1ca/0x212
-      [<0000000030be8dde>] kernel_init+0x11/0x120
-      [<0000000059709e59>] ret_from_fork+0x22/0x30
-  unreferenced object 0xffff8c5944b8dd40 (size 64):
-    comm "swapper/0", pid 1, jiffies 4294670387 (age 151.072s)
-    hex dump (first 32 bytes):
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<00000000306efe8b>] amd_uncore_cpu_up_prepare+0x183/0x230
-      [<00000000ddc9e126>] cpuhp_invoke_callback+0x2cf/0x470
-      [<0000000093e727d4>] cpuhp_issue_call+0x14d/0x170
-      [<0000000045464d54>] __cpuhp_setup_state_cpuslocked+0x11e/0x330
-      [<0000000069f67cbd>] __cpuhp_setup_state+0x6b/0x110
-      [<0000000015365e0f>] amd_uncore_init+0x260/0x321
-      [<00000000089152d2>] do_one_initcall+0x3f/0x1f0
-      [<000000002d0bd18d>] kernel_init_freeable+0x1ca/0x212
-      [<0000000030be8dde>] kernel_init+0x11/0x120
-      [<0000000059709e59>] ret_from_fork+0x22/0x30
-  [...]
-
-Fix the problem by freeing the events array before freeing the uncore
-context.
-
-Fixes: 39621c5808f5 ("perf/x86/amd/uncore: Use dynamic events array")
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Tested-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
----
- arch/x86/events/amd/uncore.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index d568afc70..83f15fe41 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -553,6 +553,7 @@ static void uncore_clean_online(void)
- 
- 	hlist_for_each_entry_safe(uncore, n, &uncore_unused_list, node) {
- 		hlist_del(&uncore->node);
-+		kfree(uncore->events);
- 		kfree(uncore);
- 	}
- }
--- 
-2.38.1.143.g1fc3c0ad40
-
-
-From e7f02b3f4dd962a65578c9725a354b4a3d7567e6 Mon Sep 17 00:00:00 2001
+From aaf3874ef04c51db86c135302064c6775bd15840 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Thu, 8 Sep 2022 12:04:50 +0200
-Subject: [PATCH 07/38] x86,retpoline: Be sure to emit INT3 after JMP *%\reg
+Subject: [PATCH 06/37] x86,retpoline: Be sure to emit INT3 after JMP *%\reg
 
 Both AMD and Intel recommend using INT3 after an indirect JMP. Make sure
 to emit one when rewriting the retpoline JMP irrespective of compiler
@@ -509,13 +438,13 @@ index 362562c83..8f109da49 100644
  
  	*pprog = prog;
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 3cd8f135edb215d5478c29a20546ccd8189d86d0 Mon Sep 17 00:00:00 2001
+From 297f33b7b14273a5ffd5062a639a538489652f1a Mon Sep 17 00:00:00 2001
 From: Alexey Romanov <avromanov@sberdevices.ru>
 Date: Wed, 24 Aug 2022 14:31:17 +0300
-Subject: [PATCH 08/38] zram: don't retry compress incompressible page
+Subject: [PATCH 07/37] zram: don't retry compress incompressible page
 
 It doesn't make sense for us to retry to compress an uncompressible page
 (comp_len == PAGE_SIZE) in zsmalloc slowpath, because we will be storing
@@ -563,13 +492,13 @@ index 226ea76cc..3bd8d5e27 100644
  
  	alloced_pages = zs_get_total_pages(zram->mem_pool);
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 29450ad1945f6b79fc76d36af8a394b6f884d35f Mon Sep 17 00:00:00 2001
+From 11846d35f6f78908559519cb58cf5ba96c796121 Mon Sep 17 00:00:00 2001
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Date: Tue, 20 Sep 2022 19:06:33 +0200
-Subject: [PATCH 09/38] lib/vdso: use "grep -E" instead of "egrep"
+Subject: [PATCH 08/37] lib/vdso: use "grep -E" instead of "egrep"
 
 The latest version of grep claims the egrep is now obsolete so the build
 now contains warnings that look like:
@@ -597,13 +526,13 @@ index c415a685d..e814061d6 100644
  		       then (echo >&2 "$@: dynamic relocations are not supported"; \
  			     rm -f $@; /bin/false); fi
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 2430c77153199d0ff06d72dcc88e53f3c7b79019 Mon Sep 17 00:00:00 2001
+From ef9319d0e0ba15627fcbad3cf7ebcec39787f849 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Mon, 26 Sep 2022 11:25:03 -0500
-Subject: [PATCH 10/38] leds: trigger: Add block device LED trigger
+Subject: [PATCH 09/37] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -1873,13 +1802,13 @@ index 000000000..8614e308f
 +MODULE_AUTHOR("Ian Pilcher <arequipeno@gmail.com>");
 +MODULE_LICENSE("GPL v2");
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 82f54afd0f621cbbe6192d9b04c29cb6c2cb6b0d Mon Sep 17 00:00:00 2001
+From 7e44009b648bdce92d4f718057c8dedbd92b6b5b Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Mon, 26 Sep 2022 11:25:02 -0500
-Subject: [PATCH 11/38] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 10/37] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -2190,13 +2119,13 @@ index 000000000..9ff5b99de
 +  A device can be associated with multiple LEDs, and an LED can be associated
 +  with multiple devices.
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 60502c79662e158402f5378016d9d3c493926bf9 Mon Sep 17 00:00:00 2001
+From f95d1438091770111aeb4d55c9aa6a2b1c54c14c Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 3 Aug 2022 20:15:04 +0800
-Subject: [PATCH 12/38] sbitmap: fix possible io hung due to lost wakeup
+Subject: [PATCH 11/37] sbitmap: fix possible io hung due to lost wakeup
 
 There are two problems can lead to lost wakeup:
 
@@ -2325,13 +2254,13 @@ index 29eb04842..1f3114787 100644
  	return false;
  }
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 49bd7a7577e686a03164788aa20098efc11228b2 Mon Sep 17 00:00:00 2001
+From 74fc75d915de8034cd6702d3d0723f152c8cd9ac Mon Sep 17 00:00:00 2001
 From: Liu Song <liusong@linux.alibaba.com>
 Date: Fri, 26 Aug 2022 11:14:13 +0800
-Subject: [PATCH 13/38] sbitmap: remove unnecessary code in
+Subject: [PATCH 12/37] sbitmap: remove unnecessary code in
  __sbitmap_queue_get_batch
 
 If "nr + nr_tags <= map_depth", then the value of nr_tags will not be
@@ -2370,13 +2299,13 @@ index 1f3114787..a39b1a877 100644
  			}
  		}
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From de5476c0d2cbfd20400501781eb5c19828f5f617 Mon Sep 17 00:00:00 2001
+From 6ac12a0fe1810dea473a0a474c62a171c882b85e Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Thu, 8 Sep 2022 15:09:37 +0200
-Subject: [PATCH 14/38] sbitmap: Avoid leaving waitqueue in invalid state in
+Subject: [PATCH 13/37] sbitmap: Avoid leaving waitqueue in invalid state in
  __sbq_wake_up()
 
 When __sbq_wake_up() decrements wait_cnt to 0 but races with someone
@@ -2442,13 +2371,13 @@ index a39b1a877..47cd8fb89 100644
  
  void sbitmap_queue_wake_up(struct sbitmap_queue *sbq)
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 06f35d6c6fdd597cc7b1d22fca5b1480302806e6 Mon Sep 17 00:00:00 2001
+From 294d43b771897fd5e04055377d40ac75a53d29dc Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Thu, 8 Sep 2022 17:12:00 +0200
-Subject: [PATCH 15/38] sbitmap: Use atomic_long_try_cmpxchg in
+Subject: [PATCH 14/37] sbitmap: Use atomic_long_try_cmpxchg in
  __sbitmap_queue_get_batch
 
 Use atomic_long_try_cmpxchg instead of
@@ -2498,13 +2427,13 @@ index 47cd8fb89..cbfd2e677 100644
  				*offset = nr + (index << sb->shift);
  				update_alloc_hint_after_get(sb, depth, hint,
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From f9dc63727bd34d2a4d0ad3f2e7a6bc1263c6b4f4 Mon Sep 17 00:00:00 2001
+From 0df9eef0561fbe5307bb6e7d8803f3ec86961c4f Mon Sep 17 00:00:00 2001
 From: Keith Busch <kbusch@kernel.org>
 Date: Fri, 9 Sep 2022 11:40:22 -0700
-Subject: [PATCH 16/38] sbitmap: fix batched wait_cnt accounting
+Subject: [PATCH 15/37] sbitmap: fix batched wait_cnt accounting
 
 Batched completions can clear multiple bits, but we're only decrementing
 the wait_cnt by one each time. This can cause waiters to never be woken,
@@ -2635,13 +2564,13 @@ index cbfd2e677..624fa7f11 100644
  }
  EXPORT_SYMBOL_GPL(sbitmap_queue_clear);
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 725745f31de63e06ddf89050757c79d8308cae78 Mon Sep 17 00:00:00 2001
+From a234cdb36b890868b2bbc399397f3095f1ebe3d5 Mon Sep 17 00:00:00 2001
 From: Hugh Dickins <hughd@google.com>
 Date: Tue, 27 Sep 2022 21:07:46 -0700
-Subject: [PATCH 17/38] sbitmap: fix lockup while swapping
+Subject: [PATCH 16/37] sbitmap: fix lockup while swapping
 
 Commit 4acb83417cad ("sbitmap: fix batched wait_cnt accounting")
 is a big improvement: without it, I had to revert to before commit
@@ -2702,13 +2631,13 @@ index 624fa7f11..a8108a962 100644
  				atomic_set(&sbq->wake_index, wake_index);
  			return ws;
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From c521168f70af1a23f3c34d6a4ffc1177ddf2fe06 Mon Sep 17 00:00:00 2001
+From 0166e124fab5c5799334192b3d1aecb669302020 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:01 +0800
-Subject: [PATCH 19/38] elevator: remove redundant code in
+Subject: [PATCH 18/37] elevator: remove redundant code in
  elv_unregister_queue()
 
 "elevator_queue *e" is already declared and initialized in the beginning
@@ -2735,13 +2664,13 @@ index bd71f0fc4..20e70fd3f 100644
  		kobject_del(&e->kobj);
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 12134c39798aba1ef05f9f304a0012c7579d3db7 Mon Sep 17 00:00:00 2001
+From 8f1dbc73860aac3c4375d2fbbe653535f0e6924b Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:02 +0800
-Subject: [PATCH 20/38] blk-wbt: remove unnecessary check in
+Subject: [PATCH 19/37] blk-wbt: remove unnecessary check in
  wbt_enable_default()
 
 If CONFIG_BLK_WBT_MQ is disabled, wbt_init() won't do anything.
@@ -2765,13 +2694,13 @@ index c293e08b3..c5a8c1002 100644
  }
  EXPORT_SYMBOL_GPL(wbt_enable_default);
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 83eff215146587f89648d7bec76db61641f397e3 Mon Sep 17 00:00:00 2001
+From 86adaf2a5107587d39a3374bc8eafb454fcda429 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:03 +0800
-Subject: [PATCH 21/38] blk-wbt: make enable_state more accurate
+Subject: [PATCH 20/37] blk-wbt: make enable_state more accurate
 
 Currently, if user disable wbt through sysfs, 'enable_state' will be
 'WBT_STATE_ON_MANUAL', which will be confusing. Add a new state
@@ -2828,13 +2757,13 @@ index 7e44eccc6..7fe98638f 100644
  
  struct rq_wb {
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 54a06cfa0ecda60bc59c80b6fe3a70e5dd2f1660 Mon Sep 17 00:00:00 2001
+From bc2863a078bdf3e1eddebe83a80cc830217047b1 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:04 +0800
-Subject: [PATCH 22/38] blk-wbt: don't show valid wbt_lat_usec in sysfs while
+Subject: [PATCH 21/37] blk-wbt: don't show valid wbt_lat_usec in sysfs while
  wbt is disabled
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2917,13 +2846,13 @@ index 7fe98638f..e3ea6e7e2 100644
  #endif /* CONFIG_BLK_WBT */
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From aef82f0882836abd16c88fc270fbea9ac94f9b0d Mon Sep 17 00:00:00 2001
+From 7e91212ed8a65b41251f5a646514fe549077ca63 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:05 +0800
-Subject: [PATCH 23/38] elevator: add new field flags in struct elevator_queue
+Subject: [PATCH 22/37] elevator: add new field flags in struct elevator_queue
 
 There are only one flag to indicate that elevator is registered currently,
 prepare to add a flag to disable wbt if default elevator is bfq.
@@ -2979,13 +2908,13 @@ index 3f0593b3b..ed574bf3e 100644
   * block elevator interface
   */
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 7cb0c42cb3754648cc24cae5528d53d11f5b5d38 Mon Sep 17 00:00:00 2001
+From 255c956092eb210f772b36615033a89ae6dace73 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:06 +0800
-Subject: [PATCH 24/38] blk-wbt: don't enable throttling if default elevator is
+Subject: [PATCH 23/37] blk-wbt: don't enable throttling if default elevator is
  bfq
 
 Commit b5dc5d4d1f4f ("block,bfq: Disable writeback throttling") tries to
@@ -3086,13 +3015,13 @@ index ed574bf3e..753824712 100644
  /*
   * block elevator interface
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From fd759a40309414c1049124780741f9d82ae6e15a Mon Sep 17 00:00:00 2001
+From a67bd05cc60b6c26401afd74a9b8caf56f8684c7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:46 +0200
-Subject: [PATCH 25/38] Revert "blk-wbt: don't enable throttling if default
+Subject: [PATCH 24/37] Revert "blk-wbt: don't enable throttling if default
  elevator is bfq"
 
 This reverts commit 1d02a85fec87b1c79cc6c7d5a67b28547ea4c3b6.
@@ -3178,13 +3107,13 @@ index 753824712..ed574bf3e 100644
  /*
   * block elevator interface
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 0f1bdc38d500ffb6683421ab62b2601afe98d519 Mon Sep 17 00:00:00 2001
+From effa7e7610763ed0ed76f6e031aafe2d9329810e Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:47 +0200
-Subject: [PATCH 26/38] Revert "elevator: add new field flags in struct
+Subject: [PATCH 25/37] Revert "elevator: add new field flags in struct
  elevator_queue"
 
 This reverts commit 804721046d109737bf0e07af7637dc5f8ed20702.
@@ -3240,13 +3169,13 @@ index ed574bf3e..3f0593b3b 100644
   * block elevator interface
   */
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 32b90af1da23bc6da92a2a2caa15b0b62212bcbe Mon Sep 17 00:00:00 2001
+From 39db75c1f3c2c8433a0bbf4105cf259216774d25 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:48 +0200
-Subject: [PATCH 27/38] Revert "blk-wbt: don't show valid wbt_lat_usec in sysfs
+Subject: [PATCH 26/37] Revert "blk-wbt: don't show valid wbt_lat_usec in sysfs
  while wbt is disabled"
 
 This reverts commit 9c349c31cd2985dcc940eaf8d6925f0100437ef2.
@@ -3321,13 +3250,13 @@ index e3ea6e7e2..7fe98638f 100644
  #endif /* CONFIG_BLK_WBT */
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From e302c5a68feea0a6d40eb9cda4410c9cef7271e7 Mon Sep 17 00:00:00 2001
+From 665166e90cc3465de6e9c72661975a2fa5a657a4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:48 +0200
-Subject: [PATCH 28/38] Revert "blk-wbt: make enable_state more accurate"
+Subject: [PATCH 27/37] Revert "blk-wbt: make enable_state more accurate"
 
 This reverts commit 3d608a694b9a1da0988b891f28019949c1e20210.
 
@@ -3382,13 +3311,13 @@ index 7fe98638f..7e44eccc6 100644
  
  struct rq_wb {
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 591b9dc723910d7fb955176de21bb3cf3aa5203a Mon Sep 17 00:00:00 2001
+From 060e5c2ed837b9fdce21c07caf4bb722d0409aa7 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:49 +0200
-Subject: [PATCH 29/38] Revert "blk-wbt: remove unnecessary check in
+Subject: [PATCH 28/37] Revert "blk-wbt: remove unnecessary check in
  wbt_enable_default()"
 
 This reverts commit afb96bd9624b0859516b0056ad81b301b15cfd0c.
@@ -3412,13 +3341,13 @@ index c5a8c1002..c293e08b3 100644
  }
  EXPORT_SYMBOL_GPL(wbt_enable_default);
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 450ef95c160be18c3d7da3e1922fbebf7af64fb0 Mon Sep 17 00:00:00 2001
+From c42f4f8e3493343520143f7e508252e54204f2a6 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:50 +0200
-Subject: [PATCH 30/38] Revert "elevator: remove redundant code in
+Subject: [PATCH 29/37] Revert "elevator: remove redundant code in
  elv_unregister_queue()"
 
 This reverts commit c47677f1afa495e13029d26fa81b69a91918c8cb.
@@ -3442,13 +3371,13 @@ index 20e70fd3f..bd71f0fc4 100644
  		kobject_del(&e->kobj);
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 219127d5b08f824582abe70405abec61beb8095a Mon Sep 17 00:00:00 2001
+From b1aa6a8965f5fe06e2e1e13b1190501fefc5b664 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:13 +0800
-Subject: [PATCH 31/38] elevator: remove redundant code in
+Subject: [PATCH 30/37] elevator: remove redundant code in
  elv_unregister_queue()
 
 "elevator_queue *e" is already declared and initialized in the beginning
@@ -3475,13 +3404,13 @@ index bd71f0fc4..20e70fd3f 100644
  		kobject_del(&e->kobj);
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 311df4a0fa812da894eed7b6c8821ec9fbc56139 Mon Sep 17 00:00:00 2001
+From 3b6590a421664acb1beb109a5c816d45ce8073f5 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:14 +0800
-Subject: [PATCH 32/38] blk-wbt: remove unnecessary check in
+Subject: [PATCH 31/37] blk-wbt: remove unnecessary check in
  wbt_enable_default()
 
 If CONFIG_BLK_WBT_MQ is disabled, wbt_init() won't do anything.
@@ -3506,13 +3435,13 @@ index c293e08b3..c5a8c1002 100644
  }
  EXPORT_SYMBOL_GPL(wbt_enable_default);
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 84df71b13e0dcdc495a99d2bf46c16cd811f34b2 Mon Sep 17 00:00:00 2001
+From dc7505b7b93f73a34ac4606831af41e16d43dfad Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:15 +0800
-Subject: [PATCH 33/38] blk-wbt: make enable_state more accurate
+Subject: [PATCH 32/37] blk-wbt: make enable_state more accurate
 
 Currently, if user disable wbt through sysfs, 'enable_state' will be
 'WBT_STATE_ON_MANUAL', which will be confusing. Add a new state
@@ -3570,13 +3499,13 @@ index 7e44eccc6..7fe98638f 100644
  
  struct rq_wb {
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From d0b5d7bccc0c4208a8f5ce30a76ee8098cf140c2 Mon Sep 17 00:00:00 2001
+From 42d79e10c2a7496bf0beb7e86966fce168fdab1a Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:16 +0800
-Subject: [PATCH 34/38] blk-wbt: don't show valid wbt_lat_usec in sysfs while
+Subject: [PATCH 33/37] blk-wbt: don't show valid wbt_lat_usec in sysfs while
  wbt is disabled
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -3654,13 +3583,13 @@ index 7fe98638f..e3ea6e7e2 100644
  #endif /* CONFIG_BLK_WBT */
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 9a5bd09bab1f5c021fbd54b423aa98d61f63c615 Mon Sep 17 00:00:00 2001
+From f579955056e2e78acc0bab06a36f27ec8fb6ac08 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:17 +0800
-Subject: [PATCH 35/38] elevator: add new field flags in struct elevator_queue
+Subject: [PATCH 34/37] elevator: add new field flags in struct elevator_queue
 
 There are only one flag to indicate that elevator is registered currently,
 prepare to add a flag to disable wbt if default elevator is bfq.
@@ -3717,13 +3646,13 @@ index 3f0593b3b..ed574bf3e 100644
   * block elevator interface
   */
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From ae632ce6c9049d807f977aeeb0cac24e05bfee3d Mon Sep 17 00:00:00 2001
+From ec0bc361bea45e1cab695f713a47e7c92b951995 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:18 +0800
-Subject: [PATCH 36/38] blk-wbt: don't enable throttling if default elevator is
+Subject: [PATCH 35/37] blk-wbt: don't enable throttling if default elevator is
  bfq
 
 Commit b5dc5d4d1f4f ("block,bfq: Disable writeback throttling") tries to
@@ -3825,13 +3754,13 @@ index ed574bf3e..753824712 100644
  /*
   * block elevator interface
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 7f1d88d3b63ffc93574e05e4a000d2e137257080 Mon Sep 17 00:00:00 2001
+From e23f8e3128ec7baa8b3c8c6c5e1ec72a3ba1f744 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
 Date: Fri, 7 Oct 2022 09:51:13 +0200
-Subject: [PATCH 37/38] drm/sched: add DRM_SCHED_FENCE_DONT_PIPELINE flag
+Subject: [PATCH 36/37] drm/sched: add DRM_SCHED_FENCE_DONT_PIPELINE flag
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -3847,10 +3776,10 @@ Signed-off-by: Christian König <christian.koenig@amd.com>
  2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
-index 6b25b2f4f..6137537aa 100644
+index 7ef1a086a..4b913dbb7 100644
 --- a/drivers/gpu/drm/scheduler/sched_entity.c
 +++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -385,7 +385,8 @@ static bool drm_sched_entity_add_dependency_cb(struct drm_sched_entity *entity)
+@@ -389,7 +389,8 @@ static bool drm_sched_entity_add_dependency_cb(struct drm_sched_entity *entity)
  	}
  
  	s_fence = to_drm_sched_fence(fence);
@@ -3881,13 +3810,13 @@ index addb135ee..289a33e80 100644
  
  struct drm_gpu_scheduler;
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 
 
-From 19fe0b89d6f5ab5eae49bfd2c41596fa901c6473 Mon Sep 17 00:00:00 2001
+From 283c086bbd84171bb2b131492c1b252cba60cfa5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
 Date: Fri, 7 Oct 2022 10:59:58 +0200
-Subject: [PATCH 38/38] drm/amdgpu: use DRM_SCHED_FENCE_DONT_PIPELINE for VM
+Subject: [PATCH 37/37] drm/amdgpu: use DRM_SCHED_FENCE_DONT_PIPELINE for VM
  updates
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -3923,5 +3852,5 @@ index 718db7d98..25ad3c7fa 100644
  	return 0;
  
 -- 
-2.38.1.143.g1fc3c0ad40
+2.38.1.385.g3b08839926
 

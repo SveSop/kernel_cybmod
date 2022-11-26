@@ -1,6 +1,6 @@
-From bf8c950d10d4f6b489a7fe47b8a655cf63a65930 Mon Sep 17 00:00:00 2001
+From 60f19237d70b089d8a9445a3e4ff8c1a857ece68 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 14 Nov 2022 17:31:19 +0100
+Date: Mon, 21 Nov 2022 11:46:41 +0100
 Subject: [PATCH] mm: introduce the Maple Tree with MGLRU
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -26,7 +26,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  arch/um/kernel/tlb.c                          |    14 +-
  arch/x86/Kconfig                              |     1 +
  arch/x86/entry/vdso/vma.c                     |     9 +-
- arch/x86/include/asm/pgtable.h                |     9 +-
+ arch/x86/include/asm/pgtable.h                |    17 +-
  arch/x86/kernel/tboot.c                       |     2 +-
  arch/x86/mm/pgtable.c                         |     5 +-
  arch/xtensa/kernel/syscall.c                  |    18 +-
@@ -54,7 +54,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  include/linux/nodemask.h                      |     1 +
  include/linux/page-flags-layout.h             |    16 +-
  include/linux/page-flags.h                    |     4 +-
- include/linux/pgtable.h                       |    17 +-
+ include/linux/pgtable.h                       |    28 +-
  include/linux/sched.h                         |     5 +-
  include/linux/swap.h                          |     4 +
  include/linux/userfaultfd_k.h                 |     7 +-
@@ -123,7 +123,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  tools/testing/radix-tree/linux/maple_tree.h   |     7 +
  tools/testing/radix-tree/maple.c              | 35830 ++++++++++++++++
  .../radix-tree/trace/events/maple_tree.h      |     5 +
- 118 files changed, 53122 insertions(+), 2170 deletions(-)
+ 118 files changed, 53141 insertions(+), 2170 deletions(-)
  create mode 100644 Documentation/admin-guide/mm/multigen_lru.rst
  create mode 100644 Documentation/core-api/maple_tree.rst
  create mode 100644 Documentation/mm/multigen_lru.rst
@@ -1143,7 +1143,7 @@ index 1000d457c..6292b9600 100644
  				vma_is_special_mapping(vma, &vvar_mapping)) {
  			mmap_write_unlock(mm);
 diff --git a/arch/x86/include/asm/pgtable.h b/arch/x86/include/asm/pgtable.h
-index 44e2d6f1d..5059799be 100644
+index 44e2d6f1d..c567a6ed1 100644
 --- a/arch/x86/include/asm/pgtable.h
 +++ b/arch/x86/include/asm/pgtable.h
 @@ -815,7 +815,8 @@ static inline unsigned long pmd_page_vaddr(pmd_t pmd)
@@ -1156,7 +1156,7 @@ index 44e2d6f1d..5059799be 100644
  }
  
  static inline unsigned long pages_to_mb(unsigned long npg)
-@@ -1431,10 +1432,10 @@ static inline bool arch_has_pfn_modify_check(void)
+@@ -1431,11 +1432,19 @@ static inline bool arch_has_pfn_modify_check(void)
  	return boot_cpu_has_bug(X86_BUG_L1TF);
  }
  
@@ -1167,9 +1167,18 @@ index 44e2d6f1d..5059799be 100644
  {
 -	return false;
 +	return true;
++}
++
++#ifdef CONFIG_XEN_PV
++#define arch_has_hw_nonleaf_pmd_young arch_has_hw_nonleaf_pmd_young
++static inline bool arch_has_hw_nonleaf_pmd_young(void)
++{
++	return !cpu_feature_enabled(X86_FEATURE_XENPV);
  }
++#endif
  
  #ifdef CONFIG_PAGE_TABLE_CHECK
+ static inline bool pte_user_accessible_page(pte_t pte)
 diff --git a/arch/x86/kernel/tboot.c b/arch/x86/kernel/tboot.c
 index 3bacd935f..4c1bcb605 100644
 --- a/arch/x86/kernel/tboot.c
@@ -3904,7 +3913,7 @@ index 465ff35a8..0b0ae5084 100644
  #define PAGE_FLAGS_PRIVATE				\
  	(1UL << PG_private | 1UL << PG_private_2)
 diff --git a/include/linux/pgtable.h b/include/linux/pgtable.h
-index 014ee8f0f..d9095251b 100644
+index 014ee8f0f..2c6b141fd 100644
 --- a/include/linux/pgtable.h
 +++ b/include/linux/pgtable.h
 @@ -213,7 +213,7 @@ static inline int ptep_test_and_clear_young(struct vm_area_struct *vma,
@@ -3925,10 +3934,21 @@ index 014ee8f0f..d9095251b 100644
  #endif
  
  #ifndef __HAVE_ARCH_PTEP_CLEAR_YOUNG_FLUSH
-@@ -260,6 +260,19 @@ static inline int pmdp_clear_flush_young(struct vm_area_struct *vma,
+@@ -260,6 +260,30 @@ static inline int pmdp_clear_flush_young(struct vm_area_struct *vma,
  #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
  #endif
  
++#ifndef arch_has_hw_nonleaf_pmd_young
++/*
++ * Return whether the accessed bit in non-leaf PMD entries is supported on the
++ * local CPU.
++ */
++static inline bool arch_has_hw_nonleaf_pmd_young(void)
++{
++	return IS_ENABLED(CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG);
++}
++#endif
++
 +#ifndef arch_has_hw_pte_young
 +/*
 + * Return whether the accessed bit is supported on the local CPU.
@@ -19672,7 +19692,7 @@ index 01a6e6688..000000000
 -}
 -#endif
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 382dbe973..f6822dfe4 100644
+index 382dbe973..8788b6ebe 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -49,6 +49,10 @@
@@ -20846,7 +20866,7 @@ index 382dbe973..f6822dfe4 100644
 +			goto next;
 +
 +		if (!pmd_trans_huge(pmd[i])) {
-+			if (IS_ENABLED(CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG) &&
++			if (arch_has_hw_nonleaf_pmd_young() &&
 +			    get_cap(LRU_GEN_NONLEAF_YOUNG))
 +				pmdp_test_and_clear_young(vma, addr, pmd + i);
 +			goto next;
@@ -20944,14 +20964,14 @@ index 382dbe973..f6822dfe4 100644
 +#endif
 +		walk->mm_stats[MM_NONLEAF_TOTAL]++;
 +
-+#ifdef CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
-+		if (get_cap(LRU_GEN_NONLEAF_YOUNG)) {
++		if (arch_has_hw_nonleaf_pmd_young() &&
++		    get_cap(LRU_GEN_NONLEAF_YOUNG)) {
 +			if (!pmd_young(val))
 +				continue;
 +
 +			walk_pmd_range_locked(pud, addr, vma, args, bitmap, &pos);
 +		}
-+#endif
++
 +		if (!walk->force_scan && !test_bloom_filter(walk->lruvec, walk->max_seq, pmd + i))
 +			continue;
 +
@@ -22225,7 +22245,7 @@ index 382dbe973..f6822dfe4 100644
 +	if (arch_has_hw_pte_young() && get_cap(LRU_GEN_MM_WALK))
 +		caps |= BIT(LRU_GEN_MM_WALK);
 +
-+	if (IS_ENABLED(CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG) && get_cap(LRU_GEN_NONLEAF_YOUNG))
++	if (arch_has_hw_nonleaf_pmd_young() && get_cap(LRU_GEN_NONLEAF_YOUNG))
 +		caps |= BIT(LRU_GEN_NONLEAF_YOUNG);
 +
 +	return snprintf(buf, PAGE_SIZE, "0x%04x\n", caps);
