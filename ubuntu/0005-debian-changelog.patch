@@ -1,27 +1,78 @@
-From 621008ea1c19fe0e4cee9229003096cc1cad24e4 Mon Sep 17 00:00:00 2001
+From 844157bbe39ac9c323b267037ca3bb432f1cbdc8 Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Wed, 16 Nov 2022 11:02:22 +0000
-Subject: [PATCH 5/6] debian changelog
+Date: Fri, 2 Dec 2022 17:41:33 +0000
+Subject: [PATCH 5/5] debian changelog
 
 ---
- debian.master/changelog | 17013 +-------------------------------------
- 1 file changed, 3 insertions(+), 17010 deletions(-)
+ debian.master/changelog | 17064 +-------------------------------------
+ 1 file changed, 3 insertions(+), 17061 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index 84802ce21b8c..c1de48cea3d5 100644
+index d971e71307f6..6cb8fd5d557a 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,17013 +1,6 @@
--linux-unstable (6.1.0-7.7) lunar; urgency=medium
-+linux (6.0.9-060009.202211161102) lunar; urgency=low
+@@ -1,17064 +1,6 @@
+-linux-unstable (6.1.0-9.9) lunar; urgency=medium
++linux (6.0.11-060011.202212021741) lunar; urgency=low
  
--  * lunar/linux-unstable: 6.1.0-7.7 -proposed tracker (LP: #1996731)
-+  Mainline build at commit: v6.0.9
+-  * lunar/linux-unstable: 6.1.0-9.9 -proposed tracker (LP: #1998078)
++  Mainline build at commit: v6.0.11
  
 -  * Miscellaneous Ubuntu changes
--    - ppc64el: remove missing module
-+ -- Mainline Build <kernel@kathleen>  Wed, 16 Nov 2022 11:02:22 +0000
+-    - [Config] Set ARM64_ERRATUM_2077057=y
+-    - SAUCE: add python cached bytecode to .gitignore
+-    - [Packaging] config-check: ignore values that are not defined in annotations
+-    - [Packaging] config-check: do not strictly enforce CONFIG_CC_VERSION_TEXT
+-    - [Packaging] config-check: support annotations format 4
+-    - [Packaging] introduce annotations script
+-    - [Packaging] add a README.rst to document the new annotations schema
+-    - [Packaging] kernelconfig: automatically generate configs from annotations
+-    - [Packaging] drop deprecated script tristate.sh
+-    - [Packaging] use annotations to generate initial configs check them
+-    - [Packaging] simplify kernelconfig
+-    - [Packaging] kernelconfig: always keep configs
+-    - [Packaging] kernelconfig: provide listnewconfigs
+-    - [Packaging] kernelconfig: introduce importconfigs
+-    - [Packaging] snap: support new annotations with snapcraft
+-    - [Packaging] final-checks: support new annotations
+-    - [Packaging] introduce migrate-annotations
+-    - [Packaging] re-introduce previous kernelconfig as old-kernelconfig
+-    - [Packaging] provide migrateconfigs debian/rules target
+-    - [Packaging] correctly propagate errors during updateconfigs
+-    - [Packaging] annotations: report failed config checks in alphabetic order
+-    - [Config] merge configs into annotations
+-    - [Config] udpate annotations after rebase to v6.1-rc7
++ -- Mainline Build <kernel@kathleen>  Fri, 02 Dec 2022 17:41:33 +0000
  
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v6.1-rc7
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 28 Nov 2022 11:25:44 +0100
+-
+-linux-unstable (6.1.0-8.8) lunar; urgency=medium
+-
+-  * lunar/linux-unstable: 6.1.0-8.8 -proposed tracker (LP: #1997357)
+-
+-  *  Fibocom WWAN FM350-GL suspend error (notebook not suspend) (LP: #1990700)
+-    - net: wwan: t7xx: Add AP CLDMA
+-
+-  * Miscellaneous Ubuntu changes
+-    - Rebase to v6.1-rc6
+-    - [Config] update configs following v6.1-rc6 rebase
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Config] update configs following v6.1-rc6 rebase
+-
+- -- Paolo Pisati <paolo.pisati@canonical.com>  Tue, 22 Nov 2022 11:56:26 +0100
+-
+-linux-unstable (6.1.0-7.7) lunar; urgency=medium
+-
+-  * lunar/linux-unstable: 6.1.0-7.7 -proposed tracker (LP: #1996731)
+-
+-  * Miscellaneous Ubuntu changes
+-    - ppc64el: remove missing module
+-
 - -- Paolo Pisati <paolo.pisati@canonical.com>  Wed, 16 Nov 2022 11:37:05 +0100
 -
 -linux-unstable (6.1.0-6.6) lunar; urgency=medium

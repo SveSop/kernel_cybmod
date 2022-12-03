@@ -2,10 +2,10 @@ diff --git a/.config b/.config
 new file mode 100644
 --- /dev/null
 +++ b/.config
-@@ -0,0 +1,11747 @@
+@@ -0,0 +1,11749 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
-+# Linux/x86 6.0.10-cybmod10 Kernel Configuration
++# Linux/x86 6.0.11-cybmod11 Kernel Configuration
 +#
 +CONFIG_CC_VERSION_TEXT="gcc (Ubuntu 11.1.0-1ubuntu1~20.04) 11.1.0"
 +CONFIG_CC_IS_GCC=y
@@ -19,6 +19,7 @@ new file mode 100644
 +CONFIG_CC_CAN_LINK=y
 +CONFIG_CC_CAN_LINK_STATIC=y
 +CONFIG_CC_HAS_ASM_GOTO_OUTPUT=y
++CONFIG_CC_HAS_ASM_GOTO_TIED_OUTPUT=y
 +CONFIG_CC_HAS_ASM_INLINE=y
 +CONFIG_CC_HAS_NO_PROFILE_FN_ATTR=y
 +CONFIG_PAHOLE_VERSION=0
@@ -1218,6 +1219,7 @@ new file mode 100644
 +CONFIG_INET_ESP_OFFLOAD=m
 +CONFIG_INET_ESPINTCP=y
 +CONFIG_INET_IPCOMP=m
++CONFIG_INET_TABLE_PERTURB_ORDER=16
 +CONFIG_INET_XFRM_TUNNEL=m
 +CONFIG_INET_TUNNEL=m
 +CONFIG_INET_DIAG=m

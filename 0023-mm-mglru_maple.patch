@@ -1,6 +1,6 @@
-From 60f19237d70b089d8a9445a3e4ff8c1a857ece68 Mon Sep 17 00:00:00 2001
+From 9d560231bda1ebd5dfb45d2559ef48b9021ea52d Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Mon, 21 Nov 2022 11:46:41 +0100
+Date: Wed, 30 Nov 2022 17:47:38 +0100
 Subject: [PATCH] mm: introduce the Maple Tree with MGLRU
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
@@ -110,7 +110,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  mm/swapfile.c                                 |     4 +-
  mm/util.c                                     |    32 -
  mm/vmacache.c                                 |   117 -
- mm/vmscan.c                                   |  3241 +-
+ mm/vmscan.c                                   |  3231 +-
  mm/vmstat.c                                   |     4 -
  mm/workingset.c                               |   110 +-
  tools/include/linux/slab.h                    |     4 +
@@ -123,7 +123,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  tools/testing/radix-tree/linux/maple_tree.h   |     7 +
  tools/testing/radix-tree/maple.c              | 35830 ++++++++++++++++
  .../radix-tree/trace/events/maple_tree.h      |     5 +
- 118 files changed, 53141 insertions(+), 2170 deletions(-)
+ 118 files changed, 53137 insertions(+), 2164 deletions(-)
  create mode 100644 Documentation/admin-guide/mm/multigen_lru.rst
  create mode 100644 Documentation/core-api/maple_tree.rst
  create mode 100644 Documentation/mm/multigen_lru.rst
@@ -772,7 +772,7 @@ index 8b311e400..bf19a84ff 100644
  
  source "scripts/gcc-plugins/Kconfig"
 diff --git a/arch/arm64/include/asm/pgtable.h b/arch/arm64/include/asm/pgtable.h
-index b5df82aa9..71a1af42f 100644
+index d78e69293..edf6625ce 100644
 --- a/arch/arm64/include/asm/pgtable.h
 +++ b/arch/arm64/include/asm/pgtable.h
 @@ -1082,24 +1082,13 @@ static inline void update_mmu_cache(struct vm_area_struct *vma,
@@ -4521,10 +4521,10 @@ index 7beceb447..d5e9ccde3 100644
  	flush_icache_range(addr, addr + BREAK_INSTR_SIZE);
  }
 diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 072ab2626..3d55bca7a 100644
+index bec18d81b..7101d68fd 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
-@@ -10316,8 +10316,9 @@ static void perf_addr_filter_apply(struct perf_addr_filter *filter,
+@@ -10329,8 +10329,9 @@ static void perf_addr_filter_apply(struct perf_addr_filter *filter,
  				   struct perf_addr_filter_range *fr)
  {
  	struct vm_area_struct *vma;
@@ -4829,7 +4829,7 @@ index 914096c5b..f36876afb 100644
  			is_vm_hugetlb_page(vma) || (vma->vm_flags & VM_MIXEDMAP)) {
  			continue;
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index cb131fad1..9cf5abf06 100644
+index 997d23641..54887896c 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -820,13 +820,12 @@ config DEBUG_VM
@@ -4865,7 +4865,7 @@ index cb131fad1..9cf5abf06 100644
  endmenu
  
  config DEBUG_CREDENTIALS
-@@ -2229,6 +2236,10 @@ config TEST_UUID
+@@ -2230,6 +2237,10 @@ config TEST_UUID
  config TEST_XARRAY
  	tristate "Test the XArray code at runtime"
  
@@ -15287,7 +15287,7 @@ index 98ed17a44..a5728a797 100644
  			vma = find_vma(mm, start);
  	}
 diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index b69979c9c..fa9714d9a 100644
+index 6a95ea7c5..05b6af366 100644
 --- a/mm/memcontrol.c
 +++ b/mm/memcontrol.c
 @@ -2789,6 +2789,7 @@ static void commit_charge(struct folio *folio, struct mem_cgroup *memcg)
@@ -19692,7 +19692,7 @@ index 01a6e6688..000000000
 -}
 -#endif
 diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 382dbe973..8788b6ebe 100644
+index a69f32dd5..9f63906e5 100644
 --- a/mm/vmscan.c
 +++ b/mm/vmscan.c
 @@ -49,6 +49,10 @@
@@ -19744,7 +19744,7 @@ index 382dbe973..8788b6ebe 100644
  		/*
  		 * The number of dirty pages determines if a node is marked
  		 * reclaim_congested. kswapd will stall and start writing
-@@ -2728,6 +2745,112 @@ enum scan_balance {
+@@ -2740,6 +2757,112 @@ enum scan_balance {
  	SCAN_FILE,
  };
  
@@ -19857,7 +19857,7 @@ index 382dbe973..8788b6ebe 100644
  /*
   * Determine how aggressively the anon and file LRU lists should be
   * scanned.
-@@ -2947,159 +3070,2900 @@ static bool can_age_anon_pages(struct pglist_data *pgdat,
+@@ -2959,152 +3082,2895 @@ static bool can_age_anon_pages(struct pglist_data *pgdat,
  	return can_demote(pgdat->node_id, sc);
  }
  
@@ -19869,8 +19869,8 @@ index 382dbe973..8788b6ebe 100644
 -	enum lru_list lru;
 -	unsigned long nr_reclaimed = 0;
 -	unsigned long nr_to_reclaim = sc->nr_to_reclaim;
+-	bool proportional_reclaim;
 -	struct blk_plug plug;
--	bool scan_adjusted;
 +#ifdef CONFIG_LRU_GEN
  
 -	get_scan_count(lruvec, sc, nr);
@@ -19899,8 +19899,8 @@ index 382dbe973..8788b6ebe 100644
 -	 * abort proportional reclaim if either the file or anon lru has already
 -	 * dropped to zero at the first pass.
 -	 */
--	scan_adjusted = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
--			 sc->priority == DEF_PRIORITY);
+-	proportional_reclaim = (!cgroup_reclaim(sc) && !current_is_kswapd() &&
+-				sc->priority == DEF_PRIORITY);
 +#define LRU_REFS_FLAGS	(BIT(PG_referenced) | BIT(PG_workingset))
  
 -	blk_start_plug(&plug);
@@ -19935,7 +19935,7 @@ index 382dbe973..8788b6ebe 100644
 +{
 +	struct pglist_data *pgdat = NODE_DATA(nid);
  
--		if (nr_reclaimed < nr_to_reclaim || scan_adjusted)
+-		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
 -			continue;
 +#ifdef CONFIG_MEMCG
 +	if (memcg) {
@@ -20005,16 +20005,10 @@ index 382dbe973..8788b6ebe 100644
 -		nr_scanned = targets[lru] - nr[lru];
 -		nr[lru] = targets[lru] * (100 - percentage) / 100;
 -		nr[lru] -= min(nr[lru], nr_scanned);
-+	return mem_cgroup_swappiness(memcg);
-+}
- 
--		scan_adjusted = true;
 -	}
 -	blk_finish_plug(&plug);
 -	sc->nr_reclaimed += nr_reclaimed;
-+static int get_nr_gens(struct lruvec *lruvec, int type)
-+{
-+	return lruvec->lrugen.max_seq - lruvec->lrugen.min_seq[type] + 1;
++	return mem_cgroup_swappiness(memcg);
 +}
  
 -	/*
@@ -20025,32 +20019,37 @@ index 382dbe973..8788b6ebe 100644
 -	    inactive_is_low(lruvec, LRU_INACTIVE_ANON))
 -		shrink_active_list(SWAP_CLUSTER_MAX, lruvec,
 -				   sc, LRU_ACTIVE_ANON);
-+static bool __maybe_unused seq_is_valid(struct lruvec *lruvec)
++static int get_nr_gens(struct lruvec *lruvec, int type)
 +{
-+	/* see the comment on lru_gen_struct */
-+	return get_nr_gens(lruvec, LRU_GEN_FILE) >= MIN_NR_GENS &&
-+	       get_nr_gens(lruvec, LRU_GEN_FILE) <= get_nr_gens(lruvec, LRU_GEN_ANON) &&
-+	       get_nr_gens(lruvec, LRU_GEN_ANON) <= MAX_NR_GENS;
++	return lruvec->lrugen.max_seq - lruvec->lrugen.min_seq[type] + 1;
  }
  
 -/* Use reclaim/compaction for costly allocs or under memory pressure */
 -static bool in_reclaim_compaction(struct scan_control *sc)
-+/******************************************************************************
-+ *                          mm_struct list
-+ ******************************************************************************/
-+
-+static struct lru_gen_mm_list *get_mm_list(struct mem_cgroup *memcg)
++static bool __maybe_unused seq_is_valid(struct lruvec *lruvec)
  {
 -	if (IS_ENABLED(CONFIG_COMPACTION) && sc->order &&
 -			(sc->order > PAGE_ALLOC_COSTLY_ORDER ||
 -			 sc->priority < DEF_PRIORITY - 2))
 -		return true;
++	/* see the comment on lru_gen_struct */
++	return get_nr_gens(lruvec, LRU_GEN_FILE) >= MIN_NR_GENS &&
++	       get_nr_gens(lruvec, LRU_GEN_FILE) <= get_nr_gens(lruvec, LRU_GEN_ANON) &&
++	       get_nr_gens(lruvec, LRU_GEN_ANON) <= MAX_NR_GENS;
++}
+ 
+-	return false;
++/******************************************************************************
++ *                          mm_struct list
++ ******************************************************************************/
++
++static struct lru_gen_mm_list *get_mm_list(struct mem_cgroup *memcg)
++{
 +	static struct lru_gen_mm_list mm_list = {
 +		.fifo = LIST_HEAD_INIT(mm_list.fifo),
 +		.lock = __SPIN_LOCK_UNLOCKED(mm_list.lock),
 +	};
- 
--	return false;
++
 +#ifdef CONFIG_MEMCG
 +	if (memcg)
 +		return &memcg->mm_list;
@@ -20092,11 +20091,6 @@ index 382dbe973..8788b6ebe 100644
 -	/*
 -	 * Stop if we failed to reclaim any pages from the last SWAP_CLUSTER_MAX
 -	 * number of pages that were scanned. This will return to the caller
--	 * with the risk reclaim/compaction and the resulting allocation attempt
--	 * fails. In the past we have tried harder for __GFP_RETRY_MAYFAIL
--	 * allocations through requiring that the full LRU list has been scanned
--	 * first, by assuming that zero delta of sc->nr_scanned means full LRU
--	 * scan, but that approximation was wrong, and there were corner cases
 +	for_each_node_state(nid, N_MEMORY) {
 +		struct lruvec *lruvec = get_lruvec(memcg, nid);
 +
@@ -22878,15 +22872,10 @@ index 382dbe973..8788b6ebe 100644
 +	/*
 +	 * Stop if we failed to reclaim any pages from the last SWAP_CLUSTER_MAX
 +	 * number of pages that were scanned. This will return to the caller
-+	 * with the risk reclaim/compaction and the resulting allocation attempt
-+	 * fails. In the past we have tried harder for __GFP_RETRY_MAYFAIL
-+	 * allocations through requiring that the full LRU list has been scanned
-+	 * first, by assuming that zero delta of sc->nr_scanned means full LRU
-+	 * scan, but that approximation was wrong, and there were corner cases
- 	 * where always a non-zero amount of pages were scanned.
- 	 */
- 	if (!nr_reclaimed)
-@@ -3197,109 +6061,16 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
+ 	 * with the risk reclaim/compaction and the resulting allocation attempt
+ 	 * fails. In the past we have tried harder for __GFP_RETRY_MAYFAIL
+ 	 * allocations through requiring that the full LRU list has been scanned
+@@ -3207,109 +6073,16 @@ static void shrink_node(pg_data_t *pgdat, struct scan_control *sc)
  	unsigned long nr_reclaimed, nr_scanned;
  	struct lruvec *target_lruvec;
  	bool reclaimable = false;
@@ -22997,7 +22986,7 @@ index 382dbe973..8788b6ebe 100644
  
  	shrink_node_memcgs(pgdat, sc);
  
-@@ -3557,11 +6328,14 @@ static void snapshot_refaults(struct mem_cgroup *target_memcg, pg_data_t *pgdat)
+@@ -3567,11 +6340,14 @@ static void snapshot_refaults(struct mem_cgroup *target_memcg, pg_data_t *pgdat)
  	struct lruvec *target_lruvec;
  	unsigned long refaults;
  
@@ -23014,7 +23003,7 @@ index 382dbe973..8788b6ebe 100644
  }
  
  /*
-@@ -3923,12 +6697,16 @@ unsigned long try_to_free_mem_cgroup_pages(struct mem_cgroup *memcg,
+@@ -3933,12 +6709,16 @@ unsigned long try_to_free_mem_cgroup_pages(struct mem_cgroup *memcg,
  }
  #endif
  
@@ -23033,7 +23022,7 @@ index 382dbe973..8788b6ebe 100644
  	if (!can_age_anon_pages(pgdat, sc))
  		return;
  
-@@ -4248,12 +7026,11 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
+@@ -4258,12 +7038,11 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int highest_zoneidx)
  		sc.may_swap = !nr_boost_reclaim;
  
  		/*
@@ -59427,5 +59416,5 @@ index 000000000..97d0e1ddc
 +#define trace_ma_read(a, b) do {} while (0)
 +#define trace_ma_write(a, b, c, d) do {} while (0)
 -- 
-2.38.1.385.g3b08839926
+2.38.1.473.ga0789512c5
 
