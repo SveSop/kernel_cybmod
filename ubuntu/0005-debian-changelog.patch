@@ -1,23 +1,140 @@
-From 844157bbe39ac9c323b267037ca3bb432f1cbdc8 Mon Sep 17 00:00:00 2001
+From 651749b3c3a835021be0f41c83ac8f217339488b Mon Sep 17 00:00:00 2001
 From: "Kernel Builder (kathleen)" <ubuntu-kernel-bot@canonical.com>
-Date: Fri, 2 Dec 2022 17:41:33 +0000
-Subject: [PATCH 5/5] debian changelog
+Date: Wed, 21 Dec 2022 17:31:07 +0000
+Subject: [PATCH 5/6] debian changelog
 
 ---
- debian.master/changelog | 17064 +-------------------------------------
- 1 file changed, 3 insertions(+), 17061 deletions(-)
+ debian.master/changelog | 17180 +-------------------------------------
+ 1 file changed, 3 insertions(+), 17177 deletions(-)
 
 diff --git a/debian.master/changelog b/debian.master/changelog
-index d971e71307f6..6cb8fd5d557a 100644
+index 59e9563136fb..13ccc48a8fb9 100644
 --- a/debian.master/changelog
 +++ b/debian.master/changelog
-@@ -1,17064 +1,6 @@
+@@ -1,17180 +1,6 @@
+-linux (6.1.0-10.10) lunar; urgency=medium
++linux (6.0.15-060015.202212211731) lunar; urgency=low
+ 
+-  * lunar/linux: 6.1.0-10.10 -proposed tracker (LP: #1999569)
++  Mainline build at commit: v6.0.15
+ 
+-  * Soundwire support for the Intel RPL Gen platforms (LP: #1997944)
+-    - ASoC: Intel: sof_sdw: Add support for SKU 0C10 product
+-    - ASoC: Intel: soc-acpi: add SKU 0C10 SoundWire configuration
+-    - ASoC: Intel: sof_sdw: Add support for SKU 0C40 product
+-    - ASoC: Intel: soc-acpi: add SKU 0C40 SoundWire configuration
+-    - ASoC: Intel: sof_sdw: Add support for SKU 0C4F product
+-    - ASoC: rt1318: Add RT1318 SDCA vendor-specific driver
+-    - ASoC: intel: sof_sdw: add rt1318 codec support.
+-    - ASoC: Intel: sof_sdw: Add support for SKU 0C11 product
+-    - ASoC: Intel: soc-acpi: add SKU 0C11 SoundWire configuration
+-    - SAUCE: ASoC: Intel: soc-acpi: update codec addr on 0C11/0C4F product
+-    - [Config] enable CONFIG_SND_SOC_RT1318_SDW
++ -- Mainline Build <kernel@kathleen>  Wed, 21 Dec 2022 17:31:07 +0000
+ 
+-  * Virtual GPU driver packaging regression (LP: #1996112)
+-    - [Packaging] Reintroduce VM DRM drivers into modules
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 13 Dec 2022 22:14:08 +0100
+-
+-linux (6.1.0-9.9) lunar; urgency=medium
+-
+-  * Empty entry (ABI bump)
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 13 Dec 2022 21:31:08 +0100
+-
+-linux (6.1.0-3.3) lunar; urgency=medium
+-
+-  * lunar/linux: 6.1.0-3.3 -proposed tracker (LP: #1999534)
+-
+-  * [DEP-8] Run ADT regression suite for lowlatency kernels Jammy and later
+-    (LP: #1999528)
+-    - [DEP-8] Fix regression suite to run on lowlatency
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] annotations: do not add constraints on toolchain versions
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Tue, 13 Dec 2022 16:45:59 +0100
+-
+-linux (6.1.0-2.2) lunar; urgency=medium
+-
+-  * lunar/linux: 6.1.0-2.2 -proposed tracker (LP: #1999411)
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] annotations: do not enforce toolchain versions
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 12 Dec 2022 17:05:59 +0100
+-
+-linux (6.1.0-1.1) lunar; urgency=medium
+-
+-  * lunar/linux: 6.1.0-1.1 -proposed tracker (LP: #1999373)
+-
+-  * Packaging resync (LP: #1786013)
+-    - [Packaging] update variants
+-
+-  * Miscellaneous Ubuntu changes
+-    - [Packaging] annotations: set and delete configs from command line
+-    - [Packaging] migrateconfigs: ignore README.rst if it doesn't exist
+-    - [Packaging] migrate-annotations: properly determine arches in derivatives
+-    - [Packaging] annotations: allow to set note to config options directly
+-    - [Packaging] annotations: assume --query as default command
+-    - [Packaging] annotations: allow to query using CONFIG_<option> or <option>
+-    - [Packaging] annotations: support flavour inheritance
+-    - [Packaging] annotations: properly merge configs with includes
+-    - [Packaging] annotations: accept config options with or without CONFIG_
+-      prefix
+-    - [Packaging] annotations: clarify error message with --import
+-    - [Packaging] annotations: properly support multiple levels of inclusion
+-    - [Packaging] annotations: catch syntax errors in annotations
+-    - [Packaging] kernelconfig: report arch and flavour in config-check log
+-    - [Packaging] annotations: prevent generating .pyc files on import
+-    - [Packaging] annotations: prevent python broken pipe errors
+-    - [Packaging] annotations: allow to specify --write and --note at the same
+-      time
+-    - [Packaging] annotations: add an option to enable config autocompletion in
+-      bash
+-    - [Packaging] annotations: introduce --source
+-    - [Packaging] annotations: add missing CONFIG_ prefix in main()
+-    - [Packaging] Remove obsolete etc/kernelconfig
+-    - [Packaging] Rewrite debian/scripts/abi-check in Python
+-    - [Packaging] Simplify debian/scripts/module-check
+-    - [Packaging] Clean up debian/scripts/module-check
+-    - [Packaging] Move checker scripts to debian/scripts/checks
+-    - [Packaging] mark phony targets
+-    - [Packaging] Make the compiler for fix-filenames explicit
+-    - [Packaging] add -rR MAKEFLAGS to clear implicit rules
+-    - [Packaging] use dpkg-parsechangelog to get package name and series
+-    - [Packaging] simplify revision/release
+-    - [Packaging] simplify custom_override
+-    - [Packaging] Remove meaningless code in install-arch-headers
+-    - [Packaging] use olddefconfig in stamp-prepare-tree
+-    - [Packaging] use parralel builds in more places
+-    - [Packaging] install headers to debian/linux-libc-dev directly
+-    - [Packaging] simplify abinum and uploadnum definitions
+-    - [Packaging] Remove unused INSTALL_FW_PATH
+-    - [Packaging] Merge install commands
+-    - [Config] clean up deprecated notes in annotations
+-    - [Packaging] automatically apply changes to annotations and drop
+-      importconfigs
+-    - [Packaging] kernelconfig: drop listnewconfigs
+-    - [Packaging] annotations: do not hijack CONFIGS/* to update annotations
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 12 Dec 2022 10:05:03 +0100
+-
+-linux (6.1.0-0.0) lunar; urgency=medium
+-
+-  * Empty entry
+-
+-  [ Upstream Kernel Changes ]
+-
+-  * Rebase to v6.1
+-
+- -- Andrea Righi <andrea.righi@canonical.com>  Mon, 12 Dec 2022 09:42:01 +0100
+-
 -linux-unstable (6.1.0-9.9) lunar; urgency=medium
-+linux (6.0.11-060011.202212021741) lunar; urgency=low
- 
+-
 -  * lunar/linux-unstable: 6.1.0-9.9 -proposed tracker (LP: #1998078)
-+  Mainline build at commit: v6.0.11
- 
+-
 -  * Miscellaneous Ubuntu changes
 -    - [Config] Set ARM64_ERRATUM_2077057=y
 -    - SAUCE: add python cached bytecode to .gitignore
@@ -42,8 +159,7 @@ index d971e71307f6..6cb8fd5d557a 100644
 -    - [Packaging] annotations: report failed config checks in alphabetic order
 -    - [Config] merge configs into annotations
 -    - [Config] udpate annotations after rebase to v6.1-rc7
-+ -- Mainline Build <kernel@kathleen>  Fri, 02 Dec 2022 17:41:33 +0000
- 
+-
 -  [ Upstream Kernel Changes ]
 -
 -  * Rebase to v6.1-rc7
@@ -17080,5 +17196,5 @@ index d971e71307f6..6cb8fd5d557a 100644
 -
 - -- Tim Gardner <tim.gardner@canonical.com>  Mon, 20 Mar 2017 05:15:32 -0600
 -- 
-2.38.1
+2.34.1
 

@@ -1,7 +1,7 @@
-From 8a88fe66dbff77cdb4a5c6b6a1aa60c9f1a089bc Mon Sep 17 00:00:00 2001
+From e2944baf9eb2e0c71295175dc2c34408331179b8 Mon Sep 17 00:00:00 2001
 From: Tor Vic <torvic9@mailbox.org>
 Date: Mon, 20 Jun 2022 12:40:39 +0200
-Subject: [PATCH 01/35] mm: Change dirty writeback defaults
+Subject: [PATCH 01/36] mm: Change dirty writeback defaults
 
 Use a lower ratio of 5, but a longer period of 10 seconds for dirty writeback.
 ---
@@ -9,7 +9,7 @@ Use a lower ratio of 5, but a longer period of 10 seconds for dirty writeback.
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/mm/page-writeback.c b/mm/page-writeback.c
-index 032a7bf8d..e829a5a07 100644
+index 032a7bf..e829a5a 100644
 --- a/mm/page-writeback.c
 +++ b/mm/page-writeback.c
 @@ -70,7 +70,7 @@ static long ratelimit_pages = 32;
@@ -34,10 +34,10 @@ index 032a7bf8d..e829a5a07 100644
 2.38.1.473.ga0789512c5
 
 
-From 224055dadbde2dfb220ff4aba893e1c644a0382b Mon Sep 17 00:00:00 2001
+From 9600d54a91cba038710ccc42549eb898bbb4fa81 Mon Sep 17 00:00:00 2001
 From: Sultan Alsawaf <sultan@kerneltoast.com>
 Date: Wed, 20 Oct 2021 20:50:11 -0700
-Subject: [PATCH 02/35] ZEN: mm: Lower the non-hugetlbpage pageblock size to
+Subject: [PATCH 02/36] ZEN: mm: Lower the non-hugetlbpage pageblock size to
  reduce scheduling delays
 
 The page allocator processes free pages in groups of pageblocks, where
@@ -67,7 +67,7 @@ Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/linux/pageblock-flags.h b/include/linux/pageblock-flags.h
-index 83c724805..d2b8741ea 100644
+index 83c7248..d2b8741 100644
 --- a/include/linux/pageblock-flags.h
 +++ b/include/linux/pageblock-flags.h
 @@ -48,7 +48,7 @@ extern unsigned int pageblock_order;
@@ -83,10 +83,10 @@ index 83c724805..d2b8741ea 100644
 2.38.1.473.ga0789512c5
 
 
-From 7fce4b8c5a99d0758252f51c9af9c07afc260610 Mon Sep 17 00:00:00 2001
+From a61873742f8f25fa370946c09f05bd00f97b6301 Mon Sep 17 00:00:00 2001
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 Date: Thu, 18 Aug 2022 09:26:57 -0700
-Subject: [PATCH 03/35] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
+Subject: [PATCH 03/36] objtool: Remove "ANNOTATE_NOENDBR on ENDBR" warning
 
 This warning isn't very useful: why would you put ANNOTATE_NOENDBR on
 ENDBR, and if you did, what's the harm?
@@ -106,7 +106,7 @@ Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
  1 file changed, 3 deletions(-)
 
 diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index e55fdf952..445741f36 100644
+index e55fdf9..445741f 100644
 --- a/tools/objtool/check.c
 +++ b/tools/objtool/check.c
 @@ -2104,9 +2104,6 @@ static int read_noendbr_hints(struct objtool_file *file)
@@ -123,10 +123,10 @@ index e55fdf952..445741f36 100644
 2.38.1.473.ga0789512c5
 
 
-From 2574d773877a1740244c0457be7d2a2c1cef50a8 Mon Sep 17 00:00:00 2001
+From 4edac310fa928a75642d67f82e84bfedc1a11e7a Mon Sep 17 00:00:00 2001
 From: Ingo Molnar <mingo@kernel.org>
 Date: Thu, 11 Aug 2022 08:54:52 +0200
-Subject: [PATCH 04/35] sched/all: Change all BUG_ON() instances in the
+Subject: [PATCH 04/36] sched/all: Change all BUG_ON() instances in the
  scheduler to WARN_ON_ONCE()
 
 There's no good reason to crash a user's system with a BUG_ON(),
@@ -162,7 +162,7 @@ Link: https://lore.kernel.org/r/YvSsKcAXISmshtHo@gmail.com
  7 files changed, 26 insertions(+), 25 deletions(-)
 
 diff --git a/kernel/sched/autogroup.c b/kernel/sched/autogroup.c
-index 4ebaf97f7..991fc9002 100644
+index 4ebaf97..991fc90 100644
 --- a/kernel/sched/autogroup.c
 +++ b/kernel/sched/autogroup.c
 @@ -161,7 +161,8 @@ autogroup_move_group(struct task_struct *p, struct autogroup *ag)
@@ -176,7 +176,7 @@ index 4ebaf97f7..991fc9002 100644
  	prev = p->signal->autogroup;
  	if (prev == ag) {
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index ee28253c9..813687a5f 100644
+index ee28253..813687a 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -2328,7 +2328,7 @@ static struct rq *move_queued_task(struct rq *rq, struct rq_flags *rf,
@@ -189,7 +189,7 @@ index ee28253c9..813687a5f 100644
  	check_preempt_curr(rq, p, 0);
  
 diff --git a/kernel/sched/cpupri.c b/kernel/sched/cpupri.c
-index fa9ce9d83..a286e726e 100644
+index fa9ce9d..a286e72 100644
 --- a/kernel/sched/cpupri.c
 +++ b/kernel/sched/cpupri.c
 @@ -147,7 +147,7 @@ int cpupri_find_fitness(struct cpupri *cp, struct task_struct *p,
@@ -202,7 +202,7 @@ index fa9ce9d83..a286e726e 100644
  	for (idx = 0; idx < task_pri; idx++) {
  
 diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 0ab79d819..962b169b0 100644
+index 0ab79d8..962b169 100644
 --- a/kernel/sched/deadline.c
 +++ b/kernel/sched/deadline.c
 @@ -310,7 +310,7 @@ static void dl_change_utilization(struct task_struct *p, u64 new_bw)
@@ -296,7 +296,7 @@ index 0ab79d819..962b169b0 100644
  	rq = task_rq(p);
  	src_rd = rq->rd;
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 914096c5b..28f10dccd 100644
+index 914096c..28f10dc 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -2600,7 +2600,7 @@ static void task_numa_group(struct task_struct *p, int cpupid, int flags,
@@ -345,7 +345,7 @@ index 914096c5b..28f10dccd 100644
  	/* Search for an sd spanning us and the target CPU. */
  	rcu_read_lock();
 diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 55f39c8f4..2936fe55c 100644
+index 55f39c8..2936fe5 100644
 --- a/kernel/sched/rt.c
 +++ b/kernel/sched/rt.c
 @@ -843,7 +843,7 @@ static void __disable_runtime(struct rq *rq)
@@ -358,7 +358,7 @@ index 55f39c8f4..2936fe55c 100644
  		/*
  		 * Disable all the borrow logic by pretending we have inf
 diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index f34b48963..66c6b07d5 100644
+index f34b489..66c6b07 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
 @@ -2709,8 +2709,8 @@ static inline void double_rq_lock(struct rq *rq1, struct rq *rq2)
@@ -385,10 +385,10 @@ index f34b48963..66c6b07d5 100644
 2.38.1.473.ga0789512c5
 
 
-From 682811d2d396bacd12851cc7b98ac4a1f633e846 Mon Sep 17 00:00:00 2001
+From 732ed839afceebffde5411a6e82289c298c94418 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Thu, 8 Sep 2022 12:04:50 +0200
-Subject: [PATCH 05/35] x86,retpoline: Be sure to emit INT3 after JMP *%\reg
+Subject: [PATCH 05/36] x86,retpoline: Be sure to emit INT3 after JMP *%\reg
 
 Both AMD and Intel recommend using INT3 after an indirect JMP. Make sure
 to emit one when rewriting the retpoline JMP irrespective of compiler
@@ -403,7 +403,7 @@ Link: https://lkml.kernel.org/r/Yxm+QkFPOhrVSH6q@hirez.programming.kicks-ass.net
  2 files changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index 4f3204364..5cadcea03 100644
+index 4f32043..5cadcea 100644
 --- a/arch/x86/kernel/alternative.c
 +++ b/arch/x86/kernel/alternative.c
 @@ -453,6 +453,15 @@ static int patch_retpoline(void *addr, struct insn *insn, u8 *bytes)
@@ -423,7 +423,7 @@ index 4f3204364..5cadcea03 100644
  		bytes[i++] = BYTES_NOP1;
  
 diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 362562c83..8f109da49 100644
+index 362562c..8f109da 100644
 --- a/arch/x86/net/bpf_jit_comp.c
 +++ b/arch/x86/net/bpf_jit_comp.c
 @@ -419,7 +419,9 @@ static void emit_indirect_jump(u8 **pprog, int reg, u8 *ip)
@@ -441,10 +441,10 @@ index 362562c83..8f109da49 100644
 2.38.1.473.ga0789512c5
 
 
-From 702d32140406d9ad95f8e458cc2a212b1d7426e2 Mon Sep 17 00:00:00 2001
+From 294e994ca24e0f72b514d44dacfa732f94319d15 Mon Sep 17 00:00:00 2001
 From: Alexey Romanov <avromanov@sberdevices.ru>
 Date: Wed, 24 Aug 2022 14:31:17 +0300
-Subject: [PATCH 06/35] zram: don't retry compress incompressible page
+Subject: [PATCH 06/36] zram: don't retry compress incompressible page
 
 It doesn't make sense for us to retry to compress an uncompressible page
 (comp_len == PAGE_SIZE) in zsmalloc slowpath, because we will be storing
@@ -466,7 +466,7 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
  1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index 226ea76cc..3bd8d5e27 100644
+index 226ea76..3bd8d5e 100644
 --- a/drivers/block/zram/zram_drv.c
 +++ b/drivers/block/zram/zram_drv.c
 @@ -1410,9 +1410,19 @@ static int __zram_bvec_write(struct zram *zram, struct bio_vec *bvec,
@@ -495,10 +495,10 @@ index 226ea76cc..3bd8d5e27 100644
 2.38.1.473.ga0789512c5
 
 
-From 49aa0fe1882d0eba128c26e6982c2516b73f70ca Mon Sep 17 00:00:00 2001
+From 540bd5203860d1d6b17f21588fbc87fa2e7a9519 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Mon, 26 Sep 2022 11:25:03 -0500
-Subject: [PATCH 07/35] leds: trigger: Add block device LED trigger
+Subject: [PATCH 07/36] leds: trigger: Add block device LED trigger
 
 Add "blkdev" LED trigger to blink LEDs in response to block device
 activity.
@@ -515,7 +515,7 @@ Signed-off-by: Ian Pilcher <arequipeno@gmail.com>
  create mode 100644 drivers/leds/trigger/ledtrig-blkdev.c
 
 diff --git a/drivers/leds/trigger/Kconfig b/drivers/leds/trigger/Kconfig
-index dc6816d36..bda249068 100644
+index dc6816d..bda2490 100644
 --- a/drivers/leds/trigger/Kconfig
 +++ b/drivers/leds/trigger/Kconfig
 @@ -154,4 +154,13 @@ config LEDS_TRIGGER_TTY
@@ -533,7 +533,7 @@ index dc6816d36..bda249068 100644
 +
  endif # LEDS_TRIGGERS
 diff --git a/drivers/leds/trigger/Makefile b/drivers/leds/trigger/Makefile
-index 25c4db97c..d53bab5d9 100644
+index 25c4db9..d53bab5 100644
 --- a/drivers/leds/trigger/Makefile
 +++ b/drivers/leds/trigger/Makefile
 @@ -16,3 +16,4 @@ obj-$(CONFIG_LEDS_TRIGGER_NETDEV)	+= ledtrig-netdev.o
@@ -543,7 +543,7 @@ index 25c4db97c..d53bab5d9 100644
 +obj-$(CONFIG_LEDS_TRIGGER_BLKDEV)	+= ledtrig-blkdev.o
 diff --git a/drivers/leds/trigger/ledtrig-blkdev.c b/drivers/leds/trigger/ledtrig-blkdev.c
 new file mode 100644
-index 000000000..8614e308f
+index 0000000..8614e30
 --- /dev/null
 +++ b/drivers/leds/trigger/ledtrig-blkdev.c
 @@ -0,0 +1,1220 @@
@@ -1771,10 +1771,10 @@ index 000000000..8614e308f
 2.38.1.473.ga0789512c5
 
 
-From fb25898034860d668950037c2d8c23033aeedd15 Mon Sep 17 00:00:00 2001
+From d2be33852230ca94f1ad851ded9e97f48e7f5c52 Mon Sep 17 00:00:00 2001
 From: Ian Pilcher <arequipeno@gmail.com>
 Date: Mon, 26 Sep 2022 11:25:02 -0500
-Subject: [PATCH 08/35] docs: Add block device (blkdev) LED trigger
+Subject: [PATCH 08/36] docs: Add block device (blkdev) LED trigger
  documentation
 
 Add Documentation/ABI/testing/sysfs-class-led-trigger-blkdev to
@@ -1804,7 +1804,7 @@ Signed-off-by: Ian Pilcher <arequipeno@gmail.com>
  create mode 100644 Documentation/leds/ledtrig-blkdev.rst
 
 diff --git a/Documentation/ABI/stable/sysfs-block b/Documentation/ABI/stable/sysfs-block
-index cd14ecb3c..853cb2601 100644
+index cd14ecb..853cb26 100644
 --- a/Documentation/ABI/stable/sysfs-block
 +++ b/Documentation/ABI/stable/sysfs-block
 @@ -101,6 +101,16 @@ Description:
@@ -1826,7 +1826,7 @@ index cd14ecb3c..853cb2601 100644
  Contact:	Martin K. Petersen <martin.petersen@oracle.com>
 diff --git a/Documentation/ABI/testing/sysfs-class-led-trigger-blkdev b/Documentation/ABI/testing/sysfs-class-led-trigger-blkdev
 new file mode 100644
-index 000000000..45275eb0b
+index 0000000..45275eb
 --- /dev/null
 +++ b/Documentation/ABI/testing/sysfs-class-led-trigger-blkdev
 @@ -0,0 +1,78 @@
@@ -1909,7 +1909,7 @@ index 000000000..45275eb0b
 +		may not match the device special file paths written to
 +		link_device and unlink_device.)
 diff --git a/Documentation/leds/index.rst b/Documentation/leds/index.rst
-index e5d63b940..e3c24e468 100644
+index e5d63b9..e3c24e4 100644
 --- a/Documentation/leds/index.rst
 +++ b/Documentation/leds/index.rst
 @@ -10,6 +10,7 @@ LEDs
@@ -1922,7 +1922,7 @@ index e5d63b940..e3c24e468 100644
     ledtrig-usbport
 diff --git a/Documentation/leds/ledtrig-blkdev.rst b/Documentation/leds/ledtrig-blkdev.rst
 new file mode 100644
-index 000000000..9ff5b99de
+index 0000000..9ff5b99
 --- /dev/null
 +++ b/Documentation/leds/ledtrig-blkdev.rst
 @@ -0,0 +1,158 @@
@@ -2088,10 +2088,10 @@ index 000000000..9ff5b99de
 2.38.1.473.ga0789512c5
 
 
-From 965611bfa4793acb34199f8c5f25b690d7e8aeeb Mon Sep 17 00:00:00 2001
+From 6331d71b61897f6c21f876d4ad27eeb8579bb914 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 3 Aug 2022 20:15:04 +0800
-Subject: [PATCH 09/35] sbitmap: fix possible io hung due to lost wakeup
+Subject: [PATCH 09/36] sbitmap: fix possible io hung due to lost wakeup
 
 There are two problems can lead to lost wakeup:
 
@@ -2150,7 +2150,7 @@ Reviewed-by: Jan Kara <jack@suse.cz>
  1 file changed, 33 insertions(+), 22 deletions(-)
 
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 29eb04842..1f3114787 100644
+index 29eb048..1f31147 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
 @@ -611,32 +611,43 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
@@ -2223,10 +2223,10 @@ index 29eb04842..1f3114787 100644
 2.38.1.473.ga0789512c5
 
 
-From a472df6097b6c871c86c1ba97626ae9a24bec579 Mon Sep 17 00:00:00 2001
+From 5d911010c36e37107a72db21cbf7ec8a638baaf6 Mon Sep 17 00:00:00 2001
 From: Liu Song <liusong@linux.alibaba.com>
 Date: Fri, 26 Aug 2022 11:14:13 +0800
-Subject: [PATCH 10/35] sbitmap: remove unnecessary code in
+Subject: [PATCH 10/36] sbitmap: remove unnecessary code in
  __sbitmap_queue_get_batch
 
 If "nr + nr_tags <= map_depth", then the value of nr_tags will not be
@@ -2240,7 +2240,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 1f3114787..a39b1a877 100644
+index 1f31147..a39b1a8 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
 @@ -533,10 +533,9 @@ unsigned long __sbitmap_queue_get_batch(struct sbitmap_queue *sbq, int nr_tags,
@@ -2268,10 +2268,10 @@ index 1f3114787..a39b1a877 100644
 2.38.1.473.ga0789512c5
 
 
-From 52ab2d510d4ebac3272f2c31eb2806f35696f1a1 Mon Sep 17 00:00:00 2001
+From 65788bbb17a75eff44b83c12b51d1dfbe9dc34aa Mon Sep 17 00:00:00 2001
 From: Jan Kara <jack@suse.cz>
 Date: Thu, 8 Sep 2022 15:09:37 +0200
-Subject: [PATCH 11/35] sbitmap: Avoid leaving waitqueue in invalid state in
+Subject: [PATCH 11/36] sbitmap: Avoid leaving waitqueue in invalid state in
  __sbq_wake_up()
 
 When __sbq_wake_up() decrements wait_cnt to 0 but races with someone
@@ -2290,7 +2290,7 @@ Signed-off-by: Jan Kara <jack@suse.cz>
  1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index a39b1a877..47cd8fb89 100644
+index a39b1a8..47cd8fb 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
 @@ -604,6 +604,7 @@ static bool __sbq_wake_up(struct sbitmap_queue *sbq)
@@ -2340,10 +2340,10 @@ index a39b1a877..47cd8fb89 100644
 2.38.1.473.ga0789512c5
 
 
-From ef16291ce0d26651b1c65b45373e727c23df3f74 Mon Sep 17 00:00:00 2001
+From 5053aa9739ff81cea0658b63b1c260814262716c Mon Sep 17 00:00:00 2001
 From: Uros Bizjak <ubizjak@gmail.com>
 Date: Thu, 8 Sep 2022 17:12:00 +0200
-Subject: [PATCH 12/35] sbitmap: Use atomic_long_try_cmpxchg in
+Subject: [PATCH 12/36] sbitmap: Use atomic_long_try_cmpxchg in
  __sbitmap_queue_get_batch
 
 Use atomic_long_try_cmpxchg instead of
@@ -2367,7 +2367,7 @@ Signed-off-by: Jens Axboe <axboe@kernel.dk>
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 47cd8fb89..cbfd2e677 100644
+index 47cd8fb..cbfd2e6 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
 @@ -533,16 +533,16 @@ unsigned long __sbitmap_queue_get_batch(struct sbitmap_queue *sbq, int nr_tags,
@@ -2396,10 +2396,10 @@ index 47cd8fb89..cbfd2e677 100644
 2.38.1.473.ga0789512c5
 
 
-From c33164100cda4344ae57af942739b6172814153d Mon Sep 17 00:00:00 2001
+From c71300ef79d3c87318876fb1a9561bf279b6d5a4 Mon Sep 17 00:00:00 2001
 From: Keith Busch <kbusch@kernel.org>
 Date: Fri, 9 Sep 2022 11:40:22 -0700
-Subject: [PATCH 13/35] sbitmap: fix batched wait_cnt accounting
+Subject: [PATCH 13/36] sbitmap: fix batched wait_cnt accounting
 
 Batched completions can clear multiple bits, but we're only decrementing
 the wait_cnt by one each time. This can cause waiters to never be woken,
@@ -2414,7 +2414,7 @@ Signed-off-by: Keith Busch <kbusch@kernel.org>
  3 files changed, 26 insertions(+), 16 deletions(-)
 
 diff --git a/block/blk-mq-tag.c b/block/blk-mq-tag.c
-index 8e3b36d1c..9eb968e14 100644
+index 8e3b36d..9eb968e 100644
 --- a/block/blk-mq-tag.c
 +++ b/block/blk-mq-tag.c
 @@ -196,7 +196,7 @@ unsigned int blk_mq_get_tag(struct blk_mq_alloc_data *data)
@@ -2427,7 +2427,7 @@ index 8e3b36d1c..9eb968e14 100644
  		ws = bt_wait_ptr(bt, data->hctx);
  	} while (1);
 diff --git a/include/linux/sbitmap.h b/include/linux/sbitmap.h
-index 8f5a86e21..4d2d5205a 100644
+index 8f5a86e..4d2d520 100644
 --- a/include/linux/sbitmap.h
 +++ b/include/linux/sbitmap.h
 @@ -575,8 +575,9 @@ void sbitmap_queue_wake_all(struct sbitmap_queue *sbq);
@@ -2442,7 +2442,7 @@ index 8f5a86e21..4d2d5205a 100644
  /**
   * sbitmap_queue_show() - Dump &struct sbitmap_queue information to a &struct
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index cbfd2e677..624fa7f11 100644
+index cbfd2e6..624fa7f 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
 @@ -599,24 +599,31 @@ static struct sbq_wait_state *sbq_wake_ptr(struct sbitmap_queue *sbq)
@@ -2533,10 +2533,10 @@ index cbfd2e677..624fa7f11 100644
 2.38.1.473.ga0789512c5
 
 
-From fa62f8ca092d421c6cd1038fd717972f16f9a9fb Mon Sep 17 00:00:00 2001
+From 8414b6017b5b5c0e9de8a7382e1a63b9017bf4c0 Mon Sep 17 00:00:00 2001
 From: Hugh Dickins <hughd@google.com>
 Date: Tue, 27 Sep 2022 21:07:46 -0700
-Subject: [PATCH 14/35] sbitmap: fix lockup while swapping
+Subject: [PATCH 14/36] sbitmap: fix lockup while swapping
 
 Commit 4acb83417cad ("sbitmap: fix batched wait_cnt accounting")
 is a big improvement: without it, I had to revert to before commit
@@ -2584,7 +2584,7 @@ Signed-off-by: Hugh Dickins <hughd@google.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index 624fa7f11..a8108a962 100644
+index 624fa7f..a8108a9 100644
 --- a/lib/sbitmap.c
 +++ b/lib/sbitmap.c
 @@ -587,7 +587,7 @@ static struct sbq_wait_state *sbq_wake_ptr(struct sbitmap_queue *sbq)
@@ -2600,10 +2600,10 @@ index 624fa7f11..a8108a962 100644
 2.38.1.473.ga0789512c5
 
 
-From d8ad18084b885ca2f84edd47e9425bd59ee138a2 Mon Sep 17 00:00:00 2001
+From 0380ba1b17d02c1c0be0cb49dcac321d67d5bcac Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:01 +0800
-Subject: [PATCH 16/35] elevator: remove redundant code in
+Subject: [PATCH 16/36] elevator: remove redundant code in
  elv_unregister_queue()
 
 "elevator_queue *e" is already declared and initialized in the beginning
@@ -2617,7 +2617,7 @@ Reviewed-by: Eric Biggers <ebiggers@google.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index bd71f0fc4..20e70fd3f 100644
+index bd71f0f..20e70fd 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -524,8 +524,6 @@ void elv_unregister_queue(struct request_queue *q)
@@ -2633,10 +2633,10 @@ index bd71f0fc4..20e70fd3f 100644
 2.38.1.473.ga0789512c5
 
 
-From d42e42bd9410c31509b0ea50ea50809d524535a9 Mon Sep 17 00:00:00 2001
+From e6d1e4d36c06e35f3ea2906202a2ecc267c7c5a4 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:02 +0800
-Subject: [PATCH 17/35] blk-wbt: remove unnecessary check in
+Subject: [PATCH 17/36] blk-wbt: remove unnecessary check in
  wbt_enable_default()
 
 If CONFIG_BLK_WBT_MQ is disabled, wbt_init() won't do anything.
@@ -2647,7 +2647,7 @@ Signed-off-by: Yu Kuai <yukuai3@huawei.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index c293e08b3..c5a8c1002 100644
+index c293e08..c5a8c10 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -651,7 +651,7 @@ void wbt_enable_default(struct request_queue *q)
@@ -2663,10 +2663,10 @@ index c293e08b3..c5a8c1002 100644
 2.38.1.473.ga0789512c5
 
 
-From b149a52be78b9a4e72f887e5dfaf21f54716ab5b Mon Sep 17 00:00:00 2001
+From 8ab9ed6698ba1942222693072723840625bfe722 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:03 +0800
-Subject: [PATCH 18/35] blk-wbt: make enable_state more accurate
+Subject: [PATCH 18/36] blk-wbt: make enable_state more accurate
 
 Currently, if user disable wbt through sysfs, 'enable_state' will be
 'WBT_STATE_ON_MANUAL', which will be confusing. Add a new state
@@ -2679,7 +2679,7 @@ Signed-off-by: Yu Kuai <yukuai3@huawei.com>
  2 files changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index c5a8c1002..4680691a9 100644
+index c5a8c10..4680691 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -435,8 +435,13 @@ void wbt_set_min_lat(struct request_queue *q, u64 val)
@@ -2698,7 +2698,7 @@ index c5a8c1002..4680691a9 100644
  }
  
 diff --git a/block/blk-wbt.h b/block/blk-wbt.h
-index 7e44eccc6..7fe98638f 100644
+index 7e44ecc..7fe9863 100644
 --- a/block/blk-wbt.h
 +++ b/block/blk-wbt.h
 @@ -28,13 +28,15 @@ enum {
@@ -2726,10 +2726,10 @@ index 7e44eccc6..7fe98638f 100644
 2.38.1.473.ga0789512c5
 
 
-From 6c78b36cdb03a396926943e3bdce294cd6d4aeda Mon Sep 17 00:00:00 2001
+From b5caca266db44c38f2c5dbe0c38b0e2bf2fa8571 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:04 +0800
-Subject: [PATCH 19/35] blk-wbt: don't show valid wbt_lat_usec in sysfs while
+Subject: [PATCH 19/36] blk-wbt: don't show valid wbt_lat_usec in sysfs while
  wbt is disabled
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -2750,7 +2750,7 @@ Reported-and-tested-by: Holger Hoffstätte <holger@applied-asynchrony.com>
  3 files changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index e1f009aba..1df3e22e1 100644
+index e1f009a..1df3e22 100644
 --- a/block/blk-sysfs.c
 +++ b/block/blk-sysfs.c
 @@ -467,10 +467,14 @@ static ssize_t queue_io_timeout_store(struct request_queue *q, const char *page,
@@ -2770,7 +2770,7 @@ index e1f009aba..1df3e22e1 100644
  
  static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 4680691a9..07ed0b0ae 100644
+index 4680691..07ed0b0 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -422,6 +422,14 @@ static void wbt_update_limits(struct rq_wb *rwb)
@@ -2789,7 +2789,7 @@ index 4680691a9..07ed0b0ae 100644
  {
  	struct rq_qos *rqos = wbt_rq_qos(q);
 diff --git a/block/blk-wbt.h b/block/blk-wbt.h
-index 7fe98638f..e3ea6e7e2 100644
+index 7fe9863..e3ea6e7 100644
 --- a/block/blk-wbt.h
 +++ b/block/blk-wbt.h
 @@ -96,6 +96,7 @@ void wbt_enable_default(struct request_queue *);
@@ -2815,10 +2815,10 @@ index 7fe98638f..e3ea6e7e2 100644
 2.38.1.473.ga0789512c5
 
 
-From 4a4d96d5bff2c31cef59dffc2c8dd595f807236b Mon Sep 17 00:00:00 2001
+From 16e8ef9d59292c468ec26c5492cd3706d08855ef Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:05 +0800
-Subject: [PATCH 20/35] elevator: add new field flags in struct elevator_queue
+Subject: [PATCH 20/36] elevator: add new field flags in struct elevator_queue
 
 There are only one flag to indicate that elevator is registered currently,
 prepare to add a flag to disable wbt if default elevator is bfq.
@@ -2830,7 +2830,7 @@ Signed-off-by: Yu Kuai <yukuai3@huawei.com>
  2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index 20e70fd3f..9e12706e8 100644
+index 20e70fd..9e12706 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -512,7 +512,7 @@ int elv_register_queue(struct request_queue *q, bool uevent)
@@ -2856,7 +2856,7 @@ index 20e70fd3f..9e12706e8 100644
  }
  
 diff --git a/block/elevator.h b/block/elevator.h
-index 3f0593b3b..ed574bf3e 100644
+index 3f0593b..ed574bf 100644
 --- a/block/elevator.h
 +++ b/block/elevator.h
 @@ -100,10 +100,12 @@ struct elevator_queue
@@ -2877,10 +2877,10 @@ index 3f0593b3b..ed574bf3e 100644
 2.38.1.473.ga0789512c5
 
 
-From ffa20e8e8eea4624dcac1a98e4be963ee93be210 Mon Sep 17 00:00:00 2001
+From ab0c3e68534e55be59a6dea79eb1218df4767885 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Fri, 30 Sep 2022 11:19:06 +0800
-Subject: [PATCH 21/35] blk-wbt: don't enable throttling if default elevator is
+Subject: [PATCH 21/36] blk-wbt: don't enable throttling if default elevator is
  bfq
 
 Commit b5dc5d4d1f4f ("block,bfq: Disable writeback throttling") tries to
@@ -2908,7 +2908,7 @@ Signed-off-by: Yu Kuai <yukuai3@huawei.com>
  3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index c740b41fe..889ea5264 100644
+index c740b41..889ea52 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -7047,6 +7047,7 @@ static void bfq_exit_queue(struct elevator_queue *e)
@@ -2928,7 +2928,7 @@ index c740b41fe..889ea5264 100644
  	blk_stat_enable_accounting(q);
  
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 07ed0b0ae..68a774d7a 100644
+index 07ed0b0..68a774d 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -27,6 +27,7 @@
@@ -2967,7 +2967,7 @@ index 07ed0b0ae..68a774d7a 100644
  }
  EXPORT_SYMBOL_GPL(wbt_enable_default);
 diff --git a/block/elevator.h b/block/elevator.h
-index ed574bf3e..753824712 100644
+index ed574bf..7538247 100644
 --- a/block/elevator.h
 +++ b/block/elevator.h
 @@ -104,7 +104,8 @@ struct elevator_queue
@@ -2984,10 +2984,10 @@ index ed574bf3e..753824712 100644
 2.38.1.473.ga0789512c5
 
 
-From d702b67acfdfc66cbe65aaecf6963113cc243fb0 Mon Sep 17 00:00:00 2001
+From db8cf6e392f5a3e47bfcef9babedf0a76f0e8e26 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:46 +0200
-Subject: [PATCH 22/35] Revert "blk-wbt: don't enable throttling if default
+Subject: [PATCH 22/36] Revert "blk-wbt: don't enable throttling if default
  elevator is bfq"
 
 This reverts commit 1d02a85fec87b1c79cc6c7d5a67b28547ea4c3b6.
@@ -3000,7 +3000,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  3 files changed, 4 insertions(+), 12 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 889ea5264..c740b41fe 100644
+index 889ea52..c740b41 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -7047,7 +7047,6 @@ static void bfq_exit_queue(struct elevator_queue *e)
@@ -3020,7 +3020,7 @@ index 889ea5264..c740b41fe 100644
  	blk_stat_enable_accounting(q);
  
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 68a774d7a..07ed0b0ae 100644
+index 68a774d..07ed0b0 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -27,7 +27,6 @@
@@ -3059,7 +3059,7 @@ index 68a774d7a..07ed0b0ae 100644
  }
  EXPORT_SYMBOL_GPL(wbt_enable_default);
 diff --git a/block/elevator.h b/block/elevator.h
-index 753824712..ed574bf3e 100644
+index 7538247..ed574bf 100644
 --- a/block/elevator.h
 +++ b/block/elevator.h
 @@ -104,8 +104,7 @@ struct elevator_queue
@@ -3076,10 +3076,10 @@ index 753824712..ed574bf3e 100644
 2.38.1.473.ga0789512c5
 
 
-From fbf6589718aa0b3688a0f5f3f92b93659f562da0 Mon Sep 17 00:00:00 2001
+From 947a1601400ed5fe417db71d794bce704bb00cdc Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:47 +0200
-Subject: [PATCH 23/35] Revert "elevator: add new field flags in struct
+Subject: [PATCH 23/36] Revert "elevator: add new field flags in struct
  elevator_queue"
 
 This reverts commit 804721046d109737bf0e07af7637dc5f8ed20702.
@@ -3091,7 +3091,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index 9e12706e8..20e70fd3f 100644
+index 9e12706..20e70fd 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -512,7 +512,7 @@ int elv_register_queue(struct request_queue *q, bool uevent)
@@ -3117,7 +3117,7 @@ index 9e12706e8..20e70fd3f 100644
  }
  
 diff --git a/block/elevator.h b/block/elevator.h
-index ed574bf3e..3f0593b3b 100644
+index ed574bf..3f0593b 100644
 --- a/block/elevator.h
 +++ b/block/elevator.h
 @@ -100,12 +100,10 @@ struct elevator_queue
@@ -3138,10 +3138,10 @@ index ed574bf3e..3f0593b3b 100644
 2.38.1.473.ga0789512c5
 
 
-From b8d8a4412a11c070479f7116a7ec15566e418c99 Mon Sep 17 00:00:00 2001
+From c70c55b6a3f9836701676e2240caacba26d1caf3 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:48 +0200
-Subject: [PATCH 24/35] Revert "blk-wbt: don't show valid wbt_lat_usec in sysfs
+Subject: [PATCH 24/36] Revert "blk-wbt: don't show valid wbt_lat_usec in sysfs
  while wbt is disabled"
 
 This reverts commit 9c349c31cd2985dcc940eaf8d6925f0100437ef2.
@@ -3154,7 +3154,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  3 files changed, 1 insertion(+), 18 deletions(-)
 
 diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 1df3e22e1..e1f009aba 100644
+index 1df3e22..e1f009a 100644
 --- a/block/blk-sysfs.c
 +++ b/block/blk-sysfs.c
 @@ -467,14 +467,10 @@ static ssize_t queue_io_timeout_store(struct request_queue *q, const char *page,
@@ -3174,7 +3174,7 @@ index 1df3e22e1..e1f009aba 100644
  
  static ssize_t queue_wb_lat_store(struct request_queue *q, const char *page,
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 07ed0b0ae..4680691a9 100644
+index 07ed0b0..4680691 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -422,14 +422,6 @@ static void wbt_update_limits(struct rq_wb *rwb)
@@ -3193,7 +3193,7 @@ index 07ed0b0ae..4680691a9 100644
  {
  	struct rq_qos *rqos = wbt_rq_qos(q);
 diff --git a/block/blk-wbt.h b/block/blk-wbt.h
-index e3ea6e7e2..7fe98638f 100644
+index e3ea6e7..7fe9863 100644
 --- a/block/blk-wbt.h
 +++ b/block/blk-wbt.h
 @@ -96,7 +96,6 @@ void wbt_enable_default(struct request_queue *);
@@ -3219,10 +3219,10 @@ index e3ea6e7e2..7fe98638f 100644
 2.38.1.473.ga0789512c5
 
 
-From 9df5a463291154559634a713e73261ba4a1e1ef4 Mon Sep 17 00:00:00 2001
+From abd3e2b07a261ff4a78c46ce7b61a3675d22d8a8 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:48 +0200
-Subject: [PATCH 25/35] Revert "blk-wbt: make enable_state more accurate"
+Subject: [PATCH 25/36] Revert "blk-wbt: make enable_state more accurate"
 
 This reverts commit 3d608a694b9a1da0988b891f28019949c1e20210.
 
@@ -3233,7 +3233,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  2 files changed, 6 insertions(+), 13 deletions(-)
 
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 4680691a9..c5a8c1002 100644
+index 4680691..c5a8c10 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -435,13 +435,8 @@ void wbt_set_min_lat(struct request_queue *q, u64 val)
@@ -3252,7 +3252,7 @@ index 4680691a9..c5a8c1002 100644
  }
  
 diff --git a/block/blk-wbt.h b/block/blk-wbt.h
-index 7fe98638f..7e44eccc6 100644
+index 7fe9863..7e44ecc 100644
 --- a/block/blk-wbt.h
 +++ b/block/blk-wbt.h
 @@ -28,15 +28,13 @@ enum {
@@ -3280,10 +3280,10 @@ index 7fe98638f..7e44eccc6 100644
 2.38.1.473.ga0789512c5
 
 
-From 2a9d979a189e871cfe7b597c204d02c327002a75 Mon Sep 17 00:00:00 2001
+From 5ae9ae1a89340cc00905851379eb633eb9adc577 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:49 +0200
-Subject: [PATCH 26/35] Revert "blk-wbt: remove unnecessary check in
+Subject: [PATCH 26/36] Revert "blk-wbt: remove unnecessary check in
  wbt_enable_default()"
 
 This reverts commit afb96bd9624b0859516b0056ad81b301b15cfd0c.
@@ -3294,7 +3294,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index c5a8c1002..c293e08b3 100644
+index c5a8c10..c293e08 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -651,7 +651,7 @@ void wbt_enable_default(struct request_queue *q)
@@ -3310,10 +3310,10 @@ index c5a8c1002..c293e08b3 100644
 2.38.1.473.ga0789512c5
 
 
-From 069676405e4b3ae3a46239eb11fca8afaf441864 Mon Sep 17 00:00:00 2001
+From 41860ee245195e32b6f61cb9cf2907e20898db39 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 20 Oct 2022 18:46:50 +0200
-Subject: [PATCH 27/35] Revert "elevator: remove redundant code in
+Subject: [PATCH 27/36] Revert "elevator: remove redundant code in
  elv_unregister_queue()"
 
 This reverts commit c47677f1afa495e13029d26fa81b69a91918c8cb.
@@ -3324,7 +3324,7 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index 20e70fd3f..bd71f0fc4 100644
+index 20e70fd..bd71f0f 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -524,6 +524,8 @@ void elv_unregister_queue(struct request_queue *q)
@@ -3340,10 +3340,10 @@ index 20e70fd3f..bd71f0fc4 100644
 2.38.1.473.ga0789512c5
 
 
-From ef4fb94438f13b958d2371fd61d4056fdc5c9d6c Mon Sep 17 00:00:00 2001
+From 530c282391ca99f764b2a9efa0425d2c24484ce4 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:13 +0800
-Subject: [PATCH 28/35] elevator: remove redundant code in
+Subject: [PATCH 28/36] elevator: remove redundant code in
  elv_unregister_queue()
 
 "elevator_queue *e" is already declared and initialized in the beginning
@@ -3357,7 +3357,7 @@ Reviewed-by: Eric Biggers <ebiggers@google.com>
  1 file changed, 2 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index bd71f0fc4..20e70fd3f 100644
+index bd71f0f..20e70fd 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -524,8 +524,6 @@ void elv_unregister_queue(struct request_queue *q)
@@ -3373,10 +3373,10 @@ index bd71f0fc4..20e70fd3f 100644
 2.38.1.473.ga0789512c5
 
 
-From 251a658b16d330198c3290b91a37e149d9bbdb1d Mon Sep 17 00:00:00 2001
+From 8685fa0937ae43d2d7d89e3188c96e7512f37a09 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:14 +0800
-Subject: [PATCH 29/35] blk-wbt: remove unnecessary check in
+Subject: [PATCH 29/36] blk-wbt: remove unnecessary check in
  wbt_enable_default()
 
 If CONFIG_BLK_WBT_MQ is disabled, wbt_init() won't do anything.
@@ -3388,7 +3388,7 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index c293e08b3..c5a8c1002 100644
+index c293e08..c5a8c10 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -651,7 +651,7 @@ void wbt_enable_default(struct request_queue *q)
@@ -3404,10 +3404,10 @@ index c293e08b3..c5a8c1002 100644
 2.38.1.473.ga0789512c5
 
 
-From f50a4d6ef41d0bdea61ee2501c01b8ec35e74dc2 Mon Sep 17 00:00:00 2001
+From 61ee6dac6bcf4288d6f15db3f1aa79a55c0ab065 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:15 +0800
-Subject: [PATCH 30/35] blk-wbt: make enable_state more accurate
+Subject: [PATCH 30/36] blk-wbt: make enable_state more accurate
 
 Currently, if user disable wbt through sysfs, 'enable_state' will be
 'WBT_STATE_ON_MANUAL', which will be confusing. Add a new state
@@ -3421,7 +3421,7 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
  2 files changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index c5a8c1002..4680691a9 100644
+index c5a8c10..4680691 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -435,8 +435,13 @@ void wbt_set_min_lat(struct request_queue *q, u64 val)
@@ -3440,7 +3440,7 @@ index c5a8c1002..4680691a9 100644
  }
  
 diff --git a/block/blk-wbt.h b/block/blk-wbt.h
-index 7e44eccc6..7fe98638f 100644
+index 7e44ecc..7fe9863 100644
 --- a/block/blk-wbt.h
 +++ b/block/blk-wbt.h
 @@ -28,13 +28,15 @@ enum {
@@ -3468,10 +3468,10 @@ index 7e44eccc6..7fe98638f 100644
 2.38.1.473.ga0789512c5
 
 
-From 669604b794ac3c2ea2fa8091da9d73cc0378fd17 Mon Sep 17 00:00:00 2001
+From 7bf2ed986879ba3d02248fbe59bbc5f611e05aa2 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:16 +0800
-Subject: [PATCH 31/35] blk-wbt: don't show valid wbt_lat_usec in sysfs while
+Subject: [PATCH 31/36] blk-wbt: don't show valid wbt_lat_usec in sysfs while
  wbt is disabled
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -3493,7 +3493,7 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
  3 files changed, 16 insertions(+)
 
 diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index e1f009aba..918d7fffb 100644
+index e1f009a..918d7ff 100644
 --- a/block/blk-sysfs.c
 +++ b/block/blk-sysfs.c
 @@ -470,6 +470,9 @@ static ssize_t queue_wb_lat_show(struct request_queue *q, char *page)
@@ -3507,7 +3507,7 @@ index e1f009aba..918d7fffb 100644
  }
  
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 4680691a9..07ed0b0ae 100644
+index 4680691..07ed0b0 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -422,6 +422,14 @@ static void wbt_update_limits(struct rq_wb *rwb)
@@ -3526,7 +3526,7 @@ index 4680691a9..07ed0b0ae 100644
  {
  	struct rq_qos *rqos = wbt_rq_qos(q);
 diff --git a/block/blk-wbt.h b/block/blk-wbt.h
-index 7fe98638f..e3ea6e7e2 100644
+index 7fe9863..e3ea6e7 100644
 --- a/block/blk-wbt.h
 +++ b/block/blk-wbt.h
 @@ -96,6 +96,7 @@ void wbt_enable_default(struct request_queue *);
@@ -3552,10 +3552,10 @@ index 7fe98638f..e3ea6e7e2 100644
 2.38.1.473.ga0789512c5
 
 
-From 866aa90872119b912ac85bc01f2894cacaf8b0d1 Mon Sep 17 00:00:00 2001
+From 5a04d35f19e73da45db00f82599d92c88cf6b5c1 Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:17 +0800
-Subject: [PATCH 32/35] elevator: add new field flags in struct elevator_queue
+Subject: [PATCH 32/36] elevator: add new field flags in struct elevator_queue
 
 There are only one flag to indicate that elevator is registered currently,
 prepare to add a flag to disable wbt if default elevator is bfq.
@@ -3568,7 +3568,7 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
  2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/block/elevator.c b/block/elevator.c
-index 20e70fd3f..9e12706e8 100644
+index 20e70fd..9e12706 100644
 --- a/block/elevator.c
 +++ b/block/elevator.c
 @@ -512,7 +512,7 @@ int elv_register_queue(struct request_queue *q, bool uevent)
@@ -3594,7 +3594,7 @@ index 20e70fd3f..9e12706e8 100644
  }
  
 diff --git a/block/elevator.h b/block/elevator.h
-index 3f0593b3b..ed574bf3e 100644
+index 3f0593b..ed574bf 100644
 --- a/block/elevator.h
 +++ b/block/elevator.h
 @@ -100,10 +100,12 @@ struct elevator_queue
@@ -3615,10 +3615,10 @@ index 3f0593b3b..ed574bf3e 100644
 2.38.1.473.ga0789512c5
 
 
-From 758fc5e460651c98bab136d25446e2f9cbcac055 Mon Sep 17 00:00:00 2001
+From 87ef38c3ba4faa9c23ad0e7f80dbd343247bfd9e Mon Sep 17 00:00:00 2001
 From: Yu Kuai <yukuai3@huawei.com>
 Date: Wed, 19 Oct 2022 20:15:18 +0800
-Subject: [PATCH 33/35] blk-wbt: don't enable throttling if default elevator is
+Subject: [PATCH 33/36] blk-wbt: don't enable throttling if default elevator is
  bfq
 
 Commit b5dc5d4d1f4f ("block,bfq: Disable writeback throttling") tries to
@@ -3647,7 +3647,7 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
  3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index c740b41fe..889ea5264 100644
+index c740b41..889ea52 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
 @@ -7047,6 +7047,7 @@ static void bfq_exit_queue(struct elevator_queue *e)
@@ -3667,7 +3667,7 @@ index c740b41fe..889ea5264 100644
  	blk_stat_enable_accounting(q);
  
 diff --git a/block/blk-wbt.c b/block/blk-wbt.c
-index 07ed0b0ae..68a774d7a 100644
+index 07ed0b0..68a774d 100644
 --- a/block/blk-wbt.c
 +++ b/block/blk-wbt.c
 @@ -27,6 +27,7 @@
@@ -3706,7 +3706,7 @@ index 07ed0b0ae..68a774d7a 100644
  }
  EXPORT_SYMBOL_GPL(wbt_enable_default);
 diff --git a/block/elevator.h b/block/elevator.h
-index ed574bf3e..753824712 100644
+index ed574bf..7538247 100644
 --- a/block/elevator.h
 +++ b/block/elevator.h
 @@ -104,7 +104,8 @@ struct elevator_queue
@@ -3723,10 +3723,10 @@ index ed574bf3e..753824712 100644
 2.38.1.473.ga0789512c5
 
 
-From 8a4420ba5d8af305c846a9f167fc9a1a2afe45c3 Mon Sep 17 00:00:00 2001
+From a7d2375f833764a39c08ff2c759831d7d1b89d2e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
 Date: Fri, 7 Oct 2022 09:51:13 +0200
-Subject: [PATCH 34/35] drm/sched: add DRM_SCHED_FENCE_DONT_PIPELINE flag
+Subject: [PATCH 34/36] drm/sched: add DRM_SCHED_FENCE_DONT_PIPELINE flag
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -3742,7 +3742,7 @@ Signed-off-by: Christian König <christian.koenig@amd.com>
  2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
-index 7ef1a086a..4b913dbb7 100644
+index 7ef1a08..4b913db 100644
 --- a/drivers/gpu/drm/scheduler/sched_entity.c
 +++ b/drivers/gpu/drm/scheduler/sched_entity.c
 @@ -389,7 +389,8 @@ static bool drm_sched_entity_add_dependency_cb(struct drm_sched_entity *entity)
@@ -3756,7 +3756,7 @@ index 7ef1a086a..4b913dbb7 100644
  		/*
  		 * Fence is from the same scheduler, only need to wait for
 diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
-index addb135ee..289a33e80 100644
+index addb135..289a33e 100644
 --- a/include/drm/gpu_scheduler.h
 +++ b/include/drm/gpu_scheduler.h
 @@ -32,6 +32,15 @@
@@ -3779,10 +3779,10 @@ index addb135ee..289a33e80 100644
 2.38.1.473.ga0789512c5
 
 
-From eeaed9b2fb41c23916feba64cbd6e356b71685c5 Mon Sep 17 00:00:00 2001
+From c712c3c5c336cb344975dc25b19184db98f6f8b8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
 Date: Fri, 7 Oct 2022 10:59:58 +0200
-Subject: [PATCH 35/35] drm/amdgpu: use DRM_SCHED_FENCE_DONT_PIPELINE for VM
+Subject: [PATCH 35/36] drm/amdgpu: use DRM_SCHED_FENCE_DONT_PIPELINE for VM
  updates
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -3797,7 +3797,7 @@ Signed-off-by: Christian König <christian.koenig@amd.com>
  1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
-index 718db7d98..25ad3c7fa 100644
+index 718db7d..25ad3c7 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
 @@ -115,8 +115,15 @@ static int amdgpu_vm_sdma_commit(struct amdgpu_vm_update_params *p,
@@ -3816,6 +3816,40 @@ index 718db7d98..25ad3c7fa 100644
 +	}
  	dma_fence_put(f);
  	return 0;
+ 
+-- 
+2.38.1.473.ga0789512c5
+
+
+From 7dc6a3679c07cc3a12e69df172807c4951bbace2 Mon Sep 17 00:00:00 2001
+From: Benjamin Segall <bsegall@google.com>
+Date: Tue, 6 Dec 2022 13:59:55 -0800
+Subject: [PATCH 36/36] epoll: ep_autoremove_wake_function should use
+ list_del_init_careful
+
+autoremove_wake_function uses list_del_init_careful, so should epoll's
+more aggressive variant. It only doesn't because it was copied from an
+older wait.c rather than the most recent.
+
+Fixes: a16ceb139610 ("epoll: autoremove wakers even more aggressively")
+Signed-off-by: Ben Segall <bsegall@google.com>
+Cc: stable@vger.kernel.org
+---
+ fs/eventpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 8b56b94..2aa1d0f 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1758,7 +1758,7 @@ static int ep_autoremove_wake_function(struct wait_queue_entry *wq_entry,
+ {
+ 	int ret = default_wake_function(wq_entry, mode, sync, key);
+ 
+-	list_del_init(&wq_entry->entry);
++	list_del_init_careful(&wq_entry->entry);
+ 	return ret;
+ }
  
 -- 
 2.38.1.473.ga0789512c5

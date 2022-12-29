@@ -4,7 +4,7 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v6.x/linux
 
 **Custom kernel with the following patches**  
 
-0000 : Patch 6.0.11  
+0000 : Patch 6.0.15  
 0000 : ProjectC v6.0-r0  
 0002 : 6.0 Graysky's CPU optimization patches  
 0003 : v6.0-fsync1_futex_waitv  
@@ -22,12 +22,11 @@ Get kernel source from here: [https://cdn.kernel.org/pub/linux/kernel/v6.x/linux
 0026 : BBR2 patchset  
 0027 : Winesync kernel module  
 0028 : V4L2 loopback patches  
+0029 : AMD Pstate patches  
 0030 : Various kernel tweaks patch  
 
 ubuntu : Ubuntu mainline kernel patchset  
 
-**AMD support is disabled in the example config (patch 0010), so if you have a AMD processor, you need to enable that**  
-**Also note that you should preferrably disable the clearlinux patchset for an AMD processor!**  
 **This config has default Project C - BMQ scheduler and CONFIG_HZ=1000 + NO_HZ_FULL + Fsync_waitv (backwards compatible)**  
 
 To build on Ubuntu:  
